@@ -1,4 +1,5 @@
 <?php
+use ASO\ASO_Post_Type;
 /*
 Plugin Name: All Signs Options
 Plugin URI: https://signsdesigner.us/
@@ -195,6 +196,7 @@ final class All_Signs_Options {
         }
 
         require_once ASO_INCLUDES . '/Api.php';
+        require_once ASO_INCLUDES . '/aso-post-type.php';
     }
 
     /**
@@ -206,6 +208,8 @@ final class All_Signs_Options {
 
         add_action( 'init', array( $this, 'init_classes' ) );
 
+        $aso_post_type = new ASO_Post_Type();
+        $aso_post_type->init_hooks();
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
     }
