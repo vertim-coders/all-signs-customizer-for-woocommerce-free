@@ -1,13 +1,12 @@
 <template>
   <div class="hello">
-    <span>Hello Frontend!</span>
+    <Configurator/>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Home",
-};
+<script setup>
+import { ref } from "vue";
+import Configurator from "./configurateur/index.vue"
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

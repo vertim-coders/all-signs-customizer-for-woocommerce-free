@@ -7,7 +7,7 @@ namespace ASO;
 class Frontend {
 
     public function __construct() {
-        add_shortcode( 'aso', [ $this, 'render_frontend' ] );
+        add_shortcode( 'aso-configurator', [ $this, 'render_frontend' ] );
     }
 
     /**

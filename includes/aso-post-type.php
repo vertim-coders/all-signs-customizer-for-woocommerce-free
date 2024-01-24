@@ -81,8 +81,8 @@ class ASO_Post_Type
 		?>
 		<div class="config-page-error">
 			<div>				
-				<p><?=esc_html__( "You are trying to access the personalization page without a product to personalize or your permalink is not on postname.", 'NCPC' );?></p>
-				<p><?=esc_html__( "This page should only be accessed using one of the customization buttons.", 'NCPC' );?></p>
+				<p><?=esc_html__( "You are trying to access the personalization page without a product to personalize or your permalink is not on postname.", 'ASO' );?></p>
+				<p><?=esc_html__( "This page should only be accessed using one of the customization buttons.", 'ASO' );?></p>
 			</div>
 		</div>
 		<?php			
