@@ -121,9 +121,14 @@
 
                     <div class="aso-flex">
   
-                        <!--<button class="aso-pt-4">
-                            <img class="aso-w-3/5 aso-h-4/5" :src="require('@/assets/images/ooui1_next-ltr.svg')">
-                        </button>-->
+                        <button class="aso-pt-4">
+                            <svg width="35" height="35" viewBox="0 0 65 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="ooui:next-ltr" opacity="0.1">
+                                <rect x="65" y="79" width="65" height="79" rx="5" transform="rotate(-180 65 79)" fill="#016464"/>
+                                <path id="Vector" d="M40.7962 68L44 63.2417L27.0654 39.45L44 15.6583L40.7962 10.9L20.2 39.45L40.7962 68Z" fill="white"/>
+                                </g>
+                            </svg>
+                        </button>
 
                         <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="product">
                             <div class="" >
