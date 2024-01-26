@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="aso-w-full aso-h-full">
-                            <img class="aso-w-full aso-h-full" :src="image" alt="">
+                            <img class="aso-w-[200px] aso-h-[200px]" :src="image" alt="image">
                         </div>
 
                         <div class="aso-absolute aso-w-full aso-h-0.5 aso-bottom-0 aso-bg-black">
@@ -221,7 +221,7 @@
 <script setup>
 import { ref } from "vue";
 
-var image = ref("../../../../assets/images/configurateur/Screenshot 2024-01-09 at 15.26 1.png");
+var image = ref("../../../../assets/images/img/image.png");
 
 const isColorVisible = ref(false);
 const isFixingVisible = ref(false);
