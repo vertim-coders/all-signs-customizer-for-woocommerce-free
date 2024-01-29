@@ -304,7 +304,7 @@
                                 <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
                                     
                                     <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Adhesive Tape</p>
+                                        <p class="aso-text-sm aso-font-bold">Screw and  Tape</p>
                                     </div>
 
                                     <div class="aso-w-[250px] aso-absolute aso-top-8">
@@ -418,40 +418,170 @@
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[885px] aso-bottom-[250px]" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[250px]" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
   
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                    </svg>
+
+                                </button>
+                            </div>
+                            
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+
+                                <div class="aso-absolute aso-top-4">
                                 
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+
+                                </div>
+                                
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Engraving</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
-                                
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+
+                                <div class="aso-absolute aso-top-4 aso-left-2">
+
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+
+                                </div>
+
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Form PVC</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
+
+
+
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#F08267]">
-                                
+                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+
+                                </button>
                             </div>
 
-                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="aso-absolute triangle aso-left-[160px] -aso-bottom-2 aso-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[1000px] aso-bottom-[250px]" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg  aso-bottom-[250px]" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
   
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                    </svg>
+
+                                </button>
+                            </div>
+                            
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+
+                                <div class="aso-absolute aso-top-4">
                                 
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
+
+                                </div>
+                                
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Plastic signs</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
-                                
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+
+                                <div class="aso-absolute aso-top-4">
+
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
+
+                                </div>
+
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Wood signs</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
+
+
+
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#F08267]">
-                                
+                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+
+                                </button>
                             </div>
 
-                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="aso-absolute triangle aso-left-[60px] -aso-bottom-2 aso-shadow-lg"></div>
 
 
                         </div>
