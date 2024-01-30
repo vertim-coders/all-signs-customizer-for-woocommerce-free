@@ -1,100 +1,73 @@
 <template>
-    <div class="aso-w-full aso-h-full">
-        <div class="nav-home aso-flex aso-justify-between aso-bg-white aso-h-[60px] aso-rounded-tr-none aso-rounded-bl-none aso-rounded-br-none aso-rounded-tl-md">
-            <div class="aso-pt-6 aso-pl-16">
-                <p class="aso-text-black aso-text-2xl aso-font-bold">Plastic Signs</p>
+    <div class="asow-w-full asow-h-full asow-border-4 asow-border-black">
+        <div class="asow-flex asow-justify-between asow-items-center asow-h-[15%] asow-border">
+
+            <div class="asow-flex asow-w-1/3 asow-justify-center asow-text-black asow-text-2xl asow-font-bold asow-text-center">
+                Plastic Signs
             </div>
-            <div class="aso-flex aso-pt-2">
-                <button class="aso-bg-[#22272D] aso-w-32 aso-h-11 aso-p-2 aso-rounded-full">
-                    <div class="aso-flex">
-                        <div class="aso-pt-1">
-                            <svg width="25" height="25" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="simple-line-icons:reload">
-                                <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="white"/>
-                                </g>
-                            </svg>
-                        </div>
-                        
-                        <div class="aso-pl-4 aso-pt-3.5">
-                            <p class="aso-text-white aso-w-20 aso-h-5">Restart all </p>
-                        </div>
+
+            <div class="asow-flex asow-w-1/3 asow-justify-center asow-items-center asow-space-x-4">
+                <button class="asow-bg-[#22272D] asow-w-fit asow-h-fit asow-flex asow-space-x-2 asow-p-2 asow-px-3 asow-rounded-full">
+                    <svg class="asow-h-5 asow-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="simple-line-icons:reload">
+                        <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="white"/>
+                        </g>
+                    </svg>
+                    
+                    <div class="asow-text-white asow-text-center">
+                        Restart all 
                     </div>
                 </button>
                     
-                <div class="aso-flex">
-                    <div class="aso-flex">
-
-                        <div class="aso-relative -aso-left-14">
-
-                            <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
-
-                                <svg class="aso-absolute aso-top-3 aso-right-4" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="majesticons:undo-line">
-                                    <path id="Vector" d="M5 11.625V18.0833H11.25M25 20.6666C24.3787 14.8541 20.7912 10.3333 15 10.3333C11.5875 10.3333 7.58875 13.2628 5.8825 17.4375" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </g>
-                                </svg>
-                            
-                            </button>
-
+                <div class="asow-flex asow-justify-center asow-items-center">
+                    <div class="asow-flex asow-justify-center asow-items-center">
+                        <button class="asow-w-fit asow-h-fit asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-p-2 asow-rounded-full asow-bg-white asow-text-black hover:asow-bg-lime-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asow-w-5 asow-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                            </svg>
+                        </button>
+                        <div class="asow-text-sm asow-ml-2">
+                            Undo
                         </div>
-
-                        <div class="aso-pl-24 aso-pt-4">
-                            <p class="text-sm">Undo</p>
-                        </div>
-
                     </div>
-                    <div class="aso-flex">
 
-                        <div class="aso-relative -aso-left-14">
-
-                            <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
-
-                                
-                                <svg class="aso-absolute aso-top-3 aso-right-4" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="majesticons:redo">
-                                    <path id="Vector" d="M25 11.625V18.0833H18.75M5 20.6666C5.62125 14.8541 9.20875 10.3333 15 10.3333C18.4125 10.3333 22.4113 13.2628 24.1175 17.4375" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </g>
-                                </svg>
-
-                            </button>
-
+                    <div class="asow-flex asow-justify-between asow-items-center asow-ml-4">
+                        <button class="asow-w-fit asow-h-fit asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-p-2 asow-rounded-full asow-bg-white asow-text-black">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asow-w-5 asow-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+                            </svg>
+                        </button>
+                        <div class="asow-text-sm asow-ml-2">
+                            Redo
                         </div>
-
-                        <div class="aso-pl-24 aso-pt-4">
-                            <p class="text-sm">Redo</p>
-                        </div>
-
                     </div>
                 </div>
             </div>
-            <div class="aso-pt-4">
-  
-                <p class="aso-text-black aso-text-3xl aso-font-bold">$ 495,09</p>
+   
+            <div class="asow-flex asow-w-1/3 asow-justify-between asow-items-center">
+                <div class="asow-flex asow-text-black asow-text-3xl asow-font-bold asow-text-center">
+                    $ 495,09
+                </div>
 
+                <button class="asow-bg-[#FFBC3C] asow-rounded-tr-md asow-text-center asow-text-white asow-text-lg asow-font-bold">
+                    Terminer
+                </button>
             </div>
-
-            
-
-            <button class="aso-w-28 aso-bg-[#FFBC3C] aso-h-16 aso-rounded-tr-md aso-rounded-bl-none aso-rounded-br-none aso-rounded-tl-none aso-p-6">
-                <p class="aso-text-white aso-text-lg aso-font-bold">Terminer</p>
-            </button>
-
-            
         </div>
         
-        <div class="aso-flex aso-h-[583px]">
+        <div class="asow-flex asow-h-[85%] asow-border-2">
             
-            <div class="aso-bg-[#E7ECEF] aso-flex aso-flex-col aso-items-center aso-justify-between aso-w-[98%] aso-pb-4">
+            <div class="asow-bg-[#E7ECEF] asow-flex asow-flex-col asow-items-center asow-justify-between asow-w-[98%] asow-pb-4">
 
-                <div class="aso-relative aso-w-[60%] aso-top-8">
+                <div class="asow-relative asow-w-[60%] asow-top-8">
   
-                    <div class="aso-flex aso-justify-end aso-item-end">
+                    <div class="asow-flex asow-justify-end asow-item-end">
 
-                        <div class="aso-absolute aso-h-full aso-w-0.5 -aso-right-4 aso-bg-black">
+                        <div class="asow-absolute asow-h-full asow-w-0.5 -asow-right-4 asow-bg-black">
 
-                            <div class="aso-absolute aso-w-4 aso-h-0.5 -aso-left-1.5 aso-bg-black"></div>
-                            <div class="aso-absolute aso-bottom-0 aso-w-4 -aso-left-1.5 aso-h-0.5 aso-bg-black"></div>
-                            <div class="aso-absolute -aso-left-3 aso-top-12 aso-origin-center aso-rotate-[90deg]">
+                            <div class="asow-absolute asow-w-4 asow-h-0.5 -asow-left-1.5 asow-bg-black"></div>
+                            <div class="asow-absolute asow-bottom-0 asow-w-4 -asow-left-1.5 asow-h-0.5 asow-bg-black"></div>
+                            <div class="asow-absolute -asow-left-3 asow-top-12 asow-origin-center asow-rotate-[90deg]">
                                 <p class="">65mm</p>
                             </div>
                         </div>
@@ -103,12 +76,12 @@
                             <img class="" src="../../../../assets/images/img/image.png" alt="image">
                         </div>
 
-                        <div class="aso-absolute aso-w-full aso-h-0.5 -aso-bottom-4 aso-bg-black">
+                        <div class="asow-absolute asow-w-full asow-h-0.5 -asow-bottom-4 asow-bg-black">
 
-                            <div class="aso-absolute -aso-top-2 aso-left-0 aso-h-4 aso-w-0.5 aso-bg-black"></div>
-                            <div class="aso-absolute -aso-top-2 aso-right-0 aso-h-4 aso-w-0.5 aso-bg-black"></div>
-                            <div class="aso-absolute aso-w-full aso-h-full aso-top-2 aso-justify-center">
-                                <p class="aso-text-center">155mm</p>
+                            <div class="asow-absolute -asow-top-2 asow-left-0 asow-h-4 asow-w-0.5 asow-bg-black"></div>
+                            <div class="asow-absolute -asow-top-2 asow-right-0 asow-h-4 asow-w-0.5 asow-bg-black"></div>
+                            <div class="asow-absolute asow-w-full asow-h-full asow-top-2 asow-justify-center">
+                                <p class="asow-text-center">155mm</p>
                             </div>
 
                         </div>
@@ -117,22 +90,22 @@
 
                 </div>
 
-                <div class="aso-w-full aso-flex aso-justify-center">
-                    <div class="aso-flex aso-w-[60%] aso-overflow-x-scroll">
+                <div class="asow-w-full asow-flex asow-justify-center">
+                    <div class="asow-flex asow-w-[60%] asow-overflow-x-scroll">
 
-                        <div class="aso-absolute before aso-left-[145px] aso-pt-4">
-                            <button class="aso-h-[50px] aso-w-12 aso-p-2 aso-rounded-none">
-                                <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <div class="asow-absolute before asow-left-[145px] asow-pt-4">
+                            <button class="asow-h-[50px] asow-w-12 asow-p-2 asow-rounded-none">
+                                <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                 </svg>
 
                             </button>
                         </div>
   
-                        <div class="aso-flex">
+                        <div class="asow-flex">
 
                             
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="product">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="product">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="fluent-mdl2:product-release">
@@ -141,13 +114,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Product</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Product</p>
                                 </div>
 
                             </button>
                         
-                            <button class="aso-bg-white aso-ml-2 aso-w-[103px] aso-h-[80px] aso-rounded-lg" @click="material">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[103px] asow-h-[80px] asow-rounded-lg" @click="material">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="mdi:material">
@@ -156,13 +129,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Material</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Material</p>
                                 </div>
 
                             </button>
 
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="size">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="size">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="fluent:keyboard-layout-resize-24-filled">
@@ -171,13 +144,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Size</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Size</p>
                                 </div>
 
                             </button>
 
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="shape">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="shape">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="mdi:shape">
@@ -186,13 +159,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Shape</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Shape</p>
                                 </div>
 
                             </button>
                             
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="fixing">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="fixing">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="uil:screw">
@@ -201,13 +174,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Fixing Method</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Fixing Method</p>
                                 </div>
 
                             </button>
 
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="color">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="color">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="tdesign:fill-color-1">
@@ -216,13 +189,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Color</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Color</p>
                                 </div>
 
                             </button>
 
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="text">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="text">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
@@ -237,13 +210,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Text</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Text</p>
                                 </div>
 
                             </button>
                             
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="border">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="border">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="zondicons:border-all">
@@ -252,13 +225,13 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Border</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Border</p>
                                 </div>
 
                             </button>
 
-                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="image">
+                            <button class="asow-bg-white asow-ml-2 asow-w-[108px] asow-h-[80px] asow-rounded-lg" @click="image">
                                 <div class="" >
                                     <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="gravity-ui:copy-picture">
@@ -267,8 +240,8 @@
                                     </svg>
                                 </div>
 
-                                <div class="aso-pt-3 aso-pl-3">
-                                    <p class="aso-text-[11px] aso-font-bold">Image</p>
+                                <div class="asow-pt-3 asow-pl-3">
+                                    <p class="asow-text-[11px] asow-font-bold">Image</p>
                                 </div>
 
                             </button>
@@ -276,96 +249,96 @@
 
                         </div>
 
-                        <div class="aso-absolute next aso-right-80 aso-pt-4">
-                            <button class="aso-h-[50px] aso-w-12 aso-p-2 aso-rounded-none">
-                                <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <div class="asow-absolute next asow-right-80 asow-pt-4">
+                            <button class="asow-h-[50px] asow-w-12 asow-p-2 asow-rounded-none">
+                                <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                 </svg>
 
                             </button>
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg aso-right-[540px] aso-bottom-[265px]" v-if="isColorVisible && !isFixingVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isColorVisible">
+                        <div class="asow-absolute asow-flex asow-justify-end asow-item-end asow-bg-white group-color asow-p-3 asow-rounded asow-shadow-lg asow-right-[540px] asow-bottom-[265px]" v-if="isColorVisible && !isFixingVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isColorVisible">
   
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-border-t-2 asow-border-r-2 asow-border-b-2 asow-border-l-2 asow-border-solid asow-border-black asow-bg-white asow-mr-4">
                                 
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-bg-[#FF6600] asow-mr-4">
                                 
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#F08267]">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-bg-[#F08267]">
                                 
                             </div>
 
-                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[265px]" v-if="isFixingVisible && !isColorVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isFixingVisible">
+                        <div class="asow-absolute asow-flex asow-justify-center asow-item-center group-color asow-rounded asow-shadow-lg asow-bottom-[265px]" v-if="isFixingVisible && !isColorVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isFixingVisible">
   
-                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-left-[108px] asow-top-0 before">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
 
                                 </button>
                             </div>
                             
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-w-[360px] asow-p-2">
 
-                                <div class="aso-absolute aso-top-2">
+                                <div class="asow-absolute asow-top-2">
                                 
-                                    <img class="aso-w-[80px]" src="../../../../assets/images/img/Rectangle 3683.svg" alt="">
+                                    <img class="asow-w-[80px]" src="../../../../assets/images/img/Rectangle 3683.svg" alt="">
 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Adhesive Tape</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Adhesive Tape</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-pt-2 asow-top-0 asow-left-2 asow-w-[360px]">
 
-                                <div class="aso-absolute aso-top-2">
+                                <div class="asow-absolute asow-top-2">
 
-                                    <img class="aso-w-[80px]" src="../../../../assets/images/img/Rectangle 3683.svg" alt="">
+                                    <img class="asow-w-[80px]" src="../../../../assets/images/img/Rectangle 3683.svg" alt="">
 
                                 </div>
 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Screw and  Tape</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Screw and  Tape</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-w-[100px] asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
@@ -374,25 +347,25 @@
 
                             </div>
 
-                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-right-[48px] asow-top-0 next">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-right-[330px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle asow-right-[330px] -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-h-20 aso-absolute aso-flex aso-justify-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[660px] aso-bottom-[265px]" v-if="isShapeVisible && !isFixingVisible && !isColorVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isShapeVisible">
+                        <div class="asow-h-20 asow-absolute asow-flex asow-justify-end asow-bg-white group-color asow-p-3 asow-rounded asow-shadow-lg  asow-right-[660px] asow-bottom-[265px]" v-if="isShapeVisible && !isFixingVisible && !isColorVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isShapeVisible">
               
-                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
-                                <button class="aso-h-[80px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-left-[108px] asow-top-0 before">
+                                <button class="asow-h-[80px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
 
@@ -401,135 +374,135 @@
                             
                             <div class="">
 
-                                <div class="aso-w-16 aso-h-10 aso-ml-2 aso-rounded aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                                <div class="asow-w-16 asow-h-10 asow-ml-2 asow-rounded asow-border-t-2 asow-border-r-2 asow-border-b-2 asow-border-l-2 asow-border-solid asow-border-black asow-bg-white asow-mr-4">
                                 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-6 -aso-bottom-3">
-                                <p class="aso-text-[10px]">Rounded Corners</p>
+                                <div class="asow-absolute asow-left-6 -asow-bottom-3">
+                                <p class="asow-text-[10px]">Rounded Corners</p>
                                 </div>
 
                             </div>
 
                             <div class="">
 
-                                <div class="aso-w-16 aso-h-10 aso-ml-2 aso-rounded aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                                <div class="asow-w-16 asow-h-10 asow-ml-2 asow-rounded asow-border-t-2 asow-border-r-2 asow-border-b-2 asow-border-l-2 asow-border-solid asow-border-black asow-bg-white asow-mr-4">
                                 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-28 -aso-bottom-3">
-                                <p class="aso-text-[10px]">Rounded Corners</p>
+                                <div class="asow-absolute asow-left-28 -asow-bottom-3">
+                                <p class="asow-text-[10px]">Rounded Corners</p>
                                 </div>
 
                             </div>
 
                             <div class="">
 
-                                <div class="aso-w-16 aso-h-10 aso-ml-2 aso-rounded aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                                <div class="asow-w-16 asow-h-10 asow-ml-2 asow-rounded asow-border-t-2 asow-border-r-2 asow-border-b-2 asow-border-l-2 asow-border-solid asow-border-black asow-bg-white asow-mr-4">
                                 
                                 </div>
                                 
-                                <div class="aso-absolute aso-right-5 -aso-bottom-3">
-                                <p class="aso-text-[10px]">Rounded Corners</p>
+                                <div class="asow-absolute asow-right-5 -asow-bottom-3">
+                                <p class="asow-text-[10px]">Rounded Corners</p>
                                 </div>
 
                             </div>
 
-                            <div class="aso-absolute -aso-right-[38px] aso-top-0 next">
-                                <button class="aso-h-[80px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-right-[38px] asow-top-0 next">
+                                <button class="asow-h-[80px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-right-[120px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle asow-right-[120px] -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-left-[760px] aso-bottom-[265px]" v-if="isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isSizeVisible">
+                        <div class="asow-absolute asow-flex asow-justify-end asow-item-end asow-bg-white group-color asow-p-3 asow-rounded asow-shadow-lg  asow-left-[760px] asow-bottom-[265px]" v-if="isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isSizeVisible">
   
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-border-t-2 asow-border-r-2 asow-border-b-2 asow-border-l-2 asow-border-solid asow-border-black asow-bg-white asow-mr-4">
                                 
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-bg-[#FF6600] asow-mr-4">
                                 
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#F08267]">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-bg-[#F08267]">
                                 
                             </div>
 
-                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[265px]" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
+                        <div class="asow-absolute asow-flex asow-justify-center asow-item-center group-color asow-rounded asow-shadow-lg asow-bottom-[265px]" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
   
-                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-left-[108px] asow-top-0 before">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
 
                                 </button>
                             </div>
                             
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-w-[360px] asow-p-2">
 
-                                <div class="aso-absolute aso-top-4">
+                                <div class="asow-absolute asow-top-4">
                                 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Engraving</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Engraving</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-pt-2 asow-top-0 asow-left-2 asow-w-[360px]">
 
-                                <div class="aso-absolute aso-top-4 aso-left-2">
+                                <div class="asow-absolute asow-top-4 asow-left-2">
 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
 
                                 </div>
 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Form PVC</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Form PVC</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-w-[100px] asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
@@ -538,82 +511,82 @@
 
                             </div>
 
-                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-right-[48px] asow-top-0 next">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-left-[160px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle asow-left-[160px] -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg  aso-bottom-[265px]" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
+                        <div class="asow-absolute asow-flex asow-justify-center asow-item-center group-color asow-rounded asow-shadow-lg  asow-bottom-[265px]" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
   
-                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-left-[108px] asow-top-0 before">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
 
                                 </button>
                             </div>
                             
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-w-[360px] asow-p-2">
 
-                                <div class="aso-absolute aso-top-4">
+                                <div class="asow-absolute asow-top-4">
                                 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Plastic signs</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Plastic signs</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-pt-2 asow-top-0 asow-left-2 asow-w-[360px]">
 
-                                <div class="aso-absolute aso-top-4">
+                                <div class="asow-absolute asow-top-4">
 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
 
                                 </div>
 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Wood signs</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Wood signs</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-w-[100px] asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
@@ -622,101 +595,101 @@
 
                             </div>
 
-                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-right-[48px] asow-top-0 next">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-left-[60px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle asow-left-[60px] -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[760px] aso-bottom-[265px]" v-if="isTextVisible && !isImageVisible && !isBorderVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isTextVisible">
+                        <div class="asow-absolute asow-flex asow-justify-end asow-item-end asow-bg-white group-color asow-p-3 asow-rounded asow-shadow-lg  asow-right-[760px] asow-bottom-[265px]" v-if="isTextVisible && !isImageVisible && !isBorderVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isTextVisible">
   
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-border-t-2 asow-border-r-2 asow-border-b-2 asow-border-l-2 asow-border-solid asow-border-black asow-bg-white asow-mr-4">
                                 
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-bg-[#FF6600] asow-mr-4">
                                 
                             </div>
 
-                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#F08267]">
+                            <div class="asow-w-5 asow-h-5 asow-rounded-sm asow-bg-[#F08267]">
                                 
                             </div>
 
-                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[250px]" v-if="isBorderVisible && !isTextVisible && !isImageVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isBorderVisible">
+                        <div class="asow-absolute asow-flex asow-justify-center asow-item-center group-color asow-rounded asow-shadow-lg asow-bottom-[250px]" v-if="isBorderVisible && !isTextVisible && !isImageVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isBorderVisible">
 
-                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-left-[108px] asow-top-0 before">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
 
                                 </button>
                             </div>
                             
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-w-[360px] asow-p-2">
 
-                                <div class="aso-absolute aso-top-4">
+                                <div class="asow-absolute asow-top-4">
                                 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Engraving</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Engraving</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-pt-2 asow-top-0 asow-left-2 asow-w-[360px]">
 
-                                <div class="aso-absolute aso-top-4 aso-left-2">
+                                <div class="asow-absolute asow-top-4 asow-left-2">
 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
 
                                 </div>
 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Form PVC</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Form PVC</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-w-[100px] asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
@@ -725,82 +698,82 @@
 
                             </div>
 
-                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-right-[48px] asow-top-0 next">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-left-[160px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle asow-left-[160px] -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg  aso-bottom-[250px]" v-if="isImageVisible && !isBorderVisible && !isTextVisible && !isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isImageVisible">
+                        <div class="asow-absolute asow-flex asow-justify-center asow-item-center group-color asow-rounded asow-shadow-lg  asow-bottom-[250px]" v-if="isImageVisible && !isBorderVisible && !isTextVisible && !isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isImageVisible">
 
-                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-left-[108px] asow-top-0 before">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
 
                                 </button>
                             </div>
                             
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-w-[360px] asow-p-2">
 
-                                <div class="aso-absolute aso-top-4">
+                                <div class="asow-absolute asow-top-4">
                                 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
 
                                 </div>
                                 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Plastic signs</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Plastic signs</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+                            <div class="asow-relative asow-flex asow-bg-white asow-h-24 asow-pt-2 asow-top-0 asow-left-2 asow-w-[360px]">
 
-                                <div class="aso-absolute aso-top-4">
+                                <div class="asow-absolute asow-top-4">
 
-                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
+                                    <img class="asow-w-[70px]" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
 
                                 </div>
 
-                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                <div class="asow-absolute asow-left-20 asow-pl-4 asow-w-[150px]">
                                     
-                                    <div class="aso-pt-2 aso-absolute">
-                                        <p class="aso-text-sm aso-font-bold">Wood signs</p>
+                                    <div class="asow-pt-2 asow-absolute">
+                                        <p class="asow-text-sm asow-font-bold">Wood signs</p>
                                     </div>
 
-                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
-                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                    <div class="asow-w-[250px] asow-absolute asow-top-8">
+                                        <p class="asow-text-sm">Lorem ipsum dolor sit amet, consec
                                             tetur adipiscing elit. Tincidunt port
                                             see image
                                         </p>
                                     </div>
 
-                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
-                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    <div class="asow-absolute asow-w-[100px] asow-top-14 asow-left-1.5">
+                                        <a href="" class="asow-text-sm asow-text-[#EF5A35]">Voir plus</a>
                                     </div>
 
                                 </div>
@@ -809,16 +782,16 @@
 
                             </div>
 
-                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
-                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <div class="asow-absolute -asow-right-[48px] asow-top-0 next">
+                                <button class="asow-h-[96px] asow-w-10 asow-p-2 asow-rounded-none asow-bg-[#F9F9F9]">
+                                    <svg class="asow-w-6 asow-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-left-[60px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="asow-absolute triangle asow-left-[60px] -asow-bottom-2 asow-shadow-lg"></div>
 
 
                         </div>
@@ -829,16 +802,16 @@
 
             </div>
 
-            <div class="aso-bg-white aso-w-[10%] aso-pt-12 aso-flex aso-flex-col justify-between">
+            <div class="asow-bg-white asow-w-[10%] asow-pt-12 asow-flex asow-flex-col justify-between">
               
 
-                <div class="aso-flex">
+                <div class="asow-flex">
 
-                    <div class="aso-relative">
+                    <div class="asow-relative">
 
-                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white aso-w-fit">
+                        <button class="asow-absolute asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-rounded-full asow-bg-white asow-w-fit">
 
-                            <svg class="aso-h-5 aso-w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <svg class="asow-h-5 asow-w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
@@ -848,7 +821,7 @@
 
                     </div>
 
-                    <div class="aso-pl-[43px] aso-pt-[60px]">
+                    <div class="asow-pl-[43px] asow-pt-[60px]">
                         <p class="text-sm">Preview</p>
                     </div>
 
@@ -856,13 +829,13 @@
 
                 
 
-                <div class="aso-flex">
+                <div class="asow-flex">
 
-                    <div class="aso-relative -aso-left-10">
+                    <div class="asow-relative -asow-left-10">
 
-                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
+                        <button class="asow-absolute asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-rounded-full asow-bg-white">
 
-                            <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="asow-absolute asow-top-2.5 asow-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <g id="mingcute:file-import-line" clip-path="url(#clip0_26_887)">
                                 <g id="Group">
                                 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M13.586 2C14.0556 2.00011 14.5101 2.16543 14.87 2.467L15 2.586L19.414 7C19.746 7.33202 19.9506 7.77028 19.992 8.238L20 8.414V20C20.0002 20.5046 19.8096 20.9906 19.4665 21.3605C19.1234 21.7305 18.6532 21.9572 18.15 21.995L18 22H12V20H18V10H13.5C13.1271 9.99998 12.7676 9.86108 12.4916 9.61038C12.2156 9.35968 12.0428 9.01516 12.007 8.644L12 8.5V4H6V12H4V4C3.99984 3.49542 4.19041 3.00943 4.5335 2.63945C4.87659 2.26947 5.34684 2.04284 5.85 2.005L6 2H13.586ZM7.707 14.465L10.536 17.293C10.7235 17.4805 10.8288 17.7348 10.8288 18C10.8288 18.2652 10.7235 18.5195 10.536 18.707L7.707 21.535C7.61475 21.6305 7.50441 21.7067 7.3824 21.7591C7.2604 21.8115 7.12918 21.8391 6.9964 21.8403C6.86362 21.8414 6.73194 21.8161 6.60905 21.7658C6.48615 21.7155 6.3745 21.6413 6.2806 21.5474C6.18671 21.4535 6.11246 21.3419 6.06218 21.219C6.0119 21.0961 5.9866 20.9644 5.98775 20.8316C5.9889 20.6988 6.01649 20.5676 6.0689 20.4456C6.12131 20.3236 6.19749 20.2132 6.293 20.121L7.414 19H3C2.73478 19 2.48043 18.8946 2.29289 18.7071C2.10536 18.5196 2 18.2652 2 18C2 17.7348 2.10536 17.4804 2.29289 17.2929C2.48043 17.1054 2.73478 17 3 17H7.414L6.293 15.879C6.20009 15.7862 6.12638 15.6759 6.07607 15.5546C6.02576 15.4333 5.99984 15.3032 5.9998 15.1719C5.9997 14.9066 6.10499 14.6521 6.2925 14.4645C6.48001 14.2769 6.73438 14.1714 6.99965 14.1713C7.131 14.1713 7.26107 14.1971 7.38243 14.2473C7.5038 14.2975 7.61409 14.3712 7.707 14.464V14.465ZM14 4.414V8H17.586L14 4.414Z" fill="currentColor"/>
@@ -879,19 +852,19 @@
 
                     </div>
 
-                    <div class="aso-pl-[46px] aso-pt-[60px]">
+                    <div class="asow-pl-[46px] asow-pt-[60px]">
                         <p class="text-sm">Import</p>
                     </div>
 
                 </div>
 
-                <div class="aso-flex">
+                <div class="asow-flex">
 
-                    <div class="aso-relative -aso-left-10">
+                    <div class="asow-relative -asow-left-10">
 
-                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
+                        <button class="asow-absolute asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-rounded-full asow-bg-white">
 
-                            <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="asow-absolute asow-top-2.5 asow-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="material-symbols-light:share-outline">
                                 <path id="Vector" d="M18.002 21.5C17.3087 21.5 16.7183 21.2567 16.231 20.77C15.7437 20.2847 15.5 19.6947 15.5 19C15.5 18.8667 15.5117 18.729 15.535 18.587C15.5577 18.4443 15.592 18.3103 15.638 18.185L7.896 13.623C7.65133 13.899 7.36667 14.114 7.042 14.268C6.718 14.4227 6.37067 14.5 6 14.5C5.30533 14.5 4.71533 14.2573 4.23 13.772C3.74333 13.286 3.5 12.696 3.5 12.002C3.5 11.3087 3.74333 10.7183 4.23 10.231C4.71467 9.74367 5.30467 9.5 6 9.5C6.37067 9.5 6.718 9.57733 7.042 9.732C7.36667 9.886 7.65133 10.101 7.896 10.377L15.638 5.815C15.592 5.68967 15.5577 5.55567 15.535 5.413C15.5117 5.271 15.5 5.13333 15.5 5C15.5 4.30533 15.743 3.71533 16.229 3.23C16.7143 2.74333 17.304 2.5 17.998 2.5C18.6913 2.5 19.2817 2.743 19.769 3.229C20.2563 3.71433 20.5 4.304 20.5 4.998C20.5 5.69133 20.2567 6.28167 19.77 6.769C19.2847 7.25633 18.6947 7.5 18 7.5C17.6293 7.5 17.282 7.42267 16.958 7.268C16.6333 7.114 16.3487 6.899 16.104 6.623L8.362 11.185C8.408 11.3103 8.44233 11.4437 8.465 11.585C8.48833 11.727 8.5 11.864 8.5 11.996C8.5 12.128 8.48833 12.2663 8.465 12.411C8.44233 12.555 8.408 12.6897 8.362 12.815L16.104 17.377C16.3487 17.101 16.6333 16.886 16.958 16.732C17.282 16.5773 17.6293 16.5 18 16.5C18.6947 16.5 19.2847 16.743 19.77 17.229C20.2567 17.7143 20.5 18.304 20.5 18.998C20.5 19.6913 20.2573 20.2817 19.772 20.769C19.286 21.2563 18.696 21.5 18.002 21.5ZM18 6.5C18.4113 6.5 18.7643 6.353 19.059 6.059C19.353 5.76433 19.5 5.41133 19.5 5C19.5 4.58867 19.353 4.23567 19.059 3.941C18.7643 3.647 18.4113 3.5 18 3.5C17.5887 3.5 17.2357 3.647 16.941 3.941C16.647 4.23567 16.5 4.58867 16.5 5C16.5 5.41133 16.647 5.76433 16.941 6.059C17.2357 6.353 17.5887 6.5 18 6.5ZM6 13.5C6.41133 13.5 6.76433 13.353 7.059 13.059C7.353 12.7643 7.5 12.4113 7.5 12C7.5 11.5887 7.353 11.2357 7.059 10.941C6.76433 10.647 6.41133 10.5 6 10.5C5.58867 10.5 5.23567 10.647 4.941 10.941C4.647 11.2357 4.5 11.5887 4.5 12C4.5 12.4113 4.647 12.7643 4.941 13.059C5.23567 13.353 5.58867 13.5 6 13.5ZM18 20.5C18.4113 20.5 18.7643 20.353 19.059 20.059C19.353 19.7643 19.5 19.4113 19.5 19C19.5 18.5887 19.353 18.2357 19.059 17.941C18.7643 17.647 18.4113 17.5 18 17.5C17.5887 17.5 17.2357 17.647 16.941 17.941C16.647 18.2357 16.5 18.5887 16.5 19C16.5 19.4113 16.647 19.7643 16.941 20.059C17.2357 20.353 17.5887 20.5 18 20.5Z" fill="currentColor"/>
                                 </g>
@@ -901,19 +874,19 @@
 
                     </div>
 
-                    <div class="aso-pl-[50px] aso-pt-[60px]">
+                    <div class="asow-pl-[50px] asow-pt-[60px]">
                         <p class="text-sm">Share</p>
                     </div>
 
                 </div>
 
-                <div class="aso-flex">
+                <div class="asow-flex">
 
-                    <div class="aso-relative -aso-left-10">
+                    <div class="asow-relative -asow-left-10">
 
-                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
+                        <button class="asow-absolute asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-rounded-full asow-bg-white">
 
-                            <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="asow-absolute asow-top-2.5 asow-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="basil:save-solid">
                                 <path id="Vector" d="M7.25012 7.6C7.25012 8.566 8.03412 9.35 9.00012 9.35H15.0001C15.4642 9.35 15.9094 9.16563 16.2376 8.83744C16.5657 8.50925 16.7501 8.06413 16.7501 7.6V4.276C16.7501 4.124 16.8741 4 17.0261 4C17.0983 3.99987 17.1696 4.01536 17.2352 4.04539C17.3008 4.07543 17.3591 4.1193 17.4061 4.174L20.3691 7.629C20.7795 8.10775 20.9938 8.72391 20.9691 9.354L20.6271 18.098C20.6018 18.7434 20.3277 19.3539 19.8622 19.8017C19.3967 20.2495 18.776 20.4997 18.1301 20.5H17.7511C17.6185 20.5 17.4913 20.4473 17.3976 20.3536C17.3038 20.2598 17.2511 20.1326 17.2511 20V15C17.2511 14.5359 17.0667 14.0908 16.7386 13.7626C16.4104 13.4344 15.9653 13.25 15.5011 13.25H8.50112C8.27122 13.2499 8.04355 13.295 7.83112 13.3829C7.61868 13.4708 7.42565 13.5997 7.26304 13.7622C7.10043 13.9247 6.97144 14.1177 6.88343 14.3301C6.79542 14.5425 6.75012 14.7701 6.75012 15V20C6.75012 20.1326 6.69744 20.2598 6.60367 20.3536C6.50991 20.4473 6.38273 20.5 6.25012 20.5H6.11312C5.53116 20.5001 4.96913 20.288 4.53231 19.9034C4.09549 19.5189 3.81384 18.9883 3.74012 18.411C3.24634 14.553 3.22518 10.6491 3.67712 6.786L3.73712 6.266C3.81017 5.64178 4.10993 5.06613 4.57948 4.64839C5.04902 4.23065 5.65564 3.99991 6.28412 4H6.75012C6.88273 4 7.00991 4.05268 7.10367 4.14645C7.19744 4.24021 7.25012 4.36739 7.25012 4.5V7.6Z" fill="currentColor"/>
                                 <path id="Vector_2" d="M8.25 20C8.25 20.1326 8.30268 20.2598 8.39645 20.3536C8.49021 20.4473 8.61739 20.5 8.75 20.5H15.25C15.3826 20.5 15.5098 20.4473 15.6036 20.3536C15.6973 20.2598 15.75 20.1326 15.75 20V15C15.75 14.9337 15.7237 14.8701 15.6768 14.8232C15.6299 14.7763 15.5663 14.75 15.5 14.75H8.5C8.4337 14.75 8.37011 14.7763 8.32322 14.8232C8.27634 14.8701 8.25 14.9337 8.25 15V20ZM15.25 4.5C15.25 4.36739 15.1973 4.24021 15.1036 4.14645C15.0098 4.05268 14.8826 4 14.75 4H9.25C9.11739 4 8.99021 4.05268 8.89645 4.14645C8.80268 4.24021 8.75 4.36739 8.75 4.5V7.6C8.75 7.738 8.862 7.85 9 7.85H15C15.0663 7.85 15.1299 7.82366 15.1768 7.77678C15.2237 7.72989 15.25 7.6663 15.25 7.6V4.5Z" fill="currentColor"/>
@@ -924,19 +897,19 @@
 
                     </div>
 
-                    <div class="aso-pl-[52px] aso-pt-[60px]">
+                    <div class="asow-pl-[52px] asow-pt-[60px]">
                         <p class="text-sm">Save</p>
                     </div>
 
                 </div>
 
-                <div class="aso-flex">
+                <div class="asow-flex">
 
-                    <div class="aso-relative -aso-left-10">
+                    <div class="asow-relative -asow-left-10">
 
-                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-[#FFBC3C]">
+                        <button class="asow-absolute asow-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asow-rounded-full asow-bg-[#FFBC3C]">
 
-                            <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="asow-absolute asow-top-2.5 asow-right-[20px]" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="ion:help-outline">
                                 <path id="Vector" d="M9.375 9.92969C9.375 9.92969 9.45937 7.93164 11.3402 6.32957C12.457 5.37838 13.7982 5.10289 15 5.08594C16.0975 5.07201 17.0783 5.26395 17.6648 5.55942C18.6674 6.0668 20.625 7.30195 20.625 9.92969C20.625 12.6949 18.9152 13.9482 16.9717 15.3293C15.0281 16.7103 14.5312 18.0648 14.5312 19.6172" stroke="#FEFEFE" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                 <path id="Vector_2" d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="#FEFEFE"/>
@@ -947,7 +920,7 @@
 
                     </div>
 
-                    <div class="aso-pl-[52px] aso-pt-[60px]">
+                    <div class="asow-pl-[52px] asow-pt-[60px]">
                         <p class="text-sm">Help</p>
                     </div>
 
@@ -955,7 +928,6 @@
             </div>
             
         </div>
-
     </div>
 </template>
 
