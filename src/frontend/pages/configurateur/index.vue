@@ -26,7 +26,7 @@
 
                         <div class="aso-relative -aso-left-14">
 
-                            <button class="aso-absolute cercle aso-rounded-full aso-bg-white">
+                            <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
 
                                 <svg class="aso-absolute aso-top-3 aso-right-4" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="majesticons:undo-line">
@@ -47,7 +47,7 @@
 
                         <div class="aso-relative -aso-left-14">
 
-                            <button class="aso-absolute cercle aso-rounded-full aso-bg-white">
+                            <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
 
                                 
                                 <svg class="aso-absolute aso-top-3 aso-right-4" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,8 +117,8 @@
 
                 </div>
 
-                <div class="">
-                    <div class="aso-flex">
+                <div class="aso-w-full aso-flex aso-justify-center">
+                    <div class="aso-flex aso-w-[60%] aso-overflow-x-scroll">
 
                         <div class="aso-absolute before aso-left-[145px] aso-pt-4">
                             <button class="aso-h-[50px] aso-w-12 aso-p-2 aso-rounded-none">
@@ -222,6 +222,56 @@
 
                             </button>
 
+                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="text">
+                                <div class="" >
+                                    <svg width="28" height="28" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
+                                        <path id="Vector" d="M15.5757 11.5411C15.453 11.1569 15.2131 10.8229 14.8912 10.588C14.5693 10.3531 14.1823 10.2296 13.7868 10.2356H13.6335C13.2341 10.226 12.8422 10.3477 12.5156 10.5827C12.189 10.8177 11.9448 11.1537 11.819 11.5411L1.45625 34.6756C1.33756 34.9142 1.27624 35.1782 1.27736 35.4458C1.27736 35.7921 1.41198 36.1242 1.65161 36.369C1.89124 36.6138 2.21625 36.7514 2.55514 36.7514C2.85996 36.7559 3.15822 36.6608 3.40645 36.4799C3.65467 36.2991 3.8399 36.042 3.93514 35.7461L6.59291 29.6753H20.6485L23.3062 35.6678C23.411 35.9742 23.6035 36.2413 23.8587 36.4345C24.1139 36.6278 24.42 36.7381 24.7374 36.7514C25.1034 36.7514 25.4544 36.6028 25.7132 36.3384C25.972 36.074 26.1174 35.7154 26.1174 35.3414C26.102 35.0844 26.0414 34.8323 25.9385 34.5972L15.5757 11.5411ZM7.76847 27.0381L13.6335 13.6953L19.5112 27.0381H7.76847Z" fill="currentColor"/>
+                                        <path id="Vector_2" d="M41.1964 19.2961C40.3913 18.568 39.4525 18.0108 38.4346 17.6566C37.4168 17.3025 36.3403 17.1586 35.2676 17.2333C33.1975 17.226 31.1498 17.6711 29.262 18.5389C29.0441 18.6419 28.859 18.8055 28.7279 19.011C28.5969 19.2165 28.5251 19.4556 28.5209 19.7008C28.5451 20.0156 28.6801 20.3107 28.901 20.5315C29.1218 20.7524 29.4135 20.884 29.722 20.9019C29.8926 20.895 30.0609 20.8597 30.2203 20.7975C31.7112 20.0976 33.333 19.7368 34.9737 19.74C38.4237 19.74 40.4426 21.4764 40.4426 24.8578V25.5105C38.6082 24.9643 36.7054 24.696 34.7948 24.7142C30.1437 24.7142 26.9492 26.8161 26.9492 30.7719V30.8372C26.9492 34.6886 30.3992 36.6861 33.8109 36.6861C35.0886 36.7241 36.3568 36.4502 37.5102 35.8871C38.6635 35.324 39.6688 34.488 40.4426 33.4483V35.1194C40.4426 35.4657 40.5772 35.7978 40.8168 36.0426C41.0564 36.2874 41.3814 36.425 41.7203 36.425C41.8948 36.4253 42.0674 36.3891 42.2277 36.3187C42.3879 36.2482 42.5324 36.145 42.6521 36.0153C42.7718 35.8857 42.8643 35.7324 42.9238 35.5648C42.9833 35.3973 43.0086 35.219 42.9981 35.0411V24.8055C43.074 23.8108 42.9536 22.8105 42.6441 21.8641C42.3346 20.9178 41.8423 20.0445 41.1964 19.2961ZM40.4809 29.3489C40.4809 32.3255 37.7081 34.4275 34.3348 34.4275C31.8559 34.4275 29.722 33.0436 29.722 30.6936V30.6153C29.722 28.2653 31.6387 26.6986 35.0887 26.6986C36.9138 26.7039 38.729 26.972 40.4809 27.495V29.3489Z" fill="currentColor"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_457_214">
+                                        <rect width="46" height="47" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+
+                                <div class="aso-pt-3 aso-pl-3">
+                                    <p class="aso-text-[11px] aso-font-bold">Text</p>
+                                </div>
+
+                            </button>
+                            
+                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="border">
+                                <div class="" >
+                                    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="zondicons:border-all">
+                                        <path id="Vector" d="M22 22V34H34V22H22ZM22 18H34V6H22V18ZM18 22H6V34H18V22ZM18 18V6H6V18H18ZM2 36V2H38V38H2V36Z" fill="currentColor"/>
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <div class="aso-pt-3 aso-pl-3">
+                                    <p class="aso-text-[11px] aso-font-bold">Border</p>
+                                </div>
+
+                            </button>
+
+                            <button class="aso-bg-white aso-ml-2 aso-w-[108px] aso-h-[80px] aso-rounded-lg" @click="image">
+                                <div class="" >
+                                    <svg width="28" height="28" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="gravity-ui:copy-picture">
+                                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M30 6.25H20C19.0054 6.25 18.0516 6.64509 17.3483 7.34835C16.6451 8.05161 16.25 9.00544 16.25 10V12.5H20C21.9891 12.5 23.8968 13.2902 25.3033 14.6967C26.7098 16.1032 27.5 18.0109 27.5 20V23.75H30C30.9946 23.75 31.9484 23.3549 32.6517 22.6517C33.3549 21.9484 33.75 20.9946 33.75 20V10C33.75 9.00544 33.3549 8.05161 32.6517 7.34835C31.9484 6.64509 30.9946 6.25 30 6.25ZM27.5 27.5H30C31.9891 27.5 33.8968 26.7098 35.3033 25.3033C36.7098 23.8968 37.5 21.9891 37.5 20V10C37.5 8.01088 36.7098 6.10322 35.3033 4.6967C33.8968 3.29018 31.9891 2.5 30 2.5H20C18.0109 2.5 16.1032 3.29018 14.6967 4.6967C13.2902 6.10322 12.5 8.01088 12.5 10V12.5H10C8.01088 12.5 6.10322 13.2902 4.6967 14.6967C3.29018 16.1032 2.5 18.0109 2.5 20V30C2.5 31.9891 3.29018 33.8968 4.6967 35.3033C6.10322 36.7098 8.01088 37.5 10 37.5H20C21.9891 37.5 23.8968 36.7098 25.3033 35.3033C26.7098 33.8968 27.5 31.9891 27.5 30V27.5ZM10 16.25H20C20.9946 16.25 21.9484 16.6451 22.6517 17.3483C23.3549 18.0516 23.75 19.0054 23.75 20V25.1025L22.33 23.8025C21.6451 23.177 20.7551 22.8235 19.8277 22.8088C18.9002 22.794 17.9994 23.119 17.295 23.7225L12.9975 27.405L11.4925 26.275C10.8425 25.7881 10.0537 25.5222 9.2416 25.5164C8.42951 25.5105 7.63691 25.765 6.98 26.2425L6.25 26.7725V20C6.25 19.0054 6.64509 18.0516 7.34835 17.3483C8.05161 16.6451 9.00544 16.25 10 16.25ZM6.465 31.2525C6.72388 31.9831 7.20278 32.6155 7.83581 33.0627C8.46885 33.51 9.22491 33.7501 10 33.75H20C20.9633 33.7498 21.8896 33.379 22.5868 32.7143C23.284 32.0497 23.6988 31.1422 23.745 30.18L19.8 26.575C19.7909 26.5673 19.7794 26.563 19.7675 26.563C19.7556 26.563 19.7441 26.5673 19.735 26.575L14.2975 31.235L13.155 32.2125L11.9525 31.3125L9.2425 29.2775C9.23408 29.2716 9.22404 29.2684 9.21375 29.2684C9.20346 29.2684 9.19342 29.2716 9.185 29.2775L6.465 31.2525ZM14.04 21.1525C14.04 21.9177 13.736 22.6515 13.195 23.1925C12.654 23.7335 11.9201 24.0375 11.155 24.0375C10.3899 24.0375 9.65604 23.7335 9.115 23.1925C8.57395 22.6515 8.27 21.9177 8.27 21.1525C8.29209 20.4024 8.6056 19.6904 9.14399 19.1676C9.68239 18.6448 10.4033 18.3524 11.1538 18.3524C11.9042 18.3524 12.6251 18.6448 13.1635 19.1676C13.7019 19.6904 14.0154 20.4024 14.0375 21.1525H14.04Z" fill="currentColor"/>
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <div class="aso-pt-3 aso-pl-3">
+                                    <p class="aso-text-[11px] aso-font-bold">Image</p>
+                                </div>
+
+                            </button>
                             
 
                         </div>
@@ -235,7 +285,7 @@
                             </button>
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg aso-right-[450px] aso-bottom-[250px]" v-if="isColorVisible && !isFixingVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isColorVisible">
+                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg aso-right-[540px] aso-bottom-[265px]" v-if="isColorVisible && !isFixingVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isColorVisible">
   
                             <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
                                 
@@ -254,7 +304,7 @@
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[250px]" v-if="isFixingVisible && !isColorVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isFixingVisible">
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[265px]" v-if="isFixingVisible && !isColorVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isFixingVisible">
   
                             <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
                                 <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
@@ -333,12 +383,12 @@
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle aso-right-[210px] -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="aso-absolute triangle aso-right-[330px] -aso-bottom-2 aso-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-h-20 aso-absolute aso-flex aso-justify-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[660px] aso-bottom-[250px]" v-if="isShapeVisible && !isFixingVisible && !isColorVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isShapeVisible">
+                        <div class="aso-h-20 aso-absolute aso-flex aso-justify-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[660px] aso-bottom-[265px]" v-if="isShapeVisible && !isFixingVisible && !isColorVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isShapeVisible">
               
                             <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
                                 <button class="aso-h-[80px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
@@ -394,12 +444,12 @@
                                 </button>
                             </div>
 
-                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="aso-absolute triangle aso-right-[120px] -aso-bottom-2 aso-shadow-lg"></div>
 
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[760px] aso-bottom-[250px]" v-if="isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isSizeVisible">
+                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-left-[760px] aso-bottom-[265px]" v-if="isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isSizeVisible">
   
                             <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
                                 
@@ -418,7 +468,7 @@
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[250px]" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[265px]" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
   
                             <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
                                 <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
@@ -502,8 +552,195 @@
 
                         </div>
 
-                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg  aso-bottom-[250px]" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg  aso-bottom-[265px]" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
   
+                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                    </svg>
+
+                                </button>
+                            </div>
+                            
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+
+                                <div class="aso-absolute aso-top-4">
+                                
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
+
+                                </div>
+                                
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Plastic signs</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+
+                                <div class="aso-absolute aso-top-4">
+
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
+
+                                </div>
+
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Wood signs</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+
+                                </button>
+                            </div>
+
+                            <div class="aso-absolute triangle aso-left-[60px] -aso-bottom-2 aso-shadow-lg"></div>
+
+
+                        </div>
+
+                        <div class="aso-absolute aso-flex aso-justify-end aso-item-end aso-bg-white group-color aso-p-3 aso-rounded aso-shadow-lg  aso-right-[760px] aso-bottom-[265px]" v-if="isTextVisible && !isImageVisible && !isBorderVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isTextVisible">
+  
+                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
+                                
+                            </div>
+
+                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
+                                
+                            </div>
+
+                            <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#F08267]">
+                                
+                            </div>
+
+                            <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
+
+
+                        </div>
+
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg aso-bottom-[250px]" v-if="isBorderVisible && !isTextVisible && !isImageVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isBorderVisible">
+
+                            <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                    </svg>
+
+                                </button>
+                            </div>
+                            
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-w-[360px] aso-p-2">
+
+                                <div class="aso-absolute aso-top-4">
+                                
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+
+                                </div>
+                                
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Engraving</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="aso-relative aso-flex aso-bg-white aso-h-24 aso-pt-2 aso-top-0 aso-left-2 aso-w-[360px]">
+
+                                <div class="aso-absolute aso-top-4 aso-left-2">
+
+                                    <img class="aso-w-[70px]" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+
+                                </div>
+
+                                <div class="aso-absolute aso-left-20 aso-pl-4 aso-w-[150px]">
+                                    
+                                    <div class="aso-pt-2 aso-absolute">
+                                        <p class="aso-text-sm aso-font-bold">Form PVC</p>
+                                    </div>
+
+                                    <div class="aso-w-[250px] aso-absolute aso-top-8">
+                                        <p class="aso-text-sm">Lorem ipsum dolor sit amet, consec
+                                            tetur adipiscing elit. Tincidunt port
+                                            see image
+                                        </p>
+                                    </div>
+
+                                    <div class="aso-absolute aso-w-[100px] aso-top-14 aso-left-1.5">
+                                        <a href="" class="aso-text-sm aso-text-[#EF5A35]">Voir plus</a>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="aso-absolute -aso-right-[48px] aso-top-0 next">
+                                <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
+                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                    </svg>
+
+                                </button>
+                            </div>
+
+                            <div class="aso-absolute triangle aso-left-[160px] -aso-bottom-2 aso-shadow-lg"></div>
+
+
+                        </div>
+
+                        <div class="aso-absolute aso-flex aso-justify-center aso-item-center group-color aso-rounded aso-shadow-lg  aso-bottom-[250px]" v-if="isImageVisible && !isBorderVisible && !isTextVisible && !isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isImageVisible">
+
                             <div class="aso-absolute -aso-left-[108px] aso-top-0 before">
                                 <button class="aso-h-[96px] aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9]">
                                     <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -597,11 +834,11 @@
 
                 <div class="aso-flex">
 
-                    <div class="aso-relative -aso-left-10">
+                    <div class="aso-relative">
 
-                        <button class="aso-absolute cercle aso-rounded-full aso-bg-white">
+                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white aso-w-fit">
 
-                            <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <svg class="aso-h-5 aso-w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
@@ -623,7 +860,7 @@
 
                     <div class="aso-relative -aso-left-10">
 
-                        <button class="aso-absolute cercle aso-rounded-full aso-bg-white">
+                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
 
                             <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <g id="mingcute:file-import-line" clip-path="url(#clip0_26_887)">
@@ -652,7 +889,7 @@
 
                     <div class="aso-relative -aso-left-10">
 
-                        <button class="aso-absolute cercle aso-rounded-full aso-bg-white">
+                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
 
                             <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="material-symbols-light:share-outline">
@@ -674,12 +911,12 @@
 
                     <div class="aso-relative -aso-left-10">
 
-                        <button class="aso-absolute cercle aso-rounded-full aso-bg-white">
+                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-white">
 
                             <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="basil:save-solid">
-                                <path id="Vector" d="M7.25012 7.6C7.25012 8.566 8.03412 9.35 9.00012 9.35H15.0001C15.4642 9.35 15.9094 9.16563 16.2376 8.83744C16.5657 8.50925 16.7501 8.06413 16.7501 7.6V4.276C16.7501 4.124 16.8741 4 17.0261 4C17.0983 3.99987 17.1696 4.01536 17.2352 4.04539C17.3008 4.07543 17.3591 4.1193 17.4061 4.174L20.3691 7.629C20.7795 8.10775 20.9938 8.72391 20.9691 9.354L20.6271 18.098C20.6018 18.7434 20.3277 19.3539 19.8622 19.8017C19.3967 20.2495 18.776 20.4997 18.1301 20.5H17.7511C17.6185 20.5 17.4913 20.4473 17.3976 20.3536C17.3038 20.2598 17.2511 20.1326 17.2511 20V15C17.2511 14.5359 17.0667 14.0908 16.7386 13.7626C16.4104 13.4344 15.9653 13.25 15.5011 13.25H8.50112C8.27122 13.2499 8.04355 13.295 7.83112 13.3829C7.61868 13.4708 7.42565 13.5997 7.26304 13.7622C7.10043 13.9247 6.97144 14.1177 6.88343 14.3301C6.79542 14.5425 6.75012 14.7701 6.75012 15V20C6.75012 20.1326 6.69744 20.2598 6.60367 20.3536C6.50991 20.4473 6.38273 20.5 6.25012 20.5H6.11312C5.53116 20.5001 4.96913 20.288 4.53231 19.9034C4.09549 19.5189 3.81384 18.9883 3.74012 18.411C3.24634 14.553 3.22518 10.6491 3.67712 6.786L3.73712 6.266C3.81017 5.64178 4.10993 5.06613 4.57948 4.64839C5.04902 4.23065 5.65564 3.99991 6.28412 4H6.75012C6.88273 4 7.00991 4.05268 7.10367 4.14645C7.19744 4.24021 7.25012 4.36739 7.25012 4.5V7.6Z" fill="black"/>
-                                <path id="Vector_2" d="M8.25 20C8.25 20.1326 8.30268 20.2598 8.39645 20.3536C8.49021 20.4473 8.61739 20.5 8.75 20.5H15.25C15.3826 20.5 15.5098 20.4473 15.6036 20.3536C15.6973 20.2598 15.75 20.1326 15.75 20V15C15.75 14.9337 15.7237 14.8701 15.6768 14.8232C15.6299 14.7763 15.5663 14.75 15.5 14.75H8.5C8.4337 14.75 8.37011 14.7763 8.32322 14.8232C8.27634 14.8701 8.25 14.9337 8.25 15V20ZM15.25 4.5C15.25 4.36739 15.1973 4.24021 15.1036 4.14645C15.0098 4.05268 14.8826 4 14.75 4H9.25C9.11739 4 8.99021 4.05268 8.89645 4.14645C8.80268 4.24021 8.75 4.36739 8.75 4.5V7.6C8.75 7.738 8.862 7.85 9 7.85H15C15.0663 7.85 15.1299 7.82366 15.1768 7.77678C15.2237 7.72989 15.25 7.6663 15.25 7.6V4.5Z" fill="black"/>
+                                <path id="Vector" d="M7.25012 7.6C7.25012 8.566 8.03412 9.35 9.00012 9.35H15.0001C15.4642 9.35 15.9094 9.16563 16.2376 8.83744C16.5657 8.50925 16.7501 8.06413 16.7501 7.6V4.276C16.7501 4.124 16.8741 4 17.0261 4C17.0983 3.99987 17.1696 4.01536 17.2352 4.04539C17.3008 4.07543 17.3591 4.1193 17.4061 4.174L20.3691 7.629C20.7795 8.10775 20.9938 8.72391 20.9691 9.354L20.6271 18.098C20.6018 18.7434 20.3277 19.3539 19.8622 19.8017C19.3967 20.2495 18.776 20.4997 18.1301 20.5H17.7511C17.6185 20.5 17.4913 20.4473 17.3976 20.3536C17.3038 20.2598 17.2511 20.1326 17.2511 20V15C17.2511 14.5359 17.0667 14.0908 16.7386 13.7626C16.4104 13.4344 15.9653 13.25 15.5011 13.25H8.50112C8.27122 13.2499 8.04355 13.295 7.83112 13.3829C7.61868 13.4708 7.42565 13.5997 7.26304 13.7622C7.10043 13.9247 6.97144 14.1177 6.88343 14.3301C6.79542 14.5425 6.75012 14.7701 6.75012 15V20C6.75012 20.1326 6.69744 20.2598 6.60367 20.3536C6.50991 20.4473 6.38273 20.5 6.25012 20.5H6.11312C5.53116 20.5001 4.96913 20.288 4.53231 19.9034C4.09549 19.5189 3.81384 18.9883 3.74012 18.411C3.24634 14.553 3.22518 10.6491 3.67712 6.786L3.73712 6.266C3.81017 5.64178 4.10993 5.06613 4.57948 4.64839C5.04902 4.23065 5.65564 3.99991 6.28412 4H6.75012C6.88273 4 7.00991 4.05268 7.10367 4.14645C7.19744 4.24021 7.25012 4.36739 7.25012 4.5V7.6Z" fill="currentColor"/>
+                                <path id="Vector_2" d="M8.25 20C8.25 20.1326 8.30268 20.2598 8.39645 20.3536C8.49021 20.4473 8.61739 20.5 8.75 20.5H15.25C15.3826 20.5 15.5098 20.4473 15.6036 20.3536C15.6973 20.2598 15.75 20.1326 15.75 20V15C15.75 14.9337 15.7237 14.8701 15.6768 14.8232C15.6299 14.7763 15.5663 14.75 15.5 14.75H8.5C8.4337 14.75 8.37011 14.7763 8.32322 14.8232C8.27634 14.8701 8.25 14.9337 8.25 15V20ZM15.25 4.5C15.25 4.36739 15.1973 4.24021 15.1036 4.14645C15.0098 4.05268 14.8826 4 14.75 4H9.25C9.11739 4 8.99021 4.05268 8.89645 4.14645C8.80268 4.24021 8.75 4.36739 8.75 4.5V7.6C8.75 7.738 8.862 7.85 9 7.85H15C15.0663 7.85 15.1299 7.82366 15.1768 7.77678C15.2237 7.72989 15.25 7.6663 15.25 7.6V4.5Z" fill="currentColor"/>
                                 </g>
                             </svg>
                         
@@ -697,7 +934,7 @@
 
                     <div class="aso-relative -aso-left-10">
 
-                        <button class="aso-absolute cercle aso-rounded-full aso-bg-[#FFBC3C]">
+                        <button class="aso-absolute aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-rounded-full aso-bg-[#FFBC3C]">
 
                             <svg class="aso-absolute aso-top-2.5 aso-right-[20px]" width="22" height="22" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="ion:help-outline">
@@ -732,6 +969,9 @@ const isShapeVisible = ref(false);
 const isSizeVisible = ref(false);
 const isMaterialVisible = ref(false);
 const isProductVisible = ref(false);
+const isTextVisible = ref(false);
+const isBorderVisible = ref(false);
+const isImageVisible = ref(false);
 
 const color = () => {
   isColorVisible.value = !isColorVisible.value;
@@ -749,6 +989,15 @@ const color = () => {
   }
   if (isProductVisible.value) {
     isProductVisible.value = false;
+  }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
   }
 };
 
@@ -769,6 +1018,15 @@ const fixing = () => {
   if (isProductVisible.value) {
     isProductVisible.value = false;
   }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
+  }
 };
 
 const shape = () => {
@@ -787,6 +1045,15 @@ const shape = () => {
   }
   if (isProductVisible.value) {
     isProductVisible.value = false;
+  }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
   }
 };
 
@@ -807,6 +1074,15 @@ const size = () => {
   if (isProductVisible.value) {
     isProductVisible.value = false;
   }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
+  }
 };
 
 const material = () => {
@@ -825,6 +1101,15 @@ const material = () => {
   }
   if (isProductVisible.value) {
     isProductVisible.value = false;
+  }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
   }
 };
 
@@ -845,6 +1130,95 @@ const product = () => {
   if (isMaterialVisible.value) {
     isMaterialVisible.value = false;
   }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
+  }
 };
 
+const text = () => {
+  isTextVisible.value = !isTextVisible.value;
+  if (isColorVisible.value) {
+    isColorVisible.value = false;
+  }
+  if (isFixingVisible.value) {
+    isFixingVisible.value = false;
+  }
+  if (isSizeVisible.value) {
+    isSizeVisible.value = false;
+  }
+  if (isShapeVisible.value) {
+    isShapeVisible.value = false;
+  }
+  if (isMaterialVisible.value) {
+    isMaterialVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
+  }
+  if (isProductVisible.value) {
+    isProductVisible.value = false;
+  }
+};
+
+const border = () => {
+  isBorderVisible.value = !isBorderVisible.value;
+  if (isColorVisible.value) {
+    isColorVisible.value = false;
+  }
+  if (isFixingVisible.value) {
+    isFixingVisible.value = false;
+  }
+  if (isSizeVisible.value) {
+    isSizeVisible.value = false;
+  }
+  if (isShapeVisible.value) {
+    isShapeVisible.value = false;
+  }
+  if (isMaterialVisible.value) {
+    isMaterialVisible.value = false;
+  }
+  if (isImageVisible.value) {
+    isImageVisible.value = false;
+  }
+  if (isProductVisible.value) {
+    isProductVisible.value = false;
+  }
+};
+
+const image = () => {
+  isImageVisible.value = !isImageVisible.value;
+  if (isColorVisible.value) {
+    isColorVisible.value = false;
+  }
+  if (isFixingVisible.value) {
+    isFixingVisible.value = false;
+  }
+  if (isSizeVisible.value) {
+    isSizeVisible.value = false;
+  }
+  if (isShapeVisible.value) {
+    isShapeVisible.value = false;
+  }
+  if (isMaterialVisible.value) {
+    isMaterialVisible.value = false;
+  }
+  if (isTextVisible.value) {
+    isTextVisible.value = false;
+  }
+  if (isBorderVisible.value) {
+    isBorderVisible.value = false;
+  }
+  if (isProductVisible.value) {
+    isProductVisible.value = false;
+  }
+};
 </script>
