@@ -7,14 +7,14 @@ use WP_Query;
 use WP_REST_Controller;
 
 
-class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
+class ASO_Api_Manage_sizes extends WP_REST_Controller {
 
     /**
      * [__construct description]
      */
     public function __construct() {
         $this->namespace = 'aso/v1';
-        $this->rest_base = 'Manage_sizes_configs';
+        $this->rest_base = 'manage-sizes';
     }
 
 
@@ -81,8 +81,8 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
         );
     }
           /**
-     * Create ncpc product configuration
-     * @param \WP_REST_Request $request Full details about the request.
+     * Create product size
+ group       * @param \WP_REST_Request $request Full details about the request.
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -96,14 +96,11 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
             ],
             'post_status' => 'publish'
         ];
-        $post_id = wp_insert_post($data);
-        if($post_id != 0 && !is_wp_error($post_id)){
-            if(isset($params["data"]) && !empty($params["data"])){
-                $data = [
-                    "data" =>$params["data"]
-                ];
-                update_post_meta($post_id,'aso-manages-sizes-meta',$data);
-                return rest_ensure_response( ["success"=>true,"message"=>__("Configuration created with success","ASO"),"post_id"=>$post_id] );
+        if(isset($params["data"]) && !empty($params["data"])){
+            $post_id = wp_insert_post($data);
+            if($post_id != 0 && !is_wp_error($post_id)){
+                update_post_meta($post_id,'aso-manages-sizes-meta',$params["data"]);
+                return rest_ensure_response( ["success"=>true,"message"=>__("sizes group  created with success","ASO"),"post_id"=>$post_id] );
             }else{
                 return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
             }            
@@ -112,7 +109,7 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
         }
     }
         /**
-     * Get config info for $post id
+     * Get sizes group info for $post id
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -126,10 +123,10 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
                 'id'           => $id,
                 'title'        => get_the_title($id),
                 'data' => $meta_value["data"]
-                );
-                return rest_ensure_response($post_data);
+            );
+            return rest_ensure_response($post_data);
         }else{
-            return rest_ensure_response(["message" => __("Not ASO Config Post",'ASO')]);
+            return rest_ensure_response(["message" => __("Not sizes group found",'ASO')]);
         }
 
     }else{
@@ -139,7 +136,7 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
         
 }
     /**
-     * Update of ncpc produit configuration
+     * Update of produit size group       
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -153,21 +150,17 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
         
         $updatePosts = wp_update_post($args);
         if(!is_wp_error($updatePosts)){
-            $data = [
-            
-                "data" =>$params["data"]
-            ];
-            update_post_meta($post_id,'aso-manages-sizes-meta',$data);
-            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","ASO") ) );
+            update_post_meta($post_id,'aso-manages-sizes-meta',$params["data"]);
+            return rest_ensure_response(array('success' => true, "message" => __("The sizes group has been updated with success","ASO") ) );
         }
         else{
-            return rest_ensure_response(array('success' => false, "message"=>__("Configuration update failed","") ) );
+            return rest_ensure_response(array('success' => false, "message"=>__("sizes group update failed","") ) );
         }
         
     }
 
     /**
-     * Remove ncpc configuration from ID in request
+     * Remove sizes group  from ID in request
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return $success message if is ok and fail otherwise. 
@@ -179,18 +172,18 @@ class ASO_Api_Configs_Manage_size extends WP_REST_Controller {
         if($id!=0){
             $deletePost = wp_delete_post( $id, true );
             if($deletePost != null && !$deletePost ) {
-                return rest_ensure_response(["success"=>true,"message"=>__("The configuration was well removed","ASO")]);
+                return rest_ensure_response(["success"=>true,"message"=>__("The sizes group  was well removed","ASO")]);
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);   
+                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the sizes group  failed","ASO")]);   
             }
         }
         else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the sizes group  failed","ASO")]);
         }
     }
 
     /**
-     * Get all ncpc produits configurations with or no per_page,page param in api url
+     * Get all sizes group   with or no per_page,page param in api url
      *
      * @param \WP_REST_Request $request Full details about the request.
      *

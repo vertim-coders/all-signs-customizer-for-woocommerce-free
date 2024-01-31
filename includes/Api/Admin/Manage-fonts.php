@@ -8,14 +8,14 @@ use WP_REST_Controller;
 
 
 
-class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
+class ASO_Api_Manage_fonts extends WP_REST_Controller {
 
     /**
      * [__construct description]
      */
     public function __construct() {
         $this->namespace = 'aso/v1';
-        $this->rest_base = 'manage_fonts_configs';
+        $this->rest_base = 'manage-fonts';
     }
     /**
      * Register the routes
@@ -41,14 +41,14 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/(?P<config_id>\d+)",
+            '/' . $this->rest_base."/(?P<fonts_group_id>\d+)",
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_manage_fonts_config_post' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'config_id' => array (
+                        'fonts_group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -59,7 +59,7 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
                     'callback'            => array( $this, 'update_manage_fonts_config_post' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'config_id' => array (
+                        'fonts_group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -70,7 +70,7 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
                     'callback'            => array( $this, 'delete_manage_fonts_config'),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'config_id' => array (
+                        'fonts_group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -80,7 +80,7 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
         );
     }
        /**
-     * Create ncpc product configuration
+     * Create fonts group
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -95,14 +95,12 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
             ],
             'post_status' => 'publish'
         ];
-        $post_id = wp_insert_post($data);
-        if($post_id != 0 && !is_wp_error($post_id)){
-            if(isset($params["data"]) && !empty($params["data"])){
-                $data = [
-                    "data" =>$params["data"]
-                ];
-                update_post_meta($post_id,'aso-manages-fonts-meta',$data);
-                return rest_ensure_response( ["success"=>true,"message"=>__("Configuration created with success","ASO"),"post_id"=>$post_id] );
+
+        if(isset($params["data"]) && !empty($params["data"])){
+            $post_id = wp_insert_post($data);
+            if($post_id != 0 && !is_wp_error($post_id)){
+                update_post_meta($post_id,'aso-manages-fonts-meta',$params["data"]);
+                return rest_ensure_response( ["success"=>true,"message"=>__("Fonts group created with success","ASO"),"post_id"=>$post_id] );
             }else{
                 return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
             }            
@@ -111,12 +109,12 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
         }
     }
         /**
-     * Get config info for $post id
+     * Get fonts group info for $post id
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
   public function get_manage_fonts_config_post($request){
-    $id=$request->get_param('config_id');
+    $id=$request->get_param('fonts_group_id');
     if($id!=0) {
         $meta_value = get_post_meta($id, 'aso-manages-fonts-meta', true);
         if(is_array($meta_value) && !empty($meta_value)){
@@ -125,26 +123,26 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
                 'id'           => $id,
                 'title'        => get_the_title($id),
                 'data' => $meta_value["data"]
-                );
-                return rest_ensure_response($post_data);
+            );
+            return rest_ensure_response($post_data);
         }else{
-            return rest_ensure_response(["message" => __("Not ASO Config Post",'ASO')]);
+            return rest_ensure_response(["message" => __("Not Fonts groups found",'ASO')]);
         }
 
     }else{
-       return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+       return rest_ensure_response(["message" => __("Fonts Group ID invalid","ASO")]);
     }
         
         
 }
     /**
-     * Update of ncpc produit configuration
+     * Update of fonts group
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
     public function update_manage_fonts_config_post($request){
         $params=json_decode($request->get_body(),true);
-        $post_id = $request->get_param( 'config_id' );
+        $post_id = $request->get_param( 'fonts_group_id' );
         $args=array(
             'ID'         => $post_id,
             'post_title' => $params["title"],
@@ -152,44 +150,40 @@ class ASO_Api_Configs_Manage_fonts extends WP_REST_Controller {
         
         $updatePosts = wp_update_post($args);
         if(!is_wp_error($updatePosts)){
-            $data = [
-            
-                "data" =>$params["data"]
-            ];
-            update_post_meta($post_id,'aso-manages-fonts-meta',$data);
-            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","ASO") ) );
+            update_post_meta($post_id,'aso-manages-fonts-meta',$params["data"]);
+            return rest_ensure_response(array('success' => true, "message" => __("The fonts group has been updated with success","ASO") ) );
         }
         else{
-            return rest_ensure_response(array('success' => false, "message"=>__("Configuration update failed","") ) );
+            return rest_ensure_response(array('success' => false, "message"=>__("Fonts group update failed","") ) );
         }
         
     }
 
     /**
-     * Remove ncpc configuration from ID in request
+     * Remove ncpc fonts group from ID in request
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return $success message if is ok and fail otherwise. 
     */
     public function delete_manage_fonts_config($request){
 
-        $id=$request->get_param( 'config_id' );
+        $id=$request->get_param( 'fonts_group_id' );
 
         if($id!=0){
             $deletePost = wp_delete_post( $id, true );
             if($deletePost != null && !$deletePost ) {
-                return rest_ensure_response(["success"=>true,"message"=>__("The configuration was well removed","ASO")]);
+                return rest_ensure_response(["success"=>true,"message"=>__("The fonts group was well removed","ASO")]);
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);   
+                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the fonts group failed","ASO")]);   
             }
         }
         else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the fonts group failed","ASO")]);
         }
     }
 
     /**
-     * Get all ncpc produits configurations with or no per_page,page param in api url
+     * Get all Fonts groups with or no per_page,page param in api url
      *
      * @param \WP_REST_Request $request Full details about the request.
      *

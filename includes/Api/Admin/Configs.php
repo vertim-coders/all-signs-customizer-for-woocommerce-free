@@ -102,9 +102,9 @@ class ASO_Api_Configs extends WP_REST_Controller {
             ],
             'post_status' => 'publish'
         ];
-        $post_id = wp_insert_post($data);
-        if($post_id != 0 && !is_wp_error($post_id)){
-            if(isset($params["data"]) && !empty($params["data"])){
+        if(isset($params["data"]) && !empty($params["data"])){
+            $post_id = wp_insert_post($data);
+            if($post_id != 0 && !is_wp_error($post_id)){
                 $data = [
                     "icon"=>$params["icon"],
                     "popImg"=>$params["popImg"],
