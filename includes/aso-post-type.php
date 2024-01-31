@@ -323,8 +323,8 @@ class ASO_Post_Type
 	*/
 	public function register_aso_manage_size_meta(){
 		register_meta(
-			'aso-manages-size',
-			'aso-manages-size-meta',
+			'aso-manages-sizes',
+			'aso-manages-sizes-meta',
 			array(
 				'show_in_rest' => array(
 					'schema' => array(

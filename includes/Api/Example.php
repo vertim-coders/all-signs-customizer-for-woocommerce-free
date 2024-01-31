@@ -12,7 +12,7 @@ class Example extends WP_REST_Controller {
      * [__construct description]
      */
     public function __construct() {
-        $this->namespace = 'ncpc/v1';
+        $this->namespace = 'aso/v1';
         $this->rest_base = 'base';
     }
 
