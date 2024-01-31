@@ -9,7 +9,7 @@ import {ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js';
 
 tailwind.config ={
-    prefix: 'asow-',
+    prefix: 'aso-',
     corePlugins: {
         preflight: false,
     },
