@@ -1,8 +1,8 @@
 <template>
-    <div class="aso-w-full aso-h-full aso-border-4 aso-border-black">
-        <div class="aso-flex aso-justify-between aso-items-center aso-h-[15%] aso-border">
+    <div class="aso-w-full aso-h-full">
+        <div class="aso-flex aso-justify-between aso-items-center aso-h-[18%] lg:aso-h-[15%] aso-bg-[#016565] lg:aso-bg-white aso-py-2 lg:aso-p-0 aso-border">
 
-            <div class="aso-flex aso-w-1/3 aso-justify-center aso-text-black aso-text-2xl aso-font-bold aso-text-center">
+            <div class="aso-flex aso-w-1/3 aso-justify-center aso-text-white lg:aso-text-black aso-text-base lg:aso-text-2xl aso-font-bold aso-text-center">
                 Plastic Signs
             </div>
 
@@ -14,7 +14,7 @@
                         </g>
                     </svg>
                     
-                    <div class="aso-text-white aso-text-center">
+                    <div class="aso-hidden lg:aso-flex aso-text-white aso-text-center">
                         Restart all 
                     </div>
                 </button>
@@ -22,40 +22,40 @@
                 <div class="aso-flex aso-justify-center aso-items-center">
                     <div class="aso-flex aso-justify-center aso-items-center">
                         <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                             </svg>
                         </button>
-                        <div class="aso-text-sm aso-ml-2">
+                        <div class="aso-hidden lg:aso-flex aso-text-sm aso-ml-2">
                             Undo
                         </div>
                     </div>
 
                     <div class="aso-flex aso-justify-between aso-items-center aso-ml-4">
                         <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full hover:aso-bg-[#016464] aso-bg-white aso-text-black">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                             </svg>
                         </button>
-                        <div class="aso-text-sm aso-ml-2">
+                        <div class="aso-hidden lg:aso-flex aso-text-sm aso-ml-2">
                             Redo
                         </div>
                     </div>
                 </div>
             </div>
    
-            <div class="aso-flex aso-w-1/3 aso-justify-between aso-items-center">
-                <div class="aso-flex aso-text-black aso-text-3xl aso-font-bold aso-text-center">
+            <div class="aso-flex aso-w-1/3 aso-justify-center lg:aso-justify-between aso-items-center">
+                <div class="aso-flex aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
                     $ 495,09
                 </div>
 
-                <button class="aso-bg-[#FFBC3C] aso-rounded-tr-md hover:aso-bg-[#016464] aso-text-center aso-text-white aso-text-lg aso-font-bold">
+                <button class="aso-hidden lg:aso-flex aso-bg-[#FFBC3C] aso-rounded-tr-md hover:aso-bg-[#016464] aso-text-center aso-text-white aso-text-lg aso-font-bold">
                     Terminer
                 </button>
             </div>
         </div>
         
-        <div class="aso-flex aso-h-[87.5%] aso-border-2">
+        <div class="aso-w-full aso-flex aso-h-[82%] lg:aso-h-[85%] aso-border-2">
             
             <div class="aso-bg-[#E7ECEF] aso-flex aso-flex-col aso-items-center aso-justify-between aso-w-[98%] aso-pb-4">
 
@@ -93,8 +93,6 @@
                 <div class="aso-w-full aso-flex aso-justify-center">
                     <div class="aso-flex aso-w-[60%] aso-overflow-x-scroll">
 
-                        
-  
                         <div class="aso-flex">
 
                             <div class="aso-absolute aso-left-[250px] aso-pt-5">
@@ -102,7 +100,6 @@
                                     <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                                     </svg>
-
                                 </button>
                             </div>
 
@@ -250,8 +247,7 @@
                                 </button>
                             </div>
                             <div class="aso-flex aso-bg-white aso-w-full aso-p-2 aso-pl-12 aso-pt-3">
-                                <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">
-                                    
+                                <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border-t-2 aso-border-r-2 aso-border-b-2 aso-border-l-2 aso-border-solid aso-border-black aso-bg-white aso-mr-4">  
                                 </div>
 
                                 <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-bg-[#FF6600] aso-mr-4">
@@ -770,10 +766,9 @@
 
             </div>
 
-            <div class="aso-w-[12.5%] aso-flex aso-flex-col aso-pt-12 aso-items-center">
+            <div class="aso-h-full aso-w-[12%] aso-flex aso-flex-col aso-py-12 aso-items-center aso-space-y-4">
               
-
-                <div class="">
+                <div class="aso-flex aso-flex-col aso-items-center aso-justify-center aso-space-y-2">
                     <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-3 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -781,11 +776,11 @@
                         </svg>
 
                     </button>
-                    <div class="aso-text-sm aso-mt-1">
+                    <div class="aso-text-sm">
                         Preview
                     </div>
                 </div>
-                <div class="aso-pt-8">
+                <div class="aso-flex aso-flex-col aso-items-center aso-justify-center aso-space-y-2">
                     <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-3 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464]">
                         <svg class="aso-w-5 aso-h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="mingcute:file-import-line" clip-path="url(#clip0_26_887)">
@@ -800,11 +795,11 @@
                             </defs>
                         </svg>
                     </button>
-                    <div class="aso-text-sm aso-mt-1">
+                    <div class="aso-text-sm">
                         Import
                     </div>
                 </div>
-                <div class="aso-pt-8">
+                <div class="aso-flex aso-flex-col aso-items-center aso-justify-center aso-space-y-2">
                     <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-3 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464]">
                         <svg class="aso-w-5 aso-h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="material-symbols-light:share-outline">
@@ -812,11 +807,11 @@
                             </g>
                         </svg>
                     </button>
-                    <div class="aso-text-sm aso-ml-1 aso-mt-1">
+                    <div class="aso-text-sm">
                         Share
                     </div>
                 </div>
-                <div class="aso-pt-8">
+                <div class="aso-flex aso-flex-col aso-items-center aso-justify-center aso-space-y-2">
                     <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-3 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464]">
                         <svg class="aso-w-5 aso-h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="basil:save-solid">
@@ -825,11 +820,11 @@
                             </g>
                         </svg>
                     </button>
-                    <div class="aso-text-sm aso-ml-1.5 aso-mt-1">
+                    <div class="aso-text-sm">
                         Save
                     </div>
                 </div>
-                <div class="aso-pt-8 aso-pb-32">
+                <div class="aso-flex aso-flex-col aso-items-center aso-justify-center aso-space-y-2">
                     <button class="aso-w-fit aso-h-fit aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-3 aso-rounded-full aso-bg-[#FFBC3C] aso-text-black hover:aso-bg-[#016464]">
                         <svg class="aso-w-5 aso-h-5" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="ion:help-outline">
@@ -838,7 +833,7 @@
                             </g>
                         </svg>
                     </button>
-                    <div class="aso-text-sm aso-ml-2 aso-mt-1">
+                    <div class="aso-text-sm">
                         Help
                     </div>
                 </div>
