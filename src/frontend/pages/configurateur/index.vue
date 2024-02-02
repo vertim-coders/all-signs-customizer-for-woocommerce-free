@@ -91,10 +91,12 @@
                 </div>
 
                 <div class="aso-relative aso-w-full aso-flex aso-flex-col">
-                    <div class="aso-absolute">
-                        <button class="aso-h-12 aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9] hover:aso-bg-[#016464]">
-                            <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    <div class="aso-absolute aso-left-[12%] aso-translate-y-4">
+                        <button class="aso-h-fit aso-w-fit aso-p-2 aso-rounded-none aso-bg-[#F9F9F9] hover:aso-bg-[#016464]">
+                            <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="ooui:next-ltr">
+                                <path id="Vector" d="M27.9509 53.2L30.9609 49L15.0509 28L30.9609 7.00005L27.9509 2.80005L8.60093 28L27.9509 53.2Z" fill="#DFDFDF"/>
+                                </g>
                             </svg>
                         </button>
                     </div>
@@ -231,12 +233,14 @@
                     </div>
                     
                     <div>
-                        <div class="aso-absolute aso-w-[75%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] -aso-translate-x-[3%] aso-space-x-2" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
+                        <div class="aso-absolute aso-w-[75%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] aso-translate-x-[25%] aso-space-x-2" v-if="isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isProductVisible">
     
-                            <div class="aso-left-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            <div class="aso-left-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M27.9509 53.2L30.9609 49L15.0509 28L30.9609 7.00005L27.9509 2.80005L8.60093 28L27.9509 53.2Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -295,10 +299,12 @@
     
                             
     
-                            <div class="aso-right-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            <div class="aso-right-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M15.0491 2.79999L12.0391 6.99998L27.9491 28L12.0391 49L15.0491 53.2L34.3991 28L15.0491 2.79999Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -308,12 +314,14 @@
     
     
                         </div>
-                        <div class="aso-absolute aso-w-[75%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] aso-translate-x-[0%] aso-space-x-2" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
+                        <div class="aso-absolute aso-w-[75%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] aso-translate-x-[25%] aso-space-x-2" v-if="isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isMaterialVisible">
     
-                            <div class="aso-left-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            <div class="aso-left-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M27.9509 53.2L30.9609 49L15.0509 28L30.9609 7.00005L27.9509 2.80005L8.60093 28L27.9509 53.2Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -371,10 +379,12 @@
                                 </div>
                             </div>
     
-                            <div class="aso-right-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            <div class="aso-right-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M15.0491 2.79999L12.0391 6.99998L27.9491 28L12.0391 49L15.0491 53.2L34.3991 28L15.0491 2.79999Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -384,7 +394,7 @@
     
     
                         </div>
-                        <div class="aso-absolute aso-shadow-lg -aso-translate-y-[230%] -aso-translate-x-[2%]" v-if="isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isSizeVisible">
+                        <div class="aso-absolute aso-shadow-lg -aso-translate-y-[230%] aso-translate-x-[25%]" v-if="isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isSizeVisible">
                             
                             <div class="aso-flex aso-justify-between aso-bg-white aso-p-4 aso-space-x-4 aso-items-center aso-rounded">
                                 <div class="aso-flex aso-w-1/3 aso-justify-center aso-font-bold aso-text-center aso-text-sm">
@@ -431,11 +441,13 @@
                             <div class="aso-absolute triangle aso-left-[280px] -aso-bottom-2 aso-shadow-lg"></div>
     
                         </div>
-                        <div class="aso-absolute aso-w-[65%] aso-flex aso-justify-center aso-item-center aso-shadow-lg -aso-translate-y-[225%] aso-translate-x-[0%]" v-if="isShapeVisible && !isFixingVisible && !isColorVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isShapeVisible">
-                            <div class="aso-left-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        <div class="aso-absolute aso-w-[65%] aso-flex aso-justify-center aso-item-center aso-shadow-lg -aso-translate-y-[225%] aso-translate-x-[30%]" v-if="isShapeVisible && !isFixingVisible && !isColorVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isShapeVisible">
+                            <div class="aso-left-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M27.9509 53.2L30.9609 49L15.0509 28L30.9609 7.00005L27.9509 2.80005L8.60093 28L27.9509 53.2Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -499,10 +511,12 @@
                                 </div>
                             </div>
     
-                            <div class="aso-right-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            <div class="aso-right-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M15.0491 2.79999L12.0391 6.99998L27.9491 28L12.0391 49L15.0491 53.2L34.3991 28L15.0491 2.79999Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -512,11 +526,13 @@
     
     
                         </div>
-                        <div class="aso-absolute aso-w-[75%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] -aso-translate-x-[5%] aso-space-x-2" v-if="isFixingVisible && !isColorVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isFixingVisible">
-                            <div class="aso-left-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        <div class="aso-absolute aso-w-[75%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] aso-translate-x-[22%] aso-space-x-2" v-if="isFixingVisible && !isColorVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isFixingVisible">
+                            <div class="aso-left-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M27.9509 53.2L30.9609 49L15.0509 28L30.9609 7.00005L27.9509 2.80005L8.60093 28L27.9509 53.2Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -575,10 +591,12 @@
     
                             
     
-                            <div class="aso-right-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            <div class="aso-right-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M15.0491 2.79999L12.0391 6.99998L27.9491 28L12.0391 49L15.0491 53.2L34.3991 28L15.0491 2.79999Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -588,7 +606,7 @@
     
     
                         </div>
-                        <div class="aso-absolute aso-w-[60%] aso-flex aso-rounded aso-shadow-lg -aso-translate-y-[302%]" v-if="isColorVisible && !isFixingVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isColorVisible">
+                        <div class="aso-absolute aso-w-[60%] aso-flex aso-rounded aso-shadow-lg -aso-translate-y-[302%] aso-translate-x-[35%]" v-if="isColorVisible && !isFixingVisible && !isShapeVisible && !isSizeVisible && !isMaterialVisible && !isProductVisible" v-show="isColorVisible">
                             
                             <div class="aso-flex aso-bg-white aso-w-full aso-space-x-2 aso-p-4">
                                 <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border aso-border-solid aso-border-black aso-bg-white">  
@@ -627,10 +645,10 @@
                                 
                             </div>
     
-                            <div class="aso-absolute triangle aso-left-72 -aso-bottom-2 aso-shadow-lg"></div>
+                            <div class="aso-absolute triangle aso-right-20 -aso-bottom-2 aso-shadow-lg"></div>
     
                         </div>
-                        <div class="aso-absolute aso-w-[60%] aso-flex aso-rounded aso-shadow-lg -aso-translate-y-[302%] aso-translate-x-[10%]" v-if="isTextVisible && !isImageVisible && !isBorderVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isTextVisible">
+                        <div class="aso-absolute aso-w-[60%] aso-flex aso-rounded aso-shadow-lg -aso-translate-y-[302%] aso-translate-x-[35%]" v-if="isTextVisible && !isImageVisible && !isBorderVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isMaterialVisible && !isProductVisible" v-show="isTextVisible">
                             <div class="aso-flex aso-bg-white aso-w-full aso-space-x-2 aso-p-4">
                                 <div class="aso-w-5 aso-h-5 aso-rounded-sm aso-border aso-border-solid aso-border-black aso-bg-white">  
                                 </div>
@@ -671,12 +689,14 @@
                             <div class="aso-absolute triangle aso-left-72 -aso-bottom-2 aso-shadow-lg"></div>
     
                         </div>
-                        <div class="aso-absolute aso-w-[30%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] aso-translate-x-[100%]" v-if="isBorderVisible && !isTextVisible && !isImageVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isBorderVisible">
+                        <div class="aso-absolute aso-w-[30%] aso-flex aso-justify-center aso-item-center aso-rounded aso-shadow-lg -aso-translate-y-[205%] aso-translate-x-[170%]" v-if="isBorderVisible && !isTextVisible && !isImageVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible && !isProductVisible" v-show="isBorderVisible">
     
-                            <div class="aso-left-0 aso-top-0 aso-w-14">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            <div class="aso-left-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M27.9509 53.2L30.9609 49L15.0509 28L30.9609 7.00005L27.9509 2.80005L8.60093 28L27.9509 53.2Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -712,10 +732,12 @@
                                 </div>
                             </div>
     
-                            <div class="aso-right-0 aso-top-0 aso-w-12">
-                                <button class="aso-h-full aso-w-1/4 aso-rounded-none aso-bg-[#F9F9F9]">
-                                    <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            <div class="aso-right-0 aso-top-0">
+                                <button class="aso-h-full aso-w-4/4 aso-rounded-none aso-bg-[#F9F9F9] aso-p-2">
+                                    <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="ooui:next-ltr">
+                                        <path id="Vector" d="M15.0491 2.79999L12.0391 6.99998L27.9491 28L12.0391 49L15.0491 53.2L34.3991 28L15.0491 2.79999Z" fill="#DFDFDF"/>
+                                        </g>
                                     </svg>
     
                                 </button>
@@ -724,7 +746,7 @@
                             <div class="aso-absolute triangle -aso-bottom-2 aso-shadow-lg"></div>
     
                         </div>
-                        <div class="aso-absolute aso-w-[40%] aso-bg-white aso-flex aso-rounded aso-shadow-lg aso-top[0%] -aso-translate-y-[250%] aso-translate-x-[80%]" v-if="isImageVisible && !isBorderVisible && !isTextVisible && !isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isImageVisible">
+                        <div class="aso-absolute aso-w-[40%] aso-bg-white aso-flex aso-rounded aso-shadow-lg aso-top[0%] -aso-translate-y-[250%] aso-translate-x-[130%]" v-if="isImageVisible && !isBorderVisible && !isTextVisible && !isProductVisible && !isMaterialVisible && !isSizeVisible && !isShapeVisible && !isFixingVisible && !isColorVisible" v-show="isImageVisible">
                             
                             <div class="aso-space-x-4 aso-p-4 aso-flex">
                                 <div class="">
@@ -763,10 +785,12 @@
     
                         </div>
                     </div>
-                    <div class="aso-absolute -aso-right-[10%]">
-                        <button class="aso-h-12 aso-w-10 aso-p-2 aso-rounded-none aso-bg-[#F9F9F9] hover:aso-bg-[#016464]">
-                            <svg class="aso-w-6 aso-h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    <div class="aso-absolute aso-right-[10%] aso-translate-y-4">
+                        <button class="aso-h-fit aso-w-fit aso-p-2 aso-rounded-none aso-bg-[#F9F9F9] hover:aso-bg-[#016464]">
+                            <svg width="36" height="36" viewBox="0 0 43 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="ooui:next-ltr">
+                                <path id="Vector" d="M15.0491 2.79999L12.0391 6.99998L27.9491 28L12.0391 49L15.0491 53.2L34.3991 28L15.0491 2.79999Z" fill="#DFDFDF"/>
+                                </g>
                             </svg>
 
                         </button>
