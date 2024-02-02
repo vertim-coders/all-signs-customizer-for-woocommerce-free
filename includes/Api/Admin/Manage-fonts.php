@@ -48,7 +48,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                     'callback'            => array( $this, 'get_manage_fonts_config_post' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'fonts_group_id' => array (
+                        'font_group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -59,7 +59,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                     'callback'            => array( $this, 'update_manage_fonts_config_post' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'fonts_group_id' => array (
+                        'font_group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -70,7 +70,71 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                     'callback'            => array( $this, 'delete_manage_fonts_config'),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'fonts_group_id' => array (
+                        'font_group_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base."/(?P<fonts_group_id>\d+)/items",
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_manage_fonts_item' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array (
+                        'font_group_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::CREATABLE,
+                    'callback'            => array( $this, 'create_manage_fonts_item' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array (
+                        'font_group_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base."/(?P<fonts_group_id>\d+)/items/(?P<item_id>\d+)",
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'update_manage_fonts_item' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array (
+                        'font_group_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'item_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::DELETABLE,
+                    'callback'            => array( $this, 'delete_manage_fonts_item'),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array (
+                        'font_group_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'item_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -95,7 +159,6 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
             ],
             'post_status' => 'publish'
         ];
-
         if(isset($params["data"]) && !empty($params["data"])){
             $post_id = wp_insert_post($data);
             if($post_id != 0 && !is_wp_error($post_id)){
@@ -122,7 +185,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
             $post_data = array(
                 'id'           => $id,
                 'title'        => get_the_title($id),
-                'data' => $meta_value["data"]
+                'data'         => $meta_value
             );
             return rest_ensure_response($post_data);
         }else{
@@ -150,7 +213,6 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         
         $updatePosts = wp_update_post($args);
         if(!is_wp_error($updatePosts)){
-            update_post_meta($post_id,'aso-manages-fonts-meta',$params["data"]);
             return rest_ensure_response(array('success' => true, "message" => __("The fonts group has been updated with success","ASO") ) );
         }
         else{
@@ -160,7 +222,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
     }
 
     /**
-     * Remove ncpc fonts group from ID in request
+     * Remove aso fonts group from ID in request
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return $success message if is ok and fail otherwise. 
@@ -269,6 +331,115 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         // If the user is logged in and has the rights to the posts, access to the route is authorized.
         return true;
     }
+    /**
+     * Create an item in font group
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     *
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    
+     public function create_manage_fonts_item($request){
+        $font_id = $request->get_param('font_id');
+        if($font_id != 0) {
+            $new_item = json_decode($request->get_body(),true);
+            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
+            if(is_array($meta_value) && !empty($meta_value)){
+                array_push($meta_value,$new_item);
+            }else{
+                $meta_value = [];
+                array_push($meta_value,$new_item);
+            }
+            $update = update_post_meta($font_id,'aso-manages-fonts-meta',$meta_value);
+            if($update === true){
+                return rest_ensure_response(["success"=>true, "message"=>__("Font item successfully added","ASO")]);
+            }else{
+                return rest_ensure_response(["success"=>false, "message"=>__("Font item has not been added","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["success"=>false, "message"=>__("Font item has not been added","ASO")]);
+        }
+    }
+    /**
+     * get all items in sizes group
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     *
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    
+    public function get_manage_fonts_item($request){
+        $font_id = $request->get_param('font_id');
+        if($font_id != 0) {
+            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
+            if(is_array($meta_value) && !empty($meta_value)){
+                return rest_ensure_response($meta_value);
+            }else{
+                return rest_ensure_response([]);
+            }
+        }else{
+            return rest_ensure_response([]);
+        }
+    }
+
+    /**
+     * update all items in fonts group
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     *
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    
+    public function update_manage_fonts_item($request){
+        $font_id = $request->get_param('font_id');
+        $item_id = $request->get_param('item_id');
+        if($font_id != 0) {
+            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
+            if(is_array($meta_value) && !empty($meta_value)){
+                if($meta_value[$item_id]){
+                    $meta_value[$item_id] = json_encode($request->get_body(),true);
+                    update_post_meta($font_id,'aso-manages-fonts-meta',$meta_value);
+                    return rest_ensure_response(["success"=>true,"message"=>__("The update was successfully completed","ASO")]);
+                }else{
+                    return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
+                }
+            }else{
+                return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
+        }
+    }
+
+    /**
+     * Delete an items in fonts group
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     *
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    
+     public function delete_manage_fonts_item($request){
+        $font_id = $request->get_param('size_id');
+        $item_id = $request->get_param('item_id');
+        if($font_id != 0) {
+            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
+            if(is_array($meta_value) && !empty($meta_value)){
+                if($meta_value[$item_id]){
+                    array_splice($meta_value,$item_id,1);
+                    update_post_meta($font_id,'aso-manages-fonts-meta',$meta_value);
+                    return rest_ensure_response(["success"=>true,"message"=>__("The delete was successfully completed","ASO")]);
+                }else{
+                    return rest_ensure_response(["success"=>false,"message"=>__("The item delete failed","ASO")]);
+                }
+            }else{
+                return rest_ensure_response(["success"=>false,"message"=>__("The item update failed","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["success"=>false,"message"=>__("The item update failed","ASO")]);
+        }
+    }
+
 
     /**
      * Retrieves the query params for the items collection.

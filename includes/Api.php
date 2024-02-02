@@ -6,6 +6,7 @@ use ASO\Api\Admin\ASO_Api_Colors_palettes;
 use ASO\Api\Admin\ASO_Api_Manage_cliparts;
 use ASO\Api\Admin\ASO_Api_Manage_fonts;
 use ASO\Api\Admin\ASO_Api_Manage_sizes;
+use ASO\Api\Admin\ASO_Api_Materials;
 use WP_REST_Controller;
 
 /**
@@ -31,20 +32,23 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Example'  ) ) {
             require_once __DIR__ . '/Api/Example.php';
         }
-        if ( !class_exists( __NAMESPACE__ . 'Api\Admin\ASO_Api_Configs'  ) ) {
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Configs'  ) ) {
             require_once __DIR__ . '/Api/Admin/Configs.php';
         }
-        if ( !class_exists( __NAMESPACE__ . 'Api\Admin\ASO_Api_Colors_palettes'  ) ) {
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Colors_palettes'  ) ) {
             require_once __DIR__ . '/Api/Admin/Manage-Colors-palettes.php';
         }
-        if ( !class_exists( __NAMESPACE__ . 'Api\Admin\ASO_Api_Manage_cliparts'  ) ) {
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Manage_cliparts'  ) ) {
             require_once __DIR__ . '/Api/Admin/Manage-cliparts.php';
         }
-        if ( !class_exists( __NAMESPACE__ . 'Api\Admin\ASO_Api_Manage_fonts'  ) ) {
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Manage_fonts'  ) ) {
             require_once __DIR__ . '/Api/Admin/Manage-fonts.php';
         }
-        if ( !class_exists( __NAMESPACE__ . 'Api\Admin\ASO_Api_Manage_sizes'  ) ) {
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Manage_sizes'  ) ) {
             require_once __DIR__ . '/Api/Admin/Manage-size.php';
+        }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Materials'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Materials.php';
         }
     }
 
@@ -60,6 +64,7 @@ class Api extends WP_REST_Controller {
         (new ASO_Api_Manage_fonts())->register_routes();
         (new ASO_Api_Colors_palettes())->register_routes();
         (new ASO_Api_Manage_cliparts())->register_routes();
+        (new ASO_Api_Materials())->register_routes();
     }
 
 }

@@ -169,7 +169,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
             $data = [
                 "icon"=>$params["icon"],
                 "popImg"=>$params["popImg"],
-                "data" =>$params["data"]
+                "data" =>get_post_meta($post_id,true)
             ];
             update_post_meta($post_id,'aso-configs-meta',$data);
             return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","ASO") ) );
@@ -192,7 +192,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
 
         if($id!=0){
             $deletePost = wp_delete_post( $id, true );
-            if($deletePost != null && !$deletePost ) {
+            if($deletePost != null && $deletePost != false ) {
                 return rest_ensure_response(["success"=>true,"message"=>__("The configuration was well removed","ASO")]);
             }else{
                 return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);   
@@ -204,7 +204,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
     }
 
     /**
-     * Get all ncpc produits configurations with or no per_page,page param in api url
+     * Get all aso produits configurations with or no per_page,page param in api url
      *
      * @param \WP_REST_Request $request Full details about the request.
      *
@@ -267,6 +267,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
                 $post_data = array(
                     'id'          => $id,
                     'title'       => get_the_title(),
+                    "description" => get_post_field('post_content', $id),
                     "data"        => get_post_meta($id,'aso-configs-meta',true),
                 );
                 array_push($posts_data["data"],$post_data);
