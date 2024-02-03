@@ -151,6 +151,7 @@ class ASO_Materials_With_Sub_Component extends WP_REST_Controller {
             )
         );
         
+        
     }
 
     /**
