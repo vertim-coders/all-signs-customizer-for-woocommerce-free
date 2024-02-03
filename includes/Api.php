@@ -7,6 +7,7 @@ use ASO\Api\Admin\ASO_Api_Manage_cliparts;
 use ASO\Api\Admin\ASO_Api_Manage_fonts;
 use ASO\Api\Admin\ASO_Api_Manage_sizes;
 use ASO\Api\Admin\ASO_Api_Materials;
+use ASO\Api\Admin\Materials\ASO_Materials_No_Sub_Component;
 use WP_REST_Controller;
 
 /**
@@ -50,6 +51,9 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Materials'  ) ) {
             require_once __DIR__ . '/Api/Admin/Materials.php';
         }
+        if ( !class_exists( __NAMESPACE__ . '\ASO\Api\Admin\Materials\ASO_Materials_No_Sub_Component'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Materials/No-Component.php';
+        }
     }
 
     /**
@@ -65,6 +69,7 @@ class Api extends WP_REST_Controller {
         (new ASO_Api_Colors_palettes())->register_routes();
         (new ASO_Api_Manage_cliparts())->register_routes();
         (new ASO_Api_Materials())->register_routes();
+        (new ASO_Materials_No_Sub_Component())->register_routes();
     }
 
 }

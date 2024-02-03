@@ -1,7 +1,10 @@
 <?php
 namespace ASO\Api;
 
+use WP_Error;
 use WP_REST_Controller;
+use WP_REST_Request;
+use WP_REST_Response;
 
 /**
  * REST_API Handler
