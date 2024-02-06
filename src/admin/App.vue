@@ -1,5 +1,6 @@
 <template>
   <div id="aso-backend-app">
+    <Sidebar/>
     <router-view />
   </div>
 </template>
@@ -7,6 +8,8 @@
 <script setup>
 import {ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js'
+
+import Sidebar from '../admin/components/sidebar.vue'
 
 tailwind.config ={
     prefix: 'aso-',
