@@ -61,7 +61,7 @@
             <table class="aso-text-left aso-border aso-border-collapse aso-border-0">
                 <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
                     <tr>
-                        <th scope="col" class="aso-p-4 aso-w-12">
+                        <th scope="col" class="aso-p-4 aso-w-[5%]">
                             
                         </th>
                         <th scope="col" class="aso-px-6 aso-py-3">
@@ -671,8 +671,8 @@
                 </div>
             </div>
 
-            <div v-show="isnewcomponent">
-                <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-py-4 aso-flex">
+            <div class="aso-space-y-1 aso-w-full" v-show="isnewcomponent">
+                <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                     <div class="aso-font-bold">
                         Name config
                     </div>
@@ -684,9 +684,12 @@
                     </div>
                 </div>
                 <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4">
+                        Add component
+                </div>
+                <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4">
                     <div class="aso-flex">
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[14px]">
-                            <label for="" class="aso-font-normal">Name configuration</label><br>
+                            <label for="" class="aso-font-normal">component name</label><br>
                             <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
                         </div>
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[14px]">
@@ -711,6 +714,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="aso-w-full aso-space-y-4 aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Behavior (type)</label><br>
+                        <select name="" id="" class="aso-w-2/2 aso-h-[40px]">
+                            <option>select type</option>
+                        </select>
+                    </div>
+
                 </div>
                 <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                         <div class="">
@@ -801,6 +811,7 @@ const materialVisible = ref(true);
 const newmaterial = ref(false);
 const texteVisible = ref(true);
 const imageVisible = ref(true);
+const isnewcomponent = ref(false);
 const addconfig = () => {
   isnewconfigVisible.value = !isnewconfigVisible.value;
   if (istableVisible.value) {
@@ -849,10 +860,25 @@ const showmaterial = () => {
         materialVisible.value = true;
     }
     if(texteVisible.value){
-        texteVisible.value = true
+        texteVisible.value = true;
     }
     if(imageVisible.value){
-        imageVisible.value = true
+        imageVisible.value = true;
+    }
+}
+const addcomponent = () => {
+    isnewcomponent.value = !isnewcomponent.value;
+    if (materialVisible.value) {
+        materialVisible.value = true;
+    }
+    if (newmaterial.value) {
+        newmaterial.value = false;
+    }
+    if(texteVisible.value){
+        texteVisible.value = true;
+    }
+    if(imageVisible.value){
+        imageVisible.value = true;
     }
 }
 
@@ -862,7 +888,6 @@ const isChecked = ref(false);
 const Checked = ref(false);
 const isCheckbox = ref(false);
 const handleTransform = ref('translateX(0)')
-const toggleBackgroundClass = ref('');
 
 // Mettez à jour la transformation lorsque le modèle change
 watchEffect(() => {
