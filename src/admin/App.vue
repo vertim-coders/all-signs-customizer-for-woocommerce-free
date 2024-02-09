@@ -1,7 +1,10 @@
 <template>
   <div id="aso-backend-app">
-    <Sidebar/>
-    <router-view />
+    <div class="aso-flex aso-justify-between aso-flex-row-reverse">
+        <Sidebar/>
+        <Index class="aso-w-[89%]"/>
+        <router-view />
+    </div>
   </div>
 </template>
 
@@ -10,6 +13,7 @@ import {ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js'
 
 import Sidebar from '../admin/components/sidebar.vue'
+import Index from '../admin/components/configuration/index.vue'
 
 tailwind.config ={
     prefix: 'aso-',
