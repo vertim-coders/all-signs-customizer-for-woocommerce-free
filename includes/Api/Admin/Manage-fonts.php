@@ -29,26 +29,26 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_manage_fonts_configs' ),
+                    'callback'            => array( $this, 'get_manage_fonts' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' )
                 ),
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_manage_fonts_config_post' ),
+                    'callback'            => array( $this, 'add_font_to_manages_fonts' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                 ),
             )
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/(?P<fonts_group_id>\d+)",
+            '/' . $this->rest_base."/(?P<font_id>\d+)",
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_manage_fonts_config_post' ),
+                    'callback'            => array( $this, 'get_manage_font' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'font_group_id' => array (
+                        'font_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -56,10 +56,10 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_manage_fonts_config_post' ),
+                    'callback'            => array( $this, 'update_font' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'font_group_id' => array (
+                        'font_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -70,14 +70,14 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                     'callback'            => array( $this, 'delete_manage_fonts_config'),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'font_group_id' => array (
+                        'font_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
                     ),
                 )
             )
-        );
+        );/* 
         register_rest_route(
             $this->namespace,
             '/' . $this->rest_base."/(?P<fonts_group_id>\d+)/items",
@@ -141,7 +141,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                     ),
                 )
             )
-        );
+        ); */
     }
        /**
      * Create fonts group
@@ -149,74 +149,64 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function create_manage_fonts_config_post ( $request ) {
-        $params=json_decode($request->get_body(),true);
-        $data = [
-            'post_title' => $params["title"],
-            'post_type' => 'aso-manages-fonts',
-            'post_meta' => [
-                "aso-manages-fonts-meta"=>[]
-            ],
-            'post_status' => 'publish'
-        ];
-        if(isset($params["data"]) && !empty($params["data"])){
-            $post_id = wp_insert_post($data);
-            if($post_id != 0 && !is_wp_error($post_id)){
-                update_post_meta($post_id,'aso-manages-fonts-meta',$params["data"]);
-                return rest_ensure_response( ["success"=>true,"message"=>__("Fonts group created with success","ASO"),"post_id"=>$post_id] );
-            }else{
-                return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
-            }            
+    public function add_font_to_manages_fonts ( $request ) {
+        $font=json_decode($request->get_body(),true);
+        $all_fonts = get_option("aso-manages-fonts",[]);
+        array_push($all_fonts,$font);
+        $update = update_option("aso-manages-fonts",$all_fonts);
+        if($update){
+            return rest_ensure_response( ["success"=>true,"message"=>__("Font created with success","ASO")] );
         }else{
             return rest_ensure_response(["message" => "Registration failed"]);
         }
     }
-        /**
-     * Get fonts group info for $post id
+    /**
+     * Get all fonts
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-  public function get_manage_fonts_config_post($request){
-    $id=$request->get_param('fonts_group_id');
-    if($id!=0) {
-        $meta_value = get_post_meta($id, 'aso-manages-fonts-meta', true);
-        if(is_array($meta_value) && !empty($meta_value)){
-
-            $post_data = array(
-                'id'           => $id,
-                'title'        => get_the_title($id),
-                'data'         => $meta_value
-            );
-            return rest_ensure_response($post_data);
-        }else{
-            return rest_ensure_response(["message" => __("Not Fonts groups found",'ASO')]);
-        }
-
-    }else{
-       return rest_ensure_response(["message" => __("Fonts Group ID invalid","ASO")]);
+    public function get_manage_fonts($request){
+        $all_fonts = get_option("aso-manages-fonts",[]);
+        return rest_ensure_response($all_fonts);      
+        
     }
+    /**
+     * Get font info for $font id
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_manage_font($request){
+        $font_id=$request->get_param('font_id');
+        $all_fonts = get_option("aso-manages-fonts",[]);
+        if($all_fonts[$font_id]){
+            return rest_ensure_response($all_fonts[$font_id]);      
+        }else{
+            return rest_ensure_response(["message"=>__('Font not found')]);
+        }
         
-        
-}
+    }
+
+
     /**
      * Update of fonts group
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function update_manage_fonts_config_post($request){
-        $params=json_decode($request->get_body(),true);
-        $post_id = $request->get_param( 'fonts_group_id' );
-        $args=array(
-            'ID'         => $post_id,
-            'post_title' => $params["title"],
-        );
-        
-        $updatePosts = wp_update_post($args);
-        if(!is_wp_error($updatePosts)){
-            return rest_ensure_response(array('success' => true, "message" => __("The fonts group has been updated with success","ASO") ) );
-        }
-        else{
-            return rest_ensure_response(array('success' => false, "message"=>__("Fonts group update failed","") ) );
+    public function update_font($request){
+        $font=json_decode($request->get_body(),true);
+        $font_id = $request->get_param( 'font_id' );
+        $all_fonts = get_option("aso-manages-fonts",[]);
+        if($all_fonts[$font_id]){
+            $all_fonts[$font_id] = $font;
+            $update = update_option("aso-manages-fonts",$all_fonts);
+            if($update){
+                return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success","ASO") ) );
+            }
+            else{
+                return rest_ensure_response(array('success' => false, "message"=>__("Font update failed","") ) );
+            }   
+        }else{
+            return rest_ensure_response(["message"=>__('Font not found')]);
         }
         
     }
@@ -228,98 +218,22 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
      * @return $success message if is ok and fail otherwise. 
     */
     public function delete_manage_fonts_config($request){
-
-        $id=$request->get_param( 'fonts_group_id' );
-
-        if($id!=0){
-            $deletePost = wp_delete_post( $id, true );
-            if($deletePost != null && !$deletePost ) {
-                return rest_ensure_response(["success"=>true,"message"=>__("The fonts group was well removed","ASO")]);
+        $font_id = $request->get_param( 'font_id' );
+        $all_fonts = get_option("aso-manages-fonts",[]);
+        if($all_fonts[$font_id]){
+            array_splice($all_fonts,$font_id,1);
+            $update = update_option("aso-manages-fonts",$all_fonts);
+            if($update){
+                return rest_ensure_response(["success"=>true,"message"=>__("The font was well removed","ASO")]);
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the fonts group failed","ASO")]);   
+                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the font failed","ASO")]);   
             }
-        }
-        else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the fonts group failed","ASO")]);
+        }else{
+            return rest_ensure_response(["message"=>__('Font not found')]);
         }
     }
 
-    /**
-     * Get all Fonts groups with or no per_page,page param in api url
-     *
-     * @param \WP_REST_Request $request Full details about the request.
-     *
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-    public function get_manage_fonts_configs( $request ) {
-        
-        $args = array(
-            'post_type' => 'aso-manages-fonts',
-            'post_status' => 'publish',
-            'order' => 'DESC',
-            'orderby' => 'ID',
-            'numberposts' => -1
-        );
-        
-        //displays 6 results per page if per_page is not specified
-        $per_page = absint($request->get_param( 'per_page' ));
-        if ( ! empty( $per_page ) ) {
-            $args['posts_per_page'] = $per_page ;
-        } else {
-            $per_page = 6;
-            $args['posts_per_page'] = 6;
-        }
 
-        $oder =  $request->get_param( 'order' );
-        if ( ! empty( $oder ) ) {
-            $args['order'] = $oder;
-        }
-
-        // Make Pagination
-        $page = $request->get_param( 'page' );
-        if ( ! empty( $page ) ) {
-            $args['paged'] = absint( $page );
-        }
-
-        // Make search 
-        $search_query = $request->get_param( 'search' );
-        if ( ! empty( $search_query ) ) {
-            $args['s'] = sanitize_text_field( $search_query );
-        }
-
-        // Get custom post types using WP_Query
-        $query = new WP_Query( $args );
-        $total_posts = $query->found_posts;
-        $total_pages = ceil($total_posts / $per_page);
-        // Check the results and return the response
-        $posts_data = array(
-            "totalConfigsFound" => $total_posts,
-            "totalPages"         => $total_pages,
-            "data"               => [],
-        );
-        if ( $query->have_posts() ) {
-
-            
-            while ( $query->have_posts() ) {
-                $query->the_post();
-                $id=get_the_ID();
-                
-                $post_data = array(
-                    'id'          => $id,
-                    'title'       => get_the_title(),
-                    "data"        => get_post_meta($id,'aso-manages-fonts',true),
-                );
-                array_push($posts_data["data"],$post_data);
-                //$posts_data["data"][] = $post_data;
-                
-            }
-
-            return rest_ensure_response( $posts_data );
-
-        } else {
-            return rest_ensure_response( $posts_data );
-        }
-    }
     /**
      * Checks if a given request has access to read the items.
      *
@@ -338,108 +252,6 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    
-     public function create_manage_fonts_item($request){
-        $font_id = $request->get_param('font_id');
-        if($font_id != 0) {
-            $new_item = json_decode($request->get_body(),true);
-            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                array_push($meta_value,$new_item);
-            }else{
-                $meta_value = [];
-                array_push($meta_value,$new_item);
-            }
-            $update = update_post_meta($font_id,'aso-manages-fonts-meta',$meta_value);
-            if($update === true){
-                return rest_ensure_response(["success"=>true, "message"=>__("Font item successfully added","ASO")]);
-            }else{
-                return rest_ensure_response(["success"=>false, "message"=>__("Font item has not been added","ASO")]);
-            }
-        }else{
-            return rest_ensure_response(["success"=>false, "message"=>__("Font item has not been added","ASO")]);
-        }
-    }
-    /**
-     * get all items in sizes group
-     *
-     * @param \WP_REST_Request $request Full details about the request.
-     *
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-    
-    public function get_manage_fonts_item($request){
-        $font_id = $request->get_param('font_id');
-        if($font_id != 0) {
-            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                return rest_ensure_response($meta_value);
-            }else{
-                return rest_ensure_response([]);
-            }
-        }else{
-            return rest_ensure_response([]);
-        }
-    }
-
-    /**
-     * update all items in fonts group
-     *
-     * @param \WP_REST_Request $request Full details about the request.
-     *
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-    
-    public function update_manage_fonts_item($request){
-        $font_id = $request->get_param('font_id');
-        $item_id = $request->get_param('item_id');
-        if($font_id != 0) {
-            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                if($meta_value[$item_id]){
-                    $meta_value[$item_id] = json_encode($request->get_body(),true);
-                    update_post_meta($font_id,'aso-manages-fonts-meta',$meta_value);
-                    return rest_ensure_response(["success"=>true,"message"=>__("The update was successfully completed","ASO")]);
-                }else{
-                    return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
-                }
-            }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
-            }
-        }else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
-        }
-    }
-
-    /**
-     * Delete an items in fonts group
-     *
-     * @param \WP_REST_Request $request Full details about the request.
-     *
-     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-     */
-    
-     public function delete_manage_fonts_item($request){
-        $font_id = $request->get_param('size_id');
-        $item_id = $request->get_param('item_id');
-        if($font_id != 0) {
-            $meta_value = get_post_meta($font_id, 'aso-manages-fonts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                if($meta_value[$item_id]){
-                    array_splice($meta_value,$item_id,1);
-                    update_post_meta($font_id,'aso-manages-fonts-meta',$meta_value);
-                    return rest_ensure_response(["success"=>true,"message"=>__("The delete was successfully completed","ASO")]);
-                }else{
-                    return rest_ensure_response(["success"=>false,"message"=>__("The item delete failed","ASO")]);
-                }
-            }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("The item update failed","ASO")]);
-            }
-        }else{
-            return rest_ensure_response(["success"=>false,"message"=>__("The item update failed","ASO")]);
-        }
-    }
-
 
     /**
      * Retrieves the query params for the items collection.

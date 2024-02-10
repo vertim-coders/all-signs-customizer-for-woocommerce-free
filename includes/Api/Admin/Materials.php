@@ -43,7 +43,7 @@ class ASO_Api_Materials extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_materials_item' ),
+                    'callback'            => array( $this, 'create_materials_material' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -57,18 +57,18 @@ class ASO_Api_Materials extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<item_id>\d+)',
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)',
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_materials_item' ),
+                    'callback'            => array( $this, 'get_materials_material' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         ),
-                        'item_id' => array (
+                        'material_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -76,8 +76,24 @@ class ASO_Api_Materials extends WP_REST_Controller {
 
                 ),
                 array(
-                    'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_materials_item' ),
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'update_materials_material' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::DELETABLE,
+                    'callback'            => array( $this, 'delete_materials_material' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -114,26 +130,26 @@ class ASO_Api_Materials extends WP_REST_Controller {
     }
 
     /**
-     * Create an item in materials.
+     * Create an material in materials.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function create_materials_item( $request ) {
+    public function create_materials_material( $request ) {
         $config_id = $request->get_param('config_id');
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
-                $new_item = json_decode($request->get_body(),true);
-                if(in_array($new_item['type'],['no-sub-component','with-sub-component'])){
-                    if($new_item['type'] === 'no-sub-component'){
-                        $item = [
-                            "name"=>$new_item['name'],
-                            "description"=>$new_item['description'],
-                            "icon"=>$new_item['icon'],
-                            "popImg"=>$new_item['popImg'],
-                            "type"=>$new_item['type'],
+                $new_material = json_decode($request->get_body(),true);
+                if(in_array($new_material['type'],['no-sub-component','with-sub-component'])){
+                    if($new_material['type'] === 'no-sub-component'){
+                        $material = [
+                            "name"=>$new_material['name'],
+                            "description"=>$new_material['description'],
+                            "icon"=>$new_material['icon'],
+                            "popImg"=>$new_material['popImg'],
+                            "type"=>$new_material['type'],
                             "data"=>[
                                 'sizes'=>[],
                                 'borders'=>[],
@@ -142,17 +158,17 @@ class ASO_Api_Materials extends WP_REST_Controller {
                                 'colors'=>[]
                             ]
                         ];
-                        array_push($meta['materials'],$item);
+                        array_push($meta['materials'],$material);
                     }else{
-                        $item = [
-                            "name"=>$new_item['name'],
-                            "description"=>$new_item['description'],
-                            "icon"=>$new_item['icon'],
-                            "popImg"=>$new_item['popImg'],
-                            "type"=>$new_item['type'],
+                        $material = [
+                            "name"=>$new_material['name'],
+                            "description"=>$new_material['description'],
+                            "icon"=>$new_material['icon'],
+                            "popImg"=>$new_material['popImg'],
+                            "type"=>$new_material['type'],
                             "data"=>[]
                         ];
-                        array_push($meta['materials'],$item);
+                        array_push($meta['materials'],$material);
                     }
                     $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                     if($update === true){
@@ -171,27 +187,27 @@ class ASO_Api_Materials extends WP_REST_Controller {
         }
     }
     /**
-     * Update an item in materials.
+     * Update an material in materials.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function update_materials_item( $request ) {
+    public function update_materials_material( $request ) {
         $config_id = $request->get_param('config_id');
-        $item_id = $request->get_param('item_id');
+        $material_id = $request->get_param('material_id');
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
-                $item = json_decode($request->get_body(),true);
-                if(isset($meta['materials'][$item_id]) && in_array($item['type'],['no-sub-component','with-sub-component'])){
-                    $old_item = $meta['materials'][$item_id];
-                    if($old_item !== $item){
-                        $old_item["name"] = $item['name'];
-                        $old_item["description"] = $item['description'];
-                        $old_item["icon"] = $item['icon'];
-                        $old_item["popImg"] = $item['popImg'];
-                        $meta['materials'][$item_id] = $old_item;
+                $material = json_decode($request->get_body(),true);
+                if(isset($meta['materials'][$material_id]) && in_array($material['type'],['no-sub-component','with-sub-component'])){
+                    $old_material = $meta['materials'][$material_id];
+                    if($old_material !== $material){
+                        $old_material["name"] = $material['name'];
+                        $old_material["description"] = $material['description'];
+                        $old_material["icon"] = $material['icon'];
+                        $old_material["popImg"] = $material['popImg'];
+                        $meta['materials'][$material_id] = $old_material;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                         if($update === true){
                             return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully edited","ASO")]);
@@ -215,21 +231,21 @@ class ASO_Api_Materials extends WP_REST_Controller {
 
 
     /**
-     * Retrieves an item in all materials items.
+     * Retrieves an material in all materials materials.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function get_materials_item( $request ) {
+    public function get_materials_material( $request ) {
         $config_id = $request->get_param('config_id');
-        $item_id = $request->get_param('item_id');
+        $material_id = $request->get_param('material_id');
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
-                if($meta['materials'][$item_id]){
-                    $item = $meta['materials'][$item_id];
-                    return rest_ensure_response($item);
+                if($meta['materials'][$material_id]){
+                    $material = $meta['materials'][$material_id];
+                    return rest_ensure_response($material);
                 }else{
                     return rest_ensure_response(["message"=>__("No materials component found","ASO")]);
                 }
@@ -242,20 +258,20 @@ class ASO_Api_Materials extends WP_REST_Controller {
     }
 
     /**
-     * Delete an item in all materials items.
+     * Delete an material in all materials materials.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function delete_materials_item( $request ) {
+    public function delete_materials_material( $request ) {
         $config_id = $request->get_param('config_id');
-        $item_id = $request->get_param('item_id');
+        $material_id = $request->get_param('material_id');
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
-                if($meta['materials'][$item_id]){
-                    array_splice($meta['materials'],$item_id,1);
+                if($meta['materials'][$material_id]){
+                    array_splice($meta['materials'],$material_id,1);
                     return rest_ensure_response(['success'=>true,"message"=>__("Component successfully deleted","ASO")]);
                 }else{
                     return rest_ensure_response(['success'=>false,"message"=>__("No materials component found","ASO")]);
@@ -269,7 +285,7 @@ class ASO_Api_Materials extends WP_REST_Controller {
     }
 
     /**
-     * Checks if a given request has access to read the items.
+     * Checks if a given request has access to read the materials.
      *
      * @param  WP_REST_Request $request Full details about the request.
      *
@@ -279,8 +295,9 @@ class ASO_Api_Materials extends WP_REST_Controller {
         return true;
     }
 
+
     /**
-     * Retrieves the query params for the items collection.
+     * Retrieves the query params for the materials collection.
      *
      * @return array Collection parameters.
      */

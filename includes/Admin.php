@@ -57,6 +57,13 @@ class Admin {
      * @return void
      */
     public function plugin_page() {
-        echo '<div class="wrap"><div id="aso-admin-app"></div></div>';
+        $api_url = get_rest_url(); ?>
+        <div class="wrap">
+            <div id="aso-admin-app"></div>
+            <script>
+                var aso_rest_url = <?php echo $api_url ?>;
+            </script>
+        </div>
+        <?php
     }
 }
