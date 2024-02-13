@@ -77,71 +77,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                     ),
                 )
             )
-        );/* 
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base."/(?P<fonts_group_id>\d+)/items",
-            array(
-                array(
-                    'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_manage_fonts_item' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
-                    'args'                => array (
-                        'font_group_id' => array (
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                ),
-                array(
-                    'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_manage_fonts_item' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
-                    'args'                => array (
-                        'font_group_id' => array (
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
         );
-        register_rest_route(
-            $this->namespace,
-            '/' . $this->rest_base."/(?P<fonts_group_id>\d+)/items/(?P<item_id>\d+)",
-            array(
-                array(
-                    'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_manage_fonts_item' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
-                    'args'                => array (
-                        'font_group_id' => array (
-                            'type' => 'integer',
-                            'required' => true,
-                        ),
-                        'item_id' => array (
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                ),
-                array(
-                    'methods'             => \WP_REST_Server::DELETABLE,
-                    'callback'            => array( $this, 'delete_manage_fonts_item'),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
-                    'args'                => array (
-                        'font_group_id' => array (
-                            'type' => 'integer',
-                            'required' => true,
-                        ),
-                        'item_id' => array (
-                            'type' => 'integer',
-                            'required' => true,
-                        )
-                    ),
-                )
-            )
-        ); */
     }
        /**
      * Create fonts group
@@ -157,7 +93,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         if($update){
             return rest_ensure_response( ["success"=>true,"message"=>__("Font created with success","ASO")] );
         }else{
-            return rest_ensure_response(["message" => "Registration failed"]);
+            return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
         }
     }
     /**
@@ -171,7 +107,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         
     }
     /**
-     * Get font info for $font id
+     * Get font info from id
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -181,14 +117,14 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         if($all_fonts[$font_id]){
             return rest_ensure_response($all_fonts[$font_id]);      
         }else{
-            return rest_ensure_response(["message"=>__('Font not found')]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
         }
         
     }
 
 
     /**
-     * Update of fonts group
+     * Update of font from ID
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -206,13 +142,13 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                 return rest_ensure_response(array('success' => false, "message"=>__("Font update failed","") ) );
             }   
         }else{
-            return rest_ensure_response(["message"=>__('Font not found')]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
         }
         
     }
 
     /**
-     * Remove aso fonts group from ID in request
+     * Remove aso fonts from ID in request
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return $success message if is ok and fail otherwise. 
@@ -229,7 +165,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                 return rest_ensure_response(["success"=>false,"message"=>__("Deleting the font failed","ASO")]);   
             }
         }else{
-            return rest_ensure_response(["message"=>__('Font not found')]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
         }
     }
 

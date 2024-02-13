@@ -6,17 +6,8 @@ class ASO_Post_Type
         add_action('init',array($this,'register_aso_post_type'));
         add_action('init',array($this,'register_aso_config_meta'));
 
-		add_action('init',array($this,'register_aso_manage_fonts'));
-		add_action('init',array($this,'register_aso_manage_fonts_meta'));
-
 		add_action('init',array($this,'register_aso_manage_cliparts'));
 		add_action('init',array($this,'register_aso_manage_cliparts_meta'));
-
-		add_action('init',array($this,'register_aso_color_palette'));
-		add_action('init',array($this,'register_aso_color_palette_meta'));
-
-		add_action('init',array($this,'register_aso_manage_size'));
-		add_action('init',array($this,'register_aso_manage_size_meta'));
 
         add_filter( 'the_content', array($this,'get_editor_shortcode_handler'));
 		add_filter( 'init', array($this,'aso_add_rewrite_rules'), 99 );
@@ -87,69 +78,6 @@ class ASO_Post_Type
 		);
 	}
 	
-	/**
-	 * create post type manage fonts
-	 */
-	public function register_aso_manage_fonts() {
-		
-		$labels = array(
-			'name'               => _x( 'ASO Manage fonts', 'ASO' ),
-			'singular_name'      => _x( 'ASO Manage fonts', 'ASO' ),
-			'add_new'            => _x( 'New ASO manage fonts', 'ASO' ),
-			'add_new_item'       => _x( 'New ASO manage fonts', 'ASO' ),
-			'edit_item'          => _x( 'Edit ASO manage fonts', 'ASO' ),
-			'new_item'           => _x( 'New ASO manage fonts', 'ASO' ),
-			'view_item'          => _x( 'View ASO manage fonts', 'ASO' ),
-			'not_found'          => _x( 'No ASO manage fonts', 'ASO' ),
-			'not_found_in_trash' => _x( 'No ASO manage fonts in the trash', 'ASO' ),
-			'menu_name'          => _x( 'All Signs Options', 'ASO' ),
-			'all_items'          => _x( 'ASO Manage fonts', 'ASO' ),
-		);
-
-		$args = array(
-			'labels'              => $labels,
-			'hierarchical'        => false,
-			'description'         => 'ASO Manage fonts',
-			'supports'            => array( 'title' ),
-			'public'              => false,
-			'show_in_rest' 		  => true,
-			'show_ui'             => true,
-			'show_in_menu'        => false,
-			'show_in_nav_menus'   => false,
-			'publicly_queryable'  => false,
-			'exclude_from_search' => true,
-			'has_archive'         => false,
-			'query_var'           => false,
-			'can_export'          => true,
-		);
-
-		register_post_type( 'aso-manages-fonts', $args );
-
-	}
-	 /**
-	 * Create meta data of aso-manages-fonts-meta
-	*/
-	public function register_aso_manage_fonts_meta(){
-		register_meta(
-			'aso-manages-fonts',
-			'aso-manages-fonts-meta',
-			array(
-				'show_in_rest' => array(
-					'schema' => array(
-						'type'  => 'array',
-						'items' => array(
-							'type'  => 'array',
-							'items' => array(
-								'type'        => 'mixed'
-							)
-						)
-					)
-				),
-				'type' => 'array',
-				'single' => true,
-			)
-		);
-	}
 
 	/**
 	 * create post type manage cliparts
@@ -215,134 +143,6 @@ class ASO_Post_Type
 		);
 	}
 
-/**
-	 * create post type color palette
-	 */
-	public function register_aso_color_palette() {
-		
-		$labels = array(
-			'name'               => _x( 'ASO Color palette', 'ASO' ),
-			'singular_name'      => _x( 'ASO  Color palette', 'ASO' ),
-			'add_new'            => _x( 'New ASO   color palette', 'ASO' ),
-			'add_new_item'       => _x( 'New ASO color palette', 'ASO' ),
-			'edit_item'          => _x( 'Edit ASO color palette', 'ASO' ),
-			'new_item'           => _x( 'New ASO color palette', 'ASO' ),
-			'view_item'          => _x( 'View ASO color palette', 'ASO' ),
-			'not_found'          => _x( 'No ASO color palette', 'ASO' ),
-			'not_found_in_trash' => _x( 'No ASO color palette in the trash', 'ASO' ),
-			'menu_name'          => _x( 'All Signs Options', 'ASO' ),
-			'all_items'          => _x( 'ASO Color palette', 'ASO' ),
-		);
-
-		$args = array(
-			'labels'              => $labels,
-			'hierarchical'        => false,
-			'description'         => 'ASO Color palette',
-			'supports'            => array( 'title' ),
-			'public'              => false,
-			'show_in_rest' 		  => true,
-			'show_ui'             => true,
-			'show_in_menu'        => false,
-			'show_in_nav_menus'   => false,
-			'publicly_queryable'  => false,
-			'exclude_from_search' => true,
-			'has_archive'         => false,
-			'query_var'           => false,
-			'can_export'          => true,
-		);
-
-		register_post_type( 'aso-colors-palette', $args );
-
-	}
-	/**
-	 * Create meta data of aso-color-palette-meta
-	*/
-	public function register_aso_color_palette_meta(){
-		register_meta(
-			'aso-colors-palette',
-			'aso-colors-palette-meta',
-			array(
-				'show_in_rest' => array(
-					'schema' => array(
-						'type'  => 'array',
-						'items' => array(
-							'type'  => 'array',
-							'items' => array(
-								'type'        => 'mixed'
-							)
-						)
-					)
-				),
-				'type' => 'array',
-				'single' => true,
-			)
-		);
-	}
-
-	/**
-	 * create post type manage size
-	 */
-	public function register_aso_manage_size() {
-		
-		$labels = array(
-			'name'               => _x( 'ASO Manage size', 'ASO' ),
-			'singular_name'      => _x( 'ASO Manage size', 'ASO' ),
-			'add_new'            => _x( 'New ASO manage size', 'ASO' ),
-			'add_new_item'       => _x( 'New ASO manage size', 'ASO' ),
-			'edit_item'          => _x( 'Edit ASO manage size', 'ASO' ),
-			'new_item'           => _x( 'New ASO manage size', 'ASO' ),
-			'view_item'          => _x( 'View ASO manage size', 'ASO' ),
-			'not_found'          => _x( 'No ASO manage size', 'ASO' ),
-			'not_found_in_trash' => _x( 'No ASO manage size in the trash', 'ASO' ),
-			'menu_name'          => _x( 'All Signs Options', 'ASO' ),
-			'all_items'          => _x( 'ASO Manage size', 'ASO' ),
-		);
-
-		$args = array(
-			'labels'              => $labels,
-			'hierarchical'        => false,
-			'description'         => 'ASO Manage size',
-			'supports'            => array( 'title' ),
-			'public'              => false,
-			'show_in_rest' 		  => true,
-			'show_ui'             => true,
-			'show_in_menu'        => false,
-			'show_in_nav_menus'   => false,
-			'publicly_queryable'  => false,
-			'exclude_from_search' => true,
-			'has_archive'         => false,
-			'query_var'           => false,
-			'can_export'          => true,
-		);
-
-		register_post_type( 'aso-manages-size', $args );
-
-	}
-	 /**
-	 * Create meta data of aso-manages-fonts-meta
-	*/
-	public function register_aso_manage_size_meta(){
-		register_meta(
-			'aso-manages-sizes',
-			'aso-manages-sizes-meta',
-			array(
-				'show_in_rest' => array(
-					'schema' => array(
-						'type'  => 'array',
-						'items' => array(
-							'type'  => 'array',
-							'items' => array(
-								'type'        => 'mixed'
-							)
-						)
-					)
-				),
-				'type' => 'array',
-				'single' => true,
-			)
-		);
-	}
-
     	/**
 	 * Add short code on config page
 	 */
@@ -388,9 +188,9 @@ class ASO_Post_Type
 			$aso_page_id = false;
 		}
 
-		if ( function_exists( 'icl_object_id' ) ) {
+		/* if ( function_exists( 'icl_object_id' ) ) {
 			$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
-		}
+		} */
 		$aso_page = get_post( $aso_page_id );
 		if ( is_object( $aso_page ) ) {
 			$raw_slug = get_permalink( $aso_page->ID );

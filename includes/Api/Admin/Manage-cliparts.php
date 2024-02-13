@@ -347,17 +347,24 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         if($clipart_id != 0) {
             $new_item = json_decode($request->get_body(),true);
             $meta_value = get_post_meta($clipart_id, 'aso-manages-cliparts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                array_push($meta_value,$new_item);
+            $item_keys = array('title','imgUrl','additonalPrice');
+            $req_keys = array_keys($new_item);
+            $differents_keys = array_diff($item_keys, $req_keys);
+            if(empty($differents_keys)){
+                if(is_array($meta_value) && !empty($meta_value)){
+                    array_push($meta_value,$new_item);
+                }else{
+                    $meta_value = [];
+                    array_push($meta_value,$new_item);
+                }
+                $update = update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
+                if($update === true){
+                    return rest_ensure_response(["success"=>true, "message"=>__("Clipart item successfully added","ASO")]);
+                }else{
+                    return rest_ensure_response(["success"=>false, "message"=>__("Clipart item has not been added","ASO")]);
+                }
             }else{
-                $meta_value = [];
-                array_push($meta_value,$new_item);
-            }
-            $update = update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
-            if($update === true){
-                return rest_ensure_response(["success"=>true, "message"=>__("Clipart item successfully added","ASO")]);
-            }else{
-                return rest_ensure_response(["success"=>false, "message"=>__("Clipart item has not been added","ASO")]);
+                return rest_ensure_response(["success"=>false, "message"=>__("Bad image data","ASO")]);
             }
         }else{
             return rest_ensure_response(["success"=>false, "message"=>__("Clipart item has not been added","ASO")]);
@@ -400,9 +407,16 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
             $meta_value = get_post_meta($clipart_id, 'aso-manages-cliparts-meta', true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if($meta_value[$item_id]){
-                    $meta_value[$item_id] = json_encode($request->get_body(),true);
-                    update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
-                    return rest_ensure_response(["success"=>true,"message"=>__("The update was successfully completed","ASO")]);
+                    $edit_item = json_decode($request->get_body(),true);
+                    $item_keys = array('title','imgUrl','additonalPrice');
+                    $req_keys = array_keys($edit_item);
+                    if(empty($req_keys)){
+                        $meta_value[$item_id] = $edit_item;
+                        update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
+                        return rest_ensure_response(["success"=>true,"message"=>__("The update was successfully completed","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success"=>false,"message"=>__("Bad image data","ASO")]);
+                    }
                 }else{
                     return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
                 }

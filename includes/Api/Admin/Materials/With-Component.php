@@ -138,7 +138,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/(?P<component_id>\d+)/(?P<item_id>\d+)',
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/(?P<component_id>\d+)/(?P<option_id>\d+)',
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
@@ -157,7 +157,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                             'type' => 'integer',
                             'required' => true,
                         ),
-                        'item_id' => array (
+                        'option_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -180,7 +180,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                             'type' => 'integer',
                             'required' => true,
                         ),
-                        'item_id' => array (
+                        'option_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -203,7 +203,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                             'type' => 'integer',
                             'required' => true,
                         ),
-                        'item_id' => array (
+                        'option_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
