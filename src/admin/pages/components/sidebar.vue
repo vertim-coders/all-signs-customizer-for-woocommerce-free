@@ -8,7 +8,7 @@
                 </g>
             </svg>
             <div class="aso-text-[12px] aso-w-12">
-                Manage Font
+                <router-link to="/">Manage Font</router-link>
             </div>
         </button>
     </div>

@@ -124,7 +124,7 @@
                                 </svg>
                             </td>
                             <td class="aso-px-6 aso-py-4">
-                                <img class="aso-w-8 aso-h-8" src="../../../../assets/images/img/Rectangle 3704.svg" alt="">
+                                <img class="aso-w-8 aso-h-8" src="../../../../../assets/images/img/Rectangle 3704.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4">
                                 No component
@@ -187,7 +187,7 @@
                                 </svg>
                             </td>
                             <td class="aso-px-6 aso-py-4">
-                                <img class="aso-w-8 aso-h-8" src="../../../../assets/images/img/Rectangle 3704.svg" alt="">
+                                <img class="aso-w-8 aso-h-8" src="../../../../../assets/images/img/Rectangle 3704.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4">
                                 No component
@@ -250,7 +250,7 @@
                                 </svg>
                             </td>
                             <td class="aso-px-6 aso-py-4">
-                                <img class="aso-w-8 aso-h-8" src="../../../../assets/images/img/Rectangle 3704.svg" alt="">
+                                <img class="aso-w-8 aso-h-8" src="../../../../../assets/images/img/Rectangle 3704.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4">
                                 No component
@@ -336,8 +336,8 @@
                 <div>
                     <select name="" id="" class="aso-w-full aso-h-[40px]">
                         <option selected>select type</option>
-                        <option>With Component</option>
-                        <option>No component</option>
+                        <option>Simple</option>
+                        <option>Advance</option>
                     </select>
                 </div>
             </div>
