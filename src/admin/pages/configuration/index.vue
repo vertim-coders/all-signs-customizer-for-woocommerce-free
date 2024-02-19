@@ -18,7 +18,7 @@
                         </select>
                     </div>
                     <div class="aso-w-1/4">
-                        <select name="" id="" class="aso-w-[95%] aso-h-[30px] aso-p-2 aso-text-[12px]">
+                        <select name="" id="" class="aso-w-[95%] aso-h-[30px]">
                             <option selected>filter by product type</option>
                         </select>
                     </div>
@@ -36,24 +36,7 @@
                     </div>
                </div>
             </div>
-            <div class="aso-flex aso-bg-[#F8F9FB] aso-px-4 aso-p-3">
-               <div class="aso-flex aso-w-[94.5%] aso-space-x-5">
-                   <div class="aso-text-[12px]  aso-py-1">
-                       Legend unavailable
-                  </div>
-                  <div class="aso-bg-[#EEF5FF] aso-rounded-full aso-text-[12px] aso-pl-3 aso-p-2 aso-py-1">
-                       1. Name of component group
-                  </div>
-                  <div class="aso-bg-[#FFC7D8] aso-text-[12px] aso-rounded-full aso-w-[15%] aso-pl-5 aso-p-1">
-                       2. Button for managers 
-                  </div>
-                </div>
-               <div class="">
-                    <select name="" id="">
-                        <option value="">7</option>
-                    </select>
-               </div>
-            </div>
+            
             <div class="aso-relative" id="monTableau">
                 <table class="aso-text-left aso-border aso-border-collapse aso-border-0">
                     <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
@@ -88,14 +71,14 @@
                                 </div>
                             </td>
                             <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso--items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="">AS</span> 
+                                <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
+                                    <span class="aso-text-[12px]">AS</span> 
                                 </div>
-                                <div class="aso-py-1">
+                                <div class="aso-py-1 aso-text-[14px]">
                                     Acrylic Signs
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
                                 Acrylic signs, also known .....
                             </td>
                             <td class="aso-px-6 aso-py-4">
@@ -147,14 +130,14 @@
                                 </div>
                             </td>
                             <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso--items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="">AS</span> 
+                                <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
+                                    <span class="aso-text-[12px]">AS</span> 
                                 </div>
-                                <div class="aso-py-1">
+                                <div class="aso-py-1 aso-text-[14px]">
                                     Acrylic Signs
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
                                 Acrylic signs, also known .....
                             </td>
                             <td class="aso-px-6 aso-py-4">
@@ -205,14 +188,14 @@
                                 </div>
                             </td>
                             <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso--items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="">AS</span> 
+                                <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
+                                    <span class="aso-text-[12px]">AS</span> 
                                 </div>
-                                <div class="aso-py-1">
+                                <div class="aso-py-1 aso-text-[14px]">
                                     Acrylic Signs
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
                                 Acrylic signs, also known .....
                             </td>
                             <td class="aso-px-6 aso-py-4">
@@ -299,7 +282,7 @@
             </div>
         </div>
         <div class="aso-space-y-1" v-show="isNewConfigVisible">
-            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4">
+            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4 aso-text-[16px]">
                 Create new configuration
             </div>
            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4">
@@ -308,7 +291,7 @@
                         <label for="" class="aso-font-normal">Name configuration</label><br>
                         <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
                     </div>
-                    <div class="aso-w-1/2 aso-space-y-2 aso-text-[14px]">
+                    <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label><br>
                         <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
                     </div>
@@ -333,19 +316,19 @@
            </div>
            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="">
-                    <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-2 aso-border-black aso-border-solid hover:aso-bg-[#016464] aso-cursor-pointer" @click="back">
+                    <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-2 aso-border-black aso-border-solid hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer" @click="back">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="black"/>
+                            <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
                         <div class="aso-font-semibold aso-text-[16px]">Back</div>
                     </button>
                 </div>
                 <div class="">
-                    <button class="aso-flex aso-bg-[#016464] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-space-x-2 aso-text-white aso-border-none aso-w-fit aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-2 aso-border-black aso-border-solid aso-cursor-pointer" @click="next">
-                        <div class="aso-font-semibold aso-text-[16px]">Next</div>
+                    <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-2 aso-border-black aso-border-solid hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer" @click="next">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 22 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 4L18 8V5H5.83C5.62439 5.58597 5.24142 6.09339 4.73429 6.45179C4.22715 6.81019 3.621 7.0018 3 7C2.20435 7 1.44129 6.68393 0.87868 6.12132C0.31607 5.55871 0 4.79565 0 4C0 3.20435 0.31607 2.44129 0.87868 1.87868C1.44129 1.31607 2.20435 1 3 1C4.31 1 5.42 1.83 5.83 3H18V0L22 4Z" fill="white"/>
+                            <path d="M22 4L18 8V5H5.83C5.62439 5.58597 5.24142 6.09339 4.73429 6.45179C4.22715 6.81019 3.621 7.0018 3 7C2.20435 7 1.44129 6.68393 0.87868 6.12132C0.31607 5.55871 0 4.79565 0 4C0 3.20435 0.31607 2.44129 0.87868 1.87868C1.44129 1.31607 2.20435 1 3 1C4.31 1 5.42 1.83 5.83 3H18V0L22 4Z" fill="currentColor"/>
                         </svg>
+                        <div class="aso-font-semibold aso-text-[16px]">Next</div>
                     </button>
                 </div>
            </div>
@@ -362,19 +345,16 @@
             </div>
             <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                 <div>
-                    <button class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-3 aso-border-black aso-border-solid hover:aso-bg-[#016464] aso-cursor-pointer">
+                    <button class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-3 aso-border-black aso-border-solid hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                         Include demo data
                     </button>
                 </div>
                 <div>
-                    <button class="aso-font-semibold aso-text-[16px] aso-text-white aso-flex aso-bg-[#016464] aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-3 aso-border-black aso-border-solid hover:aso-bg-[#016464] aso-cursor-pointer" @click="noDemo">
+                    <button class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-3 aso-border-black aso-border-solid hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                         No Include demo data
                     </button>
                 </div>
             </div>
-        </div>
-        <div v-show="contentMaterial">
-            <Material :configMaterial="pageIncludeDemo" />
         </div>
         
     </div>
@@ -382,7 +362,6 @@
 
 <script setup>
 import { ref } from "vue";
-import Material from './materials/material.vue';
 const contentMaterial = ref(false);
 const isNewConfigVisible = ref(false);
 const pageIncludeDemo = ref(false);
@@ -400,9 +379,4 @@ const next = () => {
     isNewConfigVisible.value = false;
     pageIncludeDemo.value = true
 };
-const noDemo = () => {
-    contentMaterial.value = true;
-    pageIncludeDemo.value = false;
-};
-
 </script>
