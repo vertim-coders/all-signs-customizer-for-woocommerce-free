@@ -210,7 +210,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
                     ),
                 )
             )
-        );       
+        );
     }
 
     public function create_component( $request ){

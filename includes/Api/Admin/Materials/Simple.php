@@ -43,7 +43,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                             'required' => true,
                         )
                     ),
-                )
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_shapes' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),  
             )
         );
         register_rest_route(
@@ -64,9 +79,24 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                             'required' => true,
                         )
                     ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_sizes' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    )
                 )
             )
-        );
+        );        
         register_rest_route(
             $this->namespace,
             $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/colors',
@@ -85,9 +115,24 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                             'required' => true,
                         )
                     ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_colors' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
                 )
             )
-        );
+        );      
         register_rest_route(
             $this->namespace,
             $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/borders',
@@ -106,16 +151,67 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                             'required' => true,
                         )
                     ),
-                )
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_borders' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
             )
-        );
+        );       
         register_rest_route(
             $this->namespace,
             $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/fixing-methods',
             array(
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'save_materials_fixingMethods' ),
+                    'callback'            => array( $this, 'save_material_fixingMethods' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+            )
+        );      
+        register_rest_route(
+            $this->namespace,
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/additional-options',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_additionalOptions' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),    
+                array(
+                    'methods'             => \WP_REST_Server::CREATABLE,
+                    'callback'            => array( $this, 'create_material_additionalOptions' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -130,7 +226,188 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                 )
             )
         );
-        
+        register_rest_route(
+            $this->namespace,
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/additional-options/(?P<additional_id>\d+)',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_additionalOption' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'additional_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),    
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'update_material_additionalOption' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'additional_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::DELETABLE,
+                    'callback'            => array( $this, 'delete_material_additionalOption' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'additional_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),        
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/additional-options/(?P<additional_id>\d+)',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_Options' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'additional_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ) 
+                    )
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::CREATABLE,
+                    'callback'            => array( $this, 'create_material_Options' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'additional_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/additional-options/(?P<additional_id>\d+)/(?P<option_id>\d+)',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_Option' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'additional_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'option_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                    array(
+                        'methods'             => \WP_REST_Server::EDITABLE,
+                        'callback'            => array( $this, 'update_material_Option' ),
+                        'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                        'args'                => array(
+                            'config_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            ),
+                            'material_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            ),
+                            'additional_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            ),
+                            'option_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            )
+                        ),
+                    ),
+                    array(
+                        'methods'             => \WP_REST_Server::DELETABLE,
+                        'callback'            => array( $this, 'deletable_material_Option' ),
+                        'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                        'args'                => array(
+                            'config_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            ),
+                            'material_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            ),
+                            'additional_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            ),
+                            'option_id' => array (
+                                'type' => 'integer',
+                                'required' => true,
+                            )
+                        ),
+                    ),   
+                )
+            )
+        );
     }
 
     /**
@@ -170,6 +447,16 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }else{
             return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
         }
+    }
+    /**
+     * Get a collection of shapes.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_shapes( $request ){
+
     }
 
     /**
@@ -211,6 +498,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }
     }
     /**
+     * Get a collection of sizes.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_sizes( $request ){
+
+    }
+
+    /**
      * Save a collection of borders.
      *
      * @param WP_REST_Request $request Full details about the request.
@@ -247,6 +545,16 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }else{
             return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
         }
+    }
+    /**
+     * Get a collection of borders.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_borders( $request ){
+        
     }
     /**
      * Save a collection of colors.
@@ -287,6 +595,16 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }
     }
     /**
+     * Get a collection of colors.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_colors( $request ){
+
+    }
+    /**
      * Save a collection of fixingMethods.
      *
      * @param WP_REST_Request $request Full details about the request.
@@ -324,7 +642,98 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
         }
     }
+    /**
+     * Get a collection of fixingMethods.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_fixingMethods( $request ){
 
+        
+    }
+    /**
+     * Create material additionnal option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function create_materials_additionalOptions ($request) {
+
+    }
+    /**
+     * Read material additionnal option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function  get_materials_additionalOptions ($request) {
+        
+    }
+    /**
+     * update material additionnal option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function update_materials_additionalOptions ($request) {
+        
+    }
+    /**
+     * Delatable material additionnal option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function delete_materials_additionalOptions ($request) {
+        
+    }
+    /**
+     * Create material option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function create_materials_Options ($request) {
+        
+    }
+    /**
+     * Read material option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_materials_Options ($request) {
+        
+    }
+    /**
+     * update material option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function update_materials_Options ($request) {
+        
+    }
+
+    /**
+     * Delatable material option.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function deletable_materials_Options($request) {
+        
+    }
     /**
      * Checks if a given request has access to read the items.
      *
