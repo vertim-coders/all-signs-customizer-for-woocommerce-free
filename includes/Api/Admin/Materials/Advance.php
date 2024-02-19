@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\components;
+namespace ASO\Api\Admin\Materials;
 
 use WP_Error;
 use WP_REST_Controller;
@@ -9,7 +9,7 @@ use WP_REST_Response;
 /**
  * REST_API Handler
  */
-class ASO_components_With_Sub_Component extends WP_REST_Controller {
+class ASO_Materials_Advance extends WP_REST_Controller {
 
     /**
      * [__construct description]
@@ -32,7 +32,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                 
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_components_post' ),
+                    'callback'            => array( $this, 'create_component' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -72,7 +72,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_components_post' ),
+                    'callback'            => array( $this, 'update_component' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -91,7 +91,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                 ), 
                 array(
                     'methods'             => \WP_REST_Server::DELETABLE,
-                    'callback'            => array( $this, 'delete_components_post' ),
+                    'callback'            => array( $this, 'delete_component' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -117,7 +117,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                 
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_subcomponents_post' ),
+                    'callback'            => array( $this, 'create_option' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -142,7 +142,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_subcomponents_post' ),
+                    'callback'            => array( $this, 'get_option' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -165,7 +165,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_subcomponents_post' ),
+                    'callback'            => array( $this, 'update_option' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -188,7 +188,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
                 ), 
                 array(
                     'methods'             => \WP_REST_Server::DELETABLE,
-                    'callback'            => array( $this, 'delete_subcomponents_item' ),
+                    'callback'            => array( $this, 'delete_option' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -213,25 +213,22 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
         );       
     }
 
-    public function create_components_post( $request ){
+    public function create_component( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $new_component = json_decode($request->get_body(),true);
-                if(in_array( $new_component['type'],['simple','advance'])){
-                    $new_component['data'] = [];
-                    array_push($meta["materials"][$material_id]['data'],$new_component);
-                    $update = update_post_meta($config_id,'aso-configs-meta',$meta);
-                    if($update === true){
-                        return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
-                    }else{
-                        return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
-                    }
+                $new_component['data'] = [];
+                array_push($meta["materials"][$material_id]['data'],$new_component);
+                $update = update_post_meta($config_id,'aso-configs-meta',$meta);
+                if($update === true){
+                    return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
                 }else{
                     return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
                 }
+                
             }else{
                 return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
             }
@@ -275,7 +272,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function update_components_post( $request ){
+    public function update_component( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
@@ -283,7 +280,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $component = json_decode($request->get_body(),true);
-                if(isset($meta['materials'][$material_id]) && (isset($meta['materials'][$material_id]['data'][$component_id]) && in_array($component['type'],['simple','advance']))){
+                if(isset($meta['materials'][$material_id]) && isset($meta['materials'][$material_id]['data'][$component_id]) ){
                  $old_component = $meta['materials'][$material_id]['data'][$component_id];
                     if($old_component !== $component){
                         $meta['materials'][$material_id] ['data'][$component_id]= $component;
@@ -313,7 +310,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function delete_components_post( $request ){
+    public function delete_component( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
@@ -340,7 +337,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function create_subcomponents_post( $request ){
+    public function create_option( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
@@ -371,7 +368,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function get_subcomponents_post( $request ){
+    public function get_option( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
@@ -400,7 +397,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function update_subcomponents_post ( $request ){
+    public function update_option ( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
@@ -441,7 +438,7 @@ class ASO_components_With_Sub_Component extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function delete_subcomponents_item( $request ){
+    public function delete_option( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');

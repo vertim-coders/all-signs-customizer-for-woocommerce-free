@@ -9,7 +9,7 @@ use WP_REST_Response;
 /**
  * REST_API Handler
  */
-class ASO_Materials_No_Sub_Component extends WP_REST_Controller {
+class ASO_Materials_Simple extends WP_REST_Controller {
 
     /**
      * [__construct description]

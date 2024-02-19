@@ -2,12 +2,13 @@
 namespace ASO;
 
 use ASO\Api\Admin\ASO_Api_Configs;
-use ASO\Api\Admin\ASO_Api_Colors_palettes;
+use ASO\Api\Admin\ASO_Api_Manage_colors;
 use ASO\Api\Admin\ASO_Api_Manage_cliparts;
 use ASO\Api\Admin\ASO_Api_Manage_fonts;
 use ASO\Api\Admin\ASO_Api_Manage_sizes;
 use ASO\Api\Admin\ASO_Api_Materials;
-use ASO\Api\Admin\Materials\ASO_Materials_No_Sub_Component;
+use ASO\Api\Admin\Materials\ASO_Materials_Simple;
+use ASO\Api\Admin\Materials\ASO_Materials_Advance;
 use WP_REST_Controller;
 
 /**
@@ -36,7 +37,7 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Configs'  ) ) {
             require_once __DIR__ . '/Api/Admin/Configs.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Colors_palettes'  ) ) {
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Manage_colors'  ) ) {
             require_once __DIR__ . '/Api/Admin/Manage-Colors-palettes.php';
         }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Manage_cliparts'  ) ) {
@@ -51,8 +52,11 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Materials'  ) ) {
             require_once __DIR__ . '/Api/Admin/Materials.php';
         }
-        if ( !class_exists( __NAMESPACE__ . '\ASO\Api\Admin\Materials\ASO_Materials_No_Sub_Component'  ) ) {
-            require_once __DIR__ . '/Api/Admin/Materials/No-Component.php';
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Materials\ASO_Api_Materials_Simple'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Materials/Simple.php';
+        }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Materials\ASO_Api_Materials_Advance'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Materials/Advance.php';
         }
     }
 
@@ -66,10 +70,11 @@ class Api extends WP_REST_Controller {
         (new ASO_Api_Configs())->register_routes();
         (new ASO_Api_Manage_sizes())->register_routes();
         (new ASO_Api_Manage_fonts())->register_routes();
-        (new ASO_Api_Colors_palettes())->register_routes();
+        (new ASO_Api_Manage_colors())->register_routes();
         (new ASO_Api_Manage_cliparts())->register_routes();
         (new ASO_Api_Materials())->register_routes();
-        (new ASO_Materials_No_Sub_Component())->register_routes();
+        (new ASO_Materials_Simple())->register_routes();
+        (new ASO_Materials_Advance())->register_routes();
     }
 
 }

@@ -142,8 +142,8 @@ class ASO_Api_Materials extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $new_material = json_decode($request->get_body(),true);
-                if(in_array($new_material['type'],['no-sub-component','with-sub-component'])){
-                    if($new_material['type'] === 'no-sub-component'){
+                if(in_array($new_material['type'],['simple','advance'])){
+                    if($new_material['type'] === 'simple'){
                         $material = [
                             "name"=>$new_material['name'],
                             "description"=>$new_material['description'],
@@ -155,11 +155,12 @@ class ASO_Api_Materials extends WP_REST_Controller {
                                 'borders'=>[],
                                 'shapes'=>[],
                                 'fixingMethods'=>[],
-                                'colors'=>[]
+                                'colors'=>[],
+                                "additionalOptions"=>[]
                             ]
                         ];
                         array_push($meta['materials'],$material);
-                    }else{
+                    }elseif ($new_material['type'] === 'advance'){
                         $material = [
                             "name"=>$new_material['name'],
                             "description"=>$new_material['description'],
