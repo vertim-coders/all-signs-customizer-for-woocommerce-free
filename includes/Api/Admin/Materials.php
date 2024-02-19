@@ -200,7 +200,7 @@ class ASO_Api_Materials extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $material = json_decode($request->get_body(),true);
-                if(isset($meta['materials'][$material_id]) && in_array($material['type'],['no-sub-component','with-sub-component'])){
+                if(isset($meta['materials'][$material_id]) && in_array($material['type'],['simple','advance'])){
                     $old_material = $meta['materials'][$material_id];
                     if($old_material !== $material){
                         $old_material["name"] = $material['name'];
