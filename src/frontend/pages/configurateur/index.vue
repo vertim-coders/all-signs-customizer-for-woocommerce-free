@@ -73,7 +73,7 @@
                         </div>
 
                         <div class="aso-h-[315px] lg:aso-h-full">
-                            <img class="aso-h-[100%]" src="../../../../assets/images/img/image.png" alt="image">
+                            <img class="aso-h-[100%]" src="../../../../assets/images/img_configurator.png" alt="image">
                         </div>
 
                         <div class="aso-absolute aso-hidden lg:aso-flex aso-w-full aso-h-0.5 -aso-bottom-4 aso-bg-black">
@@ -261,7 +261,7 @@
     
                                 <div class="aso-translate-y-[20%]">
     
-                                    <img class="aso-w-36" src="../../../../assets/images/img/Rectangle_1 3683.svg" alt="">
+                                    <img class="aso-w-36" src="../../../../assets/icons/ic_plastic.svg" alt="">
     
                                 </div>
     
@@ -287,7 +287,7 @@
     
                                 <div class="aso-translate-y-[20%]">
     
-                                    <img class="aso-w-36" src="../../../../assets/images/img/Rectangle_2 3683.svg" alt="">
+                                    <img class="aso-w-36" src="../../../../assets/icons/ic_wood.svg" alt="">
     
                                 </div>
     
@@ -343,7 +343,7 @@
     
                                 <div class="aso-translate-y-[20%]">
     
-                                    <img class="aso-w-36" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+                                    <img class="aso-w-36" src="../../../../assets/icons/ic_mat_engraving.svg" alt="">
     
                                 </div>
     
@@ -370,7 +370,7 @@
     
                                 <div class="aso-translate-y-[20%]">
     
-                                    <img class="aso-w-36" src="../../../../assets/images/img/Rectangle_3 3683.svg" alt="">
+                                    <img class="aso-w-36" src="../../../../assets/icons/ic_mat_engraving.svg" alt="">
     
                                 </div>
     
@@ -554,7 +554,7 @@
     
                                 <div class="aso-translate-y-[20%]">
                                 
-                                    <img class="aso-w-36" src="../../../../assets/images/img/Rectangle 3683.svg" alt="">
+                                    <img class="aso-w-36" src="../../../../assets/icons/ic_fixing_adhesive.svg" alt="">
     
                                 </div>
                                 
@@ -579,7 +579,7 @@
     
                                 <div class="aso-translate-y-[20%]">
     
-                                    <img class="aso-w-36" src="../../../../assets/images/img/Rectangle 3683.svg" alt="">
+                                    <img class="aso-w-36" src="../../../../assets/icons/ic_fixing_adhesive.svg" alt="">
     
                                 </div>
     
@@ -778,7 +778,7 @@
                                 </div>
                             </div>
 
-                            <div v-show="settingText" class="aso-flex aso-justify-between aso-bg-white aso-p-4 aso-space-x-4 aso-items-center aso-rounded">
+                            <div v-show="settingText" class="aso-space-x-4 aso-p-4 aso-flex">
                                 <div class="aso-flex aso-w-1/3 aso-justify-center aso-font-bold aso-text-center aso-text-sm">
                                     Suggestion
                                 </div>
@@ -927,7 +927,7 @@ const isTextVisible = ref(false);
 const isBorderVisible = ref(false);
 const isImageVisible = ref(false);
 const settingText = ref(false);
-const contentVisible = ref(true);
+const contentVisible = ref(false);
 
 const color = () => {
   isColorVisible.value = !isColorVisible.value;
@@ -1180,7 +1180,4 @@ const image = () => {
     isProductVisible.value = false;
   }
 };
-const addText = () => {
-    console.log('azerty');
-}
 </script>

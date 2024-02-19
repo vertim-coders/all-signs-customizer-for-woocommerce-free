@@ -7,31 +7,29 @@
                </div>
                <div class="aso-flex aso-space-x-2 aso-w-4/4">
                     <div class="aso-w-1/4 aso-relative">
-                        <input name="" id="" class="aso-w-[95%] aso-h-[40px] aso-absolute" placeholder="Search name configuration">
-                        <button class="aso-absolute aso-w-fit aso-h-fit aso-border-none aso-bg-[#F7F8F8] aso-rounded aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-translate-y-2.5 aso-right-4">
-                            <svg class="aso-w-4 aso-h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 10.5C6 10.3674 6.05268 10.2402 6.14645 10.1464C6.24021 10.0527 6.36739 10 6.5 10H9.5C9.63261 10 9.75979 10.0527 9.85355 10.1464C9.94732 10.2402 10 10.3674 10 10.5C10 10.6326 9.94732 10.7598 9.85355 10.8536C9.75979 10.9473 9.63261 11 9.5 11H6.5C6.36739 11 6.24021 10.9473 6.14645 10.8536C6.05268 10.7598 6 10.6326 6 10.5ZM4 7.5C4 7.36739 4.05268 7.24021 4.14645 7.14645C4.24021 7.05268 4.36739 7 4.5 7H11.5C11.6326 7 11.7598 7.05268 11.8536 7.14645C11.9473 7.24021 12 7.36739 12 7.5C12 7.63261 11.9473 7.75979 11.8536 7.85355C11.7598 7.94732 11.6326 8 11.5 8H4.5C4.36739 8 4.24021 7.94732 4.14645 7.85355C4.05268 7.75979 4 7.63261 4 7.5ZM2 4.5C2 4.36739 2.05268 4.24021 2.14645 4.14645C2.24021 4.05268 2.36739 4 2.5 4H13.5C13.6326 4 13.7598 4.05268 13.8536 4.14645C13.9473 4.24021 14 4.36739 14 4.5C14 4.63261 13.9473 4.75979 13.8536 4.85355C13.7598 4.94732 13.6326 5 13.5 5H2.5C2.36739 5 2.24021 4.94732 2.14645 4.85355C2.05268 4.75979 2 4.63261 2 4.5Z" fill="#586374"/>
-                            </svg>
+                        <input type="type" name="" id="" class="aso-w-[95%] aso-p-2 aso-text-[12px] aso-h-[30px] aso-absolute" placeholder="Search name configuration">
+                        <button class="aso-bg-transparent aso-cursor-pointer aso-absolute aso-w-fit aso-h-fit aso-border-none aso-translate-y-1.5 aso-right-4">
+                            <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_search.svg" alt="">
                         </button>
                     </div>
                     <div class="aso-w-1/4">
-                        <select name="" id="" class="aso-w-[95%] aso-h-[40px]">
+                        <select name="" id="" class="aso-w-[95%] aso-h-[30px]">
                             <option selected>filter by mode</option>
                         </select>
                     </div>
                     <div class="aso-w-1/4">
-                        <select name="" id="" class="aso-w-[95%] aso-h-[40px]">
+                        <select name="" id="" class="aso-w-[95%] aso-h-[30px] aso-p-2 aso-text-[12px]">
                             <option selected>filter by product type</option>
                         </select>
                     </div>
                     <div class="aso-w-1/4">
-                        <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-6 aso-space-x-2 aso-p-2 aso-border-none aso-text-white aso-cursor-pointer" @click="addConfig">
-                            <svg class="aso-w-6 aso-h-6" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-cursor-pointer" @click="addConfig">
+                            <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="plus-lg">
                                 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                                 </g>
                             </svg>
-                            <div class="aso-text-[15px]">
+                            <div class="aso-text-[14px]">
                                 Add new configuration
                             </div>
                         </button>
@@ -112,7 +110,7 @@
                                 </svg>
                             </td>
                             <td class="aso-px-6 aso-py-4">
-                                <img class="aso-w-8 aso-h-8" src="../../../../assets/images/img/Rectangle 3704.svg" alt="">
+                                <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_plastic.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4">
                                 <div class="aso-flex aso-space-x-2">
@@ -171,7 +169,7 @@
                                 </svg>
                             </td>
                             <td class="aso-px-6 aso-py-4">
-                                <img class="aso-w-8 aso-h-8" src="../../../../assets/images/img/Rectangle 3704.svg" alt="">
+                                <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_plastic.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4">
                                 <div class="aso-flex aso-space-x-2">
@@ -229,7 +227,7 @@
                                 </svg>
                             </td>
                             <td class="aso-px-6 aso-py-4">
-                                <img class="aso-w-8 aso-h-8" src="../../../../assets/images/img/Rectangle 3704.svg" alt="">
+                                <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_plastic.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4">
                                 <div class="aso-flex aso-space-x-2">
