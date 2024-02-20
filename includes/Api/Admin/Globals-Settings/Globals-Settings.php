@@ -426,8 +426,6 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       return rest_ensure_response(["success"=>false,"message"=>__('Fixing Methods not found',"ASO")]);
     }   
   }
-    
-  }
    /**
    * get all borders function 
    * 
