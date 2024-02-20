@@ -178,7 +178,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-  public function get_manage_cliparts_config_post($request){
+    public function get_manage_cliparts_config_post($request){
     $id=$request->get_param('clipart_id');
     if($id!=0) {
         $meta_value = get_post_meta($id, 'aso-manages-cliparts-meta', true);
@@ -194,12 +194,10 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
             return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
         }
 
-    }else{
-       return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+        }else{
+        return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+        }
     }
-        
-        
-}
     /**
      * Update of cliparts
      * @param \WP_REST_Request $request Full details about the request.

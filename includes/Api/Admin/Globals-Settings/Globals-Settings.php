@@ -134,6 +134,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'callback'            => array( $this, 'update_shapes' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
+        array(
+          'methods'             => \WP_REST_Server::CREATABLE,
+          'callback'            => array( $this, 'save_shapes' ),
+          'permission_callback' => array( $this, 'get_config_permissions_check' ),
+        )
       )
     );
   
@@ -151,6 +156,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'callback'            => array( $this, 'update_fixing_methods' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
+        array(
+          'methods'             => \WP_REST_Server::CREATABLE,
+          'callback'            => array( $this, 'save_fixing_methods' ),
+          'permission_callback' => array( $this, 'get_config_permissions_check' ),
+        )
       )
     );
     register_rest_route(
@@ -167,6 +177,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'callback'            => array( $this, 'update_borders' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
+        array(
+          'methods'             => \WP_REST_Server::CREATABLE,
+          'callback'            => array( $this, 'save_borders' ),
+          'permission_callback' => array( $this, 'get_config_permissions_check' ),
+        )
+        
       )
     );
   }
@@ -190,12 +206,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         }
       }
       if($option){
-        return rest_ensure_response(["success" => "License key added successfully"]);
+        return rest_ensure_response(["success" => __("License key added successfully","ASO")]);
       }else{
-        return rest_ensure_response(["message" => "Adding license key failed"]);
+        return rest_ensure_response(["message" => __("Adding license key failed","ASO")]);
       }
     }
-    return rest_ensure_response(["message" => "License key not found"]);
+    return rest_ensure_response(["message" => __("License key not found","ASO")]);
   }
 
   /**
@@ -215,7 +231,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     }
   
     if($option==false || empty($option) ){
-      return rest_ensure_response(["message" => "No license available"]);
+      return rest_ensure_response(["message" => __("No license available","ASO")]);
     }else{
       return rest_ensure_response(['licenseKey'=>$option]);
     }
@@ -231,12 +247,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       if(isset($params->configPage)){
           $option = update_option("aso_config_page",$params->configPage);
           if($option){
-              return rest_ensure_response(["success" => "Config page added successfully"]);
+              return rest_ensure_response(["success" => __("Config page added successfully","ASO")]);
           }else{
-              return rest_ensure_response(["message" => "Adding Config page failed"]);
+              return rest_ensure_response(["message" => __("Adding Config page failed","ASO")]);
           }
       }
-      return rest_ensure_response(["message" => "Config page not found"]);
+      return rest_ensure_response(["message" => __("Config page not found","ASO")]);
   }
 
   /**
@@ -245,12 +261,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    *
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function get_config_page( $request ) {
+  public function get_config_page() {
 
     $option = get_option("aso_config_page");
     
     if($option == false || empty($option) ){
-        return rest_ensure_response(["message" => "Config page not found"]);
+        return rest_ensure_response(["message" => __("Config page not found","ASO")]);
     }else{
         return rest_ensure_response($option);
     }
@@ -300,11 +316,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       if($page_id){
         return rest_ensure_response($page_id);
       }else{
-        return rest_ensure_response(["message"=>"Page was not created"]);
+        return rest_ensure_response(["message"=>__("Page was not created","ASO")]);
       }
 
     }else{
-      return rest_ensure_response(["message"=>"Page was not created"]);
+      return rest_ensure_response(["message"=>__("Page was not created","ASO")]);
     } 
   }
   /**
@@ -314,7 +330,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function update_output_options_globals_settings($request){
-
+    $params=json_decode($request->get_body());
   }
    /**
    * get all shapes function 
@@ -323,8 +339,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function get_shapes($request){
-     
-    
+    $all_shapes = get_option("aso-all-shapes",[]);
+    return rest_ensure_response($all_shapes);  
   }
     /**
    * Update all shape function 
@@ -333,6 +349,35 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function update_shapes($request){
+    $shape_id=$request->get_param('shape_id');
+    $all_shapes= json_decode($request->get_body());
+    if($all_shapes[$shape_id]){
+      return rest_ensure_response($all_shapes[$shape_id]);      
+    }else{
+      return rest_ensure_response(["success"=>false,"message"=>__('Shape not found',"ASO")]);
+    }
+    
+  }
+   /**
+   * Save all shape function 
+   * 
+   * @param  \WP_REST_Request $request Full details about the request.
+   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+   */
+  public function save_shapes($request){
+    $shape_id=$request->get_param('shape_id');
+    $all_shapes= json_decode($request->get_body());
+    if(isset($all_shapes[$shape_id])){
+      $save = get_option("aso_all_shapes");
+      if($save){
+          return rest_ensure_response(["success" => __(" Shapes added successfully","ASO")]);
+      }else{
+          return rest_ensure_response(["message" => __("Adding Shapes failed","ASO")]);
+      }
+    }else{
+      return rest_ensure_response(["success"=>false,"message"=>__('Shapes not found',"ASO")]);
+    }   
+    
     
   }
    /**
@@ -342,7 +387,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function get_fixing_methods($request){
-     
+    $all_fixingMethods = get_option("aso-all-fixingMethods",[]);
+    return rest_ensure_response($all_fixingMethods);  
     
   }
     /**
@@ -352,6 +398,34 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function update_fixing_methods($request){
+    $fixingMethod_id=$request->get_param('fixingMethod_id');
+    $all_fixingMethods= json_decode($request->get_body());
+    if($all_fixingMethods[$fixingMethod_id]){
+      return rest_ensure_response($all_fixingMethods[$fixingMethod_id]);      
+    }else{
+      return rest_ensure_response(["success"=>false,"message"=>__('fixing Method not found',"ASO")]);
+    }
+  }
+  /**
+   * save all fixing methods function 
+   * 
+   * @param  \WP_REST_Request $request Full details about the request.
+   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+   */
+  public function save_fixing_methods($request){
+    $fixingMethod_id=$request->get_param('fixingMethod_id');
+    $all_fixingMethods= json_decode($request->get_body());
+    if(isset($all_fixingMethods[$fixingMethod_id])){
+      $save = get_option("aso_all_fixingMethods");
+      if($save){
+          return rest_ensure_response(["success" => __(" Fixing Methods added successfully","ASO")]);
+      }else{
+          return rest_ensure_response(["message" => __("Adding Fixing Methods failed","ASO")]);
+      }
+    }else{
+      return rest_ensure_response(["success"=>false,"message"=>__('Fixing Methods not found',"ASO")]);
+    }   
+  }
     
   }
    /**
@@ -361,8 +435,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function get_borders($request){
-     
-    
+    $all_borders = get_option("aso-all-borders",[]);
+    return rest_ensure_response($all_borders);     
   }
     /**
    * Update all border function 
@@ -371,8 +445,33 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function update_borders($request){
-    
+    $border_id=$request->get_param('border_id');
+    $all_borders= json_decode($request->get_body());
+    if($all_borders[$border_id]){
+      return rest_ensure_response($all_borders[$border_id]);      
+    }else{
+      return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
+    } 
   }
-
+   /**
+   * get all borders function 
+   * 
+   * @param  \WP_REST_Request $request Full details about the request.
+   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+   */
+  public function save_borders($request){
+    $border_id=$request->get_param('border_id'); 
+    $all_borders= json_decode($request->get_body()); 
+    if(isset($all_borders[$border_id])){
+      $save = get_option("aso_all_border");
+      if($save){
+          return rest_ensure_response(["success" => __(" Border added successfully","ASO")]);
+      }else{
+          return rest_ensure_response(["message" => __("Adding Border failed","ASO")]);
+      }
+    }else{
+      return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
+    }   
+  }
 }
 
