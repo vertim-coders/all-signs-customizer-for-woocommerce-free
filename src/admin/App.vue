@@ -4,7 +4,11 @@
         <Sidebar/>
         <!--<Index class="aso-w-[91%]"/>-->
         <!--<Material class="aso-w-[91%]"/>-->
-        <Sizes class="aso-w-[91%]"/>
+        <!--<Sizes class="aso-w-[91%]"/>-->
+        <!--<Borders class="aso-w-[91%]"/>-->
+        <!--<Colors class="aso-w-[91%]"/>-->
+        <!--<Shapes class="aso-w-[91%]"/>-->
+        <Fixing class="aso-w-[91%]"/>
         <router-view />
     </div>
   </div>
@@ -17,8 +21,11 @@ import '@/frontend/utils/tailwindcss.min.js'
 import Sidebar from './pages/components/sidebar.vue'
 //import Index from './pages/configuration/index.vue'
 //import Material from './pages/configuration/materials/material.vue'
-import Sizes from './pages/configuration/materials/simple/components/sizes.vue'
-
+//import Sizes from './pages/configuration/materials/simple/components/sizes.vue'
+//import Borders from './pages/configuration/materials/simple/components/borders.vue'
+//import Colors from './pages/configuration/materials/simple/components/colors.vue'
+//import Shapes from './pages/configuration/materials/simple/components/shapes.vue'
+import Fixing from './pages/configuration/materials/simple/components/fixing-methods.vue'
 tailwind.config ={
     prefix: 'aso-',
     corePlugins: {

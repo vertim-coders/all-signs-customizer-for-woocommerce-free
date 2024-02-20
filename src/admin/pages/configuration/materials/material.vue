@@ -80,7 +80,7 @@
                                     <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-space-x-2">
                                 <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso--items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">P</span> 
                                 </div>
@@ -88,21 +88,21 @@
                                     Plastic
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
+                            <td class="aso-px-6 aso-py-2 aso-text-[11px]">
                                 Plastic, also known .....
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-items-center aso-rounded-lg aso-p-1 aso-text-[12px] aso-px-2 aso-bg-[#EEF5FF] aso-text-[#000000] aso-border-none">
-                                    simple
+                                <div class="aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                    advanced
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
@@ -131,7 +131,7 @@
                                     <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-space-x-2">
                                 <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso--items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">P</span> 
                                 </div>
@@ -139,21 +139,21 @@
                                     Plastic
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
+                            <td class="aso-px-6 aso-py-2 aso-text-[11px]">
                                 Plastic, also known .....
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-items-center aso-rounded-lg aso-p-1 aso-text-[12px] aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                <div class="aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     advanced
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
@@ -182,7 +182,7 @@
                                     <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-space-x-2">
                                 <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso--items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">P</span> 
                                 </div>
@@ -190,21 +190,21 @@
                                     Plastic
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
+                            <td class="aso-px-6 aso-py-2 aso-text-[11px]">
                                 Plastic, also known .....
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
                             <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-items-center aso-rounded-lg aso-p-1 aso-text-[12px] aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                <div class="aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     advanced
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
@@ -244,47 +244,46 @@
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
                 Add component
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4">
+            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-pb-12">
                 <div class="aso-flex">
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[14px]">
                         <label for="" class="aso-font-normal">component name</label><br>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
+                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                     </div>
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label><br>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
+                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-py-10">
+                <div class="aso-flex aso-py-4">
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label><br>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-2 aso-rounded aso-px-3 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[12px] aso-cursor-pointer">upload icon</button>
+                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-3 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload icon</button>
                         </div>
                         
                     </div>
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload PopupImg</label><br>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-2 aso-rounded aso-px-3 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[12px] aso-cursor-pointer">upload PopupImg</button>
+                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-3 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
                         </div>
                     </div>
                 </div>
-                
-           </div>
-           <div>
-                <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-w-[100%] aso-space-y-2 aso-flex aso-flex-col">
+            </div>
+            <div>
+                <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-font-bold">Behevior (type)</label>
-                    <select name="" id="" class="aso-w-full aso-h-[40px] aso-font-normal">
+                    <select name="" id="" class="aso-w-full aso-h-[30px] aso-font-normal">
                         <option selected class="aso-font-normal">select type</option>
                         <option>Simple</option>
                         <option>Advance</option>
                     </select>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="">
                     <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-border-[1px] aso-rounded aso-px-8 aso-p-2 aso-border-black aso-border-solid hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer" @click="back">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,6 +312,10 @@
   const addComponent = () => {
     isNewComponent.value = true;
     configMaterial.value = false;
+  }
+  const back = () => {
+    isNewComponent.value = false;
+    configMaterial.value = true;
   }
   </script>
   

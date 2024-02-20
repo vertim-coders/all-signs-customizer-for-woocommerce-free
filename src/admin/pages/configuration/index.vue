@@ -70,7 +70,7 @@
                                     <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-space-x-2">
                                 <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">AS</span> 
                                 </div>
@@ -78,10 +78,10 @@
                                     Acrylic Signs
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
+                            <td class="aso-px-6 aso-py-2 aso-text-[11px]">
                                 Acrylic signs, also known .....
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <svg class="aso-w-8 aso-h-8" viewBox="0 0 45 33" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <rect width="45" height="33" fill="url(#pattern0)"/>
                                     <defs>
@@ -92,10 +92,10 @@
                                     </defs>
                                 </svg>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_plastic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-transparent aso-border-none aso-cursor-pointer">
@@ -129,7 +129,7 @@
                                     <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-space-x-2">
                                 <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">AS</span> 
                                 </div>
@@ -137,10 +137,10 @@
                                     Acrylic Signs
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
+                            <td class="aso-px-6 aso-py-2 aso-text-[11px]">
                                 Acrylic signs, also known .....
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <svg class="aso-w-8 aso-h-8" viewBox="0 0 45 33" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <rect width="45" height="33" fill="url(#pattern0)"/>
                                     <defs>
@@ -151,10 +151,10 @@
                                     </defs>
                                 </svg>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_plastic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-transparent aso-border-none aso-cursor-pointer">
@@ -187,7 +187,7 @@
                                     <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-space-x-2">
                                 <div class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">AS</span> 
                                 </div>
@@ -195,10 +195,10 @@
                                     Acrylic Signs
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-text-[11px]">
+                            <td class="aso-px-6 aso-py-2 aso-text-[11px]">
                                 Acrylic signs, also known .....
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <svg class="aso-w-8 aso-h-8" viewBox="0 0 45 33" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <rect width="45" height="33" fill="url(#pattern0)"/>
                                     <defs>
@@ -209,10 +209,10 @@
                                     </defs>
                                 </svg>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_plastic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-transparent aso-border-none aso-cursor-pointer">
@@ -245,7 +245,7 @@
                                     <option value="">10</option>
                                 </select>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
+                            <td class="aso-px-6 aso-py-6 aso-flex aso-space-x-2">
                                 <div class="aso-flex aso-space-x-1">
                                         <div>
                                             01
@@ -264,15 +264,15 @@
                                         </div>
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                             <span class="aso-text-[#AAAAAA]">&lt;&lt;  &lt;</span> page 1 sur 8  > <span class="aso-text-[#AAAAAA]"> >> </span> 
                             </td>
                         </tr>
@@ -289,27 +289,27 @@
                 <div class="aso-flex">
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[14px]">
                         <label for="" class="aso-font-normal">Name configuration</label><br>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
+                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                     </div>
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label><br>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
+                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-py-10">
+                <div class="aso-flex aso-pb-12">
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label><br>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit  aso-p-2 aso-rounded aso-px-6 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[12px] aso-cursor-pointer">upload icon</button>
+                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit  aso-p-1.5 aso-rounded aso-px-4 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload icon</button>
                         </div>
                         
                     </div>
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload PopupImg</label><br>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit  aso-p-2 aso-rounded aso-px-6 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[12px] aso-cursor-pointer">upload PopupImg</button>
+                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-4 aso-text-white aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
                         </div>
                     </div>
                 </div>

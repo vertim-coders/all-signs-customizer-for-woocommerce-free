@@ -133,7 +133,7 @@
                             </g>
                         </svg>
                         <div class="aso-text-[14px]">
-                            Add new SIZE
+                            Add new size
                         </div>
                     </button>
                 </div>
@@ -171,27 +171,27 @@
                                     100X50mm
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-items-center aso-rounded-lg aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                            <td class="aso-px-6 aso-py-3 aso-flex aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     100 mm
                                 </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-4 aso-space-x-2">
-                                <div class="aso-w-[35%] aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
                                     50 mm
                                 </div>
                             </td>
-                            <td class="aso-px-6  aso-text-[12px]  aso-py-4">
-                                <div class="aso-w-[25%] aso-px-2 aso-p-1 aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
+                            <td class="aso-px-6  aso-text-[12px]  aso-py-2">
+                                <div class="aso-w-fit aso-px-2 aso-p-1 aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
                                     NONE
                                 </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-4 aso-space-x-2">
-                                <div class="aso-w-[15%] aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     25$
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
@@ -212,27 +212,27 @@
                                     100X50mm
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-items-center aso-rounded-lg aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                            <td class="aso-px-6 aso-py-3 aso-flex aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     100 mm
                                 </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-4 aso-space-x-2">
-                                <div class="aso-w-[35%] aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
                                     50 mm
                                 </div>
                             </td>
-                            <td class="aso-px-6  aso-text-[12px]  aso-py-4">
-                                <div class="aso-w-[25%] aso-px-2 aso-p-1 aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
+                            <td class="aso-px-6  aso-text-[12px]  aso-py-2">
+                                <div class="aso-w-fit aso-px-2 aso-p-1 aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
                                     NONE
                                 </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-4 aso-space-x-2">
-                                <div class="aso-w-[15%] aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     25$
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
@@ -253,27 +253,27 @@
                                     100X50mm
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-flex aso-space-x-2">
-                                <div class="aso-items-center aso-rounded-lg aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                            <td class="aso-px-6 aso-py-3 aso-flex aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     100 mm
                                 </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-4 aso-space-x-2">
-                                <div class="aso-w-[35%] aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
                                     50 mm
                                 </div>
                             </td>
-                            <td class="aso-px-6  aso-text-[12px]  aso-py-4">
-                                <div class="aso-w-[25%] aso-px-2 aso-p-1 aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
+                            <td class="aso-px-6  aso-text-[12px]  aso-py-2">
+                                <div class="aso-w-fit aso-px-2 aso-p-1 aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
                                     NONE
                                 </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-4 aso-space-x-2">
-                                <div class="aso-w-[15%] aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
+                                <div class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     25$
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-4">
+                            <td class="aso-px-6 aso-py-2">
                                 <div class="aso-flex aso-space-x-2">
                                     <div>
                                         <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
@@ -304,44 +304,44 @@
                         </label>
                     </div>
                 </div>
-                <div class="aso-py-12">
+                <div class="aso-py-10">
                     <div class="aso-flex">
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-font-normal">Width label</label>
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
+                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                         </div>
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-font-normal">Height label</label>
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px]">
+                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                         </div>
                     </div>
-                    <div class="aso-flex aso-py-8">
+                    <div class="aso-flex aso-py-2">
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-font-normal">Min width</label>
-                            <div class="aso-relative">
-                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                            <div class="">
+                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                             </div>
                             
                         </div>
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-font-normal">Max width</label>
-                            <div class="aso-relative">
-                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                            <div class="">
+                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                             </div>
                         </div>
                     </div>
-                    <div class="aso-flex aso-py-8">
+                    <div class="aso-flex aso-py-1">
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-font-normal">Min height</label>
-                            <div class="aso-relative">
-                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                            <div class="">
+                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                             </div>
                             
                         </div>
                         <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-font-normal">Max height</label>
-                            <div class="aso-relative">
-                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                            <div class="">
+                                <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                             </div>
                         </div>
                     </div>
@@ -360,38 +360,38 @@
                 <div class="aso-flex aso-px-4">
                     <div class="aso-w-full aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Select Size</label>
-                        <select type="text" class="aso-rounded aso-w-full aso-h-[35px]">
+                        <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                             
                         </select>
                     </div>
                 </div>
-                <div class="aso-flex aso-py-8">
+                <div class="aso-flex aso-py-4">
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Text number</label>
-                        <div class="aso-relative">
-                            <input type="text" placeholder="0" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                        <div class="">
+                            <input type="text" placeholder="0" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                         </div>
                         
                     </div>
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Max text char</label>
-                        <div class="aso-relative">
-                            <input type="text"  class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                        <div class="">
+                            <input type="text"  class="aso-rounded aso-w-[80%] aso-h-[30px]">
                         </div>
                     </div>
                 </div>
-                <div class="aso-flex aso-py-8">
+                <div class="aso-flex aso-py-4">
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Base Price</label>
                         <div class="aso-relative">
-                            <input type="text" placeholder="$ 25" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                            <input type="text" placeholder="$ 25" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                         </div>
                         
                     </div>
                     <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Char Price</label>
                         <div class="aso-relative">
-                            <input type="text" placeholder="$ 25" class="aso-rounded aso-w-[80%] aso-h-[40px] aso-absolute">
+                            <input type="text" placeholder="$ 25" class="aso-rounded aso-w-[80%] aso-h-[30px]">
                         </div>
                         
                     </div>
@@ -425,6 +425,10 @@
     const newSize = () => {
         listSize.value = false;
         selectSize.value = true;
+    }
+    const back = () => {
+        listSize.value = true;
+        selectSize.value = false;
     }
     const isCheckbox = ref(true);
     const handleTransform = ref('translateX(100%)');
