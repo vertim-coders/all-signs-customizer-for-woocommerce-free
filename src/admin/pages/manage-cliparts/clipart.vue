@@ -1,24 +1,24 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-show="listGroup">
+        <div class="aso-space-y-1" v-show="listClipart">
             <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2">
                 <div class="aso-text-[16px] aso-font-bold">
-                    Size group
+                    Clipart group
                 </div>
                 <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../assets/icons/ic_crochet.svg" alt="">
                     <div class="aso-text-[14px] aso-text-[#292C33] aso-translate-y-0.5">
-                        GROUP-SIZE0001
+                        Plants & nature
                     </div>
             </div>
             <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
-                <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addSize">
+                <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addClipart">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Add new size
+                        Add new clipart
                     </div>
                 </button>
             </div>
@@ -26,17 +26,17 @@
                 <table class="aso-text-center aso-border aso-border-collapse aso-border-0 aso-w-full">
                     <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
                         <tr class="">
+                            <th scope="col" class="aso-px-6 aso-py-3">
+                                
+                            </th>
                             <th scope="col" class="aso-font-normal aso-px-6 aso-py-3">
                                 Title
                             </th>
                             <th scope="col" class="aso-font-normal aso-px-6 aso-py-3">
-                                width
+                                Image
                             </th>
                             <th scope="col" class="aso-font-normal aso-px-6 aso-py-3">
-                                height
-                            </th>
-                            <th scope="col" class="aso-font-normal aso-px-6 aso-py-3">
-                                thickness
+                                Additional Price
                             </th>
                             <th scope="col" class="aso-font-normal aso-px-6 aso-py-3">
                                 Action
@@ -47,23 +47,23 @@
                     <tbody class="aso-bg-white">
                     
                         <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            
+                            <td class="aso-w-[5%] aso-p-4">
+                                <span class="aso-flex aso-justify-center">
+                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
+                                </span>
+                            </td>
                             <td class="aso-px-6 aso-text-[14px] aso-py-2">
-                                100X50mm
+                                Plants 1
+                            </td>
+                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
+                                <svg class="aso-w-5 aso-h-5" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0.5H9V9.5H0V0.5ZM15.5 0.5C18 0.5 20 2.5 20 5C20 7.5 18 9.5 15.5 9.5C13 9.5 11 7.5 11 5C11 2.5 13 0.5 15.5 0.5ZM4.5 12.5L9 20.5H0L4.5 12.5ZM17 15.5H20V17.5H17V20.5H15V17.5H12V15.5H15V12.5H17V15.5Z" fill="black"/>
+                                </svg>
+
                             </td>
                             <td class="aso-px-6 aso-text-[12px] aso-py-2 aso-space-x-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    100 mm
-                                </span>
-                            </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    50 mm
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-text-[12px] aso-py-2">
-                                <span class="aso-w-fit aso-px-2 aso-p-1 aso-text-center aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
-                                    NONE
+                                    250 $
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center">
@@ -80,23 +80,23 @@
                             </td>
                         </tr>
                         <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            
+                            <td class="aso-w-[5%] aso-p-4">
+                                <span class="aso-flex aso-justify-center">
+                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
+                                </span>
+                            </td>
                             <td class="aso-px-6 aso-text-[14px] aso-py-2">
-                                100X50mm
+                                Plants 1
+                            </td>
+                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
+                                <svg class="aso-w-5 aso-h-5" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0.5H9V9.5H0V0.5ZM15.5 0.5C18 0.5 20 2.5 20 5C20 7.5 18 9.5 15.5 9.5C13 9.5 11 7.5 11 5C11 2.5 13 0.5 15.5 0.5ZM4.5 12.5L9 20.5H0L4.5 12.5ZM17 15.5H20V17.5H17V20.5H15V17.5H12V15.5H15V12.5H17V15.5Z" fill="black"/>
+                                </svg>
+
                             </td>
                             <td class="aso-px-6 aso-text-[12px] aso-py-2 aso-space-x-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    100 mm
-                                </span>
-                            </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    50 mm
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-text-[12px] aso-py-2">
-                                <span class="aso-w-fit aso-px-2 aso-p-1 aso-text-center aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
-                                    NONE
+                                    250 $
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center">
@@ -113,23 +113,23 @@
                             </td>
                         </tr>
                         <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            
+                            <td class="aso-w-[5%] aso-p-4">
+                                <span class="aso-flex aso-justify-center">
+                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
+                                </span>
+                            </td>
                             <td class="aso-px-6 aso-text-[14px] aso-py-2">
-                                100X50mm
+                                Plants 1
+                            </td>
+                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
+                                <svg class="aso-w-5 aso-h-5" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0.5H9V9.5H0V0.5ZM15.5 0.5C18 0.5 20 2.5 20 5C20 7.5 18 9.5 15.5 9.5C13 9.5 11 7.5 11 5C11 2.5 13 0.5 15.5 0.5ZM4.5 12.5L9 20.5H0L4.5 12.5ZM17 15.5H20V17.5H17V20.5H15V17.5H12V15.5H15V12.5H17V15.5Z" fill="black"/>
+                                </svg>
+
                             </td>
                             <td class="aso-px-6 aso-text-[12px] aso-py-2 aso-space-x-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    100 mm
-                                </span>
-                            </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    50 mm
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-text-[12px] aso-py-2">
-                                <span class="aso-w-fit aso-px-2 aso-p-1 aso-text-center aso-rounded-lg aso-border-none aso-bg-[#F3F6F6]">
-                                    NONE
+                                    250 $
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center">
@@ -151,34 +151,36 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-1" v-show="createSize">
+        <div class="aso-space-y-1" v-show="createClipart">
             <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2">
                 <div class="aso-text-[16px] aso-font-bold">
-                    Create new size
+                    Add clipart
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                        <label for="" class="aso-font-normal">width</label>
+                        <label for="" class="aso-font-normal">Title</label>
                         <input type="text" placeholder="0 mm" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">height</label>
-                        <input type="text" placeholder="0 mm" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <label for="" class="aso-font-normal">Upload icon</label>
+                        <div class="aso-relative">
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[32px] aso-absolute">
+                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-space-x-2 aso-rounded aso-px-3 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">
+                                <span>upload Image</span>
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
-                <div class="aso-flex aso-text-[16px]">
-                    Thickness
-                    <div class="aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
-                        <label for="aso-toggle" @click="handleToggleClick2" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[110%]': isCheckbox, 'aso-bg-active': isChecked }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
-                        </label>
-                    </div>
-                </div>
-                <div class="aso-w-1/2 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                    <label for="" class="aso-font-normal">Thickness</label>
-                    <input type="text" placeholder="11" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                    <label for="" class="aso-font-normal">Additional Price</label>
+                    <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <option>
+                            25$
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
@@ -199,16 +201,12 @@
 </template>
 <script setup>
 import {ref} from 'vue';
-    const listGroup = ref(true);
-    const createSize = ref(false);
+    const listClipart = ref(true);
+    const createClipart = ref(false);
 
-    const addSize = () => {
-        listGroup.value = (false);
-        createSize.value= (true);
+    const addClipart = () => {
+        listClipart.value = (false);
+        createClipart.value= (true);
     }
-    const isCheckbox = ref(true);
-    const handleTransform = ref('translateX(100%)');
-    const handleToggleClick2 = () => {
-    isCheckbox.value = !isCheckbox.value;
-    };
+    
 </script>

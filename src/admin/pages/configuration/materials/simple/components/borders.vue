@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-space-y-4 aso-h-[100vh]">
+    <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-show="listBorder">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div class="aso-font-bold">
@@ -123,7 +123,7 @@
             <div class="aso-relative" id="monTableau">
                 <table class="aso-w-full aso-text-center aso-px-4 aso-border aso-border-collapse aso-border-0">
                     <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
-                        <tr class="aso-font-normal">
+                        <tr class="">
                             <th scope="col" class="aso-p-4 aso-px-8 aso-w-12 aso-font-normal">
                                 Title 
                             </th>
@@ -139,7 +139,7 @@
                             
                         </tr>
                     </thead>
-                    <tbody class="aso-bg-white aso-text-[14px]">
+                    <tbody class="aso-bg-white">
                         
                         <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-text-center aso-px-6 aso-p-4">
@@ -153,7 +153,7 @@
                                     </g>
                                 </svg>
                             </td>
-                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3 aso-space-x-2">
+                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     25$
                                 </span>
@@ -183,7 +183,7 @@
                                 </svg>
 
                             </td>
-                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3 aso-space-x-2">
+                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     25$
                                 </span>
@@ -213,7 +213,7 @@
                                 </svg>
 
                             </td>
-                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3 aso-space-x-2">
+                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     25$
                                 </span>
@@ -235,31 +235,31 @@
         <div class="aso-space-y-2" v-show="selectBorder">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-medium aso-px-8 aso-py-8 aso-space-y-8 ">
                 
-                <div class="aso-flex">
-                    <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Select border</label>
-                        <select type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                             <option selected>100x50mm</option>
                         </select>
                     </div>
-                    <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                    <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Additional Price</label>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-w-1/2 aso-space-y-2 aso-flex aso-flex-col">
+                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-normal">Exclude size</label>
-                    <select type="text" class="aso-rounded aso-w-[100%] aso-h-[30px]">
+                    <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                         <option value=""></option>
                     </select>
                     <span class="aso-text-[#444444] aso-text-[12px]">exclude the sizes of this border</span>
                     
                 </div>
-                <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-semibold">Border settings</label>
                     <span class="aso-text-[12px] aso-text-[#444444]">border color</span>
                     <div class="">
-                        <input type="text" class="aso-rounded aso-w-[78%] aso-h-[30px] aso-absolute">
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                     
                 </div>

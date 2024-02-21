@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-space-y-4 aso-h-[100vh]">
+    <div class=" aso-h-[100vh]">
         <div class="aso-space-y-1" v-show="listBorder">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div class="aso-font-bold">

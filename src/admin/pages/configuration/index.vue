@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-justify-center aso-items-center aso-h-[100vh]">
+    <div class="aso-h-[100vh]">
         <div v-show="pageCreateConfig">
             <div class="aso-pb-4 aso-bg-[#F8F9FB] aso-px-4 aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
@@ -41,7 +41,7 @@
                 <table class="aso-text-center aso-border aso-border-collapse aso-border-0">
                     <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
                         <tr>
-                            <th scope="col" class="aso-p-4 aso-w-12">
+                            <th scope="col" class="aso-px-6 aso-py-3">
                                 
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3">
@@ -216,36 +216,36 @@
             <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4 aso-text-[16px]">
                 Create new configuration
             </div>
-           <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4">
-                <div class="aso-flex">
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
+            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4 aso-space-y-6 aso-pb-12">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
                         <label for="" class="aso-font-normal">Name configuration</label>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-pb-12">
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[35px] aso-absolute">
                             <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit  aso-p-1.5 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload icon</button>
                         </div>
                         
                     </div>
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload PopupImg</label>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[35px] aso-absolute">
                             <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
                         </div>
                     </div>
                 </div>
-           </div>
-           <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
                     <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -263,7 +263,7 @@
                         <div class="aso-font-semibold aso-text-[16px]">Next</div>
                     </button>
                 </div>
-           </div>
+            </div>
         </div>
         <div class="aso-bg-[#F8F9FB] aso-p-20 aso-space-y-20" v-show="pageIncludeDemo">
             <div class="">
@@ -294,7 +294,6 @@
 
 <script setup>
 import { ref } from "vue";
-const contentMaterial = ref(false);
 const isNewConfigVisible = ref(false);
 const pageIncludeDemo = ref(false);
 const pageCreateConfig = ref(true);

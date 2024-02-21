@@ -94,7 +94,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-space-x-2">
+                            <td class="aso-px-6 aso-py-4">
                                 <span class="aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-text-center aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     advanced
                                 </span>
@@ -137,7 +137,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-space-x-2">
+                            <td class="aso-px-6 aso-py-4">
                                 <span class="aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-text-center aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     advanced
                                 </span>
@@ -180,7 +180,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-4 aso-space-x-2">
+                            <td class="aso-px-6 aso-py-4">
                                 <span class="aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-text-center aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     advanced
                                 </span>
@@ -217,37 +217,35 @@
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
                 Add component
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-pb-12">
-                <div class="aso-flex">
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
+            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-6">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
                         <label for="" class="aso-font-normal">component name</label>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
-                        <input type="text" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-py-4">
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[35px] aso-absolute">
                             <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-3 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload icon</button>
                         </div>
                         
                     </div>
-                    <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload PopupImg</label>
                         <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-[80%] aso-h-[35px] aso-absolute">
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[35px] aso-absolute">
                             <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-3 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-2 aso-flex aso-flex-col">
+                <div class="aso-space-y-2 aso-pt-8 aso-flex aso-flex-col">
                     <label for="" class="aso-font-bold">Behevior (type)</label>
                     <select name="" id="" class="aso-w-full aso-h-[30px] aso-font-normal">
                         <option selected class="aso-font-normal">select type</option>

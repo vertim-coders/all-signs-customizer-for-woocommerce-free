@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-space-y-4 aso-h-[100vh]">
+    <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-show="listShape">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div class="aso-font-bold">
@@ -123,7 +123,7 @@
             <div class="aso-relative" id="monTableau">
                 <table class="aso-w-full aso-text-center aso-px-4 aso-border aso-border-collapse aso-border-0">
                     <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
-                        <tr class="aso-font-normal">
+                        <tr class="">
                             <th scope="col" class="aso-p-4 aso-px-8 aso-w-12 aso-font-normal">
                                 Title 
                             </th>
@@ -139,7 +139,7 @@
                             
                         </tr>
                     </thead>
-                    <tbody class="aso-bg-white aso-text-[14px]">
+                    <tbody class="aso-bg-white">
                         
                         
                         <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
@@ -158,7 +158,7 @@
                                 </svg>
 
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-3 aso-space-x-2">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     250$
                                 </span>
@@ -188,7 +188,7 @@
                                 </svg>
 
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-3 aso-space-x-2">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     250$
                                 </span>
@@ -218,7 +218,7 @@
                                 </svg>
 
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-3 aso-space-x-2">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     250$
                                 </span>
@@ -240,10 +240,10 @@
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
                 Add new shape
             </div>
-            <div class="aso-text-[16px] aso-flex aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
-                <div class="aso-w-1/2 aso-space-y-2 aso-flex aso-flex-col">
+            <div class="aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
+                <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
-                    <select type="text" class="aso-rounded aso-w-[100%] aso-h-[30px]">
+                    <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                         <option value="">
                             <button>
                                 <div>
@@ -254,9 +254,9 @@
                     </select>
                     
                 </div>
-                <div class="aso-w-1/2 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                     <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                    <input type="text" class="aso-rounded aso-w-[78%] aso-h-[30px]">
+                    <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                     
                 </div>
             </div>
