@@ -87,7 +87,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                            <td class="aso-px-2 aso-py-2 aso-flex aso-justify-center ">
                                 <button class="aso-bg-transparent aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
                                     <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_preview.svg" alt="">
                                 </button>
@@ -122,7 +122,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                            <td class="aso-px-2 aso-py-2 aso-flex aso-justify-center ">
                                 <button class="aso-bg-transparent aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
                                     <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_preview.svg" alt="">
                                 </button>
@@ -157,7 +157,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../assets/icons/ic_popup_acrylic.svg" alt="">
                             </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                            <td class="aso-px-2 aso-py-2 aso-flex aso-justify-center ">
                                 <button class="aso-bg-transparent aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
                                     <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_preview.svg" alt="">
                                 </button>

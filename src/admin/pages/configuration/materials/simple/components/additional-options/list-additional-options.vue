@@ -1,8 +1,8 @@
 <template>
     <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-show="listOption">
-            <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold">
+            <div class="aso-bg-[#F8F9FB] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
+                <div class="aso-font-bold aso-text-[16px]">
                     Name config
                 </div>
                 <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -14,7 +14,7 @@
                     Plastic
                 </div>
             </div>
-            <div class="aso-bg-white aso-text-[16px] aso-px-6 aso-justify-between aso-items-center aso-flex">
+            <div class="aso-bg-white aso-px-6 aso-justify-between aso-items-center aso-flex">
                 <div class="">
                     <button class="aso-flex aso-w-fit aso-h-fit aso-p-4 aso-bg-transparent aso-border-none aso-space-x-2 aso-text-black focus:aso-border-b-[2px] focus:aso-border-r-0 focus:aso-border-l-0 focus:aso-border-t-0 focus:aso-border-solid focus:aso-border-b-[#016464] focus:aso-text-[#016464] focus:aso-bg-[#F9F9F9] hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer">
                         <svg class="aso-w-5 aso-h-5" viewBox="0 0 47 41" fill="black" xmlns="http://www.w3.org/2000/svg">
