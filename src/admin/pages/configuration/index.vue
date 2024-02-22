@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-h-[100vh]">
+    <div class="aso-h-[100vh] w-full">
         <div v-show="pageCreateConfig">
             <div class="aso-pb-4 aso-bg-[#F8F9FB] aso-px-4 aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
@@ -7,7 +7,7 @@
                </div>
                <div class="aso-flex aso-space-x-2 aso-w-4/4">
                     <div class="aso-w-1/4 aso-relative">
-                        <input type="type" name="" id="" class="aso-w-[95%] aso-p-2 aso-text-[12px] aso-h-[30px] aso-absolute" placeholder="Search name configuration">
+                        <input type="search" name="" id="" class="aso-w-[95%] aso-p-5 aso-text-[12px] aso-h-[30px] aso-absolute" placeholder="Search name configuration">
                         <button class="aso-bg-transparent aso-cursor-pointer aso-absolute aso-w-fit aso-h-fit aso-border-none aso-translate-y-1.5 aso-right-4">
                             <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_search.svg" alt="">
                         </button>

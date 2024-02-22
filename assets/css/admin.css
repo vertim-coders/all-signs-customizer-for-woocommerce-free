@@ -2,5 +2,5 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/admin/scss/admin.scss ***!
   \********************************************************************************************************************/
 .wp-core-ui select {
-  max-width: none !important;
-}
+  max-width: none !important; }
+

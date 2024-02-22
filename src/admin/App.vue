@@ -1,7 +1,12 @@
 <template>
   <div id="aso-backend-app">
-    <div class="aso-flex aso-justify-between aso-flex-row-reverse">
-        <Sidebar/>
+    <div class="aso-relative aso-flex aso-justify-between aso-flex-row-reverse aso-w-full">
+        <div class="aso-relative aso-w-[80px]">
+            <Sidebar/>
+        </div>
+        <div class="aso-w-full aso-pr-[10px]">
+            <router-view />
+        </div>
         <!--<Index class="aso-w-[91%]"/>-->
         <!--<Material class="aso-w-[91%]"/>-->
         <!--<Sizes class="aso-w-[91%]"/>-->
@@ -11,7 +16,7 @@
         <!--<Fixing class="aso-w-[91%]"/>-->
         <!--<Text class="aso-w-[91%]"/>-->
         <!--<Additional class="aso-w-[91%]"/>-->
-        <List class="aso-w-[91%]"/>
+        <!-- <List class="aso-w-[91%]"/> -->
         <!--<Options class="aso-w-[91%]"/>-->
         <!--<Advance class="aso-w-[91%]"/>-->
         <!--<Size class="aso-w-[91%]"/>-->
@@ -19,7 +24,7 @@
         <!--<Clipart class="aso-w-[91%]"/>-->
         <!--<Groups class="aso-w-[91%]"/>-->
         <!--<Fonts class="aso-w-[91%]"/>-->
-        <router-view />
+        
     </div>
   </div>
 </template>
@@ -38,7 +43,7 @@ import Sidebar from './pages/components/sidebar.vue'
 //import Fixing from './pages/configuration/materials/simple/components/fixing-methods.vue'
 //import Text from './pages/configuration/materials/simple/components/text-images.vue'
 //import Additional from './pages/configuration/materials/simple/components/additional-options/additional-options.vue'
-import List from './pages/configuration/materials/simple/components/additional-options/list-additional-options.vue'
+//import List from './pages/configuration/materials/simple/components/additional-options/list-additional-options.vue'
 //import Options from './pages/configuration/materials/advance/components/options.vue'
 //import Advance from './pages/configuration/materials/advance/components/advance_process.vue'
 //import Size from './pages/manage-sizes/size.vue'
