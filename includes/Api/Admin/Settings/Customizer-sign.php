@@ -205,7 +205,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
     */
-    public function update_text_options_customizer_sign_settings($request){
+    public function update_text_option_customizer_sign_settings ($request){
        $id = $request->get_param('config_id');
        $text_options = json_decode($request->get_body(),true);
        if($id!=0){
