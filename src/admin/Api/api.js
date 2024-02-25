@@ -1,5 +1,5 @@
 import axios from "axios";
-const aso_api_url = aso_rest_url + 'aso/v1';
+const aso_api_url = aso_data.rest_url;
 const api = {
     //function related to configuration
     getConfigs: async (url='') => {

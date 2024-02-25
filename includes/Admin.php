@@ -60,9 +60,9 @@ class Admin {
         $api_url = get_rest_url(); ?>
         <div class="wrap">
             <div id="aso-admin-app"></div>
-            <script>
-                var aso_rest_url = <?php echo $api_url ?>;
-            </script>
+            <?php wp_localize_script("aso-admin","aso_data",[
+                "rest_url"=>$api_url."aso/v1"
+            ]);?>
         </div>
         <?php
     }
