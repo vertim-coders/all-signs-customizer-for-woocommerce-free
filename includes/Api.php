@@ -2,6 +2,7 @@
 namespace ASO;
 
 use ASO\Api\Admin\ASO_Api_Configs;
+use ASO\Api\Admin\ASO_Api_GoogleFonts;
 use ASO\Api\Admin\ASO_Api_Manage_colors;
 use ASO\Api\Admin\ASO_Api_Manage_cliparts;
 use ASO\Api\Admin\ASO_Api_Manage_fonts;
@@ -36,6 +37,9 @@ class Api extends WP_REST_Controller {
         }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Configs'  ) ) {
             require_once __DIR__ . '/Api/Admin/Configs.php';
+        }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_GoogleFonts'  ) ) {
+            require_once __DIR__ . '/Api/Admin/googleFonts.php';
         }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Manage_colors'  ) ) {
             require_once __DIR__ . '/Api/Admin/Manage-Colors-palettes.php';
@@ -75,6 +79,7 @@ class Api extends WP_REST_Controller {
         (new ASO_Api_Materials())->register_routes();
         (new ASO_Materials_Simple())->register_routes();
         (new ASO_Materials_Advance())->register_routes();
+        (new ASO_Api_GoogleFonts())->register_routes();
     }
 
 }

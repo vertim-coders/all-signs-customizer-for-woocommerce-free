@@ -103,7 +103,11 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
      */
     public function get_manage_fonts($request){
         $all_fonts = get_option("aso-manages-fonts",[]);
-        return rest_ensure_response($all_fonts);          
+        if(count($all_fonts) != 0){
+            return rest_ensure_response($all_fonts);          
+        }else{
+            return rest_ensure_response(["message"=>__("No Fonts Found","ASO")]);
+        }
     }
     /**
      * Get font info from id

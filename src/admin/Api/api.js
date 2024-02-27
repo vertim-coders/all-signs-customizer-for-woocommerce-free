@@ -47,7 +47,10 @@ const api = {
     },
 
     //function related to Manage font
-
+    getGoogleFonts: async () => {
+        const fonts = await axios.get(aso_api_url + '/google-fonts');
+        return fonts.data;
+    },
     getManagefonts: async () => {
         const Managefonts = await axios.get(aso_api_url + '/manage-fonts');
         return Managefonts.data;
@@ -218,5 +221,6 @@ const api = {
         const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
         return material.data;
     },
+
 }
 export default api;
