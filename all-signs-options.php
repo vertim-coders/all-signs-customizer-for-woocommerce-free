@@ -196,7 +196,7 @@ final class All_Signs_Options {
         }
 
         require_once ASO_INCLUDES . '/Api.php';
-        require_once ASO_INCLUDES . '/aso-post-type.php';
+        require_once ASO_INCLUDES . '/ASO-Post-Type.php';
     }
 
     /**

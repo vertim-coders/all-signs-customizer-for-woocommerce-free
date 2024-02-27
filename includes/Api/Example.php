@@ -1,7 +1,10 @@
 <?php
 namespace ASO\Api;
 
+use WP_Error;
 use WP_REST_Controller;
+use WP_REST_Request;
+use WP_REST_Response;
 
 /**
  * REST_API Handler
@@ -12,7 +15,7 @@ class Example extends WP_REST_Controller {
      * [__construct description]
      */
     public function __construct() {
-        $this->namespace = 'ncpc/v1';
+        $this->namespace = 'aso/v1';
         $this->rest_base = 'base';
     }
 

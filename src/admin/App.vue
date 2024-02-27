@@ -1,18 +1,19 @@
 <template>
   <div id="aso-backend-app">
-    <div class="aso-relative aso-flex aso-justify-between aso-flex-row-reverse aso-w-full">
+    <Headerbar/>
+    <div class="aso-relative aso-flex aso-justify-between aso-flex-row-reverse aso-w-full aso-pl-[10px] aso-pt-[50px]">
         <div class="aso-relative aso-w-[80px]">
             <Sidebar/>
         </div>
-        <!--<div class="aso-w-full aso-pr-[10px]">
+        <div class="aso-w-full aso-pr-[10px]">
             <router-view />
-        </div>-->
+        </div>
         
         <!--<Product class="aso-w-full"/>-->
         <!--<Output class="aso-w-full"/>-->
         <!--<Mobiles class="aso-w-full"/>-->
         <!--<Customizer class="aso-w-full"/>-->
-        <Sign class="aso-w-full"/>
+        <!-- <Sign class="aso-w-full"/> -->
     </div>
   </div>
 </template>
@@ -27,6 +28,7 @@ import Sidebar from './pages/components/sidebar.vue'
 //import Mobiles from './pages/configuration/settings/generals/mobiles-options.vue'
 //import Customizer from './pages/configuration/settings/customizer-signs/customizer-options.vue'
 import Sign from './pages/configuration/settings/customizer-signs/sign-part.vue'
+import Headerbar from './pages/components/headerbar.vue';
 tailwind.config ={
     prefix: 'aso-',
     corePlugins: {

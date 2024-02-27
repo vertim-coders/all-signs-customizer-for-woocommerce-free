@@ -102,6 +102,10 @@ class Assets {
                 'src'       => ASO_ASSETS . '/utilities/modal.min.js',
                 'in_footer' => true
             ],
+            'aso-sortable' => [
+                'src'       => ASO_ASSETS . '/utilities/sortable.js',
+                'in_footer' => true
+            ],
             'aso-toast' => [
                 'src'       => ASO_ASSETS . '/utilities/toast.min.js',
                 'in_footer' => true
@@ -128,10 +132,10 @@ class Assets {
             'aso-admin' => [
                 'src' =>  ASO_ASSETS . '/css/admin.css'
             ],
-            'aso-omodal-css' => [
+            'aso-omodal' => [
                 'src' =>  ASO_ASSETS . '/utilities/modal.min.css'
             ],
-            'aso-toast-css' => [
+            'aso-toast' => [
                 'src' =>  ASO_ASSETS . '/utilities/toast.min.css'
             ],
         ];

@@ -25,7 +25,7 @@ class Admin {
 
         if ( current_user_can( $capability ) ) {
             $submenu[ $slug ][] = array( __( 'App', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/' );
-            $submenu[ $slug ][] = array( __( 'Options', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/options' );
+            $submenu[ $slug ][] = array( __( 'Global Settings', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/global-settings' );
         }
 
         add_action( 'load-' . $hook, [ $this, 'init_hooks'] );
@@ -49,6 +49,10 @@ class Admin {
         wp_enqueue_style( 'aso-admin' );
         wp_enqueue_style( 'aso-style' );
         wp_enqueue_script( 'aso-admin' );
+        wp_enqueue_style('aso-toast');
+        wp_enqueue_script('aso-toast');
+        wp_enqueue_script( 'aso-sortable' );
+        wp_enqueue_media();
     }
 
     /**
@@ -57,6 +61,14 @@ class Admin {
      * @return void
      */
     public function plugin_page() {
-        echo '<div class="wrap"><div id="aso-admin-app"></div></div>';
+        $api_url = get_rest_url(); ?>
+        <div class="wrap">
+            <div id="aso-admin-app"></div>
+            <?php wp_localize_script("aso-admin","aso_data",[
+                "rest_url"=>$api_url."aso/v1",
+                "version"=> ASO_VERSION
+            ]);?>
+        </div>
+        <?php
     }
 }
