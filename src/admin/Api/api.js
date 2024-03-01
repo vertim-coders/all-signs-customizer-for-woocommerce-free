@@ -75,24 +75,24 @@ const api = {
     //Function related to Manage sizes
 
     getManageSizes: async () => {
-        const Managefonts = await axios.get(aso_api_url + '/manage-sizes');
-        return Managefonts.data;
+        const Managesizes = await axios.get(aso_api_url + '/manage-sizes');
+        return Managesizes.data;
     },
-    addManageSize: async (font) => {
-        const state = await axios.post(aso_api_url + '/manage-sizes', font)
+    addManageSize: async (size) => {
+        const state = await axios.post(aso_api_url + '/manage-sizes', size)
         return state.data;
     },
-    updateManageSize: async (fontId, font) => {
-        const state = await axios.post(aso_api_url + '/manage-sizes/' + fontId, font);
+    updateManageSize: async (sizeId, size) => {
+        const state = await axios.post(aso_api_url + '/manage-sizes/' + sizeId, size);
         return state.data;
     },
-    getManageSize: async (fontId) => {
-        const fontgroup = await axios.get(aso_api_url + '/manage-sizes/' + fontId);
-        return fontgroup.data;
+    getManageSize: async (sizeId) => {
+        const sizegroup = await axios.get(aso_api_url + '/manage-sizes/' + sizeId);
+        return sizegroup.data;
     },
-    deleteManageSize: async (fontId) => {
-        const fontgroup = await axios.delete(aso_api_url + '/manage-sizes/' + fontId);
-        return fontgroup.data;
+    deleteManageSize: async (sizeId) => {
+        const sizegroup = await axios.delete(aso_api_url + '/manage-sizes/' + sizeId);
+        return sizegroup.data;
     },
 
     //Function related to Manage cliparts

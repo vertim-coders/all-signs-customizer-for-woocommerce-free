@@ -74,8 +74,8 @@
                 <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                     <p class="aso-text-md aso-font-medium aso-text-black">Google Font</p>
                     <label for="uploadFont" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer">
-                    <input id="uploadFont" type="radio" name="upload-font" class="aso-sr-only aso-peer" :value="true" v-model="font.isGoogleFont" :checked="font.isGoogleFont">
-                    <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3.5 aso-border aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[80%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[0px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-rounded-full after:aso-h-5 after:aso-w-5 after:aso-transition-all after:aso-shadow-lg`"></div>
+                        <input id="uploadFont" type="radio" name="upload-font" class="aso-sr-only aso-peer" :value="true" v-model="font.isGoogleFont" :checked="font.isGoogleFont">
+                        <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3.5 aso-border aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[80%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[0px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-rounded-full after:aso-h-5 after:aso-w-5 after:aso-transition-all after:aso-shadow-lg`"></div>
                     </label>
                 </div>
                 
@@ -116,13 +116,14 @@
                     </template>
 
                 </Multiselect>
-                <div class="aso-py-[10px]">
-                    <input type="text" v-model="font.label" class="aso-w-full aso-h-[35px]"/>
+                <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-2':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-6 aso-px-6`">
+                    <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black`">Font Label</label>
+                    <input type="text" v-model="font.label" :class="`aso-w-full aso-h-[35px] ${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid ':''} `" />
                 </div>
             </div>
             <div class="aso-flex aso-flex-col aso-space-x-2 aso-w-10/12" v-if="!font.isGoogleFont">
-                <div :class="`${emptyFontUrl?'aso-border-red-500 aso-text-red-500':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-6 aso-px-6`">
-                    <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black ${emptyFontUrl?'ncpc-field-required-description':''}`">Upload here your own font</label>
+                <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-6 aso-px-6`">
+                    <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black ${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid ':''}`">Upload here your own font</label>
                     <div class="aso-flex space-x-2 aso-flex-row aso-w-full">
                         <button @click="uploadFontFile" :class="`aso-flex aso-items-center aso-justify-center aso-space-x-2 aso-text-white aso-px-2 aso-rounded-md aso-shadow-zinc-400 aso-shadow-lg aso-text-white aso-font-medium aso-transition-all aso-ease-in-out aso-duration-1000 aso-border-solid aso-border-[#016464] aso-bg-[#016464] aso-text-white`">
                             <p class="text-base">Choose a font</p>
@@ -130,7 +131,7 @@
                         <input type="text" name="" id="" class="aso-w-8/12 aso-text-white" readonly v-model="font.url">
                     </div>
                     <div class="aso-py-[10px]">
-                        <input type="text" v-model="font.label" :class="`${emptyFontUrl?'aso-border-red-500 aso-text-red-500':''} aso-w-10/12 aso-h-[35px]`"/>
+                        <input type="text" v-model="font.label" :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid':''} aso-w-10/12 aso-h-[35px]`"/>
                     </div>
                 </div>
             </div>
@@ -202,6 +203,7 @@
     const isFetching = ref(false);
     const allGoogleFonts = ref([]);
     const selectedGoogleFont = ref({});
+    const emptyFontLabel = ref(false)
     const isEdit = ref(false);
     const isLoading = ref(false);
     const fontId = ref(null)
@@ -277,25 +279,32 @@
     const addNewFont = async () => {
         isLoading.value = true;
         const result = await api.addManagefont(font.value);
-        if(result.success){
+        if(font.value.label.trim() == ''){
+            emptyFontLabel.value = true;
             isLoading.value = false;
-            await fetchFonts();
-            toastMessage(result.message);
-            font.value = {
-                label:"",
-                url:"",
-                isGoogleFont:true
-            }
-            createFont.value = false;
+            toastMessage("Label must not be empty","warning");
         }else{
-            isLoading.value = false;
-            font.value = {
-                label:"",
-                url:"",
-                isGoogleFont:true
+            emptyFontLabel.value = false;
+            if(result.success){
+                isLoading.value = false;
+                await fetchFonts();
+                toastMessage(result.message);
+                font.value = {
+                    label:"",
+                    url:"",
+                    isGoogleFont:true
+                }
+                createFont.value = false;
+            }else{
+                isLoading.value = false;
+                font.value = {
+                    label:"",
+                    url:"",
+                    isGoogleFont:true
+                }
+                toastMessage(result.message,"error");
+                createFont.value = false;
             }
-            toastMessage(result.message,"error");
-            createFont.value = false;
         }
     }
 
@@ -343,30 +352,37 @@
     const updateFont = async () => {
         isLoading.value = true;
         const result = await api.updateManagefont(fontId.value,font.value);
-        if(result.success){
+        if(font.value.label.trim() == ''){
+            emptyFontLabel.value = true;
             isLoading.value = false;
-            await fetchFonts(); isEdit.value = false;
-            createFont.value = false;
-            if(result.success == true){
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning")
-            }
-            font.value = {
-                label:"",
-                url:"",
-                isGoogleFont:true
-            }
-           
+            toastMessage("Label must not be empty","warning");
         }else{
-            isLoading.value = false;
-            createFont.value = false;
-            font.value = {
-                label:"",
-                url:"",
-                isGoogleFont:true
+            emptyFontLabel.value = false;
+            if(result.success){
+                isLoading.value = false;
+                await fetchFonts(); isEdit.value = false;
+                createFont.value = false;
+                if(result.success == true){
+                    toastMessage(result.message);
+                }else{
+                    toastMessage(result.message,"warning")
+                }
+                font.value = {
+                    label:"",
+                    url:"",
+                    isGoogleFont:true
+                }
+               
+            }else{
+                isLoading.value = false;
+                createFont.value = false;
+                font.value = {
+                    label:"",
+                    url:"",
+                    isGoogleFont:true
+                }
+                toastMessage(result.message,"error")
             }
-            toastMessage(result.message,"error")
         }
     }
 

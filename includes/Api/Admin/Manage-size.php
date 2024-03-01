@@ -87,29 +87,21 @@ class ASO_Api_Manage_Sizes extends WP_REST_Controller {
     public function add_size_to_manages_sizes ( $request ) {
         $req_size=json_decode($request->get_body(),true);
         $all_sizes = get_option("aso-manages-sizes",[]);
-        $size_keys = array('width','height','thickness');
-        $req_keys = array_keys($req_size);
 
-        $differents_keys = array_diff($size_keys, $req_keys);
-
-        if(empty($differents_keys)){
-            $size['title']=$req_size['width']+'x'+$req_size['height'];
-            $size['width']=$req_size['width'];
-            $size['height']=$req_size['height'];
-            $size['thickness']['active']=$req_size['thickness']['active'];
-            $size['thickness']['value']=$req_size['thickness']['value'];
-            if($req_size['thickness']['active'] == true){
-                $size['title']+='_thick';
-            }
-            array_push($all_sizes,$size);
-            $update = update_option("aso-manages-sizes",$all_sizes);
-            if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("Size created with success","ASO")] );
-            }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Registration failed",'ASO')]);
-            }
+        $size['label']=$req_size['width'].'x'.$req_size['height'];
+        $size['width']=$req_size['width'];
+        $size['height']=$req_size['height'];
+        $size['thickness']['active']=$req_size['thickness']['active'];
+        $size['thickness']['value']=$req_size['thickness']['value'];
+        if($req_size['thickness']['active'] == true){
+            $size['label'].='_thick';
+        }
+        array_push($all_sizes,$size);
+        $update = update_option("aso-manages-sizes",$all_sizes);
+        if($update){
+            return rest_ensure_response( ["success"=>true,"message"=>__("Size created with success","ASO")] );
         }else{
-            return rest_ensure_response(["success"=>false,"message" => __("Wrongly formatted size data","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Registration failed",'ASO')]);
         }
     }
     /**
@@ -119,7 +111,10 @@ class ASO_Api_Manage_Sizes extends WP_REST_Controller {
      */
     public function get_manage_sizes($request){
         $all_sizes = get_option("aso-manages-sizes",[]);
-        return rest_ensure_response($all_sizes);      
+        if(count($all_sizes)>0)
+            return rest_ensure_response($all_sizes);
+        else    
+            return rest_ensure_response(["message"=>__("No sizes Found","ASO")]);     
         
     }
     /**
@@ -148,34 +143,30 @@ class ASO_Api_Manage_Sizes extends WP_REST_Controller {
         $req_size=json_decode($request->get_body(),true);
         $size_id = $request->get_param( 'size_id' );
         $all_sizes = get_option("aso-manages-sizes",[]);
-        $size_keys = array('title','width','height','thickness');
-        $req_keys = array_keys($req_size);
-        $differents_keys = array_diff($size_keys, $req_keys);
 
-        if($all_sizes[$size_id]){
-            if(empty($differents_keys)){
-                $size['title']=$req_size['width']+'x'+$req_size['height'];
-                $size['width']=$req_size['width'];
-                $size['height']=$req_size['height'];
-                $size['thickness']['active']=$req_size['thickness']['active'];
-                $size['thickness']['value']=$req_size['thickness']['value'];
-                if($req_size['thickness']['active'] == true){
-                    $size['title']+='_thick';
-                }
-                $all_sizes[$size_id] = $size;
-                $update = update_option("aso-manages-sizes",$all_sizes);
-                if($update){
-                    return rest_ensure_response(array('success' => true, "message" => __("The size has been updated with success","ASO") ) );
-                }
-                else{
-                    return rest_ensure_response(array('success' => false, "message"=>__("Size update failed","") ) );
-                }   
-            }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Wrongly formatted size data","ASO")]);
+        $size['label']=$req_size['width'].'x'.$req_size['height'];
+        $size['width']=$req_size['width'];
+        $size['height']=$req_size['height'];
+        $size['thickness']['active']=$req_size['thickness']['active'];
+        $size['thickness']['value']=$req_size['thickness']['value'];
+
+        if($req_size['thickness']['active'] == true){
+            $size['label'].='_thick';
+        }
+        
+        if($all_sizes[$size_id] !== $size ){
+            $all_sizes[$size_id] = $size;
+            $update = update_option("aso-manages-sizes",$all_sizes);
+            if($update){
+                return rest_ensure_response(array('success' => true, "message" => __("The size has been updated with success","ASO") ) );
+            }
+            else{
+                return rest_ensure_response(array('success' => false, "message"=>__("Size update failed","ASO") ) );
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Size not found',"ASO")]);
+            return rest_ensure_response(array('success' => "same", "message"=>__("No change observed","ASO") ) );
         }
+
         
     }
 
