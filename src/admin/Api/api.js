@@ -114,7 +114,7 @@ const api = {
         return clipartgroup.data;
     },
     getManageClipartItems: async (manageclipartId) => {
-        const clipartitem = await axios.get(aso_api_url + '/manage-cliparts/' + manageclipartId);
+        const clipartitem = await axios.get(aso_api_url + '/manage-cliparts/' + manageclipartId + '/items');
         return clipartitem.data;
     },
     getManageClipartItem: async (manageclipartId, clipartitemId) => {
@@ -122,14 +122,14 @@ const api = {
         return clipartitem.data;
     },
     addManageclipartItem: async (manageclipartId, clipartItem) => {
-        const state = await axios.post(aso_api_url + '/manage-cliparts/' + manageclipartId + '/items/', clipartItem)
+        const state = await axios.post(aso_api_url + '/manage-cliparts/' + manageclipartId + '/items', clipartItem)
         return state.data;
     },
     updateManageClipartItem: async (manageclipartId, clipartId, clipartitem) => {
         const state = await axios.post(aso_api_url + '/manage-cliparts/' + manageclipartId + '/items/' + clipartId, clipartitem);
         return state.data;
     },
-    deleteManageclipart: async (manageclipartId, clipartitemId,) => {
+    deleteManageclipartItem: async (manageclipartId, clipartitemId) => {
         const clipartitem = await axios.delete(aso_api_url + '/manage-cliparts/' + manageclipartId + '/items/' + clipartitemId);
         return clipartitem.data;
     },

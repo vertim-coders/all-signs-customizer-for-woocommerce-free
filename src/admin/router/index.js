@@ -1,8 +1,10 @@
 import Configuration from '@/admin/pages/configuration/index.vue'
 import Materials from '@/admin/pages/configuration/materials/index.vue'
+/* import Simple from '@/admin/pages/configuration/materials/simple/index.vue'
+import Advance from '@/admin/pages/configuration/materials/advance/index.vue' */
 import ManageFonts from '@/admin/pages/manage-fonts/index.vue'
 import ManageCliparts from '@/admin/pages/manage-cliparts/index.vue'
-import GroupsCliparts from '@/admin/pages/manage-cliparts/groups-cliparts.vue'
+import Cliparts from '@/admin/pages/manage-cliparts/cliparts.vue'
 import ManageColors from '@/admin/pages/manage-colors/index.vue'
 import ManageSizes from '@/admin/pages/manage-sizes/index.vue'
 import Options from "admin/pages/Options.vue";
@@ -21,6 +23,16 @@ const router = createRouter({
       name: "materials",
       component: Materials,
     },
+    /* {
+      path: "/configs/:configId/materials/simple",
+      name: "simple",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/advance",
+      name: "advance",
+      component: Advance,
+    }, */
     {
       path: "/manage-fonts",
       name: "manageFonts",
@@ -32,9 +44,9 @@ const router = createRouter({
       component: ManageCliparts,
     },
     {
-      path: "/groups-cliparts",
-      name: "groupscliparts",
-      component: GroupsCliparts,
+      path: "/manage-cliparts/:groupId/cliparts",
+      name: "cliparts",
+      component: Cliparts,
     },
     {
       path: "/manage-colors",

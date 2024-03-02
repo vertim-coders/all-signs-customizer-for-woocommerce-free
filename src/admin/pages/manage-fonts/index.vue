@@ -359,14 +359,17 @@
         }else{
             emptyFontLabel.value = false;
             if(result.success){
-                isLoading.value = false;
                 await fetchFonts(); isEdit.value = false;
-                createFont.value = false;
+                isLoading.value = false;
                 if(result.success == true){
                     toastMessage(result.message);
                 }else{
                     toastMessage(result.message,"warning")
                 }
+                isEdit.value = false;
+                createFont.value = false;
+                fontId.value = null;
+                
                 font.value = {
                     label:"",
                     url:"",
@@ -374,14 +377,17 @@
                 }
                
             }else{
+                toastMessage(result.message,"error")
                 isLoading.value = false;
                 createFont.value = false;
+                isEdit.value = false;
+                fontId.value = null;
+
                 font.value = {
                     label:"",
                     url:"",
                     isGoogleFont:true
                 }
-                toastMessage(result.message,"error")
             }
         }
     }
@@ -397,7 +403,8 @@
         createFont.value = (true);
     }
     const back = () => {
-        listFont.value = (true);
+        isEdit.value = false;
+        fontId.value = null;
         createFont.value = (false);
     }
 

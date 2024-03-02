@@ -36,21 +36,21 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_manage_cliparts_config_post' ),
+                    'callback'            => array( $this, 'create_manage_cliparts_group' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                 ),
             )
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/(?P<clipart_id>\d+)",
+            '/' . $this->rest_base."/(?P<group_id>\d+)",
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_manage_cliparts_config_post' ),
+                    'callback'            => array( $this, 'get_manage_cliparts_groups' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -58,10 +58,10 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_manage_cliparts_config_post' ),
+                    'callback'            => array( $this, 'update_manage_cliparts_group' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -69,10 +69,10 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::DELETABLE,
-                    'callback'            => array( $this, 'delete_manage_cliparts_config'),
+                    'callback'            => array( $this, 'delete_manage_cliparts_group'),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -82,14 +82,14 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/(?P<clipart_id>\d+)/items",
+            '/' . $this->rest_base."/(?P<group_id>\d+)/items",
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_manage_cliparts_item' ),
+                    'callback'            => array( $this, 'get_manage_cliparts_group_cliparts' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -100,7 +100,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                     'callback'            => array( $this, 'create_manage_cliparts_item' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -110,18 +110,33 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/(?P<clipart_id>\d+)/items/(?P<item_id>\d+)",
+            '/' . $this->rest_base."/(?P<group_id>\d+)/items/(?P<clipart_id>\d+)",
             array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_manage_cliparts_item' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array (
+                        'group_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'clipart_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_manage_cliparts_item' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         ),
-                        'item_id' => array (
+                        'clipart_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -132,11 +147,11 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                     'callback'            => array( $this, 'delete_manage_cliparts_item'),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array (
-                        'clipart_id' => array (
+                        'group_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         ),
-                        'item_id' => array (
+                        'clipart_id' => array (
                             'type' => 'integer',
                             'required' => true,
                         )
@@ -146,101 +161,87 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         );
     }
         /**
-     * Create aso product cliparts
+     * Create aso cliparts groups
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function create_manage_cliparts_config_post ( $request ) {
-        $params=json_decode($request->get_body(),true);
-        $data = [
-            'post_title' => $params["title"],
-            'post_type' => 'aso-manages-cliparts',
-            'post_meta' => [
-                "aso-manages-cliparts-meta"=>[]
-            ],
-            'post_status' => 'publish'
+    public function create_manage_cliparts_group ( $request ) {
+
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        $req_data=json_decode($request->get_body(),true);
+        $clipartsGroup = [
+            "title"=>$req_data["title"],
+            "description"=>$req_data["description"],
+            "cliparts"=>[]
         ];
-        if(isset($params["data"]) && !empty($params["data"])){
-            $post_id = wp_insert_post($data);
-            if($post_id != 0 && !is_wp_error($post_id)){
-                update_post_meta($post_id,'aso-manages-cliparts-meta',[]);
-                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group created with success","ASO"),"post_id"=>$post_id] );
-            }else{
-                return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
-            }            
+        array_push($all_groups,$clipartsGroup);
+        $update = update_option("aso-manages-cliparts",$all_groups);
+        if($update){
+            return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group created with success","ASO")] );
         }else{
-            return rest_ensure_response(["message" => "Registration failed"]);
-        }
+            return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
+        }   
     }
     /**
-     * Get clipart info for $post id
+     * Get clipart group info for $post id
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function get_manage_cliparts_config_post($request){
-    $id=$request->get_param('clipart_id');
-    if($id!=0) {
-        $meta_value = get_post_meta($id, 'aso-manages-cliparts-meta', true);
-        if(is_array($meta_value) && !empty($meta_value)){
-
-            $post_data = array(
-                'id'           => $id,
-                'title'        => get_the_title($id),
-                'data'         => $meta_value
-            );
-            return rest_ensure_response($post_data);
+    public function get_manage_cliparts_groups($request){
+        $id=$request->get_param('group_id');
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        if(isset($all_groups[$id])) {
+            return rest_ensure_response($all_groups[$id]);
         }else{
             return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
         }
-
-        }else{
-        return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
-        }
     }
     /**
-     * Update of cliparts
+     * Update of cliparts group
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function update_manage_cliparts_config_post($request){
-        $params=json_decode($request->get_body(),true);
-        $post_id = $request->get_param( 'clipart_id' );
-        $args=array(
-            'ID'         => $post_id,
-            'post_title' => $params["title"],
-        );
+    public function update_manage_cliparts_group($request){
+        $id=$request->get_param('group_id');
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        $req_data=json_decode($request->get_body(),true);
         
-        $updatePosts = wp_update_post($args);
-        if(!is_wp_error($updatePosts)){
-            return rest_ensure_response(array('success' => true, "message" => __("The cliparts has been updated with success","ASO") ) );
-        }
-        else{
-            return rest_ensure_response(array('success' => false, "message"=>__("Cliparts update failed","") ) );
+        if(isset($all_groups[$id])) {
+            $all_groups[$id]['title']=$req_data["title"];
+            $all_groups[$id]['description']=$req_data["description"];
+            $update = update_option("aso-manages-cliparts",$all_groups);
+            if($update){
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group updated with success","ASO")] );
+            }else{
+                return rest_ensure_response(["success"=>false,"message" => "Update failed"]);
+            }  
+        }else{
+            return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
         }
         
     }
 
     /**
-     * Remove cliparts from ID in request
+     * Remove cliparts group from ID in request
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return $success message if is ok and fail otherwise. 
     */
-    public function delete_manage_cliparts_config($request){
-
-        $id=$request->get_param( 'clipart_id' );
-
-        if($id!=0){
-            $deletePost = wp_delete_post( $id, true );
-            if($deletePost != null && !$deletePost ) {
-                return rest_ensure_response(["success"=>true,"message"=>__("The cliparts was well removed","ASO")]);
+    public function delete_manage_cliparts_group($request){
+        $id=$request->get_param('group_id');
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        
+        if(isset($all_groups[$id])) {
+            array_splice($all_groups,$id,1);
+            $update = update_option("aso-manages-cliparts",$all_groups);
+            if($update){
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group deleted with success","ASO")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the cliparts failed","ASO")]);   
-            }
-        }
-        else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the cliparts failed","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => "Delete failed"]);
+            }  
+        }else{
+            return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
         }
     }
 
@@ -253,72 +254,14 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
      */
     public function get_manage_cliparts_configs( $request ) {
         
-        $args = array(
-            'post_type' => 'aso-manages-cliparts',
-            'post_status' => 'publish',
-            'order' => 'DESC',
-            'orderby' => 'ID',
-            'numberposts' => -1
-        );
-        
-        //displays 6 results per page if per_page is not specified
-        $per_page = absint($request->get_param( 'per_page' ));
-        if ( ! empty( $per_page ) ) {
-            $args['posts_per_page'] = $per_page ;
-        } else {
-            $per_page = 6;
-            $args['posts_per_page'] = 6;
-        }
-
-        $oder =  $request->get_param( 'order' );
-        if ( ! empty( $oder ) ) {
-            $args['order'] = $oder;
-        }
-
-        // Make Pagination
-        $page = $request->get_param( 'page' );
-        if ( ! empty( $page ) ) {
-            $args['paged'] = absint( $page );
-        }
-
-        // Make search 
-        $search_query = $request->get_param( 'search' );
-        if ( ! empty( $search_query ) ) {
-            $args['s'] = sanitize_text_field( $search_query );
-        }
-
-        // Get custom post types using WP_Query
-        $query = new WP_Query( $args );
-        $total_posts = $query->found_posts;
-        $total_pages = ceil($total_posts / $per_page);
+        $all_groups = get_option("aso-manages-cliparts",[]);
         // Check the results and return the response
-        $posts_data = array(
-            "totalConfigsFound" => $total_posts,
-            "totalPages"         => $total_pages,
-            "data"               => [],
+        $groups = array(
+            "noGroupsFound"      => __("No Cliparts Group Found","ASO"),
+            "data"               => $all_groups,
         );
-        if ( $query->have_posts() ) {
-
-            
-            while ( $query->have_posts() ) {
-                $query->the_post();
-                $id=get_the_ID();
-                
-                $post_data = array(
-                    'id'          => $id,
-                    'title'       => get_the_title(),
-                    "data"        => get_post_meta($id,'aso-manages-cliparts',true),
-                );
-                array_push($posts_data["data"],$post_data);
-                //$posts_data["data"][] = $post_data;
-                
-            }
-
-            return rest_ensure_response( $posts_data );
-
-        } else {
-            return rest_ensure_response( $posts_data );
-        }
+          
+        return rest_ensure_response( $groups );
     }
 
     /**
@@ -341,35 +284,23 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
      */
     
     public function create_manage_cliparts_item($request){
-        $clipart_id = $request->get_param('clipart_id');
-        if($clipart_id != 0) {
+        $group_id = $request->get_param('group_id');
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        if(isset($all_groups[$group_id])) {
             $new_item = json_decode($request->get_body(),true);
-            $meta_value = get_post_meta($clipart_id, 'aso-manages-cliparts-meta', true);
-            $item_keys = array('title','imgUrl','additonalPrice');
-            $req_keys = array_keys($new_item);
-            $differents_keys = array_diff($item_keys, $req_keys);
-            if(empty($differents_keys)){
-                if(is_array($meta_value) && !empty($meta_value)){
-                    array_push($meta_value,$new_item);
-                }else{
-                    $meta_value = [];
-                    array_push($meta_value,$new_item);
-                }
-                $update = update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
-                if($update === true){
-                    return rest_ensure_response(["success"=>true, "message"=>__("Clipart item successfully added","ASO")]);
-                }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Clipart item has not been added","ASO")]);
-                }
+            array_push($all_groups[$group_id]["cliparts"],$new_item);
+            $update = update_option("aso-manages-cliparts",$all_groups);
+            if($update){
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  added with success","ASO")] );
             }else{
-                return rest_ensure_response(["success"=>false, "message"=>__("Bad image data","ASO")]);
+                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been added","ASO")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false, "message"=>__("Clipart item has not been added","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been added","ASO")]);
         }
     }
     /**
-     * get all items in cliparts group
+     * get item in cliparts group
      *
      * @param \WP_REST_Request $request Full details about the request.
      *
@@ -377,16 +308,29 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
      */
     
     public function get_manage_cliparts_item($request){
+        $group_id = $request->get_param('group_id');
         $clipart_id = $request->get_param('clipart_id');
-        if($clipart_id != 0) {
-            $meta_value = get_post_meta($clipart_id, 'aso-manages-cliparts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                return rest_ensure_response($meta_value);
-            }else{
-                return rest_ensure_response([]);
-            }
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        if(isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
+            return rest_ensure_response( $all_groups[$group_id]["cliparts"][$clipart_id] );
         }else{
-            return rest_ensure_response([]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been added","ASO")]);
+        }
+    }
+    /**
+     * get all items in cliparts group 
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     *
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_manage_cliparts_group_cliparts ($request) {
+        $group_id = $request->get_param('group_id');
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        if(count($all_groups[ $group_id]["cliparts"])>0) {
+            return rest_ensure_response(["groupTitle"=>$all_groups[ $group_id]["title"], "cliparts"=> $all_groups[$group_id]["cliparts"]]);
+        }else{
+            return rest_ensure_response(["groupTitle"=>$all_groups[ $group_id]["title"],"notFoundMessage"=>__("No cliparts found","ASO")]);
         }
     }
 
@@ -399,30 +343,20 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
      */
     
     public function update_manage_cliparts_item($request){
+        $group_id = $request->get_param('group_id');
         $clipart_id = $request->get_param('clipart_id');
-        $item_id = $request->get_param('item_id');
-        if($clipart_id != 0) {
-            $meta_value = get_post_meta($clipart_id, 'aso-manages-cliparts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                if($meta_value[$item_id]){
-                    $edit_item = json_decode($request->get_body(),true);
-                    $item_keys = array('title','imgUrl','additonalPrice');
-                    $req_keys = array_keys($edit_item);
-                    if(empty($req_keys)){
-                        $meta_value[$item_id] = $edit_item;
-                        update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
-                        return rest_ensure_response(["success"=>true,"message"=>__("The update was successfully completed","ASO")]);
-                    }else{
-                        return rest_ensure_response(["success"=>false,"message"=>__("Bad image data","ASO")]);
-                    }
-                }else{
-                    return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
-                }
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        if(isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
+            $update_clipart = json_decode($request->get_body(),true);
+            $all_groups[$group_id]["cliparts"][$clipart_id] = $update_clipart;
+            $update = update_option("aso-manages-cliparts",$all_groups);
+            if($update){
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  updated with success","ASO")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
+                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been updated","ASO")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Update failed","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been updated","ASO")]);
         }
     }
 
@@ -435,23 +369,19 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
      */
     
      public function delete_manage_cliparts_item($request){
+        $group_id = $request->get_param('group_id');
         $clipart_id = $request->get_param('clipart_id');
-        $item_id = $request->get_param('item_id');
-        if($clipart_id != 0) {
-            $meta_value = get_post_meta($clipart_id, 'aso-manages-cliparts-meta', true);
-            if(is_array($meta_value) && !empty($meta_value)){
-                if($meta_value[$item_id]){
-                    array_splice($meta_value,$item_id,1);
-                    update_post_meta($clipart_id,'aso-manages-cliparts-meta',$meta_value);
-                    return rest_ensure_response(["success"=>true,"message"=>__("The delete was successfully completed","ASO")]);
-                }else{
-                    return rest_ensure_response(["success"=>false,"message"=>__("The item delete failed","ASO")]);
-                }
+        $all_groups = get_option("aso-manages-cliparts",[]);
+        if(isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
+            array_splice($all_groups[$group_id]["cliparts"],$clipart_id,1);
+            $update = update_option("aso-manages-cliparts",$all_groups);
+            if($update){
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  deleted with success","ASO")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("The item update failed","ASO")]);
+                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been deleted","ASO")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__("The item update failed","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been deleted","ASO")]);
         }
     }
 

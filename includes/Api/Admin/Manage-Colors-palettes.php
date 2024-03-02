@@ -87,24 +87,17 @@ class ASO_Api_Manage_colors extends WP_REST_Controller {
     public function add_color_to_manages_colors ( $request ) {
         $req_color=json_decode($request->get_body(),true);
         $all_colors = get_option("aso-manages-colors",[]);
-        $color_keys = array('title','textColor','backgroundColor','additonalPrice');
-        $req_keys = array_keys($req_color);
-        $differents_keys = array_diff($color_keys, $req_keys);
-        
-        if(empty($differents_keys)){
-            $color['title']=$req_color['title'];
-            $color['textColor']=$req_color['textColor'];
-            $color['backgroundColor']=$req_color['backgroundColor'];
-            $color['additonalPrice']=$req_color['additonalPrice'];
-            array_push($all_colors,$color);
-            $update = update_option("aso-manages-colors",$all_colors);
-            if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("color created with success","ASO")] );
-            }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Registration failed",'ASO')]);
-            }
+
+        $color['name']=$req_color['name'];
+        $color['textColor']=$req_color['textColor'];
+        $color['backgroundColor']=$req_color['backgroundColor'];
+
+        array_push($all_colors,$color);
+        $update = update_option("aso-manages-colors",$all_colors);
+        if($update){
+            return rest_ensure_response( ["success"=>true,"message"=>__("color created with success","ASO")] );
         }else{
-            return rest_ensure_response(["success"=>false,"message" => __("Wrongly formatted color data","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Registration failed",'ASO')]);
         }
     }
     /**
@@ -114,7 +107,10 @@ class ASO_Api_Manage_colors extends WP_REST_Controller {
      */
     public function get_manage_colors($request){
         $all_colors = get_option("aso-manages-colors",[]);
-        return rest_ensure_response($all_colors);      
+        if(count($all_colors)>0)
+            return rest_ensure_response($all_colors);
+        else
+            return rest_ensure_response(["message"=>__("No Colors Found","ASO")]); 
         
     }
     /**
@@ -143,16 +139,13 @@ class ASO_Api_Manage_colors extends WP_REST_Controller {
         $req_color=json_decode($request->get_body(),true);
         $color_id = $request->get_param( 'color_id' );
         $all_colors = get_option("aso-manages-colors",[]);
-        $color_keys = array('title','textColor','backgroundColor','additonalPrice');
-        $req_keys = array_keys($req_color);
-        $differents_keys = array_diff($color_keys, $req_keys);
 
         if($all_colors[$color_id]){
-            if(empty($differents_keys)){
-                $color['title']=$req_color['title'];
-                $color['textColor']=$req_color['textColor'];
-                $color['backgroundColor']=$req_color['backgroundColor'];
-                $color['additonalPrice']=$req_color['additonalPrice'];
+            $color['name']=$req_color['name'];
+            $color['textColor']=$req_color['textColor'];
+            $color['backgroundColor']=$req_color['backgroundColor'];
+            if($all_colors[$color_id] !== $color){
+
                 $all_colors[$color_id] = $color;
                 $update = update_option("aso-manages-colors",$all_colors);
                 if($update){
@@ -162,7 +155,7 @@ class ASO_Api_Manage_colors extends WP_REST_Controller {
                     return rest_ensure_response(array('success' => false, "message"=>__("Color update failed","") ) );
                 }   
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Wrongly formatted color data","ASO")]);
+                return rest_ensure_response(["success"=>"same","message" => __("No change observed in color","ASO")]);
             }
         }else{
             return rest_ensure_response(["success"=>false,"message"=>__('Color not found',"ASO")]);
