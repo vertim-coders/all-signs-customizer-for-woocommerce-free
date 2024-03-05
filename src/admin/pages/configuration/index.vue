@@ -5,11 +5,11 @@
                <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
                     List of configurations
                </div>
-               <div class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-w-4/4" v-if="!isFetching">
+               <div class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-w-4/4" v-if="canAddNew">
                     <form class="aso-flex aso-items-center aso-h-[35px]" @submit="handleSearchChange">
                         <label for="simple-search" class="aso-sr-only">Search</label>
                         <div class="aso-relative aso-w-full">
-                            <input type="search" v-model="search" id="aso-search" class="aso-h-[40px] aso-w-[300px] aso-bg-gray-50 aso-border aso-border-gray-300 aso-text-gray-900 aso-text-sm aso-rounded-lg focus:ring-blue-500 focus:border-blue-500 aso-block aso-w-full aso-ps-10 aso-p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 aso-m-0" placeholder="Search configuration name..." />
+                            <input type="search" v-model="search" @input="searchInputEmpty" id="aso-search" class="aso-h-[40px] aso-w-[300px] aso-bg-gray-50 aso-border aso-border-gray-300 aso-text-gray-900 aso-text-sm aso-rounded-lg focus:ring-blue-500 focus:border-blue-500 aso-block aso-w-full aso-ps-10 aso-p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 aso-m-0" placeholder="Search configuration name..." />
                             <button type="submit" class="aso-absolute aso-inset-y-0 aso-end-1 aso-bg-transparent aso-flex aso-items-center ps-0 aso-cursor-pointer aso-border-none">
                                 <svg class="aso-w-4 aso-h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
@@ -50,7 +50,7 @@
                             <p class="aso-text-2xl aso-font-bold">NO CONFIGURATION FOUND</p>
                         </div>
                     </div>
-                    <div v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b aso-border-solid aso-border-gray-200 aso-gap-x-16 dark:aso-border-gray-700">
+                    <div v-if="!isFetching" v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b aso-border-solid aso-border-gray-200 aso-gap-x-16 dark:aso-border-gray-700">
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4" @click="()=>$router.push('/configs/'+config.id+'/materials')">
                             <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                 <span class="aso-text-[12px]">{{getInitials(config.name)}}</span> 
@@ -298,6 +298,7 @@ var pages = ref(0);
 var page = ref(1);
 const totalConfigsFound = ref(0);
 const isFetching = ref(false);
+const canAddNew = ref(false);
 const isLoading = ref(false);
 const search = ref('')
 const step = ref(0);
@@ -307,6 +308,7 @@ const openModal = ref(false);
 onMounted(async () => {
     isFetching.value = true;
     await fetchConfigs();
+    canAddNew.value = true;
 });
 
 const fetchConfigs = async () => {
@@ -321,9 +323,21 @@ const fetchConfigs = async () => {
 }
 
 /**Function search */
+const searchInputEmpty = async (e) => {
+    if(e.target.value ==''){
+        isFetching.value = true;
+        const response = await api.getConfigs();
+        configs.value = response.data;
+        pages.value = response.totalPages;
+        page.value = 1;
+        isFetching.value = false;
+    }
+}
+
 const handleSearchChange = async (e) => {
     e.preventDefault();
     var response;
+    isFetching.value = true;
     if(search.value !=''){
         response = await api.getConfigs('?search='+search.value);
     }else{
@@ -332,6 +346,7 @@ const handleSearchChange = async (e) => {
     configs.value = response.data;
     pages.value = response.totalPages;
     page.value = 1;
+    isFetching.value = false;
 }
 /** Pagination */
 const handleNextPage = async() => {

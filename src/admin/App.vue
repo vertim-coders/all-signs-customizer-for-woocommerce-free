@@ -5,7 +5,7 @@
         <div class="aso-relative aso-w-[80px]">
             <Sidebar/>
         </div>
-        <div class="aso-w-full aso-pr-[10px]">
+        <div class="aso-w-full aso-pr-[10px] aso-z-[999]">
             <router-view />
         </div>
         

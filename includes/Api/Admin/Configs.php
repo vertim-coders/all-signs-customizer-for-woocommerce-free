@@ -86,7 +86,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
 
     
     /**
-     * Create ncpc product configuration
+     * Create ASo product configuration
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -150,7 +150,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
         
     }
      /**
-     * Update of ncpc produit configuration
+     * Update of ASO produit configuration
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -181,7 +181,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
     }
 
     /**
-     * Remove ncpc configuration from ID in request
+     * Remove ASO configuration from ID in request
      * @param \WP_REST_Request $request Full details about the request.
      *
      * @return $success message if is ok and fail otherwise. 

@@ -222,7 +222,7 @@ import toastMessage from '@/admin/utils/functions';
     })
 
     const fetchColors = async () => {
-        const result = await api.getColorsPalettes();
+        const result = await api.getManageColorsPalettes();
         if(!result.message){
             colors.value = result;
         }else{
@@ -232,7 +232,7 @@ import toastMessage from '@/admin/utils/functions';
     }
     const saveColor = async () => {
         isLoading.value = true;
-        const result = await api.addColorPalette(newColor.value);
+        const result = await api.addManageColorPalette(newColor.value);
         if(result.success){
             await fetchColors();
             isLoading.value = false;
@@ -269,7 +269,7 @@ import toastMessage from '@/admin/utils/functions';
 
     const updateColor = async () => {
         isLoading.value = true;
-        const result = await api.UpdateColorsPalettes(colorId.value,newColor.value);
+        const result = await api.UpdateManageColorsPalettes(colorId.value,newColor.value);
         if(result.success){
             await fetchColors();
             isLoading.value = false;
@@ -300,7 +300,7 @@ import toastMessage from '@/admin/utils/functions';
     }
     const deleteColor = async () => {
         isLoading.value = true;
-        const result = await api.deleteColorsPalettes(colorId.value,newColor.value);
+        const result = await api.deleteManageColorsPalettes(colorId.value,newColor.value);
         if(result.success){
             await fetchColors();
             isLoading.value = false;

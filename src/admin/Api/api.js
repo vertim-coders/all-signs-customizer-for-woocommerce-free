@@ -134,55 +134,75 @@ const api = {
         return clipartitem.data;
     },
 
-    //Function related to color palette
+    //Function related manage to color palette
 
-    getColorsPalettes: async () => {
+    getManageColorsPalettes: async () => {
         const Colorspalettes = await axios.get(aso_api_url + '/manage-colors');
         return Colorspalettes.data;
     },
-    getColorPalette: async (colorsPaletteId) => {
+    getManageColorPalette: async (colorsPaletteId) => {
         const colorPalette = await axios.get(aso_api_url + '/manage-colors/' + colorsPaletteId);
         return colorPalette.data;
     },
-    addColorPalette: async (Colorspalette) => {
+    addManageColorPalette: async (Colorspalette) => {
         const addColor = await axios.post(aso_api_url + '/manage-colors', Colorspalette)
         return addColor.data;
     },
-    UpdateColorsPalettes: async (colorsPaletteId, color) => {
+    UpdateManageColorsPalettes: async (colorsPaletteId, color) => {
         const updateColor = await axios.post(aso_api_url + '/manage-colors/' + colorsPaletteId, color);
         return updateColor.data;
     },
-    deleteColorsPalettes: async (colorsPaletteId) => {
+    deleteManageColorsPalettes: async (colorsPaletteId) => {
         const deleteColor = await axios.delete(aso_api_url + '/manage-colors/' + colorsPaletteId);
         return deleteColor.data;
     },
 
-    //Function related to Material No Component
+    //Function related to Material Simple
 
     //Function related to shapes
-    updateNoComponentShapes: async (configId, materialId, shapes) => {
+    updateMaterialSimpleShapes: async (configId, materialId, shapes) => {
         const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/shapes/', shapes);
         return edit.data;
     },
+    getMaterialSimpleShapes: async () => {
+        const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/shapes');
+        return result.data;
+    },
     //Function related to sizes
-    updateNoComponentSizes: async (configId, materialId, sizes) => {
+    updateMaterialSimpleSizes: async (configId, materialId, sizes) => {
         const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/sizes/', sizes);
         return edit.data;
     },
+    getMaterialSimpleSizes: async (configId, materialId) => {
+        const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/sizes');
+        return result.data;
+    },
     //Function related to colors
-    updateNoComponentColors: async (configId, materialId, colors) => {
+    updateMaterialSimpleColors: async (configId, materialId, colors) => {
         const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/colors/', colors);
         return edit.data;
     },
+    getMaterialSimpleColors: async (configId, materialId) => {
+        const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/colors');
+        return result.data;
+    },
     //Function related to borders
-    updateNoComponentBorders: async (configId, materialId, borders) => {
+    updateMaterialSimpleBorders: async (configId, materialId, borders) => {
         const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/borders/', borders);
         return edit.data;
     },
+    getMaterialSimpleBorders: async (configId, materialId) => {
+        const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/borders');
+        return result.data;
+    },
     //Function related to fixing methods
-    updateNoComponentFixingMethods: async (configId, materialId, fixingmethods) => {
-        const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/fixingmethods/', fixingmethods);
+    updateMaterialSimpleFixingMethods: async (configId, materialId, fixingmethods) => {
+        const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/fixing-methods/', fixingmethods);
         return edit.data;
+    },
+    getMaterialSimpleFixingMethods: async (configId, materialId) => {
+        const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/fixing-methods');
+        return result.data;
     },
 
     //Function related to Materail with component

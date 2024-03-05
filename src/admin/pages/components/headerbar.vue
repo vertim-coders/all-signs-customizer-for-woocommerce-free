@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-fixed aso-z-[9999] aso-top-[32px] aso-w-full aso-h-[50px] aso-px-2 aso-bg-white aso-flex aso-justify-between aso-items-center">
+    <div class="aso-fixed aso-z-[9999] aso-top-[32px] aso-w-full aso-h-[50px] aso-px-2 aso-bg-white aso-flex aso-justify-between aso-items-center aso-shadow">
         <div>
             <span>
                 <img class="aso-w-[80px] aso-h-[50px]" src="../../../../assets/images/im_aso-icon2.png" alt="">

@@ -1,10 +1,10 @@
 <?php
-namespace NCPC;
+namespace ASO;
 
 /**
  * public Pages Handler
  */
-class NCPC_Public {
+class ASO_Public {
 
     public function __construct() {
         $this->render_public();

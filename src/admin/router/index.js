@@ -1,7 +1,7 @@
 import Configuration from '@/admin/pages/configuration/index.vue'
 import Materials from '@/admin/pages/configuration/materials/index.vue'
-/* import Simple from '@/admin/pages/configuration/materials/simple/index.vue'
-import Advance from '@/admin/pages/configuration/materials/advance/index.vue' */
+import Simple from '@/admin/pages/configuration/materials/simple/index.vue'
+import Advance from '@/admin/pages/configuration/materials/advance/index.vue'
 import ManageFonts from '@/admin/pages/manage-fonts/index.vue'
 import ManageCliparts from '@/admin/pages/manage-cliparts/index.vue'
 import Cliparts from '@/admin/pages/manage-cliparts/cliparts.vue'
@@ -23,16 +23,51 @@ const router = createRouter({
       name: "materials",
       component: Materials,
     },
-    /* {
-      path: "/configs/:configId/materials/simple",
+    {
+      path: "/configs/:configId/materials/:materialId/simple/sizes",
+      name: "Simple-Sizes",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/borders",
+      name: "Simple-Borders",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/colors",
+      name: "Simple-Colors",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/fixing-methods",
+      name: "Simple-FixingMethods",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/shapes",
+      name: "Simple-Shapes",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/text-images",
+      name: "Simple-TextImages",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/additional-options",
+      name: "Simple-AdditionalOptions",
+      component: Simple,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/simple/additional-options/:additionnalOptionsID",
       name: "simple",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/advance",
+      path: "/configs/:configId/materials/:materialId/advance",
       name: "advance",
       component: Advance,
-    }, */
+    },
     {
       path: "/manage-fonts",
       name: "manageFonts",
