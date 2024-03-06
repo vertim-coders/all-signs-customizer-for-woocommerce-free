@@ -230,107 +230,107 @@ final class All_Signs_Options {
         }
     }
     private function aso_define_fixingMethods(){
-        $fixingMehtods = [
+        $fixingMethods = [
             [
                 'name' => 'None',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'none'
             ],
             [
                 'name' => 'Screw',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'screw'
             ],
             [
                 'name' => 'Screw Cap',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'screw-cap'
             ],
             [
                 'name' => 'Stand Off',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'standoff'
             ],
             [
                 'name' => 'Hanging',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'hanging'
             ],
             [
                 'name' => 'Flag',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'flag'
             ],
             [
                 'name' => 'Suction Cup',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'suction-cup'
             ],
             [
                 'name' => 'Table Stand',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'table-stand'
             ],
             [
                 'name' => 'Ceiling',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'ceiling'
             ],
             [
                 'name' => 'Pole Attachment',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'pole-attachment'
             ],
             [
                 'name' => 'Cable Labeling',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'cable-labeling'
             ],
             [
                 'name' => 'Table Clamp',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'table-clamp'
             ],
             [
                 'name' => 'Base Support',
                 "description"=>"",
                 "icon" => "",
-                "popimg"=>"",
+                "popImg"=>"",
                 'type' => 'base-support'
             ],
         ];
-        $have_fixingMehtods = get_option("aso_all_fixingMehtods");
-        if($have_fixingMehtods == false){
-            update_option("aso_all_fixingMehtods",$fixingMehtods);
+        $have_fixingMethods = get_option("aso_all_fixingMethods");
+        if($have_fixingMethods == false){
+            update_option("aso_all_fixingMethods",$fixingMethods);
         }
     }
 
     /**
-     * Load the plugin after all plugis are loaded
+     * Load the plugin after all plugins are loaded
      *
      * @return void
      */

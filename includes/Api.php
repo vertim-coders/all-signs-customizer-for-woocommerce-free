@@ -8,6 +8,7 @@ use ASO\Api\Admin\ASO_Api_Manage_cliparts;
 use ASO\Api\Admin\ASO_Api_Manage_fonts;
 use ASO\Api\Admin\ASO_Api_Manage_sizes;
 use ASO\Api\Admin\ASO_Api_Materials;
+use ASO\Api\Admin\Globals_Settings\ASO_Api_Globals_Settings;
 use ASO\Api\Admin\Materials\ASO_Materials_Simple;
 use ASO\Api\Admin\Materials\ASO_Materials_Advance;
 use WP_REST_Controller;
@@ -62,6 +63,9 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Materials\ASO_Api_Materials_Advance'  ) ) {
             require_once __DIR__ . '/Api/Admin/Materials/Advance.php';
         }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Globals_Settings'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Globals-Settings/Globals-Settings.php';
+        }
     }
 
     /**
@@ -80,6 +84,7 @@ class Api extends WP_REST_Controller {
         (new ASO_Materials_Simple())->register_routes();
         (new ASO_Materials_Advance())->register_routes();
         (new ASO_Api_GoogleFonts())->register_routes();
+        (new ASO_Api_Globals_Settings())->register_route();
     }
 
 }

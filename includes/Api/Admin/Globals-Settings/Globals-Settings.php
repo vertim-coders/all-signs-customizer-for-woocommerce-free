@@ -356,7 +356,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
 	public function get_fixing_methods_options_globals_settings($request){
-		$all_fixingMethods = get_option("aso_all_fixingMehtods",[]);
+		$all_fixingMethods = get_option("aso_all_fixingMethods",[]);
 		return rest_ensure_response($all_fixingMethods);   
 	}
     /**
@@ -368,10 +368,10 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	public function update_fixing_methods_options_globals_settings($request){
 		$fixingMethod=json_decode($request->get_body(),true);
 		$fixingMethod_id=$request->get_param('fixingMethod_id');
-		$all_fixingMethods= get_option("aso_all_fixingMehtods",[]); ;
+		$all_fixingMethods= get_option("aso_all_fixingMethods",[]); ;
 		if($all_fixingMethods[$fixingMethod_id]){
 			$all_fixingMethods[$fixingMethod_id] = $fixingMethod;
-			$update = update_option("aso_all_fixingMehtods",$all_fixingMethods);
+			$update = update_option("aso_all_fixingMethods",$all_fixingMethods);
 			if($update){
 				return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","ASO") ) );
 			}
@@ -415,5 +415,15 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 			return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
 		}
 	}
+  /**
+     * Checks if a given request has access to read the items.
+     *
+     * @param  WP_REST_Request $request Full details about the request.
+     *
+     * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_config_permissions_check( $request ) {
+      return true;
+  }
 }
 
