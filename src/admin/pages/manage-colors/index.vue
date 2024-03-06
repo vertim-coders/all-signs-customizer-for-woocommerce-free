@@ -55,7 +55,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-for="(color,key) in colors" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(color,key) in colors" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-text-center aso-px-5 aso-p-4">
                                {{color.name}}
                             </td>
@@ -202,7 +202,6 @@ import toastMessage from '@/admin/utils/functions';
     
     const isFetching = ref(false);
     const isLoading = ref(false);
-    const isDelete = ref(false);
     const isNewColor = ref(false);
     const openModal = ref(false);
     const isEdit = ref(false);
@@ -226,7 +225,8 @@ import toastMessage from '@/admin/utils/functions';
         if(!result.message){
             colors.value = result;
         }else{
-            noFoundMessage.value = result.message
+            noFoundMessage.value = result.message;
+            colors.value = [];
         }
         isFetching.value = false;
     }
