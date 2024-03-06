@@ -103,7 +103,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             array(
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'save_materials_colors' ),
+                    'callback'            => array( $this, 'save_material_colors' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -119,6 +119,42 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_material_colors' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );      
+        register_rest_route(
+            $this->namespace,
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/text-images',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'save_material_textImages' ),
+                    'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_material_textImages' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -607,6 +643,74 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                 }
                 else{
                     return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","ASO")]);
+                }
+            }else{
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+        }        
+    }
+    /**
+     * Save a collection of textImages.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function save_material_textImages( $request ) {
+        $config_id = $request->get_param('config_id');
+        $material_id = $request->get_param('material_id');
+
+        if($config_id != 0){
+            $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
+            if(is_array($meta_value) && !empty($meta_value)){
+                if(isset($meta_value['data']['materials'][$material_id]) && $meta_value['data']['materials'][$material_id]['type'] === "simple"){
+                    $new_textImages = json_decode($request->get_body(),true);
+                    if($meta_value['data']['materials'][$material_id]['data']['textImages'] !== $new_textImages){
+                        $meta_value['data']['materials'][$material_id]['data']['textImages'] = $new_textImages;
+                        $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
+                        if($update === true){
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component textImages successfully updated","ASO")]);
+                        }else{
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component textImages has not been updated","ASO")]);
+                        }
+                    }else{
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                    }
+                }else{
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","ASO")]);
+                }
+
+            }else{
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+        }
+    }
+    /**
+     * Get a collection of text Images.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_textImages( $request ){
+        $config_id = $request->get_param('config_id');
+        $material_id = $request->get_param('material_id');
+        if($config_id != 0){
+            $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
+            if(is_array($meta_value) && !empty($meta_value)){
+                if(isset($meta_value['data']['materials'][$material_id])){
+                    if($meta_value['data']['materials'][$material_id]['data']['textImages']){
+                        return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['textImages']);
+                    }else{
+                        return rest_ensure_response(["message"=>__('Text not found',"ASO")]);
+                    }    
+                }
+                else{
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component textImages has not been found","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);

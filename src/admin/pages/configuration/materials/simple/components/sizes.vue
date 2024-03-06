@@ -267,8 +267,7 @@
     import api from "@/admin/Api/api";
     import { ref,onMounted } from "vue";
     import { useRoute } from 'vue-router';
-    import router from '@/admin/router';
-import toastMessage from "@/admin/utils/functions";
+    import toastMessage from "@/admin/utils/functions";
 
     const route = useRoute()
     const configID = ref(route.params.configId);
@@ -279,7 +278,6 @@ import toastMessage from "@/admin/utils/functions";
     const isLoading = ref(false);
     const manageSizes = ref([]);
     const sizeId = ref(null);
-    const selectSize = ref(false);
     const sizes = ref({
         customSize:{
             active:false,

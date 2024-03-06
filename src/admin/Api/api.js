@@ -186,6 +186,15 @@ const api = {
         const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/colors');
         return result.data;
     },
+    //Function related to textImages
+    updateMaterialSimpleTextImages: async (configId, materialId, textImages) => {
+        const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/text-images/', textImages);
+        return edit.data;
+    },
+    getMaterialSimpleTextImages: async (configId, materialId) => {
+        const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/text-images');
+        return result.data;
+    },
     //Function related to borders
     updateMaterialSimpleBorders: async (configId, materialId, borders) => {
         const edit = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/borders/', borders);
@@ -204,43 +213,105 @@ const api = {
         const result = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/fixing-methods');
         return result.data;
     },
+    // create additionnal options component
+    addMaterialSimpleAdditionnalsOption: async (configId, materialId, component) => {
+        const post = await axios.post(aso_api_url + '/configs' + configId + '/materials/' + materialId + '/additional-options', component);
+        return post.data;
+    },
+    getMaterialSimpleAdditionnalsOptions: async (configId, materialId, componentId) => {
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options' + componentId);
+        return material.data;
+    },
+    updateMaterialSimpleAdditionnalsOption: async (configId, materialId, componentId, component) => {
+        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId, component);
+        return material.data;
+    },
+    deleteMaterialSimpleAdditionnalsOption: async (configId, materialId, componentId) => {
+        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId);
+        return material.data;
+    },
+    // Additional Options component options
+    addMaterialSimpleAdditionnalOptionsItem: async (config, material, component, option) => {
+        const post = await axios.post(aso_api_url + '/configs' + config + '/materials/' + material + '/additional-options/' + component, option);
+        return post.data;
+    },
+    getMaterialSimpleAdditionnalOptionsItems: async (configId, materialId, componentId, optionId) => {
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId + '/' + optionId);
+        return material.data;
+    },
+    updateMaterialSimpleAdditionnalOptionsItem: async (configId, materialId, componentId, optionId, option) => {
+        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId + '/' + optionId, option);
+        return material.data;
+    },
+    deleteMaterialSimpleAdditionnalOptionsItem: async (configId, materialId, componentId, optionId, option) => {
+        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId + '/' + optionId, option);
+        return material.data;
+    },
 
     //Function related to Materail with component
 
     // create component
-    addMaterialComponent: async (configId, materialId, component) => {
+    addMaterialAdvanceComponent: async (configId, materialId, component) => {
         const post = await axios.post(aso_api_url + '/configs' + configId + '/materials/' + materialId, component);
         return post.data;
     },
-    getMaterialComponent: async (configId, materialId, componentId) => {
+    getMaterialAdvanceComponent: async (configId, materialId, componentId) => {
         const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId);
         return material.data;
     },
-    updateMaterialComponent: async (configId, materialId, componentId, component) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId, component);
+    updateMaterialAdvanceComponent: async (configId, materialId, componentId, component) => {
+        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId, component);
         return material.data;
     },
-    deleteMaterialComponent: async (configId, materialId, componentId) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId);
+    deleteMaterialAdvanceComponent: async (configId, materialId, componentId) => {
+        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId);
         return material.data;
     },
     // create component
-    addComponentOption: async (config, material, component, option) => {
+    addMaterialAdvanceComponentOption: async (config, material, component, option) => {
         const post = await axios.post(aso_api_url + '/configs' + config + '/materials/' + material + '/' + component, option);
         return post.data;
     },
-    getComponentOption: async (configId, materialId, componentId, optionId) => {
+    getMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId) => {
         const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId);
         return material.data;
     },
-    updateComponentOption: async (configId, materialId, componentId, optionId, option) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
+    updateMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId, option) => {
+        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
         return material.data;
     },
-    deleteComponentOption: async (configId, materialId, componentId, optionId, option) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
+    deleteMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId, option) => {
+        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
         return material.data;
     },
+    //shapes routes
+    getGlobalShapes: async () => {
+        const shapes = await axios.get(aso_api_url + '/globals-settings/shapes');
+        return shapes.data;
+    },
+    updateShapeInGlobalShapes: async (shapeId, shape) => {
+        const shapes = await axios.get(aso_api_url + '/globals-settings/shapes/' + shapeId, shape);
+        return shapes.data;
+    },
+    //borders routes
+    getGlobalBorders: async () => {
+        const borders = await axios.get(aso_api_url + '/globals-settings/borders');
+        return borders.data;
+    },
+    updateBorderInGloblaBorders: async (borderId, border) => {
+        const borders = await axios.get(aso_api_url + '/globals-settings/borders/' + borderId, border);
+        return borders.data;
+    },
+    //Fixing Methods routes
+    getGlobalFixingMethods: async () => {
+        const FixingMethods = await axios.get(aso_api_url + '/globals-settings/fixing-methods');
+        return FixingMethods.data;
+    },
+    updateFixingMethodInGloblaFixingMethods: async (FixingMethodId, FixingMethod) => {
+        const FixingMethods = await axios.get(aso_api_url + '/globals-settings/fixing-methods/' + FixingMethodId, FixingMethod);
+        return FixingMethods.data;
+    },
+
 
 }
 export default api;

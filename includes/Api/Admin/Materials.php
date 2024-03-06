@@ -153,6 +153,7 @@ class ASO_Api_Materials extends WP_REST_Controller {
                                 'sizes'=>[],
                                 'borders'=>[],
                                 'shapes'=>[],
+                                "textImages"=>["enableText"=>true,"enableImages"=>true],
                                 'fixingMethods'=>[],
                                 'colors'=>[],
                                 "additionalOptions"=>[]

@@ -76,7 +76,9 @@ final class All_Signs_Options {
     public function __construct() {
 
         $this->define_constants();
-
+        $this->aso_define_borders();
+        $this->aso_define_shapes();
+        $this->aso_define_fixingMethods();
         register_activation_hook( __FILE__, array( $this, 'activate' ) );
         register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
@@ -137,6 +139,194 @@ final class All_Signs_Options {
         define( 'ASO_INCLUDES', ASO_PATH . '/includes' );
         define( 'ASO_URL', plugins_url( '', ASO_FILE ) );
         define( 'ASO_ASSETS', ASO_URL . '/assets' );
+    }
+
+    private function aso_define_borders(){
+        $borders = [
+            [
+                'name' => 'None',
+                "icon" => "",
+                'value' => 'none'
+            ],
+            [
+                'name' => 'Normal',
+                "icon" => "",
+                'value' => 'normal'
+            ],
+            [
+                'name' => 'Old World',
+                'value' => 'old-world'
+            ]
+        ];
+        $have_borders = get_option("aso_all_borders");
+        if($have_borders == false){
+            update_option("aso_all_borders",$borders);
+        }
+    }
+    private function aso_define_shapes(){
+        $shapes = [
+            [
+                'name' => 'Oval',
+                "icon" => "",
+                'value' => 'oval'
+            ],
+            [
+                'name' => 'Square',
+                'value' => 'square'
+            ],
+            [
+                'name' => 'Triangle',
+                "icon" => "",
+                'value' => 'triangle'
+            ],
+            [
+                'name' => 'Rounded Square',
+                "icon" => "",
+                'value' => 'rounded-square'
+            ],
+            [
+                'name' => 'Rotated Square',
+                "icon" => "",
+                'value' => 'rotated-square'
+            ],
+            [
+                'name' => 'Turn Left',
+                "icon" => "",
+                'value' => 'turn-left'
+            ],
+            [
+                'name' => 'Turn Right',
+                "icon" => "",
+                'value' => 'turn-right'
+            ],
+            [
+                'name' => 'Arrow Left',
+                'value' => 'arrow-left'
+            ],
+            [
+                'name' => 'Arrow Right',
+                "icon" => "",
+                'value' => 'arrow-right'
+            ],
+            [
+                'name' => 'Stop',
+                "icon" => "",
+                'value' => 'stop'
+            ],
+            [
+                'name' => 'Rounded Top',
+                "icon" => "",
+                'value' => 'rounded-top'
+            ],
+            [
+                'name' => 'Rounded Sides',
+                "icon" => "",
+                'value' => 'rounded-sides'
+            ]
+        ];
+        $have_shapes = get_option("aso_all_shapes");
+        if($have_shapes == false){
+            update_option("aso_all_shapes",$shapes);
+        }
+    }
+    private function aso_define_fixingMethods(){
+        $fixingMehtods = [
+            [
+                'name' => 'None',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'none'
+            ],
+            [
+                'name' => 'Screw',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'screw'
+            ],
+            [
+                'name' => 'Screw Cap',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'screw-cap'
+            ],
+            [
+                'name' => 'Stand Off',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'standoff'
+            ],
+            [
+                'name' => 'Hanging',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'hanging'
+            ],
+            [
+                'name' => 'Flag',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'flag'
+            ],
+            [
+                'name' => 'Suction Cup',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'suction-cup'
+            ],
+            [
+                'name' => 'Table Stand',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'table-stand'
+            ],
+            [
+                'name' => 'Ceiling',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'ceiling'
+            ],
+            [
+                'name' => 'Pole Attachment',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'pole-attachment'
+            ],
+            [
+                'name' => 'Cable Labeling',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'cable-labeling'
+            ],
+            [
+                'name' => 'Table Clamp',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'table-clamp'
+            ],
+            [
+                'name' => 'Base Support',
+                "description"=>"",
+                "icon" => "",
+                "popimg"=>"",
+                'type' => 'base-support'
+            ],
+        ];
+        $have_fixingMehtods = get_option("aso_all_fixingMehtods");
+        if($have_fixingMehtods == false){
+            update_option("aso_all_fixingMehtods",$fixingMehtods);
+        }
     }
 
     /**

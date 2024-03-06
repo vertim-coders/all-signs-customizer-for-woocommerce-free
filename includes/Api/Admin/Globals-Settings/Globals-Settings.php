@@ -133,11 +133,6 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_shapes_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
-        array(
-          'methods'             => \WP_REST_Server::CREATABLE,
-          'callback'            => array( $this, 'save_shapes_options_globals_settings' ),
-          'permission_callback' => array( $this, 'get_config_permissions_check' ),
         )
       )
     );
@@ -155,11 +150,6 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_fixing_methods_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
-        array(
-          'methods'             => \WP_REST_Server::CREATABLE,
-          'callback'            => array( $this, 'save_fixing_methods_options_globals_settings' ),
-          'permission_callback' => array( $this, 'get_config_permissions_check' ),
         )
       )
     );
@@ -176,13 +166,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_borders_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
-        array(
-          'methods'             => \WP_REST_Server::CREATABLE,
-          'callback'            => array( $this, 'save_borders_options_globals_settings' ),
-          'permission_callback' => array( $this, 'get_config_permissions_check' ),
         )
-        
       )
     );
   }
@@ -330,7 +314,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function update_output_options_globals_settings($request){
-    $params=json_decode($request->get_body());
+    $data=json_decode($request->get_body());
   }
    /**
    * get all shapes function 
@@ -338,149 +322,98 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @param  \WP_REST_Request $request Full details about the request.
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function get_shapes_options_globals_settings($request){
-    $all_shapes = get_option("aso-all-shapes",[]);
-    return rest_ensure_response($all_shapes);  
-  }
+	public function get_shapes_options_globals_settings($request){
+		$all_shapes = get_option("aso_all_shapes",[]);
+		return rest_ensure_response($all_shapes);  
+	}
     /**
    * Update all shape function 
    * 
    * @param  \WP_REST_Request $request Full details about the request.
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function update_shapes_options_globals_settings($request){
-    $shape=json_decode($request->get_body(),true);
-    $shape_id=$request->get_param('shape_id');
-    $all_shapes= get_option("aso-all-shapes",[]); ;
-    if($all_shapes[$shape_id]){
-      $all_shapes[$shape_id] = $shape;
-      $update = update_option("aso-manages-fonts",$all_shapes);
-        if($update){
-        return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","ASO") ) );
-        }
-        else{
-        return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","") ) );
-        }   
-    }else{
-      return rest_ensure_response(["success"=>false,"message"=>__('Shape not found',"ASO")]);
-    }
-  }
-   /**
-   * Save all shape function 
-   * 
-   * @param  \WP_REST_Request $request Full details about the request.
-   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-   */
-  public function save_shapes_options_globals_settings($request){
-    $shape=json_decode($request->get_body(),true);
-    $all_shapes= get_option("aso-all-shapes",[]);
-    array_push($all_shapes,$shape);
-    $update = update_option("aso-all-shapes",$all_shapes);
-    if($update){
-      return rest_ensure_response( ["success"=>true,"message"=>__("Shape created with success","ASO")] );
-    }else{
-      return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
-    }
-  }
+	public function update_shapes_options_globals_settings($request){
+		$shape=json_decode($request->get_body(),true);
+		$shape_id=$request->get_param('shape_id');
+		$all_shapes= get_option("aso_all_shapes",[]); ;
+		if($all_shapes[$shape_id]){
+			$all_shapes[$shape_id] = $shape;
+			$update = update_option("aso_all_shapes",$all_shapes);
+			if($update){
+				return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","ASO") ) );
+			}
+			else{
+				return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","") ) );
+			}   
+		}else{
+			return rest_ensure_response(["success"=>false,"message"=>__('Shape not found',"ASO")]);
+		}
+	}
    /**
    * get all fixing methods function 
    * 
    * @param  \WP_REST_Request $request Full details about the request.
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function get_fixing_methods_options_globals_settings($request){
-    $all_fixingMethods = get_option("aso-all-fixingMethods",[]);
-    return rest_ensure_response($all_fixingMethods);   
-  }
+	public function get_fixing_methods_options_globals_settings($request){
+		$all_fixingMethods = get_option("aso_all_fixingMehtods",[]);
+		return rest_ensure_response($all_fixingMethods);   
+	}
     /**
    * Update all fixing method function 
    * 
    * @param  \WP_REST_Request $request Full details about the request.
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function update_fixing_methods_options_globals_settings($request){
-    $fixingMethod=json_decode($request->get_body(),true);
-    $fixingMethod_id=$request->get_param('fixingMethod_id');
-    $all_fixingMethods= get_option("aso-all-fixingMethods",[]); ;
-    if($all_fixingMethods[$fixingMethod_id]){
-      $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
-      $update = update_option("aso-all-fixingMethods",$all_fixingMethods);
-        if($update){
-        return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","ASO") ) );
-        }
-        else{
-        return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","") ) );
-        }   
-    }else{
-      return rest_ensure_response(["success"=>false,"message"=>__('FixingMethod not found',"ASO")]);
-    }
-  }
-  /**
-   * save all fixing methods function 
-   * 
-   * @param  \WP_REST_Request $request Full details about the request.
-   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-   */
-  public function save_fixing_methods_options_globals_settings($request){
-    $fixingMethod=json_decode($request->get_body(),true);
-    $all_fixingMethods= get_option("aso-all-fixingMethods",[]);
-    array_push($all_fixingMethods,$fixingMethod);
-    $update = update_option("aso-all-fixingMethods",$all_fixingMethods);
-    if($update){
-      return rest_ensure_response( ["success"=>true,"message"=>__("Fixing Method created with success","ASO")] );
-    }else{
-      return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
-    }
-  }
-   /**
-   * get all borders function 
-   * 
-   * @param  \WP_REST_Request $request Full details about the request.
-   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-   */
-  public function get_borders_options_globals_settings($request){
-    $all_borders = get_option("aso-all-borders",[]);
-    return rest_ensure_response($all_borders);     
-  }
+	public function update_fixing_methods_options_globals_settings($request){
+		$fixingMethod=json_decode($request->get_body(),true);
+		$fixingMethod_id=$request->get_param('fixingMethod_id');
+		$all_fixingMethods= get_option("aso_all_fixingMehtods",[]); ;
+		if($all_fixingMethods[$fixingMethod_id]){
+			$all_fixingMethods[$fixingMethod_id] = $fixingMethod;
+			$update = update_option("aso_all_fixingMehtods",$all_fixingMethods);
+			if($update){
+				return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","ASO") ) );
+			}
+			else{
+				return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","") ) );
+			}   
+		}else{
+			return rest_ensure_response(["success"=>false,"message"=>__('FixingMethod not found',"ASO")]);
+		}
+	}
+	/**
+	 * get all borders function 
+	 * 
+	 * @param  \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_borders_options_globals_settings($request){
+		$all_borders = get_option("aso_all_borders",[]);
+		return rest_ensure_response($all_borders);     
+	}
     /**
    * Update all border function 
    * 
    * @param  \WP_REST_Request $request Full details about the request.
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function update_borders_options_globals_settings($request){
-    $border=json_decode($request->get_body(),true);
-    $border_id=$request->get_param('border_id');
-    $all_borders= get_option("aso-all-borders",[]); ;
-    if($all_borders[$border_id]){
-      $all_borders[$border_id] = $border;
-      $update = update_option("aso-manages-fonts",$all_borders);
-        if($update){
-        return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","ASO") ) );
-        }
-        else{
-        return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","") ) );
-        }   
-    }else{
-      return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
-    }
-  }
-   /**
-   * get all borders function 
-   * 
-   * @param  \WP_REST_Request $request Full details about the request.
-   * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-   */
-  public function save_borders_options_globals_settings($request){
-    $border=json_decode($request->get_body(),true);
-    $all_borders= get_option("aso-all-borders",[]);
-    array_push($all_borders,$border);
-    $update = update_option("aso-all-borders",$all_borders);
-    if($update){
-      return rest_ensure_response( ["success"=>true,"message"=>__("Border created with success","ASO")] );
-    }else{
-      return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
-    }  
-  }
+	public function update_borders_options_globals_settings($request){
+		$border=json_decode($request->get_body(),true);
+		$border_id=$request->get_param('border_id');
+		$all_borders= get_option("aso_all_borders",[]); ;
+		if($all_borders[$border_id]){
+			$all_borders[$border_id] = $border;
+			$update = update_option("aso_all_borders",$all_borders);
+			if($update){
+				return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","ASO") ) );
+			}
+			else{
+				return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","") ) );
+			}   
+		}else{
+			return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
+		}
+	}
 }
 
