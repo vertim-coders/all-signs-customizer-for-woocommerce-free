@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-show="listBorder">
+        <div class="aso-space-y-1" v-if="!isNewBorder">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
                 <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newBorder">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,10 +21,10 @@
                                 Title 
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
-                                Description
+                                Icons
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
-                                Icons
+                                Additional Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Action
@@ -33,90 +33,40 @@
                         </tr>
                     </thead>
                     <tbody class="aso-bg-white">
-                        
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-if="isFetching">
+                            <td colspan="6">
+                                <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
+                                    <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-if="borders.length == 0 && !isFetching">
+                            <td colspan="6">
+                                <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
+                                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
+                                        <p class="aso-text-2xl aso-font-bold">{{noBordersFound}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-for="(border, key) in borders" :key=key class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-text-center aso-px-6 aso-p-4">
-                                   None
+                                {{manageBorders[border.borderId].name}}
                             </td>
                             <td class="aso-px-8 aso-py-3 aso-flex aso-justify-center aso-translate-x-1">
-                                <svg class="aso-w-7 aso-h-7" viewBox="0 0 51 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="Group 19352812">
-                                    <rect id="Rectangle 8" x="1" y="0.5" width="49" height="49" rx="24.5" stroke="#3D3D3D"/>
-                                    <path id="Rectangle 9" d="M41.0957 7.61719L7.0957 42.5255" stroke="#3D3D3D"/>
-                                    </g>
-                                </svg>
+                                <img :src="manageBorders[border.borderId].icon" />
                             </td>
                             <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
-                                    25$
+                                    {{border.additionalPrice}}
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center -aso-translate-y-3">
+                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialBorder(key,border)">
                                 </button>
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-28 aso-text-center aso-px-6 aso-p-4">
-                                   Stop
-                            </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-x-1">
-                                <svg class="aso-w-12 aso-h-12" viewBox="0 0 52 37" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <rect width="52" height="37" fill="url(#pattern0)"/>
-                                    <defs>
-                                    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                                    <use xlink:href="#image0_1133_5185" transform="matrix(0.00613395 0 0 0.00862069 0.101293 0)"/>
-                                    </pattern>
-                                    <image id="image0_1133_5185" width="130" height="116" xlink:href="data:image/png;base64,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"/>
-                                    </defs>
-                                </svg>
-
-                            </td>
-                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
-                                <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
-                                    25$
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center -aso-translate-y-3">
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
-                                </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-28 aso-text-center aso-px-6 aso-p-4">
-                                Triangle
-                            </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-x-1">
-                                <svg class="aso-w-12 aso-h-12" viewBox="0 0 52 37" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <rect width="52" height="37" fill="url(#pattern0)"/>
-                                    <defs>
-                                    <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                                    <use xlink:href="#image0_1133_5185" transform="matrix(0.00613395 0 0 0.00862069 0.101293 0)"/>
-                                    </pattern>
-                                    <image id="image0_1133_5185" width="130" height="116" xlink:href="data:image/png;base64,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"/>
-                                    </defs>
-                                </svg>
-
-                            </td>
-                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
-                                <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
-                                    25$
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center -aso-translate-y-3">
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
-                                </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialBorder(key,border,true)">
                                 </button>
                             </td>
                         </tr>
@@ -125,34 +75,54 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-2" v-show="selectBorder">
+        <div class="aso-space-y-2" v-if="isNewBorder">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-medium aso-px-8 aso-py-8 aso-space-y-8 ">
                 
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Select border</label>
-                        <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                            <option selected>100x50mm</option>
+                        <select v-model="border.borderId" type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <option :value="key" v-for="brder, key in manageBorders" :key="key">
+                            {{ brder.name }}
+                        </option>
                         </select>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Additional Price</label>
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input type="number" v-model="border.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-normal">Exclude size</label>
-                    <select type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option value=""></option>
-                    </select>
+                    <Multiselect
+                        v-model="border.excludeSize" 
+                        placeholder=""
+                        label="name"
+                        trackBy="id"
+                        :options="MaterialSimpleSizes"
+                        mode="tags"
+                        :searchable="true"
+                    />
                     <span class="aso-text-[#444444] aso-text-[12px]">exclude the sizes of this border</span>
                     
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-semibold">Border settings</label>
                     <span class="aso-text-[12px] aso-text-[#444444]">border color</span>
-                    <div class="">
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                    <div class="aso-relative aso-flex">
+                        <input
+                            id="colorPicker"
+                            type="color"
+                            v-model="border.settings.codeHex"
+                            @input="changeBorderColor"
+                            class="aso-w-9 aso-h-[30px]"
+                        />
+                        <input
+                            type="text"
+                            v-model="border.settings.codeHex"
+                            @input="changeBorderColor"
+                            class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                        />
                     </div>
                     
                 </div>
@@ -160,16 +130,16 @@
                     <div class="aso-flex aso-font-semibold">
                         Enable border width
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleToggleClick2" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[110%]': isCheckbox, 'aso-bg-active': isChecked }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="aso-toggle" @click="enableBorderWidth" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
+                            <div :class="{'aso-translate-x-[110%]': border.settings.enableBorderWidth, 'aso-bg-active': border.settings.enableBorderWidth }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
                     <div class="aso-flex aso-font-semibold">
-                        Enable border width
+                        Enable border Color
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleToggleClick2" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[110%]': isCheckbox, 'aso-bg-active': isChecked }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="aso-toggle" @click="enableBorderColor" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
+                            <div :class="{'aso-translate-x-[110%]': border.settings.enableBorderColor, 'aso-bg-active': border.settings.enableBorderColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -177,7 +147,7 @@
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
-                    <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
+                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
@@ -185,32 +155,227 @@
                         <div class="aso-font-semibold aso-text-[16px]">Back</div>
                     </button>
                 </div>
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white  aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer">
-                        <div class="aso-font-semibold aso-text-[16px]">Save</div>
+                <div class="aso-bg-[#016464] aso-rounded" v-if="isEdit">
+                    <button @click="updateMaterialBorders" :class="`aso-rounded aso-flex ${!isLoading ? 'aso-bg-amber-400 ' :'aso-bg-amber-500'} aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer`">
+                        <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <div class="aso-font-semibold aso-text-[16px]">Update</div>
+                    </button>
+                </div>
+                <div class="aso-bg-[#016464] aso-rounded" v-if="!isEdit">
+                    <button @click="addBorders" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white  aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer">
+                        <div class="aso-translate-y-1">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
+                            </svg>
+                        </div>
+                        <span class="aso-font-semibold aso-text-[16px]">Save</span>
                     </button>
                 </div>
             </div>
         </div>
-        
+         <!-- Delete Modal-->
+         <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close modal</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this border?</h3>
+                        <input v-model="manageBorders[borderId].name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <button @click="deleteBorders" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            Yes, I'm sure
+                        </button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
-    import { ref } from "vue";
-    const selectBorder = ref(false);
-    const listBorder = ref(true);
-    const newBorder = () => {
-        listBorder.value = false;
-        selectBorder.value = true;
+    import Multiselect from '@vueform/multiselect'
+    import api from "@/admin/Api/api";
+    import { ref,onMounted } from "vue";
+    import { useRoute } from 'vue-router';
+    import toastMessage from "@/admin/utils/functions";
+    
+
+    const route = useRoute()
+    const configID = ref(route.params.configId);
+    const materialId = ref(route.params.materialId);
+
+    const isFetching = ref(false);
+    const isNewBorder = ref(false);
+    const isLoading = ref(false);
+    const borders = ref([]);
+    const manageBorders = ref([]);
+    const MaterialSimpleSizes = ref([]);
+    const manageSizes = ref([]);
+    const borderId = ref(null);
+
+    
+    const isEdit = ref(false);
+    const openModal = ref(false);
+    const noBordersFound = ref('');
+    const border = ref({
+        manageBorderId:0,
+        additionalPrice:0,
+        excludeSize: [],
+        settings:{
+            codeHex:"",
+            enableBorderWidth:true,
+            enableBorderColor:true,
+        }
+    });
+    onMounted(async ()=>{
+        isFetching.value = true;
+        await fetchManageSizes();
+        await fetchBorders();
+        await fetchMaterialSizes();
+        await fetchMaterialBorders();
+        isFetching.value = false;
+    });
+
+    const fetchMaterialSizes = async () => {
+        const sizesResult = await api.getMaterialSimpleSizes(configID.value, materialId.value);
+        if(!sizesResult.message){
+            MaterialSimpleSizes.value = sizesResult.allSizes.map((s,key) =>  {
+                return { name: manageSizes.value[s.manageSizeId].label, value:key}
+            });
+           
+        }
     }
-    const back = () => {
-        listBorder.value = true;
-        selectBorder.value = false;
+
+    const fetchManageSizes = async () => {
+        const allManageSizes = await api.getManageSizes();
+        if(!allManageSizes.message){
+            manageSizes.value = allManageSizes;
+        }
     }
     
-    const isCheckbox = ref(true);
-    const handleTransform = ref('translateX(100%)');
-    const handleToggleClick2 = () => {
-    isCheckbox.value = !isCheckbox.value;
+    const fetchMaterialBorders = async () => {
+        const result = await api.getMaterialSimpleBorders(configID.value,materialId.value);
+        console.log(result)
+        if(!result.message){
+            borders.value = result;
+        }else{
+            borders.value = [];
+            noBordersFound.value = result.message;
+        }
+    };
+    const fetchBorders = async () => {
+        const result = await api.getGlobalBorders();
+        if(!result.message){
+            manageBorders.value = result;
+        }
+    };
+
+    const updateBorders = async () => {
+        isLoading.value = true;
+        const result = await api.updateMaterialSimpleBorders(configID.value,materialId.value,borders.value);
+        if(result.success){
+            await fetchMaterialBorders();
+            if(result.success == true ) {
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning");
+            }
+            isLoading.value = false;
+            isNewBorder.value = false;
+            openModal.value = false;
+            border.value = {
+                manageBorderId:0,
+                additionalPrice:0,
+                excludeSize: [],
+                settings:{
+                    codeHex:"",
+                    enableBorderWidth:true,
+                    enableBorderColor:true,
+                }
+            };
+        }else{
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            isNewBorder.value = false;
+            openModal.value = false;
+            border.value = {
+                manageBorderId:0,
+                additionalPrice:0,
+                excludeSize: [],
+                settings:{
+                    codeHex:"",
+                    enableBorderWidth:true,
+                    enableBorderColor:true,
+                }
+            };
+        }
+    };
+
+    const selectMaterialBorder = (id,sz,isDeleting=false) => {
+        if(isDeleting){
+            borderId.value = id;
+            closeModal();
+        }else{
+            border.value = sz;
+            isEdit.value = true;
+            isNewBorder.value = true;
+        }
+    };
+
+    const addBorders = async () => {
+        isLoading.value = true;
+        borders.value.push(border.value);
+        await updateBorders();
+    };
+    const updateMaterialBorders = async () => {
+        isLoading.value = true;
+        borders.value[borderId.value] = border.value;
+        await updateBorders();
+    };
+
+    const deleteBorders = async () => {
+        isLoading.value = true;
+        borders.value.splice(borderId.value,1);
+        await updateBorders();
+    };
+
+
+    const closeModal = () => {
+        openModal.value = !openModal.value;
+    };
+
+    const newBorder = () => {
+        isNewBorder.value = true;
+    }
+    const back = () => {
+        isNewBorder.value = false;
+        isEdit.value = false;
+        borderId.value  = null;
+        border.value = {
+            manageBorderId:0,
+            additionalPrice:0,
+            excludeSize: [],
+            settings:{
+                codeHex:"",
+                enableBorderWidth:true,
+                enableBorderColor:true,
+            }
+        };
+    }
+
+    const enableBorderWidth = () => {
+        border.value.settings.enableBorderWidth = !border.value.settings.enableBorderWidth;
+    };
+    const enableBorderColor = () => {
+        border.value.settings.enableBorderColor = !border.value.settings.enableBorderColor;
     };
 </script>

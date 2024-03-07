@@ -50,7 +50,7 @@
                             <td colspan="3">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[306px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
-                                        <p class="aso-text-2xl aso-font-bold">{{noFontsFound}}</p>
+                                        <p class="aso-text-2xl aso-font-bold">{{noSizesFound}}</p>
                                     </div>
                                 </div>
                             </td>
@@ -189,8 +189,7 @@ const newSize = ref({
         value:0
     }
 });
-const noFontsFound = ref('');
-const listGroup = ref(true);
+const noSizesFound = ref('');
 const createSize = ref(false);
 
 
@@ -202,7 +201,7 @@ onMounted(async () => {
 const fetchSizes = async () => {
     const result = await api.getManageSizes();
     if(result.message){
-        noFontsFound.value = result.message;
+        noSizesFound.value = result.message;
         sizes.value = [];
     }else{
         sizes.value = result;

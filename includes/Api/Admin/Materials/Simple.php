@@ -512,7 +512,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
-                    if($meta_value['data']['materials'][$material_id]['data']['shapes']){
+                    if(isset($meta_value['data']['materials'][$material_id]['data']['shapes']) && count($meta_value['data']['materials'][$material_id]['data']['shapes']) > 0){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['shapes']);
                     }else{
                         return rest_ensure_response(["message"=>__('Shape not found',"ASO")]);
