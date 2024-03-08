@@ -6,6 +6,7 @@ import ManageFonts from '@/admin/pages/manage-fonts/index.vue'
 import ManageCliparts from '@/admin/pages/manage-cliparts/index.vue'
 import Cliparts from '@/admin/pages/manage-cliparts/cliparts.vue'
 import ManageColors from '@/admin/pages/manage-colors/index.vue'
+import Settings from '@/admin/pages/configuration/settings/index.vue'
 import ManageSizes from '@/admin/pages/manage-sizes/index.vue'
 import Options from "admin/pages/Options.vue";
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -67,6 +68,26 @@ const router = createRouter({
       path: "/configs/:configId/materials/:materialId/advance",
       name: "advance",
       component: Advance,
+    },
+    {
+      path: "/configs/:configId/settings/generals",
+      name: "config-settings-generals",
+      component: Settings,
+    },
+    {
+      path: "/configs/:configId/settings/generals",
+      name: "config-settings-customizer-options",
+      component: Settings,
+    },
+    {
+      path: "/configs/:configId/settings/generals",
+      name: "config-settings-languages-images",
+      component: Settings,
+    },
+    {
+      path: "/configs/:configId/settings/generals",
+      name: "config-settings-themes-colors",
+      component: Settings,
     },
     {
       path: "/manage-fonts",

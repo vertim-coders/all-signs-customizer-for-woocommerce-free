@@ -70,54 +70,40 @@
                     <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                         <div class="">
                             <button class="aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold focus:aso-font-bold focus:aso-text-[#016464] focus:aso-bg-[#E1E1E1] hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer">
-                                Customizer options
+                                Main
                             </button>
                         </div>
                         <div class="">
                             <button class="aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold focus:aso-font-bold focus:aso-text-[#016464] focus:aso-bg-[#E1E1E1] hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer">
-                                Sign Part
+                                Upload design
                             </button>
                         </div>
                         <div class="">
                             <button class="aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold focus:aso-font-bold focus:aso-text-[#016464] focus:aso-bg-[#E1E1E1] hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer">
-                                Text
+                                Visualizer
                             </button>
                         </div>
                         <div class="">
                             <button class="aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold focus:aso-font-bold focus:aso-text-[#016464] focus:aso-bg-[#E1E1E1] hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer">
-                                Image
+                                Images
                             </button>
                         </div>
                     </div>
                 </div>
                 
                 <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
-                    <div class="aso-flex aso-space-x-3">
-                        <div class="aso-text-[16px]">Enable SIGN Part</div>
-                        <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleToggleClick2" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': isCheckbox, 'aso-bg-active': isChecked }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
-                            </label>
-                        </div>
-                    </div>
+                    <h3 class="aso-text-[16px]">Content Header</h3>
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                            <label class="aso-font-semibold aso-text-[16px]">Part 1</label>
-                            <input type="text" placeholder="name" class="aso-w-full"/>
+                            <label class="aso-text-[12px] aso-text-[#444444]">Header</label>
+                            <input type="text" placeholder="" class="aso-w-full"/>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                            <label class="aso-font-semibold aso-text-[16px]">Part 2</label>
-                            <input type="text" placeholder="name" class="aso-w-full"/>
+                            <label class="so-text-[12px] aso-text-[#444444]">Text Tab</label>
+                            <input type="text" placeholder="" class="aso-w-full"/>
                         </div>
                     </div>
-                    <div class="aso-flex aso-space-x-3">
-                        <div class="aso-text-[16px]">Enable Copy design from side</div>
-                        <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleToggleClick2" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': isCheckbox, 'aso-bg-active': isChecked }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
-                            </label>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">

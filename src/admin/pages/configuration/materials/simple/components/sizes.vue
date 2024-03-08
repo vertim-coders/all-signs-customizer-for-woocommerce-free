@@ -361,6 +361,7 @@
                 charPrice:0,
                 basePrice:0
             };
+           openModal.value = false;
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
@@ -372,6 +373,7 @@
                 charPrice:0,
                 basePrice:0
             };
+           openModal.value = false;
         }
     }
 

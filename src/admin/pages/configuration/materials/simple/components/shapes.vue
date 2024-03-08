@@ -1,7 +1,7 @@
 <template>
     <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-if="!isNewShape">
-            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
+            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageShapes.length > 0">
                 <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newShape">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
@@ -67,7 +67,7 @@
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialShape(key,shape)">
                                 </button>
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialShape(shape.shapeId,shape,true)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialShape(key,shape,true)">
                                 </button>
                             </td>
                         </tr>

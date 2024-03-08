@@ -1,7 +1,7 @@
 <template>
     <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-if="!isNewBorder">
-            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
+            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageBorders.length > 0">
                 <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newBorder">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
@@ -51,10 +51,10 @@
                         </tr>
                         <tr v-for="(border, key) in borders" :key=key class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-text-center aso-px-6 aso-p-4">
-                                {{manageBorders[border.borderId].name}}
+                                {{manageBorders[border.manageBorderId].name}}
                             </td>
                             <td class="aso-px-8 aso-py-3 aso-flex aso-justify-center aso-translate-x-1">
-                                <img :src="manageBorders[border.borderId].icon" />
+                                <img :src="manageBorders[border.manageBorderId].icon" />
                             </td>
                             <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
@@ -62,11 +62,11 @@
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialBorder(key,border)">
+                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectMaterialBorder(key,border)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialBorder(key,border,true)">
+                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer" @click="selectMaterialBorder(key,border,true)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" >
                                 </button>
                             </td>
                         </tr>
@@ -81,10 +81,10 @@
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Select border</label>
-                        <select v-model="border.borderId" type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <select v-model="border.manageBorderId" type="text" class="aso-rounded aso-w-full aso-h-[30px]">
                             <option :value="key" v-for="brder, key in manageBorders" :key="key">
-                            {{ brder.name }}
-                        </option>
+                                {{ brder.name }}
+                            </option>
                         </select>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
@@ -95,7 +95,7 @@
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-normal">Exclude size</label>
                     <Multiselect
-                        v-model="border.excludeSize" 
+                        v-model="border.excludeSizes" 
                         placeholder=""
                         label="name"
                         trackBy="id"
@@ -229,9 +229,9 @@
     const border = ref({
         manageBorderId:0,
         additionalPrice:0,
-        excludeSize: [],
+        excludeSizes: [],
         settings:{
-            codeHex:"",
+            codeHex:"#000000",
             enableBorderWidth:true,
             enableBorderColor:true,
         }
@@ -295,9 +295,9 @@
             border.value = {
                 manageBorderId:0,
                 additionalPrice:0,
-                excludeSize: [],
+                excludeSizes: [],
                 settings:{
-                    codeHex:"",
+                    codeHex:"#ffffff",
                     enableBorderWidth:true,
                     enableBorderColor:true,
                 }
@@ -310,9 +310,9 @@
             border.value = {
                 manageBorderId:0,
                 additionalPrice:0,
-                excludeSize: [],
+                excludeSizes: [],
                 settings:{
-                    codeHex:"",
+                    codeHex:"#ffffff",
                     enableBorderWidth:true,
                     enableBorderColor:true,
                 }
@@ -363,9 +363,9 @@
         border.value = {
             manageBorderId:0,
             additionalPrice:0,
-            excludeSize: [],
+            excludeSizes: [],
             settings:{
-                codeHex:"",
+                codeHex:"#ffffff",
                 enableBorderWidth:true,
                 enableBorderColor:true,
             }
