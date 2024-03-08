@@ -60,8 +60,8 @@ const router = createRouter({
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/additional-options/:additionnalOptionsID",
-      name: "simple",
+      path: "/configs/:configId/materials/:materialId/simple/additional-options/:additionalOptionID",
+      name: "Simple-AdditionalOptions-Options",
       component: Simple,
     },
     {
