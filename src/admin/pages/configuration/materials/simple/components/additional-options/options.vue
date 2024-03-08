@@ -1,35 +1,35 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-if="!isNewAdditionalOptions">
+        <div class="aso-space-y-1" v-if="!isNewOptions">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
-                <button :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newAdditionalOptions">
+                <button :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addOption">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Add new additional options
+                        Add new option
                     </div>
                 </button>
             </div>
             <div class="aso-relative" id="monTableau">
-                <table class="aso-text-center aso-border aso-border-collapse aso-border-0 aso-w-full">
-                    <thead class="aso-bg-[#f0f0f1]">
+                <table class="aso-w-full aso-text-center aso-px-4 aso-border aso-border-collapse aso-border-0">
+                    <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
                         <tr class="">
-                            <th scope="col" class="aso-p-4 aso-w-12">
-                                
+                            <th scope="col" class="aso-p-4 aso-px-8 aso-font-semibold">
+                                Title 
                             </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
-                                Title
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-semibold">
+                                Icon
                             </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
-                                Description
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-semibold">
+                                Background Image
                             </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
-                                icon
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-semibold">
+                                Additional Price
                             </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-semibold">
                                 Action
                             </th>
                             
@@ -43,82 +43,95 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="additionalOptions.length == 0 && !isFetching">
+                        <tr v-if="options.length == 0 && !isFetching">
                             <td colspan="6">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
-                                        <p class="aso-text-2xl aso-font-bold">{{noAdditionalOptionsFound}}</p>
+                                        <p class="aso-text-2xl aso-font-bold">{{noOptionsFound}}</p>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        {{ console.log(additionalOptions) }}
-                        <tr v-for="(additionalOption,key) in additionalOptions" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-[5%] aso-p-4">
-                                <span class="aso-flex aso-justify-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="aso-text-[12px]">{{getInitials(additionalOption.title)}}</span> 
-                                </span>
-                                <span class="aso-py-1 aso-text-[14px]">
-                                    {{additionalOption.title}}
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
-                                {{additionalOption.description}}
+                        
+                        <tr v-for="(option,key) in options" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                            <td class="aso-px-8 aso-p-4">
+                                {{option.title}}
                             </td>
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
-                                <img v-if="additionalOption.icon" class="aso-w-10 aso-h-10" :src="additionalOption.icon" />
+                                <img v-if="option.icon" class="aso-w-10 aso-h-8" :src="option.icon" />
+
                             </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="router.push('/configs/'+configID+'/materials/'+materialId+'/simple/additional-options/'+key)">
-                                    <img class="aso-w-4 aso-h-4" src="../../../../../../../../assets/icons/ic_manage.svg" alt="">
-                                    <span class="aso-text-[12px]">
-                                        add options
-                                    </span>
-                                </button>
+                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
+                                <img v-if="option.image" class="aso-w-10 aso-h-8" :src="option.image" />
+
+                            </td>
+                            <td class="aso-text-[12px] aso-px-6 aso-py-3">
+                                <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                    {{option.additionalPrice}}
+                                </span>
+                            </td>
+                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-3">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectAdditionalOption(key,additionalOption)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectOption(key,option)">
                                 </button>
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectAdditionalOption(key,additionalOption,true)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectOption(key,option,true)">
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="aso-space-y-1" v-if="isNewAdditionalOptions">
-            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
-                <span class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 ">
-                        Add sub component
-                </span>
+            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+                <div class="aso-bg-[#016464] aso-rounded">
+                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="router.push('/configs/'+configID+'/materials/'+materialId+'/simple/additional-options')">
+                        <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
+                        </svg>
 
+                        <div class="aso-font-semibold aso-text-[16px]">Back</div>
+                    </button>
+                </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-20">
-                
-                <div class="aso-flex aso-justify-between aso-px-4 aso-py-4">
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+        </div>
+        <div class="aso-space-y-1" v-if="isNewOptions">
+            <div class="aso-text-[16px] aso-font-bold aso-px-8 aso-py-4 aso-bg-[#F8F9FB]">
+                Add options
+            </div>
+            <div class="aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-6">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
                         <label for="" class="aso-font-normal">Title</label>
-                        <input type="text" v-model="additionalOption.title" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input type="text" v-model="option.title" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
-                        <input type="text" v-model="additionalOption.description" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input type="text" v-model="option.description" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-space-y-2 aso-flex aso-flex-col aso-px-4 aso-text-[12px]">
-                    <label for="" class="aso-font-normal">Upload icon</label>
-                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
+                <div class="aso-flex aso-justify-between aso-pb-12">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-flex aso-space-x-2">
-                            <button @click="selectAdditionalOptionsIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload Icon</button>
+                            <button @click="selectOptionsIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload Icon</button>
                             <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
-                                    <img v-if="additionalOption.icon != ''" :src="additionalOption.icon" alt="" class="aso-absolute aso-w-full aso-h-full">
-                                    <button v-if="additionalOption.icon != ''" @click="()=>{additionalOption.icon = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                    <img v-if="option.icon != ''" :src="option.icon" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="option.icon != ''" @click="()=>{option.icon = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                        </div>
+                        
+                    </div>
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Background / image</label>
+                        <div class="aso-flex aso-space-x-2">
+                            <button @click="selectOptionsBackgroundImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload Image</button>
+                            <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                    <img v-if="option.image != ''" :src="option.image" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="option.image != ''" @click="()=>{option.image = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
@@ -126,12 +139,13 @@
                                 </div>
                         </div>
                     </div>
-                        
-                    
                 </div>
-                
+                <div class="aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
+                    <label for="" class="aso-font-normal">Additional Price</label>
+                    <input type="number" v-model="option.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
                     <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,13 +156,13 @@
                     </button>
                 </div>
                 <div class="aso-bg-[#016464] aso-rounded" v-if="isEdit">
-                    <button @click="updateMaterialAdditionalOption" :class="`aso-rounded aso-flex ${!isLoading ? 'aso-bg-amber-400 ' :'aso-bg-amber-500'} aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer`">
+                    <button @click="updateMaterialOption" :class="`aso-rounded aso-flex ${!isLoading ? 'aso-bg-amber-400 ' :'aso-bg-amber-500'} aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer`">
                         <img src="../../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                         <div class="aso-font-semibold aso-text-[16px]">Update</div>
                     </button>
                 </div>
                 <div class="aso-bg-[#016464] aso-rounded" v-if="!isEdit">
-                    <button @click="addMaterialAdditionalOption" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                    <button @click="addMaterialOption" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                         <div class="aso-translate-y-1">
                             <img src="../../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -175,9 +189,9 @@
                         <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this additional options?</h3>
-                        <input v-model="additionalOption.title" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
-                        <button @click="deleteAdditionalOption" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this options?</h3>
+                        <input v-model="option.title" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <button @click="deleteOption" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
                             <img src="../../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Yes, I'm sure
                         </button>
@@ -187,180 +201,192 @@
             </div>
         </div>
     </div>
-  </template>
-  
-  <script setup>
+</template>
+<script setup>
     import api from "@/admin/Api/api";
     import { ref,onMounted } from "vue";
-    import { useRoute } from 'vue-router';
     import router from '@/admin/router'
+    import { useRoute } from 'vue-router';
     import toastMessage from "@/admin/utils/functions";
 
     const route = useRoute()
     const configID = ref(route.params.configId);
     const materialId = ref(route.params.materialId);
+    const additionalOptionId = ref(route.params.additionalOptionID);
 
     const isFetching = ref(false);
-    const isNewAdditionalOptions = ref(false);
+    const isNewOptions = ref(false);
     const isLoading = ref(false);
-    const additionalOptions = ref([]);
-    const additionalOptionId = ref(null);
+    const options = ref([]);
+    const optionId = ref(null);
 
     const isEdit = ref(false);
     const openModal = ref(false);
-    const noAdditionalOptionsFound = ref('');
-    const additionalOption = ref({
+    const noOptionsFound = ref('');
+    const option = ref({
         title:"",
         description:"",
         icon:"",
-        options: [],
+        image:"",
+        additionalPrice:0,
     });
 
     onMounted(async ()=>{
         isFetching.value = true;
-        await fetchMaterialAdditionalOptions();
+        await fetchMaterialOptions();
         isFetching.value = false;
     });
-    const fetchMaterialAdditionalOptions = async () => {
-        const result = await api.getMaterialSimpleAdditionalOptions(configID.value,materialId.value);
+    const fetchMaterialOptions = async () => {
+        const result = await api.getMaterialSimpleAdditionalOptionsItems(configID.value,materialId.value,additionalOptionId.value);
         
         if(!result.message){
-            additionalOptions.value = result;
+            options.value = result;
         }else{
-            additionalOptions.value = [];
-            noAdditionalOptionsFound.value = result.message;
+            options.value = [];
+            noOptionsFound.value = result.message;
         }
     };
 
-    const updateMaterialAdditionalOption = async () => {
+    
+    const selectOption = (id,sz,isDeleting=false) => {
+        if(isDeleting){
+            optionId.value = id;
+            option.value = sz;
+            closeModal();
+        }else{
+            option.value = sz;
+            optionId.value = id;
+            isEdit.value = true;
+            isNewOptions.value = true;
+        }
+    };
+
+    const addMaterialOption = async () => {
         isLoading.value = true;
-        const result = await api.updateMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value,additionalOption.value);
+        const result = await api.addMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,option.value);
         if(result.success){
-            await fetchMaterialAdditionalOptions();
+            await fetchMaterialOptions();
+            isLoading.value = false;
+            toastMessage(result.message);
+            isNewOptions.value = false;
+            openModal.value = false;
+            option.value = {
+                title:"",
+                description:"",
+                icon:"",
+                image:"",
+                additionalPrice:0,
+            };
+        }else{
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            isNewOptions.value = false;
+            openModal.value = false;
+            option.value = {
+                title:"",
+                description:"",
+                icon:"",
+                image:"",
+                additionalPrice:0,
+            };
+        }
+    };
+
+    const updateMaterialOption = async () => {
+        isLoading.value = true;
+        const result = await api.updateMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value,option.value);
+        if(result.success){
+            await fetchMaterialOptions();
             if(result.success == true ) {
                 toastMessage(result.message);
             }else{
                 toastMessage(result.message,"warning");
             }
             isLoading.value = false;
-            isNewAdditionalOptions.value = false;
+            isNewOptions.value = false;
             openModal.value = false;
-            additionalOption.value = {
+            optionId.value = null;
+            option.value = {
                 title:"",
                 description:"",
                 icon:"",
-                options: [],
+                image:"",
+                additionalPrice:0,
             };
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
-            isNewAdditionalOptions.value = false;
+            isNewOptions.value = false;
+            optionId.value = null;
             openModal.value = false;
-            additionalOption.value = {
+            option.value = {
                 title:"",
                 description:"",
                 icon:"",
-                options: [],
+                image:"",
+                additionalPrice:0,
             };
         }
     };
-
-    const selectAdditionalOption = (id,sz,isDeleting=false) => {
-        if(isDeleting){
-            additionalOptionId.value = id;
-            additionalOption.value = sz;
-            closeModal();
-        }else{
-            additionalOption.value = sz;
-            additionalOptionId.value = id;
-            isEdit.value = true;
-            isNewAdditionalOptions.value = true;
-        }
-    };
-
-    const addMaterialAdditionalOption = async () => {
+    const deleteOption = async () => {
         isLoading.value = true;
-        const result = await api.addMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOption.value);
+        const result = await api.deleteMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value);
         if(result.success){
-            await fetchMaterialAdditionalOptions();
+            await fetchMaterialOptions();
             isLoading.value = false;
             toastMessage(result.message);
-            isNewAdditionalOptions.value = false;
+            isNewOptions.value = false;
             openModal.value = false;
-            additionalOption.value = {
+            optionId.value = null;
+            option.value = {
                 title:"",
                 description:"",
                 icon:"",
-                options: [],
+                image:"",
+                additionalPrice:0,
             };
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
-            isNewAdditionalOptions.value = false;
+            isNewOptions.value = false;
+            optionId.value = null;
             openModal.value = false;
-            additionalOption.value = {
+            option.value = {
                 title:"",
-                description:"",
                 icon:"",
-                options: [],
+                description:"",
+                image:"",
+                additionalPrice:0,
             };
         }
     };
-    
-
-    const deleteAdditionalOption = async () => {
-        isLoading.value = true;
-        const result = await api.deleteMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value);
-        if(result.success){
-            await fetchMaterialAdditionalOptions();
-            isLoading.value = false;
-            toastMessage(result.message);
-            isNewAdditionalOptions.value = false;
-            openModal.value = false;
-            additionalOption.value = {
-                title:"",
-                description:"",
-                icon:"",
-                options: [],
-            };
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewAdditionalOptions.value = false;
-            openModal.value = false;
-            additionalOption.value = {
-                title:"",
-                description:"",
-                icon:"",
-                options: [],
-            };
-        }
-    };
-
-    const getInitials = (str) => {
-        const words = str.split(' ');
-        const initials = words.map(word => word.trim().charAt(0).toUpperCase());
-        const result = initials.join('');
-        return result;
+    const addOption = () => {
+        isNewOptions.value = true;
+    }
+    const back = () => {
+        isNewOptions.value = false;
+        isLoading.value = false;
+        optionId.value = null;
+        isNewOptions.value = false;
+        openModal.value = false;
+        option.value = {
+            title:"",
+            description:"",
+            icon:"",
+            image:"",
+            additionalPrice:0,
+        };
     }
 
     const closeModal = () => {
         openModal.value = !openModal.value;
     };
 
-    const newAdditionalOptions = () => {
-        isNewAdditionalOptions.value = true;
-    }
-    const back = () => {
-        isNewAdditionalOptions.value = false;
-        
-    }
-
-    const selectAdditionalOptionsIcon = async(e) => { 
+    const selectOptionsIcon = async(e) => { 
         e.preventDefault();
         var uploader = wp.media(
             {
-                title: "Select Additional Options Icon",
+                title: "Select Options Icon",
                 button: {
                     text: "Select Icon"
                 },
@@ -375,7 +401,7 @@
                         function (attachment) {
                             attachment = attachment.toJSON();
                             if (attachment.type == "image") {
-                                additionalOption.value.icon = (attachment.url);
+                                option.value.icon = (attachment.url);
                             }
                         }
                     );
@@ -383,5 +409,32 @@
             )
             .open();
     }
-  </script>
-   
+    const selectOptionsBackgroundImage = async(e) => { 
+        e.preventDefault();
+        var uploader = wp.media(
+            {
+                title: "Select Options background image",
+                button: {
+                    text: "Select background image"
+                },
+                multiple: false
+            }
+        )
+            .on(
+                'select',
+                function () {
+                    var selection = uploader.state().get('selection');
+                    selection.map(
+                        function (attachment) {
+                            attachment = attachment.toJSON();
+                            if (attachment.type == "image") {
+                                option.value.image = (attachment.url);
+                            }
+                        }
+                    );
+                }
+            )
+            .open();
+    }
+    
+</script>

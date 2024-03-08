@@ -97,7 +97,7 @@
                 </button>
             </div>
             <div class="">
-                <button @click="()=>router.push('/configs/'+configID+'/materials/'+materialId+'/simple/additional-options')" :class="`aso-flex aso-w-fit aso-h-fit aso-p-4 aso-bg-transparent aso-space-x-2 aso-text-black ${route.name == 'Simple-AdditionalOptions' ? 'aso-border-b-[3px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">
+                <button @click="()=>router.push('/configs/'+configID+'/materials/'+materialId+'/simple/additional-options')" :class="`aso-flex aso-w-fit aso-h-fit aso-p-4 aso-bg-transparent aso-space-x-2 aso-text-black ${route.name == 'Simple-AdditionalOptions' || route.name == 'Simple-AdditionalOptions-Options' ? 'aso-border-b-[3px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 26 28" fill="black" xmlns="http://www.w3.org/2000/svg">
                         <path d="M25 4H1M25 14H1M25 24H1M21 1V7M5 11V17M17 21V27" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -116,7 +116,7 @@
             <FixingMethods v-if="route.name == 'Simple-FixingMethods'"/>
             <Shapes v-if="route.name == 'Simple-Shapes'"/>
             <TextImages v-if="route.name == 'Simple-TextImages'"/>
-            <AdditionalOptions v-if="route.name == 'Simple-AdditionalOptions'"/>
+            <AdditionalOptions v-if="route.name == 'Simple-AdditionalOptions' || route.name == 'Simple-AdditionalOptions-Options'"/>
         </div>
     </div>
 </template>

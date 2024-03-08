@@ -232,7 +232,7 @@ const api = {
     },
     // Additional Options component options
     addMaterialSimpleAdditionalOptionsItem: async (config, material, component, option) => {
-        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/additional-options/' + component, option);
+        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/additional-options/' + component+'/new-option', option);
         return post.data;
     },
     getMaterialSimpleAdditionalOptionsItems: async (configId, materialId, componentId) => {
