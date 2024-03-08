@@ -66,7 +66,12 @@ const router = createRouter({
     },
     {
       path: "/configs/:configId/materials/:materialId/advance",
-      name: "advance",
+      name: "Material-Advance",
+      component: Advance,
+    },
+    {
+      path: "/configs/:configId/materials/:materialId/advance/:componentId/options",
+      name: "Material-Advance-options",
       component: Advance,
     },
     {

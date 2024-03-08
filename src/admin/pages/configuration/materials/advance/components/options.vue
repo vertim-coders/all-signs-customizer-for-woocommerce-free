@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class=""  v-show="listOption">
+        <div class="aso-space-y-1" v-show="listOption">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div class="aso-font-bold">
                     Name config
@@ -13,8 +13,24 @@
                 <div class="aso-text-[16px] ">
                     Brass
                 </div>
+                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div class="aso-text-[16px] ">
+                    Sub component 1 <span class="aso-font-bold">(Advance)</span>
+                </div>
             </div>
-            
+            <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
+                
+                <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newOption">
+                    <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="plus-lg">
+                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                        </g>
+                    </svg>
+                    <div class="aso-text-[14px]">
+                        Add new option
+                    </div>
+                </button>
+            </div>
             
             <div class="aso-relative" id="monTableau">
                 <table class="aso-text-center aso-border aso-border-collapse aso-border-0">
@@ -30,7 +46,13 @@
                                 Description
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
-                                icon
+                                Icons
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
+                                Size
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
+                                Color
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Action
@@ -47,11 +69,9 @@
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="aso-text-[12px]">SC</span> 
-                                </span>
+                                
                                 <span class="aso-py-1 aso-text-[14px]">
-                                    Sub component 1
+                                    Madrid
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
@@ -60,13 +80,18 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../../../assets/icons/ic_plastic_sub.svg" alt="">
                             </td>
+                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                    25 x 10 mm
+                                </span>
+                            </td>
+                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                                    #DDA534
+                                </span>
+                            </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="addOption">
-                                    <img class="aso-w-4 aso-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
-                                    <span class="aso-text-[12px]">
-                                        add options
-                                    </span>
-                                </button>
+                                
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>
@@ -82,11 +107,9 @@
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="aso-text-[12px]">SC</span> 
-                                </span>
+                                
                                 <span class="aso-py-1 aso-text-[14px]">
-                                    Sub component 1
+                                    Madrid
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
@@ -95,13 +118,18 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../../../assets/icons/ic_plastic_sub.svg" alt="">
                             </td>
+                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                    25 x 10 mm
+                                </span>
+                            </td>
+                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                                    #DDA534
+                                </span>
+                            </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="addOption">
-                                    <img class="aso-w-4 aso-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
-                                    <span class="aso-text-[12px]">
-                                        add options
-                                    </span>
-                                </button>
+                                
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>
@@ -117,11 +145,9 @@
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                    <span class="aso-text-[12px]">SC</span> 
-                                </span>
+                                
                                 <span class="aso-py-1 aso-text-[14px]">
-                                    Sub component 1
+                                    Madrid
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
@@ -130,13 +156,18 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img class="aso-w-8 aso-h-8" src="../../../../../../../assets/icons/ic_plastic_sub.svg" alt="">
                             </td>
+                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                    25 x 10 mm
+                                </span>
+                            </td>
+                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                                    #DDA534
+                                </span>
+                            </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="addOption">
-                                    <img class="aso-w-4 aso-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
-                                    <span class="aso-text-[12px]">
-                                        add options
-                                    </span>
-                                </button>
+                                
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>
@@ -145,43 +176,51 @@
                                 </button>
                             </td>
                         </tr>
+                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                            <td class="aso-w-[5%] aso-p-4">
+                                <select name="" id="" class="aso-rounded-full">
+                                    <option value="">10</option>
+                                </select>
+                            </td>
+                            <td class="aso-px-6 aso-py-6 aso-flex aso-space-x-2">
+                                <div class="aso-flex aso-space-x-1">
+                                        <div>
+                                            01
+                                        </div>
+                                        <div class="aso-text-[#AAAAAA]">
+                                            a
+                                        </div>
+                                        <div>
+                                            10
+                                        </div>
+                                        <div class="aso-text-[#AAAAAA]">
+                                            sur
+                                        </div>
+                                        <div>
+                                            700
+                                        </div>
+                                </div>
+                            </td>
+                            <td class="aso-px-6 aso-py-2">
+                                
+                            </td>
+                            <td class="aso-px-6 aso-py-2">
+                                
+                            </td>
+                            <td class="aso-px-6 aso-py-2">
+                            </td>
+                            <td class="aso-px-6 aso-py-2">
+                                
+                            </td>
+                            <td class="aso-px-6 aso-py-2">
+                            <span class="aso-text-[#AAAAAA]">&lt;&lt;  &lt;</span> page 1 sur 8  > <span class="aso-text-[#AAAAAA]"> >> </span> 
+                            </td>
+                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
-            <div class="aso-space-y-1">
-                <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 ">
-                                Add sub component
-                </div>
-                <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-20">
-                    <div class="aso-flex aso-justify-between aso-px-4 aso-py-4">
-                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                            <label for="" class="aso-font-normal">Title</label>
-                            <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                        </div>
-                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                            <label for="" class="aso-font-normal">Description</label>
-                            <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                        </div>
-                    </div>
-                    <div class="aso-space-y-2 aso-px-4 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Upload icon</label>
-                        <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-full aso-h-[35px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-rounded aso-px-3 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">upload icon</button>
-                        </div>
-                            
-                        
-                    </div>
-                    
-                </div>
-                <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
-                    <div class="aso-bg-[#016464] aso-rounded">
-                        <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-rounded aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                            <div class="aso-font-semibold aso-text-[16px]">Add new sub component</div>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <div class="aso-space-y-1" v-show="contentOption">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
@@ -296,7 +335,7 @@
     import { ref } from "vue";
     const listOption = ref(true);
     const contentOption = ref(false);
-    const addOption = () => {
+    const newOption = () => {
         listOption.value = false;
         contentOption.value = true;
     }

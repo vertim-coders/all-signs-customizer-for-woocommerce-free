@@ -1,13 +1,11 @@
-<template lang="">
-    <div>
-        
-    </div>
+<template>
+    <ComponentAdvance v-if="$route.name == 'Material-Advance'"/>
+    <Options v-if="$route.name == 'Material-Advance-options'"/>
 </template>
-<script>
-export default {
-    
-}
+<script setup>
+import ComponentAdvance from './components/component-advance.vue';
+import Options from './components/options.vue'
 </script>
-<style lang="">
+<style>
     
-</style>
+</style>./components/option.vue./components/options.vue
