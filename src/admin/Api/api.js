@@ -215,11 +215,11 @@ const api = {
     },
     // create additional options component
     addMaterialSimpleAdditionalOption: async (configId, materialId, component) => {
-        const post = await axios.post(aso_api_url + '/configs' + configId + '/materials/' + materialId + '/additional-options', component);
+        const post = await axios.post(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options', component);
         return post.data;
     },
-    getMaterialSimpleAdditionalOptions: async (configId, materialId, componentId) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options' + componentId);
+    getMaterialSimpleAdditionalOptions: async (configId, materialId) => {
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options');
         return material.data;
     },
     updateMaterialSimpleAdditionalOption: async (configId, materialId, componentId, component) => {
@@ -232,11 +232,11 @@ const api = {
     },
     // Additional Options component options
     addMaterialSimpleAdditionalOptionsItem: async (config, material, component, option) => {
-        const post = await axios.post(aso_api_url + '/configs' + config + '/materials/' + material + '/additional-options/' + component, option);
+        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/additional-options/' + component, option);
         return post.data;
     },
-    getMaterialSimpleAdditionalOptionsItems: async (configId, materialId, componentId, optionId) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId + '/' + optionId);
+    getMaterialSimpleAdditionalOptionsItems: async (configId, materialId, componentId) => {
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId );
         return material.data;
     },
     updateMaterialSimpleAdditionalOptionsItem: async (configId, materialId, componentId, optionId, option) => {
@@ -252,7 +252,7 @@ const api = {
 
     // create component
     addMaterialAdvanceComponent: async (configId, materialId, component) => {
-        const post = await axios.post(aso_api_url + '/configs' + configId + '/materials/' + materialId, component);
+        const post = await axios.post(aso_api_url + '/configs/' + configId + '/materials/' + materialId, component);
         return post.data;
     },
     getMaterialAdvanceComponent: async (configId, materialId, componentId) => {
@@ -269,7 +269,7 @@ const api = {
     },
     // create component
     addMaterialAdvanceComponentOption: async (config, material, component, option) => {
-        const post = await axios.post(aso_api_url + '/configs' + config + '/materials/' + material + '/' + component, option);
+        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/' + component, option);
         return post.data;
     },
     getMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId) => {
