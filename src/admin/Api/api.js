@@ -252,11 +252,11 @@ const api = {
 
     // create component
     addMaterialAdvanceComponent: async (configId, materialId, component) => {
-        const post = await axios.post(aso_api_url + '/configs/' + configId + '/materials/' + materialId, component);
+        const post = await axios.post(aso_api_url + '/configs/' + configId + '/materials/' + materialId+'/new-advance-component', component);
         return post.data;
     },
-    getMaterialAdvanceComponent: async (configId, materialId, componentId) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId);
+    getMaterialAdvanceComponent: async (configId, materialId) => {
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/');
         return material.data;
     },
     updateMaterialAdvanceComponent: async (configId, materialId, componentId, component) => {
