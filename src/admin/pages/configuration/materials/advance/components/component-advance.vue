@@ -50,14 +50,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="6">
+                            <td colspan="4">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr v-if="componentAdvances.length == 0 && !isFetching">
-                            <td colspan="6">
+                            <td colspan="4">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noComponentAdvancesFound}}</p>

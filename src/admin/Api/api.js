@@ -232,11 +232,11 @@ const api = {
     },
     // Additional Options component options
     addMaterialSimpleAdditionalOptionsItem: async (config, material, component, option) => {
-        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/additional-options/' + component+'/new-option', option);
+        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/additional-options/' + component + '/new-option', option);
         return post.data;
     },
     getMaterialSimpleAdditionalOptionsItems: async (configId, materialId, componentId) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId );
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/additional-options/' + componentId);
         return material.data;
     },
     updateMaterialSimpleAdditionalOptionsItem: async (configId, materialId, componentId, optionId, option) => {
@@ -252,7 +252,7 @@ const api = {
 
     // create component
     addMaterialAdvanceComponent: async (configId, materialId, component) => {
-        const post = await axios.post(aso_api_url + '/configs/' + configId + '/materials/' + materialId+'/new-advance-component', component);
+        const post = await axios.post(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/components', component);
         return post.data;
     },
     getMaterialAdvanceComponent: async (configId, materialId) => {
@@ -260,28 +260,32 @@ const api = {
         return material.data;
     },
     updateMaterialAdvanceComponent: async (configId, materialId, componentId, component) => {
-        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId, component);
+        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/components/' + componentId, component);
         return material.data;
     },
     deleteMaterialAdvanceComponent: async (configId, materialId, componentId) => {
-        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId);
+        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/components/' + componentId);
         return material.data;
     },
-    // create component
+    // Material Advance Options
+    getMaterialAdvanceComponentOptions: async (config, material, component) => {
+        const options = await axios.get(aso_api_url + '/configs/' + config + '/materials/' + material + '/components/' + component);
+        return options.data;
+    },
     addMaterialAdvanceComponentOption: async (config, material, component, option) => {
-        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/' + component, option);
+        const post = await axios.post(aso_api_url + '/configs/' + config + '/materials/' + material + '/components/' + component + '/new-option', option);
         return post.data;
     },
     getMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId) => {
-        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId);
+        const material = await axios.get(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/components/' + componentId + '/' + optionId);
         return material.data;
     },
     updateMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId, option) => {
-        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
+        const material = await axios.put(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/components/' + componentId + '/' + optionId, option);
         return material.data;
     },
     deleteMaterialAdvanceComponentOption: async (configId, materialId, componentId, optionId, option) => {
-        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/' + componentId + '/' + optionId, option);
+        const material = await axios.delete(aso_api_url + '/configs/' + configId + '/materials/' + materialId + '/components/' + componentId + '/' + optionId, option);
         return material.data;
     },
     //shapes routes

@@ -1,26 +1,30 @@
 <template>
     <div>
-        <div class="aso-space-y-1" v-show="listOption">
-            <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold">
-                    Name config
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div>
-                    Material
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    Brass
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    Sub component 1 <span class="aso-font-bold">(Advance)</span>
-                </div>
+        <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
+            <div class="aso-font-bold">
+                Name config
             </div>
+            <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div>
+                Material
+            </div>
+            <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div class="aso-text-[16px] ">
+                Brass
+            </div>
+            <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div class="aso-text-[16px] " v-if="componentName.trim()!=''">
+                {{componentName}} <span class="aso-font-bold">(Advance)</span>
+            </div>
+            <img v-if="isNewOption" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div v-if="isNewOption" class="aso-text-[16px] ">
+                options
+            </div>
+        </div>
+        <div class="aso-space-y-1" v-if="!isNewOption">
             <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
                 
-                <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newOption">
+                <button v-if="!isFetching" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="openOptionForm">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
@@ -32,18 +36,12 @@
                 </button>
             </div>
             
-            <div class="aso-relative" id="monTableau">
-                <table class="aso-text-center aso-border aso-border-collapse aso-border-0">
+            <div class="aso-relative " id="monTableau">
+                <table class="aso-text-center aso-border aso-border-collapse aso-border-0 aso-w-full">
                     <thead class="aso-bg-[#f0f0f1]">
                         <tr class="">
-                            <th scope="col" class="aso-p-4 aso-w-12">
-                                
-                            </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Title
-                            </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
-                                Description
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Icons
@@ -61,159 +59,49 @@
                         </tr>
                     </thead>
                     <tbody class="aso-bg-white">
-                        
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-[5%] aso-p-4">
-                                <span class="aso-flex aso-justify-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                
-                                <span class="aso-py-1 aso-text-[14px]">
-                                    Madrid
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
-                                Plastic, also known .....
-                            </td>
-                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
-                                <img class="aso-w-8 aso-h-8" src="../../../../../../../assets/icons/ic_plastic_sub.svg" alt="">
-                            </td>
-                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    25 x 10 mm
-                                </span>
-                            </td>
-                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    #DDA534
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
-                                </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-[5%] aso-p-4">
-                                <span class="aso-flex aso-justify-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                
-                                <span class="aso-py-1 aso-text-[14px]">
-                                    Madrid
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
-                                Plastic, also known .....
-                            </td>
-                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
-                                <img class="aso-w-8 aso-h-8" src="../../../../../../../assets/icons/ic_plastic_sub.svg" alt="">
-                            </td>
-                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    25 x 10 mm
-                                </span>
-                            </td>
-                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    #DDA534
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
-                                </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-[5%] aso-p-4">
-                                <span class="aso-flex aso-justify-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                
-                                <span class="aso-py-1 aso-text-[14px]">
-                                    Madrid
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
-                                Plastic, also known .....
-                            </td>
-                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
-                                <img class="aso-w-8 aso-h-8" src="../../../../../../../assets/icons/ic_plastic_sub.svg" alt="">
-                            </td>
-                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    25 x 10 mm
-                                </span>
-                            </td>
-                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    #DDA534
-                                </span>
-                            </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
-                                </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-[5%] aso-p-4">
-                                <select name="" id="" class="aso-rounded-full">
-                                    <option value="">10</option>
-                                </select>
-                            </td>
-                            <td class="aso-px-6 aso-py-6 aso-flex aso-space-x-2">
-                                <div class="aso-flex aso-space-x-1">
-                                        <div>
-                                            01
-                                        </div>
-                                        <div class="aso-text-[#AAAAAA]">
-                                            a
-                                        </div>
-                                        <div>
-                                            10
-                                        </div>
-                                        <div class="aso-text-[#AAAAAA]">
-                                            sur
-                                        </div>
-                                        <div>
-                                            700
-                                        </div>
+                        <tr v-if="isFetching">
+                            <td colspan="5">
+                                <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
+                                    <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
-                            <td class="aso-px-6 aso-py-2">
+                        </tr>
+                        <tr v-if="options.length == 0 && !isFetching">
+                            <td colspan="5">
+                                <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
+                                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
+                                        <p class="aso-text-2xl aso-font-bold">{{noOptionsFound}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-for="(option,key) in options" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 
+                                <span class="aso-py-1 aso-text-[14px]">
+                                    {{option.name}}
+                                </span>
                             </td>
-                            <td class="aso-px-6 aso-py-2">
-                                
+                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
+                                <img class="aso-w-8 aso-h-8" :src="option.icon" alt="" v-if="option.icon.trim() != ''">
                             </td>
-                            <td class="aso-px-6 aso-py-2">
+                            <td class="aso-px-6 aso-py-3 aso-space-x-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                    {{option.size.width+'x'+option.size.height}}
+                                </span>
                             </td>
-                            <td class="aso-px-6 aso-py-2">
-                                
+                           <td class="aso-text-[12px] aso-px-6 aso-py-2">
+                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                                    {{manageColors[option.manageColorId].name}}
+                                </span>
                             </td>
-                            <td class="aso-px-6 aso-py-2">
-                            <span class="aso-text-[#AAAAAA]">&lt;&lt;  &lt;</span> page 1 sur 8  > <span class="aso-text-[#AAAAAA]"> >> </span> 
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectOption(key,option)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
+                                </button>
+                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer" @click="selectOption(key,option,true)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="">
+                                </button>
                             </td>
                         </tr>
                         
@@ -222,85 +110,86 @@
             </div>
             
         </div>
-        <div class="aso-space-y-1" v-show="contentOption">
-            <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold">
-                    Name config
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div>
-                    Material
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    Brass
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    Sub component 1 <span class="aso-font-bold">(Advance)</span>
-                </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    options
-                </div>
+        <div class="aso-space-y-1" v-if="isNewOption">
+            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-2">
+                    {{ isEdit ? 'Edit Option' : 'Add Option'}}
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-font-bold aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4">
-                    Add options
-            </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-6">
+            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-4">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                         <label for="" class="aso-font-normal">Title</label>
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input v-model="option.name" type="text" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input v-model="option.description" type="text" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                 </div>
                 <div class="aso-flex aso-justify-between">
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Upload icon</label>
-                        <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-full aso-h-[38px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-space-x-2 aso-rounded aso-px-3 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">
-                                <svg class="aso-w-4 aso-h-4" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22.4375 12.2809V18.5309C22.4375 18.9453 22.2729 19.3427 21.9799 19.6357C21.6868 19.9288 21.2894 20.0934 20.875 20.0934H2.125C1.7106 20.0934 1.31317 19.9288 1.02015 19.6357C0.72712 19.3427 0.5625 18.9453 0.5625 18.5309V12.2809C0.5625 11.8665 0.72712 11.4691 1.02015 11.176C1.31317 10.883 1.7106 10.7184 2.125 10.7184H6.8125C7.0197 10.7184 7.21841 10.8007 7.36493 10.9472C7.51144 11.0937 7.59375 11.2924 7.59375 11.4996C7.59375 11.7068 7.51144 11.9056 7.36493 12.0521C7.21841 12.1986 7.0197 12.2809 6.8125 12.2809H2.125V18.5309H20.875V12.2809H16.1875C15.9803 12.2809 15.7816 12.1986 15.6351 12.0521C15.4886 11.9056 15.4062 11.7068 15.4062 11.4996C15.4062 11.2924 15.4886 11.0937 15.6351 10.9472C15.7816 10.8007 15.9803 10.7184 16.1875 10.7184H20.875C21.2894 10.7184 21.6868 10.883 21.9799 11.176C22.2729 11.4691 22.4375 11.8665 22.4375 12.2809ZM7.36523 6.58362L10.7188 3.22913V11.4996C10.7188 11.7068 10.8011 11.9056 10.9476 12.0521C11.0941 12.1986 11.2928 12.2809 11.5 12.2809C11.7072 12.2809 11.9059 12.1986 12.0524 12.0521C12.1989 11.9056 12.2812 11.7068 12.2812 11.4996V3.22913L15.6348 6.58362C15.7814 6.73022 15.9802 6.81257 16.1875 6.81257C16.3948 6.81257 16.5936 6.73022 16.7402 6.58362C16.8868 6.43703 16.9692 6.2382 16.9692 6.03089C16.9692 5.82357 16.8868 5.62475 16.7402 5.47815L12.0527 0.790654C11.9802 0.718016 11.894 0.660392 11.7992 0.621076C11.7043 0.58176 11.6027 0.561523 11.5 0.561523C11.3973 0.561523 11.2957 0.58176 11.2008 0.621076C11.106 0.660392 11.0198 0.718016 10.9473 0.790654L6.25977 5.47815C6.11317 5.62475 6.03082 5.82357 6.03082 6.03089C6.03082 6.2382 6.11317 6.43703 6.25977 6.58362C6.40636 6.73022 6.60518 6.81257 6.8125 6.81257C7.01982 6.81257 7.21864 6.73022 7.36523 6.58362ZM18.5312 15.4059C18.5312 15.1741 18.4625 14.9475 18.3338 14.7548C18.205 14.5621 18.022 14.4119 17.8078 14.3232C17.5937 14.2345 17.3581 14.2113 17.1308 14.2565C16.9034 14.3017 16.6946 14.4134 16.5307 14.5772C16.3668 14.7411 16.2552 14.9499 16.21 15.1773C16.1648 15.4046 16.188 15.6402 16.2767 15.8543C16.3654 16.0685 16.5156 16.2515 16.7083 16.3803C16.901 16.509 17.1276 16.5778 17.3594 16.5778C17.6702 16.5778 17.9682 16.4543 18.188 16.2345C18.4078 16.0148 18.5312 15.7167 18.5312 15.4059Z" fill="white"/>
-                                </svg>
-                                <span>Upload icon</span>
-                            </button>
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Upload Option Icon</label>
+                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
+                            <div class="aso-flex aso-space-x-2">
+                                <button @click="selectOptionIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer aso-whitespace-nowrap">upload Icon</button>
+                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                    <img v-if="option.icon != ''" :src="option.icon" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="option.icon != ''" @click="()=>{option.icon = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        
                     </div>
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Background / image</label>
-                        <div class="aso-relative">
-                            <input type="text" class="aso-rounded aso-w-full aso-h-[38px] aso-absolute">
-                            <button class="aso-absolute aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-1.5 aso-space-x-2 aso-rounded aso-px-3 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-translate-x-4 aso-translate-y-1 aso-text-[10px] aso-cursor-pointer">
-                                <svg class="aso-w-4 aso-h-4" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M22.4375 12.2809V18.5309C22.4375 18.9453 22.2729 19.3427 21.9799 19.6357C21.6868 19.9288 21.2894 20.0934 20.875 20.0934H2.125C1.7106 20.0934 1.31317 19.9288 1.02015 19.6357C0.72712 19.3427 0.5625 18.9453 0.5625 18.5309V12.2809C0.5625 11.8665 0.72712 11.4691 1.02015 11.176C1.31317 10.883 1.7106 10.7184 2.125 10.7184H6.8125C7.0197 10.7184 7.21841 10.8007 7.36493 10.9472C7.51144 11.0937 7.59375 11.2924 7.59375 11.4996C7.59375 11.7068 7.51144 11.9056 7.36493 12.0521C7.21841 12.1986 7.0197 12.2809 6.8125 12.2809H2.125V18.5309H20.875V12.2809H16.1875C15.9803 12.2809 15.7816 12.1986 15.6351 12.0521C15.4886 11.9056 15.4062 11.7068 15.4062 11.4996C15.4062 11.2924 15.4886 11.0937 15.6351 10.9472C15.7816 10.8007 15.9803 10.7184 16.1875 10.7184H20.875C21.2894 10.7184 21.6868 10.883 21.9799 11.176C22.2729 11.4691 22.4375 11.8665 22.4375 12.2809ZM7.36523 6.58362L10.7188 3.22913V11.4996C10.7188 11.7068 10.8011 11.9056 10.9476 12.0521C11.0941 12.1986 11.2928 12.2809 11.5 12.2809C11.7072 12.2809 11.9059 12.1986 12.0524 12.0521C12.1989 11.9056 12.2812 11.7068 12.2812 11.4996V3.22913L15.6348 6.58362C15.7814 6.73022 15.9802 6.81257 16.1875 6.81257C16.3948 6.81257 16.5936 6.73022 16.7402 6.58362C16.8868 6.43703 16.9692 6.2382 16.9692 6.03089C16.9692 5.82357 16.8868 5.62475 16.7402 5.47815L12.0527 0.790654C11.9802 0.718016 11.894 0.660392 11.7992 0.621076C11.7043 0.58176 11.6027 0.561523 11.5 0.561523C11.3973 0.561523 11.2957 0.58176 11.2008 0.621076C11.106 0.660392 11.0198 0.718016 10.9473 0.790654L6.25977 5.47815C6.11317 5.62475 6.03082 5.82357 6.03082 6.03089C6.03082 6.2382 6.11317 6.43703 6.25977 6.58362C6.40636 6.73022 6.60518 6.81257 6.8125 6.81257C7.01982 6.81257 7.21864 6.73022 7.36523 6.58362ZM18.5312 15.4059C18.5312 15.1741 18.4625 14.9475 18.3338 14.7548C18.205 14.5621 18.022 14.4119 17.8078 14.3232C17.5937 14.2345 17.3581 14.2113 17.1308 14.2565C16.9034 14.3017 16.6946 14.4134 16.5307 14.5772C16.3668 14.7411 16.2552 14.9499 16.21 15.1773C16.1648 15.4046 16.188 15.6402 16.2767 15.8543C16.3654 16.0685 16.5156 16.2515 16.7083 16.3803C16.901 16.509 17.1276 16.5778 17.3594 16.5778C17.6702 16.5778 17.9682 16.4543 18.188 16.2345C18.4078 16.0148 18.5312 15.7167 18.5312 15.4059Z" fill="white"/>
-                                </svg>
-                                <span>Upload image</span>
-                            </button>
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Upload Option Backgound Image</label>
+                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
+                            <div class="aso-flex aso-space-x-2">
+                                <button @click="selectOptionImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer aso-whitespace-nowrap">upload Background Image</button>
+                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                    <img v-if="option.image != ''" :src="option.image" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="option.image != ''" @click="()=>{option.image = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="aso-flex aso-pt-8 aso-justify-between">
+                <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                         <label for="" class="">Fixing method</label>
-                        <select name="" id="" class="aso-w-full aso-h-[30px] aso-font-normal">
-                            <option selected class="aso-font-normal">select fixing method</option>
-                        </select>
+                        <Multiselect
+                            v-model="option.fixingMethodId"
+                            placeholder="Select your fixing methods"
+                            :options="fixingMethods"
+                            label="name"
+                            trackBy="name"
+                            :searchable="true"
+                        >
+                            <template v-slot:singleLabel="{ value }">
+                                <div class="multiselect-single-label">
+                                <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
+                                </div>
+                            </template>
+
+                            <template v-slot:option="{ option }">
+                                <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
+                            </template>
+                        </Multiselect>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2">
                         <label for="" class="">Size</label>
-                        <div class="aso-flex aso-justify-between aso-space-x-4">
+                        <div class="aso-flex aso-justify-between aso-items-center aso-space-x-4">
                             <div class="aso-w-2/5">
-                                <input type="text" placeholder="width" class="aso-w-full">
+                                <input type="number" v-model="option.size.width" placeholder="width" class="aso-w-full aso-h-[35px]">
                             </div>
                             <span class="aso-font-bold">x</span>
                             <div class="aso-w-2/5">
-                                <input type="text" placeholder="height" class="aso-w-full">
+                                <input type="number" v-model="option.size.height" placeholder="height" class="aso-w-full aso-h-[35px]">
                             </div>
                         </div>
                     </div>
@@ -308,35 +197,419 @@
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                         <label for="" class="aso-font-normal">Shape</label>
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <Multiselect
+                            v-model="option.shapeId"
+                            placeholder="Select your fixing methods"
+                            :options="shapes"
+                            label="name"
+                            trackBy="name"
+                            :searchable="true"
+                        >
+                            <template v-slot:singleLabel="{ value }">
+                                <div class="multiselect-single-label">
+                                <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
+                                </div>
+                            </template>
+
+                            <template v-slot:option="{ option }">
+                                <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
+                            </template>
+                        </Multiselect>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Additional Price</label>
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <label for="" class="aso-font-normal">Color</label>
+                        <Multiselect
+                            v-model="option.manageColorId"
+                            placeholder="Select your fixing methods"
+                            :options="manageColors"
+                            label="name"
+                            trackBy="name"
+                            :searchable="true"
+                        >
+                            <template v-slot:singleLabel="{ value }">
+                                <div class="multiselect-single-label">
+                                    <p :class="`aso-w-6 aso-h-6 mr-2 aso-rounded aso-bg-[${value.codeHex}]`"></p> <span>{{ value.name }}</span>
+                                </div>
+                            </template>
+
+                            <template v-slot:option="{ option }">
+                                <p :class="`aso-w-6 aso-h-6 aso-mr-2 aso-rounded aso-bg-[${option.codeHex}]`"></p><span>{{ option.name }}</span>
+                            </template>
+                        </Multiselect>
                     </div>
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                    <label for="" class="aso-font-normal">Color</label>
-                    <input type="color" class="aso-rounded aso-w-full aso-h-[30px]">
-                    
+                    <label for="" class="aso-font-normal">Additional Price</label>
+                    <input type="number" v-model="option.additionalPrice" class="aso-rounded aso-w-full aso-h-[35px]">                    
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
-                    <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-rounded aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                        <div class="aso-font-semibold aso-text-[16px]">Save</div>
+                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
+                        <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
+                        </svg>
+
+                        <div class="aso-font-semibold aso-text-[16px]">Back</div>
                     </button>
+                </div>
+                <div class="aso-bg-[#016464] aso-rounded" v-if="isEdit">
+                    <button @click="updateOption" :class="`aso-rounded aso-flex ${!isLoading ? 'aso-bg-amber-400 ' :'aso-bg-amber-500'} aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer`">
+                        <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <div class="aso-font-semibold aso-text-[16px]">Update</div>
+                    </button>
+                </div>
+                <div class="aso-bg-[#016464] aso-rounded" v-if="!isEdit">
+                    <button @click="addNewOption" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                        <div class="aso-translate-y-1">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
+                            </svg>
+                        </div>
+
+                        <span class="aso-font-semibold aso-text-[16px]">Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal-->
+        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close modal</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this component advance?</h3>
+                        <input v-model="option.name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <button @click="deleteOption" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            Yes, I'm sure
+                        </button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-    import { ref } from "vue";
-    const listOption = ref(true);
-    const contentOption = ref(false);
-    const newOption = () => {
-        listOption.value = false;
-        contentOption.value = true;
+import api from "@/admin/Api/api";
+import toastMessage from "@/admin/utils/functions";
+import Multiselect from "@vueform/multiselect";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute()
+const configId = ref(route.params.configId);
+const materialId = ref(route.params.materialId);
+const componentId = ref(route.params.componentId);
+const options = ref([]);
+const option = ref({
+    name:"",
+    description:"",
+    icon:"",
+    image:"",
+    manageColorId:0,
+    fixingMethodId:0,
+    shapeId:0,
+    size:{
+        width:0,
+        height:0
+    },
+    additionalPrice:0
+});
+const noOptionsFound = ref('');
+const componentName = ref('');
+const fixingMethods = ref([]);
+const shapes = ref([]);
+const manageColors = ref([]);
+const  optionId = ref(null);
+const isFetching = ref(false);
+const isLoading = ref(false);
+const openModal = ref(false);
+const isNewOption = ref(false);
+const isEdit = ref(false);
+
+onMounted(async() => {
+    isFetching.value = true;
+    await fetchAllFixingMethods();
+    await fetchAllShapes();
+    await fetchManageColors();
+    await fetchMaterialAdvanceOptions();
+});
+const fetchAllFixingMethods = async () => {
+    const result = await api.getGlobalFixingMethods();
+    fixingMethods.value = result.map((fx,key)=>{
+        return {name:fx.name,value:key,icon:fx.icon};
+    });
+}
+const fetchAllShapes = async () => {
+    const result = await api.getGlobalShapes();
+    shapes.value = result.map((sh,key)=>{
+        return {name:sh.name,value:key,icon:sh.icon};
+    });
+}
+const fetchManageColors = async () => {
+    const result = await api.getManageColorsPalettes();
+    if(!result.message){
+        manageColors.value = result.map((col,key)=>{
+            return {name:col.name,value:key,codeHex:col.backgroundColor};
+        });
+    }else{
+        manageColors.value = [];
     }
+}
+const fetchMaterialAdvanceOptions = async () => {
+    const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
+    if(result.component){
+        options.value = result.component.options;
+        componentName.value = result.component.name
+        noOptionsFound.value = result.message;
+        isFetching.value = false;
+    }else{
+        options.value = [];
+        componentName.value = ''
+        noOptionsFound.value = result.message;
+        isFetching.value = false;
+    }
+}
+
+const addNewOption = async () => {
+    isLoading.value = true;
+    const result = await api.addMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,option.value);
+    if(result.success){
+        await fetchMaterialAdvanceOptions();
+        isLoading.value = false;
+        toastMessage(result.message);
+        isNewOption.value = false;
+        option.value ={
+            name:"",
+            description:"",
+            icon:"",
+            image:"",
+            manageColorId:0,
+            fixingMethodId:0,
+            shapeId:0,
+            size:{
+                width:0,
+                height:0
+            },
+            additionalPrice:0
+        }
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewOption.value = false;
+        option.value ={
+            name:"",
+            description:"",
+            icon:"",
+            image:"",
+            manageColorId:0,
+            fixingMethodId:0,
+            shapeId:0,
+            size:{
+                width:0,
+                height:0
+            },
+            additionalPrice:0
+        }
+    }
+}
+const updateOption = async () => {
+    isLoading.value = true;
+    const result = await api.updateMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,optionId.value,option.value);
+    if(result.success){
+        await fetchMaterialAdvanceOptions();
+        isLoading.value = false;
+        if(result.success == true){
+            toastMessage(result.message);
+        }else{
+            toastMessage(result.message,"warning");
+        }
+        isNewOption.value = false;
+        isEdit.value = false;
+        optionId.value = null;
+        option.value ={
+            name:"",
+            description:"",
+            icon:"",
+            image:"",
+            manageColorId:0,
+            fixingMethodId:0,
+            shapeId:0,
+            size:{
+                width:0,
+                height:0
+            },
+            additionalPrice:0
+        }
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewOption.value = false;
+        isEdit.value = false;
+        optionId.value = null;
+        option.value ={
+            name:"",
+            description:"",
+            icon:"",
+            image:"",
+            manageColorId:0,
+            fixingMethodId:0,
+            shapeId:0,
+            size:{
+                width:0,
+                height:0
+            },
+            additionalPrice:0
+        }
+    }
+}
+const deleteOption = async () => {
+    isLoading.value = true;
+    const result = await api.deleteMaterialAdvanceComponentOption(configId.value,materialId.value,componentId.value,optionId.value);
+    if(result.success){
+        await fetchMaterialAdvanceOptions();
+        isLoading.value = false;
+        toastMessage(result.message);
+        closeModal();
+        isNewOption.value = false;
+        isEdit.value = false;
+        optionId.value = null;
+        option.value ={
+            name:"",
+            description:"",
+            icon:"",
+            image:"",
+            manageColorId:0,
+            fixingMethodId:0,
+            shapeId:0,
+            size:{
+                width:0,
+                height:0
+            },
+            additionalPrice:0
+        }
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        closeModal();
+        isNewOption.value = false;
+        isEdit.value = false;
+        optionId.value = null;
+        option.value ={
+            name:"",
+            description:"",
+            icon:"",
+            image:"",
+            manageColorId:0,
+            fixingMethodId:0,
+            shapeId:0,
+            size:{
+                width:0,
+                height:0
+            },
+            additionalPrice:0
+        }
+    }
+}
+
+/** Fonction for image selection */
+const selectOptionIcon = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Option icon",
+            button: {
+                text: "Select Icon"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            option.value.icon = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const selectOptionImage = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Option Image",
+            button: {
+                text: "Select image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            option.value.image = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const openOptionForm = () => {
+    isNewOption.value = true;
+}
+const selectOption = (id,op,isDeleting=false) => {
+    option.value = op;
+    optionId.value = id;
+    if(isDeleting){
+        closeModal();
+    }else{
+        isEdit.value = true;
+        isNewOption.value = true;
+    }
+}
+const closeModal = () => {
+    openModal.value = !openModal.value;
+}
+const back = () => {
+    isNewOption.value = false;
+    isEdit.value = false;
+    optionId.value = null;
+    option = {
+        name:"",
+        description:"",
+        icon:"",
+        image:"",
+        manageColorId:0,
+        fixingMethodId:0,
+        shapeId:0,
+        size:{
+            width:0,
+            height:0
+        },
+        additionalPrice:0
+    }
+}
 </script>

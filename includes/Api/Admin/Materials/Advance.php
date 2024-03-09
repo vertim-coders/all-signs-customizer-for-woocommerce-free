@@ -27,7 +27,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
     public function register_routes() {
         register_rest_route(
             $this->namespace,
-            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/new-advance-component',
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/components',
             array(
                 
                 array(
@@ -49,11 +49,11 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/(?P<component_id>\d+)',
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/components/(?P<component_id>\d+)',
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_components' ),
+                    'callback'            => array( $this, 'get_component' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -112,7 +112,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         );       
         register_rest_route(
             $this->namespace,
-            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/(?P<component_id>\d+)',
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/components/(?P<component_id>\d+)/new-option',
             array(
                 
                 array(
@@ -138,7 +138,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/(?P<component_id>\d+)/(?P<option_id>\d+)',
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/components/(?P<component_id>\d+)/(?P<option_id>\d+)',
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
@@ -237,13 +237,13 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         
     }
       /**
-     *   get components
+     *   get material advance component
      *
      * @param WP_REST_Request $request Full details about the request.
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function get_components( $request ){
+    public function get_component( $request ){
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
@@ -251,8 +251,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 if($meta['data']['materials'][$material_id]['data'][$component_id]){
-                    $component = $meta['data']['materials'][$material_id]['data'][$component_id];
-                    return rest_ensure_response($component);
+                    return rest_ensure_response(["component"=>$meta['data']['materials'][$material_id]['data'][$component_id],"message"=>__("No Material Component Options Found","ASO")]);
                 }else{
                     return rest_ensure_response(["message"=>__("No materials component found","ASO")]);
                 }
@@ -348,13 +347,12 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $option = json_decode($request->get_body(),true);
-                $option = [];
-                array_push($meta['data']["materials"][$material_id]['data'][$component_id]['data'],$option);
+                array_push($meta['data']["materials"][$material_id]['data'][$component_id]['options'],$option);
                 $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                 if($update === true){
-                    return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
+                    return rest_ensure_response(["success"=>true, "message"=>__("Materiel component option successfully added","ASO")]);
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component option has not been added","ASO")]);
                 }
                 
             }else{
@@ -380,7 +378,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 if($meta['data']['materials'][$material_id]['data'][$component_id]){
-                    $subcomponent = $meta['data']['materials'][$material_id]['data'][$component_id]['data'][$option_id];
+                    $subcomponent = $meta['data']['materials'][$material_id]['data'][$component_id]['options'][$option_id];
                     return rest_ensure_response($subcomponent);
                 }else{
                     return rest_ensure_response(["message"=>__("No materials component found","ASO")]);
@@ -411,15 +409,15 @@ class ASO_Materials_Advance extends WP_REST_Controller {
                 $subcomponent = json_decode($request->get_body(),true);
                 if(isset($meta['data']['materials'][$material_id]) 
                 && (isset($meta['data']['materials'][$material_id]['data'][$component_id]) 
-                && (isset($meta['data']['materials'][$material_id]['data'][$component_id]['data'][$option_id])))){
-                $old_subcomponent = $meta['data']['materials'][$material_id]['data'][$component_id]['data'][$option_id];
+                && isset($meta['data']['materials'][$material_id]['data'][$component_id]["options"][$option_id]))){
+                $old_subcomponent = $meta['data']['materials'][$material_id]['data'][$component_id]["options"][$option_id];
                     if($old_subcomponent !== $subcomponent){
-                        $meta['data']['materials'][$material_id] ['data'][$component_id]['data'][$option_id] = $subcomponent;
+                        $meta['data']['materials'][$material_id] ['data'][$component_id]["options"][$option_id] = $subcomponent;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully edited","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component option successfully edited","ASO")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been edited","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component option has not been edited","ASO")]);
                         }
                     }else{
                         return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
@@ -449,13 +447,13 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
-                if($meta['data']['materials'][$material_id]['data'][$component_id]['data'][$option_id]){
-                    array_splice($meta['data']['materials'][$material_id]['data'][$component_id]['data'],$option_id,1);
+                if($meta['data']['materials'][$material_id]['data'][$component_id]["options"][$option_id]){
+                    array_splice($meta['data']['materials'][$material_id]['data'][$component_id]["options"],$option_id,1);
                     $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                     if($update === true)
-                        return rest_ensure_response(['success'=>true,"message"=>__("Component successfully deleted","ASO")]);
+                        return rest_ensure_response(['success'=>true,"message"=>__("Material Component option successfully deleted","ASO")]);
                     else
-                        return rest_ensure_response(['success'=>false,"message"=>__("Component has not been deleted","ASO")]);
+                        return rest_ensure_response(['success'=>false,"message"=>__("Material Component option has not been deleted","ASO")]);
                 }else{
                     return rest_ensure_response(['success'=>false,"message"=>__("No materials component found","ASO")]);
                 }
