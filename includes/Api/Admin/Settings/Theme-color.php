@@ -16,7 +16,7 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
      */
     public function __construct() {
         $this->namespace = 'aso/v1';
-        $this->rest_base = 'configs/(?P<config_id>\d+)/settings/theme-color';
+        $this->rest_base = 'configs/(?P<config_id>\d+)/settings/theme-colors';
     }
     /**
      * Register the routes
@@ -31,6 +31,17 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_theme_color_settings' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'update_theme_color_settings' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -56,9 +67,9 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
                 if(empty($meta_value)){
                     return rest_ensure_response(["message" => "No Settings found"]);
                 }else{
-                    if(isset($meta_value["settings"]["theme_color"])){
+                    if(isset($meta_value["data"]["settings"]["themeColors"])){
 
-                        return rest_ensure_response($meta_value["settings"]["theme_color"]);
+                        return rest_ensure_response($meta_value["data"]["settings"]["themeColors"]);
                     }
                     return rest_ensure_response(["message" => __("No Theme color Settings found","ASO")]);
                 }
@@ -67,6 +78,31 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
             }
         }else{
             return rest_ensure_response(["message" => __("Theme color ID i nvalid","ASO")]);
+        }
+    }
+    public function update_theme_color_settings ($request){
+        $id = $request->get_param('config_id');
+        $theme_colors = json_decode($request->get_body(),true);
+        if($id!=0){
+            $post = get_post($id);
+            if($post){
+                $meta_value = get_post_meta($id, 'aso-configs-meta', true);
+                if($theme_colors != $meta_value["data"]["settings"]["themeColors"]){
+                    $meta_value["data"]["settings"]["themeColors"] = $theme_colors;
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                    if($response){
+                        return rest_ensure_response(["success" =>true, "message"=>__("Theme Colors update successfully settings added successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" =>false, "message"=> __("Add Theme Colors update successfully settings failed","ASO")]);
+                    }
+                }else{
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on theme colors","ASO")]);
+                }
+            }else{
+                return rest_ensure_response(["success" =>false,"message" => __(" Theme color ID invalid","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["success" =>false,"message" => __("Theme color ID i nvalid","ASO")]);
         }
     }
 }        

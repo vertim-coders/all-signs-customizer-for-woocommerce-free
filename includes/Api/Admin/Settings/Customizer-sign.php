@@ -94,11 +94,11 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/image",
+            '/' . $this->rest_base."/images",
             array(
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_image_customizer_sign_settings' ),
+                    'callback'            => array( $this, 'updates_image_customizer_sign_settings' ),
                     'permission_callback' => array( $this, 'get_config_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -122,19 +122,19 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 if(empty($meta_value)){
-                    return rest_ensure_response(["message" => "No Settings found"]);
+                    return rest_ensure_response(["success"=>false,"message" => __("No Settings found","ASO")]);
                 }else{
-                    if(isset($meta_value["settings"]["customizer_sign"])){
+                    if(isset($meta_value["data"]["settings"]["customizerSign"])){
 
-                        return rest_ensure_response($meta_value["settings"]["customizer_sign"]);
+                        return rest_ensure_response($meta_value["data"]["settings"]["customizerSign"]);
                     }
-                    return rest_ensure_response(["message" => __("No Customizer Sign Settings found","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("No Customizer Sign Settings found","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Customizer ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Customizer ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Customizer ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Customizer ID invalid","ASO")]);
         }
     }
     /**
@@ -149,24 +149,20 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["customizer_sign"]['customizer'] = $customizer_options;
-                }else{
-                    $meta_value["settings"]["customizer_sign"]['customizer'] = $customizer_options;
-                }
+                $meta_value["data"]["settings"]["customizerSign"]['customizerOptions'] = $customizer_options;
+
                 $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["message" => __("customizer in customizer sign settings added successfully","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("customizer in customizer sign settings upadted successfully","ASO")]);
                 }else{
-                    return rest_ensure_response(["message" => __("Add customizer in customizer sign settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("Update customizer in customizer sign settings failed","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
     /**
@@ -181,23 +177,24 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["customizer_sign"]['signPart'] = $sign_options;
+                
+                if($meta_value["data"]["settings"]["customizerSign"]['signPart'] != $sign_options){
+                    $meta_value["data"]["settings"]["customizerSign"]['signPart'] = $sign_options;
+                    
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                    if($response){
+                        return rest_ensure_response(["success"=>false,"message" => __("Sign part in customizer sign settings upadted successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success"=>false,"message" => __("Update Sign part in customizer sign settings failed","ASO")]);
+                    }
                 }else{
-                    $meta_value["settings"]["customizer_sign"]['signPart'] = $sign_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
-                if($response){
-                    return rest_ensure_response(["message" => __("Sign part in customizer sign settings added successfully","ASO")]);
-                }else{
-                    return rest_ensure_response(["message" => __("Add Sign part in customizer sign settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Sign part in customizer sign settings ","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{  
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
     /**
@@ -212,23 +209,25 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
           $post = get_post($id);
           if($post){
                 $meta_value = get_post_meta($id,'aso-configs-meta',true);
-                if(empty($meta_value)){
-                   $meta_value=array();
-                   $meta_value["settings"]["customizer_sign"]['text'] =$text_options;
+                
+                if($meta_value["data"]["settings"]["customizerSign"]['text'] != $text_options){
+                    $meta_value["data"]["settings"]["customizerSign"]['text'] =$text_options; 
+                    
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                    if($response){
+                        return rest_ensure_response(["success"=>true,"message"=>__("Text in customizer sign settings upadted successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success"=>false,"message"=>__("Update Text in customizer sign settings failed","ASO")]);
+                    }
                 }else{
-                   $meta_value["settings"]["customizer_sign"]['text'] =$text_options; 
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
-                if($response){
-                    return rest_ensure_response(["message"=>__("Text in customizer sign settings added successfully","ASO")]);
-                }else{
-                    return rest_ensure_response(["message"=>__("Add Text in customizer sign settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message"=>__("No change observed on Text in customizer sign settings","ASO")]);
+
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{  
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
     /**
@@ -236,31 +235,31 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
     */
-    public function update_image_customizer_sign_settings($request){
+    public function updates_image_customizer_sign_settings($request){
         $id = $request->get_param('config_id');
         $image_options = json_decode($request->get_body(),true);
         if($id!=0){
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["customizer_sign"]['image'] = $image_options;
-                }else{
-                    $meta_value["settings"]["customizer_sign"]['image'] = $image_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                if($meta_value["data"]["settings"]["customizerSign"]['images'] != $image_options){
+                    $meta_value["data"]["settings"]["customizerSign"]['images'] = $image_options;
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if($response){
-                    return rest_ensure_response(["message" => __("image in Customizer sign settings added successfully","ASO")]);
+                    if($response){
+                        return rest_ensure_response(["success"=>true,"message" => __("image in Customizer sign settings upadted successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success"=>false,"message" =>__( "Update image in Customizer sign settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" =>__( "Add image in Customizer sign settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" =>__( "No change observed on image in Customizer sign settings","ASO")]);
+
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
         }  
     }
 }   

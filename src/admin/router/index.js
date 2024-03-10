@@ -80,17 +80,17 @@ const router = createRouter({
       component: Settings,
     },
     {
-      path: "/configs/:configId/settings/generals",
+      path: "/configs/:configId/settings/customizer-options",
       name: "config-settings-customizer-options",
       component: Settings,
     },
     {
-      path: "/configs/:configId/settings/generals",
+      path: "/configs/:configId/settings/language-images",
       name: "config-settings-languages-images",
       component: Settings,
     },
     {
-      path: "/configs/:configId/settings/generals",
+      path: "/configs/:configId/settings/themes-colors",
       name: "config-settings-themes-colors",
       component: Settings,
     },

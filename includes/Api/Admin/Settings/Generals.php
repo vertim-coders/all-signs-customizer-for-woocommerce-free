@@ -107,8 +107,8 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                 if(empty($meta_value)){
                     return rest_ensure_response(["message" => __("No Settings found","ASO")]);
                 }else{
-                    if(isset($meta_value["settings"]["generals"])){
-                        return rest_ensure_response($meta_value["settings"]["generals"]);
+                    if(isset($meta_value["data"]["settings"]["generals"])){
+                        return rest_ensure_response($meta_value["data"]["settings"]["generals"]);
                     }
                     return rest_ensure_response(["message" => __("No generals Settings found","ASO")]);
                 }
@@ -131,24 +131,24 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["generals"]['product'] = $product_options;
-                }else{
-                    $meta_value["settings"]["generals"]['product'] = $product_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                
+                if($meta_value["data"]["settings"]["generals"]['product'] != $product_options){
+                    $meta_value["data"]["settings"]["generals"]['product'] = $product_options;
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if($response){
-                    return rest_ensure_response(["success" => __("Product options in generals settings added successfully","ASO")]);
+                    if($response){
+                        return rest_ensure_response(["success" =>true,"message"=> __("Product options in generals settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" =>false,"message" => __("Update product options in generals settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add product options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in product options in generals settings failed","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
 
@@ -164,24 +164,25 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["generals"]['mobile'] = $mobile_options;
-                }else{
-                    $meta_value["settings"]["generals"]['mobile'] = $mobile_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                
+                if($meta_value["data"]["settings"]["generals"]['mobile'] != $mobile_options){
+                    $meta_value["data"]["settings"]["generals"]['mobile'] = $mobile_options;
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if($response){
-                    return rest_ensure_response(["success" => __("Mobile options in generals settings added successfully","ASO")]);
+                    if($response){
+                        return rest_ensure_response(["success" =>true,"message" => __("Mobile options in generals settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" =>false,"message" => __("Update mobile options in generals settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add mobile options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed on mobile options in generals settings failed","ASO")]);
+
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
     /**
@@ -196,24 +197,23 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
             $post=get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true); 
-                if(empty($meta_value)){
-                    $meta_value =array();
-                    $meta_value ["settings"]["generals"]['output']=$output_options;    
-                }
-                else{
+                
+                if($meta_value ["settings"]["generals"]['output'] != $output_options){
                     $meta_value ["settings"]["generals"]['output']=$output_options;
-                }
-                $response= update_post_meta($id,'aso-configs-meta',$meta_value);
-                if($response){
-                    return rest_ensure_response(["success" => __("Output options in generals settings added successfully","ASO")]);
+                    $response= update_post_meta($id,'aso-configs-meta',$meta_value);
+                    if($response){
+                        return rest_ensure_response(["success" => true,"message" => __("Output options in generals settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" => false,"message" => __("Update output options in generals settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add output options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" => "same","message" => __("No change observed on output options in generals settings failed","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
 }

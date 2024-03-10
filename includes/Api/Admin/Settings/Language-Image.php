@@ -124,8 +124,8 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                 if(empty($meta_value)){
                     return rest_ensure_response(["message" => "No Settings found"]);
                 }else{
-                    if(isset($meta_value["settings"]["languageImages"])){
-                        return rest_ensure_response($meta_value["settings"]["languageImages"]);
+                    if(isset($meta_value["data"]["settings"]["languageImages"])){
+                        return rest_ensure_response($meta_value["data"]["settings"]["languageImages"]);
                     }
                     return rest_ensure_response(["message" => __("No language Images Settings found","ASO")]);
                 }
@@ -148,24 +148,25 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["languageImages"]['main'] = $main_options;
-                }else{
-                    $meta_value["settings"]["languageImages"]['main'] = $main_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                
+                if($meta_value["data"]["settings"]["languageImages"]['main'] != $main_options){
+                    $meta_value["data"]["settings"]["languageImages"]['main'] = $main_options;
+                    
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if($response){
-                    return rest_ensure_response(["success" =>__("Main options in language Images settings added successfully","ASO")]);
+                    if($response){
+                        return rest_ensure_response(["success" =>true,"message"=>__("Main options in language Images settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" =>false,"message" => __("Update Main options in language Images settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add Main options in language Images settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed on Main options in language Images settings failed","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
      /**
@@ -180,24 +181,25 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["languageImages"]['customizerDesign'] =   $customizer_options;
-                }else{
-                    $meta_value["settings"]["languageImages"]['customizerDesign'] =   $customizer_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                
+                if($meta_value["data"]["settings"]["languageImages"]['customizerDesign'] !=   $customizer_options){
+                    $meta_value["data"]["settings"]["languageImages"]['customizerDesign'] =   $customizer_options;
+                    
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if($response){
-                    return rest_ensure_response(["success" => __("Customizer Design options in language Images settings added successfully","ASO")]);
+                    if($response){
+                        return rest_ensure_response(["success" =>true,"message"=> __("Customizer Design options in language Images settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" =>false,"message" => __("Update Customizer Design options in language Images settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add Customizer Design options in language Images settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Customizer Design options in language Images settings","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
      /**
@@ -212,24 +214,25 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["languageImages"]['visualizerDesign'] =   $visualizer_options;
-                }else{
-                    $meta_value["settings"]["languageImages"]['visualizerDesign'] =   $visualizer_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                
+                if($meta_value["data"]["settings"]["languageImages"]['visualizerDesign'] !=   $visualizer_options){
+                    $meta_value["data"]["settings"]["languageImages"]['visualizerDesign'] =   $visualizer_options;
 
-                if($response){
-                    return rest_ensure_response(["success" => __("Visualizer options in language Images settings added successfully","ASO")]);
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+
+                    if($response){
+                        return rest_ensure_response(["success" =>true, "message"=> __("Visualizer options in language Images settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success"=>false,"message" => __("update Visualizer options in language Images settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add Visualizer options in language Images settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Visualizer options in language Images","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
      /**
@@ -244,24 +247,24 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(empty($meta_value)){
-                    $meta_value=array();
-                    $meta_value["settings"]["languageImages"]['images'] =   $image_options;
-                }else{
-                    $meta_value["settings"]["languageImages"]['images'] =   $image_options;
-                }
-                $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+                
+                if($meta_value["data"]["settings"]["languageImages"]['images'] !=   $image_options){
+                    $meta_value["data"]["settings"]["languageImages"]['images'] =   $image_options;
+                    $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if($response){
-                    return rest_ensure_response(["success" => __("Images options in language Images settings added successfully","ASO")]);
+                    if($response){
+                        return rest_ensure_response(["success" =>true,"message"=> __("Images options in language Images settings updated successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success" =>false,"message" => __("Update Images options in language Images settings failed","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["message" => __("Add Images options in language Images settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Images options in language Images settings","ASO")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
         }
     }
 }
