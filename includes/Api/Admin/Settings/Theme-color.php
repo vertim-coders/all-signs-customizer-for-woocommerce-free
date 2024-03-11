@@ -31,7 +31,7 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_theme_color_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -42,7 +42,7 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_theme_color_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -104,5 +104,15 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
         }else{
             return rest_ensure_response(["success" =>false,"message" => __("Theme color ID i nvalid","ASO")]);
         }
+    }
+    /**
+     * Checks if a given request has access to read the materials.
+     *
+     * @param  WP_REST_Request $request Full details about the request.
+     *
+     * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_permissions_check( $request ) {
+        return true;
     }
 }        

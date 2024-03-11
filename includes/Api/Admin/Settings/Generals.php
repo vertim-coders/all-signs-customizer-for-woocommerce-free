@@ -31,7 +31,7 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_generals_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -48,7 +48,7 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_product_options_generals_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -65,7 +65,7 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_output_options_generals_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -82,7 +82,7 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_mobile_options_generals_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -198,8 +198,8 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true); 
                 
-                if($meta_value ["settings"]["generals"]['output'] != $output_options){
-                    $meta_value ["settings"]["generals"]['output']=$output_options;
+                if($meta_value["data"]["settings"]["generals"]['output'] != $output_options){
+                    $meta_value["data"]["settings"]["generals"]['output']=$output_options;
                     $response= update_post_meta($id,'aso-configs-meta',$meta_value);
                     if($response){
                         return rest_ensure_response(["success" => true,"message" => __("Output options in generals settings updated successfully","ASO")]);
@@ -215,6 +215,16 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
         }else{
             return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","ASO")]);
         }
+    }
+    /**
+     * Checks if a given request has access to read the materials.
+     *
+     * @param  WP_REST_Request $request Full details about the request.
+     *
+     * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_permissions_check( $request ) {
+        return true;
     }
 }
 

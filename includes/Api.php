@@ -11,6 +11,10 @@ use ASO\Api\Admin\ASO_Api_Materials;
 use ASO\Api\Admin\Globals_Settings\ASO_Api_Globals_Settings;
 use ASO\Api\Admin\Materials\ASO_Materials_Simple;
 use ASO\Api\Admin\Materials\ASO_Materials_Advance;
+use ASO\Api\Admin\Settings\ASO_Api_Customizer_Sign_Settings;
+use ASO\Api\Admin\Settings\ASO_Api_General_Settings;
+use ASO\Api\Admin\Settings\ASO_Api_Language_Images_Settings;
+use ASO\Api\Admin\Settings\ASO_Api_Theme_color_Settings;
 use WP_REST_Controller;
 
 /**
@@ -66,6 +70,18 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Globals_Settings'  ) ) {
             require_once __DIR__ . '/Api/Admin/Globals-Settings/Globals-Settings.php';
         }
+        if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\Settings\ASO_Api_Customizer_Sign_Settings')){
+            require_once __DIR__ . '/Api/Admin/Settings/Customizer-sign.php';
+        }
+        if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\Settings\ASO_Api_General_Settings')){
+            require_once __DIR__ . '/Api/Admin/Settings/Generals.php';
+        }
+        if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\Settings\ASO_Api_Language_Images_Settings')){
+            require_once __DIR__ . '/Api/Admin/Settings/Language-Image.php';
+        }
+        if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\Settings\ASO_Api_Theme_color_Settings')){
+            require_once __DIR__ . '/Api/Admin/Settings/Theme-color.php';
+        }
     }
 
     /**
@@ -85,6 +101,10 @@ class Api extends WP_REST_Controller {
         (new ASO_Materials_Advance())->register_routes();
         (new ASO_Api_GoogleFonts())->register_routes();
         (new ASO_Api_Globals_Settings())->register_route();
+        (new ASO_Api_General_Settings())->register_routes();
+        (new ASO_Api_Customizer_Sign_Settings())->register_routes();
+        (new ASO_Api_Language_Images_Settings())->register_routes();
+        (new ASO_Api_Theme_color_Settings())->register_routes();
     }
 
 }

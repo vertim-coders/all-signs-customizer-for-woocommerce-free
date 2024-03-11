@@ -317,82 +317,82 @@ const api = {
     },
     //function related to settings
     getGeneralSettings: async (config) => {
-        const generals = await axios.get(apiURL + '/configs/' + config + '/settings/generals');
+        const generals = await axios.get(aso_api_url + '/configs/' + config + '/settings/generals');
         return generals.data;
     },/* 
     updateGeneralCustomizer: async (config, data) => {
-        const customizer = await axios.post(apiURL + '/configs/' + config + '/settings/generals/customizer', data);
+        const customizer = await axios.post(aso_api_url + '/configs/' + config + '/settings/generals/customizer', data);
         return customizer.data;
     }, */
     updateGeneralMobile: async (config, data) => {
-        const mobile = await axios.post(apiURL + '/configs/' + config + '/settings/generals/mobile', data);
+        const mobile = await axios.post(aso_api_url + '/configs/' + config + '/settings/generals/mobile', data);
         return mobile.data;
     },
     updateGeneralProduct: async (config, data) => {
-        const product = await axios.post(apiURL + '/configs/' + config + '/settings/generals/product', data);
+        const product = await axios.post(aso_api_url + '/configs/' + config + '/settings/generals/product', data);
         return product.data;
     },
-    updateGeneralOuput: async (config, data) => {
-        const ouput = await axios.post(apiURL + '/configs/' + config + '/settings/generals/output', data);
-        return ouput.data;
+    updateGeneralOutput: async (config, data) => {
+        const output = await axios.post(aso_api_url + '/configs/' + config + '/settings/generals/output', data);
+        return output.data;
     },
     //fonction related to customizer options
     getCustomizerSignsSettings: async (config) => {
-        const customizerSigns = await axios.get(apiURL + '/configs/' + config + '/settings/customizer-signs');
+        const customizerSigns = await axios.get(aso_api_url + '/configs/' + config + '/settings/customizer-signs');
         return customizerSigns.data;
     },
     getCustomizerSignsCustomizer: async (config, data) => {
-        const customizer = await axios.post(apiURL + '/configs/' + config + '/settings/customizer-signs/customizer', data);
+        const customizer = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/customizer', data);
         return customizer.data;
     },
     getCustomizerSignsSignPart: async (config, data) => {
-        const SignPart = await axios.post(apiURL + '/configs/' + config + '/settings/customizer-signs/sign-part', data);
+        const SignPart = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/sign-part', data);
         return SignPart.data;
     },
     getCustomizerSignsImage: async (config, data) => {
-        const Image = await axios.post(apiURL + '/configs/' + config + '/settings/customizer-signs/images', data);
+        const Image = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/images', data);
         return Image.data;
     },
     getCustomizerSignsText: async (config, data) => {
-        const Text = await axios.post(apiURL + '/configs/' + config + '/settings/customizer-signs/text', data);
+        const Text = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/text', data);
         return Text.data;
     },
     //fonction related to languages et images
     getLanguageImagesSettings: async (config) => {
-        const languageImages = await axios.get(apiURL + '/configs/' + config + '/settings/language-images');
+        const languageImages = await axios.get(aso_api_url + '/configs/' + config + '/settings/language-images');
         return languageImages.data;
     },
     updateLanguageImagesMain: async (config, data) => {
-        const main = await axios.post(apiURL + '/configs/' + config + '/settings/language-images/main', data);
+        const main = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/main', data);
         return main.data;
     },
     updateLanguageImagesCustomDesign: async (config, data) => {
-        const customDesign = await axios.post(apiURL + '/configs/' + config + '/settings/language-images/custom-design', data);
+        const customDesign = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/custom-design', data);
         return customDesign.data;
     },
     updateLanguageImagesProduct: async (config, data) => {
-        const product = await axios.post(apiURL + '/configs/' + config + '/settings/language-images/product', data);
+        const product = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/product', data);
         return product.data;
     },
     updateLanguageImagesVisualizer: async (config, data) => {
-        const visualizer = await axios.post(apiURL + '/configs/' + config + '/settings/language-images/visualizer', data);
+        const visualizer = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/visualizer', data);
         return visualizer.data;
     },
     updateLanguageImagesImgs: async (config, data) => {
-        const images = await axios.post(apiURL + '/configs/' + config + '/settings/language-images/images', data);
+        const images = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/images', data);
         return images.data;
     },
     updateLanguageImagesReviewScreen: async (config, data) => {
-        const ReviewScreen = await axios.post(apiURL + '/configs/' + config + '/settings/language-images/review-screen', data);
+        const ReviewScreen = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/review-screen', data);
         return ReviewScreen.data;
     },
     //fonction related to languages et images
     getThemesSettings: async (config) => {
-        const themes = await axios.get(apiURL + '/configs/' + config + '/settings/theme-colors');
+        const themes = await axios.get(aso_api_url + '/configs/' + config + '/settings/theme-colors');
         return themes.data;
     },
     updateThemes: async (config, data) => {
-        const main = await axios.post(apiURL + '/configs/' + config + '/settings/theme-colors', data);
+        const main = await axios.post(aso_api_url + '/configs/' + config + '/settings/theme-colors', data);
         return main.data;
     }
 }

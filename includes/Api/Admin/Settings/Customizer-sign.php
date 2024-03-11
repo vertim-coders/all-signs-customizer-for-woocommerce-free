@@ -31,7 +31,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
                     'callback'            => array( $this, 'get_customizer_sign_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -48,7 +48,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_customizer_options_customizer_sign_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -65,7 +65,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_sign_part_customizer_sign_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -82,7 +82,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'update_text_option_customizer_sign_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -99,7 +99,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'updates_image_customizer_sign_settings' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
                             'type' => 'integer',
@@ -261,5 +261,15 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
         }else{
             return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
         }  
+    }
+    /**
+     * Checks if a given request has access to read the materials.
+     *
+     * @param  WP_REST_Request $request Full details about the request.
+     *
+     * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_permissions_check( $request ) {
+        return true;
     }
 }   
