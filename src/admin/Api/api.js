@@ -341,19 +341,19 @@ const api = {
         const customizerSigns = await axios.get(aso_api_url + '/configs/' + config + '/settings/customizer-signs');
         return customizerSigns.data;
     },
-    getCustomizerSignsCustomizer: async (config, data) => {
+    updateCustomizerSignsCustomizer: async (config, data) => {
         const customizer = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/customizer', data);
         return customizer.data;
     },
-    getCustomizerSignsSignPart: async (config, data) => {
+    updateCustomizerSignsSignPart: async (config, data) => {
         const SignPart = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/sign-part', data);
         return SignPart.data;
     },
-    getCustomizerSignsImage: async (config, data) => {
+    updateCustomizerSignsImage: async (config, data) => {
         const Image = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/images', data);
         return Image.data;
     },
-    getCustomizerSignsText: async (config, data) => {
+    updateCustomizerSignsText: async (config, data) => {
         const Text = await axios.post(aso_api_url + '/configs/' + config + '/settings/customizer-signs/text', data);
         return Text.data;
     },
