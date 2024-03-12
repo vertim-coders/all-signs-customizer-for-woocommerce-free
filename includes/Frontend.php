@@ -4,10 +4,10 @@ namespace ASO;
 /**
  * Frontend Pages Handler
  */
-class Frontend {
+class ASO_Frontend {
 
     public function __construct() {
-        add_shortcode( 'aso-configurator', [ $this, 'render_frontend' ] );
+        add_shortcode( 'aso-configurator', [ $this, 'render_aso_frontend' ] );
     }
 
     /**
@@ -18,7 +18,7 @@ class Frontend {
      *
      * @return string
      */
-    public function render_frontend( $atts, $content = '' ) {
+    public function render_aso_frontend( $atts, $content = '' ) {
         wp_enqueue_style( 'aso-frontend' );
         wp_enqueue_style( 'aso-style' );
         wp_enqueue_script( 'aso-frontend' );
