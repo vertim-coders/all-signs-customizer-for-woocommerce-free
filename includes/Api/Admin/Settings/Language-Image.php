@@ -60,11 +60,11 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/customizer-design",
+            '/' . $this->rest_base."/upload-design",
             array(
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_customizer_design_options_language_images_settings' ),
+                    'callback'            => array( $this, 'update_upload_design_options_language_images_settings' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -94,7 +94,7 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
         );
         register_rest_route(
             $this->namespace,
-            '/' . $this->rest_base."/image",
+            '/' . $this->rest_base."/images",
             array(
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
@@ -170,11 +170,11 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
         }
     }
      /**
-     * Update Customizer design options of language images settings 
+     * Update upload design options of language images settings 
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
     */
-    public function  update_customizer_design_options_language_images_settings($request){
+    public function  update_upload_design_options_language_images_settings($request){
         $id = $request->get_param('config_id');
         $customizer_options = json_decode($request->get_body(),true);
         if($id!=0){
@@ -182,8 +182,8 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 
-                if($meta_value["data"]["settings"]["languageImages"]['customizerDesign'] !=   $customizer_options){
-                    $meta_value["data"]["settings"]["languageImages"]['customizerDesign'] =   $customizer_options;
+                if($meta_value["data"]["settings"]["languageImages"]['uploadDesign'] !=   $customizer_options){
+                    $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] =   $customizer_options;
                     
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
@@ -215,8 +215,8 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 
-                if($meta_value["data"]["settings"]["languageImages"]['visualizerDesign'] !=   $visualizer_options){
-                    $meta_value["data"]["settings"]["languageImages"]['visualizerDesign'] =   $visualizer_options;
+                if($meta_value["data"]["settings"]["languageImages"]['visualizer'] !=   $visualizer_options){
+                    $meta_value["data"]["settings"]["languageImages"]['visualizer'] =   $visualizer_options;
 
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 

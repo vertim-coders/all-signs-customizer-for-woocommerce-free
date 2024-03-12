@@ -154,7 +154,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["success"=>false,"message" => __("customizer in customizer sign settings upadted successfully","ASO")]);
+                    return rest_ensure_response(["success"=>true,"message" => __("customizer in customizer sign settings upadted successfully","ASO")]);
                 }else{
                     return rest_ensure_response(["success"=>false,"message" => __("Update customizer in customizer sign settings failed","ASO")]);
                 }
@@ -183,7 +183,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                     
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
                     if($response){
-                        return rest_ensure_response(["success"=>false,"message" => __("Sign part in customizer sign settings upadted successfully","ASO")]);
+                        return rest_ensure_response(["success"=>true,"message" => __("Sign part in customizer sign settings upadted successfully","ASO")]);
                     }else{
                         return rest_ensure_response(["success"=>false,"message" => __("Update Sign part in customizer sign settings failed","ASO")]);
                     }

@@ -6,20 +6,22 @@
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-flex aso-flex-col aso-w-2/5">
                             <label class="aso-text-[12px]">Measurement Unit</label>
-                            <select v-model="customizer.showMeasurementUnit">
-                                <option>Centimeters</option>
-                                <option>inches</option>
-                                <option>milimetres</option>
-                                <option>Both Centimeters and Inches</option>
+                            <select v-model="customizer.measurementUnit">
+                                <option value="cm">Centimeters</option>
+                                <option value="in">inches</option>
+                                <option value="mm">milimetres</option>
+                                <option value="cm-in">Centimeters and Inches</option>
+                                <option value="cm-mm">Centimeters and Milimetres</option>
+                                <option value="mm-in">Milimetres and Inches</option>
                             </select>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5">
                             <label class="aso-text-[12px]">Show/hide Measurements</label>
                             <select v-model="customizer.showHideMeasurements">
-                                <option>show both width and height</option>
-                                <option>Do not show measurements</option>
-                                <option>show only height</option>
-                                <option>show only width</option>
+                                <option value="both">show both width and height</option>
+                                <option value="none">Do not show measurements</option>
+                                <option value="only-height">show only height</option>
+                                <option value="only-width">show only width</option>
                             </select>
                         </div>
                     </div>
@@ -27,23 +29,23 @@
                         <div class="aso-flex aso-flex-col aso-w-2/5">
                             <label class="aso-text-[12px]">Decimal Format of Measurements</label>
                             <select v-model="customizer.decimalFormatMeasurements">
-                                <option>with decimal</option>
-                                <option>No decimal</option>
+                                <option value="with-decimal">with decimal</option>
+                                <option value="no-decimal">No decimal</option>
                             </select>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5">
                             <label class="aso-text-[12px]"></label>
-                            <select v-model="customizer.decimalFormatRightLeft">
-                                <option>Right</option>
-                                <option>Left</option>
+                            <select v-model="customizer.desktopColumnOrder">
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
                             </select>
                         </div>
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5">
                         <label class="aso-text-[12px]"></label>
-                        <select v-model="customizer.displayHidden">
-                            <option>display</option>
-                            <option>Hidden</option>
+                        <select v-model="customizer.showDayNightButton">
+                            <option value="display">display</option>
+                            <option value="hidden">Hidden</option>
                         </select>
                     </div>
                     <div class="aso-text-[11px] aso-text-[#444444]">Display a switch to turn default background into day or right mode</div>
@@ -60,7 +62,7 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
 import api from '@/admin/Api/api';
 import {ref, defineProps,onMounted} from 'vue';
 import { useRoute } from 'vue-router';
@@ -71,11 +73,11 @@ const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading =ref(false);
 const customizer = ref({
-    showMeasurementUnit:"centimenters",
-    showHideMeasurements:"show both width and height",
-    decimalFormatMeasurements:"with decimal",
-    decimalFormatRightLeft:"Right",
-    displayHidden:"display"
+    measurementUnit:"cm",
+    showHideMeasurements:"both",
+    decimalFormatMeasurements:"with-decimal",
+    desktopColumnOrder:"right",
+    showDayNightButton:"display"
 });
 const props = defineProps({
     data:Object,
@@ -90,7 +92,9 @@ onMounted(() => {
 const updateCustomizerSettings = async () => {
     isLoading.value = true;
     const result = await api.updateCustomizerSignsCustomizer(configId.value,customizer.value);
+    console.log(result)
     if(result.success){
+        await props.fetchSettings();
         isLoading.value = false;
         if(result.success == true){
             toastMessage(result.message);
@@ -101,6 +105,6 @@ const updateCustomizerSettings = async () => {
         isLoading.value = false;
         toastMessage(result.message,"error");
     }
-}
+};
     
 </script> 

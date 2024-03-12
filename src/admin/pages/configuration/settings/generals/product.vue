@@ -136,6 +136,7 @@ onMounted(() => {
 const updateProductSettings = async () => {
     isLoading.value = true;
     const result = await api.updateGeneralProduct(configId.value,product.value);
+    console.log(result)
     if(result.success){
         await props.fetchSettings();
         isLoading.value = false;

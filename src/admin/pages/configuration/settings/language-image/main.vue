@@ -6,11 +6,11 @@
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px] aso-text-[#444444]">Header</label>
-                        <input type="text" placeholder="" class="aso-w-full"/>
+                        <input type="text" v-model="main.header" placeholder="" class="aso-w-full"/>
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="so-text-[12px] aso-text-[#444444]">Text Tab</label>
-                        <input type="text" placeholder="" class="aso-w-full"/>
+                        <input type="text" v-model="main.textTab" placeholder="" class="aso-w-full"/>
                     </div>
                 </div>
                 
@@ -18,7 +18,8 @@
         </div>
         <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
             <div class="aso-bg-[#016464] aso-rounded">
-                <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                <button :disabled="isLoading" @click="updateMainSettings" class="aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointeraso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
                     <div class="aso-font-semibold aso-text-[16px]">Save</div>
                 </button>
             </div>
@@ -26,10 +27,44 @@
     </div>
 </template>
 <script setup>
-import {ref} from 'vue';
-    const isCheckbox = ref(true);
-    const handleTransform = ref('translateX(100%)');
-    const handleToggleClick2 = () => {
-    isCheckbox.value = !isCheckbox.value;
-    };
+import {ref,defineProps, onMounted} from 'vue';
+import api from '@/admin/Api/api';
+import { useRoute } from 'vue-router';
+import toastMessage from '@/admin/utils/functions';
+const props = defineProps({
+    data:Object,
+    fetchSettings:Function
+});
+const route = useRoute();
+const isLoading =ref(false);
+const configId = ref(route.params.configId);
+const main = ref({
+    header:"",
+    textTab:"",
+})
+
+
+onMounted(() => {
+    if(props.data){
+        main.value = {...main.value,...props.data}
+    }
+});
+
+const updateMainSettings = async () => {
+    isLoading.value = true;
+    const result = await api.updateLanguageImagesMain(configId.value,main.value);
+    if(result.success){
+        await props.fetchSettings();
+        isLoading.value = false;
+        if(result.success == true){
+            toastMessage(result.message);
+        }else{
+            toastMessage(result.message,"warning");
+        }
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+    }
+};
+    
 </script> 

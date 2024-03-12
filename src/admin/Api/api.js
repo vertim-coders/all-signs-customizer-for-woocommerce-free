@@ -366,9 +366,9 @@ const api = {
         const main = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/main', data);
         return main.data;
     },
-    updateLanguageImagesCustomDesign: async (config, data) => {
-        const customDesign = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/custom-design', data);
-        return customDesign.data;
+    updateLanguageImagesUploadDesign: async (config, data) => {
+        const uploadDesign = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/upload-design', data);
+        return uploadDesign.data;
     },
     updateLanguageImagesProduct: async (config, data) => {
         const product = await axios.post(aso_api_url + '/configs/' + config + '/settings/language-images/product', data);

@@ -1,5 +1,5 @@
 <template lang="">
-    <div>
+    <div v-if="!isFetching">
         <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
             <div class="">
                 <button @click="()=>{showStep = 'main'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'main' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
@@ -22,20 +22,42 @@
                 </button>
             </div>
         </div>
-        <Main v-if="showStep == 'main'"/>
-        <Images v-if="showStep == 'images'"/>
-        <UploadDesign v-if="showStep == 'upload-design'"/>
-        <!-- <Visualizer v-if="showStep == 'visualizer'"/> -->
+    </div>
+    <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
+        <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
+    </div>
+    <div v-if="!isFetching">
+        <Main v-if="showStep == 'main'" :data="languageImages.main" :fetch-settings="fetchLanguageImageSettings"/>
+        <Images v-if="showStep == 'images'" :data="languageImages.images" :fetch-settings="fetchLanguageImageSettings"/>
+        <UploadDesign v-if="showStep == 'upload-design'" :data="languageImages.uploadDesign" :fetch-settings="fetchLanguageImageSettings"/>
+        <!-- <Visualizer v-if="showStep == 'visualizer'" :data="languageImages.visualizer" :fetch-settings="fetchLanguageImageSettings"/> -->
+        
     </div>
 </template>
 <script setup>
+import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import api from '@/admin/Api/api';
 import Main from './main.vue';
 import Images from './images.vue';
 import UploadDesign from './upload-design.vue';
 /* import Visualizer from './visualizer.vue'; */
-import { ref } from 'vue';
-
 const showStep = ref('main');
+const isFetching = ref(false);
+const languageImages = ref({});
+const route = useRoute()
+const configId = ref(route.params.configId);
+const fetchLanguageImageSettings = async () => {
+    const result = await api.getLanguageImagesSettings(configId.value);
+    if(!result.message){
+        languageImages.value = result;
+    }
+}
+onMounted(async()=>{
+    isFetching.value = true;
+    await fetchLanguageImageSettings();
+    isFetching.value = false;
+})
 </script>
 <style lang="">
     
