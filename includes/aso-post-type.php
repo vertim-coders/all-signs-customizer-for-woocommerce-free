@@ -150,7 +150,7 @@ class ASO_Post_Type
 	public function get_editor_shortcode_handler( $content ) {
 		global $wp_query;
 		$config_page_id = get_option("aso_editor_page");
-		if ( get_the_ID() == $config_page_id && !isset( $wp_query->query_vars['product-id'] ) ) {
+		if ( get_the_ID() == $config_page_id && !isset( $wp_query->query_vars['aso-product-id'] ) ) {
 					ob_start();
 		?>
 		<div class="config-page-error">
@@ -162,8 +162,8 @@ class ASO_Post_Type
 		<?php			
 				
 					$content .= ob_get_clean();
-		}elseif ( isset( $wp_query->query_vars['product-id'] ) ) {
-			$productid = $wp_query->query_vars['product-id'];
+		}elseif ( isset( $wp_query->query_vars['aso-product-id'] ) ) {
+			$productid = $wp_query->query_vars['aso-product-id'];
 
 			if( is_page($config_page_id) ) {
 				$content .= do_shortcode("[aso-configurator]");
@@ -172,7 +172,7 @@ class ASO_Post_Type
 		return $content;
 	}
 	public function aso_add_query_vars( $a_vars ) {
-		$a_vars[] = 'product-id';
+		$a_vars[] = 'aso-product-id';
 		$a_vars[] = 'tpl';
 		$a_vars[] = 'edit';
 		$a_vars[] = 'design-index';
@@ -203,22 +203,22 @@ class ASO_Post_Type
 			}
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'design' . '/([^/]+)/?$',
+				$slug . $sep . 'aso-design' . '/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&product-id=$matches[1]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
 			);
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'design' . '/([^/]+)/([^/]+)/?$',
+				$slug . $sep . 'aso-design' . '/([^/]+)/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&product-id=$matches[1]&tpl=$matches[2]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&tpl=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
@@ -229,18 +229,18 @@ class ASO_Post_Type
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&product-id=$matches[1]&edit=$matches[2]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&edit=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
 			);
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'ordered-design' . '/([^/]+)/([^/]+)/?$',
+				$slug . $sep . 'aso-ordered-design' . '/([^/]+)/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&product-id=$matches[1]&vcid=$matches[2]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&vcid=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
@@ -248,11 +248,11 @@ class ASO_Post_Type
 
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'saved-design' . '/([^/]+)/([^/]+)/?$',
+				$slug . $sep . 'aso-saved-design' . '/([^/]+)/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&product-id=$matches[1]&design-index=$matches[2]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&design-index=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'

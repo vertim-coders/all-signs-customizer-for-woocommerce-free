@@ -412,11 +412,11 @@ final class All_Signs_Options {
     public function init_classes() {
 
         if ( $this->is_request( 'admin' ) ) {
-            $this->container['admin'] = new ASO\Admin();
+            $this->container['admin'] = new ASO\ASO_Admin();
         }
 
         if ( $this->is_request( 'frontend' ) ) {
-            $this->container['frontend'] = new ASO\Frontend();
+            $this->container['frontend'] = new ASO\ASO_Frontend();
         }
 
         if ( $this->is_request( 'ajax' ) ) {

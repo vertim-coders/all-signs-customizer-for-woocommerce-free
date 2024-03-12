@@ -4,7 +4,7 @@ namespace ASO;
 /**
  * Admin Pages Handler
  */
-class Admin {
+class ASO_Admin {
 
     public function __construct() {
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
