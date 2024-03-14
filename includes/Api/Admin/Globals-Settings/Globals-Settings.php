@@ -128,11 +128,23 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'methods'             => \WP_REST_Server::READABLE,
           'callback'            => array( $this, 'get_shapes_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
+        )
+      )
+    );
+    register_rest_route(
+      $this->namespace,
+      '/' . $this->rest_base."/shapes/(?P<shape_id>\d+)",
+      array(
         array(
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_shapes_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
+          'args'                => array(
+            'shape_id' => array (
+              'type' => 'integer',
+              'required' => true,
+            )
+          )
         )
       )
     );
@@ -145,11 +157,23 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'methods'             => \WP_REST_Server::READABLE,
           'callback'            => array( $this, 'get_fixing_methods_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
+        )
+      )
+    );
+    register_rest_route(
+      $this->namespace,
+      '/' . $this->rest_base."/fixing-methods/(?P<fixingMethod_id>\d+)",
+      array(
         array(
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_fixing_methods_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
+          'args'                => array(
+            'fixingMethod_id' => array (
+              'type' => 'integer',
+              'required' => true,
+            )
+          )
         )
       )
     );
@@ -161,11 +185,23 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'methods'             => \WP_REST_Server::READABLE,
           'callback'            => array( $this, 'get_borders_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-        ),
+        )
+      )
+    );
+    register_rest_route(
+      $this->namespace,
+      '/' . $this->rest_base."/borders/(?P<border_id>\d+)",
+      array(
         array(
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_borders_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
+          'args'                => array(
+            'border_id' => array (
+              'type' => 'integer',
+              'required' => true,
+            )
+          )
         )
       )
     );
@@ -337,14 +373,19 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 		$shape_id=$request->get_param('shape_id');
 		$all_shapes= get_option("aso_all_shapes",[]); ;
 		if($all_shapes[$shape_id]){
-			$all_shapes[$shape_id] = $shape;
-			$update = update_option("aso_all_shapes",$all_shapes);
-			if($update){
-				return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","ASO") ) );
-			}
-			else{
-				return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","") ) );
-			}   
+      if($all_shapes[$shape_id] != $shape){
+        $all_shapes[$shape_id] = $shape;
+        $update = update_option("aso_all_shapes",$all_shapes);
+        if($update){
+          return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","ASO") ) );
+        }
+        else{
+          return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","ASO") ) );
+        } 
+      }else{
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed on shape","ASO") ) );
+
+      }
 		}else{
 			return rest_ensure_response(["success"=>false,"message"=>__('Shape not found',"ASO")]);
 		}
@@ -370,14 +411,18 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 		$fixingMethod_id=$request->get_param('fixingMethod_id');
 		$all_fixingMethods= get_option("aso_all_fixingMethods",[]); ;
 		if($all_fixingMethods[$fixingMethod_id]){
-			$all_fixingMethods[$fixingMethod_id] = $fixingMethod;
-			$update = update_option("aso_all_fixingMethods",$all_fixingMethods);
-			if($update){
-				return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","ASO") ) );
-			}
-			else{
-				return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","") ) );
-			}   
+      if($all_fixingMethods[$fixingMethod_id] != $fixingMethod){
+        $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
+        $update = update_option("aso_all_fixingMethods",$all_fixingMethods);
+        if($update){
+          return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","ASO") ) );
+        }
+        else{
+          return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","ASO") ) );
+        }
+      }else{
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed on fixing Method","ASO") ) );
+      } 
 		}else{
 			return rest_ensure_response(["success"=>false,"message"=>__('FixingMethod not found',"ASO")]);
 		}
@@ -403,14 +448,18 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 		$border_id=$request->get_param('border_id');
 		$all_borders= get_option("aso_all_borders",[]); ;
 		if($all_borders[$border_id]){
-			$all_borders[$border_id] = $border;
-			$update = update_option("aso_all_borders",$all_borders);
-			if($update){
-				return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","ASO") ) );
-			}
-			else{
-				return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","") ) );
-			}   
+      if($all_borders[$border_id] != $border){
+        $all_borders[$border_id] = $border;
+        $update = update_option("aso_all_borders",$all_borders);
+        if($update){
+          return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","ASO") ) );
+        }
+        else{
+          return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","") ) );
+        }
+      }else{
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed on border","ASO") ) );
+      }   
 		}else{
 			return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
 		}

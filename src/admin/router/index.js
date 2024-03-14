@@ -7,6 +7,7 @@ import ManageCliparts from '@/admin/pages/manage-cliparts/index.vue'
 import Cliparts from '@/admin/pages/manage-cliparts/cliparts.vue'
 import ManageColors from '@/admin/pages/manage-colors/index.vue'
 import Settings from '@/admin/pages/configuration/settings/index.vue'
+import GlobalSettings from '@/admin/pages/global-settings/index.vue'
 import ManageSizes from '@/admin/pages/manage-sizes/index.vue'
 import Options from "admin/pages/Options.vue";
 import { createRouter, createWebHashHistory } from 'vue-router'
@@ -123,6 +124,36 @@ const router = createRouter({
       path: "/global-settings",
       name: "Options",
       component: Options,
+    },
+    {
+      path: "/global-settings/border",
+      name: "global-settings-border",
+      component: GlobalSettings,
+    },
+    {
+      path: "/global-settings/configuration-page",
+      name: "global-settings-configuration-page",
+      component: GlobalSettings,
+    },
+    {
+      path: "/global-settings/fixing-methods",
+      name: "global-settings-fixing-methods",
+      component: GlobalSettings,
+    },
+    {
+      path: "/global-settings/licences",
+      name: "global-settings-licences",
+      component: GlobalSettings,
+    },
+    {
+      path: "/global-settings/output",
+      name: "global-settings-output",
+      component: GlobalSettings,
+    },
+    {
+      path: "/global-settings/shapes",
+      name: "global-settings-shapes",
+      component: GlobalSettings,
     },
   ],
 });

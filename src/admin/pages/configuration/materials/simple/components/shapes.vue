@@ -199,7 +199,7 @@
             manageShapes.value = result;
         }
     }
-
+    
     const updateShapes = async () => {
         isLoading.value = true;
         const result = await api.updateMaterialSimpleShapes(configID.value,materialId.value,shapes.value);

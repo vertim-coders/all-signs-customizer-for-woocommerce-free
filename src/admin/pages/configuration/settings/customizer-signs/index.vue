@@ -34,9 +34,9 @@
     </div>
 </template>
 <script setup>
+import api from '@/admin/Api/api';
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import api from '@/admin/Api/api';
 import CustomizerOptions from './customizer-options.vue';
 import Image from './image.vue';
 import SignPart from './sign-part.vue';

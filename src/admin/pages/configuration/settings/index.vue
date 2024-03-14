@@ -57,10 +57,10 @@
         </div>
     </div>
     <div>
-        <Generals v-if="$route.name =='config-settings-generals'"/>
-        <CustomizerOptions v-if="$route.name =='config-settings-customizer-options'"/>
-        <LanguageImages v-if="$route.name =='config-settings-languages-images'"/>
-        <ThemesColors v-if="$route.name =='config-settings-themes-colors'"/>
+        <Generals v-if="$route.name == 'config-settings-generals'"/>
+        <CustomizerOptions v-if="$route.name == 'config-settings-customizer-options'"/>
+        <LanguageImages v-if="$route.name == 'config-settings-languages-images'"/>
+        <ThemesColors v-if="$route.name == 'config-settings-themes-colors'"/>
     </div>
 </template>
 <script setup>

@@ -294,7 +294,7 @@ const api = {
         return shapes.data;
     },
     updateShapeInGlobalShapes: async (shapeId, shape) => {
-        const shapes = await axios.get(aso_api_url + '/globals-settings/shapes/' + shapeId, shape);
+        const shapes = await axios.put(aso_api_url + '/globals-settings/shapes/' + shapeId, shape);
         return shapes.data;
     },
     //borders routes
@@ -303,7 +303,7 @@ const api = {
         return borders.data;
     },
     updateBorderInGlobalBorders: async (borderId, border) => {
-        const borders = await axios.get(aso_api_url + '/globals-settings/borders/' + borderId, border);
+        const borders = await axios.put(aso_api_url + '/globals-settings/borders/' + borderId, border);
         return borders.data;
     },
     //Fixing Methods routes
@@ -312,7 +312,7 @@ const api = {
         return FixingMethods.data;
     },
     updateFixingMethodInGlobalFixingMethods: async (FixingMethodId, FixingMethod) => {
-        const FixingMethods = await axios.get(aso_api_url + '/globals-settings/fixing-methods/' + FixingMethodId, FixingMethod);
+        const FixingMethods = await axios.put(aso_api_url + '/globals-settings/fixing-methods/' + FixingMethodId, FixingMethod);
         return FixingMethods.data;
     },
     //function related to settings
