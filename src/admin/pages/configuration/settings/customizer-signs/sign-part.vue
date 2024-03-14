@@ -4,28 +4,28 @@
             <div>
                 <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                     <div class="aso-flex aso-space-x-3">
-                        <div class="aso-text-[16px]">Enable SIGN Part</div>
+                        <div class="aso-text-[16px]">Activate the double-sided option</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
                             <label for="aso-toggle" @click="handleEnableSignPart" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': signPart.enableSignPart.active, 'aso-bg-active': signPart.enableSignPart }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': signPart.doublePart.active, 'aso-bg-active': signPart.doublePart }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
-                    <div class="aso-flex aso-justify-between" v-if="signPart.enableSignPart.active">
+                    <div class="aso-flex aso-justify-between" v-if="signPart.doublePart.active">
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-font-semibold aso-text-[16px]">Part 1</label>
-                            <input type="text" v-model="signPart.part1" placeholder="name" class="aso-w-full"/>
+                            <input type="text" v-model="signPart.doublePart.part1" placeholder="name" class="aso-w-full"/>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-font-semibold aso-text-[16px]">Part 2</label>
-                            <input type="text" v-model="signPart.part2" placeholder="name" class="aso-w-full"/>
+                            <input type="text" v-model="signPart.doublePart.part2" placeholder="name" class="aso-w-full"/>
                         </div>
                     </div>
-                    <div class="aso-flex aso-space-x-3">
+                    <div class="aso-flex aso-space-x-3" v-if="signPart.doublePart.active">
                         <div class="aso-text-[16px]">Enable Copy design from side</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
                             <label for="aso-toggle" @click="handleEnableCopyDesignFromSide" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': signPart.EnableCopyDesignFromSide, 'aso-bg-active': signPart.EnableCopyDesignFromSide }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': signPart.doublePart.enableCopyDesignFromSide, 'aso-bg-active': signPart.doublePart.enableCopyDesignFromSide }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -56,13 +56,12 @@ const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading =ref(false);
 const signPart = ref({
-    
-    enableSignPart:{
-        active:true,
-        part1:"",
-        part2:"",
+    doublePart:{
+        active:false,
+        part1:"Face A",
+        part2:"Face B",
+        enableCopyDesignFromSide:true
     },
-    enableCopyDesignFromSide:true
 });
 onMounted(() => {
     if(props.data){
@@ -87,9 +86,9 @@ const updateSignPartSettings = async () => {
     }
 };
 const handleEnableSignPart = () => {
-    signPart.value.enableSignPart.active = !signPart.value.enableSignPart.active;
+    signPart.value.doublePart.active = !signPart.value.doublePart.active;
 };
 const handleEnableCopyDesignFromSide = () => {
-    signPart.value.enableCopyDesignFromSide = !signPart.value.enableCopyDesignFromSide;
+    signPart.value.doublePart.enableCopyDesignFromSide = !signPart.value.doublePart.enableCopyDesignFromSide;
 };
 </script> 
