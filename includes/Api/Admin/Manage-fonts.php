@@ -136,14 +136,18 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         $font_id = $request->get_param( 'font_id' );
         $all_fonts = get_option("aso-manages-fonts",[]);
         if($all_fonts[$font_id]){
-            $all_fonts[$font_id] = $font;
-            $update = update_option("aso-manages-fonts",$all_fonts);
-            if($update){
-                return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success","ASO") ) );
+            if($all_fonts[$font_id] != $font){
+                $all_fonts[$font_id] = $font;
+                $update = update_option("aso-manages-fonts",$all_fonts);
+                if($update){
+                    return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success","ASO") ) );
+                }
+                else{
+                    return rest_ensure_response(array('success' => false, "message"=>__("Font update failed","ASO") ) );
+                } 
+            }else{
+                return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in font","ASO") ) );
             }
-            else{
-                return rest_ensure_response(array('success' => false, "message"=>__("Font update failed","") ) );
-            }   
         }else{
             return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
         }

@@ -154,7 +154,7 @@ class ASO_Api_Manage_Sizes extends WP_REST_Controller {
             $size['label'].='_thick';
         }
         
-        if($all_sizes[$size_id] !== $size ){
+        if($all_sizes[$size_id] != $size ){
             $all_sizes[$size_id] = $size;
             $update = update_option("aso-manages-sizes",$all_sizes);
             if($update){
@@ -164,7 +164,7 @@ class ASO_Api_Manage_Sizes extends WP_REST_Controller {
                 return rest_ensure_response(array('success' => false, "message"=>__("Size update failed","ASO") ) );
             }
         }else{
-            return rest_ensure_response(array('success' => "same", "message"=>__("No change observed","ASO") ) );
+            return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in size","ASO") ) );
         }
 
         

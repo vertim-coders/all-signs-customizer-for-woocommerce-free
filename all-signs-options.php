@@ -2,6 +2,8 @@
 
 use ASO\ASO_Design;
 use ASO\ASO_Post_Type;
+use ASO\ASO_Public;
+
 /*
 Plugin Name: All Signs Options
 Plugin URI: https://signsdesigner.us/
@@ -398,6 +400,7 @@ final class ASO_All_Signs_Options {
         }
 
         require_once ASO_INCLUDES . '/Api.php';
+        require_once ASO_INCLUDES . '/Public.php';
         require_once ASO_INCLUDES . '/aso-post-type.php';
         require_once ASO_INCLUDES . '/aso-design.php';
         require_once ASO_INCLUDES . '/aso-product-config.php';
@@ -413,12 +416,11 @@ final class ASO_All_Signs_Options {
 
         add_action( 'init', array( $this, 'init_classes' ) );
 
-        $aso_post_type = new ASO_Post_Type();
-        $aso_post_type->init_hooks();
-        $aso_product = new ASO_Product_Config();
-        $aso_product->init_hooks();
-        $aso_design = new ASO_Design();
-        $aso_design->init_hooks();
+        (new ASO_Post_Type())->init_hooks();
+        (new ASO_Product_Config())->init_hooks();
+        (new ASO_Design())->init_hooks();
+        (new ASO_Public())->render_public();
+        
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
     }

@@ -96,7 +96,7 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success" =>false, "message"=> __("Add Theme Colors update successfully settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on theme colors","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in theme colors","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success" =>false,"message" => __(" Theme color ID invalid","ASO")]);

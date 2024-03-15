@@ -1,16 +1,15 @@
-import Configuration from '@/admin/pages/configuration/index.vue'
-import Materials from '@/admin/pages/configuration/materials/index.vue'
-import Simple from '@/admin/pages/configuration/materials/simple/index.vue'
-import Advance from '@/admin/pages/configuration/materials/advance/index.vue'
-import ManageFonts from '@/admin/pages/manage-fonts/index.vue'
-import ManageCliparts from '@/admin/pages/manage-cliparts/index.vue'
-import Cliparts from '@/admin/pages/manage-cliparts/cliparts.vue'
-import ManageColors from '@/admin/pages/manage-colors/index.vue'
-import Settings from '@/admin/pages/configuration/settings/index.vue'
-import GlobalSettings from '@/admin/pages/global-settings/index.vue'
-import ManageSizes from '@/admin/pages/manage-sizes/index.vue'
-import Options from "admin/pages/Options.vue";
-import { createRouter, createWebHashHistory } from 'vue-router'
+import Configuration from "@/admin/pages/configuration/index.vue";
+import Materials from "@/admin/pages/configuration/materials/index.vue";
+import Simple from "@/admin/pages/configuration/materials/simple/index.vue";
+import Advance from "@/admin/pages/configuration/materials/advance/index.vue";
+import ManageFonts from "@/admin/pages/manage-fonts/index.vue";
+import ManageCliparts from "@/admin/pages/manage-cliparts/index.vue";
+import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
+import ManageColors from "@/admin/pages/manage-colors/index.vue";
+import Settings from "@/admin/pages/configuration/settings/index.vue";
+import GlobalSettings from "@/admin/pages/global-settings/index.vue";
+import ManageSizes from "@/admin/pages/manage-sizes/index.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -121,11 +120,6 @@ const router = createRouter({
       component: ManageSizes,
     },
     {
-      path: "/global-settings",
-      name: "Options",
-      component: Options,
-    },
-    {
       path: "/global-settings/border",
       name: "global-settings-border",
       component: GlobalSettings,
@@ -141,8 +135,8 @@ const router = createRouter({
       component: GlobalSettings,
     },
     {
-      path: "/global-settings/licences",
-      name: "global-settings-licences",
+      path: "/global-settings/license",
+      name: "global-settings-license",
       component: GlobalSettings,
     },
     {

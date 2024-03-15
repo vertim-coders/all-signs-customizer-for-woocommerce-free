@@ -43,17 +43,17 @@
     </div>
 </template>
 <script setup>
-    import { ref,onMounted } from "vue";
-    import api from "@/admin/Api/api";
-    import toastMessage from "@/admin/utils/functions";
+import { ref,onMounted } from "vue";
+import api from "@/admin/Api/api";
+import toastMessage from "@/admin/utils/functions";
 
-    
-    const isFetching = ref(false);
-    const isLoading = ref(false);
-    const output = ref({
-        zipName:true,
-        calculateOutput:true
-    });
+
+const isFetching = ref(false);
+const isLoading = ref(false);
+const output = ref({
+    zipName:true,
+    calculateOutput:true
+});
     
 
 onMounted(async () => {

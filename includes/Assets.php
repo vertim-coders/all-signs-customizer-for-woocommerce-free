@@ -98,10 +98,6 @@ class Assets {
                 'version'   => filemtime( ASO_PATH . '/assets/js/admin.js' ),
                 'in_footer' => true
             ],
-            'aso-product-min' => [
-                'src'       => ASO_ASSETS . '/utilities/aso-product-min.js',
-                'in_footer' => true
-            ],
             'aso-omodal' => [
                 'src'       => ASO_ASSETS . '/utilities/modal.min.js',
                 'in_footer' => true

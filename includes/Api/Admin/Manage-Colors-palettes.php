@@ -144,7 +144,7 @@ class ASO_Api_Manage_colors extends WP_REST_Controller {
             $color['name']=$req_color['name'];
             $color['textColor']=$req_color['textColor'];
             $color['backgroundColor']=$req_color['backgroundColor'];
-            if($all_colors[$color_id] !== $color){
+            if($all_colors[$color_id] != $color){
 
                 $all_colors[$color_id] = $color;
                 $update = update_option("aso-manages-colors",$all_colors);
@@ -152,7 +152,7 @@ class ASO_Api_Manage_colors extends WP_REST_Controller {
                     return rest_ensure_response(array('success' => true, "message" => __("The color has been updated with success","ASO") ) );
                 }
                 else{
-                    return rest_ensure_response(array('success' => false, "message"=>__("Color update failed","") ) );
+                    return rest_ensure_response(array('success' => false, "message"=>__("Color update failed","ASO") ) );
                 }   
             }else{
                 return rest_ensure_response(["success"=>"same","message" => __("No change observed in color","ASO")]);

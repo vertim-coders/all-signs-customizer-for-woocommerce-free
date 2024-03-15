@@ -175,7 +175,7 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success" =>false,"message" => __("Update mobile options in generals settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" =>"same","message" => __("No change observed on mobile options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in mobile options in generals settings failed","ASO")]);
 
                 }
             }else{
@@ -207,7 +207,7 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success" => false,"message" => __("Update output options in generals settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" => "same","message" => __("No change observed on output options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" => "same","message" => __("No change observed in output options in generals settings failed","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","ASO")]);

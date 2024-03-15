@@ -188,7 +188,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success"=>false,"message" => __("Update Sign part in customizer sign settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Sign part in customizer sign settings ","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Sign part in customizer sign settings ","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
@@ -220,7 +220,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success"=>false,"message"=>__("Update Text in customizer sign settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message"=>__("No change observed on Text in customizer sign settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message"=>__("No change observed in Text in customizer sign settings","ASO")]);
 
                 }
             }else{
@@ -252,7 +252,7 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success"=>false,"message" =>__( "Update image in Customizer sign settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" =>__( "No change observed on image in Customizer sign settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" =>__( "No change observed in image in Customizer sign settings","ASO")]);
 
                 }
             }else{

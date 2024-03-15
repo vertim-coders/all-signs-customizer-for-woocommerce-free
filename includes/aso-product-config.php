@@ -243,7 +243,7 @@
 		?>
 		<div class="aso_config_data show_if_simple">
 			<?php
-			$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Sign Options configuration',"ASO") );
+			$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"ASO") );
 			?>
 		</div>
 		<?php
@@ -298,7 +298,7 @@
 			<td>
 				<div class="aso_config_data show_if_simple">
 				<?php
-				$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Sign Options configuration',"ASO") );
+				$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"ASO") );
 				?>
 				</div>
 			</td>
@@ -324,7 +324,7 @@
 	 * @return array $defaults result
 	 */
 	function get_product_columns( $defaults ) {
-		$defaults['is_aso_customizable'] = __( "ASO", "ASO" );
+		$defaults['is_aso_customizable'] = __( "All Signs Options", "ASO" );
 		return $defaults;
 	}
 	/**
@@ -340,13 +340,7 @@
 				if ( empty( $aso_metas[ $id ]['config-id'] ) ) {
 					esc_attr_e( 'No', "ASO" );
 				} else {
-					$types = wp_get_post_terms($aso_metas[ $id ]['config-id'],'aso-products-type');
-					$type ='';
-					foreach ($types as $key => $value) {
-						$type = $value->name;
-					}
-					esc_attr_e( ucfirst($type), "ASO" );
-					//esc_attr_e('aso Product',"ASO");
+					esc_attr_e( "Yes", "ASO" );
 				}
 			} else {
 				esc_attr_e( 'No', "ASO" );

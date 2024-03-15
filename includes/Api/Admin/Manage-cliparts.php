@@ -180,7 +180,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         if($update){
             return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group created with success","ASO")] );
         }else{
-            return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
+            return rest_ensure_response(["success"=>false,"message" => __("Registration failed","ASO")]);
         }   
     }
     /**
@@ -208,14 +208,19 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         $req_data=json_decode($request->get_body(),true);
         
         if(isset($all_groups[$id])) {
-            $all_groups[$id]['title']=$req_data["title"];
-            $all_groups[$id]['description']=$req_data["description"];
-            $update = update_option("aso-manages-cliparts",$all_groups);
-            if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group updated with success","ASO")] );
+            if($all_groups[$id]['title']!=$req_data["title"] || $all_groups[$id]['description'] !=$req_data["description"]){
+                $all_groups[$id]['title']=$req_data["title"];
+                $all_groups[$id]['description']=$req_data["description"];
+                $update = update_option("aso-manages-cliparts",$all_groups);
+                if($update){
+                    return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group updated with success","ASO")] );
+                }else{
+                    return rest_ensure_response(["success"=>false,"message" => __("Update failed","ASO")]);
+                }
             }else{
-                return rest_ensure_response(["success"=>false,"message" => "Update failed"]);
-            }  
+                return rest_ensure_response(["success"=>"same","message" => __("No change observed in clipart group","ASO")]);
+
+            }
         }else{
             return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
         }
@@ -238,7 +243,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
             if($update){
                 return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group deleted with success","ASO")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message" => "Delete failed"]);
+                return rest_ensure_response(["success"=>false,"message" => __("Delete Cliparts group failed","ASO")]);
             }  
         }else{
             return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
@@ -348,12 +353,16 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         $all_groups = get_option("aso-manages-cliparts",[]);
         if(isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
             $update_clipart = json_decode($request->get_body(),true);
-            $all_groups[$group_id]["cliparts"][$clipart_id] = $update_clipart;
-            $update = update_option("aso-manages-cliparts",$all_groups);
-            if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  updated with success","ASO")] );
-            }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been updated","ASO")]);
+            if($all_groups[$group_id]["cliparts"][$clipart_id] != $update_clipart){
+                $all_groups[$group_id]["cliparts"][$clipart_id] = $update_clipart;
+                $update = update_option("aso-manages-cliparts",$all_groups);
+                if($update){
+                    return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  updated with success","ASO")] );
+                }else{
+                    return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been updated","ASO")]);
+                }
+            }else{                
+                return rest_ensure_response(["success"=>"same","message"=>__("No change observed in clipart","ASO")]);
             }
         }else{
             return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been updated","ASO")]);

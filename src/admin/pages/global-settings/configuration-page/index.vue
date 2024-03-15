@@ -8,25 +8,19 @@
                 <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     <div class="aso-flex aso-space-x-4 aso-py-4">
                         <label class="aso-text-[12px] aso-text-[#444444] aso-py-1">With which tag do you want the configurator title to be displayed?</label>
-                        <select v-model="configPage.configTitle">
-                            <option value="h1">h1</option>
-                            <option value="h2">h2</option>
-                            <option value="h3">h3</option>
-                            <option value="h4">h4</option>
-                            <option value="h5">h5</option>
-                            <option value="h6">h6</option>
+                        <select v-model="configPages.others.titleBalise">
+                            <option :value="balise" v-for="(balise,key) in titleBalise" :key="key">{{balise}}</option>
                         </select>
                     </div>
                     <div class="aso-flex aso-flex-col aso-space-y-3">
                         <label class="aso-text-[12px] aso-text-[#444444]">Select the configuration Page</label>
-                        <select class="aso-w-full" v-model="configPage.page">
-                            <option>Design page</option>
-                            <option>My account</option>
+                        <select class="aso-w-full" v-model="configPages.configuratorPage">
+                            <option v-for="(page,key) in pages" :value="page.id" :key="key">{{ page.title }}</option>
                         </select>
                     </div>
                     <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
                     
-                        <button :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newSize">
+                        <button :disabled="isLoading" @click="modal" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer">
                             <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="plus-lg">
                                 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
@@ -41,16 +35,29 @@
                 <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#DDDDDD]">
                     <div class="aso-flex aso-flex-col aso-space-y-3">
                         <label class="aso-text-[12px] aso-text-[#444444]">Template page</label>
-                        <select class="aso-w-full" v-model="configPage.templatePage">
-                            <option value=""></option>
+                        <select class="aso-w-full" v-model="configPages.templatePage">
+                            <option v-for="(page,key) in pages" :value="page.id" :key="key">{{ page.title }}</option>
                         </select>
+                    </div>
+                    <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
+                    
+                        <button :disabled="isLoading" @click="modal" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer">
+                            <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="plus-lg">
+                                <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                                </g>
+                            </svg>
+                            <div class="aso-text-[14px]">
+                                Add new page
+                            </div>
+                        </button>
                     </div>
                 </div>
 
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" @click="updateGlobalConfigPage" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                    <button :disabled="isLoading" @click="saveConfigPage" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                         <div class="aso-translate-y-1">
                             <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,18 +69,114 @@
                 </div>
             </div>
         </div>
+        <!-- Delete Modal-->
+        <div v-if="openModal" @click.self="setBack" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="setBack" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close modal</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Give your page title</h3>
+                        <input v-model="page.title" class="aso-rounded aso-w-full aso-h-[35px] aso-p-4 aso-border-solid aso-border-[#016464] aso-my-2 focus:aso-border-solid focus:aso-border-[#016464] focus:aso-ring-4 focus:aso-ring-[#016460]" />
+                        <button @click="addNewPage" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:aso-bg-[#016460] focus:aso-ring-4 focus:aso-outline-none aso-my-2 aso-border-none  focus:aso-ring-[#016464]  aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            Yes, I'm sure
+                        </button>
+                        <button @click.stop="setBack" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
+import { ref,onMounted } from 'vue';
 import api from '@/admin/Api/api';
-import {ref} from 'vue';
 import toastMessage from '@/admin/utils/functions';
 
-const isFetching = ref(false);
-const isLoading = ref(false);
-const configPage = ref({
-    configTitle:"",
-    page:"",
-    templatePage:"",
-})  
+var isLoading = ref(false);
+var isFetching= ref(false);
+var pages = ref([]);
+var configPages = ref({
+    configuratorPage:0,
+    templatePage:0,
+    others:{
+        titleBalise:'h1'
+    }
+});
+const openModal = ref(false);
+var page = ref({
+    title:''
+});
+var titleBalise = ref(['h1','h2', 'h3', 'h4','h5','h6']);
+onMounted(async()=>{
+    isFetching.value = true;
+    await fetchData();
+});
+
+const fetchData = async () => {
+    const pgs = await api.getGlobalSettingsPages();
+    const confPages = await api.getGlobalSettingsConfigPages();
+    if(!confPages.message){
+        configPages.value = {...configPages.value,...confPages};
+    }
+    pages.value = pgs;
+    isFetching.value = false;
+}
+
+const saveConfigPage = async () => {
+    isLoading.value = true;
+    const op = await api.saveGlobalSettingsConfigPage(configPages.value);
+    if(op.success){
+        const confPages = await api.getGlobalSettingsConfigPages();
+        if(!confPages.message){
+            configPages.value = {...configPages.value,...confPages};
+        }
+        isLoading.value = false;
+        if(op.success == true){
+            toastMessage(op.message);
+        }else{
+            toastMessage(op.message,"warning");
+        }
+    }else{
+        isLoading.value = false;
+        toastMessage(op.message,'error');
+    }
+}
+
+const addNewPage = async () => {
+    if(page.value.title != ''){  
+        isLoading.value = true;
+        const op = await api.addPageInGlobalSettings(page.value);
+        if(!op.message){
+            const pgs = await api.getGlobalSettingsPages();
+            pages.value = pgs;
+            isLoading.value = false;
+            modal();
+            toastMessage(op.message);
+        }else{
+            isLoading.value = false;
+            modal();
+            toastMessage(op.message,'error');
+        }
+    }else{
+        toastMessage("Page title is empty","warning")
+    }
+}
+const setBack = () => {
+    page.value = {
+        title:''
+    }
+    modal();
+}
+function modal(){
+    openModal.value = !openModal.value
+}
 </script> 

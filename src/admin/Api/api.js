@@ -851,8 +851,10 @@ const api = {
     );
     return licence.data;
   },
-  getGlobalSettingsLicenceKey: async (plugin='pro') => {
-    const licence = await axios.get(aso_api_url + "/globals-settings/license/"+plugin);
+  getGlobalSettingsLicenceKey: async (plugin = "pro") => {
+    const licence = await axios.get(
+      aso_api_url + "/globals-settings/license/" + plugin
+    );
     return licence.data;
   },
   saveGlobalSettingsConfigPage: async (data) => {
@@ -862,12 +864,27 @@ const api = {
     );
     return configPage.data;
   },
+  getGlobalSettingsConfigPages: async () => {
+    const configPage = await axios.get(
+      aso_api_url + "/globals-settings/config-page"
+    );
+    return configPage.data;
+  },
+  getGlobalSettingsPages: async () => {
+    const pages = await axios.get(aso_api_url + "/globals-settings/pages");
+    return pages.data;
+  },
   addPageInGlobalSettings: async (data) => {
-    const page = await axios.post(aso_api_url + "/globals-settings/pages", data);
+    const page = await axios.post(
+      aso_api_url + "/globals-settings/pages",
+      data
+    );
     return page.data;
   },
   getGlobalSettingsOutput: async () => {
-    const outputSetting = await axios.get(aso_api_url + "/globals-settings/output");
+    const outputSetting = await axios.get(
+      aso_api_url + "/globals-settings/output"
+    );
     return outputSetting.data;
   },
   updateGlobalSettingsOutput: async (data) => {

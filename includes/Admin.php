@@ -25,7 +25,7 @@ class ASO_Admin {
 
         if ( current_user_can( $capability ) ) {
             $submenu[ $slug ][] = array( __( 'App', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/' );
-            $submenu[ $slug ][] = array( __( 'Global Settings', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/global-settings' );
+            $submenu[ $slug ][] = array( __( 'Global Settings', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/global-settings/license' );
         }
 
         add_action( 'load-' . $hook, [ $this, 'init_hooks'] );

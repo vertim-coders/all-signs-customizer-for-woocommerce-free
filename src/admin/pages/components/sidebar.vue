@@ -90,7 +90,7 @@
             
         </div>      
         <div class="aso-flex aso-relative aso-justify-center aso-items-center">
-            <button :class="`aso-w-fit aso-h-fit aso-bg-transparent aso-border-none aso-text-white hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer ${$route.path == '/global-settings/licences' || $route.path == '/global-settings/configuration-page' || $route.path == '/global-settings/output' || $route.path == '/global-settings/shapes' || $route.path == '/global-settings/fixing-methods' || $route.path == '/global-settings/border' ? 'aso-opacity-100' :'aso-opacity-50'}`" @click="()=>this.$router.push('/global-settings/licences')">
+            <button :class="`aso-w-fit aso-h-fit aso-bg-transparent aso-border-none aso-text-white hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer ${$route.path == '/global-settings/license' || $route.path == '/global-settings/configuration-page' || $route.path == '/global-settings/output' || $route.path == '/global-settings/shapes' || $route.path == '/global-settings/fixing-methods' || $route.path == '/global-settings/border' ? 'aso-opacity-100' :'aso-opacity-50'}`" @click="()=>this.$router.push('/global-settings/license')">
                 <svg class="aso-w-6 aso-h-6" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="tabler:settings-code">
                     <g id="Group">

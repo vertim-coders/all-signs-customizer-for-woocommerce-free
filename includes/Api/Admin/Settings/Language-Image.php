@@ -160,7 +160,7 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success" =>false,"message" => __("Update Main options in language Images settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" =>"same","message" => __("No change observed on Main options in language Images settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in Main options in language Images settings failed","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
@@ -193,7 +193,7 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success" =>false,"message" => __("Update Customizer Design options in language Images settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Customizer Design options in language Images settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Customizer Design options in language Images settings","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
@@ -226,7 +226,7 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success"=>false,"message" => __("update Visualizer options in language Images settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Visualizer options in language Images","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Visualizer options in language Images","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
@@ -258,7 +258,7 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                         return rest_ensure_response(["success" =>false,"message" => __("Update Images options in language Images settings failed","ASO")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed on Images options in language Images settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Images options in language Images settings","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);

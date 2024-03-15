@@ -175,7 +175,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
             return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","ASO") ) );
         }
         else{
-            return rest_ensure_response(array('success' => false, "message"=>__("Configuration update failed","") ) );
+            return rest_ensure_response(array('success' => false, "message"=>__("Configuration update failed","ASO") ) );
         }
         
     }

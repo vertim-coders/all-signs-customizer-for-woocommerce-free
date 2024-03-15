@@ -66,7 +66,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         ),
         array(
           'methods'             => \WP_REST_Server::READABLE,
-          'callback'            => array( $this, 'get_config_page' ),
+          'callback'            => array( $this, 'get_config_pages' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
       )
@@ -254,31 +254,16 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
   public function save_config_page( $request ) {
-    $params=json_decode($request->get_body(),true);
-    if(isset($params['configPage'])){
+    $data=json_decode($request->get_body(),true);
+    if(isset($data['configuratorPage'])){
         
-        $config_page = get_option("aso_config_page");
-        $othersData = get_option("aso_global_settings_others_data",[]);
-        if($config_page == $params["configPage"] && $othersData == $params["others"]){
-            
-            return rest_ensure_response(["success"=>"same","message" => __("No change observed","ASO")]);
+        $config_page = get_option("aso_config_page",[]);
         
-        }elseif($othersData == $params["others"]){
-            
-            update_option("aso_config_page",$params['configPage']);
-            return rest_ensure_response(["success" => true, "message" => __("Config page updated successfully","ASO")]);
-            
-        }elseif($config_page == $params["configPage"]){
-            
-            update_option("aso_global_settings_others_data",$params['others']);                
-            return rest_ensure_response(["success" => true, "message"=> __("Data updated successfully","ASO")]);
-        
+        if($config_page != $data){
+          update_option("aso_config_page",$data);
+          return rest_ensure_response(["success" =>true, "message"=> __("Data updated successfully","ASO")]);
         }else{
-        
-            update_option("aso_config_page",$params['configPage']);
-            update_option("aso_global_settings_others_data",$params['others']);
-            return rest_ensure_response(["success" =>true, "message"=> __("Data updated successfully","ASO")]);
-        
+          return rest_ensure_response(["success"=>"same","message" => __("No change observed","ASO")]);        
         }
     }
     return rest_ensure_response(["message" => __("Config page not found","ASO")]);
@@ -290,7 +275,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    *
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function get_config_page() {
+  public function get_config_pages() {
 
     $option = get_option("aso_config_page");
     
@@ -314,13 +299,13 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     );
 
     $existing_pages = get_posts($args);
-
-    $pages[0] = esc_html_x("None","ASO");
+    $pages = [];
+    $pages[] = ["id"=>0,"title"=>esc_html_x("None","ASO")];
     
     foreach ($existing_pages as $page) {
-        $pages[$page->ID] = $page->post_title;
+        $pages[] = ["id"=>$page->ID,"title"=>$page->post_title];
     }
-
+  
     return rest_ensure_response($pages);
   }
 
@@ -332,7 +317,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    */
   function create_new_page($request) {
     $params=json_decode($request->get_body());
-    if(isset($params->title)){
+    if(isset($params->title) && !empty($params->title)){
       
       $new_page = array(
         'post_title' => $params->title,
@@ -360,7 +345,10 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    */
   public function get_output_options_globals_settings($request){
     $outputOptions = get_option("aso_output_options",[]);
-		return rest_ensure_response($outputOptions);  
+    if(count($outputOptions)>0)
+		  return rest_ensure_response($outputOptions);  
+    else
+      return rest_ensure_response(["message"=>__("No output options found","ASO")]);
   }
    public function update_output_options_globals_settings($request){
     $data=json_decode($request->get_body(),true);
@@ -481,7 +469,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","ASO") ) );
         }
         else{
-          return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","") ) );
+          return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","ASO") ) );
         }
       }else{
         return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in border","ASO") ) );

@@ -261,7 +261,11 @@
         if(result.success){
             await fetchCliparts();
             isLoading.value= false;
-            toastMessage(result.message);
+            if(result.success == true){
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning")
+            }
             isNew.value = false;
             clipartId.value = null;
             clipart.value = {

@@ -278,32 +278,32 @@
     }
     const addNewFont = async () => {
         isLoading.value = true;
-        const result = await api.addManagefont(font.value);
         if(font.value.label.trim() == ''){
             emptyFontLabel.value = true;
             isLoading.value = false;
             toastMessage("Label must not be empty","warning");
         }else{
             emptyFontLabel.value = false;
+            const result = await api.addManagefont(font.value);
             if(result.success){
-                isLoading.value = false;
                 await fetchFonts();
+                isLoading.value = false;
+                createFont.value = false;
                 toastMessage(result.message);
                 font.value = {
                     label:"",
                     url:"",
                     isGoogleFont:true
                 }
-                createFont.value = false;
             }else{
                 isLoading.value = false;
+                createFont.value = false;
                 font.value = {
                     label:"",
                     url:"",
                     isGoogleFont:true
                 }
                 toastMessage(result.message,"error");
-                createFont.value = false;
             }
         }
     }
@@ -327,6 +327,7 @@
             isLoading.value = false;
             await fetchFonts();
             isLoading.value = false;
+            closeModal();
             toastMessage(result.message);
             isEdit.value = false;
             createFont.value = false;
@@ -335,40 +336,39 @@
                 url:"",
                 isGoogleFont:true
             }
-            closeModal();
         }else{
-            toastMessage(result.message,"error")
             isLoading.value = false;
+            closeModal();
+            toastMessage(result.message,"error")
             createFont.value = false;
             font.value = {
                 label:"",
                 url:"",
                 isGoogleFont:true
             }
-            closeModal();
         }
     }
 
     const updateFont = async () => {
         isLoading.value = true;
-        const result = await api.updateManagefont(fontId.value,font.value);
         if(font.value.label.trim() == ''){
             emptyFontLabel.value = true;
             isLoading.value = false;
             toastMessage("Label must not be empty","warning");
         }else{
             emptyFontLabel.value = false;
+            const result = await api.updateManagefont(fontId.value,font.value);
             if(result.success){
                 await fetchFonts(); isEdit.value = false;
                 isLoading.value = false;
+                createFont.value = false;
+                isEdit.value = false;
+                fontId.value = null;
                 if(result.success == true){
                     toastMessage(result.message);
                 }else{
                     toastMessage(result.message,"warning")
                 }
-                isEdit.value = false;
-                createFont.value = false;
-                fontId.value = null;
                 
                 font.value = {
                     label:"",
@@ -377,17 +377,17 @@
                 }
                
             }else{
-                toastMessage(result.message,"error")
                 isLoading.value = false;
                 createFont.value = false;
                 isEdit.value = false;
                 fontId.value = null;
-
+                toastMessage(result.message,"error")
                 font.value = {
                     label:"",
                     url:"",
                     isGoogleFont:true
                 }
+
             }
         }
     }

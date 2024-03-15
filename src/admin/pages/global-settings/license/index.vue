@@ -53,13 +53,51 @@ const updateGlobalLicenses = async () => {
     isLoading.value = true;
     const result = await api.saveGlobalSettingsLicenceKey(licenses.value);
     if(result.success){
-        await fetchLicenses();
+        //await activateLicenseKey();
+        //await fetchLicenses();
         isLoading.value = false;
-            toastMessage(result.success);
+        toastMessage(result.success);
         
     }else{
         isLoading.value = false;
         toastMessage(result.message,"error");
+    }
+}
+const activateLicenseKey = async () => {
+    try {
+        const response = await axios.post(
+            aso_ajax_object.ajax_url, 
+            {
+                action: 'aso_activate_license',
+            }, 
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+        switch (response.data.success) {
+            case 200:
+                toastMessage("Activation succeded! Your product is now activated");
+                window.aso_license_key = true;
+                if (document.location.href == "admin.php?page=aso#/global-settings") {
+                    document.location.href = 'admin.php?page=aso#/configurations';
+                }
+                document.location.reload(true);
+                break;
+            default:
+                window.aso_license_key = false;
+                jQuery(".aso-licence-warning").show();
+                jQuery(".wp-submenu li a[href='admin.php?page=aso#/configurations']").remove();
+                if(response.data.answer){
+                    toastMessage(response.data.answer, 'error');
+                }else{
+                    toastMessage(response.data.message, 'error');
+                }
+                /* jQuery('aso-license-message').html("<p>" + data + "</p>"); */
+        }
+    } catch (error) {
+        toastMessage(error, "error");
     }
 }
 </script> 
