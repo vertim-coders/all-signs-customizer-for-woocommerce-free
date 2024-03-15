@@ -85,7 +85,6 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
 import Licences from './licences/index.vue'
 import ConfigurationPage from './configuration-page/index.vue'
 import Output from './output/index.vue'
@@ -95,7 +94,6 @@ import Border from './border/index.vue'
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
-const configID = ref(route.params.configId)
 </script>
 <style>
     

@@ -29,7 +29,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
   public function register_route(){
     register_rest_route(
       $this->namespace,
-      '/' . $this->rest_base."/licence/(?<plugin>\S+)",
+      '/' . $this->rest_base."/license/(?<plugin>\S+)",
       array(
         array(
           'methods'             => \WP_REST_Server::CREATABLE,
@@ -37,8 +37,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
           'args'                => array (
             'plugin' => array (
-            'type' => 'string',
-            'required' => true,
+              'type' => 'string',
+              'required' => true,
             )
           ),
         ),
@@ -108,15 +108,14 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       '/' . $this->rest_base."/output",
       array(
         array(
+          'methods'             => \WP_REST_Server::READABLE,
+          'callback'            => array( $this, 'get_output_options_globals_settings' ),
+          'permission_callback' => array( $this, 'get_config_permissions_check' ),
+        ),
+        array(
           'methods'             => \WP_REST_Server::EDITABLE,
           'callback'            => array( $this, 'update_output_options_globals_settings' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-          'args'                => array(
-            'config_id' => array (
-             'type' => 'integer',
-             'required' => true,
-            )
-          ),
         )
       )
     );
@@ -219,10 +218,6 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       if(isset($plugin)){
         if($plugin === "pro"){
           $option = update_option("aso_pro_license",$params->license);
-        }else if($plugin === "advanced"){
-          $option = update_option("aso_advanced_license",$params->license);
-        }else{
-          $option = update_option("aso_starter_license",$params->license);
         }
       }
       if($option){
@@ -244,10 +239,6 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     $plugin = $request->get_param('plugin');
     if($plugin === "pro"){
       $option = get_option("aso_pro_license");
-    }else if($plugin === "advanced"){
-      $option = get_option("aso_advanced_license");
-    }else{
-      $option = get_option("aso_starter_license");
     }
   
     if($option==false || empty($option) ){
@@ -262,17 +253,35 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function save_config_page( $request ) {
-      $params=json_decode($request->get_body());
-      if(isset($params->configPage)){
-          $option = update_option("aso_config_page",$params->configPage);
-          if($option){
-              return rest_ensure_response(["success" => __("Config page added successfully","ASO")]);
-          }else{
-              return rest_ensure_response(["message" => __("Adding Config page failed","ASO")]);
-          }
-      }
-      return rest_ensure_response(["message" => __("Config page not found","ASO")]);
+  public function save_config_page( $request ) {
+    $params=json_decode($request->get_body(),true);
+    if(isset($params['configPage'])){
+        
+        $config_page = get_option("aso_config_page");
+        $othersData = get_option("aso_global_settings_others_data",[]);
+        if($config_page == $params["configPage"] && $othersData == $params["others"]){
+            
+            return rest_ensure_response(["success"=>"same","message" => __("No change observed","ASO")]);
+        
+        }elseif($othersData == $params["others"]){
+            
+            update_option("aso_config_page",$params['configPage']);
+            return rest_ensure_response(["success" => true, "message" => __("Config page updated successfully","ASO")]);
+            
+        }elseif($config_page == $params["configPage"]){
+            
+            update_option("aso_global_settings_others_data",$params['others']);                
+            return rest_ensure_response(["success" => true, "message"=> __("Data updated successfully","ASO")]);
+        
+        }else{
+        
+            update_option("aso_config_page",$params['configPage']);
+            update_option("aso_global_settings_others_data",$params['others']);
+            return rest_ensure_response(["success" =>true, "message"=> __("Data updated successfully","ASO")]);
+        
+        }
+    }
+    return rest_ensure_response(["message" => __("Config page not found","ASO")]);
   }
 
   /**
@@ -344,13 +353,30 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     } 
   }
   /**
-   * Output function 
+   * Output functions 
    * 
    * @param  \WP_REST_Request $request Full details about the request.
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function update_output_options_globals_settings($request){
+  public function get_output_options_globals_settings($request){
+    $outputOptions = get_option("aso_output_options",[]);
+		return rest_ensure_response($outputOptions);  
+  }
+   public function update_output_options_globals_settings($request){
     $data=json_decode($request->get_body());
+    $outputOptions = get_option("aso_output_options",[]);
+    if($data != $outputOptions){
+      $update = update_option("aso_output_options",$data);
+      if($update){
+        return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success","ASO") ) );
+      }
+      else{
+        return rest_ensure_response(array('success' => false, "message"=>__("The ouput settings update failed","ASO") ) );
+      } 
+    }else{
+      return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in the ouput settings","ASO") ) );
+
+    }
   }
    /**
    * get all shapes function 
@@ -383,7 +409,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","ASO") ) );
         } 
       }else{
-        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed on shape","ASO") ) );
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in shape","ASO") ) );
 
       }
 		}else{
@@ -421,7 +447,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","ASO") ) );
         }
       }else{
-        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed on fixing Method","ASO") ) );
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in fixing Method","ASO") ) );
       } 
 		}else{
 			return rest_ensure_response(["success"=>false,"message"=>__('FixingMethod not found',"ASO")]);
@@ -458,7 +484,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","") ) );
         }
       }else{
-        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed on border","ASO") ) );
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in border","ASO") ) );
       }   
 		}else{
 			return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
