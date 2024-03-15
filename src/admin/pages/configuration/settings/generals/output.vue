@@ -37,7 +37,7 @@
                     <label class="aso-text-[16px] aso-font-semibold">Zip output files</label>
                     <div class="aso-flex aso-items-center">
                         <label for="aso-toggle" @click="handleZipOutputFiles" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': Output.zipOutputFiles.active, 'aso-bg-active': Output.zipOutputFiles.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                         <div :class="{'aso-translate-x-[100%]': Output.zipOutputFiles.active, 'aso-bg-active': Output.zipOutputFiles.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <label class="aso-text-[16px] aso-font-semibold">Design composition</label>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="aso-toggle" @click="handleDesignComposition" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': Output.designComposition, 'aso-bg-active': Output.designComposition }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                         <div :class="{'aso-translate-x-[100%]': Output.designComposition, 'aso-bg-active': Output.designComposition }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>

@@ -844,31 +844,35 @@ const api = {
   },
 
   //License Routes
-  saveGlogalSettingsLicenceKey: async (data, plugin = "pro") => {
+  saveGlobalSettingsLicenceKey: async (data, plugin = "pro") => {
     const licence = await axios.post(
-      apiURL + "/globals-settings/license/" + plugin,
+      aso_api_url + "/globals-settings/license/" + plugin,
       data
     );
     return licence.data;
   },
-  saveGlogalSettingsConfigPage: async (data) => {
+  getGlobalSettingsLicenceKey: async (plugin='pro') => {
+    const licence = await axios.get(aso_api_url + "/globals-settings/license/"+plugin);
+    return licence.data;
+  },
+  saveGlobalSettingsConfigPage: async (data) => {
     const configPage = await axios.post(
-      apiURL + "/globals-settings/config-page",
+      aso_api_url + "/globals-settings/config-page",
       data
     );
     return configPage.data;
   },
-  addPageInGlogalSettings: async (data) => {
-    const page = await axios.post(apiURL + "/globals-settings/pages", data);
+  addPageInGlobalSettings: async (data) => {
+    const page = await axios.post(aso_api_url + "/globals-settings/pages", data);
     return page.data;
   },
-  getGlogalSettingsOutput: async () => {
-    const outputSetting = await axios.get(apiURL + "/globals-settings/output");
+  getGlobalSettingsOutput: async () => {
+    const outputSetting = await axios.get(aso_api_url + "/globals-settings/output");
     return outputSetting.data;
   },
-  updateGlogalSettingsOutput: async (data) => {
+  updateGlobalSettingsOutput: async (data) => {
     const outputSetting = await axios.post(
-      apiURL + "/globals-settings/output",
+      aso_api_url + "/globals-settings/output",
       data
     );
     return outputSetting.data;

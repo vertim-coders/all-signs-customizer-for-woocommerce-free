@@ -45,46 +45,46 @@
 <script setup>
     import { ref,onMounted } from "vue";
     import api from "@/admin/Api/api";
-    import { useRoute } from 'vue-router';
     import toastMessage from "@/admin/utils/functions";
 
-    const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
+    
+    const isFetching = ref(false);
+    const isLoading = ref(false);
     const output = ref({
         zipName:true,
         calculateOutput:true
     });
     
 
-    onMounted(async () => {
-        isFetching.value = true;
+onMounted(async () => {
+    isFetching.value = true;
+    await fetchGlobalOutput();
+    isFetching.value = false;
+});
+
+const fetchGlobalOutput = async () => {
+    const result = await api.getGlobalSettingsOutput();
+    if(!result.message){
+        output.value = result;
+    }
+
+};
+const updateGlobalOutput = async () => {
+    isLoading.value = true;
+    const result = await api.updateGlobalSettingsOutput(output.value);
+    if(result.success){
         await fetchGlobalOutput();
-        
-    });
-    const isFetching = ref(false);
-    const isLoading = ref(false);
-    const fetchGlobalOutput = async () => {
-        const result = await api.getMaterialSimpleTextImages(configID.value,materialId.value);
-        if(result.message){
-            output.value = result;
-        }
-        isFetching.value = false;
-    }
-    const updateGlobalOutput = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleTextImages(configID.value,materialId.value,output.value);
-        if(result.success){
-            isLoading.value = false;
-            if(result.success == true){
-                toastMessage(result.message)
-            }else{
-                toastMessage(result.message,"warning");
-            }
+        isLoading.value = false;
+        if(result.success == true){
+            toastMessage(result.message);
         }else{
-            toastMessage(result.message,"error");
+            toastMessage(result.message,"warning");
         }
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
     }
+}
     const handleZipName = () => {
         output.value.zipName = !output.value.zipName;
     }

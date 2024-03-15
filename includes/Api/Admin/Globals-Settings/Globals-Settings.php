@@ -363,7 +363,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 		return rest_ensure_response($outputOptions);  
   }
    public function update_output_options_globals_settings($request){
-    $data=json_decode($request->get_body());
+    $data=json_decode($request->get_body(),true);
     $outputOptions = get_option("aso_output_options",[]);
     if($data != $outputOptions){
       $update = update_option("aso_output_options",$data);
