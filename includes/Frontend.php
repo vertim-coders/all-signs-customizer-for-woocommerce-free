@@ -22,6 +22,8 @@ class ASO_Frontend {
         wp_enqueue_style( 'aso-frontend' );
         wp_enqueue_style( 'aso-style' );
         wp_enqueue_script( 'aso-frontend' );
+        // wp_enqueue_script( 'aso-editor-script' );
+        wp_enqueue_script( 'aso-fabric' );
 
         $content .= '<div id="aso-frontend-app"></div>';
 

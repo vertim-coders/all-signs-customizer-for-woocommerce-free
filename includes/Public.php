@@ -22,6 +22,7 @@ class ASO_Public {
         wp_enqueue_style( 'aso-style' );
         wp_enqueue_style( 'aso-omodal' );
         wp_enqueue_script('aso-omodal');
+        wp_enqueue_script('aso-fabric');
         // Localisez votre script avec les variables nécessaires
         //wp_localize_script('product-design', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
         return $content;

@@ -102,6 +102,14 @@ class Assets {
                 'src'       => ASO_ASSETS . '/utilities/modal.min.js',
                 'in_footer' => true
             ],
+            'aso-editor-script' => [
+                'src'       => ASO_ASSETS . '/utilities/aso-editor-script.js',
+                'in_footer' => true
+            ],
+            'aso-fabric' => [
+                'src'       => ASO_ASSETS . '/utilities/fabric.min.js',
+                'in_footer' => true
+            ],
             'aso-sortable' => [
                 'src'       => ASO_ASSETS . '/utilities/sortable.js',
                 'in_footer' => true
