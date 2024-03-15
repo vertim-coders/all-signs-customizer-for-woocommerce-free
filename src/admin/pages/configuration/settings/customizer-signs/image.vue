@@ -19,32 +19,44 @@
                     <span class="aso-text-[#444444] aso-text-[12px]">Normal</span>
                     <div class="aso-flex aso-items-center">
                         <label for="aso-toggle" @click="handleFileUploadScript" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': image.fileUploadScript, 'aso-bg-active': image.fileUploadScript }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <div :class="{'aso-translate-x-[100%]': image.fileUploadScript.customWithGraphical, 'aso-bg-active': image.fileUploadScript.customWithGraphical }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                     <span class="aso-text-[#444444] aso-text-[12px]">Custom with graphical enchacements</span>
-                </div> 
-                <div class="aso-flex aso-justify-between aso-space-x-6">
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Upload min width (px)</label>
-                        <input type="text" v-model="image.uploadMinWidth" placeholder="name" class="aso-w-full"/>
-                    </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Upload min height (px)</label>
-                        <input type="text" v-model="image.uploadMinHeight" placeholder="name" class="aso-w-full"/>
-                    </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Allowed uploads extensions</label>
-                        <select v-model="image.allowedUploadsExtentions" class="aso-w-full">
-                        <option>PNG</option>
-                        <option>JPEG</option>
-                        <option>SVG</option>
-                        <option>PNG + PNG</option>
-                        <option>PNG + JPEG</option>
-                        <option>PNG + SVG</option>
-                    </select>
-                    </div>
                 </div>
+                <div>
+                    <div class="aso-flex aso-justify-between aso-space-x-6 aso-space-y-2">
+                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Upload min width (px)</label>
+                            <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMinWidth.trim() ==''){image.fileUploadScript.uploadMinWidth=100}}"/>
+                        </div>
+                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Upload min height (px)</label>
+                            <input type="number" v-model="image.fileUploadScript.uploadMinHeight" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMinHeight.trim()==''){image.fileUploadScript.uploadMinHeight = 100}}"/>
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-space-x-6 aso-space-y-2">
+                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Upload Max width (px)</label>
+                            <input type="number" v-model="image.fileUploadScript.uploadMaxWidth" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMaxWidth.trim()==''){image.fileUploadScript.uploadMaxWidth =1024}}"/>
+                        </div>
+                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Upload Max height (px)</label>
+                            <input type="number" v-model="image.fileUploadScript.uploadMaxHeight" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMaxHeight.trim()==''){image.fileUploadScript.uploadMaxHeight =1024}}"/>
+                        </div>
+                    </div>
+                    <div class="aso-pt-2">
+                        <Multiselect
+                            v-model="image.fileUploadScript.allowedUploadsExtentions"
+                            placeholder=""
+                            :options="allowedUploadsExtentions"
+                            label="name"
+                            trackBy="name"
+                            mode="tags"
+                        /> 
+                    </div>
+
+                </div> 
                 <div class="aso-space-y-3">
                     <div class="aso-flex aso-space-x-3">
                         <div class="aso-text-[16px]">Enable clipart</div>
@@ -57,13 +69,13 @@
                     <div class="aso-space-y-2" v-if="image.enableClipart.active">
                         <label class="aso-text-[12px] aso-text-[#444444]">Select clipart  group</label>
                         <Multiselect
-                        v-model="image.selectClipartGroup"
-                        placeholder=""
-                        :options="manageCliparts"
-                        label="name"
-                        trackBy="name"
-                        mode="tags"
-                        :searchable="true"
+                            v-model="image.enableClipart.selectClipartGroups"
+                            placeholder=""
+                            :options="manageCliparts"
+                            label="name"
+                            trackBy="name"
+                            mode="tags"
+                            :loading="isFetching"
                         />
                     </div>
                 </div>
@@ -89,7 +101,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableGreyscale" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableGreyscale, 'aso-bg-active': image.enableGreyscale }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': image.filter.enableGreyscale, 'aso-bg-active': image.filter.enableGreyscale }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
 
@@ -105,7 +117,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableOpacity" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableOpacity, 'aso-bg-active': image.enableOpacity }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': image.filter.enableOpacity, 'aso-bg-active': image.filter.enableOpacity }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -120,7 +132,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableBlur" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableBlur, 'aso-bg-active': image.enableBlur }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': image.filter.enableBlur, 'aso-bg-active': image.filter.enableBlur }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -133,7 +145,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableSepia" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableSepia, 'aso-bg-active': image.enableSepia }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': image.filter.enableSepia, 'aso-bg-active': image.filter.enableSepia }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -146,7 +158,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableSharpen" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableSharpen, 'aso-bg-active': image.enableSharpen }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': image.filter.enableSharpen, 'aso-bg-active': image.filter.enableSharpen }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -159,7 +171,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableEmbross" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableEmbross, 'aso-bg-active': image.enableEmbross }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': image.filter.enableEmbross, 'aso-bg-active': image.filter.enableEmbross }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -195,14 +207,17 @@ const isLoading =ref(false);
 const isFetching = ref(false);
 const image = ref({
     enableUploadImage:true,
-    fileUploadScript:true,
-    uploadMinWidth:"",
-    uploadMinHeight:"",
-    allowedUploadsExtentions:"PNG",
+    fileUploadScript:{
+      customWithGraphical:false,
+      uploadMinWidth:100,
+      uploadMaxWidth:100,
+      uploadMinHeight:1024,
+      uploadMaxHeight:1024,
+      allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
+    },
     enableClipart:{
         active:true,
-        selectClipartGroup:"",
-        manageClipartId:0,
+        selectClipartGroups:[],
     },
     filter: {
         active:true,
@@ -214,17 +229,24 @@ const image = ref({
         enableSharpen:true,
     }
 });
+const allowedUploadsExtentions = [
+    {name:"PNG",value:"png"},
+    {name:"JPEG",value:"jpeg"},
+    {name:"SVG",value:"svg"},
+    {name:"WEBP",value:"webp"},
+    {name:"GIF",value:"gif"}
+];
 const manageCliparts = ref([]);
 onMounted(async ()=>{
     isFetching.value = true;
     await fetchManageCliparts();
     if(props.data){
-    image.value = {...image.value,...props.data}
-}
+        image.value = {...image.value,...props.data}
+    }
+    isFetching.value = false;
 });
 const fetchManageCliparts = async () => {
     const result = await api.getManageCliparts();
-    console.log(result.data)
     if (result.data.length > 0) {
         manageCliparts.value = result.data.map((group,id) => {
             return { name:group.title, value:id };
@@ -253,7 +275,7 @@ const handleEnableUploadImage = () => {
     image.value.enableUploadImage = !image.value.enableUploadImage;
 };
 const handleFileUploadScript = () => {
-    image.value.fileUploadScript = !image.value.fileUploadScript;
+    image.value.fileUploadScript.customWithGraphical = !image.value.fileUploadScript.customWithGraphical;
 };
 const handleEnableClipart = () => {
     image.value.enableClipart.active = !image.value.enableClipart.active;
@@ -262,21 +284,21 @@ const handleFilter = () => {
     image.value.filter.active = !image.value.filter.active;
 };
 const handleEnableGreyscale = () => {
-    image.value.enableGreyscale = !image.value.enableGreyscale;
+    image.value.filter.enableGreyscale = !image.value.filter.enableGreyscale;
 };
 const handleEnableOpacity = () => {
-    image.value.enableOpacity = !image.value.enableOpacity;
+    image.value.filter.enableOpacity = !image.value.filter.enableOpacity;
 };
 const handleEnableBlur = () => {
-    image.value.enableBlur = !image.value.enableBlur;
+    image.value.filter.enableBlur = !image.value.filter.enableBlur;
 };
 const handleEnableSepia = () => {
-    image.value.enableSepia = !image.value.enableSepia;
+    image.value.filter.enableSepia = !image.value.filter.enableSepia;
 };
 const handleEnableSharpen = () => {
-    image.value.enableSharpen = !image.value.enableSharpen;
+    image.value.filter.enableSharpen = !image.value.filter.enableSharpen;
 };
 const handleEnableEmbross = () => {
-    image.value.enableEmbross = !image.value.enableEmbross;
+    image.value.filter.enableEmbross = !image.value.filter.enableEmbross;
 };
 </script>

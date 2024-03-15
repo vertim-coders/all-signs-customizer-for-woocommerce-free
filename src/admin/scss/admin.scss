@@ -125,7 +125,7 @@
   flex-shrink: 1;
   display: flex;
   flex-wrap: wrap;
-  margin: var(--ms-tag-my, 0.25rem) 0 0;
+  /* margin: var(--ms-tag-my, 0.25rem) 0 0; */
   padding-left: var(--ms-py, 0.5rem);
   align-items: center;
   min-width: 0;
@@ -143,7 +143,7 @@
   margin-right: var(--ms-tag-mx, 0.25rem);
   margin-bottom: var(--ms-tag-my, 0.25rem);
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   white-space: nowrap;
   min-width: 0;
 

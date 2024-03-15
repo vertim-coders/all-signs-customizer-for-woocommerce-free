@@ -8,21 +8,21 @@
                     <div class="aso-text-[11px]">Enable custom design link</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="aso-toggle" @click="handleEnableCustomDesignLink" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': uploadDesign.enableCustomDesignLink, 'aso-bg-active': uploadDesign.EnableCustomDesignLink }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[white] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <div :class="{'aso-translate-x-[100%]': uploadDesign.activate, 'aso-bg-active': uploadDesign.activate }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[white] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>
                 <div class="aso-text-[11px] aso-text-[#444444]">
                     Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.
                 </div>
-                <div class="aso-flex aso-flex-col aso-w-3/5 aso-space-y-2">
+                <div class="aso-flex aso-flex-col aso-w-3/5 aso-space-y-2" v-if="uploadDesign.activate">
                     <label class="aso-text-[12px] aso-text-[#444444]">Custom Design Link</label>
-                    <input type="text" v-model="uploadDesign.customDesignLink" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="uploadDesign.link" placeholder="" class="aso-w-full"/>
                     <span class="aso-text-[12px] aso-text-[#444444]">URL to redirect customers on your store that will allow for more complex graphic design quote submissions.</span>
                 </div>
-                <div class="aso-flex aso-flex-col aso-w-3/5 aso-space-y-2">
+                <div class="aso-flex aso-flex-col aso-w-3/5 aso-space-y-2" v-if="uploadDesign.activate">
                     <label class="aso-text-[12px] aso-text-[#444444]">Phrase for link to submit custom design page</label>
-                    <input type="text" v-model="uploadDesign.phraseForLinkToSubmitCustomDesignPage" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="uploadDesign.phraseSubmitCustom" placeholder="" class="aso-w-full"/>
 
                 </div>
                 
@@ -51,9 +51,9 @@ const route = useRoute();
 const isLoading =ref(false);
 const configId = ref(route.params.configId);
 const uploadDesign = ref({
-    customDesignLink:"",
-    phraseForLinkToSubmitCustomDesignPage:"",
-    enableCustomDesignLink:true,
+    activate: false,
+    link: "",
+    phraseSubmitCustom: "Take a customization"
 })
 
 
@@ -80,6 +80,6 @@ const updateUploadDesignSettings = async () => {
     }
 };
 const handleEnableCustomDesignLink = () => {
-    uploadDesign.value.enableCustomDesignLink.active = !uploadDesign.value.enableCustomDesignLink.active;
+    uploadDesign.value.activate = !uploadDesign.value.activate;
 };   
 </script> 

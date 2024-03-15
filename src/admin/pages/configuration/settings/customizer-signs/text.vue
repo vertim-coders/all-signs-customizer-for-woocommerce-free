@@ -5,12 +5,13 @@
                 <div class="aso-flex aso-flex-col aso-w-full">
                     <label class="aso-text-[12px]">Select Font</label>
                     <Multiselect
-                        v-model="text.selectFont"
+                        v-model="text.s"
                         placeholder=""
                         :options="manageFonts"
                         label="name"
                         trackBy="name"
                         mode="tags"
+                        :loading="isFetching"
                         :searchable="true"
                     />
                         
@@ -23,16 +24,17 @@
                         </label>
                     </div>
                 </div>
-                <div class="aso-flex aso-flex-col aso-w-full" v-if="text.enableCustomColor.active">
-                    <label class="aso-text-[12px]">Add color</label>
+                <div class="aso-flex aso-flex-col aso-w-full" >
+                    <label class="aso-text-[12px]">Choose the colors to be displayed </label>
                     <Multiselect
-                        v-model="text.addColor"
+                        v-model="text.addColors"
                         placeholder=""
                         :options="manageColors"
                         label="name"
                         trackBy="name"
                         mode="tags"
                         :searchable="true"
+                        :loading="isFetching"
                     />
                 </div>
                 <div class="aso-flex aso-space-x-6">
@@ -56,15 +58,15 @@
                 <div class="aso-flex aso-justify-between aso-space-x-6" v-if="text.enableFontSize.active">
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px]">Minimun font size</label>
-                        <input type="text" v-model="text.minimumFontSize" placeholder="name" class="aso-w-full"/>
+                        <input type="number" v-model="text.enableFontSize.minimumFontSize" @blur="()=>{ if(text.enableFontSize.minimumFontSize.trim()=='') {text.enableFontSize.minimumFontSize=12}}" placeholder="name" class="aso-w-full"/>
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px]">Maximum font size</label>
-                        <input type="text" v-model="text.maximumFontSize" placeholder="name" class="aso-w-full"/>
+                        <input type="number" v-model="text.enableFontSize.maximumFontSize" @blur="()=>{ if(text.enableFontSize.maximumFontSize.trim()=='') {text.enableFontSize.maximumFontSize=30}}" placeholder="name" class="aso-w-full"/>
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px]">Default size</label>
-                        <input type="text" v-model="text.defaultSize" placeholder="name" class="aso-w-full"/>
+                        <input type="number" v-model="text.enableFontSize.defaultFontSize" @blur="()=>{ if(text.enableFontSize.defaultFontSize.trim()=='') {text.enableFontSize.defaultFontSize=16}}" placeholder="name" class="aso-w-full"/>
                     </div>
                 </div>
                 <div class="aso-text-[16px] aso-font-bold">enable text options</div>
@@ -260,17 +262,17 @@ const isLoading =ref(false);
 const isFetching = ref(false);
 const text = ref({
     manageFontId:0,
-    selectFont: [],
+    selectFonts: [],
     enableCustomColor:{
         active:true,
         manageColorId:0,
-        addColor:"",
+        addColors:[],
     },
     enableFontSize:{
         active:true,
-        minimumFontSize:"",
-        maximumFontSize:"",
-        defaultFontSize:"",
+        minimumFontSize:12,
+        maximumFontSize:30,
+        defaultFontSize:16,
     },
     enableColorPicker:true,
     enableBold:true,
@@ -292,8 +294,9 @@ onMounted(async ()=>{
     await fetchManageFonts();
     await fetchManageColors();
     if(props.data){
-    text.value = {...text.value,...props.data}
-}
+        text.value = {...text.value,...props.data}
+    }
+    isFetching.value = false;
 });
 
 const fetchManageFonts = async () => {
@@ -342,7 +345,7 @@ const handleEnableFontSize = () => {
     text.value.enableFontSize.active = !text.value.enableFontSize.active;
 };
 const handleEnableColorPicker = () => {
-    text.value.enableColorPicker.active = !text.value.enableColorPicker.active;
+    text.value.enableColorPicker = !text.value.enableColorPicker;
 };
 const handleEnableBold = () => {
     text.value.enableBold = !text.value.enableBold;

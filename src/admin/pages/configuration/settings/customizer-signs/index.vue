@@ -2,22 +2,22 @@
     <div v-if="!isFetching">
         <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
             <div class="">
-                <button @click="()=>showStep='customizer-options'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'customizer-options' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
+                <button @click="()=>{showStep='customizer-options'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'customizer-options' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
                     Customizer options
                 </button>
             </div>
             <div class="">
-                <button @click="()=>showStep='sign-part'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'sign-part' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
+                <button @click="()=>{showStep='sign-part'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'sign-part' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
                     Sign Part
                 </button>
             </div>
             <div class="">
-                <button @click="()=>showStep='text'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'text' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
+                <button @click="()=>{showStep='text'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'text' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
                     Text
                 </button>
             </div>
             <div class="">
-                <button @click="()=>showStep='image'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'image' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
+                <button @click="()=>{showStep='image'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'image' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
                     Image
                 </button>
             </div>
@@ -27,8 +27,8 @@
         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
     </div>
     <div v-if="!isFetching">
-        <CustomizerOptions v-if="showStep == 'customizer-options'" :data="customizerSigns.customizer" :fetch-settings="fetchCustomizerSignsSettings"/>
-        <Image v-if="showStep == 'image'" :data="customizerSigns.image" :fetch-settings="fetchCustomizerSignsSettings"/>
+        <CustomizerOptions v-if="showStep == 'customizer-options'" :data="customizerSigns.customizerOptions" :fetch-settings="fetchCustomizerSignsSettings"/>
+        <Image v-if="showStep == 'image'" :data="customizerSigns.images" :fetch-settings="fetchCustomizerSignsSettings"/>
         <Text v-if="showStep == 'text'" :data="customizerSigns.text" :fetch-settings="fetchCustomizerSignsSettings"/>
         <SignPart v-if="showStep == 'sign-part'" :data="customizerSigns.signPart" :fetch-settings="fetchCustomizerSignsSettings"/>
     </div>
