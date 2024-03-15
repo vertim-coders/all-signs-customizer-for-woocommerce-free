@@ -1,4 +1,6 @@
 <?php
+
+use ASO\ASO_Design;
 use ASO\ASO_Post_Type;
 /*
 Plugin Name: All Signs Options
@@ -51,7 +53,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @class All_Signs_Options The class that holds the entire All_Signs_Options plugin
  */
-final class All_Signs_Options {
+final class ASO_All_Signs_Options {
 
     /**
      * Plugin version
@@ -95,7 +97,7 @@ final class All_Signs_Options {
         static $instance = false;
 
         if ( ! $instance ) {
-            $instance = new All_Signs_Options();
+            $instance = new ASO_All_Signs_Options();
         }
 
         return $instance;
@@ -139,6 +141,16 @@ final class All_Signs_Options {
         define( 'ASO_INCLUDES', ASO_PATH . '/includes' );
         define( 'ASO_URL', plugins_url( '', ASO_FILE ) );
         define( 'ASO_ASSETS', ASO_URL . '/assets' );
+
+        $upload_dir = wp_upload_dir();
+        $generation_path = $upload_dir['basedir'] . "/ASO/";
+        $generation_url = $upload_dir['baseurl'] . "/ASO/";
+
+        define('ASO_IMAGE_PATH', $generation_path . "image");
+        define('ASO_IMAGE_URL', $generation_url . "image");
+
+        define('ASO_ORDER_PATH', $generation_path . "ORDER");
+        define('ASO_ORDER_URL', $generation_url . "ORDER");
     }
 
     private function aso_define_borders(){
@@ -386,7 +398,10 @@ final class All_Signs_Options {
         }
 
         require_once ASO_INCLUDES . '/Api.php';
-        require_once ASO_INCLUDES . '/ASO-Post-Type.php';
+        require_once ASO_INCLUDES . '/aso-post-type.php';
+        require_once ASO_INCLUDES . '/aso-design.php';
+        require_once ASO_INCLUDES . '/aso-product-config.php';
+        require_once ASO_INCLUDES.'/Functions.php';
     }
 
     /**
@@ -400,6 +415,10 @@ final class All_Signs_Options {
 
         $aso_post_type = new ASO_Post_Type();
         $aso_post_type->init_hooks();
+        $aso_product = new ASO_Product_Config();
+        $aso_product->init_hooks();
+        $aso_design = new ASO_Design();
+        $aso_design->init_hooks();
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
     }
@@ -464,4 +483,4 @@ final class All_Signs_Options {
 
 } // All_Signs_Options
 
-$ASO = All_Signs_Options::init();
+$ASO = ASO_All_Signs_Options::init();
