@@ -3,11 +3,21 @@
 
         <div class="aso-w-full lg:aso-w-[92%] aso-h-full aso-flex aso-flex-col">
             <div class="aso-w-full aso-h-[7%] lg:aso-h-[10%] aso-bg-[#016464] lg:aso-bg-white aso-flex aso-items-center aso-justify-between">
-                <div class="aso-flex aso-w-1/3 aso-justify-center aso-text-white lg:aso-text-black aso-text-base lg:aso-text-2xl aso-font-bold aso-text-center">
+                <div v-if="isLoaded" class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-between aso-px-2">
+                    <div class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[65%] aso-animate-pulse"></div>
+                    <div class="aso-w-1/3 aso-h-[65%] aso-flex aso-space-x-4">
+                        <div class="aso-w-1/3 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full aso-animate-pulse"></div>
+                        <div class="aso-w-1/3 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full aso-animate-pulse"></div>
+                        <div class="aso-w-1/3 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full aso-animate-pulse"></div>
+                    </div>
+                    <div class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[65%] aso-animate-pulse"></div>
+                </div>
+                
+                <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-text-white lg:aso-text-black aso-text-base lg:aso-text-2xl aso-font-bold aso-text-center">
                     Plastic Signs
                 </div>
 
-                <div class="aso-flex aso-w-1/3 aso-justify-center aso-items-center aso-space-x-4">
+                <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-items-center aso-space-x-4">
                     <span @click="clearAll" class="aso-bg-[#22272D] aso-w-fit aso-h-fit aso-flex aso-full-center aso-space-x-2 aso-p-2 aso-px-3 aso-rounded-full focus:aso-bg-[#016464] hover:aso-bg-[#016464]">
                         <svg class="aso-h-5 aso-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="simple-line-icons:reload">
@@ -22,7 +32,7 @@
                         
                     <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-2">
-                            <span @click="handleUndo" class="aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464] hover:aso-text-white aso-base-animation">
+                            <span @click="undo" class="aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464] hover:aso-text-white aso-base-animation">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                 </svg>
@@ -33,7 +43,7 @@
                         </div>
 
                         <div class="aso-flex aso-justify-between aso-items-center aso-space-x-2">
-                            <span @click="handleRedo" class="aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464] hover:aso-text-white aso-base-animation">
+                            <span @click="redo" class="aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-white aso-text-black hover:aso-bg-[#016464] hover:aso-text-white aso-base-animation">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                 </svg>
@@ -45,7 +55,7 @@
                     </div>
                 </div>
     
-                <div id="aso-price" class="aso-flex aso-w-1/3 aso-justify-center aso-items-center">
+                <div v-show="!isLoaded" id="aso-price" class="aso-flex aso-w-1/3 aso-justify-center aso-items-center">
                     <div class="aso-flex aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
                         $ 495,09
                     </div>
@@ -53,65 +63,81 @@
             </div>
     
             <div class="aso-relative aso-w-full aso-h-[93%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center aso-bg-[#f5f5f5]">
-                <div id="aso-canvas-containers" class="aso-relative aso-w-full aso-h-[60%] lg:aso-h-[82%] aso-bg-red-300 aso-border-4 aso-border-black">
-                    <canvas ref="canvasRef" id="canvaas" class="aso-relative aso-w-full aso-h-full"></canvas>
+                <div id="aso-canvas-containers" class="aso-relative aso-w-full aso-h-[54%] lg:aso-h-[82%] aso-border-4 aso-border-black">
+                    <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
 
-                    <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
-                        <div class="aso-space-y-2 aso-text-sm">
-                            <div>
-                                <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
+                    <canvas v-show="!isLoaded" ref="canvasRef" id="canvaas" class="aso-relative aso-w-full aso-h-full"></canvas>
+
+                    <div v-show="!isLoaded">
+                        <div style="display: none;" id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
+                            <div class="aso-space-y-1 aso-text-sm">
+                                <div>
+                                    <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
+                                </div>
+                                <div>
+                                    <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
+                                </div>
+                                <div>
+                                    <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
+                                </div>
                             </div>
-                            <div>
-                                <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
+                        </div>
+    
+                        <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-space-x-3 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
+                            <div @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                                <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
+                                    <g clip-path="url(#clip0_65_739)">
+                                        <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
+                                        <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
+                                        <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_65_739">
+                                            <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                <p class="aso-text-[10px] aso-font-semibold">Clone</p>
                             </div>
-                            <div>
-                                <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
+    
+                            <div @click="deleteObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                                <p class="aso-text-[10px] aso-font-semibold">Delete</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-space-x-3 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md">
-                        <div @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                            <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
-                                <g clip-path="url(#clip0_65_739)">
-                                    <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
-                                    <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
-                                    <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_65_739">
-                                        <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <p class="aso-text-[10px] aso-font-semibold">Clone</p>
-                        </div>
-
-                        <div @click="deleteObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
-                            <p class="aso-text-[10px] aso-font-semibold">Delete</p>
-                        </div>
-
-                        <div @click="centerVertically()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                                <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
-                            </svg>
-                            <p class="aso-text-[10px] aso-font-semibold">CenterV</p>
-                        </div>
-
-                        <div @click="centerHorizontally()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                                <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
-                            </svg>
-                            <p class="aso-text-[10px] aso-font-semibold">CenterH</p>
+    
+                            <div @click="centerVertically()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                    <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
+                                </svg>
+                                <p class="aso-text-[10px] aso-font-semibold">CenterV</p>
+                            </div>
+    
+                            <div @click="centerHorizontally()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                    <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
+                                </svg>
+                                <p class="aso-text-[10px] aso-font-semibold">CenterH</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div id="aso-optionsButtons-container" class="aso-w-full aso-relative lg:aso-w-[55%] aso-h-[8%] lg:aso-h-[15%] aso-flex aso-full-center aso-bg-[#016565] lg:aso-bg-transparent">
-                    <div class="aso-absolute aso-left-0 lg:aso-translate-x-[-80%] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] lg:aso-shadow-none lg:aso-h-fit lg:aso-w-fit lg:aso-mr-2 aso-flex aso-full-center">
+                    <div v-if="isLoaded" class="aso-w-full aso-h-[80%] aso-flex aso-full-center aso-space-x-4">
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                        <div class="ncpc-w-[20%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full"></div>
+                    </div>
+                    
+                    <div v-show="!isLoaded" class="aso-absolute aso-left-0 lg:aso-translate-x-[-80%] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] lg:aso-shadow-none lg:aso-h-fit lg:aso-w-fit lg:aso-mr-2 aso-flex aso-full-center">
                         <div class="aso-flex lg:aso-h-fit lg:aso-w-fit aso-p-2 aso-bg-[#016464] lg:aso-bg-[#80acac] hover:aso-bg-[#016464] aso-text-black hover:aso-text-white aso-rounded-lg aso-base-animation">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-7 aso-h-7">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -119,7 +145,7 @@
                         </div>
                     </div>  
 
-                    <div class="aso-w-full aso-h-full aso-flex aso-full-center aso-overflow-auto no-scrollbar aso-mx-8 lg:aso-mx-0 lg:px-4">
+                    <div v-show="!isLoaded" class="aso-w-full aso-h-full aso-flex aso-full-center aso-overflow-auto no-scrollbar aso-mx-8 lg:aso-mx-0 lg:px-4">
                         <div @click="showOptions('product')" class="aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-transparent lg:aso-bg-white hover:aso-bg-[#016565] hover:aso-text-white aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation">
                             <svg class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <g id="fluent-mdl2:product-release">
@@ -222,7 +248,7 @@
                         </div>
                     </div>
 
-                    <div class="aso-absolute aso-right-0 lg:aso-translate-x-[90%] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] lg:aso-shadow-none lg:aso-h-fit lg:aso-w-fit lg:aso-mr-2 aso-flex aso-full-center aso-rounded-lg">
+                    <div v-show="!isLoaded" class="aso-absolute aso-right-0 lg:aso-translate-x-[90%] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] lg:aso-shadow-none lg:aso-h-fit lg:aso-w-fit lg:aso-mr-2 aso-flex aso-full-center aso-rounded-lg">
                         <div class="aso-flex lg:aso-h-fit lg:aso-w-fit aso-p-2 aso-bg-[#016464] lg:aso-bg-[#80acac] hover:aso-bg-[#016464] aso-text-black hover:aso-text-white aso-rounded-lg aso-base-animation">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-7 aso-h-7">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
@@ -276,7 +302,7 @@
                         <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
                             <div class="aso-space-y-2">
                                 <p class="aso-font-medium">Suggestions</p>
-                                <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-text-zinc-800 aso-px-2 aso-border-2 aso-border-zinc-800 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
+                                <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-text-zinc-800 aso-px-2 aso-border-solid aso-border-2 aso-border-zinc-800 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
                                     <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
                                         <p :class="`lg:aso-text-sm aso-font-semibold`" >{{ currentSize.width }} x {{ currentSize.height }} cm</p>
                                     </div>
@@ -290,7 +316,7 @@
                                     <div v-for="(size, index) in sizes" :key="size.name" class="aso-w-full aso-flex">
                                         <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size.width, size.height, size.name)">
                                         <label :for="size.width + index" :class="`${currentSizeName == size.name ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                                aso-w-full aso-h-full aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                                aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
                                             {{size.width}} x {{size.height}} cm
                                         </label>
@@ -300,18 +326,18 @@
                             
                             <div class="aso-space-y-2">
                                 <p class="aso-text-base aso-font-semibold">Custom</p>
-                                <div class="aso-flex aso-space-x-2">
+                                <div class="aso-flex aso-justify-between aso-items-center">
                                     <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
                                         <!-- <label class="aso-text-xs" for="sizeWidth">{{ customWidth }}</label> -->
                                         <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeWidth" max="" v-model="customWidth">
                                     </div>
-                                    <p>x</p>
+                                    <p class="aso-px-2">x</p>
                                     <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
                                         <!-- <label class="aso-text-xs" for="sizeHeight">{{ customHeight }}</label> -->
                                         <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" max="" v-model="customHeight">
                                     </div>
                                 </div>
-                                <button @click="changeSize(customWidth, customHeight)" class="aso-w-full aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</button>
+                                <span @click="changeSize(customWidth, customHeight)" class="aso-w-full aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</span>
                             </div>
 
                             <div class="aso-space-y-2">
@@ -319,7 +345,7 @@
                                 <div class="aso-flex aso-space-x-2">
                                     <div class="aso-w-full aso-flex aso-flex-col aso-space-y-2">
                                         <!-- <label class="aso-text-xs" for="sizeWidth">{{ customWidth }}</label> -->
-                                        <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="thickness" max="" >
+                                        <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="aso-thickness" max="" >
                                     </div>
                                 </div>
                             </div>
@@ -378,9 +404,9 @@
                             <p class="aso-font-medium" >List of colors</p>
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                 <div v-for="(color, index) in colors" >
-                                    <div @click="changeSignColor(color)" :class="`${activeColor == color.name ? `aso-border-4 aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${color.code}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-black aso-rounded-full aso-cursor-pointer`"> T </div>
+                                    <div @click="changeSignColor(color)" :class="`${activeSignColor == color.name ? `aso-border-4 aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${color.code}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-black aso-rounded-full aso-cursor-pointer`"> T </div>
                                 </div>
-                                <label for="setColor" :class="`${activeColor == 'custom' ? `aso-border-4 aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${simpleColor}] aso-flex aso-full-center aso-rounded-full`">
+                                <label for="setColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${simpleColor}] aso-flex aso-full-center aso-rounded-full`">
                                     <input id="setColor" type="color" v-model="simpleColor" class="aso-invisible" @change="changeSignColor({name: 'custom', code: simpleColor})"/>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" :fill="simpleColor" class="aso-w-11 aso-h-11">
                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
@@ -583,7 +609,7 @@
 
                         <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div class="aso-w-full aso-bg-zinc-200 aso-flex aso-flex-col aso-space-y-3 aso-full-center aso-p-4">
-                                <span class="aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[#016464] aso-text-white aso-text-md aso-p-2 aso-px-4 aso-rounded-full">
+                                <span @click="() =>{editImage = false}" class="aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[#016464] aso-text-white aso-text-md aso-p-2 aso-px-4 aso-rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                                     </svg>
@@ -673,14 +699,31 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="aso-w-full aso-flex lg:aso-hidden aso-h-[6%] aso-bg-red-400">
+                    <div class="aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-zinc-200">Cancel</div>
+                    <div class="aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797]">Terminer</div>
+                </div>
             </div>
         </div>
 
         <div class="aso-absolute aso-top-[50%] lg:aso-top-0 aso-translate-y-[-70%] lg:aso-translate-y-0 aso-right-4 lg:aso-right-0 lg:aso-relative aso-w-[8%] aso-h-fit lg:aso-h-full aso-p-2 lg:aso-p-0 aso-flex aso-flex-col aso-rounded-lg lg:aso-rounded-none aso-shadow-lg aso-bg-white">
-            <button class="aso-hidden lg:aso-flex aso-full-center aso-w-full aso-h-[10%] aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">Terminer</button>
+            <div v-if="isLoaded" class="aso-w-full aso-h-full aso-flex aso-flex-col">
+                <div class="aso-w-full aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[10%] aso-animate-pulse"></div>
 
-            <div class="lg:aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-4">
+                <div class="aso-h-[90%] aso-flex aso-full-center aso-flex-col aso-space-y-4 aso-animate-pulse">
+                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
+                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
+                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
+                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
+                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
+                </div>
+            </div>
 
+
+            <button v-show="!isLoaded" class="aso-hidden lg:aso-flex aso-full-center aso-w-full aso-h-[10%] aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">Terminer</button>
+
+            <div v-show="!isLoaded" class="lg:aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-4">
                 <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
                     <span class="aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-white aso-text-black hover:aso-bg-[#016464] hover:aso-text-white aso-base-animation">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
@@ -731,52 +774,6 @@
             </div>       
         </div>
 
-        <!-- <div class="w-full bg-purple-300 p-2 h-[20%] flex flex-col space-y-4 overflow-scroll">
-            <div class="flex space-x-4">
-                <div v-for="color in colors" class="flex w-fit space-x-4">
-                    <button @click="changeColor(color)" class="border border-black rounded-lg text-black p-1 px-3 text-[14px]">{{color.name}}</button>
-                </div>
-            </div>
-
-        </div> -->
-
-        <!-- <div class="absolute right-0 top-0 bg-slate-500 p-2 border flex flex-col space-y-4">
-            <input type="number" name="" id="" v-model="selectedText.size" @input="changeTextSize">
-            <div class="flex space-x-6">
-                <div>
-                    <div v-for="color in colors">
-                        <button @click="changeTextColor(color.code)">{{ color.name }}</button>
-                    </div>
-                </div>
-                <div class="space-y-2">
-                    <div>width: {{ (selectedText.width) }} - height: {{ (selectedText.height) }}</div>
-                    <div>left: {{ (selectedText.left) }} - right: {{ (selectedText.right) }}</div>
-                    <div>top: {{ (selectedText.top) }} - bottom: {{ (selectedText.bottom) }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="absolute right-0 top-[50%] bg-slate-500 p-2 border flex flex-col space-y-4">
-            <div class="space-y-2">
-                <div>width: {{ (selectedImage.width) }} - height: {{ (selectedImage.height) }}</div>
-                <div>left: {{ (selectedImage.left) }} - right: {{ (selectedImage.right) }}</div>
-                <div>top: {{ (selectedImage.top) }} - bottom: {{ (selectedImage.bottom) }}</div>
-                <div>Angle: {{ (selectedImage.angle) }}</div>
-            </div>
-            <div class="flex space-x-4">
-                <button @click="turnLeftImage()" class="p-0.5 border rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                    </svg>
-                </button>
-                <button @click="turnRightImage()" class="p-0.5 border rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
-                    </svg>
-                </button>
-            </div>
-            <button @click="undo">undo</button>
-            <button @click="redo">redo</button>
-        </div> -->
     </div>
 </template>
 
@@ -816,6 +813,13 @@
         handleChangeImageSize,
     } from '@/frontend/utils/aso-editor-script.js'
 
+    var isLoaded = ref(true)
+    function setIsLoadedToFalse() {
+        setTimeout(() => {
+            isLoaded.value = false;
+        }, 1000);
+    };
+
     var div = document.getElementById('canvas-container')
 
 
@@ -829,13 +833,15 @@
     const handleDocumentClick = (e) => {
         var optionss = document.querySelector('#aso-options-container')
         var optionButton = document.querySelector('#aso-optionsButtons-container')
-        if(!optionss.contains(e.target) && !optionButton.contains(e.target)) {
-            closeOption()
+        if(window.innerWidth > 688){
+            if(!optionss.contains(e.target) && !optionButton.contains(e.target)) {
+                closeOption()
+            }
         }
     }
 
     var selectText = ref(false);
-    var editImage = ref(true);
+    var editImage = ref(false);
 
     function showOptions(option){
         showOption.value = true;
@@ -1041,6 +1047,11 @@
             // updateBarreSize()
         });
 
+        if(window.innerWidth < 688){
+            showOption.value = true
+        }
+
+        setIsLoadedToFalse()
 
         return {
             canvas
@@ -1050,11 +1061,24 @@
 
 
     function undo() {
-        handleUndo()
+        var options = handleUndo()
+        currentSizeName.value = options.sizeName
+        selectedShape.value = options.shape
+        activeBorder.value = options.border
+        activeFixingMethode.value = options.fixing
+        activeSignColor.value = options.signColor
+        console.log(options)
+        
     }
 
     function redo() {
-        handleRedo()
+        var options = handleRedo()
+        currentSizeName.value = options.sizeName
+        selectedShape.value = options.shape
+        activeBorder.value = options.border
+        activeFixingMethode.value = options.fixing
+        activeSignColor.value = options.signColor
+        console.log(options)
     }
 
     function clearAll() {
@@ -1108,6 +1132,7 @@
     function updateInfoDiv() {
         var infoDiv = document.getElementById('aso-editButtons');
         
+        var sign = handleGetObjectByName("safeObject")
         
         var canvasRect = canvas.getElement().getBoundingClientRect();
         var object = canvas.getActiveObject();
@@ -1116,8 +1141,10 @@
         if(object != null){
             infoDiv.classList.remove("aso-invisible");
             // Calculez la position de la div en fonction de l'objet du canvas
-            var divLeft = canvasRect.left + objectRect.left + objectRect.width / 2;
-            var divTop = canvasRect.top + objectRect.top + objectRect.height / 2;
+            var divLeft = sign.left ;
+            // var divLeft = canvasRect.left + (objectRect.left-((object.width*object.scaleX)/2)) ;
+            var divTop = sign.top;
+            // var divTop = canvasRect.top + (objectRect.top - ((object.height*object.scaleY)/2)) ;
     
             // Mettez à jour la position de la div
             infoDiv.style.left = divLeft + 'px';
@@ -1368,11 +1395,11 @@
         // console.log(activeBorder.value)
     }
 
-    var activeColor = ref('')
+    var activeSignColor = ref('')
     function changeSignColor(color) {
-        activeColor.value = color.name
+        activeSignColor.value = color.name
         handleChangeSignColor(color)
-        console.log(activeColor.value)
+        console.log(activeSignColor.value)
     }
 
     var activeFixingMethode = ref('')

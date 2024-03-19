@@ -27,23 +27,33 @@ let currentStateIndex = 0;
 function updateModifications(savehistory, position) {
     // console.log(position)
     if (savehistory === true) {
-        let objects = handleCheckObjects()
-        // console.log(objects, "object saved")
-
-        // Sérialiser chaque objet en détail
-        let serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
-
-        // Récupérer l'état JSON du canvas 
-        let jsonData = canvas.toJSON();
-
-        // Combiner le JSON avec les objets sérialisés
-        let canvasState = {
-            jsonData: jsonData,
-            objects: serializedObjects
-        };
-
-        state.push(canvasState);
-        currentStateIndex = state.length - 1;
+        if(state.length <= 6){
+            let objects = handleCheckObjects()
+            // console.log(objects, "object saved")
+    
+            // Sérialiser chaque objet en détail
+            let serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
+    
+            // Récupérer l'état JSON du canvas 
+            let jsonData = canvas.toJSON();
+    
+            // Combiner le JSON avec les objets sérialisés
+            let canvasState = {
+                jsonData: jsonData,
+                objects: serializedObjects,
+                options: {
+                    size: 0,
+                    sizeName: currentSizeName,
+                    shape: selectedShape,
+                    border: activeBorder,
+                    signColor: currentSignColor,
+                    fixing: activeFixingMethode
+                },
+            };
+    
+            state.push(canvasState);
+            currentStateIndex = state.length - 1;
+        }
     }
     // console.log(state, "state")
 }
@@ -52,6 +62,7 @@ function handleUndo() {
   if (mods < state.length && currentStateIndex > 0) {
     const canvasState = state[state.length - 1 - mods - 1];
     const currentObjects = canvas.getObjects();
+    const activeOptions = canvasState.options
 
     canvas.discardActiveObject();
     // Supprimer les objets qui n'existent pas dans l'état précédent
@@ -71,9 +82,51 @@ function handleUndo() {
 
           fabric.util.enlivenObjects([prevObj], objects => {
             const newObj = objects[0];
+            if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
+                newObj.on('editing:entered', () => {
+                    handleGetAddedTextValues(newObj);  
+                });
+                newObj.on('editing:exited', () => {
+                    handleGetAddedTextValues(newObj);              
+                });
+                newObj.on('selected', () => {   
+                    handleGetAddedTextValues(newObj);         
+                    console.log("newTextdqdqdqsdqd");
+        
+                });
+                newObj.on('mousedown', function() {
+                    handleGetAddedTextValues(newObj); 
+                    updateModifications(true, 'deposer le text')
+                });
+                newObj.on('mouseup', function() {
+                    handleGetAddedTextValues(newObj); 
+                    updateModifications(true, 'deposer le text')
+                });
+            }
+            if(newObj.type === 'image' && newObj.id != 6 ){
+                newObj.on('mousedown', function() {
+                    handleGetAddedImageValues(newObj); 
+                    updateModifications(true, "deposer l'image ")
+                });
+                newObj.on('mouseup', function() {
+                    handleGetAddedImageValues(newObj); 
+                    updateModifications(true, "deposer l'image ")
+                });
+                newObj.on('selected', function() {
+                    handleGetAddedImageValues(newObj); 
+                    updateModifications(true, "deposer l'image ")
+                });
+            }
             canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
             canvas.remove(currentObj);
           });
+
+          currentSizeName = activeOptions.sizeName;
+          selectedShape = activeOptions.shape
+          activeBorder = activeOptions.border
+          currentSignColor = activeOptions.signColor
+          activeFixingMethode = activeOptions.fixing
+
         }
       });
     }
@@ -84,12 +137,21 @@ function handleUndo() {
     currentStateIndex -= 1;
 
     console.log('cuurent state', currentStateIndex)
+    return {
+        sizeName: currentSizeName,
+        shape: selectedShape,
+        signBorder: activeBorder,
+        signColor: currentSignColor,
+        fixing: activeFixingMethode,
+    }
   }
 }
 function handleRedo() {
     if (mods > 0) {
         const canvasState = state[state.length - mods];
         const currentObjects = canvas.getObjects();
+        const activeOptions = canvasState.options
+
 
         canvas.discardActiveObject();
         // Supprimer les objets qui n'existent pas dans l'état suivant
@@ -119,6 +181,41 @@ function handleRedo() {
     
               fabric.util.enlivenObjects([nextObj], objects => {
                 const newObj = objects[0];
+                if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
+                    newObj.on('editing:entered', () => {
+                        handleGetAddedTextValues(newObj);  
+                    });
+                    newObj.on('editing:exited', () => {
+                        handleGetAddedTextValues(newObj);              
+                    });
+                    newObj.on('selected', () => {   
+                        handleGetAddedTextValues(newObj);         
+                        console.log("newTextdqdqdqsdqd");
+            
+                    });
+                    newObj.on('mousedown', function() {
+                        handleGetAddedTextValues(newObj); 
+                        updateModifications(true, 'deposer le text')
+                    });
+                    newObj.on('mouseup', function() {
+                        handleGetAddedTextValues(newObj); 
+                        updateModifications(true, 'deposer le text')
+                    });
+                }
+                if(newObj.type === 'image' && newObj.id != 6 ){
+                    newObj.on('mousedown', function() {
+                        handleGetAddedImageValues(newObj); 
+                        updateModifications(true, "deposer l'image ")
+                    });
+                    newObj.on('mouseup', function() {
+                        handleGetAddedImageValues(newObj); 
+                        updateModifications(true, "deposer l'image ")
+                    });
+                    newObj.on('selected', function() {
+                        handleGetAddedImageValues(newObj); 
+                        updateModifications(true, "deposer l'image ")
+                    });
+                }
                 // canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
                 canvas.remove(currentObj);
                 canvas.add(newObj);
@@ -130,9 +227,48 @@ function handleRedo() {
         
                 fabric.util.enlivenObjects([nextObj], objects => {
                     const newObj = objects[0];
+                    if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
+                        newObj.on('editing:entered', () => {
+                            handleGetAddedTextValues(newObj);  
+                        });
+                        newObj.on('editing:exited', () => {
+                            handleGetAddedTextValues(newObj);              
+                        });
+                        newObj.on('selected', () => {   
+                            handleGetAddedTextValues(newObj);         
+                
+                        });
+                        newObj.on('mousedown', function() {
+                            handleGetAddedTextValues(newObj); 
+                            updateModifications(true, 'deposer le text')
+                        });
+                        newObj.on('mouseup', function() {
+                            handleGetAddedTextValues(newObj); 
+                            updateModifications(true, 'deposer le text')
+                        });
+                    }
+                    if(newObj.type === 'image' && newObj.id != 6 ){
+                        newObj.on('mousedown', function() {
+                            handleGetAddedImageValues(newObj); 
+                            updateModifications(true, "deposer l'image ")
+                        });
+                        newObj.on('mouseup', function() {
+                            handleGetAddedImageValues(newObj); 
+                            updateModifications(true, "deposer l'image ")
+                        });
+                        newObj.on('selected', function() {
+                            handleGetAddedImageValues(newObj); 
+                            updateModifications(true, "deposer l'image ")
+                        });
+                    }
                     canvas.add(newObj);
                 });
             }
+            currentSizeName = activeOptions.sizeName;
+            selectedShape = activeOptions.shape
+            activeBorder = activeOptions.border
+            currentSignColor = activeOptions.signColor
+            activeFixingMethode = activeOptions.fixing
           });
   
       canvas.renderAll();
@@ -140,6 +276,13 @@ function handleRedo() {
       currentStateIndex += 1;
 
     console.log('cuurent state', currentStateIndex)
+    }
+    return {
+        sizeName: currentSizeName,
+        shape: selectedShape,
+        signBorder: activeBorder,
+        signColor: currentSignColor,
+        fixing: activeFixingMethode,
     }
 }
 function handleClearAll() {
@@ -341,6 +484,7 @@ var preHeight = 0
 var firstWidth = 0
 var firstHeight = 0
 
+
 function handleChangeSize(width, height, name) {
     // console.log(scale, 'name')
     currentSizeName = name;
@@ -519,6 +663,7 @@ function handleDeleteObject(object) {
         }
         return addedImages
     }
+    updateModifications(true, 'delete')
 }
 function handleCloneObject(object) {
     var target = object;
@@ -827,12 +972,13 @@ function handleSelectBorder(border) {
                                 var scaleX = object.width / img.width;
                                 var scaleY = object.height / img.height;
                                 var imageOverlay = new fabric.Image(img, {
-                                left: object.left,
-                                top: object.top,
-                                scaleX: scaleX,
-                                scaleY: scaleY,
-                                name: 'old-world-border',
-                                selectable: false,
+                                    left: object.left,
+                                    top: object.top,
+                                    scaleX: scaleX,
+                                    scaleY: scaleY,
+                                    name: 'old-world-border',
+                                    id: 6,
+                                    selectable: false,
                                 });
                             
                                 canvas.add(imageOverlay);
@@ -845,13 +991,13 @@ function handleSelectBorder(border) {
                                 var scaleX = object.width / img.width;
                                 var scaleY = object.height / img.height;
                                 var imageOverlay = new fabric.Image(img, {
-                                left: object.left,
-                                top: object.top,
-                                scaleX: scaleX,
-                                scaleY: scaleY,
-                                name: 'old-world-border',
-                                id: 6,
-                                selectable: false,
+                                    left: object.left,
+                                    top: object.top,
+                                    scaleX: scaleX,
+                                    scaleY: scaleY,
+                                    name: 'old-world-border',
+                                    id: 6,
+                                    selectable: false,
                                 });
                             
                                 canvas.add(imageOverlay);
@@ -876,7 +1022,9 @@ function handleSelectBorder(border) {
     return border
 }
 
+var currentSignColor = ''
 function handleChangeSignColor(color) {
+    currentSignColor = color;
     var Objects = canvas.getObjects();
     Objects.forEach(function(object){
         if (object.type !== 'line') {
@@ -2461,7 +2609,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../fixing-methodes/flag.png', function(img) {
+                            fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
                                 img.scale(fixScale)
     
                                 img.setCoords();
@@ -2477,7 +2625,7 @@ function handleSelectFixingMethode(methode){
                                 canvas.add(img)
                             });
     
-                            fabric.Image.fromURL('../../fixing-methodes/flag.png', function(img) {
+                            fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
                                 img.scale(fixScale)
     
                                 img.setCoords();
