@@ -1441,9 +1441,9 @@
     function addTextToSign(){
         addedTexts.value =  handleAddTextToSign()
         if(addedTexts.value.length > 0){
-            getTextObject(addedTexts.value[0])
+            var index = addedTexts.value.length - 1
+            getTextObject(addedTexts.value[index])
         }
-        // console.log(addedTexts.value)
     }
     function getTextObject(object) {
         selectText.value = true

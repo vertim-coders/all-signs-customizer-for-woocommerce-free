@@ -1,12 +1,14 @@
 <template>
   <div class="hello">
-    <Configurator/>
+    <!-- <Default/> -->
+    <Couffo/>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import Configurator from "./configurateur/index.vue"
+import Default from "./configurateur/Default/index.vue"
+import Couffo from "./configurateur/Couffo/index.vue"
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

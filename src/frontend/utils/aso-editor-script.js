@@ -642,6 +642,13 @@ function lockToCanvas(activeObj) {
         }
     });
 }
+function removeTextById(id, table) {
+    const index = table.findIndex(item => item.id === id);
+    if (index !== -1) {
+      table.splice(index, 1);
+      console.log(`Objet avec l'id ${id} supprimé avec succès.`);
+    }
+}
 function handleDeleteObject(object) {
     var target = object;
     var canvas = target.canvas;
@@ -650,17 +657,13 @@ function handleDeleteObject(object) {
     canvas.requestRenderAll();
 
     if(target.type == 'i-text'){
-        var index = addedTexts.indexOf(target);
-        if (index !== -1) {
-            addedTexts.splice(index, 1);
-        }
+        removeTextById(target.id, addedTexts)
+        // console.log('deleted', addedTexts)
         return addedTexts
     }
     if(target.type == 'image'){
-        var index = addedImages.indexOf(target);
-        if (index !== -1) {
-            addedImages.splice(index, 1);
-        }
+        removeTextById(target.id, addedImages)
+
         return addedImages
     }
     updateModifications(true, 'delete')
@@ -3523,8 +3526,8 @@ function handleAddTextToSign(clone){
 
 
         addedTexts.push(newText);
-        // canvas.setActiveObject(newText);
-        // lockToCanvas(newText)
+        canvas.setActiveObject(newText);
+        lockToCanvas(newText)
 
 
     }
@@ -3748,7 +3751,7 @@ function handleAddImageToSign(image){
             handleCenterHorizontally(img)
             handleCenterVertically(img)
 
-            addedImages.push({url: imgUrl, object: img})
+            addedImages.push({id: img.id, url: imgUrl, object: img})
 
 
             updateModifications(true, "==ajout d'image ==")
