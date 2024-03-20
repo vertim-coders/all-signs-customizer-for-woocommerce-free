@@ -646,7 +646,6 @@ function removeTextById(id, table) {
     const index = table.findIndex(item => item.id === id);
     if (index !== -1) {
       table.splice(index, 1);
-      console.log(`Objet avec l'id ${id} supprimé avec succès.`);
     }
 }
 function handleDeleteObject(object) {
@@ -678,6 +677,7 @@ function handleCloneObject(object) {
             handleAddTextToSign(cloned)
         }
         if(cloned.type == 'image'){
+            cloned.id = newId += 1
             cloned.on('mousedown', function() {
                 handleGetAddedImageValues(cloned); 
             });
@@ -3069,6 +3069,9 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
     var textBottom = document.getElementById('text-bottom')
     var textAngle = document.getElementById('text-angle')
 
+    var imageWidth = document.getElementById('image-width')
+    var imageHeight = document.getElementById('image-height')
+
 
     var activeObject = canvas.getActiveObject()
 
@@ -3121,6 +3124,11 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textTop.textContent = parseInt(convertFromPx(top, 'cm'))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
+
+            if(canvas.getActiveObject().type == 'image'){
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+            }
         }
         if(container.width == 1000){
             var radio = firstWidth / 1000
@@ -3167,6 +3175,11 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textTop.textContent = parseInt(convertFromPx(top, 'cm'))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
+
+            if(canvas.getActiveObject().type == 'image'){
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+            }
         }
     }
 
@@ -3186,21 +3199,6 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             
             var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
             
-            // if(activeObject.type === 'i-text'){
-            //     selectedText.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedText.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedText.left = parseInt(convertFromPx(left, 'cm'))
-            //     selectedText.right = right
-            //     selectedText.top = convertFromPx(top, 'cm')
-            //     selectedText.bottom = bottom
-            // }if(activeObject.type == 'image'){
-            //     selectedImage.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedImage.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedImage.left = parseInt(convertFromPx(left, 'cm'))
-            //     selectedImage.right = right
-            //     selectedImage.top = convertFromPx(top, 'cm')
-            //     selectedImage.bottom = bottom
-            // }
 
             textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
             textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
@@ -3209,6 +3207,11 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textTop.textContent = parseInt(convertFromPx(top, 'cm'))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
+
+            if(canvas.getActiveObject().type == 'image'){
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+            }
         }
         if(container.width == 1000){
             var radio = preWidth / 1000
@@ -3224,22 +3227,6 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             var top = objTop * radio
             
             var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
-            
-            // if(activeObject.type === 'i-text'){
-            //     selectedText.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedText.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedText.left = parseInt(convertFromPx(left, 'cm'))
-            //     selectedText.right = right
-            //     selectedText.top = convertFromPx(top, 'cm')
-            //     selectedText.bottom = bottom
-            // }if(activeObject.type == 'image'){
-            //     selectedImage.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedImage.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedImage.left = parseInt(convertFromPx(left, 'cm'))
-            //     selectedImage.right = right
-            //     selectedImage.top = convertFromPx(top, 'cm')
-            //     selectedImage.bottom = bottom
-            // }
 
             textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
             textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
@@ -3248,6 +3235,11 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textTop.textContent = parseInt(convertFromPx(top, 'cm'))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
+
+            if(canvas.getActiveObject().type == 'image'){
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+            }
         }
 
 
@@ -3806,6 +3798,16 @@ function handleTurnRightImage(){
         handleGetAddedImageValues(currentImage)
     }
 }
+function handleFlipImage(){
+    var currentImage = canvas.getActiveObject();
+    if(currentImage.flipX == false){
+        currentImage.set('flipX', true)
+    }else if(currentImage.flipX == true){
+        currentImage.set('flipX', false)
+    }
+    canvas.requestRenderAll()
+    handleGetAddedImageValues(currentImage)
+}
 
 
 export {
@@ -3841,4 +3843,5 @@ export {
     handleTurnImageLeft,
     handleTurnRightImage,
     handleChangeImageSize,
+    handleFlipImage,
 }

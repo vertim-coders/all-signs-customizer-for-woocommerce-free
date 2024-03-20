@@ -1,8 +1,8 @@
 <template>
-    <div id="aso-frontend-app" class="aso-relative aso-flex aso-flex-row-reverse aso-w-full aso-h-[100vh]">
+    <div id="aso-frontend-app" class="aso-relative aso-flex aso-flex-col lg:aso-flex-row-reverse aso-w-full aso-h-[100vh]">
 
-        <div class="aso-w-full lg:aso-w-[92%] aso-h-full aso-flex aso-flex-col">
-            <div class="aso-w-full aso-h-[7%] lg:aso-h-[10%] aso-bg-gradient-to-r aso-from-[#016464] aso-to-[#038888] aso-flex aso-items-center aso-justify-between">
+        <div class="aso-w-full lg:aso-w-[92%] aso-h-[54%] lg:aso-h-full aso-flex aso-flex-col">
+            <div class="aso-w-full aso-h-[9%] lg:aso-h-[10%] aso-bg-gradient-to-r aso-from-[#016464] aso-to-[#038888] aso-flex aso-items-center aso-justify-between">
                 <div v-if="isLoaded" class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-between aso-px-2">
                     <div class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[65%] aso-animate-pulse"></div>
                     <div class="aso-w-1/3 aso-h-[65%] aso-flex aso-space-x-4">
@@ -55,15 +55,44 @@
                     </div>
                 </div>
     
-                <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-items-center">
-                    <div class="aso-flex lg:aso-hidden aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
-                        $ 495,09
+                <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-full-center">
+                    <div class="aso-bg-[#039b9b] aso-hidden lg:aso-flex aso-full-center aso-space-x-4 aso-text-white aso-p-2 aso-px-4 aso-rounded-lg">
+                        <span class="aso-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        </span>
+                        <span class="aso-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                            </svg>
+                        </span>
+                        <span class="aso-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                            </svg>
+                        </span>
+                        <span class="aso-flex">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
+                                <path d="M7.25012 7.6C7.25012 8.566 8.03412 9.35 9.00012 9.35H15.0001C15.4642 9.35 15.9094 9.16563 16.2376 8.83744C16.5657 8.50925 16.7501 8.06413 16.7501 7.6V4.276C16.7501 4.124 16.8741 4 17.0261 4C17.0983 3.99987 17.1696 4.01536 17.2352 4.04539C17.3008 4.07543 17.3591 4.1193 17.4061 4.174L20.3691 7.629C20.7795 8.10775 20.9938 8.72391 20.9691 9.354L20.6271 18.098C20.6018 18.7434 20.3277 19.3539 19.8622 19.8017C19.3967 20.2495 18.776 20.4997 18.1301 20.5H17.7511C17.6185 20.5 17.4913 20.4473 17.3976 20.3536C17.3038 20.2598 17.2511 20.1326 17.2511 20V15C17.2511 14.5359 17.0667 14.0908 16.7386 13.7626C16.4104 13.4344 15.9653 13.25 15.5011 13.25H8.50112C8.27122 13.2499 8.04355 13.295 7.83112 13.3829C7.61868 13.4708 7.42565 13.5997 7.26304 13.7622C7.10043 13.9247 6.97144 14.1177 6.88343 14.3301C6.79542 14.5425 6.75012 14.7701 6.75012 15V20C6.75012 20.1326 6.69744 20.2598 6.60367 20.3536C6.50991 20.4473 6.38273 20.5 6.25012 20.5H6.11312C5.53116 20.5001 4.96913 20.288 4.53231 19.9034C4.09549 19.5189 3.81384 18.9883 3.74012 18.411C3.24634 14.553 3.22518 10.6491 3.67712 6.786L3.73712 6.266C3.81017 5.64178 4.10993 5.06613 4.57948 4.64839C5.04902 4.23065 5.65564 3.99991 6.28412 4H6.75012C6.88273 4 7.00991 4.05268 7.10367 4.14645C7.19744 4.24022 7.25012 4.36739 7.25012 4.5V7.6Z" fill="currentColor"/>
+                                <path d="M8.25 20C8.25 20.1326 8.30268 20.2598 8.39645 20.3536C8.49021 20.4473 8.61739 20.5 8.75 20.5H15.25C15.3826 20.5 15.5098 20.4473 15.6036 20.3536C15.6973 20.2598 15.75 20.1326 15.75 20V15C15.75 14.9337 15.7237 14.8701 15.6768 14.8232C15.6299 14.7763 15.5663 14.75 15.5 14.75H8.5C8.4337 14.75 8.37011 14.7763 8.32322 14.8232C8.27634 14.8701 8.25 14.9337 8.25 15V20ZM15.25 4.5C15.25 4.36739 15.1973 4.24021 15.1036 4.14645C15.0098 4.05268 14.8826 4 14.75 4H9.25C9.11739 4 8.99021 4.05268 8.89645 4.14645C8.80268 4.24021 8.75 4.36739 8.75 4.5V7.6C8.75 7.738 8.862 7.85 9 7.85H15C15.0663 7.85 15.1299 7.82366 15.1768 7.77678C15.2237 7.72989 15.25 7.6663 15.25 7.6V4.5Z" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <span class="aso-flex">
+                            <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
+                                <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
+                                <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
+                            </svg>
+                        </span>
                     </div>
+                    
+                    <div class="aso-flex lg:aso-hidden aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center"> $ 495,09 </div>
                 </div>
             </div>
     
-            <div class="aso-relative aso-w-full aso-h-[93%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center aso-bg-[#f5f5f5]">
-                <div id="aso-canvas-containers" class="aso-relative aso-w-full aso-h-[54%] lg:aso-h-[82%] aso-border-4 aso-border-black">
+            <div class="aso-relative aso-w-full aso-h-[91%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center aso-bg-[#f5f5f5]">
+                <div id="aso-canvas-containers" class="aso-relative aso-w-full aso-h-full lg:aso-h-[82%] aso-border-4 aso-border-black">
                     <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
 
                     <canvas  ref="canvasRef" id="canvaas" class="aso-relative aso-w-full aso-h-full"></canvas>
@@ -165,14 +194,14 @@
             </div>
         </div>
 
-        <div id="aso-optionsButtons-container" class="aso-relative aso-w-[8%] aso-h-full aso-p-0 aso-flex aso-flex-col aso-shadow-lg aso-bg-black">
+        <div id="aso-optionsButtons-container" class="aso-relative aso-w-full aso-h-[8%] lg:aso-w-[8%] lg:aso-h-full aso-p-0 aso-flex aso-flex-col aso-shadow-lg aso-bg-black">
             <div v-if="isLoaded" class="aso-w-full aso-h-full aso-flex aso-flex-col">
-                <div class="aso-h-[90%] aso-flex aso-full-center aso-flex-col aso-space-y-4 aso-animate-pulse">
-                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
-                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
-                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
-                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
-                    <div class="aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[11%]"></div>
+                <div class="aso-h-[90%] aso-flex aso-full-center aso-flex-row aso-space-x-4 lg:aso-space-x-0 lg:aso-flex-col lg:aso-space-y-4 aso-animate-pulse">
+                    <div class="aso-w-[50px] lg:aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[90%] lg:aso-h-[11%]"></div>
+                    <div class="aso-w-[50px] lg:aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[90%] lg:aso-h-[11%]"></div>
+                    <div class="aso-w-[50px] lg:aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[90%] lg:aso-h-[11%]"></div>
+                    <div class="aso-w-[50px] lg:aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[90%] lg:aso-h-[11%]"></div>
+                    <div class="aso-w-[50px] lg:aso-w-[80%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[90%] lg:aso-h-[11%]"></div>
                 </div>
             </div>
             <!-- <button v-show="!isLoaded" class="aso-hidden lg:aso-flex aso-full-center aso-w-full aso-h-[10%] aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">Terminer</button>
@@ -226,7 +255,7 @@
                 </div>
             </div>        -->
 
-            <div v-show="!isLoaded" class="aso-w-full aso-h-full aso-flex aso-flex-col aso-items-center aso-space-y-4 aso-py-4 aso-overflow-auto no-scrollbar">
+            <div v-show="!isLoaded" class="aso-w-full aso-h-full aso-flex lg:aso-flex-col aso-items-center lg:aso-space-y-4 aso-py-4 aso-overflow-auto no-scrollbar">
                 <div @click="showOptions('product')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <g id="fluent-mdl2:product-release">
@@ -330,8 +359,8 @@
             </div>
         </div>
 
-        <div>
-            <div v-show="showOption" id="aso-options-container" class="aso-relative lg:aso-absolute lg:aso-left-[8%] lg:aso-top-[10%] aso-w-full lg:aso-w-[30%] aso-h-[32%] lg:aso-h-[70%] aso-bg-white aso-rounded-md aso-shadow-xl">
+        <div class="aso-w-full aso-h-[32%] lg:aso-w-fit lg:aso-h-fit">
+            <div v-show="showOption" id="aso-options-container" class="aso-relative lg:aso-absolute lg:aso-left-[8%] lg:aso-top-[10%] aso-w-full lg:aso-w-[30%] aso-h-[85%] lg:aso-h-[70%] aso-bg-white aso-rounded-md lg:aso-shadow-xl">
                 <div class="aso-hidden lg:aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
                     <span @click="closeOption" class="aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] aso-p-1 aso-rounded-md aso-base-animation">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -344,13 +373,23 @@
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Products</p>    
 
                     <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div class="aso-flex aso-full-center aso-space-x-2">
-                            <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
-                            <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                <p class="aso-text-sm aso-text-black aso-font-medium">Screw and Tape</p>
-                                <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
-                                <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
-                            </div>
+                        <div v-for="(fixing, index) in fixings" class="aso-space-y-3">
+                            <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
+                            <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                                <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
+                                <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
+                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
+                                    <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
+                                    <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
+                                        <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
+                                        <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                            </svg>
+                                        </span>                
+                                    </div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -359,13 +398,23 @@
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Materials</p>    
 
                     <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div class="aso-flex aso-full-center aso-space-x-2">
-                            <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
-                            <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                <p class="aso-text-sm aso-text-black aso-font-medium">Screw and Tape</p>
-                                <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
-                                <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
-                            </div>
+                        <div v-for="(fixing, index) in fixings" class="aso-space-y-3">
+                            <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
+                            <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                                <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
+                                <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
+                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
+                                    <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
+                                    <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
+                                        <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
+                                        <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                            </svg>
+                                        </span>                
+                                    </div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -398,20 +447,18 @@
                             </div>
                         </div>
                         
-                        <div class="aso-space-y-2">
+                        <div class="aso-space-y-2 aso-w-full">
                             <p class="aso-text-base aso-font-semibold">Custom</p>
                             <div class="aso-flex aso-justify-between aso-items-center">
                                 <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
-                                    <!-- <label class="aso-text-xs" for="sizeWidth">{{ customWidth }}</label> -->
                                     <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeWidth" max="" v-model="customWidth">
                                 </div>
                                 <p class="aso-px-2">x</p>
                                 <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
-                                    <!-- <label class="aso-text-xs" for="sizeHeight">{{ customHeight }}</label> -->
                                     <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" max="" v-model="customHeight">
                                 </div>
                             </div>
-                            <span @click="changeSize(customWidth, customHeight)" class="aso-w-full aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</span>
+                            <span @click="changeSize(customWidth, customHeight)" class="aso-w-full aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-full-center aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</span>
                         </div>
 
                         <div class="aso-space-y-2">
@@ -612,7 +659,7 @@
                             <div class="aso-space-y-1">
                                 <p class="aso-font-medium">Other custom</p>
                                 <div class="aso-w-full aso-flex aso-items-center">
-                                    <div class="aso-flex aso-flex-wrap aso-gap-2">
+                                    <div class="aso-flex aso-flex-wrap aso-gap-3">
                                         <span @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]">
                                             <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                 <g clip-path="url(#clip0_65_739)">
@@ -714,8 +761,9 @@
                         <div v-show="editImage" class="aso-w-full aso-p-2">
                             <div>
                                 <p class="aso-font-medium">Size</p>
-                                <div class="aso-w-full aso-p-2">
+                                <div class="aso-w-full aso-p-2 aso-space-y-1">
                                     <input type="range" name="" id="" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageSize">
+                                    <p class="aso-flex aso-full-center aso-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
                                 </div>
                             </div>
                             <div>
@@ -738,18 +786,25 @@
                                 <p class="aso-font-medium">Other custom</p>
                                 <div class="aso-w-full aso-flex aso-items-center">
                                     <div class="aso-flex aso-space-x-6">
-                                        <span @click="turnLeftImage()" class="aso-flex aso-flex-col aso-full-center aso-space-y-2 hover:aso-text-[#016464] aso-base-animation">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7">
+                                        <span @click="turnLeftImage()" class="aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[#016464] aso-base-animation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                             </svg>
                                             <p class="aso-text-xs aso-font-semibold">Turn left</p>
                                         </span>
 
-                                        <span @click="turnRightImage()" class="aso-flex aso-flex-col aso-full-center aso-space-y-2 hover:aso-text-[#016464] aso-base-animation">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7">
+                                        <span @click="turnRightImage()" class="aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[#016464] aso-base-animation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                             </svg>
                                             <p class="aso-text-xs aso-font-semibold">Turn right</p>
+                                        </span>
+
+                                        <span @click="flipImage()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[#016464] aso-base-animation`">
+                                            <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
+                                                <path d="m10.562 13.984c-3.1094-0.2241-5.5625-2.8177-5.5625-5.9843 0-3.3137 2.6863-6 6-6h7c0.5523 0 1 0.44771 1 1v18c0 0.5523-0.4477 1-1 1s-1-0.4477-1-1v-7h-4.4444l-3.3144 7.4573c-0.14667 0.33-0.47392 0.5427-0.83505 0.5427-0.66129 0-1.1036-0.6807-0.83505-1.2849l2.9914-6.7308zm0.4375-1.9843c-2.2091 0-4-1.7909-4-4 0-2.2091 1.7909-4 4-4h6v8h-6z" clip-rule="evenodd" fill="currentColor" fill-rule="evenodd"></path>
+                                            </svg>
+                                            <p class="aso-text-xs aso-font-semibold">Flip</p>
                                         </span>
                                     </div>
                                 </div>
@@ -774,7 +829,7 @@
                 </div>
             </div>
 
-            <div class="aso-w-full aso-flex lg:aso-hidden aso-h-[6%] aso-bg-red-400">
+            <div class="aso-w-full aso-flex lg:aso-hidden aso-h-[15%] aso-bg-red-400">
                 <div class="aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-zinc-200">Cancel</div>
                 <div class="aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797]">Terminer</div>
             </div>
@@ -817,6 +872,7 @@
         handleTurnImageLeft,
         handleTurnRightImage,
         handleChangeImageSize,
+        handleFlipImage,
     } from '@/frontend/utils/aso-editor-script.js'
 
     var isLoaded = ref(true)
@@ -1072,7 +1128,7 @@
 
             console.log("==1==", scaleRatio, "==1==")
         } else {
-            scaleRatio = canvasWidth / (canvasHeight * targetRatio) - 0.09;
+            scaleRatio = canvasWidth / (canvasHeight * targetRatio) - 0.15;
             var hValue = handleGetObjectByName('height-value')
             var wValue = handleGetObjectByName('width-value')
             var fontSize = (hValue.fontSize * targetRatio) + 10
@@ -1502,6 +1558,9 @@
     }
     function turnRightImage(){
         handleTurnRightImage()
+    }
+    function flipImage(){
+        handleFlipImage()
     }
 
 
