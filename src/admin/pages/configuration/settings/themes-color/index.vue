@@ -34,14 +34,14 @@
                             <input
                                 id="colorPicker"
                                 type="color"
-                                v-model="textColorConstentHeader"
-                                @input="updateHexCode1"
+                                v-model="themes.colors.textColorContentHeader"
+                                @input="updateTextColorContentHeaderCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
-                                v-model="textColorConstentHeader"
-                                @input="updateColorFromHex1"
+                                v-model="themes.colors.textColorContentHeader"
+                                @input="updateTextColorContentHeaderCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -52,14 +52,14 @@
                             <input
                                 id="colorPicker"
                                 type="color"
-                                v-model="backgroundCoslorHeader"
-                                @input="updateHexCode2"
+                                v-model="themes.colors.backgroundColorHeader"
+                                @input="updateBackgroundColorHeaderCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
-                                v-model="backgroundCoslorHeader"
-                                @input="updateColorFromHex2"
+                                v-model="themes.colors.backgroundColorHeader"
+                                @input="updateBackgroundColorHeaderCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -77,13 +77,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorContentSideMenu"
-                                @input="updateHexCode3"
+                                @input="updateTextColorContentSideMenuCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorContentSideMenu"
-                                @input="updateColorFromHex3"
+                                @input="updateTextColorContentSideMenuCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -95,13 +95,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorHeaderContentSide"
-                                @input="updateHexCode4"
+                                @input="updateBackgroundColorHeaderContentSideCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorHeaderContentSide"
-                                @input="updateColorFromHex4"
+                                @input="updateBackgroundColorHeaderContentSideCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -118,13 +118,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorOptionsMenu"
-                                @input="updateHexCode5"
+                                @input="updateTextColorOptionsMenuCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorOptionsMenu"
-                                @input="updateColorFromHex5"
+                                @input="updateTextColorOptionsMenuCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -136,13 +136,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorOptionsMenu"
-                                @input="updateHexCode6"
+                                @input="updateBackgroundColorOptionsMenuCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorOptionsMenu"
-                                @input="updateColorFromHex6"
+                                @input="updateBackgroundColorOptionsMenuCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -158,13 +158,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorButtonSave"
-                                @input="updateHexCode7"
+                                @input="updateTextColorButtonSaveCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorButtonSave"
-                                @input="updateColorFromHex7"
+                                @input="updateTextColorButtonSaveCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -176,13 +176,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorTextButtonSave"
-                                @input="updateHexCode8"
+                                @input="updateBackgroundColorTextButtonSaveCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorTextButtonSave"
-                                @input="updateColorFromHex8"
+                                @input="updateBackgroundColorTextButtonSaveCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -196,13 +196,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorHoverButtonSave"
-                                @input="updateHexCode9"
+                                @input="updateTextColorHoverButtonSaveCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorHoverButtonSave"
-                                @input="updateColorFromHex9"
+                                @input="updateTextColorHoverButtonSaveCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -214,13 +214,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorHoverButtonSave"
-                                @input="updateHexCode10"
+                                @input="updateBackgroundColorHoverButtonSaveCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorHoverButtonSave"
-                                @input="updateColorFromHex10"
+                                @input="updateBackgroundColorHoverButtonSaveCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -237,13 +237,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorButton"
-                                @input="updateHexCode11"
+                                @input="updateTextColorButtonCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorButton"
-                                @input="updateColorFromHex11"
+                                @input="updateTextColorButtonCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -255,13 +255,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundButton"
-                                @input="updateHexCode12"
+                                @input="updateBackgroundButtonCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundButton"
-                                @input="updateColorFromHex12"
+                                @input="updateBackgroundButtonCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -275,13 +275,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorHoverButton"
-                                @input="updateHexCode13"
+                                @input="updateTextColorHoverButtonCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorHoverButton"
-                                @input="updateColorFromHex13"
+                                @input="updateTextColorHoverButtonCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -293,13 +293,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorHoverButton"
-                                @input="updateHexCode14"
+                                @input="updateBackgroundColorHoverButtonCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorHoverButton"
-                                @input="updateColorFromHex14"
+                                @input="updateBackgroundColorHoverButtonCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -315,13 +315,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorButtonHelp"
-                                @input="updateHexCode15"
+                                @input="updateTextColorButtonHelpCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorButtonHelp"
-                                @input="updateColorFromHex15"
+                                @input="updateTextColorButtonHelpCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -333,13 +333,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorButtonHelp"
-                                @input="updateHexCode16"
+                                @input="updateBackgroundColorButtonHelpCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorButtonHelp"
-                                @input="updateColorFromHex16"
+                                @input="updateBackgroundColorButtonHelpCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -353,13 +353,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorHoverButtonHelp"
-                                @input="updateHexCode17"
+                                @input="updateTextColorHoverButtonHelpCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorHoverButtonHelp"
-                                @input="updateColorFromHex17"
+                                @input="updateTextColorHoverButtonHelpCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -371,13 +371,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorHoverButtonHelp"
-                                @input="updateHexCode18"
+                                @input="updateBackgroundColorHoverButtonHelpCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorHoverButtonHelp"
-                                @input="updateColorFromHex18"
+                                @input="updateBackgroundColorHoverButtonHelpCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -395,13 +395,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorButtonRestartAll"
-                                @input="updateHexCode19"
+                                @input="updateTextColorButtonRestartAllCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorButtonRestartAll"
-                                @input="updateColorFromHex19"
+                                @input="updateTextColorButtonRestartAllCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -413,13 +413,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorButtonRestartAll"
-                                @input="updateHexCode20"
+                                @input="updateBackgroundColorButtonRestartAllCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorButtonRestartAll"
-                                @input="updateColorFromHex20"
+                                @input="updateBackgroundColorButtonRestartAllCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -433,13 +433,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.textColorHoverButtonRestartAll"
-                                @input="updateHexCode21"
+                                @input="updateTextColorHoverButtonRestartAllCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.textColorHoverButtonRestartAll"
-                                @input="updateColorFromHex21"
+                                @input="updateTextColorHoverButtonRestartAllCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -451,13 +451,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorHoverButtonRestartAll"
-                                @input="updateHexCode22"
+                                @input="updateBackgroundColorHoverButtonRestartAllCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorHoverButtonRestartAll"
-                                @input="updateColorFromHex22"
+                                @input="updateBackgroundColorHoverButtonRestartAllCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
                         </div>
@@ -541,254 +541,139 @@ const updateThemesSettings = async () => {
     }
 };
 
-const textColorContentHeader = ref('#000000');
+const updateTextColorContentHeaderCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorContentHeader = event.target.value;
+}
+const updateBackgroundColorHeaderCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHeader = event.target.value;
+}
+const updateTextColorContentSideMenuCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorContentSideMenu = event.target.value;
+}
+const updateBackgroundColorHeaderContentSideCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHeaderContentSide = event.target.value;
+}
+const updateTextColorOptionsMenuCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorOptionsMenu = event.target.value;
+}
+const updateBackgroundColorOptionsMenuCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorOptionsMenu = event.target.value;
+}
+const updateTextColorButtonSaveCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorButtonSave = event.target.value;
+}
+const updateBackgroundColorTextButtonSaveCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorTextButtonSave = event.target.value;
+}
+const updateTextColorHoverButtonSaveCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorHoverButtonSave = event.target.value;
+}
+const updateBackgroundColorHoverButtonSaveCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHoverButtonSave = event.target.value;
+}
+const updateTextColorButtonCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorButton = event.target.value;
+}
+const updateBackgroundButtonCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundButton = event.target.value;
+}
+const updateTextColorHoverButtonCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorHoverButton = event.target.value;
+}
+const updateBackgroundColorHoverButtonCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHoverButton = event.target.value;
+}
+const updateTextColorButtonHelpCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorButtonHelp = event.target.value;
+}
+const updateBackgroundColorButtonHelpCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorButtonHelp = event.target.value;
+}
+const updateTextColorHoverButtonHelpCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorHoverButtonHelp = event.target.value;
+}
+const updateBackgroundColorHoverButtonHelpCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHoverButtonHelp = event.target.value;
+}
+const updateBackgroundColorButtonRestartAllCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorButtonRestartAll = event.target.value;
+}
 
-const updateHexCode1 = () => {
-    textColorContentHeader.value = event.target.value;
-};
+const updateTextColorHoverButtonRestartAllCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorHoverButtonRestartAll = event.target.value;
+}
+const updateBackgroundColorHoverButtonRestartAllCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHoverButtonRestartAll = event.target.value;
+}
 
-const updateColorFromHex1 = () => {
-  if (textColorContentHeader.value[0] !== '#') {
-    textColorContentHeader.value = '#' + textColorContentHeader.value;
-  }
-};
+const updateTextColorButtonRestartAllCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorButtonRestartAll = event.target.value;
+}
 
-const backgroundColorHeader = ref('#000000');
-
-const updateHexCode2 = () => {
-    backgroundColorHeader.value = event.target.value;
-};
-
-const updateColorFromHex2 = () => {
-  if (backgroundColorHeader.value[0] !== '#') {
-    backgroundColorHeader.value = '#' + backgroundColorHeader.value;
-  }
-};
-
-
-const textColorContentSideMenu = ref('#000000');
-
-const updateHexCode3 = () => {
-    textColorContentSideMenu.value = event.target.value;
-};
-
-const updateColorFromHex3 = () => {
-  if (textColorContentSideMenu.value[0] !== '#') {
-    textColorContentSideMenu.value = '#' + textColorContentSideMenu.value;
-  }
-};
-const backgroundColorHeaderContentSide = ref('#000000');
-
-const updateHexCode4 = () => {
-    backgroundColorHeaderContentSide.value = event.target.value;
-};
-
-const updateColorFromHex4 = () => {
-  if (backgroundColorHeaderContentSide.value[0] !== '#') {
-    backgroundColorHeaderContentSide.value = '#' + backgroundColorHeaderContentSide.value;
-  }
-};
-
-const textColorOptionsMenu = ref('#000000');
-
-const updateHexCode5 = () => {
-    textColorOptionsMenu.value = event.target.value;
-};
-
-const updateColorFromHex5 = () => {
-  if (textColorOptionsMenu.value[0] !== '#') {
-    textColorOptionsMenu.value = '#' + textColorOptionsMenu.value;
-  }
-};
-const backgroundColorOptionsMenu = ref('#000000');
-
-const updateHexCode6 = () => {
-    backgroundColorOptionsMenu.value = event.target.value;
-};
-
-const updateColorFromHex6 = () => {
-  if (backgroundColorOptionsMenu.value[0] !== '#') {
-    backgroundColorOptionsMenu.value = '#' + backgroundColorOptionsMenu.value;
-  }
-};
-
-const textColorButtonSave = ref('#000000');
-
-const updateHexCode7 = () => {
-    textColorButtonSave.value = event.target.value;
-};
-
-const updateColorFromHex7 = () => {
-  if (textColorButtonSave.value[0] !== '#') {
-    textColorButtonSave.value = '#' + textColorButtonSave.value;
-  }
-};
-const backgroundColorTextButtonSave = ref('#000000');
-
-const updateHexCode8 = () => {
-    backgroundColorTextButtonSave.value = event.target.value;
-};
-
-const updateColorFromHex8 = () => {
-  if (backgroundColorTextButtonSave.value[0] !== '#') {
-    backgroundColorTextButtonSave.value = '#' + backgroundColorTextButtonSave.value;
-  }
-};
-
-const textColorHoverButtonSave = ref('#000000');
-
-const updateHexCode9 = () => {
-    textColorHoverButtonSave.value = event.target.value;
-};
-
-const updateColorFromHex9 = () => {
-  if (textColorHoverButtonSave.value[0] !== '#') {
-    textColorHoverButtonSave.value = '#' + textColorHoverButtonSave.value;
-  }
-};
-const backgroundColorHoverButtonSave = ref('#000000');
-
-const updateHexCode10 = () => {
-    backgroundColorHoverButtonSave.value = event.target.value;
-};
-
-const updateColorFromHex10 = () => {
-  if (backgroundColorHoverButtonSave.value[0] !== '#') {
-    backgroundColorHoverButtonSave.value = '#' + backgroundColorHoverButtonSave.value;
-  }
-};
-const textColorButton = ref('#000000');
-
-const updateHexCode11 = () => {
-    textColorButton.value = event.target.value;
-};
-
-const updateColorFromHex11 = () => {
-  if (textColorButton.value[0] !== '#') {
-    textColorButton.value = '#' + textColorButton.value;
-  }
-};
-const backgroundButton = ref('#000000');
-
-const updateHexCode12 = () => {
-    backgroundButton.value = event.target.value;
-};
-
-const updateColorFromHex12 = () => {
-  if (backgroundButton.value[0] !== '#') {
-    backgroundButton.value = '#' + backgroundButton.value;
-  }
-};
-const textColorHoverButton = ref('#000000');
-
-const updateHexCode13 = () => {
-    textColorHoverButton.value = event.target.value;
-};
-
-const updateColorFromHex13 = () => {
-  if (textColorHoverButton.value[0] !== '#') {
-    textColorHoverButton.value = '#' + textColorHoverButton.value;
-  }
-};
-const backgroundColorHoverButton = ref('#000000');
-
-const updateHexCode14 = () => {
-    backgroundColorHoverButton.value = event.target.value;
-};
-
-const updateColorFromHex14 = () => {
-  if (backgroundColorHoverButton.value[0] !== '#') {
-    backgroundColorHoverButton.value = '#' + backgroundColorHoverButton.value;
-  }
-};
-
-const textColorButtonHelp = ref('#000000');
-
-const updateHexCode15 = () => {
-    textColorButtonHelp.value = event.target.value;
-};
-
-const updateColorFromHex15 = () => {
-  if (textColorButtonHelp.value[0] !== '#') {
-    textColorButtonHelp.value = '#' + textColorButtonHelp.value;
-  }
-};
-const backgroundColorButtonHelp = ref('#000000');
-
-const updateHexCode16 = () => {
-    backgroundColorButtonHelp.value = event.target.value;
-};
-
-const updateColorFromHex16 = () => {
-  if (backgroundColorButtonHelp.value[0] !== '#') {
-    backgroundColorButtonHelp.value = '#' + backgroundColorButtonHelp.value;
-  }
-};
-const textColorHoverButtonHelp = ref('#000000');
-
-const updateHexCode17 = () => {
-    textColorHoverButtonHelp.value = event.target.value;
-};
-
-const updateColorFromHex17 = () => {
-  if (textColorHoverButtonHelp.value[0] !== '#') {
-    textColorHoverButtonHelp.value = '#' + textColorHoverButtonHelp.value;
-  }
-};
-const backgroundColorHoverButtonHelp = ref('#000000');
-
-const updateHexCode18 = () => {
-    backgroundColorHoverButtonHelp.value = event.target.value;
-};
-
-const updateColorFromHex18 = () => {
-  if (backgroundColorHoverButtonHelp.value[0] !== '#') {
-    backgroundColorHoverButtonHelp.value = '#' + backgroundColorHoverButtonHelp.value;
-  }
-};
-
-const textColorButtonRestartAll = ref('#000000');
-
-const updateHexCode19 = () => {
-    textColorButtonRestartAll.value = event.target.value;
-};
-
-const updateColorFromHex19 = () => {
-  if (textColorButtonRestartAll.value[0] !== '#') {
-    textColorButtonRestartAll.value = '#' + textColorButtonRestartAll.value;
-  }
-};
-const backgroundColorButtonRestartAll = ref('#000000');
-
-const updateHexCode20 = () => {
-    backgroundColorButtonRestartAll.value = event.target.value;
-};
-
-const updateColorFromHex20 = () => {
-  if (backgroundColorButtonRestartAll.value[0] !== '#') {
-    backgroundColorButtonRestartAll.value = '#' + backgroundColorButtonRestartAll.value;
-  }
-};
-const textColorHoverButtonRestartAll = ref('#000000');
-
-const updateHexCode21 = () => {
-    textColorHoverButtonRestartAll.value = event.target.value;
-};
-
-const updateColorFromHex21 = () => {
-  if (textColorHoverButtonRestartAll.value[0] !== '#') {
-    textColorHoverButtonRestartAll.value = '#' + textColorHoverButtonRestartAll.value;
-  }
-};
-const backgroundColorHoverButtonRestartAll = ref('#000000');
-
-const updateHexCode22 = () => {
-    backgroundColorHoverButtonRestartAll.value = event.target.value;
-};
-
-const updateColorFromHex22 = () => {
-  if (backgroundColorHoverButtonRestartAll.value[0] !== '#') {
-    backgroundColorHoverButtonRestartAll.value = '#' + backgroundColorHoverButtonRestartAll.value;
-  }
-};
 </script>

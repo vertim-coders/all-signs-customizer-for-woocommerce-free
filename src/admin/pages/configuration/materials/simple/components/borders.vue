@@ -378,4 +378,12 @@
     const enableBorderColor = () => {
         border.value.settings.enableBorderColor = !border.value.settings.enableBorderColor;
     };
+
+
+    const changeBorderColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    border.value.settings.codeHex = event.target.value;
+}
 </script>
