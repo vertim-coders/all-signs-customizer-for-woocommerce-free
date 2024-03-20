@@ -169,6 +169,7 @@ final class ASO_All_Signs_Options {
             ],
             [
                 'name' => 'Old World',
+                "icon" => "",
                 'value' => 'old-world'
             ]
         ];
@@ -186,6 +187,7 @@ final class ASO_All_Signs_Options {
             ],
             [
                 'name' => 'Square',
+                "icon" => "",
                 'value' => 'square'
             ],
             [
@@ -389,10 +391,12 @@ final class ASO_All_Signs_Options {
 
         if ( $this->is_request( 'admin' ) ) {
             require_once ASO_INCLUDES . '/Admin.php';
+            require_once ASO_INCLUDES . '/Public.php';
         }
 
         if ( $this->is_request( 'frontend' ) ) {
             require_once ASO_INCLUDES . '/Frontend.php';
+            require_once ASO_INCLUDES . '/Public.php';
         }
 
         if ( $this->is_request( 'ajax' ) ) {
@@ -400,7 +404,6 @@ final class ASO_All_Signs_Options {
         }
 
         require_once ASO_INCLUDES . '/Api.php';
-        require_once ASO_INCLUDES . '/Public.php';
         require_once ASO_INCLUDES . '/aso-post-type.php';
         require_once ASO_INCLUDES . '/aso-design.php';
         require_once ASO_INCLUDES . '/aso-product-config.php';
