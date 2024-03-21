@@ -12,11 +12,6 @@
                 </button>
             </div>
             <div class="">
-                <button @click="()=>{showStep = 'visualizer'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'visualizer' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
-                    Visualizer
-                </button>
-            </div>
-            <div class="">
                 <button @click="()=>{showStep = 'images'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'images' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">
                     Images
                 </button>
@@ -30,7 +25,6 @@
         <Main v-if="showStep == 'main'" :data="languageImages.main" :fetch-settings="fetchLanguageImageSettings"/>
         <Images v-if="showStep == 'images'" :data="languageImages.images" :fetch-settings="fetchLanguageImageSettings"/>
         <UploadDesign v-if="showStep == 'upload-design'" :data="languageImages.uploadDesign" :fetch-settings="fetchLanguageImageSettings"/>
-        <!-- <Visualizer v-if="showStep == 'visualizer'" :data="languageImages.visualizer" :fetch-settings="fetchLanguageImageSettings"/> -->
         
     </div>
 </template>
@@ -41,7 +35,6 @@ import api from '@/admin/Api/api';
 import Main from './main.vue';
 import Images from './images.vue';
 import UploadDesign from './upload-design.vue';
-/* import Visualizer from './visualizer.vue'; */
 const showStep = ref('main');
 const isFetching = ref(false);
 const languageImages = ref({});
