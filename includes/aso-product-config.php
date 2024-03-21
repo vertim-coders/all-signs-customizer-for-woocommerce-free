@@ -357,8 +357,6 @@
 		ob_start();
 		$content      = '';
 		$product      =  $this->product;
-		$aso_metas    = $this->settings;
-		$product_page = get_permalink( $product->get_id() );
 
 		if ( $this->variation_id ) {
 			$item_id = $this->variation_id;
@@ -416,7 +414,7 @@
 	 * @return string
 	 */
 	public function get_design_url( $design_index = false, $cart_item_key = false, $order_item_id = false, $tpl_id = false ) {
-		global $aso_settings;
+
 		//global $wp_query;
 		if ( $this->variation_id ) {
 			$item_id = $this->variation_id;
@@ -425,13 +423,19 @@
 		}
 
 
-		$configPage     = $aso_settings['aso_config_page'];
-		if( isset($configPage) && !empty($configPage) && $configPage != 0){
-			$aso_page_id = $configPage;
-		}
-		else {
+		$page_settings = get_option("aso_config_page");
+		if ( !empty($page_settings) && $page_settings != false ) {
+			$configPage = $page_settings["configuratorPage"];
+			if($configPage != 0){
+				$aso_page_id = $configPage;
+			}
+			else {
+				$aso_page_id = false;
+			}
+		} else {
 			$aso_page_id = false;
 		}
+		
 
 
 		$aso_page_url = '';

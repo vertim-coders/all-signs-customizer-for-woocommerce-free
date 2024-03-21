@@ -391,18 +391,17 @@ final class ASO_All_Signs_Options {
 
         if ( $this->is_request( 'admin' ) ) {
             require_once ASO_INCLUDES . '/Admin.php';
-            require_once ASO_INCLUDES . '/Public.php';
         }
-
+        
         if ( $this->is_request( 'frontend' ) ) {
             require_once ASO_INCLUDES . '/Frontend.php';
-            require_once ASO_INCLUDES . '/Public.php';
         }
-
+        
         if ( $this->is_request( 'ajax' ) ) {
             // require_once ASO_INCLUDES . '/class-ajax.php';
         }
-
+        
+        require_once ASO_INCLUDES . '/Public.php';
         require_once ASO_INCLUDES . '/Api.php';
         require_once ASO_INCLUDES . '/aso-post-type.php';
         require_once ASO_INCLUDES . '/aso-design.php';
@@ -422,7 +421,7 @@ final class ASO_All_Signs_Options {
         (new ASO_Post_Type())->init_hooks();
         (new ASO_Product_Config())->init_hooks();
         (new ASO_Design())->init_hooks();
-        (new ASO_Public())->render_public();
+        (new ASO_Public())->init_hooks();
         
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );

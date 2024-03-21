@@ -47,7 +47,6 @@ class ASO_Admin {
      */
     public function enqueue_scripts() {
         wp_enqueue_style( 'aso-admin' );
-        wp_enqueue_style( 'aso-style' );
         wp_enqueue_script( 'aso-admin' );
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');

@@ -25,6 +25,6 @@ class ASO_Frontend {
 
         $content .= '<div id="aso-frontend-app"></div>';
 
-        return $content;
+        return wp_kses_post($content);
     }
 }

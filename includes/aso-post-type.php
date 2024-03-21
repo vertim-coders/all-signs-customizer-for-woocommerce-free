@@ -149,7 +149,8 @@ class ASO_Post_Type
 
 	public function get_editor_shortcode_handler( $content ) {
 		global $wp_query;
-		$config_page_id = get_option("aso_editor_page");
+		$page_settings = get_option("aso_config_page");
+		$config_page_id = $page_settings["configuratorPage"];
 		if ( get_the_ID() == $config_page_id && !isset( $wp_query->query_vars['aso-product-id'] ) ) {
 					ob_start();
 		?>
@@ -161,10 +162,8 @@ class ASO_Post_Type
 		</div>
 		<?php			
 				
-					$content .= ob_get_clean();
+			$content .= ob_get_clean();
 		}elseif ( isset( $wp_query->query_vars['aso-product-id'] ) ) {
-			$productid = $wp_query->query_vars['aso-product-id'];
-
 			if( is_page($config_page_id) ) {
 				$content .= do_shortcode("[aso-configurator]");
 			}
@@ -181,9 +180,9 @@ class ASO_Post_Type
 	}
 	public function aso_add_rewrite_rules( $param ) {
 		global $wp_rewrite;
-		$option = get_option("aso_editor_page");
-		if ( !empty($option) && $option != false ) {
-			$aso_page_id = $option;
+		$page_settings = get_option("aso_config_page");
+		if ( !empty($page_settings) && $page_settings != false ) {
+			$aso_page_id = $page_settings["configuratorPage"];
 		} else {
 			$aso_page_id = false;
 		}
@@ -236,7 +235,7 @@ class ASO_Post_Type
 			);
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'aso-ordered-design' . '/([^/]+)/([^/]+)/?$',
+				$slug . $sep . 'aso-template' . '/([^/]+)/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
