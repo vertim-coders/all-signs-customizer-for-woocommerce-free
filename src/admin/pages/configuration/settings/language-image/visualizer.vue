@@ -24,12 +24,22 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                    <label class="aso-text-[12px] aso-text-[#444444]">Text price</label>
-                    <input type="text" v-model="visualizer.textPrice" placeholder="" class="aso-w-full"/>
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Before Price</label>
+                    <input type="text" v-model="visualizer.textBeforePrice" placeholder="" class="aso-w-full"/>
                 </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text After Price</label>
+                    <input type="text" v-model="visualizer.textAfterPrice" placeholder="" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text button finish</label>
                     <input type="text" v-model="visualizer.textButtonFinish" placeholder="" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Text button Add to cart</label>
+                    <input type="text" v-model="visualizer.textAddToCart" placeholder="" class="aso-w-full"/>
                 </div>
             </div>
             
@@ -141,8 +151,10 @@ const visualizer = ref({
     textButtonRefresh:"Restart all",
     textButtonBack:"Undo",
     textButtonNext:"Redo",
-    textPrice:"$ 495,09",
-    textButtonFinish:"Terminer",
+    textBeforePrice:"",
+    textAfterPrice:"TVA Include",
+    textButtonFinish:"Finish",
+    textAddToCart:"Add To Cart",
     textPreview:"Preview",
     textShare:"Share",
     textImport:"Import",

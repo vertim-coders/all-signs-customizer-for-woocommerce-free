@@ -56,6 +56,7 @@ const updateGlobalLicenses = async () => {
         //await activateLicenseKey();
         //await fetchLicenses();
         isLoading.value = false;
+        window.location.reload();
         toastMessage(result.success);
         
     }else{

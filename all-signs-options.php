@@ -87,6 +87,11 @@ final class ASO_All_Signs_Options {
         register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
         add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
+
+        add_action('admin_notices', [$this,'check_woocommerce_install_and_version']);
+        add_action('admin_notices', [$this,'check_config_pageselected']);
+        add_action( 'admin_notices', [$this, 'get_license_activation_notice'] );
+        add_action( 'admin_notices', [$this,'permalink_notice'] );
     }
 
     /**
@@ -401,12 +406,12 @@ final class ASO_All_Signs_Options {
             // require_once ASO_INCLUDES . '/class-ajax.php';
         }
         
-        require_once ASO_INCLUDES . '/Public.php';
         require_once ASO_INCLUDES . '/Api.php';
         require_once ASO_INCLUDES . '/aso-post-type.php';
         require_once ASO_INCLUDES . '/aso-design.php';
         require_once ASO_INCLUDES . '/aso-product-config.php';
         require_once ASO_INCLUDES.'/Functions.php';
+        require_once ASO_INCLUDES . '/Public.php';
     }
 
     /**
@@ -421,7 +426,6 @@ final class ASO_All_Signs_Options {
         (new ASO_Post_Type())->init_hooks();
         (new ASO_Product_Config())->init_hooks();
         (new ASO_Design())->init_hooks();
-        (new ASO_Public())->init_hooks();
         
         // Localize our plugin
         add_action( 'init', array( $this, 'localization_setup' ) );
@@ -447,6 +451,7 @@ final class ASO_All_Signs_Options {
         }
 
         $this->container['api'] = new ASO\Api();
+        $this->container['public'] = new ASO\ASO_Public();
         $this->container['assets'] = new ASO\Assets();
     }
 
@@ -484,6 +489,206 @@ final class ASO_All_Signs_Options {
                 return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
         }
     }
+
+    public function check_config_pageselected() {
+        if ( class_exists( 'WooCommerce' ) ) {
+            $PageSettings = get_option('aso_config_page',[]);
+            if ( count($PageSettings) == 0 ) {
+                ?>
+                <div class="notice notice-warning aso-notice-nux is-dismissible">
+                    <span class="aso-icon">
+                        <img src="<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>" alt="" width="250"/>
+                    </span>
+                    <div>
+                        <h2><?php esc_html_e( "Welcome to All Signs Options. Let's get you started !!!", 'ASO' ) ?></h2>
+                        <p><?php _e( 'Configuration page is not defined for NCPC plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO' ); ?></p>
+                    </div>
+                </div>
+                <?php
+            }else{
+                
+                if((!get_post_status($PageSettings["configuratorPage"]) && $PageSettings["configuratorPage"] != 0) || $PageSettings["configuratorPage"]==0){
+                    ?>
+                    <div class="notice notice-warning aso-notice-nux is-dismissible">
+                        <span class="aso-icon">
+                            <img src="<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>" alt="" width="250"/>
+                        </span>
+                        <div>
+                            <h2><?php esc_html_e( "Welcome to All Signs Options. Let's get you started !!!", 'ASO' ) ?></h2>
+                            <p><?php _e( 'Configuration page is not defined for NCPC plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO' ); ?></p>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+        }
+    }
+    /**
+     * Check if Woocommerce is installed
+     */
+    public function check_woocommerce_install_and_version($version = '3.4.0') {
+        if ( class_exists( 'WooCommerce' ) ) {
+            global $woocommerce;
+            if ( version_compare( $woocommerce->version, $version, '<' ) ) {
+                ?>
+                <div class="notice notice-info aso-notice-nux is-dismissible">
+                    <span class="aso-icon">
+                        <img src="<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>" alt="" width="250"/>
+                    </span>
+                    <div>
+                        <h2><?php esc_html_e( "Welcome to All Signs Options. Let's get you started !!!", 'ASO' ) ?></h2>
+						<p><?php esc_html_e( 'To avoid performance problems we recommend at least version 3.4 of Woocommerce.', 'ASO' ); ?></p>
+                        <p><?php $this->install_plugin_button( 'woocommerce', 'woocommerce.php', 'WooCommerce', array(), __( 'WooCommerce activated', 'ASO' ), __( 'Activate WooCommerce', 'ASO' ), __( 'Install WooCommerce', 'ASO' ) ); ?></p>
+                    </div>
+                </div>
+                <?php
+            }
+            
+        }else {
+            ?>
+            <div class="notice notice-info aso-notice-nux is-dismissible">
+                <span class="aso-icon">
+                    <img src="<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>" alt="" width="250"/>
+                </span>
+                <div>
+                    <h2><?php esc_html_e( "Welcome to All Signs Options. Let's get you started !!!", 'ASO' ) ?></h2>
+                    <p><?php esc_html_e( 'To enable eCommerce features you need to install or activate the WooCommerce plugin.', 'ASO' ); ?></p>
+                    <p><?php $this->install_plugin_button( 'woocommerce', 'woocommerce.php', 'WooCommerce', array(), __( 'WooCommerce activated', 'ASO' ), __( 'Activate WooCommerce', 'ASO' ), __( 'Install WooCommerce', 'ASO' ) ); ?></p>
+                </div>
+            </div>
+            <?php
+        }
+    }
+
+    /**
+     * Output a button that will install or activate a plugin if it doesn't exist, or display a disabled button if the
+     * plugin is already activated.
+     *
+     * @param string $plugin_slug The plugin slug.
+     * @param string $plugin_file The plugin file.
+     * @param string $plugin_name The plugin name.
+     * @param array $classes CSS classes.
+     * @param string $activated Button activated text.
+     * @param string $activate Button activate text.
+     * @param string $install Button install text.
+     */
+    public static function install_plugin_button( $plugin_slug, $plugin_file, $plugin_name, $classes = array(), $activated = '', $activate = '', $install = '' ) {
+        if ( current_user_can( 'install_plugins' ) && current_user_can( 'activate_plugins' ) ) {
+            if ( is_plugin_active( $plugin_slug . '/' . $plugin_file ) ) {
+                // The plugin is already active.
+                $button = array(
+                    'message' => esc_attr__( 'Activated', 'ASO' ),
+                    'url'     => '#',
+                    'classes' => array( 'storefront-button', 'disabled' ),
+                );
+
+                if ( '' !== $activated ) {
+                    $button['message'] = esc_attr( $activated );
+                }
+            } elseif ( self::is_plugin_installed( $plugin_slug ) ) {
+                $url = self::is_plugin_installed( $plugin_slug );
+
+                // The plugin exists but isn't activated yet.
+                $button = array(
+                    'message' => esc_attr__( 'Activate', 'ASO' ),
+                    'url'     => $url,
+                    'classes' => array( 'activate-now' ),
+                );
+
+                if ( '' !== $activate ) {
+                    $button['message'] = esc_attr( $activate );
+                }
+            } 
+
+            if ( ! empty( $classes ) ) {
+                $button['classes'] = array_merge( $button['classes'], $classes );
+            }
+            if(isset($button) && is_array($button)) {
+
+            $button['classes'] = implode( ' ', $button['classes'] );
+
+            ?>
+            <span class="plugin-card-<?php echo esc_attr( $plugin_slug ); ?>">
+                <a href="<?php echo esc_url( $button['url'] ); ?>" class="<?php echo esc_attr( $button['classes'] ); ?>" data-originaltext="<?php echo esc_attr( $button['message'] ); ?>" data-name="<?php echo esc_attr( $plugin_name ); ?>" data-slug="<?php echo esc_attr( $plugin_slug ); ?>" aria-label="<?php echo esc_attr( $button['message'] ); ?>"><?php echo esc_html( $button['message'] ); ?></a>
+            </span> <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__( 'or', 'ASO' ); ?>
+            <a href="https://docs.signsdesigner.us" target="_blank"><?php esc_html_e( 'learn more', 'ASO' ); ?></a>
+            <?php
+            }
+        }
+    }
+    private static function is_plugin_installed( $plugin_slug ) {
+        $plugin_folders = plugins_url();
+        if ( $plugin_folders . '/' . $plugin_slug ) {
+            $plugins = get_plugins( '/' . $plugin_slug );
+            if ( ! empty( $plugins ) ) {
+                $keys        = array_keys( $plugins );
+                $plugin_file = $plugin_slug . '/' . $keys[0];
+                $url         = wp_nonce_url(
+                    add_query_arg(
+                        array(
+                            'action' => 'activate',
+                            'plugin' => $plugin_file,
+                        ),
+                        admin_url( 'plugins.php' )
+                    ),
+                    'activate-plugin_' . $plugin_file
+                );
+                return $url;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 
+     */
+    public function permalink_notice() {
+
+        $current_permalink_structure = get_option( 'permalink_structure' );
+        
+        if ( $current_permalink_structure !== '/%postname%/' ) { ?>
+        
+            <div class="notice notice-warning aso-notice-nux is-dismissible">
+                <span class="aso-icon">
+                    <img src='<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>' alt="" width="250"/>
+                </span>
+                <div>
+                    <h2><?php esc_html_e( 'We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', 'ASO' ) ?></h2>
+                    <p><?php esc_html_e( 'To do this, go to',"NCPC")?> <a href="<?php echo admin_url('options-permalink.php')?>"><?php echo esc_html_e("Settings > Permanent links","NCPC")?></a></p>
+                </div>
+            </div>
+      <?php  }
+    
+    }
+
+    /**
+	 * Get licence activation notice.
+	 *
+	 * @return void
+	 */
+    public function get_license_activation_notice() {
+
+        if ( class_exists( 'WooCommerce' ) ) {
+            $ncpc_settings = get_option("aso_pro_license");
+            
+
+            if ( empty( $ncpc_settings ) ) {
+                ?>
+                    <div class="notice notice-warning aso-licence-warning">
+                        <p><b>All Signs Options Pro: </b><?php _e( "No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", 'ASO' ); ?></p>
+                    </div>
+                <?php
+            } else {
+                if(empty(get_option( 'ncpc_pro_activate_license')) || get_option( 'ncpc_pro_activate_license') == false){ ?>
+                    <div class="notice notice-error aso-licence-warning" style="display:none!important">
+                        <p><b>All Signs Options Pro: </b><?php _e( 'You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', 'ASO' ); ?></p>
+                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate","NCPC")?></a>
+                        <div id="aso-license-message"></div>
+                    </div>
+            <?php }
+            }
+        }
+	}
 
 } // All_Signs_Options
 

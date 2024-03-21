@@ -73,7 +73,7 @@
                         </div>
 
                         <div class="aso-h-[315px] lg:aso-h-full">
-                            <img class="aso-h-[100%]" src="../../../../assets/images/img_configurator.png" alt="image">
+                            <img class="aso-h-[100%]" src="../../../../assets/images/skin-couffo.png" alt="image">
                         </div>
 
                         <div class="aso-absolute aso-hidden lg:aso-flex aso-w-full aso-h-0.5 -aso-bottom-4 aso-bg-black">

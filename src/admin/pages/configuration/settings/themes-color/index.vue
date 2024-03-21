@@ -6,21 +6,31 @@
         <div class="aso-space-y-1">
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <h3 class="aso-text-[16px]">Choose your customizer appearance</h3>
-                <div class="aso-w-1/2">
-                    <div class="aso-image-wrapper aso-border-black aso-border-solid aso-border-[1px] aso-rounded-lg">
-
-                        <label for="image1" class="aso-image-label">
-                            <img src="../../../../../../assets/images/img_homepage.png" alt="Image 1" class="aso-w-full aso-h-auto aso-cursor-pointer" @click="themes.skin('image1')">
-                        </label>
-                        <div class="aso-flex aso-bg-[#ffffff] aso-p-3 -aso-translate-y-0.5 aso-rounded-lg">
-                            <div class="aso-w-1/2">
-                                <span>Default</span>
-                            </div>
-                            <div class="aso-flex aso-justify-end aso-w-1/2 aso-space-x-2">
-                                <span>Select</span>
-                                <input type="radio" id="image1" name="selectedImage" class="aso-translate-y-1.5"  v-model="themes.skin">
-                                
-                            </div>
+                <div class="aso-p-6">
+                    <div class="aso-grid aso-grid-cols-2 aso-gap-6">
+                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded" :class="themes.skin == 'default' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
+                            <input type="radio" id="default" name="skin" value="default" v-model="themes.skin" class="aso-invisible">
+                            <label for="default">
+                                <div class="aso-w-full aso-h-[300px] aso-relative">
+                                    <img src="../../../../../../assets/images/skin-default.png" alt="Image 1" class="aso-w-full aso-h-full aso-cursor-pointer aso-absolute">
+                                </div>
+                                <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
+                                   <label for="default" class="aso-text-base aso-font-semibold aso-text-black">Default skin</label>
+                                    <input type="radio" id="default" name="skin" value="default" v-model="themes.skin" :checked="themes.skin == 'default'">
+                                </div>
+                            </label>
+                        </div>
+                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded" :class="themes.skin == 'couffo' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
+                            <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" class="aso-invisible">
+                            <label for="couffo">
+                                <div class="aso-w-full aso-h-[300px] aso-relative">
+                                    <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="aso-w-full aso-h-full aso-cursor-pointer aso-absolute">
+                                </div>
+                                <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
+                                    <label for="couffo" class="aso-text-base aso-font-semibold aso-text-black">Default skin</label>
+                                    <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" :checked="themes.skin == 'couffo'">
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </div>

@@ -265,30 +265,112 @@ const deleteConfig = ref({
 const defaultSettings = ref({
   settings: {
     generals: {
-      mobile: {},
-      output: {},
-      product: {}
+        mobile: {
+            showNavigatorMenu:"off",
+            showNavigationMenuFirst:"yes",
+            mobileSelectionOptionsDisplay:"horizontally-stack"
+        },
+        output: {
+            filesFormat:'png',
+            waterMark:'',
+            zipOutputFiles:{
+                active:true,
+                zipOutFolderPrefix:'aso_',
+            },
+            designComposition:true
+        },
+        product: {
+            designFromScratch:true,
+            redirectAfterAddingToCart:true,
+            hideAddToCartButtonOnDetailPage:true,
+            hideDesignButtonsOnShopPage:true,
+            hideAddToCartButtonOnShopPage:true
+        }
     },
     customizerSign: {
-      customizerOptions: {},
-      signPart: {},
-      text: {},
-      images: {}
+        customizerOptions: {},
+        signPart: {},
+        text: {},
+        images: {}
     },
     languageImages: {
-      uploadDesign: {
-        activate: false,
-        link: "",
-        phraseSubmitCustom: "Take a customization"
-      },
-      images: {},
-      main: {},
-      reviewScreen: {},
-      visualizer: {}
+        uploadDesign: {
+            activate: false,
+            link: "",
+            phraseSubmitCustom: "Take a customization"
+        },
+        images: {
+            resetAllIcon:'',
+            cancelAnAction:'',
+            icon:'',
+            changeIconPreview:'',
+            changeIconImport:'',
+            changeIconShare:'',
+            changeIconSaveProject:'',
+            changeIconShareSideBar:'',
+            changeIconMaterial:'',
+            changeIconShape:'',
+            changeIconFixingMethod:'',
+            changeIconProduct:'',
+            changeIconSize:'',
+            changeIconText:'',
+            changeIconColor:'',
+            changeIconSizeMenu:'',
+            changeIconBorder:'',
+            changeIconImage:'',
+        },
+        visualizer: {
+            titleHeader:"Plastic Signs",
+            textButtonRefresh:"Restart all",
+            textButtonBack:"Undo",
+            textButtonNext:"Redo",
+            textBeforePrice:"",
+            textAfterPrice:"TVA Include",
+            textButtonFinish:"Finish",
+            textAddToCart:"Add To Cart",
+            textPreview:"Preview",
+            textShare:"Share",
+            textImport:"Import",
+            textDownload:"Download",
+            textSave:"Save",
+            textHelp:"Help",
+            textMaterial:"Material",
+            textSize:"Size",
+            textShape:"Shape",
+            textFixingMethods:"Fixing Methods",
+            textColor:"Color",
+            textOptionText:"Text",
+            textBorder:"Border",
+            textProduct:"Product",
+            textImage:"Image",
+        }
     },
     themes: {
-      skin: "default",
-      colors: {}
+        skin: "default",
+        colors: {
+            textColorContentHeader:'#000000',
+            backgroundColorHeader:'#000000',
+            textColorContentSideMenu:'#000000',
+            backgroundColorHeaderContentSide:'#000000',
+            textColorOptionsMenu:'#000000',
+            backgroundColorOptionsMenu:'#000000',
+            textColorButtonSave:'#000000',
+            backgroundColorTextButtonSave:'#000000',
+            textColorHoverButtonSave:'#000000',
+            backgroundColorHoverButtonSave:'#000000',
+            textColorButton:'#000000',
+            backgroundButton:'#000000',
+            textColorHoverButton:'#000000',
+            backgroundColorHoverButton:'#000000',
+            textColorButtonHelp:'#000000',
+            backgroundColorButtonHelp:'#000000',
+            textColorHoverButtonHelp:'#000000',
+            backgroundColorHoverButtonHelp:'#000000',
+            textColorHoverButtonRestartAll:'#000000',
+            backgroundColorHoverButtonRestartAll:'#000000',
+            textColorButtonRestartAll:'#000000',
+            backgroundColorButtonRestartAll:'#000000',
+        }
     },
     sortOptions: []
   }
