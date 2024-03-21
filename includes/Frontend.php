@@ -149,7 +149,7 @@ class ASO_Frontend {
             font-family: ".esc_html( $font_label).";
             src: url('".esc_url($url)."') format('truetype');
         }";
-        wp_add_inline_style( 'ncpc-frontend', $inline_style );
+        wp_add_inline_style( 'aso-frontend', $inline_style );
         ?>
         <?php
     }
