@@ -165,7 +165,7 @@ class ASO_Post_Type
 			$content .= ob_get_clean();
 		}elseif ( isset( $wp_query->query_vars['aso-product-id'] ) ) {
 			if( is_page($config_page_id) ) {
-				$content .= do_shortcode("[aso-configurator]");
+				$content .= do_shortcode("[aso-configurator productid='".$wp_query->query_vars['aso-product-id']."']");
 			}
 		}
 		return $content;

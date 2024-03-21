@@ -69,7 +69,7 @@
                     <div class="aso-space-y-2" v-if="image.enableClipart.active">
                         <label class="aso-text-[12px] aso-text-[#444444]">Select clipart  group</label>
                         <Multiselect
-                            v-model="image.enableClipart.selectClipartGroups"
+                            v-model="image.enableClipart.selectedClipartGroups"
                             placeholder=""
                             :options="manageCliparts"
                             label="name"
@@ -217,7 +217,7 @@ const image = ref({
     },
     enableClipart:{
         active:true,
-        selectClipartGroups:[],
+        selectedClipartGroups:[],
     },
     filter: {
         active:true,

@@ -5,7 +5,7 @@
                 <div class="aso-flex aso-flex-col aso-w-full">
                     <label class="aso-text-[12px]">Select Font</label>
                     <Multiselect
-                        v-model="text.s"
+                        v-model="text.selectedFonts"
                         placeholder=""
                         :options="manageFonts"
                         label="name"
@@ -20,14 +20,14 @@
                     <div class="aso-text-[16px]">Enable Custom color</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="aso-toggle" @click="handleEnableCustomColor" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': text.enableCustomColor.active, 'aso-bg-active': text.enableCustomColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <div :class="{'aso-translate-x-[100%]': text.enableCustomColor, 'aso-bg-active': text.enableCustomColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-full" >
                     <label class="aso-text-[12px]">Choose the colors to be displayed </label>
                     <Multiselect
-                        v-model="text.addColors"
+                        v-model="text.selectedColors"
                         placeholder=""
                         :options="manageColors"
                         label="name"
@@ -38,14 +38,6 @@
                     />
                 </div>
                 <div class="aso-flex aso-space-x-6">
-                    <div class="aso-flex aso-space-x-3">
-                        <div class="aso-text-[16px]">Enable color picker</div>
-                        <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleEnableColorPicker" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableColorPicker, 'aso-bg-active': text.enableColorPicker }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
-                            </label>
-                        </div>
-                    </div>
                     <div class="aso-flex aso-space-x-3">
                         <div class="aso-text-[16px]">Enable font size</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
@@ -261,20 +253,15 @@ const configId = ref(route.params.configId);
 const isLoading =ref(false);
 const isFetching = ref(false);
 const text = ref({
-    manageFontId:0,
-    selectFonts: [],
-    enableCustomColor:{
-        active:true,
-        manageColorId:0,
-        addColors:[],
-    },
+    selectedFonts: [],
+    selectedColors:[],
+    enableCustomColor:true,
     enableFontSize:{
         active:true,
         minimumFontSize:12,
         maximumFontSize:30,
         defaultFontSize:16,
     },
-    enableColorPicker:true,
     enableBold:true,
     enableUnderline:true,
     enableOverline:true,
@@ -339,13 +326,10 @@ const updateTextSettings = async () => {
 };
 
 const handleEnableCustomColor = () => {
-    text.value.enableCustomColor.active = !text.value.enableCustomColor.active;
+    text.value.enableCustomColor = !text.value.enableCustomColor;
 };
 const handleEnableFontSize = () => {
     text.value.enableFontSize.active = !text.value.enableFontSize.active;
-};
-const handleEnableColorPicker = () => {
-    text.value.enableColorPicker = !text.value.enableColorPicker;
 };
 const handleEnableBold = () => {
     text.value.enableBold = !text.value.enableBold;
