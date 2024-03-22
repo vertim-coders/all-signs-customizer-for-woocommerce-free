@@ -264,7 +264,6 @@
     
     const fetchMaterialBorders = async () => {
         const result = await api.getMaterialSimpleBorders(configID.value,materialId.value);
-        console.log(result)
         if(!result.message){
             borders.value = result;
         }else{

@@ -397,7 +397,6 @@ onMounted(async () => {
 const fetchConfigs = async () => {
 
     const allConfigs = await api.getConfigs();
-    console.log(allConfigs);
     configs.value = allConfigs.data;
     totalPages.value = allConfigs.totalPages;
     totalConfigsFound.value = allConfigs.totalConfigsFound;

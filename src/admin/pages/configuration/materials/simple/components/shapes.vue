@@ -185,7 +185,6 @@
 
     const fetchMaterialShapes = async () => {
         const result = await api.getMaterialSimpleShapes(configID.value,materialId.value);
-        console.log(result)
         if(!result.message){
             shapes.value = result;
         }else{

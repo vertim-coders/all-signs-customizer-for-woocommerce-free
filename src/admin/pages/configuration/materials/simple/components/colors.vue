@@ -210,7 +210,6 @@
 
     const fetchManageColors = async () => {
         const result = await api.getManageColorsPalettes();
-        console.log(result);
         if(!result.message){
             manageColors.value = result;
         }

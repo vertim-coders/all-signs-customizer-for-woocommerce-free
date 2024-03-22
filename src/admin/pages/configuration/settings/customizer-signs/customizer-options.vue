@@ -92,7 +92,6 @@ onMounted(() => {
 const updateCustomizerSettings = async () => {
     isLoading.value = true;
     const result = await api.updateCustomizerSignsCustomizer(configId.value,customizer.value);
-    console.log(result)
     if(result.success){
         await props.fetchSettings();
         isLoading.value = false;

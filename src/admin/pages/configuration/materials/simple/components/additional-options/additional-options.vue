@@ -52,7 +52,6 @@
                                 </div>
                             </td>
                         </tr>
-                        {{ console.log(additionalOptions) }}
                         <tr v-for="(additionalOption,key) in additionalOptions" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-w-[5%] aso-p-4">
                                 <span class="aso-flex aso-justify-center">

@@ -288,7 +288,6 @@ onMounted(async ()=>{
 
 const fetchManageFonts = async () => {
     const result = await api.getManagefonts();
-    console.log(result)
     if(!result.message){
         manageFonts.value = result.map((font,id)=>{
             return {name:font.label,value:id};
@@ -299,7 +298,6 @@ const fetchManageFonts = async () => {
 }
 const fetchManageColors = async () => {
     const result = await api.getManageColorsPalettes();
-    console.log(result)
     if(!result.message){
         manageColors.value = result.map((col,key)=>{
             return {name:col.name,value:key,codeHex:col.backgroundColor};

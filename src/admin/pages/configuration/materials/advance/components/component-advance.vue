@@ -66,7 +66,6 @@
                             </td>
                         </tr>
                         <tr v-for="(componentAdvance,key) in componentAdvances" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            {{ console.log(componentAdvances) }}
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">{{getInitials(componentAdvance.name)}}</span> 

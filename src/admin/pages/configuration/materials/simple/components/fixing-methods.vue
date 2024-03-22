@@ -280,8 +280,4 @@
     { value: 'option2', imageUrl: 'path/to/image2.jpg', text: 'Option 2' },
     // ... Ajoutez d'autres options selon vos besoins
     ];
-
-    const handleChange = () => {
-    console.log('Option sélectionnée :', selectedOption.value);
-    };
 </script>

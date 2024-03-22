@@ -404,7 +404,6 @@
 
     const delMaterial = async () => {
         isLoading.value = true;
-        console.log(deleteMaterial.value);
         const result = await api.deleteMaterial(configID.value,deleteMaterial.value.id);
         if(result.success){
             await fetchMaterials();

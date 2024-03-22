@@ -209,7 +209,6 @@
 
     const fetchCliparts = async () => {
         const result = await api.getManageClipartItems(groupId.value);
-        console.log(result);
         groupTitle.value = result.groupTitle;
         if(!result.notFoundMessage){
             cliparts.value = result.cliparts;
@@ -221,7 +220,6 @@
     const saveClipart = async ()=>{
         isLoading.value = true;
         const result = await api.addManageclipartItem(groupId.value,clipart.value);
-        console.log(result);
         if(result.success){
             await fetchCliparts();
             isLoading.value= false;
