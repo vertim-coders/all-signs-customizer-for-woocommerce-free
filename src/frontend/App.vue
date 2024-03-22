@@ -7,6 +7,8 @@
 <script setup>
 import {ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js';
+import '../../assets/utilities/fabric.min.js';
+// import '@/frontend/utils/aso-editor-script.js';
 
 tailwind.config ={
     prefix: 'aso-',
