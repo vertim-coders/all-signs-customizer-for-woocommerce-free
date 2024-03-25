@@ -14,10 +14,10 @@
                 </div>
                 
                 <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-text-white aso-text-base lg:aso-text-2xl aso-font-bold aso-text-center">
-                    Plastic Signs
+                    {{props.config.name}}
                 </div>
 
-                <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-items-center aso-space-x-4">
+                <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-full-center aso-space-x-4">
                     <span @click="clearAll" class="aso-w-fit aso-h-fit aso-flex aso-full-center aso-bg-zinc-700 hover:aso-bg-zinc-900 aso-space-x-2 aso-p-2 aso-px-3 aso-rounded-full aso-base-animation">
                         <svg class="aso-h-5 aso-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="simple-line-icons:reload">
@@ -26,19 +26,19 @@
                         </svg>
                         
                         <div class="aso-hidden lg:aso-flex aso-text-white aso-text-center">
-                            Restart all 
+                            {{props.config.data.settings.languageImages.visualizer.textButtonBack}} 
                         </div>
                     </span>
                         
-                    <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
-                        <div class="aso-flex aso-justify-center aso-items-center aso-text-white aso-space-x-2">
+                    <div class="aso-flex aso-full-center aso-space-x-4">
+                        <div class="aso-flex aso-full-center aso-text-white aso-space-x-2">
                             <span @click="undo" class="aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-transparent hover:aso-bg-[#016464] aso-base-animation">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                 </svg>
                             </span>
                             <div class="aso-hidden lg:aso-flex aso-text-sm">
-                                Undo
+                                {{props.config.data.settings.languageImages.visualizer.textButtonUndo}} 
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
                                 </svg>
                             </span>
                             <div class="aso-hidden lg:aso-flex aso-text-sm">
-                                Redo
+                                {{props.config.data.settings.languageImages.visualizer.textButtonNext}} 
                             </div>
                         </div>
                     </div>
@@ -57,6 +57,134 @@
     
                 <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-full-center">
                     <div class="aso-bg-[#039b9b] aso-hidden lg:aso-flex aso-full-center aso-space-x-4 aso-text-white aso-p-2 aso-px-4 aso-rounded-lg">
+                        <div @click="cloneObject()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
+                                <g clip-path="url(#clip0_65_739)">
+                                    <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
+                                    <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
+                                    <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_65_739">
+                                        <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <p class="aso-text-[11px] aso-font-semibold">Clone</p>
+                        </div>
+
+                        <div @click="deleteObject()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
+                            <p class="aso-text-[11px] aso-font-semibold">Delete</p>
+                        </div>
+
+                        <div @click="centerVertically()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
+                            </svg>
+                            <p class="aso-text-[11px] aso-font-semibold">CenterV</p>
+                        </div>
+
+                        <div @click="centerHorizontally()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
+                            </svg>
+                            <p class="aso-text-[11px] aso-font-semibold">CenterH</p>
+                        </div>
+                    </div>
+                    
+                    <div class="aso-flex lg:aso-hidden aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center"> $ 495,09 </div>
+                </div>
+            </div>
+    
+            <div class="aso-relative aso-w-full aso-h-[91%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center aso-bg-[#f5f5f5]">
+                <div class="aso-w-full aso-h-[6%] aso-flex aso-items-center aso-bg-white aso-space-x-3 aso-px-4 aso-border-y">
+                    <span class="aso-text-sm aso-font-medium">Switch face</span>
+
+                    <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1 aso-px-2 aso-text-white aso-font-medium aso-h-[80%] aso-w-[6%] aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
+                        <span :class="`${activeFace == 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
+                        
+                        <span :class="`${activeFace == 'front-face' ? 'aso-text-white' : ''} aso-z-10 aso-flex aso-full-center aso-pl-1`">
+                            A
+                        </span>
+                        <span :class="`${activeFace == 'back-face' ? '' : 'aso-text-white'} aso-z-10 aso-flex aso-full-center aso-pr-1`">
+                            B
+                        </span>
+                    </span>
+                </div>
+                <div id="aso-canvas-containers" class="flipper aso-relative aso-w-full aso-h-full lg:aso-h-[84%] aso-border-4 aso-border-black">
+                    <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
+
+                    <div id="aso-sign-recto" class="aso-relative aso-w-full aso-h-full">
+                        <canvas  ref="canvasFace1Ref" id="canaas" class="aso-relative aso-w-full aso-h-full"></canvas>
+                    </div>
+
+                    <div id="aso-sign-verso" class="aso-absolute aso-left-0 aso-top-0">
+                        <canvas ref="canvasFace2Ref" class="canvas2 aso-w-full aso-h-full"></canvas>
+                    </div>
+
+                </div>
+
+                <div v-show="!isLoaded">
+                    <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
+                        <div class="aso-space-y-1 aso-text-sm">
+                            <div>
+                                <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
+                            </div>
+                            <div>
+                                <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
+                            </div>
+                            <div>
+                                <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-space-x-3 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
+                        <div @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
+                                <g clip-path="url(#clip0_65_739)">
+                                    <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
+                                    <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
+                                    <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_65_739">
+                                        <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">Clone</p>
+                        </div>
+
+                        <div @click="deleteObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">Delete</p>
+                        </div>
+
+                        <div @click="centerVertically()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">CenterV</p>
+                        </div>
+
+                        <div @click="centerHorizontally()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">CenterH</p>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div id="aso-editButtons" class="aso-absolute aso-bottom-0 aso-w-full aso-h-[10%]  aso-hidden lg:aso-flex aso-full-center aso-bg-white aso-space-x-4">
+                    
+                    <div class="aso-w-1/3 aso-flex aso-full-center aso-space-x-4">
                         <span class="aso-flex">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -86,109 +214,15 @@
                             </svg>
                         </span>
                     </div>
-                    
-                    <div class="aso-flex lg:aso-hidden aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center"> $ 495,09 </div>
-                </div>
-            </div>
-    
-            <div class="aso-relative aso-w-full aso-h-[91%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center aso-bg-[#f5f5f5]">
-                <div id="aso-canvas-containers" class="aso-relative aso-w-full aso-h-full lg:aso-h-[82%] aso-border-4 aso-border-black">
-                    <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
 
-                    <canvas  ref="canvasRef" id="canvaas" class="aso-relative aso-w-full aso-h-full"></canvas>
-
-                    <div v-show="!isLoaded">
-                        <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
-                            <div class="aso-space-y-1 aso-text-sm">
-                                <div>
-                                    <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
-                                </div>
-                                <div>
-                                    <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
-                                </div>
-                                <div>
-                                    <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
-                                </div>
-                            </div>
+                    <div class="aso-w-1/3 aso-flex aso-full-center">
+                        <div class="aso-flex aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
+                            $ 495,09
                         </div>
-    
-                        <!-- <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-space-x-3 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
-                            <div @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
-                                    <g clip-path="url(#clip0_65_739)">
-                                        <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
-                                        <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
-                                        <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_65_739">
-                                            <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">Clone</p>
-                            </div>
-    
-                            <div @click="deleteObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">Delete</p>
-                            </div>
-    
-                            <div @click="centerVertically()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                                    <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">CenterV</p>
-                            </div>
-    
-                            <div @click="centerHorizontally()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                                    <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">CenterH</p>
-                            </div>
-                        </div> -->
-                    </div>
-                </div>
-
-                <div id="aso-editButtons" class="aso-absolute aso-bottom-0 aso-w-full aso-h-[10%] aso-hidden lg:aso-flex aso-full-center aso-bg-white aso-space-x-4">
-                    <div @click="cloneObject()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                        <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
-                            <g clip-path="url(#clip0_65_739)">
-                                <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
-                                <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
-                                <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_65_739">
-                                    <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        <p class="aso-text-[11px] aso-font-semibold">Clone</p>
                     </div>
 
-                    <div @click="deleteObject()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                        </svg>
-                        <p class="aso-text-[11px] aso-font-semibold">Delete</p>
-                    </div>
-
-                    <div @click="centerVertically()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                        <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                            <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
-                        </svg>
-                        <p class="aso-text-[11px] aso-font-semibold">CenterV</p>
-                    </div>
-
-                    <div @click="centerHorizontally()" class="aso-flex aso-full-center aso-space-x-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                        <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                            <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
-                        </svg>
-                        <p class="aso-text-[11px] aso-font-semibold">CenterH</p>
+                    <div class="aso-w-1/3 aso-h-full aso-flex aso-justify-end">
+                        <div v-show="!isLoaded" class="aso-hidden lg:aso-flex aso-full-center aso-w-[40%] aso-h-full aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">Terminer</div>
                     </div>
                 </div>
             </div>
@@ -398,16 +432,16 @@
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Materials</p>    
 
                     <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div v-for="(fixing, index) in fixings" class="aso-space-y-3">
-                            <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
-                            <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                        <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
+                            <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
+                            <label :for="material.name + index" class="aso-flex aso-full-center aso-space-x-2">
                                 <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
                                 <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
-                                    <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
+                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
+                                    <p class="aso-text-xs">{{ material.description }}</p>
                                     <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
                                         <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
-                                        <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                        <span :class="`${selectedMaterial == material.name ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                             </svg>
@@ -427,7 +461,7 @@
                             <p class="aso-font-medium">Suggestions</p>
                             <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-text-zinc-800 aso-px-2 aso-border-solid aso-border-2 aso-border-zinc-800 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
                                 <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
-                                    <p :class="`lg:aso-text-sm aso-font-semibold`" >{{ currentSize.width }} x {{ currentSize.height }} cm</p>
+                                    <p :class="`lg:aso-text-sm aso-font-semibold`" >{{ currentSizeName }}</p>
                                 </div>
                                 <div class="aso-flex aso-items-center aso-justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 lg:w-5 lg:aso-h-5">
@@ -436,13 +470,17 @@
                                 </div>
                             </div>
                             <div v-show="dropSize" class="aso-grid aso-grid-cols-2 aso-gap-2 aso-w-full aso-full-center">
-                                <div v-for="(size, index) in sizes" :key="size.name" class="aso-w-full aso-flex">
-                                    <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size.width, size.height, size.name)">
-                                    <label :for="size.width + index" :class="`${currentSizeName == size.name ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                            aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
-                                        >
-                                        {{size.width}} x {{size.height}} cm
-                                    </label>
+                                <div v-for="(sizee, id) in sizees">
+                                    <div v-for="(size, index) in allSizes" :key="size.name" class="aso-w-full aso-flex" >
+                                        <div v-if="sizee.manageSizeId == index" class="aso-w-full aso-h-full aso-flex">
+                                            <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size.width, size.height, size.label)">
+                                            <label :for="size.width + index" :class="`${currentSizeName == size.label ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
+                                                aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                            >
+                                                {{ size.label }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -579,7 +617,7 @@
                             <p class="aso-font-medium" v-show="addedTexts.length > 0">Text added</p>
                             <div class="aso-p-2 aso-space-y-2">
                                 <div v-for="(textObject, index) in addedTexts">
-                                    <div class="aso-bg-zinc-100 aso-p-2 aso-cursor-pointer" @click="getTextObject(textObject)">
+                                    <div :class="`${activeFace == textObject.canvas.name ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-bg-zinc-100 aso-p-2`" @click="getTextObject(textObject)">
                                         <p class="aso-text-sm">Text object {{ index }}</p>
                                         <p class="aso-text-xs">{{textObject.text}}</p>
                                     </div>
@@ -840,7 +878,7 @@
 
 <script setup>
 // import { fabric } from 'fabric';
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, defineProps } from 'vue';
     import {handleGetCanvas, handleUndo,
         handleRedo,
         handleClearAll,
@@ -873,7 +911,17 @@
         handleTurnRightImage,
         handleChangeImageSize,
         handleFlipImage,
+        handleCheckActiveSignFace,
+        handleCloneCanvas,
     } from '@/frontend/utils/aso-editor-script.js'
+
+    const props = defineProps({
+        config:Object,
+        manage:Object,
+    });
+
+    console.log(props.config)
+    console.log(props.manage)
 
     var isLoaded = ref(true)
     function setIsLoadedToFalse() {
@@ -919,6 +967,7 @@
     }
     var dropSize = ref(false)
     function dropSizeToggle(){
+        console.log('drop')
         dropSize.value = !dropSize.value;
     }
 
@@ -927,8 +976,11 @@
 
     var fabric = window.fabric;
 
-    var canvasRef = ref(null);
+    var canvasFace1Ref = ref(null);
+    var canvasFace2Ref = ref(null);
     var canvas = null
+    var canvasBack = null
+    var activeCanvas = canvas
 
     var defaultShadow = ref(new fabric.Shadow({
         color: 'black',
@@ -938,32 +990,52 @@
         isActive: true
     }))
 
-    function getCanvas(canvas){
-        handleGetCanvas(canvas)
+    function getCanvas(canvas1, canvas2){
+        handleGetCanvas(canvas1, canvas2)
     }
 
     onMounted(() => {
+        allSizes.value = props.manage.manageSize
+        selectMaterial(props.config.data.materials[0])
+
+
+
+
+        
         var optionss = document.querySelector('#aso-options-container')
         document.addEventListener('click', handleDocumentClick)
         console.log(fabric.version)
 
-        const canvasElement = canvasRef.value
+        const canvasElementFace1 = canvasFace1Ref.value
+        const canvasElementFace2 = canvasFace2Ref.value
+
         document.addEventListener("DOMContentLoaded", function() {
 
             var canvasContainer = document.getElementById("aso-canvas-containers")
             var canvasWidth = canvasContainer.clientWidth;
             var canvasHeight = canvasContainer.clientHeight;
 
-            canvas = new fabric.Canvas(canvasElement,{
+            canvas = new fabric.Canvas(canvasElementFace1,{
                 backgroundColor : "#f5f5f5",
                 width: canvasWidth, 
                 height: canvasHeight, 
                 // selectable: true,
                 // hasControls: true,
-                interactive: true
+                interactive: true,
+                name: 'front-face'
             });
-            canvas.selection = true;
+            canvasBack = new fabric.Canvas(canvasElementFace2,{
+                backgroundColor : "#f5f5f5",
+                width: canvasElementFace2.clientWidth, 
+                height: canvasElementFace2.clientHeight, 
+                // selectable: true,
+                // hasControls: true,
+                interactive: true,
+                name: 'back-face'
+            });
+
             canvas.hoverCursor = 'pointer';
+            canvasBack.hoverCursor = 'pointer';
 
             const rectWidth = 600; 
             const rectHeight = 400; 
@@ -988,6 +1060,20 @@
                 originY: 'center',
                 id: 0,
             });
+            const rectangle2 = new fabric.Rect({
+                width: rectWidth,
+                height: rectHeight,
+                fill: '#cfcece', // Couleur du rectangle
+                left: rectLeft,
+                top: rectTop,
+                shadow: defaultShadow.value,
+                selectable: false,
+                name: 'safeObject',
+                originX: 'center',
+                originY: 'center',
+                id: 0,
+            });
+            
             const cnvasClip = new fabric.Rect({
                 width: clipWidth ,
                 height: clipHeight ,
@@ -1032,12 +1118,13 @@
 
             // canvas.clipPath = cnvasClip
             canvas.add(rectangle, hLine, hValue, wLine, wValue);
-            
-            getCanvas(canvas)
+            canvasBack.add(rectangle2);
         
+            getCanvas(canvas, canvasBack)
         
             checkScreenSize();
             canvas.selection = false;
+            canvasBack.selection = false;
     
             // hLine.bringToFront()
             // wLine.bringToFront()
@@ -1057,8 +1144,12 @@
             
             canvas.on('selection:created', showObjectValues);
             canvas.on('selection:cleared', closeObjectValues);
+            canvasBack.on('selection:created', showObjectValues);
+            canvasBack.on('selection:cleared', closeObjectValues);
             
-    
+            handleCloneCanvas(canvas, canvasBack)
+            activeCanvas = canvas
+
             window.addEventListener('resize', checkScreenSize);
     
             // updateBarreSize()
@@ -1087,7 +1178,6 @@
         console.log(options)
         
     }
-
     function redo() {
         var options = handleRedo()
         currentSizeName.value = options.sizeName
@@ -1097,12 +1187,36 @@
         activeSignColor.value = options.signColor
         console.log(options)
     }
-
     function clearAll() {
         handleClearAll()
     }
 
 
+    var flipped = ref(false)
+    var activeFace = ref('front-face')
+    function flipRect() {
+        var flipper = document.getElementById('aso-canvas-containers')
+        var signFace = document.getElementById('aso-sign-recto')
+        var signBack = document.getElementById('aso-sign-verso')
+        if(!flipped.value){
+            flipper.classList.add('flipper-switch')
+            handleCheckActiveSignFace('back')
+            // signFace.classList.add('aso-invisible')
+            // signBack.classList.remove('aso-invisible')
+            activeFace.value = 'back-face'
+            activeCanvas = canvasBack
+            canvas.discardActiveObject();
+        }else{
+            flipper.classList.remove('flipper-switch')
+            handleCheckActiveSignFace('front')
+            // signBack.classList.add('aso-invisible')
+            // signFace.classList.remove('aso-invisible')
+            activeFace.value = 'front-face'
+            activeCanvas = canvas
+            canvasBack.discardActiveObject();
+        }
+        flipped.value = !flipped.value
+    }
 
 
     function checkScreenSize(){
@@ -1110,10 +1224,9 @@
         var canvasWidth = canvasContainer.clientWidth;
         var canvasHeight = canvasContainer.clientHeight;
 
-        console.log(window.innerWidth, window.innerHeight)
-        console.log("canvas-container", canvasWidth, canvasHeight)
+        // console.log(window.innerWidth, window.innerHeight)
+        // console.log("canvas-container", canvasWidth, canvasHeight)
 
-        // let windowRatio = canvasWidth / canvasHeight;
         let windowRatio = canvasWidth / canvasHeight;
         let targetRatio = 16/9;
 
@@ -1125,8 +1238,7 @@
             var fontSize = (hValue.fontSize / targetRatio) + 10
             hValue.fontSize = fontSize
             wValue.fontSize = fontSize
-
-            console.log("==1==", scaleRatio, "==1==")
+            // console.log("==1==", scaleRatio, "==1==")
         } else {
             scaleRatio = canvasWidth / (canvasHeight * targetRatio) - 0.15;
             var hValue = handleGetObjectByName('height-value')
@@ -1134,16 +1246,23 @@
             var fontSize = (hValue.fontSize * targetRatio) + 10
             hValue.fontSize = fontSize
             wValue.fontSize = fontSize
-
-
-            console.log("==2==", scaleRatio, "==2==")
+            // console.log("==2==", scaleRatio, "==2==")
         }
 
-        var zoomPoint = new fabric.Point(canvas.width / 2, canvas.height / 2)
         canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
+        canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
+
+        // canvas.getObjects().forEach(obj => {
+        //     obj.scaleX *= scaleRatio;
+        //     obj.scaleY *= scaleRatio;
+        //     obj.setCoords();
+        // });
         
         canvas.setWidth(canvasWidth);
         canvas.setHeight(canvasHeight);
+
+        canvasBack.setWidth(canvasWidth);
+        canvasBack.setHeight(canvasHeight);
     }
 
 
@@ -1157,7 +1276,13 @@
     }
 
 
+    var selectedMaterial = ref('')
+    function selectMaterial(material){
+        console.log("selectMaterial", material)
+        selectedMaterial.value = material.name
 
+        sizees.value = material.data.sizes.allSizes
+    }
 
 
 
@@ -1366,7 +1491,7 @@
 
 
     function deleteObject(){
-        var object = canvas.getActiveObject();
+        var object = activeCanvas.getActiveObject();
         // addedTexts.value = handleDeleteObject(object)
         if(object.type == 'i-text'){
             addedTexts.value = handleDeleteObject(object)
@@ -1379,22 +1504,23 @@
         }
     }
     function cloneObject(){
-        var object = canvas.getActiveObject();
+        var object = activeCanvas.getActiveObject();
         handleCloneObject(object)
     }
     function centerHorizontally(){
-        var object = canvas.getActiveObject();
+        var object = activeCanvas.getActiveObject();
         handleCenterHorizontally(object)
     }
     function centerVertically(){
-        var object = canvas.getActiveObject();
+        var object = activeCanvas.getActiveObject();
         handleCenterVertically(object)
     }
 
 
 
 
-
+    var sizees = ref()
+    var allSizes = ref()
     var currentSizeName = ref('')
     var currentSize = ref('')
     var currentSizeValues = ref()
@@ -1443,14 +1569,16 @@
         // console.log(addedTexts.value)
     }
     function getTextObject(object) {
-        selectText.value = true
-        object.selected = true;
-
-        selectedText.value.value = object.text
-
-        canvas.setActiveObject(object);
-        handleGetAddedTextValues(object)
-        canvas.requestRenderAll();
+        if(activeFace.value == object.canvas.name){
+            selectText.value = true
+            object.selected = true;
+    
+            selectedText.value.value = object.text
+    
+            activeCanvas.setActiveObject(object);
+            handleGetAddedTextValues(object)
+            activeCanvas.requestRenderAll();
+        }
     }
     function changeText(){
         selectText.value = false
@@ -1568,9 +1696,37 @@
 
 <style scoped>
     #canvaas {
-        /* -webkit-filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.5));
-        filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.5)); */
-
         border: 3px solid green
+    }
+
+    .flipper {
+        position: relative;
+        /* width: 100%;
+        height: 100%; */
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+    }
+
+    .flipper-switch {
+        transform: rotateY(180deg);
+    }
+
+
+
+    #aso-sign-recto, #aso-sign-verso {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    #aso-sign-recto {
+        background-color: #bbb;
+        color: black;
+    }
+
+    #aso-sign-verso {
+        background-color: dodgerblue;
+        color: white;
+        transform: rotateY(180deg);
     }
 </style>

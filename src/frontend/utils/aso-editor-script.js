@@ -1,7 +1,66 @@
 var canvas = null;
-function handleGetCanvas(canva){
-    canvas = canva
+var backCanvas = null;
+var activeCanvas = canvas
+function handleGetCanvas(canvas1, canvas2){
+    // console.log('canvas getted', canvas1, canvas2)
+    canvas = canvas1
+    backCanvas = canvas2
+    activeCanvas = canvas
 }
+var activeSignFace = 'front'
+function handleCheckActiveSignFace(face){
+    activeSignFace = face
+    console.log(activeSignFace)
+    if(face == 'front'){
+        activeCanvas = canvas
+    }else{
+        activeCanvas = backCanvas
+    }
+}
+
+function handleCloneCanvas(canvas1, canvas2){
+    
+    setTimeout(function() {
+        var objects = canvas1.getObjects();
+        var serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
+        var jsonData = canvas.toJSON();
+    
+        var canvas1State = {
+            jsonData: jsonData,
+            objects: serializedObjects
+        };
+    
+        canvas2.discardActiveObject();
+        var currentObjects = canvas2.getObjects();
+        // currentObjects.forEach(obj => {
+        //     if (!canvas1State.objects.some(prevObj => prevObj.id === obj.id)) {
+        //       // console.log(obj.id, 'undo - borderA');
+        //       canvas2.remove(obj);
+        //     }
+        // });
+    
+        var verifiedId = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]
+    
+        canvas1State.objects.forEach(prevObj => {
+            const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
+    
+            fabric.util.enlivenObjects([prevObj], objects => {
+                const newObj = objects[0];
+                if (verifiedId.includes(newObj.id)){
+                    canvas2.insertAt(newObj, currentObjects.indexOf(currentObj));
+                    canvas2.remove(currentObj);
+                }
+            });
+        });
+    
+        canvas2.renderAll();
+
+    },100)
+    // console.log(backCanvas)
+}
+
+
+
 
 var defaultShadow = new fabric.Shadow({
     color: 'black',
@@ -461,7 +520,7 @@ function handleMiseAEchelle(rW, rH) {
 }
 
 function handleGetObjectByName(name) {
-    var objects = canvas.getObjects();
+    var objects = activeCanvas.getObjects();
     for (var i = 0; i < objects.length; i++) {
         if (objects[i].name === name) {
             return objects[i];
@@ -484,7 +543,7 @@ var preHeight = 0
 var firstWidth = 0
 var firstHeight = 0
 
-
+var firstLoad = false
 function handleChangeSize(width, height, name) {
     // console.log(scale, 'name')
     currentSizeName = name;
@@ -509,7 +568,6 @@ function handleChangeSize(width, height, name) {
     currentWidth = handleMiseAEchelle(width, height).width
     currentHeight  = handleMiseAEchelle(width, height).height
 
-    var Objects = canvas.getObjects();
     var currentBackground = canvas.backgroundImage
     // var currentShape = canvas.clipPath
 
@@ -531,58 +589,58 @@ function handleChangeSize(width, height, name) {
     var newClipTop = (canvas.height/2) - (newClipHeight/2);
 
     //resize des des barres et valeurs de mesure
-    Objects.forEach(object => {
-        if(object.name == 'heightLine'){
-            object.set({
-                x1 : (newRectLeft + newSignWidth + 20), 
-                y1: newRectTop, 
-                x2: (newRectLeft + newSignWidth + 20), 
-                y2: (newRectTop + newSignHeight)
-            })
-        }
-        if(object.name == 'widthLine'){
-            object.set({
-                x1: newRectLeft, 
-                y1: (newRectTop + newSignHeight + 18.5), 
-                x2: (newRectLeft + newSignWidth + 18.5), 
-                y2: (newRectTop + newSignHeight + 18.5)
-            })
-        }
-        if(object.name == 'height-value'){
-            object.top = newRectTop + (newSignHeight/2)
-            object.left = newRectLeft + newSignWidth + 25
-            object.text = String(height)
-        }
-        if(object.name == 'width-value'){
-            object.left = newRectLeft + (newSignWidth/2)
-            object.top = newRectTop + (newSignHeight + 25)
-            object.text = String(width)
-        }
-
-        if(selectedShape == 'square'){
-            if(object.name == 'old-world-border'){
-                var scaleX = newSignWidth / object.width;
-                var scaleY = newSignHeight / object.height;
-                object.left = newRectLeft
-                object.top = newRectTop
-                object.scaleX = scaleX
-                object.scaleY = scaleY
+    function setMeasurmentValue(canvas){
+        var Objects = canvas.getObjects();
+        Objects.forEach(object => {
+            if(object.name == 'heightLine'){
+                object.set({
+                    x1 : (newRectLeft + newSignWidth + 20), 
+                    y1: newRectTop, 
+                    x2: (newRectLeft + newSignWidth + 20), 
+                    y2: (newRectTop + newSignHeight)
+                })
             }
-        }
-        // updateModifications(true, 'changement de size - barres et valeur de mesures')
-    })
+            if(object.name == 'widthLine'){
+                object.set({
+                    x1: newRectLeft, 
+                    y1: (newRectTop + newSignHeight + 18.5), 
+                    x2: (newRectLeft + newSignWidth + 18.5), 
+                    y2: (newRectTop + newSignHeight + 18.5)
+                })
+            }
+            if(object.name == 'height-value'){
+                object.top = newRectTop + (newSignHeight/2)
+                object.left = newRectLeft + newSignWidth + 25
+                object.text = String(height)
+            }
+            if(object.name == 'width-value'){
+                object.left = newRectLeft + (newSignWidth/2)
+                object.top = newRectTop + (newSignHeight + 25)
+                object.text = String(width)
+            }
+            if(selectedShape == 'square'){
+                if(object.name == 'old-world-border'){
+                    var scaleX = newSignWidth / object.width;
+                    var scaleY = newSignHeight / object.height;
+                    object.left = newRectLeft
+                    object.top = newRectTop
+                    object.scaleX = scaleX
+                    object.scaleY = scaleY
+                }
+            }
+        })
+        canvas.renderAll()
+    }
+
+    setMeasurmentValue(canvas)
+    if(firstLoad){
+        setMeasurmentValue(backCanvas)
+    }
 
     handleSelectShape(selectedShape, newSignWidth, newSignHeight, newRectTop, newRectLeft)
-
-    // if(currentShape.type == 'rect'){
-    //     currentShape.set('width', newClipWidth ),
-    //     currentShape.set('height', newClipHeight )
-    //     currentShape.set('top', newClipTop),
-    //     currentShape.set('left', newClipLeft)
-    // }
-
-    canvas.renderAll();
     handleSelectFixingMethode(activeFixingMethode)
+
+    firstLoad = true
     return {
         width: currentWidth,
         height: currentHeight,
@@ -617,7 +675,7 @@ function handleChangeSize(width, height, name) {
 //     })
 // }
 function lockToCanvas(activeObj) {
-    var objects = canvas.getObjects();
+    var objects = activeCanvas.getObjects();
     objects.forEach(function(object) {
         if (object.type != 'line') {
             if (object.name == 'safeObject') {
@@ -907,7 +965,7 @@ function handleCenterHorizontally(object){
 //function pour afficher les borders
 var activeBorder = ''
 function removeBorder(){
-    var Objects = canvas.getObjects();
+    var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
         if(object.type !== 'line'){
             if(object.name == 'safeObject'){
@@ -916,17 +974,16 @@ function removeBorder(){
 
                 var oldWorld =handleGetObjectByName('old-world-border')
                 if(oldWorld != null){
-                    canvas.remove(oldWorld)
+                    activeCanvas.remove(oldWorld)
                 }
             }
         }
     });
-
-    canvas.renderAll();
+    activeCanvas.renderAll();
 }
 function handleSelectBorder(border) {
     activeBorder = border
-    var Objects = canvas.getObjects();
+    var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
         if(object.type !== 'line'){
             if(object.name == 'safeObject'){
@@ -943,10 +1000,6 @@ function handleSelectBorder(border) {
                         }
                         object.set('stroke', 'black')
     
-                        // var oldWorld =handleGetObjectByName('old-world-border')
-                        // if(oldWorld != null){
-                        //     canvas.remove(oldWorld)
-                        // }
                     }
                 }
                 if(border == 'old-wold'){
@@ -975,18 +1028,17 @@ function handleSelectBorder(border) {
                                 var scaleX = object.width / img.width;
                                 var scaleY = object.height / img.height;
                                 var imageOverlay = new fabric.Image(img, {
-                                    left: object.left,
-                                    top: object.top,
-                                    scaleX: scaleX,
-                                    scaleY: scaleY,
-                                    name: 'old-world-border',
-                                    id: 6,
-                                    selectable: false,
+                                left: object.left,
+                                top: object.top,
+                                scaleX: scaleX,
+                                scaleY: scaleY,
+                                name: 'old-world-border',
+                                selectable: false,
                                 });
                             
-                                canvas.add(imageOverlay);
-                                imageOverlay.moveTo(canvas.getObjects().length); // Déplacer l'image au-dessus du rectangle
-                                canvas.renderAll();
+                                activeCanvas.add(imageOverlay);
+                                imageOverlay.moveTo(activeCanvas.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                                activeCanvas.renderAll();
                             });
                         }
                         if(sizeRatio == 'big'){
@@ -994,19 +1046,19 @@ function handleSelectBorder(border) {
                                 var scaleX = object.width / img.width;
                                 var scaleY = object.height / img.height;
                                 var imageOverlay = new fabric.Image(img, {
-                                    left: object.left,
-                                    top: object.top,
-                                    scaleX: scaleX,
-                                    scaleY: scaleY,
-                                    name: 'old-world-border',
-                                    id: 6,
-                                    selectable: false,
+                                left: object.left,
+                                top: object.top,
+                                scaleX: scaleX,
+                                scaleY: scaleY,
+                                name: 'old-world-border',
+                                id: 6,
+                                selectable: false,
                                 });
                             
-                                canvas.add(imageOverlay);
+                                activeCanvas.add(imageOverlay);
                                 updateModifications(true, '==ajout de border==')
-                                imageOverlay.moveTo(canvas.getObjects().length); // Déplacer l'image au-dessus du rectangle
-                                canvas.renderAll();
+                                imageOverlay.moveTo(activeCanvas.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                                activeCanvas.renderAll();
                             });
                         }
                     }else{
@@ -1019,8 +1071,7 @@ function handleSelectBorder(border) {
             }
         }
     });
-
-    canvas.renderAll();
+    activeCanvas.renderAll();
 
     return border
 }
@@ -1028,7 +1079,7 @@ function handleSelectBorder(border) {
 var currentSignColor = ''
 function handleChangeSignColor(color) {
     currentSignColor = color;
-    var Objects = canvas.getObjects();
+    var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
         if (object.type !== 'line') {
 
@@ -1037,7 +1088,7 @@ function handleChangeSignColor(color) {
             }
         }
     });
-    canvas.renderAll();
+    activeCanvas.renderAll();
     updateModifications(true, 'changer sign color')
 
     return color
@@ -1050,148 +1101,53 @@ function handleGetShape(shape){
     selectedShape = shape
 }
 function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
-    // console.log('select shape', shape)
     selectedShape = shape
     removeBorder()
     // var currentBackground = canvas.backgroundImage
 
-    var Objects = canvas.getObjects();
-    Objects.forEach(function(object){
-        if (object.type !== 'line') {
-            var top = nTop;
-            var left = nLeft;
-            var width = nwidth;
-            var height = nheight;
-            var objectfill = object.fill;
-            var objectId = object.id;
-
-            if(object.name == 'safeObject'){
-                switch (shape){
-                    case 'square':
-                        // var squareShape = new fabric.Rect({
-                        //     height: height,
-                        //     width: width,
-                        //     left: left,
-                        //     top: top,
-                        //     fill: objectfill,
-                        //     selectable: false,                                
-                        //     name: 'safeObject',
-                        //     shadow: defaultShadow,
-
-                        // })
-                        // canvas.remove(object)
-                        // canvas.add(squareShape)
-
-                        // fabric.util.loadImage('../../old-world-border.png', function (img) {
-                        //     squareShape.setPatternFill({
-                        //       source: img,
-                        //       repeat: 'no-repeat',
-                        //       patternTransform: [0.2, 0, 0, 0.2, 0, 0]
-                        //     });
-                        //     canvas.renderAll();
-                        //   });
-
-                        // console.log(squareShape.getCenterPoint(), 'square shape')
-                        // squareShape.sendToBack()
-                        // canvas.centerObject(squareShape)
-                        var squareShape = new fabric.Rect({
-                            height: height,
-                            width: width,
-                            left: left,
-                            top: top,
-                            fill: objectfill,
-                            selectable: false,
-                            name: 'safeObject',
-                            shadow: defaultShadow,
-                            id: objectId,
-                        });
-                          
-                        canvas.remove(object);
-                        canvas.add(squareShape);
-                        handleSelectBorder(activeBorder)
-                        // console.log(squareShape.getCenterPoint(), 'square shape');
-                        squareShape.sendToBack();
-                        canvas.centerObject(squareShape);
-                        // updateModifications(true)
-                    break;
-                    
-                    case 'rounded-square':
-                        var roundedSquareShape = new fabric.Rect({
-                            height: height,
-                            width: width,
-                            left: left,
-                            top: top,
-                            rx: 15,
-                            ry: 15,
-                            fill: objectfill,
-                            selectable: false,                                
-                            name: 'safeObject',
-                            shadow: defaultShadow,
-                            id: objectId,
-                            // strokeWidth: 5,
-                            // stroke: 'black'
-
-                        })
-                        canvas.remove(object)
-                        canvas.add(roundedSquareShape)
-                        handleSelectBorder(activeBorder)
-                        roundedSquareShape.sendToBack()
-                        canvas.centerObject(roundedSquareShape)
-                        // updateModifications(true)
-                    break;
-
-                    case 'oval':
-                        var ellipseShape = new fabric.Ellipse({
-                            ry: height / 2,
-                            rx: width / 2,
-                            fill: objectfill,
-                            left: left,
-                            top: top,
-                            selectable: false,
-                            name: 'safeObject',
-                            shadow: defaultShadow,
-                            id: objectId
-                        });
-                        canvas.remove(object)
-                        canvas.add(ellipseShape)
-                        handleSelectBorder(activeBorder)
-                        ellipseShape.sendToBack()
-                        canvas.centerObject(ellipseShape)
-                        // updateModifications(true)
-                        // ellipseShape.on('selected', function() {
-                        //     canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, 0.5) // set zoom at static value for now
-                        // })
-                    break;
-
-                    case 'triangle':
-                        var triangleShape = new fabric.Triangle({
-                            height: height,
-                            width: width,
-                            left: left,
-                            top: top,
-                            fill: objectfill,
-                            selectable: false,                                
-                            name: 'safeObject',
-                            shadow: defaultShadow,
-                            id: objectId,
-
-                        })
-                        canvas.remove(object)
-                        canvas.add(triangleShape)
-                        handleSelectBorder(activeBorder)
-                        triangleShape.sendToBack()
-                        canvas.centerObject(triangleShape)
-                        // updateModifications(true)
-                    break;
-                    
-                    case 'rotated-square':
-                        var rotatedSquareShape = new fabric.Polygon([
-                                { x: width / 2, y: 0 },
-                                { x: width, y: height / 2 },
-                                { x: width / 2, y: height },
-                                { x: 0, y: height / 2 }
-                            ], 
-                            {
+    function setShape(canvas){
+        var Objects = canvas.getObjects();
+        Objects.forEach(function(object){
+            if (object.type !== 'line') {
+                var top = nTop;
+                var left = nLeft;
+                var width = nwidth;
+                var height = nheight;
+                var objectfill = object.fill;
+                var objectId = object.id;
+    
+                if(object.name == 'safeObject'){
+                    switch (shape){
+                        case 'square':
+                            // var squareShape = new fabric.Rect({
+                            //     height: height,
+                            //     width: width,
+                            //     left: left,
+                            //     top: top,
+                            //     fill: objectfill,
+                            //     selectable: false,                                
+                            //     name: 'safeObject',
+                            //     shadow: defaultShadow,
+    
+                            // })
+                            // canvas.remove(object)
+                            // canvas.add(squareShape)
+    
+                            // fabric.util.loadImage('../../old-world-border.png', function (img) {
+                            //     squareShape.setPatternFill({
+                            //       source: img,
+                            //       repeat: 'no-repeat',
+                            //       patternTransform: [0.2, 0, 0, 0.2, 0, 0]
+                            //     });
+                            //     canvas.renderAll();
+                            //   });
+    
+                            // console.log(squareShape.getCenterPoint(), 'square shape')
+                            // squareShape.sendToBack()
+                            // canvas.centerObject(squareShape)
+                            var squareShape = new fabric.Rect({
+                                height: height,
+                                width: width,
                                 left: left,
                                 top: top,
                                 fill: objectfill,
@@ -1199,199 +1155,296 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                                 name: 'safeObject',
                                 shadow: defaultShadow,
                                 id: objectId,
-                            }
-                        )
-                        canvas.remove(object)
-                        canvas.add(rotatedSquareShape)
-                        handleSelectBorder(activeBorder)
-                        rotatedSquareShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-
-                    case 'turn-left':
-                        var turnLeftShape = new fabric.Polygon([
-                                {x: 0, y: height / 2},
-                                {x: width / 2, y: 0}, 
-                                {x: width, y: 0},
-                                {x: width, y: height},
-                                {x: width / 2, y: height},
-                            ], 
-                            {
+                            });
+                              
+                            canvas.remove(object);
+                            canvas.add(squareShape);
+                            handleSelectBorder(activeBorder)
+                            // console.log(squareShape.getCenterPoint(), 'square shape');
+                            squareShape.sendToBack();
+                            canvas.centerObject(squareShape);
+                            // updateModifications(true)
+                        break;
+                        
+                        case 'rounded-square':
+                            var roundedSquareShape = new fabric.Rect({
+                                height: height,
+                                width: width,
                                 left: left,
                                 top: top,
+                                rx: 15,
+                                ry: 15,
                                 fill: objectfill,
-                                selectable: false,
+                                selectable: false,                                
                                 name: 'safeObject',
                                 shadow: defaultShadow,
                                 id: objectId,
-                            }
-                        )
-                        canvas.remove(object)
-                        canvas.add(turnLeftShape)
-                        handleSelectBorder(activeBorder)
-                        turnLeftShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-
-                    case 'turn-right':
-                        var turnRightShape = new fabric.Polygon([
-                                {x: 0, y: 0},
-                                {x: width / 2, y: 0}, 
-                                {x: width, y: height/2},
-                                {x: width / 2, y: height},
-                                {x: 0, y: height},
-                            ], 
-                            {
+                                // strokeWidth: 5,
+                                // stroke: 'black'
+    
+                            })
+                            canvas.remove(object)
+                            canvas.add(roundedSquareShape)
+                            handleSelectBorder(activeBorder)
+                            roundedSquareShape.sendToBack()
+                            canvas.centerObject(roundedSquareShape)
+                            // updateModifications(true)
+                        break;
+    
+                        case 'oval':
+                            var ellipseShape = new fabric.Ellipse({
+                                ry: height / 2,
+                                rx: width / 2,
+                                fill: objectfill,
                                 left: left,
                                 top: top,
-                                fill: objectfill,
                                 selectable: false,
                                 name: 'safeObject',
                                 shadow: defaultShadow,
-                                id: objectId,
-                            }
-                        )
-                        canvas.remove(object)
-                        canvas.add(turnRightShape)
-                        handleSelectBorder(activeBorder)
-                        turnRightShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-                    
-                    case 'arrow-right':
-                        var arrowRightShape = new fabric.Polyline([
-                                {x: 0, y: (height/5)*4 },
-                                {x: width / 2, y: (height/5)*4 },
-                                {x: width / 2, y: height },
-                                {x: width, y: height / 2 },
-                                {x: width / 2, y: 0}, 
-                                {x: width / 2, y: (height/5) },
-                                {x: 0, y: (height/5)},
-                            ], 
-                            {
+                                id: objectId
+                            });
+                            canvas.remove(object)
+                            canvas.add(ellipseShape)
+                            handleSelectBorder(activeBorder)
+                            ellipseShape.sendToBack()
+                            canvas.centerObject(ellipseShape)
+                            // updateModifications(true)
+                            // ellipseShape.on('selected', function() {
+                            //     canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, 0.5) // set zoom at static value for now
+                            // })
+                        break;
+    
+                        case 'triangle':
+                            var triangleShape = new fabric.Triangle({
+                                height: height,
+                                width: width,
                                 left: left,
                                 top: top,
                                 fill: objectfill,
-                                selectable: false,
+                                selectable: false,                                
                                 name: 'safeObject',
                                 shadow: defaultShadow,
                                 id: objectId,
-                            }
-                        )
-                        canvas.remove(object)
-                        canvas.add(arrowRightShape)
-                        handleSelectBorder(activeBorder)
-                        arrowRightShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-
-                    case 'arrow-left':
-                        var arrowLeftShape = new fabric.Polygon([
-                                {x: 0, y: height / 2},
-                                {x: width / 2, y: 0}, 
-                                {x: width / 2, y: (height/5) },
-                                {x: width, y: (height/5) },
-                                {x: width, y: (height/5)*4 },
-                                {x: width / 2, y: (height/5)*4 },
-                                {x: width / 2, y: height},
-                            ], 
-                            {
+    
+                            })
+                            canvas.remove(object)
+                            canvas.add(triangleShape)
+                            handleSelectBorder(activeBorder)
+                            triangleShape.sendToBack()
+                            canvas.centerObject(triangleShape)
+                            // updateModifications(true)
+                        break;
+                        
+                        case 'rotated-square':
+                            var rotatedSquareShape = new fabric.Polygon([
+                                    { x: width / 2, y: 0 },
+                                    { x: width, y: height / 2 },
+                                    { x: width / 2, y: height },
+                                    { x: 0, y: height / 2 }
+                                ], 
+                                {
+                                    left: left,
+                                    top: top,
+                                    fill: objectfill,
+                                    selectable: false,
+                                    name: 'safeObject',
+                                    shadow: defaultShadow,
+                                    id: objectId,
+                                }
+                            )
+                            canvas.remove(object)
+                            canvas.add(rotatedSquareShape)
+                            handleSelectBorder(activeBorder)
+                            rotatedSquareShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+    
+                        case 'turn-left':
+                            var turnLeftShape = new fabric.Polygon([
+                                    {x: 0, y: height / 2},
+                                    {x: width / 2, y: 0}, 
+                                    {x: width, y: 0},
+                                    {x: width, y: height},
+                                    {x: width / 2, y: height},
+                                ], 
+                                {
+                                    left: left,
+                                    top: top,
+                                    fill: objectfill,
+                                    selectable: false,
+                                    name: 'safeObject',
+                                    shadow: defaultShadow,
+                                    id: objectId,
+                                }
+                            )
+                            canvas.remove(object)
+                            canvas.add(turnLeftShape)
+                            handleSelectBorder(activeBorder)
+                            turnLeftShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+    
+                        case 'turn-right':
+                            var turnRightShape = new fabric.Polygon([
+                                    {x: 0, y: 0},
+                                    {x: width / 2, y: 0}, 
+                                    {x: width, y: height/2},
+                                    {x: width / 2, y: height},
+                                    {x: 0, y: height},
+                                ], 
+                                {
+                                    left: left,
+                                    top: top,
+                                    fill: objectfill,
+                                    selectable: false,
+                                    name: 'safeObject',
+                                    shadow: defaultShadow,
+                                    id: objectId,
+                                }
+                            )
+                            canvas.remove(object)
+                            canvas.add(turnRightShape)
+                            handleSelectBorder(activeBorder)
+                            turnRightShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+                        
+                        case 'arrow-right':
+                            var arrowRightShape = new fabric.Polyline([
+                                    {x: 0, y: (height/5)*4 },
+                                    {x: width / 2, y: (height/5)*4 },
+                                    {x: width / 2, y: height },
+                                    {x: width, y: height / 2 },
+                                    {x: width / 2, y: 0}, 
+                                    {x: width / 2, y: (height/5) },
+                                    {x: 0, y: (height/5)},
+                                ], 
+                                {
+                                    left: left,
+                                    top: top,
+                                    fill: objectfill,
+                                    selectable: false,
+                                    name: 'safeObject',
+                                    shadow: defaultShadow,
+                                    id: objectId,
+                                }
+                            )
+                            canvas.remove(object)
+                            canvas.add(arrowRightShape)
+                            handleSelectBorder(activeBorder)
+                            arrowRightShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+    
+                        case 'arrow-left':
+                            var arrowLeftShape = new fabric.Polygon([
+                                    {x: 0, y: height / 2},
+                                    {x: width / 2, y: 0}, 
+                                    {x: width / 2, y: (height/5) },
+                                    {x: width, y: (height/5) },
+                                    {x: width, y: (height/5)*4 },
+                                    {x: width / 2, y: (height/5)*4 },
+                                    {x: width / 2, y: height},
+                                ], 
+                                {
+                                    left: left,
+                                    top: top,
+                                    fill: objectfill,
+                                    selectable: false,
+                                    name: 'safeObject',
+                                    shadow: defaultShadow,
+                                    id: objectId,
+                                }
+                            )
+                            canvas.remove(object)
+                            canvas.add(arrowLeftShape)
+                            handleSelectBorder(activeBorder)
+                            arrowLeftShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+    
+                        case 'stop':
+                            var stopShape = new fabric.Polygon([
+                                    {x: 0, y: (height / 3)*2},
+                                    {x: width / 3, y: height}, 
+                                    {x: (width / 3)*2, y: height}, 
+                                    {x: width, y: (height/3)*2 },
+                                    {x: width, y: height/3 },
+                                    {x: (width/3)*2, y: 0 },
+                                    {x: width / 3, y: 0 },
+                                    {x: 0, y: height/3},
+                                ], 
+                                {
+                                    left: left,
+                                    top: top,
+                                    fill: objectfill,
+                                    selectable: false,
+                                    name: 'safeObject',
+                                    shadow: defaultShadow,
+                                    id: objectId,
+                                }
+                            )
+                            canvas.remove(object)
+                            canvas.add(stopShape)
+                            handleSelectBorder(activeBorder)
+                            stopShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+    
+                        case 'rounded-top':
+                            var roundedTopShape = new fabric.Rect({
+                                height: height,
+                                width: width,
                                 left: left,
                                 top: top,
+                                rx: width,
+                                ry: 10,
                                 fill: objectfill,
-                                selectable: false,
+                                selectable: false,                                
                                 name: 'safeObject',
                                 shadow: defaultShadow,
                                 id: objectId,
-                            }
-                        )
-                        canvas.remove(object)
-                        canvas.add(arrowLeftShape)
-                        handleSelectBorder(activeBorder)
-                        arrowLeftShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-
-                    case 'stop':
-                        var stopShape = new fabric.Polygon([
-                                {x: 0, y: (height / 3)*2},
-                                {x: width / 3, y: height}, 
-                                {x: (width / 3)*2, y: height}, 
-                                {x: width, y: (height/3)*2 },
-                                {x: width, y: height/3 },
-                                {x: (width/3)*2, y: 0 },
-                                {x: width / 3, y: 0 },
-                                {x: 0, y: height/3},
-                            ], 
-                            {
+    
+                            })
+                            canvas.remove(object)
+                            canvas.add(roundedTopShape)
+                            handleSelectBorder(activeBorder)
+                            roundedTopShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+    
+                        case 'rounded-sides':
+                            var roundedSidesShape = new fabric.Rect({
+                                height: height,
+                                width: width,
                                 left: left,
                                 top: top,
+                                rx: 10,
+                                ry: height,
                                 fill: objectfill,
-                                selectable: false,
+                                selectable: false,                                
                                 name: 'safeObject',
                                 shadow: defaultShadow,
                                 id: objectId,
-                            }
-                        )
-                        canvas.remove(object)
-                        canvas.add(stopShape)
-                        handleSelectBorder(activeBorder)
-                        stopShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-
-                    case 'rounded-top':
-                        var roundedTopShape = new fabric.Rect({
-                            height: height,
-                            width: width,
-                            left: left,
-                            top: top,
-                            rx: width,
-                            ry: 10,
-                            fill: objectfill,
-                            selectable: false,                                
-                            name: 'safeObject',
-                            shadow: defaultShadow,
-                            id: objectId,
-
-                        })
-                        canvas.remove(object)
-                        canvas.add(roundedTopShape)
-                        handleSelectBorder(activeBorder)
-                        roundedTopShape.sendToBack()
-                        // updateModifications(true)
-                    break;
-
-                    case 'rounded-sides':
-                        var roundedSidesShape = new fabric.Rect({
-                            height: height,
-                            width: width,
-                            left: left,
-                            top: top,
-                            rx: 10,
-                            ry: height,
-                            fill: objectfill,
-                            selectable: false,                                
-                            name: 'safeObject',
-                            shadow: defaultShadow,
-                            id: objectId,
-
-                        })
-                        canvas.remove(object)
-                        canvas.add(roundedSidesShape)
-                        handleSelectBorder(activeBorder)
-                        roundedSidesShape.sendToBack()
-                        // updateModifications(true)
-                    break;
+    
+                            })
+                            canvas.remove(object)
+                            canvas.add(roundedSidesShape)
+                            handleSelectBorder(activeBorder)
+                            roundedSidesShape.sendToBack()
+                            // updateModifications(true)
+                        break;
+                    }
                 }
             }
-            
-        }
-    });
+        });
+        canvas.renderAll();
+    }
 
-    
-    
-    canvas.renderAll();
+    setShape(canvas)
+    if(firstLoad){
+        setShape(backCanvas)
+    }
 
     handleSelectFixingMethode(activeFixingMethode)
     // updateModifications(true, 'selection de shape')
@@ -1399,95 +1452,155 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
 
 //fonctions concernant les fixings methode
 function resetFixing(){
-    var Objects = canvas.getObjects();
-    Objects.forEach(function(object){
-        if(object.type != 'line'){
-            if(object.name == 'screw1' || object.name == 'screw2' ||  object.name == 'screw3' || object.name == 'screw4'
-                || object.name == 'screw-cap1' || object.name == 'screw-cap2' || object.name == 'screw-cap3' || object.name == 'screw-cap4'
-                || object.name == 'suction-cup1' || object.name == 'suction-cup2' || object.name == 'suction-cup3' || object.name == 'suction-cup4'
-                || object.name == 'standoff1' || object.name == 'standoff2' || object.name == 'standoff3' || object.name == 'standoff4'
-                || object.name == 'flag' || object.name == 'flag1' || object.name == 'flag2' 
-                || object.name == 'table-stand'
-                || object.name == 'ceiling1' || object.name == 'ceiling2'
-                || object.name == 'hanging-hole' || object.name == 'hanging-hole1' || object.name == 'hanging-hole2'
-                || object.name == 'pole'
-                || object.name == 'cable-hole1' || object.name == 'cable-hole2' || object.name == 'cable-hole3' || object.name == 'cable-hole4'
-                || object.name == 'table-clamp1' || object.name == 'table-clamp2'
-                || object.name == 'base-support1' || object.name == 'base-support2'
-            ){
-                canvas.remove(object)
-                canvas.renderAll()
+    function reset(canvas){
+        var Objects = canvas.getObjects();
+        Objects.forEach(function(object){
+            if(object.type != 'line'){
+                if(object.name == 'screw1' || object.name == 'screw2' ||  object.name == 'screw3' || object.name == 'screw4'
+                    || object.name == 'screw-cap1' || object.name == 'screw-cap2' || object.name == 'screw-cap3' || object.name == 'screw-cap4'
+                    || object.name == 'suction-cup1' || object.name == 'suction-cup2' || object.name == 'suction-cup3' || object.name == 'suction-cup4'
+                    || object.name == 'standoff1' || object.name == 'standoff2' || object.name == 'standoff3' || object.name == 'standoff4'
+                    || object.name == 'flag' || object.name == 'flag1' || object.name == 'flag2' 
+                    || object.name == 'table-stand'
+                    || object.name == 'ceiling1' || object.name == 'ceiling2'
+                    || object.name == 'hanging-hole' || object.name == 'hanging-hole1' || object.name == 'hanging-hole2'
+                    || object.name == 'pole'
+                    || object.name == 'cable-hole1' || object.name == 'cable-hole2' || object.name == 'cable-hole3' || object.name == 'cable-hole4'
+                    || object.name == 'table-clamp1' || object.name == 'table-clamp2'
+                    || object.name == 'base-support1' || object.name == 'base-support2'
+                ){
+                    canvas.remove(object)
+                    canvas.renderAll()
+                }
             }
-        }
-    })
+        })
+    }
+    reset(canvas)
+    if(firstLoad){
+        reset(backCanvas)
+    }
 }
 var activeFixingMethode = ''
 function handleSelectFixingMethode(methode){
     activeFixingMethode = methode
 
-    var Objects = canvas.getObjects();
-    Objects.forEach(function(object){
-        if (object.type !== 'line') {
-
-            if(methode == 'none'){
-                resetFixing()
-            }
-            
-            if(object.name == 'safeObject'){
-                if(methode == 'screw'){
+    function setFixing(canvas){
+        var Objects = canvas.getObjects();
+        Objects.forEach(function(object){
+            if (object.type !== 'line') {
+    
+                if(methode == 'none'){
                     resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        if(sizeRatio == 'small'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                                img.scale(fixScale)
+                }
+                
+                if(object.name == 'safeObject'){
+                    if(methode == 'screw'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            if(sizeRatio == 'small'){
+                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left
+                                    img.set('name', 'screw1')
+                                    img.id = 7
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'screw2')
+                                    img.id = 8
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left
+                                    img.set('name', 'screw1')
+                                    img.id = 7
+            
+                                    img.selectable = false
+                                    canvas.add(img)
     
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
+                                });
         
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left
-                                img.set('name', 'screw1')
-                                img.id = 7
-        
-                                img.selectable = false
-                                canvas.add(img)
-                            });
+                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'screw2')
+                                    img.id = 8
+            
+                                    img.selectable = false
+                                    canvas.add(img)
     
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
+                                });
         
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'screw2')
-                                img.id = 8
+                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left
+                                    img.set('name', 'screw3')
+                                    img.id = 9
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+    
+                                });
         
-                                img.selectable = false
-                                canvas.add(img)
-                            });
+                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'screw4')
+                                    img.id = 10
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+    
                         }
-                        if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                                img.scale(fixScale)
-    
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top
-                                img.left = object.left
-                                img.set('name', 'screw1')
-                                img.id = 7
-        
-                                img.selectable = false
-                                canvas.add(img)
-
-                            });
-    
+                        if(selectedShape == 'triangle'){
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -1495,14 +1608,13 @@ function handleSelectFixingMethode(methode){
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'screw2')
-                                img.id = 8
+                                img.top = object.top + (newHeight/2)
+                                img.left = object.left + (object.width /2 - (newWidth/2))
+                                img.set('name', 'screw1')
+                                img.id = 7
         
                                 img.selectable = false
-                                canvas.add(img)
-
+                                    canvas.add(img)
                             });
     
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1513,13 +1625,148 @@ function handleSelectFixingMethode(methode){
                                 var newHeight = img.height * img.scaleY;
         
                                 img.top = object.top + (object.height - (newHeight))
-                                img.left = object.left
+                                img.left = object.left + (newWidth/2)
+                                img.set('name', 'screw2')
+                                img.id = 8
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height - (newHeight))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
                                 img.set('name', 'screw3')
                                 img.id = 9
         
                                 img.selectable = false
+                                    canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'screw1')
+                                img.id = 7
+        
+                                img.selectable = false
                                 canvas.add(img)
-
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'screw2')
+                                img.id = 8
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'screw1')
+                                img.id = 7
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth)
+                                img.set('name', 'screw2')
+                                img.id = 8
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'screw1')
+                                img.id = 7
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'screw2')
+                                img.id = 8
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'stop'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'screw1')
+                                img.id = 7
+        
+                                img.selectable = false
+                                    canvas.add(img)
                             });
     
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1529,207 +1776,170 @@ function handleSelectFixingMethode(methode){
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (object.height - (newHeight))
+                                img.top = object.top + (object.height /2 - (newHeight/2))
                                 img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'screw4')
-                                img.id = 10
+                                img.set('name', 'screw2')
+                                img.id = 8
+        
+                                img.selectable = false
+                                    canvas.add(img)
+                            });
+                        }
+                    }
+                    if(methode == 'screw-cap'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            if(sizeRatio == 'small'){
+                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                    // img.scaleToWidth(object.width);
+                                    // img.scaleToHeight(object.height);
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left
+                                    img.set('name', 'screw-cap1')
+                                    img.id = 11
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'screw-cap2')
+                                    img.id = 12
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left
+                                    img.set('name', 'screw-cap1')
+                                    img.id = 11
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'screw-cap2')
+                                    img.id = 12
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left
+                                    img.set('name', 'screw-cap3')
+                                    img.id = 13
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'screw-cap4')
+                                    img.id = 14
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                        }
+                        if(selectedShape == 'triangle'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (newHeight/2)
+                                img.left = object.left + (object.width /2 - (newWidth/2))
+                                img.set('name', 'screw-cap1')
+                                img.id = 11
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height - (newHeight))
+                                img.left = object.left + (newWidth/2)
+                                img.set('name', 'screw-cap2')
+                                img.id = 12
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height - (newHeight))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'screw-cap3')
+                                img.id = 13
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
                         }
-
-                    }
-                    if(selectedShape == 'triangle'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (newHeight/2)
-                            img.left = object.left + (object.width /2 - (newWidth/2))
-                            img.set('name', 'screw1')
-                            img.id = 7
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (newWidth/2)
-                            img.set('name', 'screw2')
-                            img.id = 8
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'screw3')
-                            img.id = 9
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'screw1')
-                            img.id = 7
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'screw2')
-                            img.id = 8
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'screw1')
-                            img.id = 7
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'screw2')
-                            img.id = 8
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'screw1')
-                            img.id = 7
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'screw2')
-                            img.id = 8
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'stop'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'screw1')
-                            img.id = 7
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'screw2')
-                            img.id = 8
-    
-                            img.selectable = false
-                                canvas.add(img)
-                        });
-                    }
-                }
-                if(methode == 'screw-cap'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        if(sizeRatio == 'small'){
+                        if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
@@ -1740,6 +1950,107 @@ function handleSelectFixingMethode(methode){
                                 var newHeight = img.height * img.scaleY;
         
                                 img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'screw-cap1')
+                                img.id = 11
+        
+                                img.selectable = false
+                            canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'screw-cap2')
+                                img.id = 12
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'screw-cap1')
+                                img.id = 11
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth)
+                                img.set('name', 'screw-cap2')
+                                img.id = 12
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'screw-cap1')
+                                img.id = 11
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'screw-cap2')
+                                img.id = 12
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'stop'){
+                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
                                 img.left = object.left
                                 img.set('name', 'screw-cap1')
                                 img.id = 11
@@ -1764,271 +2075,118 @@ function handleSelectFixingMethode(methode){
                                 canvas.add(img)
                             });
                         }
-                        if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                                img.scale(fixScale)
-    
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
+                    }
+                    if(methode == 'suction-cup'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            if(sizeRatio == 'small'){
+                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                    img.scale(fixScale)
         
-                                img.top = object.top
-                                img.left = object.left
-                                img.set('name', 'screw-cap1')
-                                img.id = 11
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left
+                                    img.set('name', 'suction-cup1')
+                                    img.id = 15
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
         
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-    
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
+                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'suction-cup2')
+                                    img.id = 16
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                    img.scale(fixScale)
         
-                                img.top = object.top
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'screw-cap2')
-                                img.id = 12
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left
+                                    img.set('name', 'suction-cup1')
+                                    img.id = 15
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
         
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-    
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
+                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'suction-cup2')
+                                    img.id = 16
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
         
-                                img.top = object.top + (object.height - (newHeight))
-                                img.left = object.left
-                                img.set('name', 'screw-cap3')
-                                img.id = 13
+                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left
+                                    img.set('name', 'suction-cup3')
+                                    img.id = 17
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
         
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-    
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top + (object.height - (newHeight))
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'screw-cap4')
-                                img.id = 14
-        
-                                img.selectable = false
-                                canvas.add(img)
-                            });
+                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'suction-cup4')
+                                    img.id = 18
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
                         }
-                    }
-                    if(selectedShape == 'triangle'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (newHeight/2)
-                            img.left = object.left + (object.width /2 - (newWidth/2))
-                            img.set('name', 'screw-cap1')
-                            img.id = 11
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (newWidth/2)
-                            img.set('name', 'screw-cap2')
-                            img.id = 12
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'screw-cap3')
-                            img.id = 13
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'screw-cap1')
-                            img.id = 11
-    
-                            img.selectable = false
-                        canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'screw-cap2')
-                            img.id = 12
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'screw-cap1')
-                            img.id = 11
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'screw-cap2')
-                            img.id = 12
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'screw-cap1')
-                            img.id = 11
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'screw-cap2')
-                            img.id = 12
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'stop'){
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'screw-cap1')
-                            img.id = 11
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'screw-cap2')
-                            img.id = 12
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                }
-                if(methode == 'suction-cup'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        if(sizeRatio == 'small'){
+                        if(selectedShape == 'triangle'){
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
-    
+                                
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left
+                                img.top = object.top + (newHeight/2)
+                                img.left = object.left + (object.width /2 - (newWidth/2))
                                 img.set('name', 'suction-cup1')
                                 img.id = 15
         
@@ -2043,40 +2201,8 @@ function handleSelectFixingMethode(methode){
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'suction-cup2')
-                                img.id = 16
-        
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-                        }
-                        if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                                img.scale(fixScale)
-    
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top
-                                img.left = object.left
-                                img.set('name', 'suction-cup1')
-                                img.id = 15
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-    
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top
-                                img.left = object.left + (object.width - newWidth)
+                                img.top = object.top + (object.height - (newHeight))
+                                img.left = object.left + (newWidth/2)
                                 img.set('name', 'suction-cup2')
                                 img.id = 16
         
@@ -2092,13 +2218,133 @@ function handleSelectFixingMethode(methode){
                                 var newHeight = img.height * img.scaleY;
         
                                 img.top = object.top + (object.height - (newHeight))
-                                img.left = object.left
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
                                 img.set('name', 'suction-cup3')
                                 img.id = 17
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'suction-cup1')
+                                img.id = 15
+        
+                                img.selectable = false
+                            canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'suction-cup2')
+                                img.id = 16
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'suction-cup1')
+                                img.id = 15
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth)
+                                img.set('name', 'suction-cup2')
+                                img.id = 16
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'suction-cup1')
+                                img.id = 15
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'suction-cup2')
+                                img.id = 16
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'stop'){
+                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'suction-cup1')
+                                img.id = 15
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
     
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
@@ -2107,263 +2353,143 @@ function handleSelectFixingMethode(methode){
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth)
+                                img.set('name', 'suction-cup2')
+                                img.id = 16
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                    }
+                    if(methode == 'standoff'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            if(sizeRatio == 'small'){
+                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left
+                                    img.set('name', 'standoff1')
+                                    img.id = 19
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'standoff2')
+                                    img.id = 20
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left
+                                    img.set('name', 'standoff1')
+                                    img.id = 19
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'standoff2')
+                                    img.id = 20
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left
+                                    img.set('name', 'standoff3')
+                                    img.id = 21
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                    img.scale(fixScale)
+                                    
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height - (newHeight))
+                                    img.left = object.left + (object.width - newWidth)
+                                    img.set('name', 'standoff4')
+                                    img.id = 22
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                        }
+                        if(selectedShape == 'triangle'){
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (newHeight/2)
+                                img.left = object.left + (object.width /2 - (newWidth/2))
+                                img.set('name', 'standoff1')
+                                img.id = 19
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
                                 img.top = object.top + (object.height - (newHeight))
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'suction-cup4')
-                                img.id = 18
-        
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-                        }
-                    }
-                    if(selectedShape == 'triangle'){
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (newHeight/2)
-                            img.left = object.left + (object.width /2 - (newWidth/2))
-                            img.set('name', 'suction-cup1')
-                            img.id = 15
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (newWidth/2)
-                            img.set('name', 'suction-cup2')
-                            img.id = 16
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'suction-cup3')
-                            img.id = 17
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'suction-cup1')
-                            img.id = 15
-    
-                            img.selectable = false
-                        canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'suction-cup2')
-                            img.id = 16
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'suction-cup1')
-                            img.id = 15
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'suction-cup2')
-                            img.id = 16
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'suction-cup1')
-                            img.id = 15
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'suction-cup2')
-                            img.id = 16
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'stop'){
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'suction-cup1')
-                            img.id = 15
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'suction-cup2')
-                            img.id = 16
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                }
-                if(methode == 'standoff'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        if(sizeRatio == 'small'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                                img.scale(fixScale)
-    
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left
-                                img.set('name', 'standoff1')
-                                img.id = 19
-        
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-    
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'standoff2')
-                                img.id = 20
-        
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-                        }
-                        if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                                img.scale(fixScale)
-    
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top
-                                img.left = object.left
-                                img.set('name', 'standoff1')
-                                img.id = 19
-                                img.selectable = false
-                                canvas.add(img)
-                            });
-    
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                                img.scale(fixScale)
-                                
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
-        
-                                img.top = object.top
-                                img.left = object.left + (object.width - newWidth)
+                                img.left = object.left + (newWidth/2)
                                 img.set('name', 'standoff2')
                                 img.id = 20
         
@@ -2379,13 +2505,133 @@ function handleSelectFixingMethode(methode){
                                 var newHeight = img.height * img.scaleY;
         
                                 img.top = object.top + (object.height - (newHeight))
-                                img.left = object.left
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
                                 img.set('name', 'standoff3')
                                 img.id = 21
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'standoff1')
+                                img.id = 19
+        
+                                img.selectable = false
+                            canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'standoff2')
+                                img.id = 20
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                // img.scaleToWidth(object.width);
+                                // img.scaleToHeight(object.height);
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left +(newWidth/2)
+                                img.set('name', 'standoff1')
+                                img.id = 19
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth)
+                                img.set('name', 'standoff2')
+                                img.id = 20
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'standoff1')
+                                img.id = 19
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+        
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left + (object.width - newWidth) - (newWidth/2)
+                                img.set('name', 'standoff2')
+                                img.id = 20
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
+                        if(selectedShape == 'stop'){
+                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left
+                                img.set('name', 'standoff1')
+                                img.id = 19
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
     
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
                                 img.scale(fixScale)
@@ -2394,667 +2640,488 @@ function handleSelectFixingMethode(methode){
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (object.height - (newHeight))
+                                img.top = object.top + (object.height /2 - (newHeight/2))
                                 img.left = object.left + (object.width - newWidth)
-                                img.set('name', 'standoff4')
-                                img.id = 22
+                                img.set('name', 'standoff2')
+                                img.id = 20
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
                         }
                     }
-                    if(selectedShape == 'triangle'){
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (newHeight/2)
-                            img.left = object.left + (object.width /2 - (newWidth/2))
-                            img.set('name', 'standoff1')
-                            img.id = 19
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (newWidth/2)
-                            img.set('name', 'standoff2')
-                            img.id = 20
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height - (newHeight))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'standoff3')
-                            img.id = 21
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'standoff1')
-                            img.id = 19
-    
-                            img.selectable = false
-                        canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'standoff2')
-                            img.id = 20
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            // img.scaleToWidth(object.width);
-                            // img.scaleToHeight(object.height);
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left +(newWidth/2)
-                            img.set('name', 'standoff1')
-                            img.id = 19
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'standoff2')
-                            img.id = 20
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'standoff1')
-                            img.id = 19
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-    
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth) - (newWidth/2)
-                            img.set('name', 'standoff2')
-                            img.id = 20
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'stop'){
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left
-                            img.set('name', 'standoff1')
-                            img.id = 19
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + (object.height /2 - (newHeight/2))
-                            img.left = object.left + (object.width - newWidth)
-                            img.set('name', 'standoff2')
-                            img.id = 20
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                }
-                if(methode == 'flag'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'turn-right'){
-                        if(sizeRatio == 'small'){
-                            fabric.Image.fromURL('../../fixing-methodes/flag.png', function(img) {
-                                img.scale(fixScale)
-    
-                                img.setCoords();
-                                var newWidth = img.width * img.scaleX;
-                                var newHeight = img.height * img.scaleY;
+                    if(methode == 'flag'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'turn-right'){
+                            if(sizeRatio == 'small'){
+                                fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                                    img.scale(fixScale)
         
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left - (newWidth / 2)
-                                img.set('name', 'flag1')
-                                img.id = 23
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left - (newWidth / 2)
+                                    img.set('name', 'flag1')
+                                    img.id = 23
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                    img.bringToFront()
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                                    img.scale(fixScale)
         
-                                img.selectable = false
-                                canvas.add(img)
-                                img.bringToFront()
-                            });
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + ((object.height /4) - (newHeight/2))
+                                    img.left = object.left - (newWidth / 2)
+                                    img.set('name', 'flag1')
+                                    img.id = 23
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (((object.height /4)*3) - (newHeight/2))
+                                    img.left = object.left - (newWidth / 2)
+                                    img.set('name', 'flag2')
+                                    img.id = 24
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
                         }
-                        if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                        if(selectedShape == 'turn-left'){
+                            if(sizeRatio == 'small'){
+                                fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (object.height /2 - (newHeight/2))
+                                    img.left = object.left + object.width - (newWidth / 2)
+                                    img.set('name', 'flag')
+                                    img.id = 23
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                    img.bringToFront()
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + ((object.height /4) - (newHeight/2))
+                                    img.left = object.left + object.width - (newWidth / 2)
+                                    img.set('name', 'flag1')
+                                    img.id = 23
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+        
+                                fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                                    img.scale(fixScale)
+        
+                                    img.setCoords();
+                                    var newWidth = img.width * img.scaleX;
+                                    var newHeight = img.height * img.scaleY;
+            
+                                    img.top = object.top + (((object.height /4)*3) - (newHeight/2))
+                                    img.left = object.left + object.width - (newWidth / 2)
+                                    img.set('name', 'flag2')
+                                    img.id = 24
+            
+                                    img.selectable = false
+                                    canvas.add(img)
+                                });
+                            }
+                        }
+                    }
+                    if(methode == 'table-stand'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square'){
+                            var points = [
+                                {x:0, y:0},
+                                {x:-10, y:object.height/10},
+                                {x:object.width + 10, y:object.height/10},
+                                {x:object.width, y:0},
+                            ]
+                            var tableStand = new fabric.Polygon(points, {
+                                id: 25,
+                                left: object.left-10,
+                                top: object.top + object.height,
+                                fill: 'grey',
+                                name: 'table-stand',
+                                selectable: false,
+                            })
+                            // tableStand.setGradient('fill', {
+                            //     x1: 0,
+                            //     y1: 0,
+                            //     x2: 0,
+                            //     y2: 0,
+                            //     colorStops:{
+                            //         0: 'red',
+                            //         0.2: 'green',
+                            //         0.6: 'purple',
+                            //         0.8: 'yellow',
+                            //         1: 'blue'
+                            //     }
+                            // });
+                            canvas.add(tableStand)
+                            tableStand.sendToBack()
+                        }
+                    }
+                    if(methode == 'ceiling'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
     
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + ((object.height /4) - (newHeight/2))
-                                img.left = object.left - (newWidth / 2)
-                                img.set('name', 'flag1')
-                                img.id = 23
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + (object.width/5) - newWidth
+                                img.set('name', 'ceiling1')
+                                img.id = 26
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
     
-                            fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
-    
+                                
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (((object.height /4)*3) - (newHeight/2))
-                                img.left = object.left - (newWidth / 2)
-                                img.set('name', 'flag2')
-                                img.id = 24
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + ((object.width/5)*4) 
+                                img.set('name', 'ceiling2')
+                                img.id = 27
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
                         }
-                    }
-                    if(selectedShape == 'turn-left'){
-                        if(sizeRatio == 'small'){
-                            fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                        if(selectedShape == 'turn-left'){
+                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
     
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (object.height /2 - (newHeight/2))
-                                img.left = object.left + object.width - (newWidth / 2)
-                                img.set('name', 'flag')
-                                img.id = 23
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + ((object.width/5)*3.5) - newWidth
+                                img.set('name', 'ceiling1')
+                                img.id = 26
         
                                 img.selectable = false
                                 canvas.add(img)
-                                img.bringToFront()
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + ((object.width/5)*4) 
+                                img.set('name', 'ceiling2')
+                                img.id = 27
+        
+                                img.selectable = false
+                                canvas.add(img)
                             });
                         }
-                        if(sizeRatio == 'big'){
-                            fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                        if(selectedShape == 'turn-right'){
+                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
     
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + ((object.height /4) - (newHeight/2))
-                                img.left = object.left + object.width - (newWidth / 2)
-                                img.set('name', 'flag1')
-                                img.id = 23
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + (object.width/5) - newWidth
+                                img.set('name', 'ceiling1')
+                                img.id = 26
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
     
-                            fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
-    
+                                
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
         
-                                img.top = object.top + (((object.height /4)*3) - (newHeight/2))
-                                img.left = object.left + object.width - (newWidth / 2)
-                                img.set('name', 'flag2')
-                                img.id = 24
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + ((object.width/5)*1.5) 
+                                img.set('name', 'ceiling2')
+                                img.id = 27
         
                                 img.selectable = false
                                 canvas.add(img)
                             });
                         }
                     }
-                }
-                if(methode == 'table-stand'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square'){
-                        var points = [
-                            {x:0, y:0},
-                            {x:-10, y:object.height/10},
-                            {x:object.width + 10, y:object.height/10},
-                            {x:object.width, y:0},
-                        ]
-                        var tableStand = new fabric.Polygon(points, {
-                            id: 25,
-                            left: object.left-10,
-                            top: object.top + object.height,
-                            fill: 'grey',
-                            name: 'table-stand',
-                            selectable: false,
-                        })
-                        // tableStand.setGradient('fill', {
-                        //     x1: 0,
-                        //     y1: 0,
-                        //     x2: 0,
-                        //     y2: 0,
-                        //     colorStops:{
-                        //         0: 'red',
-                        //         0.2: 'green',
-                        //         0.6: 'purple',
-                        //         0.8: 'yellow',
-                        //         1: 'blue'
-                        //     }
-                        // });
-                        canvas.add(tableStand)
-                        tableStand.sendToBack()
-                    }
-                }
-                if(methode == 'ceiling'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top - (newHeight/2)
-                            img.left = object.left + (object.width/5) - newWidth
-                            img.set('name', 'ceiling1')
-                            img.id = 26
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top - (newHeight/2)
-                            img.left = object.left + ((object.width/5)*4) 
-                            img.set('name', 'ceiling2')
-                            img.id = 27
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-left'){
-                        fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top - (newHeight/2)
-                            img.left = object.left + ((object.width/5)*3.5) - newWidth
-                            img.set('name', 'ceiling1')
-                            img.id = 26
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top - (newHeight/2)
-                            img.left = object.left + ((object.width/5)*4) 
-                            img.set('name', 'ceiling2')
-                            img.id = 27
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                    if(selectedShape == 'turn-right'){
-                        fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top - (newHeight/2)
-                            img.left = object.left + (object.width/5) - newWidth
-                            img.set('name', 'ceiling1')
-                            img.id = 26
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top - (newHeight/2)
-                            img.left = object.left + ((object.width/5)*1.5) 
-                            img.set('name', 'ceiling2')
-                            img.id = 27
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                }
-                if(methode == 'hanging'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        if(sizeRatio == 'small'){
+                    if(methode == 'hanging'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            if(sizeRatio == 'small'){
+                                var hangingHole = new fabric.Circle({
+                                    id: 28,
+                                    radius: object.height * 0.06,
+                                    fill: '#f5f5f5',
+                                    left: object.left + object.width/2 - 15,
+                                    top: object.top + 15,
+                                    name : 'hanging-hole',
+                                    strokeWidth: 2,
+                                    stroke: 'grey',
+                                    selectable: false,
+        
+                                })
+                                canvas.add(hangingHole)
+                            }
+                            if(sizeRatio == 'big'){
+                                var hangingHole1 = new fabric.Circle({
+                                    id: 28,
+                                    radius: object.height * 0.03,
+                                    fill: '#f5f5f5',
+                                    left: object.left + (object.width/8) - 15,
+                                    top: object.top + 15,
+                                    name : 'hanging-hole1',
+                                    strokeWidth: 2,
+                                    stroke: 'grey',
+                                    selectable: false,
+        
+                                })
+                                var hangingHole2 = new fabric.Circle({
+                                    id: 29,
+                                    radius: object.height * 0.03,
+                                    fill: '#f5f5f5',
+                                    left: object.left + ((object.width/8)*7) - 15,
+                                    top: object.top + 15,
+                                    name : 'hanging-hole2',
+                                    strokeWidth: 2,
+                                    stroke: 'grey',
+                                    selectable: false,
+        
+                                })
+                                canvas.add(hangingHole1, hangingHole2)
+                            }
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'stop' || selectedShape == 'triangle' || selectedShape == 'rotated-square'){
                             var hangingHole = new fabric.Circle({
                                 id: 28,
-                                radius: object.height * 0.06,
+                                radius: object.height * 0.04,
                                 fill: '#f5f5f5',
-                                left: object.left + object.width/2 - 15,
-                                top: object.top + 15,
+                                left: object.left + object.width/2 - (object.height * 0.04),
+                                top: object.top + 20,
                                 name : 'hanging-hole',
                                 strokeWidth: 2,
                                 stroke: 'grey',
                                 selectable: false,
-    
                             })
                             canvas.add(hangingHole)
                         }
-                        if(sizeRatio == 'big'){
-                            var hangingHole1 = new fabric.Circle({
-                                id: 28,
-                                radius: object.height * 0.03,
+                    }
+                    if(methode == 'pole-attachement'){
+                        resetFixing()
+                        var pole = new fabric.Rect({
+                            id: 30,
+                            width: object.width/4,
+                            height: object.height * 2,
+                            top: object.top - (object.height/2),
+                            left: object.left + object.width/2 -((object.width/4)/2),
+                            fill: 'grey',
+                            strokeWidth: 2,
+                            stroke: 'grey',
+                            name: 'pole',
+                            selectable: false,
+                        })
+                        canvas.add(pole)
+                        pole.sendToBack()
+                    }
+                    if(methode == 'cable-labeling'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            var cableHole1 = new fabric.Rect({
+                                id: 31,
+                                width: object.width*0.07,
+                                height: object.height*0.05,
+                                top: object.top + (object.height/6) - (object.height*0.05),
+                                left: object.left + object.width/7 - (object.width*0.05),
                                 fill: '#f5f5f5',
-                                left: object.left + (object.width/8) - 15,
-                                top: object.top + 15,
-                                name : 'hanging-hole1',
                                 strokeWidth: 2,
                                 stroke: 'grey',
+                                name: 'cable-hole1',
+        
                                 selectable: false,
-    
                             })
-                            var hangingHole2 = new fabric.Circle({
-                                id: 29,
-                                radius: object.height * 0.03,
+                            var cableHole2 = new fabric.Rect({
+                                id: 32,
+                                width: object.width*0.07,
+                                height: object.height*0.05,
+                                top: object.top + (object.height/6) - (object.height*0.05),
+                                left: object.left + ((object.width/7)*6),
                                 fill: '#f5f5f5',
-                                left: object.left + ((object.width/8)*7) - 15,
-                                top: object.top + 15,
-                                name : 'hanging-hole2',
                                 strokeWidth: 2,
                                 stroke: 'grey',
+                                name: 'cable-hole2',
                                 selectable: false,
-    
                             })
-                            canvas.add(hangingHole1, hangingHole2)
+                            var cableHole3 = new fabric.Rect({
+                                id: 33,
+                                width: object.width*0.07,
+                                height: object.height*0.05,
+                                top: object.top + ((object.height/6)*5) - (object.height*0.05),
+                                left: object.left + object.width/7 - (object.width*0.05),
+                                fill: '#f5f5f5',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                name: 'cable-hole3',
+                                selectable: false,
+                            })
+                            var cableHole4 = new fabric.Rect({
+                                id: 34,
+                                width: object.width*0.07,
+                                height: object.height*0.05,
+                                top: object.top + ((object.height/6)*5) - (object.height*0.05),
+                                left: object.left + ((object.width/7)*6),
+                                fill: '#f5f5f5',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                name: 'cable-hole4',
+                                selectable: false,
+                            })
+                            canvas.add(cableHole1, cableHole2, cableHole3, cableHole4)
                         }
                     }
-                    if(selectedShape == 'oval' || selectedShape == 'stop' || selectedShape == 'triangle' || selectedShape == 'rotated-square'){
-                        var hangingHole = new fabric.Circle({
-                            id: 28,
-                            radius: object.height * 0.04,
-                            fill: '#f5f5f5',
-                            left: object.left + object.width/2 - (object.height * 0.04),
-                            top: object.top + 20,
-                            name : 'hanging-hole',
-                            strokeWidth: 2,
-                            stroke: 'grey',
-                            selectable: false,
-                        })
-                        canvas.add(hangingHole)
+                    if(methode == 'table-clamp'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - (newHeight/2)
+                                img.left = object.left + (object.width/5) - newWidth
+                                img.set('name', 'table-clamp1')
+                                img.id = 35
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - (newHeight/2)
+                                img.left = object.left + ((object.width/5)*4) 
+                                img.set('name', 'table-clamp2')
+                                img.id = 36
+        
+                                img.selectable = false
+                                canvas.add(img)
+                            });
+                        }
                     }
-                }
-                if(methode == 'pole-attachement'){
-                    resetFixing()
-                    var pole = new fabric.Rect({
-                        id: 30,
-                        width: object.width/4,
-                        height: object.height * 2,
-                        top: object.top - (object.height/2),
-                        left: object.left + object.width/2 -((object.width/4)/2),
-                        fill: 'grey',
-                        strokeWidth: 2,
-                        stroke: 'grey',
-                        name: 'pole',
-                        selectable: false,
-                    })
-                    canvas.add(pole)
-                    pole.sendToBack()
-                }
-                if(methode == 'cable-labeling'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        var cableHole1 = new fabric.Rect({
-                            id: 31,
-                            width: object.width*0.07,
-                            height: object.height*0.05,
-                            top: object.top + (object.height/6) - (object.height*0.05),
-                            left: object.left + object.width/7 - (object.width*0.05),
-                            fill: '#f5f5f5',
-                            strokeWidth: 2,
-                            stroke: 'grey',
-                            name: 'cable-hole1',
-                            selectable: false,
-                        })
-                        var cableHole2 = new fabric.Rect({
-                            id: 32,
-                            width: object.width*0.07,
-                            height: object.height*0.05,
-                            top: object.top + (object.height/6) - (object.height*0.05),
-                            left: object.left + ((object.width/7)*6),
-                            fill: '#f5f5f5',
-                            strokeWidth: 2,
-                            stroke: 'grey',
-                            name: 'cable-hole2',
-                            selectable: false,
-                        })
-                        var cableHole3 = new fabric.Rect({
-                            id: 33,
-                            width: object.width*0.07,
-                            height: object.height*0.05,
-                            top: object.top + ((object.height/6)*5) - (object.height*0.05),
-                            left: object.left + object.width/7 - (object.width*0.05),
-                            fill: '#f5f5f5',
-                            strokeWidth: 2,
-                            stroke: 'grey',
-                            name: 'cable-hole3',
-                            selectable: false,
-                        })
-                        var cableHole4 = new fabric.Rect({
-                            id: 34,
-                            width: object.width*0.07,
-                            height: object.height*0.05,
-                            top: object.top + ((object.height/6)*5) - (object.height*0.05),
-                            left: object.left + ((object.width/7)*6),
-                            fill: '#f5f5f5',
-                            strokeWidth: 2,
-                            stroke: 'grey',
-                            name: 'cable-hole4',
-                            selectable: false,
-                        })
-                        canvas.add(cableHole1, cableHole2, cableHole3, cableHole4)
+                    if(methode == 'base-support'){
+                        resetFixing()
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            fabric.Image.fromURL('../../fixing-methodes/base-support-left.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - (newHeight) + 5
+                                img.left = object.left + (object.width/5) - newWidth
+                                img.set('name', 'base-support1')
+                                img.id = 37
+        
+                                img.selectable = false
+                                canvas.add(img)
+                                // img.sendToBack()
+                            });
+    
+                            fabric.Image.fromURL('../../fixing-methodes/base-support-right.png', function(img) {
+                                img.scale(fixScale)
+                                
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - (newHeight) + 5
+                                img.left = object.left + ((object.width/5)*4) 
+                                img.set('name', 'base-support2')
+                                img.id = 38
+        
+                                img.selectable = false
+                                canvas.add(img)
+                                // img.sendToBack()
+                            });
+                        }
                     }
-                }
-                if(methode == 'table-clamp'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
-                            img.scale(fixScale)
+    
+                }  
+            }if(object.type == 'line'){
+                object.sendToBack()
+            }
+        }); 
+        canvas.renderAll();
+    }
 
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + object.height - (newHeight/2)
-                            img.left = object.left + (object.width/5) - newWidth
-                            img.set('name', 'table-clamp1')
-                            img.id = 35
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
+    setFixing(canvas)
+    if(firstLoad){
+        setFixing(backCanvas)
+    }
 
-                        fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + object.height - (newHeight/2)
-                            img.left = object.left + ((object.width/5)*4) 
-                            img.set('name', 'table-clamp2')
-                            img.id = 36
-    
-                            img.selectable = false
-                            canvas.add(img)
-                        });
-                    }
-                }
-                if(methode == 'base-support'){
-                    resetFixing()
-                    if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                        fabric.Image.fromURL('../../fixing-methodes/base-support-left.png', function(img) {
-                            img.scale(fixScale)
-
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + object.height - (newHeight) + 5
-                            img.left = object.left + (object.width/5) - newWidth
-                            img.set('name', 'base-support1')
-                            img.id = 37
-    
-                            img.selectable = false
-                            canvas.add(img)
-                            // img.sendToBack()
-                        });
-
-                        fabric.Image.fromURL('../../fixing-methodes/base-support-right.png', function(img) {
-                            img.scale(fixScale)
-                            
-                            img.setCoords();
-                            var newWidth = img.width * img.scaleX;
-                            var newHeight = img.height * img.scaleY;
-    
-                            img.top = object.top + object.height - (newHeight) + 5
-                            img.left = object.left + ((object.width/5)*4) 
-                            img.set('name', 'base-support2')
-                            img.id = 38
-    
-                            img.selectable = false
-                            canvas.add(img)
-                            // img.sendToBack()
-                        });
-                    }
-                }
-
-            }  
-        }if(object.type == 'line'){
-            object.sendToBack()
-        }
-    }); 
-    
-    canvas.renderAll();
     setTimeout(function() {
         // Comptez le nombre d'objets sur le canvas
         var nombreObjets = canvas.getObjects().length;
         updateModifications(true, 'selection de fixing')
 
-        console.log("Nombre d'objets après ajout :", nombreObjets);
+        // console.log("Nombre d'objets après ajout :", nombreObjets);
     }, 100);
 
 }
@@ -3100,22 +3167,6 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             
             var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
 
-            // if(activeObject.type === 'i-text'){
-            //     selectedText.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedText.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedText.left = parseInt(convertFromPx(left, 'cm'))
-            //     selectedText.right = right
-            //     selectedText.top = convertFromPx(top, 'cm')
-            //     selectedText.bottom = bottom
-            // }if(activeObject.type == 'image'){
-            //     selectedImage.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedImage.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedImage.left = parseInt(convertFromPx(left, 'cm'))
-            //     selectedImage.right = right
-            //     selectedImage.top = convertFromPx(top, 'cm')
-            //     selectedImage.bottom = bottom
-            // }
-
             textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
             textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
             textLeft.textContent = parseInt(convertFromPx(left, 'cm'))
@@ -3125,7 +3176,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(canvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
             }
@@ -3176,7 +3227,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(canvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
             }
@@ -3208,7 +3259,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(canvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
             }
@@ -3236,13 +3287,11 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(canvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
             }
         }
-
-
     }
 
     return {
@@ -3336,14 +3385,6 @@ function handleGetAddedTextValues(transform) {
         var obj = transform.target;
         var newCoord = obj.getCoords();
 
-        // container.set({
-        //     originX: 'center',
-        //     originY: 'center',
-        // });
-        // container.setCoords();
-        // canvas.renderAll()
-        // console.log(container);
-
         var objWidht = obj.width * obj.scaleX
         var objHeight = obj.height * obj.scaleY
         
@@ -3398,8 +3439,6 @@ function handleGetAddedTextValues(transform) {
     // console.log('container-left',parseInt(container.left), 'object-left',parseInt((obj.left-(objWidht/2))), 'object-left in sign', parseInt(((obj.left-(objWidht/2))) - (container.left)), 'object-right in sign', parseInt((container.left + container.width)-((obj.left-(objWidht/2))+objWidht)))
     // console.log('container-width',parseInt(container.width), 'object-widht',parseInt((objWidht)))
     // console.log('container-height',parseInt(container.height), 'object-height',parseInt((objHeight)))
-
-    console.log('zoom', canvas.getZoom())
 
     // console.log(selectedText.value, textEditor.value)
 }
@@ -3459,9 +3498,9 @@ function handleAddTextToSign(clone){
             updateModifications(true, 'deposer le text')
         });
 
-        canvas.add(text2);
+        activeCanvas.add(text2);
         addedTexts.push(text2);
-        canvas.setActiveObject(text2);
+        activeCanvas.setActiveObject(text2);
         lockToCanvas(text2)
     }else{
         var sign = handleGetObjectByName('safeObject')
@@ -3511,19 +3550,19 @@ function handleAddTextToSign(clone){
             updateModifications(true, 'prendre le text')
         });
 
-        canvas.add(newText)
+        activeCanvas.add(newText)
 
         handleCenterHorizontally(newText)
         handleCenterVertically(newText)
 
 
         addedTexts.push(newText);
-        canvas.setActiveObject(newText);
+        activeCanvas.setActiveObject(newText);
         lockToCanvas(newText)
 
 
     }
-    canvas.renderAll()
+    activeCanvas.renderAll()
     updateModifications(true, '==ajout de text==')
     return addedTexts
 }
@@ -3535,9 +3574,9 @@ function handleChangeTextValue(event){
         // console.log(event.target.value)
         selectedText.value = event.target.value
 
-        var currentText = canvas.getActiveObject();
+        var currentText = activeCanvas.getActiveObject();
         currentText.set('text', String(selectedText.value))
-        canvas.requestRenderAll()
+        activeCanvas.requestRenderAll()
         handleGetAddedTextValues(currentText)
 
     } )
@@ -3545,21 +3584,21 @@ function handleChangeTextValue(event){
 function handleChangeTextAlign(align){
     var currentText = selectedText.object;
     currentText.set('textAlign', align) 
-    canvas.requestRenderAll()
+    activeCanvas.requestRenderAll()
     selectedText.align = currentText.textAlign
     handleGetAddedTextValues(currentText)
 
     return selectedText.align
 }
 function handleChangeTextWeight(){
-    var currentText = canvas.getActiveObject();
+    var currentText = activeCanvas.getActiveObject();
     if(selectedText.weight == 'normal'){
         currentText.set('fontWeight', 'bold')
     }else if(selectedText.weight == 'bold'){
         currentText.set('fontWeight', 'normal')
     }
     console.log('current')
-    canvas.renderAll()
+    activeCanvas.renderAll()
     handleGetAddedTextValues(currentText)
 
     return selectedText.weight
@@ -3571,7 +3610,7 @@ function handleChangeTextStyle(){
     }else if(selectedText.style == 'italic'){
         currentText.set('fontStyle', 'normal')
     }
-    canvas.requestRenderAll()
+    activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
 }
 function handleChangeTextSize(){
@@ -3580,16 +3619,16 @@ function handleChangeTextSize(){
     sizeEditor.addEventListener("input", (event) => {
         selectedText.size = event.target.value
 
-        var currentText = canvas.getActiveObject();
+        var currentText = activeCanvas.getActiveObject();
         currentText.set('fontSize', selectedText.size)
-        canvas.renderAll()
+        activeCanvas.renderAll()
         handleGetAddedTextValues(currentText)
     })
 }
 function handleChangeTextFontFam(font){
     var currentText = selectedText.object;
     currentText.set('fontFamily', font)
-    canvas.renderAll()
+    activeCanvas.renderAll()
 
     console.log(currentText.fontFamily, 'fontFamily')
     handleGetAddedTextValues(currentText)
@@ -3598,7 +3637,7 @@ function handleChangeTextFontFam(font){
 function handleChangeTextColor(color){
     var currentText = selectedText.object;
     currentText.set('fill', color)
-    canvas.renderAll()
+    activeCanvas.renderAll()
     handleGetAddedTextValues(currentText)
 }
 function handleUnderlineText(color){
@@ -3608,7 +3647,7 @@ function handleUnderlineText(color){
     }else if(selectedText.underline == true){
         currentText.set('underline', false)
     }
-    canvas.requestRenderAll()
+    activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
 }
 function handleCrossText(color){
@@ -3618,7 +3657,7 @@ function handleCrossText(color){
     }else if(selectedText.linethrough == true){
         currentText.set('linethrough', false)
     }
-    canvas.requestRenderAll()
+    activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
 }
 function handleOverlineText(color){
@@ -3628,7 +3667,7 @@ function handleOverlineText(color){
     }else if(selectedText.overline == true){
         currentText.set('overline', false)
     }
-    canvas.requestRenderAll()
+    activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
 }
 
@@ -3844,4 +3883,6 @@ export {
     handleTurnRightImage,
     handleChangeImageSize,
     handleFlipImage,
+    handleCheckActiveSignFace,
+    handleCloneCanvas,
 }
