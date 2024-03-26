@@ -8,4 +8,4 @@ import Options from './components/options.vue'
 </script>
 <style>
     
-</style>./components/option.vue./components/options.vue
+</style>

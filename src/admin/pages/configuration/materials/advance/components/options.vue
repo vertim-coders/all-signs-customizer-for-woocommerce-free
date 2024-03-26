@@ -1,19 +1,19 @@
 <template>
     <div>
         <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-            <div class="aso-font-bold">
-                Name config
+            <div v-if="config.trim() != ''" class="aso-font-bold">
+                {{config}}
             </div>
-            <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div>
+            <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div class="aso-text-[16px] aso-cursor-pointer" v-if="config.trim() != ''" @click="()=>$router.push('/configs/'+configId+'/materials')">
                 Material
             </div>
-            <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div class="aso-text-[16px] ">
-                Brass
+            <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div class="aso-text-[16px] aso-cursor-pointer" v-if="material.trim() != ''" @click="()=>$router.push('/configs/'+configId+'/materials/'+materialId+'/advance')">
+                {{material}}
             </div>
-            <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div class="aso-text-[16px] " v-if="componentName.trim()!=''">
+            <img v-if="componentName.trim()!=''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+            <div  class="aso-text-[16px] " v-if="componentName.trim()!=''">
                 {{componentName}} <span class="aso-font-bold">(Advance)</span>
             </div>
             <img v-if="isNewOption" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -92,7 +92,7 @@
                             </td>
                            <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{manageColors[option.manageColorId].name}}
+                                    {{option.color.name}}
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
@@ -163,12 +163,12 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                         <label for="" class="">Fixing method</label>
                         <Multiselect
-                            v-model="option.fixingMethodId"
+                            v-model="option.fixingMethods"
+                            mode="tags"
                             placeholder="Select your fixing methods"
                             :options="fixingMethods"
                             label="name"
                             trackBy="name"
-                            :searchable="true"
                         >
                             <template v-slot:singleLabel="{ value }">
                                 <div class="multiselect-single-label">
@@ -217,25 +217,8 @@
                         </Multiselect>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Color</label>
-                        <Multiselect
-                            v-model="option.manageColorId"
-                            placeholder="Select your fixing methods"
-                            :options="manageColors"
-                            label="name"
-                            trackBy="name"
-                            :searchable="true"
-                        >
-                            <template v-slot:singleLabel="{ value }">
-                                <div class="multiselect-single-label">
-                                    <p :class="`aso-w-6 aso-h-6 mr-2 aso-rounded aso-bg-[${value.codeHex}]`"></p> <span>{{ value.name }}</span>
-                                </div>
-                            </template>
-
-                            <template v-slot:option="{ option }">
-                                <p :class="`aso-w-6 aso-h-6 aso-mr-2 aso-rounded aso-bg-[${option.codeHex}]`"></p><span>{{ option.name }}</span>
-                            </template>
-                        </Multiselect>
+                        <label for="" class="aso-font-normal">Color Name</label>
+                        <input v-model="option.color.name" type="text" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
@@ -310,14 +293,20 @@ const route = useRoute()
 const configId = ref(route.params.configId);
 const materialId = ref(route.params.materialId);
 const componentId = ref(route.params.componentId);
+const config = ref("");
+const material = ref("");
 const options = ref([]);
 const option = ref({
     name:"",
     description:"",
     icon:"",
     image:"",
-    manageColorId:0,
-    fixingMethodId:0,
+    color:{
+        name:"",
+        codeHex:"#FFFFFF",
+        prevImg:""
+    },
+    fixingMethods:[0],
     shapeId:0,
     size:{
         width:0,
@@ -329,7 +318,6 @@ const noOptionsFound = ref('');
 const componentName = ref('');
 const fixingMethods = ref([]);
 const shapes = ref([]);
-const manageColors = ref([]);
 const  optionId = ref(null);
 const isFetching = ref(false);
 const isLoading = ref(false);
@@ -339,9 +327,12 @@ const isEdit = ref(false);
 
 onMounted(async() => {
     isFetching.value = true;
+    const res = await api.getConfig(configId.value);
+    config.value = res.name;
+    const resp = await api.getMaterial(configId.value,materialId.value);
+    material.value = resp.name;
     await fetchAllFixingMethods();
     await fetchAllShapes();
-    await fetchManageColors();
     await fetchMaterialAdvanceOptions();
 });
 const fetchAllFixingMethods = async () => {
@@ -355,16 +346,6 @@ const fetchAllShapes = async () => {
     shapes.value = result.map((sh,key)=>{
         return {name:sh.name,value:key,icon:sh.icon};
     });
-}
-const fetchManageColors = async () => {
-    const result = await api.getManageColorsPalettes();
-    if(!result.message){
-        manageColors.value = result.map((col,key)=>{
-            return {name:col.name,value:key,codeHex:col.backgroundColor};
-        });
-    }else{
-        manageColors.value = [];
-    }
 }
 const fetchMaterialAdvanceOptions = async () => {
     const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
@@ -394,8 +375,12 @@ const addNewOption = async () => {
             description:"",
             icon:"",
             image:"",
-            manageColorId:0,
-            fixingMethodId:0,
+            color:{
+                name:"",
+                color:"#FFFFFF",
+                prevImg:""
+            },
+            fixingMethods:[0],
             shapeId:0,
             size:{
                 width:0,
@@ -412,8 +397,12 @@ const addNewOption = async () => {
             description:"",
             icon:"",
             image:"",
-            manageColorId:0,
-            fixingMethodId:0,
+            color:{
+                name:"",
+                color:"#FFFFFF",
+                prevImg:""
+            },
+            fixingMethods:[0],
             shapeId:0,
             size:{
                 width:0,
@@ -442,8 +431,12 @@ const updateOption = async () => {
             description:"",
             icon:"",
             image:"",
-            manageColorId:0,
-            fixingMethodId:0,
+            color:{
+                name:"",
+                color:"#FFFFFF",
+                prevImg:""
+            },
+            fixingMethods:[0],
             shapeId:0,
             size:{
                 width:0,
@@ -462,8 +455,12 @@ const updateOption = async () => {
             description:"",
             icon:"",
             image:"",
-            manageColorId:0,
-            fixingMethodId:0,
+            color:{
+                name:"",
+                color:"#FFFFFF",
+                prevImg:""
+            },
+            fixingMethods:[0],
             shapeId:0,
             size:{
                 width:0,
@@ -489,8 +486,12 @@ const deleteOption = async () => {
             description:"",
             icon:"",
             image:"",
-            manageColorId:0,
-            fixingMethodId:0,
+            color:{
+                name:"",
+                color:"#FFFFFF",
+                prevImg:""
+            },
+            fixingMethods:[0],
             shapeId:0,
             size:{
                 width:0,
@@ -510,8 +511,12 @@ const deleteOption = async () => {
             description:"",
             icon:"",
             image:"",
-            manageColorId:0,
-            fixingMethodId:0,
+            color:{
+                name:"",
+                color:"#FFFFFF",
+                prevImg:""
+            },
+            fixingMethods:[0],
             shapeId:0,
             size:{
                 width:0,
@@ -597,13 +602,17 @@ const back = () => {
     isNewOption.value = false;
     isEdit.value = false;
     optionId.value = null;
-    option = {
+    option.value = {
         name:"",
         description:"",
         icon:"",
         image:"",
-        manageColorId:0,
-        fixingMethodId:0,
+        color:{
+            name:"",
+            color:"#FFFFFF",
+            prevImg:""
+        },
+        fixingMethods:[0],
         shapeId:0,
         size:{
             width:0,

@@ -2,11 +2,11 @@
     <div>
         <div v-if="!isNewComponent">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold">
-                    Name config
+                <div  v-if="config.trim() != ''" class="aso-font-bold">
+                    {{config}}
                 </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div>
+                <img  v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div v-if="config.trim() != ''" >
                     Material
                 </div>
             </div>
@@ -208,6 +208,7 @@
 
     const route = useRoute()
     const configID = ref(route.params.configId)
+    const config =ref("");
     const materials = ref([]);
     const newMaterial = ref({
         name:"",
@@ -229,7 +230,7 @@
     })
     const notFoundMessage = ref('');
 
-    const fetchMaterials = async () => {
+const fetchMaterials = async () => {
     const result = await api.getMaterials(configID.value);
     if(!result.message){
         materials.value = result;
@@ -248,6 +249,8 @@
 
     onMounted(async() => {
         isFetching.value = true;
+        const res = await api.getConfig(configID.value);
+        config.value = res.name;
         await fetchMaterials();
 
     });

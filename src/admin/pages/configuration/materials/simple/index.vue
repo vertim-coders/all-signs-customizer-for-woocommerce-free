@@ -2,16 +2,16 @@
     <div>
         <div class="aso-sticky">
             <div class="aso-bg-[#F8F9FB] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold aso-text-[16px]">
-                    Name config
+                <div v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
+                    {{config}}
                 </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px]">
+                <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="()=>router.push('/configs/'+configID+'/materials')">
                     Material
                 </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    Plastic
+                <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div v-if="material.trim() != ''" class="aso-text-[16px] ">
+                    {{material}}
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Size
+                        Sizes
                     </div>
                 </button>
             </div>
@@ -36,7 +36,7 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Border
+                        Borders
                     </div>
                 </button>
             </div>
@@ -49,7 +49,7 @@
                     </svg>
 
                     <div class="aso-text-[14px]">
-                        Material color
+                        Material colors
                     </div>
                 </button>
             </div>
@@ -61,7 +61,7 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Fixing method
+                        Fixing Methods
                     </div>
                 </button>
             </div>
@@ -74,7 +74,7 @@
                     </svg>
 
                     <div class="aso-text-[14px]">
-                        Shape
+                        Shapes
                     </div>
                 </button>
             </div>
@@ -128,13 +128,22 @@
     import Shapes from '@/admin/pages/configuration/materials/simple/components/shapes.vue'
     import TextImages from '@/admin/pages/configuration/materials/simple/components/text-images.vue'
     import AdditionalOptions from '@/admin/pages/configuration/materials/simple/components/additional-options/index.vue'
-    import { ref } from 'vue'
+    import { onMounted, ref } from 'vue'
     import { useRoute } from 'vue-router';
     import router from '@/admin/router';
+import api from '@/admin/Api/api'
 
     const route = useRoute()
-    const configID = ref(route.params.configId);
+    const configID = ref(route.paconfigrams.configId);
     const materialId = ref(route.params.materialId);
+    const config =ref("");
+    const material = ref("")
+    onMounted(async() => {
+        const res = await api.getConfig(configID.value);
+        config.value = res.name;
+        const resp = await api.getMaterial(configID.value,materialId.value);
+        material.value = resp.name;
+    });
 </script>
 <style>
     

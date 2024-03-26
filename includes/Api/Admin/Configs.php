@@ -132,7 +132,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
 
                 $post_data = array(
                     'id'           => $id,
-                    'title'        => get_the_title($id),
+                    'name'        => get_the_title($id),
                     "description"  => get_post_field('post_content', $id),
                     "icon"         =>$meta_value['icon'],
                     "popImg"       =>$meta_value['popImg'],

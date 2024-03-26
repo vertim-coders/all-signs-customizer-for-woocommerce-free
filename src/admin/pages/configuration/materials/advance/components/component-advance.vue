@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="aso-space-y-1"  v-if="!isNewComponentAdvance">
-            <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold">
-                    Name config
+            <div class="aso-bg-[#F8F9FB] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
+                <div v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
+                    {{config}}
                 </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div>
+                <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="()=>$router.push('/configs/'+configId+'/materials')">
                     Material
                 </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px] ">
-                    Brass
+                <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div v-if="material.trim() != ''" class="aso-text-[16px] ">
+                    {{material}}
                 </div>
             </div>
             <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
@@ -81,7 +81,7 @@
                                 <img v-if="componentAdvance.icon" class="aso-w-10 aso-h-10" :src="componentAdvance.icon" />
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="router.push('/configs/'+configId+'/materials/'+materialId+'/advance/'+key+'/options')">
+                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="$router.push('/configs/'+configId+'/materials/'+materialId+'/advance/'+key+'/options')">
                                     <img class="aso-w-4 aso-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
                                     <span class="aso-text-[12px]">
                                         add options
@@ -195,13 +195,13 @@
     import api from "@/admin/Api/api";
     import { ref,onMounted } from "vue";
     import { useRoute } from 'vue-router';
-    import router from '@/admin/router';
     import toastMessage from "@/admin/utils/functions";
 
     const route = useRoute()
     const configId = ref(route.params.configId);
     const materialId = ref(route.params.materialId);
-
+    const config =ref("");
+    const material = ref("")
     const isFetching = ref(false);
     const isNewComponentAdvance = ref(false);
     const isLoading = ref(false);
@@ -220,6 +220,10 @@
 
     onMounted(async ()=>{
         isFetching.value = true;
+        const res = await api.getConfig(configId.value);
+        config.value = res.name;
+        const resp = await api.getMaterial(configId.value,materialId.value);
+        material.value = resp.name;
         await fetchMaterialComponentAdvances();
         isFetching.value = false;
     });

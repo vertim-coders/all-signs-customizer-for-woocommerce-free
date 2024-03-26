@@ -27,7 +27,7 @@
                                     <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="aso-w-full aso-h-full aso-cursor-pointer aso-absolute">
                                 </div>
                                 <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
-                                    <label for="couffo" class="aso-text-base aso-font-semibold aso-text-black">Default skin</label>
+                                    <label for="couffo" class="aso-text-base aso-font-semibold aso-text-black">Couffo Skin</label>
                                     <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" :checked="themes.skin == 'couffo'">
                                 </div>
                             </label>
