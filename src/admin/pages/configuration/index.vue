@@ -35,7 +35,7 @@
             <!-- Table which display all configurations -->
             <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full">
-                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
+                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
                         <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Description</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
@@ -288,10 +288,66 @@ const defaultSettings = ref({
         }
     },
     customizerSign: {
-        customizerOptions: {},
-        signPart: {},
-        text: {},
-        images: {}
+        customizerOptions: {
+            measurementUnit:"cm",
+            showHideMeasurements:"both",
+            decimalFormatMeasurements:"with-decimal",
+            desktopColumnOrder:"right",
+            showDayNightButton:"display"
+        },
+        signPart: {
+            doublePart:{
+                active:false,
+                part1:"Face A",
+                part2:"Face B",
+                enableCopyDesignFromSide:true
+            }
+        },
+        text: {
+            selectedFonts: [],
+            colors:[],
+            enableCustomColor:true,
+            enableFontSize:{
+                active:true,
+                minimumFontSize:12,
+                maximumFontSize:30,
+                defaultFontSize:16,
+            },
+            enableBold:true,
+            enableUnderline:true,
+            enableOverline:true,
+            enableStrike:true,
+            enableItalic:true,
+            enableOpacity:true,
+            enableBorder:true,
+            enableTextAlignment:true,
+            enableCurvedUp:true,
+            enableCurvedDown:true,
+        },
+        images: {
+            enableUploadImage:true,
+            fileUploadScript:{
+            customWithGraphical:false,
+            uploadMinWidth:100,
+            uploadMaxWidth:100,
+            uploadMinHeight:1024,
+            uploadMaxHeight:1024,
+            allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
+            },
+            enableClipart:{
+                active:true,
+                selectedClipartGroups:[],
+            },
+            filter: {
+                active:true,
+                enableGreyscale:true,
+                enableOpacity:true,
+                enableEmbross:true,
+                enableBlur:true,
+                enableSepia:true,
+                enableSharpen:true,
+            }
+        }
     },
     languageImages: {
         uploadDesign: {

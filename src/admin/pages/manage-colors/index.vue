@@ -62,7 +62,7 @@
                             
                             <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{color.textColor}}
+                                    {{color.textColor.active ? color.textColor.codeHex : 'None'}}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
@@ -91,49 +91,62 @@
             <div class="aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-4">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Titre</label>
-                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="newColor.name">
-                        
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Color Name</label>
+                        <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="newColor.name"> 
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Background color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="newColor.backgroundColor"
+                                @input="changeBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="newColor.backgroundColor"
+                                @input="changeBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                            />
+                        </div>
+                        
+                    </div>  
+                </div>
+                <div class="aso-flex aso-justify-between aso-items-center">
+                    <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start">
+                        <label for="">Enable Text Color</label>
+                        <div class="aso-flex aso-space-x-2 aso-items-center">
+                            <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                            <div class="aso-flex aso-items-center">
+                                <label for="aso-toggle" @click="handleChangeTextColorActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                    <div :class="{'aso-translate-x-[100%]': newColor.textColor.active, 'aso-bg-active': newColor.textColor.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                </label>
+                            </div>
+                            <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                        </div>
+                    </div>
+                    <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="newColor.textColor.active">
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
                         <div class="aso-relative aso-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
-                                v-model="newColor.textColor"
+                                v-model="newColor.textColor.codeHex"
                                 @input="changeTextColor"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
-                                v-model="newColor.textColor"
+                                v-model="newColor.textColor.codeHex"
                                 @input="changeTextColor"
                                 class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                             />
-                        </div>
-                        
+                        </div>                        
                     </div>
                 </div>
-                <div class="aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Background color</label>
-                    <div class="aso-relative aso-flex">
-                        <input
-                            id="colorPicker"
-                            type="color"
-                            v-model="newColor.backgroundColor"
-                            @input="changeBackgroundColor"
-                            class="aso-w-9 aso-h-[30px]"
-                        />
-                        <input
-                            type="text"
-                            v-model="newColor.backgroundColor"
-                            @input="changeBackgroundColor"
-                            class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
-                        />
-                    </div>
-                    
-                </div>  
+                
             </div>
                 
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
@@ -209,7 +222,10 @@ import toastMessage from '@/admin/utils/functions';
     const noFoundMessage = ref('');
     const newColor = ref({
         name:'',
-        textColor:'#000000',
+        textColor:{
+            active:false,
+            codeHex:'#000000'
+        },
         backgroundColor:'#000000'
     });
     const colorId = ref(null);
@@ -240,7 +256,10 @@ import toastMessage from '@/admin/utils/functions';
             toastMessage(result.message);
             newColor.value = {
                 name:'',
-                textColor:'#000000',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
                 backgroundColor:'#000000'
             }
         }else{
@@ -249,7 +268,10 @@ import toastMessage from '@/admin/utils/functions';
             toastMessage(result.message,"error")
             newColor.value = {
                 name:'',
-                textColor:'#000000',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
                 backgroundColor:'#000000'
             }
         }
@@ -282,7 +304,10 @@ import toastMessage from '@/admin/utils/functions';
             }
             newColor.value = {
                 name:'',
-                textColor:'#000000',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
                 backgroundColor:'#000000'
             }
         }else{
@@ -292,7 +317,10 @@ import toastMessage from '@/admin/utils/functions';
             toastMessage(result.message,"error");
             newColor.value = {
                 name:'',
-                textColor:'#000000',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
                 backgroundColor:'#000000'
             }
         }
@@ -308,7 +336,10 @@ import toastMessage from '@/admin/utils/functions';
             toastMessage(result.message);
             newColor.value = {
                 name:'',
-                textColor:'#000000',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
                 backgroundColor:'#000000'
             }
             colorId.value = null;
@@ -318,7 +349,10 @@ import toastMessage from '@/admin/utils/functions';
             toastMessage(result.message,"error");
             newColor.value = {
                 name:'',
-                textColor:'#000000',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
                 backgroundColor:'#000000'
             }
             colorId.value = null;
@@ -332,7 +366,10 @@ import toastMessage from '@/admin/utils/functions';
     const back = () => {
         newColor.value = {
             name:'',
-            textColor:'#000000',
+            textColor:{
+                active:false,
+                codeHex:'#000000'
+            },
             backgroundColor:'#000000'
         }
         colorId.value = null;
@@ -344,9 +381,12 @@ import toastMessage from '@/admin/utils/functions';
         if(event.target.value[0]!=='#'){
             event.target.value = '#'+ event.target.value;
         }
-        newColor.value.textColor = event.target.value;
+        newColor.value.textColor.codeHex = event.target.value;
     }
 
+    const handleChangeTextColorActive = () => {
+        newColor.value.textColor.active = !newColor.value.textColor.active;
+    }
     const changeBackgroundColor = (event) => {
         if(event.target.value[0]!=='#'){
             event.target.value = '#'+ event.target.value;

@@ -115,14 +115,15 @@ class ASO_Frontend {
                             'nbDecimals'         => wc_get_price_decimals(),
                             'currencySymbol'     => html_entity_decode(get_woocommerce_currency_symbol()),
                             'currency_pos'       => get_option('woocommerce_currency_pos'),
-                            'variations'          => $available_variations
+                            'variations'          => $available_variations,
+                            "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
+                            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
-                        $this->includes_config_fonts($visibleFonts);
-                        wp_localize_script("aso-frontend","aso_confiurator_data",$ASO);
                         ?>
                         <div id='aso-frontend-app'></div>
                         <?php 
-                        wp_localize_script("aso-frontend","aso_ajax_nonce",["nonce"=>wp_create_nonce('aso_add_to_cart_after_custom')]);
+                        $this->includes_config_fonts($visibleFonts);
+                        wp_localize_script("aso-frontend","aso_confiurator_data",$ASO);
                         wp_enqueue_script( 'aso-product-pricing');
                     }
                 }

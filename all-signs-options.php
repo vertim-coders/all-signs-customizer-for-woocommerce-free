@@ -262,21 +262,21 @@ final class ASO_All_Signs_Options {
             [
                 'name' => 'Screw',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_screw.png',
                 "popImg"=>"",
                 'type' => 'screw'
             ],
             [
                 'name' => 'Screw Cap',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_screw-cap.png',
                 "popImg"=>"",
                 'type' => 'screw-cap'
             ],
             [
                 'name' => 'Stand Off',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_standoff.png',
                 "popImg"=>"",
                 'type' => 'standoff'
             ],
@@ -290,28 +290,28 @@ final class ASO_All_Signs_Options {
             [
                 'name' => 'Flag',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_flag.png',
                 "popImg"=>"",
                 'type' => 'flag'
             ],
             [
                 'name' => 'Suction Cup',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_suction-cup.png',
                 "popImg"=>"",
                 'type' => 'suction-cup'
             ],
             [
                 'name' => 'Table Stand',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_table-clamp.png',
                 "popImg"=>"",
                 'type' => 'table-stand'
             ],
             [
                 'name' => 'Ceiling',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_ceiling.png',
                 "popImg"=>"",
                 'type' => 'ceiling'
             ],
@@ -332,14 +332,14 @@ final class ASO_All_Signs_Options {
             [
                 'name' => 'Table Clamp',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_table-clamp.png',
                 "popImg"=>"",
                 'type' => 'table-clamp'
             ],
             [
                 'name' => 'Base Support',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_base-support.png',
                 "popImg"=>"",
                 'type' => 'base-support'
             ],

@@ -12,9 +12,56 @@
                         trackBy="name"
                         mode="tags"
                         :loading="isFetching"
-                        :searchable="true"
                     />
                         
+                </div>                
+                <div class="aso-flex aso-flex-col aso-w-full" >
+                    <label class="aso-text-[12px]">Define text colors </label>
+                    <div class="aso-grid aso-grid-cols-3 aso-gap-4">
+                        <div class="aso-flex aso-justify-start aso-space-x-2" v-for="(color,key) in text.colors">
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
+                                <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="text.colors[key].name" autocomplete="off"> 
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <div class="aso-relative aso-flex">
+                                    <input
+                                        id="colorPicker"
+                                        type="color"
+                                        v-model="text.colors[key].codeHex"
+                                        @input="(e)=>changeColorCodeHex(e,key)"
+                                        class="aso-w-9 aso-h-[30px]"
+                                    />
+                                    <input
+                                        type="text"
+                                        v-model="text.colors[key].codeHex"
+                                        @input="(e)=>changeColorCodeHex(e,key)"
+                                        class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                    />
+                                </div>
+                                
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <div class="aso-relative aso-flex">
+                                    <button @click="removeColor(key)" class="aso-w-[50px] aso-h-full aso-border-solid aso-border-red-600 aso-rounded aso-bg-red-600 aso-cursor-pointer aso-text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-[70%] aso-h-[70%]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aso-pt-4" v-if="!isFetching">
+                        <button @click="addNewColor" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span class="aso-font-semibold aso-text-[16px]">Add</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="aso-flex aso-space-x-3">
                     <div class="aso-text-[16px]">Enable Custom color</div>
@@ -23,19 +70,6 @@
                         <div :class="{'aso-translate-x-[100%]': text.enableCustomColor, 'aso-bg-active': text.enableCustomColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
-                </div>
-                <div class="aso-flex aso-flex-col aso-w-full" >
-                    <label class="aso-text-[12px]">Choose the colors to be displayed </label>
-                    <Multiselect
-                        v-model="text.selectedColors"
-                        placeholder=""
-                        :options="manageColors"
-                        label="name"
-                        trackBy="name"
-                        mode="tags"
-                        :searchable="true"
-                        :loading="isFetching"
-                    />
                 </div>
                 <div class="aso-flex aso-space-x-6">
                     <div class="aso-flex aso-space-x-3">
@@ -254,7 +288,7 @@ const isLoading =ref(false);
 const isFetching = ref(false);
 const text = ref({
     selectedFonts: [],
-    selectedColors:[],
+    colors:[],
     enableCustomColor:true,
     enableFontSize:{
         active:true,
@@ -322,6 +356,18 @@ const updateTextSettings = async () => {
         toastMessage(result.message,"error");
     }
 };
+const addNewColor = ()=> {
+    text.value.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
+}
+const removeColor = (key)=> {
+    text.value.colors.splice(key,1);
+}
+const changeColorCodeHex = (event,key) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    text.value.colors[key].codeHex = event.target.value;
+}
 
 const handleEnableCustomColor = () => {
     text.value.enableCustomColor = !text.value.enableCustomColor;

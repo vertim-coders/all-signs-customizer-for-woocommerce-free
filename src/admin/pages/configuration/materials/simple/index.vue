@@ -134,7 +134,7 @@
 import api from '@/admin/Api/api'
 
     const route = useRoute()
-    const configID = ref(route.paconfigrams.configId);
+    const configID = ref(route.params.configId);
     const materialId = ref(route.params.materialId);
     const config =ref("");
     const material = ref("")

@@ -385,7 +385,7 @@
 
 			
 			$default_design_btn_url = $this->get_design_url();
-			$content               .= '<a  href="' . $default_design_btn_url . '" class="button aso-design-product">' . apply_filters( 'aso_default_design_btn_filter', __( 'Make Your Sign', "ASO" ) ) . '</a>';
+			$content               .= '<a  href="' . $default_design_btn_url . '" class="button aso-design-product">' . apply_filters( 'aso_default_design_btn_filter', __( 'Customize Your Sign', "ASO" ) ) . '</a>';
 
 			if ( ! isset( $item_id ) ) {
 				$item_id = '';
