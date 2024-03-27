@@ -10,7 +10,7 @@ function handleGetCanvas(canvas1, canvas2){
 var activeSignFace = 'front'
 function handleCheckActiveSignFace(face){
     activeSignFace = face
-    console.log(activeSignFace)
+    // console.log(activeSignFace)
     if(face == 'front'){
         activeCanvas = canvas
     }else{
@@ -59,7 +59,11 @@ function handleCloneCanvas(canvas1, canvas2){
     // console.log(backCanvas)
 }
 
-
+var currentUnit = ''
+function handleGetCurrentUnit(unit){
+    console.log(unit)
+    currentUnit = unit;
+}
 
 
 var defaultShadow = new fabric.Shadow({
@@ -448,8 +452,8 @@ function handleMiseAEchelle(rW, rH) {
     var finalWidth = 0
     var finalHeight = 0
 
-    var signWPx = convertToPx(rW, 'cm')
-    var signHPx = convertToPx(rH, 'cm')
+    var signWPx = convertToPx(rW, currentUnit)
+    var signHPx = convertToPx(rH, currentUnit)
 
 
     if((signWPx || signHPx) > 10000 ){
@@ -519,14 +523,62 @@ function handleMiseAEchelle(rW, rH) {
 
 }
 
-function handleGetObjectByName(name) {
-    var objects = activeCanvas.getObjects();
+function handleGetObjectByName(name, canva) {
+    var objects
+    if(canva){
+        objects = canva.getObjects();
+    }else{
+        objects = activeCanvas.getObjects();
+    }
     for (var i = 0; i < objects.length; i++) {
         if (objects[i].name === name) {
             return objects[i];
         }
     }
     return null;
+}
+
+var FtextObjects = [];
+var BtextObjects = [];
+function handleGetTextObjects1(name) {
+    var array = [];
+    FtextObjects = []
+    var objects
+    // if(canva){
+    // }
+    objects = canvas.getObjects();
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].name === name) {
+            function addUniqueObject(arr, obj, key) {
+                const exists = arr.some(item => item[key] === obj[key]);
+                if (!exists) {
+                  arr.push(obj);
+                }
+            }
+            addUniqueObject(FtextObjects, objects[i], 'id')
+        }
+    }
+    return FtextObjects;
+}
+function handleGetTextObjects2(name) {
+    var array = [];
+    BtextObjects = []
+    var objects
+    // if(canva){
+    // }
+    objects = backCanvas.getObjects();
+    for (var i = 0; i < objects.length; i++) {
+        if (objects[i].name === name) {
+            function addUniqueObject(arr, obj, key) {
+                const exists = arr.some(item => item[key] === obj[key]);
+                if (!exists) {
+                  arr.push(obj);
+                }
+            }
+            addUniqueObject(BtextObjects, objects[i], 'id')
+        }
+    }
+    return BtextObjects;
 }
 
 
@@ -543,9 +595,12 @@ var preHeight = 0
 var firstWidth = 0
 var firstHeight = 0
 
+var textNumberForSize
+
 var firstLoad = false
-function handleChangeSize(width, height, name) {
-    // console.log(scale, 'name')
+function handleChangeSize(width, height, name, nbText) {
+    textNumberForSize = nbText
+
     currentSizeName = name;
     currentSize = {width: width, height: height}
     
@@ -568,7 +623,7 @@ function handleChangeSize(width, height, name) {
     currentWidth = handleMiseAEchelle(width, height).width
     currentHeight  = handleMiseAEchelle(width, height).height
 
-    var currentBackground = canvas.backgroundImage
+    // var currentBackground = canvas.backgroundImage   
     // var currentShape = canvas.clipPath
 
 
@@ -611,12 +666,12 @@ function handleChangeSize(width, height, name) {
             if(object.name == 'height-value'){
                 object.top = newRectTop + (newSignHeight/2)
                 object.left = newRectLeft + newSignWidth + 25
-                object.text = String(height)
+                object.text = String(height + ' ' + currentUnit)
             }
             if(object.name == 'width-value'){
                 object.left = newRectLeft + (newSignWidth/2)
                 object.top = newRectTop + (newSignHeight + 25)
-                object.text = String(width)
+                object.text = String(width + ' ' + currentUnit)
             }
             if(selectedShape == 'square'){
                 if(object.name == 'old-world-border'){
@@ -640,12 +695,56 @@ function handleChangeSize(width, height, name) {
     handleSelectShape(selectedShape, newSignWidth, newSignHeight, newRectTop, newRectLeft)
     handleSelectFixingMethode(activeFixingMethode)
 
+    
+    if(nbText != null){
+        // textNumberForSize = nbText
+        // console.log(nbText, "max text")
+        var stop1 = false
+        canvas.getObjects().forEach(object => {
+            if(object.name == 'aso-SignText' && nbText < handleGetTextObjects1('aso-SignText').length && !stop1){
+                var surplus = addedTexts.length - nbText
+                // console.log(`surplus text.`, addedTexts.length, 'é', nbText)
+                for(let i = 0; i < nbText ; i++){
+                    canvas.remove(object)
+                    removeTextById(object.id, addedTexts)
+                    removeTextById(object.id, handleGetTextObjects1('aso-SignText'), canvas.name)
+                    canvas.requestRenderAll()
+                    stop = true
+                }
+            }
+        });
+        
+        faceTextCount = handleGetTextObjects1('aso-SignText').length
+        
+        var stop2 = false
+        if(firstLoad){
+            backCanvas.getObjects().forEach(object => {
+                if(object.name == 'aso-SignText' && nbText < handleGetTextObjects2('aso-SignText').length && !stop2){
+                    var surplus = addedTexts.length - nbText
+                    // console.log(`surplus text.`, addedTexts.length, 'é', nbText)
+                    for(let i = 0; i < nbText ; i++){
+                        backCanvas.remove(object)
+                        removeTextById(object.id, addedTexts)
+                        removeTextById(object.id, handleGetTextObjects2('aso-SignText'), backCanvas.name)
+                        backCanvas.requestRenderAll()
+                        stop = true
+                    }
+                }
+            });
+    
+            backTextCount = handleGetTextObjects2('aso-SignText').length
+        }
+    }
+
+
+
     firstLoad = true
     return {
         width: currentWidth,
         height: currentHeight,
         top: currentTop,
-        left: currentLeft
+        left: currentLeft,
+        texts: addedTexts
     }
 }
 
@@ -700,7 +799,8 @@ function lockToCanvas(activeObj) {
         }
     });
 }
-function removeTextById(id, table) {
+function removeTextById(id, table, canvas) {
+    console.log(id, table, canvas);
     const index = table.findIndex(item => item.id === id);
     if (index !== -1) {
       table.splice(index, 1);
@@ -715,6 +815,10 @@ function handleDeleteObject(object) {
 
     if(target.type == 'i-text'){
         removeTextById(target.id, addedTexts)
+        removeTextById(object.id, handleGetTextObjects1('aso-SignText'), canvas.name)
+        faceTextCount = handleGetTextObjects1('aso-SignText').length
+        removeTextById(object.id, handleGetTextObjects2('aso-SignText'), canvas.name)
+        backTextCount = handleGetTextObjects2('aso-SignText').length
         // console.log('deleted', addedTexts)
         return addedTexts
     }
@@ -981,7 +1085,7 @@ function removeBorder(){
     });
     activeCanvas.renderAll();
 }
-function handleSelectBorder(border) {
+function handleSelectBorder(border, color) {
     activeBorder = border
     var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
@@ -998,7 +1102,11 @@ function handleSelectBorder(border) {
                         if(sizeRatio == 'big'){
                             object.set('strokeWidth', 6)
                         }
-                        object.set('stroke', 'black')
+                        if(color){
+                            object.set('stroke', color)
+                        }else{
+                            object.set('stroke', 'black')
+                        }
     
                     }
                 }
@@ -1084,7 +1192,7 @@ function handleChangeSignColor(color) {
         if (object.type !== 'line') {
 
             if(object.name == 'safeObject'){
-                object.set('fill', color.code)
+                object.set('fill', color.backgroundColor)
             }
         }
     });
@@ -1092,6 +1200,32 @@ function handleChangeSignColor(color) {
     updateModifications(true, 'changer sign color')
 
     return color
+}
+function handleSetImageToSignBackground(image){
+    function setPattern(canva){
+        // var object = handleGetObjectByName('safeObject', canvas)
+        canva.getObjects().forEach((object, index) =>{
+            if(object.name === 'safeObject'){
+                fabric.util.loadImage(image, function(img) {
+                    var scaleX = object.width / img.width;
+                    var scaleY = object.height / img.height;
+                    var pattern = new fabric.Pattern({
+                        source: img,
+                        repeat: 'no-repeat',
+                        patternTransform: [scaleX, 0, 0, scaleY, 0, 0]
+                    });
+            
+                    // console.log(pattern)
+                    
+                    object.set('fill', pattern);
+                    // canvas.add(pattern);
+                    canva.renderAll();
+                });
+            }
+        })
+    }
+    setPattern(canvas)
+    setPattern(backCanvas)
 }
 
 
@@ -1451,7 +1585,7 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
 }
 
 //fonctions concernant les fixings methode
-function resetFixing(){
+function resetFixing(canva){
     function reset(canvas){
         var Objects = canvas.getObjects();
         Objects.forEach(function(object){
@@ -1475,27 +1609,26 @@ function resetFixing(){
             }
         })
     }
-    reset(canvas)
-    if(firstLoad){
-        reset(backCanvas)
-    }
+    reset(canva)
+    // reset(canva)
+    // if(firstLoad){
+    // }
 }
 var activeFixingMethode = ''
 function handleSelectFixingMethode(methode){
     activeFixingMethode = methode
 
-    function setFixing(canvas){
-        var Objects = canvas.getObjects();
-        Objects.forEach(function(object){
+    function setFixing(canva){
+        canva.getObjects().forEach(function(object){
             if (object.type !== 'line') {
-    
+        
                 if(methode == 'none'){
-                    resetFixing()
+                    resetFixing(canva)
                 }
                 
                 if(object.name == 'safeObject'){
                     if(methode == 'screw'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
                                 fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1511,7 +1644,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 7
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1527,7 +1660,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 8
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                             if(sizeRatio == 'big'){
@@ -1544,8 +1677,8 @@ function handleSelectFixingMethode(methode){
                                     img.id = 7
             
                                     img.selectable = false
-                                    canvas.add(img)
-    
+                                    canva.add(img)
+        
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1561,8 +1694,8 @@ function handleSelectFixingMethode(methode){
                                     img.id = 8
             
                                     img.selectable = false
-                                    canvas.add(img)
-    
+                                    canva.add(img)
+        
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1578,8 +1711,8 @@ function handleSelectFixingMethode(methode){
                                     img.id = 9
             
                                     img.selectable = false
-                                    canvas.add(img)
-    
+                                    canva.add(img)
+        
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1595,10 +1728,10 @@ function handleSelectFixingMethode(methode){
                                     img.id = 10
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
-    
+        
                         }
                         if(selectedShape == 'triangle'){
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1614,9 +1747,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 7
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -1630,9 +1763,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 8
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -1646,7 +1779,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 9
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
@@ -1654,7 +1787,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -1665,7 +1798,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 7
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1681,7 +1814,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 8
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
@@ -1689,7 +1822,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -1700,7 +1833,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 7
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1716,13 +1849,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 8
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -1733,7 +1866,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 7
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
@@ -1749,13 +1882,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 8
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
                         }
                         if(selectedShape == 'stop'){
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -1766,9 +1899,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 7
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -1782,12 +1915,12 @@ function handleSelectFixingMethode(methode){
                                 img.id = 8
         
                                 img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                             });
                         }
                     }
                     if(methode == 'screw-cap'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
                                 fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -1805,7 +1938,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 11
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -1821,7 +1954,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 12
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                             if(sizeRatio == 'big'){
@@ -1838,7 +1971,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 11
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -1854,7 +1987,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 12
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -1870,7 +2003,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 13
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -1886,7 +2019,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 14
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                         }
@@ -1904,9 +2037,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 11
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -1920,9 +2053,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 12
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -1936,7 +2069,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 13
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
@@ -1944,7 +2077,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -1955,7 +2088,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 11
         
                                 img.selectable = false
-                            canvas.add(img)
+                            canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -1971,7 +2104,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 12
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
@@ -1979,7 +2112,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -1990,7 +2123,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 11
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -2006,13 +2139,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 12
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2023,7 +2156,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 11
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
@@ -2039,13 +2172,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 12
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'stop'){
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2056,9 +2189,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 11
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2072,12 +2205,12 @@ function handleSelectFixingMethode(methode){
                                 img.id = 12
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                     }
                     if(methode == 'suction-cup'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
                                 fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2093,7 +2226,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 15
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2109,7 +2242,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 16
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                             if(sizeRatio == 'big'){
@@ -2125,7 +2258,7 @@ function handleSelectFixingMethode(methode){
                                     img.set('name', 'suction-cup1')
                                     img.id = 15
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2141,7 +2274,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 16
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2157,7 +2290,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 17
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2173,7 +2306,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 18
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                         }
@@ -2191,9 +2324,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 15
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2207,9 +2340,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 16
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2223,7 +2356,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 17
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
@@ -2231,7 +2364,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2242,7 +2375,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 15
         
                                 img.selectable = false
-                            canvas.add(img)
+                            canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2258,7 +2391,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 16
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
@@ -2266,7 +2399,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2277,7 +2410,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 15
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2293,13 +2426,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 16
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2310,7 +2443,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 15
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
@@ -2326,13 +2459,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 16
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'stop'){
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2343,9 +2476,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 15
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2359,12 +2492,12 @@ function handleSelectFixingMethode(methode){
                                 img.id = 16
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                     }
                     if(methode == 'standoff'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
                                 fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2380,7 +2513,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 19
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2396,7 +2529,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 20
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                             if(sizeRatio == 'big'){
@@ -2412,7 +2545,7 @@ function handleSelectFixingMethode(methode){
                                     img.set('name', 'standoff1')
                                     img.id = 19
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2428,7 +2561,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 20
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2444,7 +2577,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 21
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2460,7 +2593,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 22
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                         }
@@ -2478,9 +2611,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 19
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2494,9 +2627,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 20
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2510,7 +2643,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 21
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
@@ -2518,7 +2651,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2529,7 +2662,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 19
         
                                 img.selectable = false
-                            canvas.add(img)
+                            canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2545,7 +2678,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 20
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
@@ -2553,7 +2686,7 @@ function handleSelectFixingMethode(methode){
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2564,7 +2697,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 19
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2580,13 +2713,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 20
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2597,7 +2730,7 @@ function handleSelectFixingMethode(methode){
                                 img.id = 19
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
         
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
@@ -2613,13 +2746,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 20
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'stop'){
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2630,9 +2763,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 19
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2646,12 +2779,12 @@ function handleSelectFixingMethode(methode){
                                 img.id = 20
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                     }
                     if(methode == 'flag'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'turn-right'){
                             if(sizeRatio == 'small'){
                                 fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
@@ -2667,7 +2800,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 23
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                     img.bringToFront()
                                 });
                             }
@@ -2685,7 +2818,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 23
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
@@ -2701,7 +2834,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 24
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                         }
@@ -2720,7 +2853,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 23
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                     img.bringToFront()
                                 });
                             }
@@ -2738,7 +2871,7 @@ function handleSelectFixingMethode(methode){
                                     img.id = 23
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
         
                                 fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
@@ -2754,13 +2887,13 @@ function handleSelectFixingMethode(methode){
                                     img.id = 24
             
                                     img.selectable = false
-                                    canvas.add(img)
+                                    canva.add(img)
                                 });
                             }
                         }
                     }
                     if(methode == 'table-stand'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square'){
                             var points = [
                                 {x:0, y:0},
@@ -2789,16 +2922,16 @@ function handleSelectFixingMethode(methode){
                             //         1: 'blue'
                             //     }
                             // });
-                            canvas.add(tableStand)
+                            canva.add(tableStand)
                             tableStand.sendToBack()
                         }
                     }
                     if(methode == 'ceiling'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2809,9 +2942,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 26
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2825,13 +2958,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 27
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-left'){
                             fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2842,9 +2975,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 26
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2858,13 +2991,13 @@ function handleSelectFixingMethode(methode){
                                 img.id = 27
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                         if(selectedShape == 'turn-right'){
                             fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -2875,9 +3008,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 26
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -2891,12 +3024,12 @@ function handleSelectFixingMethode(methode){
                                 img.id = 27
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                     }
                     if(methode == 'hanging'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
                                 var hangingHole = new fabric.Circle({
@@ -2911,7 +3044,7 @@ function handleSelectFixingMethode(methode){
                                     selectable: false,
         
                                 })
-                                canvas.add(hangingHole)
+                                canva.add(hangingHole)
                             }
                             if(sizeRatio == 'big'){
                                 var hangingHole1 = new fabric.Circle({
@@ -2938,7 +3071,7 @@ function handleSelectFixingMethode(methode){
                                     selectable: false,
         
                                 })
-                                canvas.add(hangingHole1, hangingHole2)
+                                canva.add(hangingHole1, hangingHole2)
                             }
                         }
                         if(selectedShape == 'oval' || selectedShape == 'stop' || selectedShape == 'triangle' || selectedShape == 'rotated-square'){
@@ -2953,11 +3086,11 @@ function handleSelectFixingMethode(methode){
                                 stroke: 'grey',
                                 selectable: false,
                             })
-                            canvas.add(hangingHole)
+                            canva.add(hangingHole)
                         }
                     }
-                    if(methode == 'pole-attachement'){
-                        resetFixing()
+                    if(methode == 'pole-attachment'){
+                        resetFixing(canva)
                         var pole = new fabric.Rect({
                             id: 30,
                             width: object.width/4,
@@ -2970,11 +3103,11 @@ function handleSelectFixingMethode(methode){
                             name: 'pole',
                             selectable: false,
                         })
-                        canvas.add(pole)
+                        canva.add(pole)
                         pole.sendToBack()
                     }
                     if(methode == 'cable-labeling'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             var cableHole1 = new fabric.Rect({
                                 id: 31,
@@ -3025,15 +3158,15 @@ function handleSelectFixingMethode(methode){
                                 name: 'cable-hole4',
                                 selectable: false,
                             })
-                            canvas.add(cableHole1, cableHole2, cableHole3, cableHole4)
+                            canva.add(cableHole1, cableHole2, cableHole3, cableHole4)
                         }
                     }
                     if(methode == 'table-clamp'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -3044,9 +3177,9 @@ function handleSelectFixingMethode(methode){
                                 img.id = 35
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -3060,16 +3193,16 @@ function handleSelectFixingMethode(methode){
                                 img.id = 36
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                             });
                         }
                     }
                     if(methode == 'base-support'){
-                        resetFixing()
+                        resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             fabric.Image.fromURL('../../fixing-methodes/base-support-left.png', function(img) {
                                 img.scale(fixScale)
-    
+        
                                 img.setCoords();
                                 var newWidth = img.width * img.scaleX;
                                 var newHeight = img.height * img.scaleY;
@@ -3080,10 +3213,10 @@ function handleSelectFixingMethode(methode){
                                 img.id = 37
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                                 // img.sendToBack()
                             });
-    
+        
                             fabric.Image.fromURL('../../fixing-methodes/base-support-right.png', function(img) {
                                 img.scale(fixScale)
                                 
@@ -3097,18 +3230,18 @@ function handleSelectFixingMethode(methode){
                                 img.id = 38
         
                                 img.selectable = false
-                                canvas.add(img)
+                                canva.add(img)
                                 // img.sendToBack()
                             });
                         }
                     }
-    
+        
                 }  
             }if(object.type == 'line'){
                 object.sendToBack()
             }
         }); 
-        canvas.renderAll();
+        canva.renderAll();
     }
 
     setFixing(canvas)
@@ -3158,27 +3291,27 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             var left = objLeft * radio
             left = left * radio1
             
-            var right = currentSize.width - (convertFromPx(left, 'cm') + convertFromPx(newWidth, 'cm'))
+            var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit))
             // var right = objRight * radio
             // right = right * radio1
             
             var top = objTop * radio
             top = top * radio1
             
-            var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
+            var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit))
 
-            textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-            textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
-            textLeft.textContent = parseInt(convertFromPx(left, 'cm'))
+            textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+            textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
+            textLeft.textContent = parseInt(convertFromPx(left, currentUnit))
             textRight.textContent = parseInt(right)
-            // textRight.textContent = parseInt(convertFromPx(right, 'cm'))
-            textTop.textContent = parseInt(convertFromPx(top, 'cm'))
+            // textRight.textContent = parseInt(convertFromPx(right, currentUnit))
+            textTop.textContent = parseInt(convertFromPx(top, currentUnit))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
             if(activeCanvas.getActiveObject().type == 'image'){
-                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
         }
         if(container.width == 1000){
@@ -3194,42 +3327,42 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             var left = objLeft * radio
             left = left * radio1
             
-            var right = currentSize.width - (convertFromPx(left, 'cm') + convertFromPx(newWidth, 'cm'))
+            var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit))
             
             var top = objTop * radio
             top = top * radio1
             
-            var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
+            var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit))
             
             // if(activeObject.type === 'i-text'){
-            //     selectedText.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedText.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedText.left = parseInt(convertFromPx(left, 'cm'))
+            //     selectedText.width = parseInt(convertFromPx(newWidth, currentUnit))
+            //     selectedText.height = parseInt(convertFromPx(newHeight, currentUnit))
+            //     selectedText.left = parseInt(convertFromPx(left, currentUnit))
             //     selectedText.right = right
-            //     selectedText.top = convertFromPx(top, 'cm')
+            //     selectedText.top = convertFromPx(top, currentUnit)
             //     selectedText.bottom = bottom
             // }if(activeObject.type == 'image'){
-            //     selectedImage.width = parseInt(convertFromPx(newWidth, 'cm'))
-            //     selectedImage.height = parseInt(convertFromPx(newHeight, 'cm'))
-            //     selectedImage.left = parseInt(convertFromPx(left, 'cm'))
+            //     selectedImage.width = parseInt(convertFromPx(newWidth, currentUnit))
+            //     selectedImage.height = parseInt(convertFromPx(newHeight, currentUnit))
+            //     selectedImage.left = parseInt(convertFromPx(left, currentUnit))
             //     selectedImage.right = right
-            //     selectedImage.top = convertFromPx(top, 'cm')
+            //     selectedImage.top = convertFromPx(top, currentUnit)
             //     selectedImage.bottom = bottom
 
                 
             // }
 
-            textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-            textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
-            textLeft.textContent = parseInt(convertFromPx(left, 'cm'))
+            textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+            textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
+            textLeft.textContent = parseInt(convertFromPx(left, currentUnit))
             textRight.textContent = parseInt(right)
-            textTop.textContent = parseInt(convertFromPx(top, 'cm'))
+            textTop.textContent = parseInt(convertFromPx(top, currentUnit))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
             if(activeCanvas.getActiveObject().type == 'image'){
-                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
         }
     }
@@ -3244,24 +3377,24 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             
             var left = objLeft * radio
             
-            var right = currentSize.width - (convertFromPx(left, 'cm') + convertFromPx(newWidth, 'cm'))
+            var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit))
             
             var top = objTop * radio
             
-            var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
+            var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit))
             
 
-            textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-            textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
-            textLeft.textContent = parseInt(convertFromPx(left, 'cm'))
+            textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+            textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
+            textLeft.textContent = parseInt(convertFromPx(left, currentUnit))
             textRight.textContent = parseInt(right)
-            textTop.textContent = parseInt(convertFromPx(top, 'cm'))
+            textTop.textContent = parseInt(convertFromPx(top, currentUnit))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
             if(activeCanvas.getActiveObject().type == 'image'){
-                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
         }
         if(container.width == 1000){
@@ -3273,34 +3406,34 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             
             var left = objLeft * radio
             
-            var right = currentSize.width - (convertFromPx(left, 'cm') + convertFromPx(newWidth, 'cm'))
+            var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit))
             
             var top = objTop * radio
             
-            var bottom = currentSize.height - (convertFromPx(top, 'cm') + convertFromPx(newHeight, 'cm'))
+            var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit))
 
-            textWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-            textHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
-            textLeft.textContent = parseInt(convertFromPx(left, 'cm'))
+            textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+            textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
+            textLeft.textContent = parseInt(convertFromPx(left, currentUnit))
             textRight.textContent = parseInt(right)
-            textTop.textContent = parseInt(convertFromPx(top, 'cm'))
+            textTop.textContent = parseInt(convertFromPx(top, currentUnit))
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
             if(activeCanvas.getActiveObject().type == 'image'){
-                imageWidth.textContent = parseInt(convertFromPx(newWidth, 'cm'))
-                imageHeight.textContent = parseInt(convertFromPx(newHeight, 'cm'))
+                imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
+                imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
         }
     }
 
     return {
-        width: parseInt(convertFromPx(newWidth, 'cm')),
-        height: parseInt(convertFromPx(newHeight, 'cm')),
-        left: parseInt(convertFromPx(left, 'cm')),
+        width: parseInt(convertFromPx(newWidth, currentUnit)),
+        height: parseInt(convertFromPx(newHeight, currentUnit)),
+        left: parseInt(convertFromPx(left, currentUnit)),
         right: parseInt(right),
-        // right: parseInt(convertFromPx(right, 'cm')),
-        top: parseInt(convertFromPx(top, 'cm')),
+        // right: parseInt(convertFromPx(right, currentUnit)),
+        top: parseInt(convertFromPx(top, currentUnit)),
         bottom: bottom
     }
 }
@@ -3446,124 +3579,136 @@ function handleGetAddedTextValues(transform) {
 let newId = 38
 
 var addedTexts = []
+var faceTextCount = 0
+var backTextCount = 0
 function handleAddTextToSign(clone){
-    // console.log('clone',clone)
-    if(clone){
-        var text1JSON = clone.toJSON();  
-        // console.log(text1JSON)
-        delete text1JSON.evented;
+    if(textNumberForSize != null && (((faceTextCount < textNumberForSize && activeSignFace == 'front') || (backTextCount < textNumberForSize && activeSignFace == 'back'))) || textNumberForSize == null){
+        if(clone){
+            var text1JSON = clone.toJSON();  
+            // console.log(text1JSON)
+            delete text1JSON.evented;
+    
+            var text2 = new fabric.IText(text1JSON.text ,{
+                id: newId += 1,
+                name: 'aso-SignText',
+                evented: true,
+                editable: true,
+                scaleX: text1JSON.scaleX,
+                scaleY: text1JSON.scaleY,
+                top: text1JSON.top,
+                left: text1JSON.left,
+                fontSize: text1JSON.fontSize,
+                underline: text1JSON.underline,
+                linethrough: text1JSON.linethrough,
+                overline: text1JSON.overline,
+                fill: text1JSON.fill,
+                textAlign: text1JSON.textAlign,
+                fontFamily: text1JSON.fontFamily,
+                fontWeight: text1JSON.fontWeight,
+                fontStyle: text1JSON.fontStyle,
+                uniScaleTransform: true,
+                centeredScaling: true,
+                lockScalingFlip: true,
+                originX: 'center',
+                originY: 'center',
+                // mouseUpHandler: handleGetAddedTextValues,
+            })
+    
+            text2.on('editing:entered', () => {
+                handleGetAddedTextValues(text2);  
+            });
+            text2.on('editing:exited', () => {
+                handleGetAddedTextValues(text2);              
+            });
+            text2.on('selected', () => {   
+                handleGetAddedTextValues(text2);         
+                // console.log("newTextdqdqdqsdqd");
+    
+            });
+            text2.on('mousedown', function() {
+                handleGetAddedTextValues(text2); 
+                updateModifications(true, 'deposer le text')
+            });
+            text2.on('mouseup', function() {
+                handleGetAddedTextValues(text2); 
+                updateModifications(true, 'deposer le text')
+            });
+    
+            activeCanvas.add(text2);
+            addedTexts.push(text2);
+            activeCanvas.setActiveObject(text2);
+            lockToCanvas(text2)
+        }else{
+            var sign = handleGetObjectByName('safeObject')
+            var newText = new fabric.IText('Text',{
+                id: newId += 1,
+                name: 'aso-SignText',
+                editable: true,
+                selectOnEdit: false,
+                top: sign.top + (sign.height /3),
+                left: sign.left + sign.width/3,
+                fontSize: 100,
+                uniScaleTransform: true,
+                centeredScaling: true,
+                lockScalingFlip: true,
+                evented: true,
+                showITextBorder: true,
+    
+                originX: 'center',
+                originY: 'center',
+    
+                renderControls: false
+                // path: new fabric.Path('M 0 0 C 50 -100 150 -100 200 0', {
+                //     strokeWidth: 1,
+                //     visible: false
+                // }),
+                // pathSide: 'left',
+                // pathStartOffset: 0
+                // minScaleLimit: 0.3
+            })
+    
+    
+            newText.on('editing:entered', () => {
+                handleGetAddedTextValues(newText);  
+            });
+            newText.on('editing:exited', () => {   
+                handleGetAddedTextValues(newText);              
+            });
+            newText.on('selected', () => {   
+                handleGetAddedTextValues(newText);         
+                // console.log("newTextdqdqdqsdqd");
+            });
+            newText.on('mousedown', function() {
+                handleGetAddedTextValues(newText); 
+                updateModifications(true, 'deposer le text')
+            });
+            newText.on('mouseup', function() {
+                handleGetAddedTextValues(newText); 
+                updateModifications(true, 'prendre le text')
+            });
+    
+            activeCanvas.add(newText)
+    
+            handleCenterHorizontally(newText)
+            handleCenterVertically(newText)
+    
+    
+            addedTexts.push(newText);
+            activeCanvas.setActiveObject(newText);
+            lockToCanvas(newText)
+    
+    
+        }
+        activeCanvas.renderAll()
+        updateModifications(true, '==ajout de text==')
 
-        var text2 = new fabric.IText(text1JSON.text ,{
-            id: newId += 1,
-            evented: true,
-            editable: true,
-            scaleX: text1JSON.scaleX,
-            scaleY: text1JSON.scaleY,
-            top: text1JSON.top,
-            left: text1JSON.left,
-            fontSize: text1JSON.fontSize,
-            underline: text1JSON.underline,
-            linethrough: text1JSON.linethrough,
-            overline: text1JSON.overline,
-            fill: text1JSON.fill,
-            textAlign: text1JSON.textAlign,
-            fontFamily: text1JSON.fontFamily,
-            fontWeight: text1JSON.fontWeight,
-            fontStyle: text1JSON.fontStyle,
-            uniScaleTransform: true,
-            centeredScaling: true,
-            lockScalingFlip: true,
-            originX: 'center',
-            originY: 'center',
-            // mouseUpHandler: handleGetAddedTextValues,
-        })
-
-        text2.on('editing:entered', () => {
-            handleGetAddedTextValues(text2);  
-        });
-        text2.on('editing:exited', () => {
-            handleGetAddedTextValues(text2);              
-        });
-        text2.on('selected', () => {   
-            handleGetAddedTextValues(text2);         
-            console.log("newTextdqdqdqsdqd");
-
-        });
-        text2.on('mousedown', function() {
-            handleGetAddedTextValues(text2); 
-            updateModifications(true, 'deposer le text')
-        });
-        text2.on('mouseup', function() {
-            handleGetAddedTextValues(text2); 
-            updateModifications(true, 'deposer le text')
-        });
-
-        activeCanvas.add(text2);
-        addedTexts.push(text2);
-        activeCanvas.setActiveObject(text2);
-        lockToCanvas(text2)
-    }else{
-        var sign = handleGetObjectByName('safeObject')
-        var newText = new fabric.IText('Text',{
-            id: newId += 1,
-            editable: true,
-            selectOnEdit: false,
-            top: sign.top + (sign.height /3),
-            left: sign.left + sign.width/3,
-            fontSize: 100,
-            uniScaleTransform: true,
-            centeredScaling: true,
-            lockScalingFlip: true,
-            evented: true,
-            showITextBorder: true,
-
-            originX: 'center',
-            originY: 'center',
-
-            renderControls: false
-            // path: new fabric.Path('M 0 0 C 50 -100 150 -100 200 0', {
-            //     strokeWidth: 1,
-            //     visible: false
-            // }),
-            // pathSide: 'left',
-            // pathStartOffset: 0
-            // minScaleLimit: 0.3
-        })
-
-
-        newText.on('editing:entered', () => {
-            handleGetAddedTextValues(newText);  
-        });
-        newText.on('editing:exited', () => {   
-            handleGetAddedTextValues(newText);              
-        });
-        newText.on('selected', () => {   
-            handleGetAddedTextValues(newText);         
-            console.log("newTextdqdqdqsdqd");
-        });
-        newText.on('mousedown', function() {
-            handleGetAddedTextValues(newText); 
-            updateModifications(true, 'deposer le text')
-        });
-        newText.on('mouseup', function() {
-            handleGetAddedTextValues(newText); 
-            updateModifications(true, 'prendre le text')
-        });
-
-        activeCanvas.add(newText)
-
-        handleCenterHorizontally(newText)
-        handleCenterVertically(newText)
-
-
-        addedTexts.push(newText);
-        activeCanvas.setActiveObject(newText);
-        lockToCanvas(newText)
-
-
+        if(activeSignFace == 'front'){
+            faceTextCount += 1
+        }else{
+            backTextCount += 1
+        }
     }
-    activeCanvas.renderAll()
-    updateModifications(true, '==ajout de text==')
+    // console.log(handleGetTextObjects('aso-SignText', activeCanvas).length, 'current texts')
     return addedTexts
 }
 
@@ -3851,6 +3996,7 @@ function handleFlipImage(){
 
 export {
     handleGetCanvas,
+    handleGetCurrentUnit,
     handleUndo,
     handleRedo,
     handleClearAll,
@@ -3885,4 +4031,5 @@ export {
     handleFlipImage,
     handleCheckActiveSignFace,
     handleCloneCanvas,
+    handleSetImageToSignBackground,
 }

@@ -26,7 +26,7 @@
                         </svg>
                         
                         <div class="aso-hidden lg:aso-flex aso-text-white aso-text-center">
-                            {{props.config.data.settings.languageImages.visualizer.textButtonBack}} 
+                            {{props.config.data.settings.languageImages.visualizer.textButtonRefresh}} 
                         </div>
                     </span>
                         
@@ -38,7 +38,7 @@
                                 </svg>
                             </span>
                             <div class="aso-hidden lg:aso-flex aso-text-sm">
-                                {{props.config.data.settings.languageImages.visualizer.textButtonUndo}} 
+                                {{props.config.data.settings.languageImages.visualizer.textButtonBack}} 
                             </div>
                         </div>
 
@@ -106,10 +106,10 @@
                     <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1 aso-px-2 aso-text-white aso-font-medium aso-h-[80%] aso-w-[6%] aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
                         <span :class="`${activeFace == 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
                         
-                        <span :class="`${activeFace == 'front-face' ? 'aso-text-white' : ''} aso-z-10 aso-flex aso-full-center aso-pl-1`">
+                        <span :class="`${activeFace == 'front-face' ? 'aso-text-white' : ''} aso-flex aso-full-center aso-pl-1`">
                             A
                         </span>
-                        <span :class="`${activeFace == 'back-face' ? '' : 'aso-text-white'} aso-z-10 aso-flex aso-full-center aso-pr-1`">
+                        <span :class="`${activeFace == 'back-face' ? '' : 'aso-text-white'} aso-flex aso-full-center aso-pr-1`">
                             B
                         </span>
                     </span>
@@ -215,14 +215,20 @@
                         </span>
                     </div>
 
-                    <div class="aso-w-1/3 aso-flex aso-full-center">
+                    <div class="aso-w-1/3 aso-flex aso-full-center aso-space-x-2">
+                        <div class="aso-text-center aso-text-lg aso-font-semibold">
+                            {{props.config.data.settings.languageImages.visualizer.textBeforePrice}}
+                        </div>
                         <div class="aso-flex aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
                             $ 495,09
+                        </div>
+                        <div class="aso-text-center aso-text-lg aso-font-semibold">
+                            {{props.config.data.settings.languageImages.visualizer.textAfterPrice}}
                         </div>
                     </div>
 
                     <div class="aso-w-1/3 aso-h-full aso-flex aso-justify-end">
-                        <div v-show="!isLoaded" class="aso-hidden lg:aso-flex aso-full-center aso-w-[40%] aso-h-full aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">Terminer</div>
+                        <div v-show="!isLoaded" class="aso-hidden lg:aso-flex aso-full-center aso-w-[40%] aso-h-full aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">{{props.config.data.settings.languageImages.visualizer.textButtonFinish}}</div>
                     </div>
                 </div>
             </div>
@@ -290,17 +296,6 @@
             </div>        -->
 
             <div v-show="!isLoaded" class="aso-w-full aso-h-full aso-flex lg:aso-flex-col aso-items-center lg:aso-space-y-4 aso-py-4 aso-overflow-auto no-scrollbar">
-                <div @click="showOptions('product')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
-                    <svg class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <g id="fluent-mdl2:product-release">
-                        <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
-                        </g>
-                    </svg>
-                    <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Product
-                    </div>
-                </div>
-
                 <div @click="showOptions('material')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg class="aso-w-6 aso-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="mdi:material">
@@ -308,29 +303,42 @@
                         </g>
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Materials
+                        {{props.config.data.settings.languageImages.visualizer.textMaterial}} 
+                    </div>
+                </div>
+                
+                <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="aso-w-[80%]" >
+                    <div @click="showOptions('component', component)" class="aso-w-full aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                        <svg class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <g id="fluent-mdl2:product-release">
+                            <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
+                            </g>
+                        </svg>
+                        <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
+                            {{component.name}}
+                        </div>
                     </div>
                 </div>
 
-                <div @click="showOptions('size')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="materialType == 'simple'" @click="showOptions('size')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg class="aso-w-6 aso-h-6" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="fluent:keyboard-layout-resize-24-filled">
                         <path id="Vector" d="M41.5083 17.9375C41.8623 17.9375 42.2043 18.0496 42.4711 18.2531C42.7379 18.4566 42.9115 18.7378 42.9596 19.0445L42.9733 19.2187V33.7396C42.9734 34.7135 42.5508 35.6512 41.7908 36.3632C41.0308 37.0751 39.9901 37.5081 38.8791 37.5748L38.5783 37.5833H34.6716C34.3004 37.5832 33.9431 37.4599 33.6719 37.2383C33.4007 37.0167 33.2358 36.7133 33.2105 36.3894C33.1852 36.0655 33.3014 35.7453 33.5356 35.4935C33.7699 35.2417 34.1047 35.077 34.4724 35.0328L34.6716 35.0208H38.5783C38.9323 35.0208 39.2743 34.9087 39.5411 34.7052C39.8079 34.5017 39.9815 34.2206 40.0296 33.9138L40.0433 33.7396V19.2187C40.0433 18.8789 40.1976 18.553 40.4724 18.3128C40.7471 18.0725 41.1197 17.9375 41.5083 17.9375ZM41.5083 3.41666L41.645 3.42178L41.8423 3.45082L41.9751 3.48328L42.0923 3.52257L42.2291 3.58236L42.3892 3.67461L42.5455 3.7942L42.6451 3.88986L42.733 3.99578L42.8307 4.14953L42.8639 4.21274L42.9108 4.32549C42.9323 4.3887 42.9498 4.45532 42.9596 4.52366L42.9733 4.69791V13.2396C42.9732 13.5642 42.8322 13.8767 42.5788 14.1139C42.3254 14.3511 41.9785 14.4953 41.6081 14.5175C41.2378 14.5396 40.8717 14.4379 40.5838 14.2331C40.2958 14.0282 40.1075 13.7354 40.057 13.4138L40.0433 13.2396V7.78999L31.3119 15.4262C31.0501 15.6534 30.7001 15.7858 30.3316 15.7972C29.9631 15.8085 29.6032 15.6979 29.3239 15.4875C29.0445 15.277 28.8662 14.9821 28.8244 14.6617C28.7827 14.3413 28.8807 14.0189 29.0988 13.7589L29.2413 13.6154L37.9688 5.97916H31.7416C31.3876 5.97914 31.0456 5.86702 30.7788 5.66351C30.512 5.46001 30.3384 5.17889 30.2903 4.87216L30.2766 4.69791C30.2766 4.38829 30.4048 4.08916 30.6375 3.85582C30.8702 3.62248 31.1916 3.47072 31.5424 3.42861L31.7416 3.41666H41.5083ZM25.8816 17.9375C26.9953 17.9374 28.0674 18.307 28.8815 18.9717C29.6955 19.6363 30.1906 20.5465 30.2668 21.5182L30.2766 21.7812V33.7396C30.2768 34.7135 29.8541 35.6512 29.0941 36.3632C28.3341 37.0751 27.2935 37.5081 26.1824 37.5748L25.8816 37.5833H8.30162C7.18797 37.5834 6.11579 37.2138 5.30178 36.5492C4.48776 35.8845 3.99261 34.9743 3.91638 34.0027L3.90662 33.7396V21.7812C3.90648 20.8073 4.32911 19.8696 5.0891 19.1577C5.8491 18.4457 6.88977 18.0127 8.0008 17.946L8.30162 17.9375H25.8816ZM20.9983 29.8958H13.1849C12.3841 29.8958 11.7199 30.5279 11.7199 31.1771C11.7199 31.8262 12.2708 32.3627 12.9857 32.4464L13.1849 32.4583H20.9983C21.7991 32.4583 22.4633 31.8262 22.4633 31.1771C22.4633 30.8675 22.3351 30.5683 22.1024 30.335C21.8697 30.1016 21.5483 29.9499 21.1975 29.9078L20.9983 29.8958ZM11.7199 23.0625C11.2019 23.0625 10.7051 23.2425 10.3387 23.5629C9.97241 23.8832 9.76662 24.3177 9.76662 24.7708C9.76662 25.2239 9.97241 25.6584 10.3387 25.9788C10.7051 26.2992 11.2019 26.4792 11.7199 26.4792C12.238 26.4792 12.7348 26.2992 13.1012 25.9788C13.4675 25.6584 13.6733 25.2239 13.6733 24.7708C13.6733 24.3177 13.4675 23.8832 13.1012 23.5629C12.7348 23.2425 12.238 23.0625 11.7199 23.0625ZM22.4633 23.0625C21.9452 23.0625 21.4484 23.2425 21.0821 23.5629C20.7157 23.8832 20.5099 24.3177 20.5099 24.7708C20.5099 25.2239 20.7157 25.6584 21.0821 25.9788C21.4484 26.2992 21.9452 26.4792 22.4633 26.4792C22.9813 26.4792 23.4782 26.2992 23.8445 25.9788C24.2108 25.6584 24.4166 25.2239 24.4166 24.7708C24.4166 24.3177 24.2108 23.8832 23.8445 23.5629C23.4782 23.2425 22.9813 23.0625 22.4633 23.0625ZM17.0916 23.0625C16.5736 23.0625 16.0767 23.2425 15.7104 23.5629C15.3441 23.8832 15.1383 24.3177 15.1383 24.7708C15.1383 25.2239 15.3441 25.6584 15.7104 25.9788C16.0767 26.2992 16.5736 26.4792 17.0916 26.4792C17.6097 26.4792 18.1065 26.2992 18.4728 25.9788C18.8392 25.6584 19.0449 25.2239 19.0449 24.7708C19.0449 24.3177 18.8392 23.8832 18.4728 23.5629C18.1065 23.2425 17.6097 23.0625 17.0916 23.0625ZM24.9049 3.41666C25.2761 3.41676 25.6334 3.54007 25.9046 3.76169C26.1759 3.98331 26.3408 4.28671 26.3661 4.61058C26.3914 4.93445 26.2752 5.25464 26.0409 5.50646C25.8067 5.75828 25.4719 5.92295 25.1042 5.9672L24.9049 5.97916H8.30162C7.9476 5.97917 7.60556 6.0913 7.33876 6.2948C7.07196 6.4983 6.89844 6.77942 6.85029 7.08616L6.83662 7.26041V14.0937C6.8365 14.4184 6.6955 14.7308 6.4421 14.9681C6.18869 15.2053 5.84179 15.3495 5.47147 15.3716C5.10115 15.3937 4.73504 15.2921 4.44711 15.0873C4.15917 14.8824 3.97088 14.5896 3.92029 14.268L3.90662 14.0937V7.26041C3.90648 6.28644 4.32911 5.34875 5.0891 4.63683C5.8491 3.92491 6.88977 3.49186 8.0008 3.4252L8.30162 3.41666H24.9049Z" fill="currentColor"/>
                         </g>
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Size
+                        {{props.config.data.settings.languageImages.visualizer.textSize}}
                     </div>
                 </div>
 
-                <div @click="showOptions('shape')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="materialType == 'simple'" @click="showOptions('shape')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg class="aso-w-6 aso-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="mdi:shape">
                         <path id="Vector" d="M18.3333 23.0625V36.7292H5V23.0625H18.3333ZM20 3.41666L29.1667 18.7917H10.8333L20 3.41666ZM29.1667 22.2083C33.3333 22.2083 36.6667 25.625 36.6667 29.8958C36.6667 34.1667 33.3333 37.5833 29.1667 37.5833C25 37.5833 21.6667 34.1667 21.6667 29.8958C21.6667 25.625 25 22.2083 29.1667 22.2083Z" fill="currentColor"/>
                         </g>
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Shape
+                        {{props.config.data.settings.languageImages.visualizer.textShape}}
                     </div>
                 </div>
 
@@ -340,17 +348,17 @@
                         <path id="Vector" d="M36.183 16.8667L23.133 3.81666C22.9138 3.59622 22.6374 3.44147 22.3349 3.36988C22.0324 3.29829 21.716 3.31272 21.4212 3.41153C21.1265 3.51035 20.8653 3.68962 20.6671 3.92908C20.4689 4.16855 20.3417 4.45867 20.2997 4.76666L19.083 13.3333L15.7497 16.6667L15.1997 16.35C14.8408 16.1755 14.4313 16.1356 14.0455 16.2374C13.6597 16.3393 13.3232 16.5762 13.0972 16.905C12.8713 17.2339 12.7708 17.6329 12.8141 18.0296C12.8573 18.4263 13.0415 18.7942 13.333 19.0667L11.4163 21.0167L10.8663 20.7C10.5084 20.5356 10.1038 20.5033 9.72429 20.6089C9.3448 20.7144 9.01495 20.9509 8.79324 21.2765C8.57153 21.6021 8.4723 21.9956 8.51314 22.3874C8.55398 22.7792 8.73225 23.1438 9.01634 23.4167L7.06634 25.35L6.53301 25C6.34278 24.8898 6.13264 24.8183 5.91468 24.7897C5.69671 24.761 5.47524 24.7758 5.263 24.8331C5.05077 24.8904 4.85197 24.9892 4.67806 25.1237C4.50415 25.2581 4.35856 25.4257 4.24967 25.6167C4.06145 25.9599 4.00005 26.3584 4.07623 26.7424C4.15242 27.1264 4.36133 27.4713 4.66634 27.7167L3.81634 28.5667C3.662 28.7231 3.5427 28.9106 3.46634 29.1167C3.38094 29.317 3.33564 29.5322 3.33301 29.75V35C3.33301 35.442 3.5086 35.8659 3.82116 36.1785C4.13372 36.4911 4.55765 36.6667 4.99967 36.6667H10.2163C10.4341 36.664 10.6493 36.6187 10.8497 36.5333C11.0557 36.457 11.2432 36.3377 11.3997 36.1833L14.233 33.3333L14.783 33.65C14.9722 33.7609 15.1815 33.8333 15.3988 33.8632C15.6161 33.893 15.8371 33.8797 16.0492 33.824C16.2613 33.7682 16.4604 33.6712 16.6349 33.5384C16.8095 33.4055 16.9561 33.2396 17.0663 33.05C17.2609 32.7069 17.3275 32.3059 17.2543 31.9184C17.181 31.5308 16.9727 31.1818 16.6663 30.9333L18.6163 29L19.1663 29.3167C19.4154 29.4578 19.6967 29.5325 19.983 29.5333C20.302 29.5046 20.606 29.3845 20.8586 29.1875C21.1111 28.9904 21.3016 28.7248 21.4071 28.4223C21.5126 28.1199 21.5287 27.7934 21.4535 27.4821C21.3783 27.1707 21.2149 26.8876 20.983 26.6667L22.933 24.7333L23.483 25.05C23.7321 25.1912 24.0134 25.2658 24.2997 25.2667C24.64 25.2606 24.9704 25.1504 25.2462 24.951C25.5221 24.7516 25.7303 24.4725 25.8429 24.1512C25.9554 23.83 25.9669 23.4819 25.8757 23.154C25.7846 22.826 25.5952 22.5338 25.333 22.3167L26.6497 21L35.233 19.7833C35.5415 19.7395 35.8315 19.6101 36.0701 19.4097C36.3087 19.2094 36.4864 18.9462 36.583 18.65C36.6973 18.3461 36.7203 18.0154 36.6492 17.6986C36.5782 17.3818 36.4161 17.0926 36.183 16.8667ZM9.53301 33.3333H6.66634V30.4667L7.61634 29.5167L11.2497 31.6667L9.53301 33.3333ZM13.683 29.1667L9.99967 27.0833L11.8997 25.1833L15.5163 27.2667L13.683 29.1667ZM18.033 24.8333L14.3997 22.7333L16.3163 20.8333L19.9997 22.9167L18.033 24.8333ZM22.383 20.4833L18.7497 18.3333L20.6497 16.4333L23.5163 19.3L22.383 20.4833ZM26.4663 17.5833L22.4163 13.5333L23.133 8.53333L31.4663 16.8667L26.4663 17.5833Z" fill="currentColor"/>
                         </g>
                     </svg>
-                    <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium aso-whitespace-nowrap">
-                        Fixing
+                    <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium aso-text-center">
+                        {{props.config.data.settings.languageImages.visualizer.textFixingMethods}}
                     </div>
                 </div>
 
-                <div @click="showOptions('border')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="materialType == 'simple'" @click="showOptions('border')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Border
+                        {{props.config.data.settings.languageImages.visualizer.textBorder}}
                     </div>
                 </div>
 
@@ -361,11 +369,11 @@
                         </g>
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Color
+                        {{props.config.data.settings.languageImages.visualizer.textColor}}
                     </div>
                 </div>
 
-                <div @click="showOptions('text')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableText) || materialType == 'advance'" @click="showOptions('text')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg class="aso-w-6 aso-h-6" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
                             <path id="Vector" d="M15.5757 11.5411C15.453 11.1569 15.2131 10.8229 14.8912 10.588C14.5693 10.3531 14.1823 10.2296 13.7868 10.2356H13.6335C13.2341 10.226 12.8422 10.3477 12.5156 10.5827C12.189 10.8177 11.9448 11.1537 11.819 11.5411L1.45625 34.6756C1.33756 34.9142 1.27624 35.1782 1.27736 35.4458C1.27736 35.7921 1.41198 36.1242 1.65161 36.369C1.89124 36.6138 2.21625 36.7514 2.55514 36.7514C2.85996 36.7559 3.15822 36.6608 3.40645 36.4799C3.65467 36.2991 3.8399 36.042 3.93514 35.7461L6.59291 29.6753H20.6485L23.3062 35.6678C23.411 35.9742 23.6035 36.2413 23.8587 36.4345C24.1139 36.6278 24.42 36.7381 24.7374 36.7514C25.1034 36.7514 25.4544 36.6028 25.7132 36.3384C25.972 36.074 26.1174 35.7154 26.1174 35.3414C26.102 35.0844 26.0414 34.8323 25.9385 34.5972L15.5757 11.5411ZM7.76847 27.0381L13.6335 13.6953L19.5112 27.0381H7.76847Z" fill="currentColor"/>
@@ -378,16 +386,16 @@
                         </defs>
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Text
+                        {{props.config.data.settings.languageImages.visualizer.textOptionText}}
                     </div>
                 </div>
 
-                <div @click="showOptions('image')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableImage) || materialType == 'advance'" @click="showOptions('image')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                     </svg>
                     <div class="aso-text-[10px] lg:aso-text-[13px] aso-font-medium">
-                        Image
+                        {{props.config.data.settings.languageImages.visualizer.textImage}}
                     </div>
                 </div>
             </div>
@@ -403,20 +411,23 @@
                     </span>
                 </div>
 
-                <div v-show="step == 'product'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-products-section">
-                    <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Products</p>    
+                <div v-show="step == 'material'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-materials-section">
+                    <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Materials</p>    
 
                     <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div v-for="(fixing, index) in fixings" class="aso-space-y-3">
-                            <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
-                            <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
+                        <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
+                            <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
+                            <label :for="material.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                                <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                    <img v-if="material.icon != ''" :src="material.icon" class="aso-w-full aso-h-full" />
+                                </div>                                
                                 <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
-                                    <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
+                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
+                                    <p class="aso-text-xs">{{ material.description }}</p>
                                     <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
-                                        <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
-                                        <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                        <span v-if="material.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
+                                        <span v-if="material.popImg == ''" class="aso-invisible">example</span>                                        
+                                        <span :class="`${selectedMaterial == material.name ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                             </svg>
@@ -428,20 +439,23 @@
                     </div>
                 </div>
 
-                <div v-show="step == 'material'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-materials-section">
-                    <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Materials</p>    
-
+                <div v-show="step == 'component'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-products-section">
+                    <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">{{advancedComponent.name}}</p>    
                     <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
-                            <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
-                            <label :for="material.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
-                                <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
-                                    <p class="aso-text-xs">{{ material.description }}</p>
+                        <div v-for="(option, index) in advancedComponent.options" class="aso-space-y-3">
+                            <input type="radio" :id="option.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectSignModel(option)">
+                            <label :for="option.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                                    <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                        <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
+                                    </div>                                
+                                    <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
+                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ option.name }}</p>
+                                    <p class="aso-text-xs">{{ option.description }}</p>
+                                    <p class="aso-text-xs">{{ option.size.width }}x{{ option.size.height }}</p>
                                     <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
-                                        <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
-                                        <span :class="`${selectedMaterial == material.name ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                        <span v-if="option.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
+                                        <span v-if="option.popImg == ''" class="aso-invisible">example</span>
+                                        <span :class="`${activeSignModelName == option.name ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                             </svg>
@@ -473,7 +487,7 @@
                                 <div v-for="(sizee, id) in sizees">
                                     <div v-for="(size, index) in allSizes" :key="size.name" class="aso-w-full aso-flex" >
                                         <div v-if="sizee.manageSizeId == index" class="aso-w-full aso-h-full aso-flex">
-                                            <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size.width, size.height, size.label)">
+                                            <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size, sizee)">
                                             <label :for="size.width + index" :class="`${currentSizeName == size.label ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                                 aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
@@ -485,26 +499,27 @@
                             </div>
                         </div>
                         
-                        <div class="aso-space-y-2 aso-w-full">
+                        <div v-if="customSizeActive" class="aso-space-y-2 aso-w-full">
                             <p class="aso-text-base aso-font-semibold">Custom</p>
-                            <div class="aso-flex aso-justify-between aso-items-center">
+                            <div class="aso-flex aso-justify-between aso-items-center aso-space-x-2 ">
                                 <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
-                                    <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeWidth" max="" v-model="customWidth">
+                                    <label class="aso-text-xs" for="sizeWidth">{{ customSizes.width.label }}</label>
+                                    <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeWidth" :min="customSizes.width.min" :max="customSizes.width.max" v-model="customSizeValues.width">
                                 </div>
-                                <p class="aso-px-2">x</p>
+                                <!-- <p class="aso-px-2">x</p> -->
                                 <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
-                                    <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" max="" v-model="customHeight">
+                                    <label class="aso-text-xs" for="sizeHeight">{{ customSizes.height.label }}</label>
+                                    <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height">
                                 </div>
                             </div>
-                            <span @click="changeSize(customWidth, customHeight)" class="aso-w-full aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-full-center aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</span>
+                            <span @click="changeSize(customSizeValues)" class="aso-w-full aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-full-center aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</span>
                         </div>
 
-                        <div class="aso-space-y-2">
+                        <div v-if="currentSizeThickness" class="aso-space-y-2">
                             <p class="aso-text-base aso-font-semibold">Thickness</p>
                             <div class="aso-flex aso-space-x-2">
                                 <div class="aso-w-full aso-flex aso-flex-col aso-space-y-2">
-                                    <!-- <label class="aso-text-xs" for="sizeWidth">{{ customWidth }}</label> -->
-                                    <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="aso-thickness" max="" >
+                                    <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="aso-thickness" :min="currentSize.thickness" :max="currentSize.thickness" :value="currentSize.thickness" disabled >
                                 </div>
                             </div>
                         </div>
@@ -516,16 +531,20 @@
 
                     <div class="aso-w-full aso-h-full aso-overflow-auto aso-scrollBar">
                         <div class="aso-grid aso-grid-cols-3 lg:aso-grid-cols-3 aso-gap-2 aso-w-full aso-full-center">
-                            <div v-for="(shape, index) in shapes" :key="shape.name" class="aso-w-full aso-flex">
-                                <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.name, currentSizeValues.width, currentSizeValues.height, currentSizeValues.top, currentSizeValues.left)">
-                                <label :for="shape.name + index" :class="`${selectedShape == shape.name ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                    aso-w-full aso-h-full aso-flex aso-flex-col aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-16 aso-h-16">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z" />
-                                    </svg>
-                                    <p>{{shape.name}}</p>
-                                </label>
+                            <div v-for="(shapee, id) in shapees">
+                                <div v-for="(shape, index) in allShapes" :key="shape.name" class="aso-w-full aso-flex">
+                                    <div class="aso-w-full aso-flex" v-if="shapee.shapeId == index">
+                                        <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, currentSizeValues.width, currentSizeValues.height, currentSizeValues.top, currentSizeValues.left)">
+                                        <label :for="shape.name + index" :class="`${selectedShape == shape.type ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
+                                            aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                        >
+                                            <div class="aso-w-16 aso-h-16 aso-bg-lime-400">
+                                                <img v-if="shape.icon != ''" :src="shape.icon" class="aso-w-full aso-h-full" />
+                                            </div>
+                                            <p>{{shape.name}}</p>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -534,24 +553,59 @@
                 <div v-show="step == 'fixing-methode'" class="aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Fixings</p>    
 
-                    <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div v-for="(fixing, index) in fixings" class="aso-space-y-3">
-                            <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
-                            <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                <span class="aso-w-1/4 aso-h-10 aso-rounded-full aso-p-2 aso-bg-red-400"></span>
-                                <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                    <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
-                                    <p class="aso-text-xs">Lorem i psum dolor sit amet, co psum dolor sit amet, copsum dolor sit amet, conses f</p>
-                                    <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
-                                        <span class="aso-text-xs aso-text-red-500 aso-underline">example</span>
-                                        <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                            </svg>
-                                        </span>                
-                                    </div>
+                    <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
+                        <div v-for="(fixingg, id) in fixinggs">
+                            <div v-for="(fixing, index) in allFixings">
+                                <div v-if="fixingg.fixingMethodId == index" class="aso-space-y-3 aso-w-full aso-h-full">
+                                    <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
+                                    <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                                        <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                            <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
+                                        </div>
+                                        <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
+                                            <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
+                                            <p class="aso-text-xs">{{ fixing.description }}</p>
+                                            <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
+                                                <span v-if="fixing.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
+                                                <span v-if="fixing.popImg == ''" class="aso-invisible">example</span>
+                                                <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                    </svg>
+                                                </span>                
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="materialType == 'advance'" class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
+                        <div v-for="(fixingId) in fixinggs">
+                            <div v-for="(fixing, index) in allFixings">
+                                <div v-if="fixingId == index" class="aso-space-y-3">
+                                    <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
+                                    <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
+                                        <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                            <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
+                                        </div>
+                                        <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
+                                            <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
+                                            <p class="aso-text-xs">{{ fixing.description }}</p>
+                                            <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
+                                                <span v-if="fixing.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
+                                                <span v-if="fixing.popImg == ''" class="aso-invisible">example</span>
+                                                <span :class="`${activeFixingMethode == fixing.type ? `aso-bg-[#016464] aso-text-white` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                    </svg>
+                                                </span>                
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -559,18 +613,32 @@
                 <div v-show="step == 'color'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-colors-section">
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Colors options</p>    
 
-                    <div class="aso-w-full aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
+                    <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
                         <p class="aso-font-medium" >List of colors</p>
                         <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                            <div v-for="(color, index) in colors" >
-                                <div @click="changeSignColor(color)" :class="`${activeSignColor == color.name ? `aso-border-4 aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${color.code}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-black aso-rounded-full aso-cursor-pointer`"> T </div>
+                            <div v-for="(colorr, id) in colorrs">
+                                <div v-for="(color, index) in allColors" >
+                                    <div v-if="colorr.manageColorId == index" @click="changeSignColor(color, colorr)" :class="`${activeSignColor == color.name ? `aso-border-4 aso-border-[#016464]` : `` } aso-w-16 aso-h-16 aso-bg-[${color.backgroundColor}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${color.textColor}] aso-rounded-full aso-cursor-pointer`"> C </div>
+                                </div>
                             </div>
-                            <label for="setColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${simpleColor}] aso-flex aso-full-center aso-rounded-full`">
+                            <!-- <label for="setColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${simpleColor}] aso-flex aso-full-center aso-rounded-full`">
                                 <input id="setColor" type="color" v-model="simpleColor" class="aso-invisible" @change="changeSignColor({name: 'custom', code: simpleColor})"/>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" :fill="simpleColor" class="aso-w-11 aso-h-11">
                                     <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
                                 </svg>
-                            </label>
+                            </label> -->
+                        </div>
+                    </div>
+
+                    <div v-if="materialType == 'advance'" class="aso-w-full aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
+                        <p class="aso-font-medium" >List of colors</p>
+                        <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                            <div v-for="(colorr, id) in colorrs" class="aso-space-y-2 aso-full-center">
+                                <div class="aso-w-16 aso-h-16 aso-rounded-full aso-overflow-hidden">
+                                    <img :src="colorr.image" class="aso-w-full aso-h-full" />
+                                </div>
+                                <!-- <div>{{ colorr.color.name }}</div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -580,16 +648,20 @@
 
                     <div class="aso-w-full aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                         <div class="aso-grid aso-grid-cols-3 lg:aso-grid-cols-3 aso-gap-2 aso-w-full aso-full-center">
-                            <div v-for="(border, index) in borders" :key="border.name" class="aso-w-full aso-flex">
-                                <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.name)">
-                                <label :for="'border' + border.name + index" :class="`${activeBorder == border.name ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                    aso-w-full aso-h-full aso-flex aso-flex-col aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-16 aso-h-16">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25 2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z" />
-                                    </svg>
-                                    <p>{{border.name}}</p>
-                                </label>
+                            <div v-for="(borderr, id) in borderrs">
+                                <div v-for="(border, index) in allBorders" :key="border.name" class="aso-w-full aso-flex">
+                                    <div v-if="borderr.manageBorderId == index">
+                                        <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings.codeHex)">
+                                        <label :for="'border' + border.name + index" :class="`${activeBorder == border.value ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
+                                            aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                        >
+                                            <div class="aso-w-16 aso-h-16 aso-bg-lime-400">
+                                                <img v-if="border.icon != ''" :src="border.icon" class="aso-w-full aso-h-full" />
+                                            </div>
+                                            <p>{{border.name}}</p>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -879,7 +951,7 @@
 <script setup>
 // import { fabric } from 'fabric';
     import { ref, onMounted, defineProps } from 'vue';
-    import {handleGetCanvas, handleUndo,
+    import {handleGetCanvas, handleGetCurrentUnit, handleUndo,
         handleRedo,
         handleClearAll,
         handleGetObjectByName,
@@ -913,15 +985,17 @@
         handleFlipImage,
         handleCheckActiveSignFace,
         handleCloneCanvas,
+        handleSetImageToSignBackground,
     } from '@/frontend/utils/aso-editor-script.js'
 
     const props = defineProps({
         config:Object,
         manage:Object,
     });
+    var configSettings = ref({})
 
-    console.log(props.config)
     console.log(props.manage)
+    // console.log(props.config)
 
     var isLoaded = ref(true)
     function setIsLoadedToFalse() {
@@ -954,11 +1028,17 @@
     var selectText = ref(false);
     var editImage = ref(false);
 
-    function showOptions(option){
+    var advancedComponent = ref({})
+    function showOptions(option, stepValue){
         showOption.value = true;
         if(showOption.value){
             step.value = option;
         }
+
+        if(stepValue && materialType.value == 'advance'){
+            advancedComponent.value = stepValue;
+        }
+
     }
 
     var dropFont = ref(false)
@@ -995,13 +1075,21 @@
     }
 
     onMounted(() => {
+        configSettings.value = props.config.data.settings
+        console.log(configSettings.value)
+        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit)    
+
         allSizes.value = props.manage.manageSize
+        allShapes.value = props.manage.allShapes
+        allFixings.value = props.manage.allFixingMethod
+        allColors.value = props.manage.colors
+        allBorders.value = props.manage.allBorder
+
+        // console.log(allColors.value, "allColors")
+        
         selectMaterial(props.config.data.materials[0])
 
 
-
-
-        
         var optionss = document.querySelector('#aso-options-container')
         document.addEventListener('click', handleDocumentClick)
         console.log(fabric.version)
@@ -1130,10 +1218,61 @@
             // wLine.bringToFront()
     
     
-            selectedShape.value = shapes.value[0].name
-            handleGetShape(shapes.value[0].name)
+            // selectedShape.value = shapes.value[0].name
+            // handleGetShape(shapes.value[0].name)
+            var stopShape = false
+            shapees.value.forEach((shapee, id) => {
+                allShapes.value.forEach((shape, index) => {
+                    if(shapee.shapeId == index && !stopShape){
+                        selectedShape.value = shape.value
+                        handleGetShape(shape.value)
+
+                        stopShape = true
+                    }
+                })
+            })
     
-            changeSize(sizes.value[0].width, sizes.value[0].height, sizes.value[0].name)
+            var stopSize = false
+            sizees.value.forEach((sizee, id) => {
+                allSizes.value.forEach((size, index) => {
+                    if(sizee.manageSizeId == index && !stopSize){
+                        changeSize(size, sizee)
+                        stopSize = true
+                    }
+                })
+            })
+
+            var stopFixing = false
+            fixinggs.value.forEach((fixingg, id) => {
+                allFixings.value.forEach((fixing, index) => {
+                    if(fixingg.fixingMethodId == index && !stopFixing){
+                        selectFixingMethode(fixing.type)
+                        stopFixing = true
+                    }
+                })
+            })
+
+            var stopBorder = false
+            borderrs.value.forEach((borderr, id) => {
+                allBorders.value.forEach((border, index) => {
+                    if(borderr.manageBorderId == index && !stopBorder){
+                        selectBorder(border.value, borderr.settings.codeHex)
+                        stopBorder = true
+                    }
+                })
+            })
+
+            var stopColor = false
+            colorrs.value.forEach((colorr, id) => {
+                allColors.value.forEach((color, index) => {
+                    if(colorr.manageColorId == index && !stopColor){
+                        changeSignColor(color)
+                        stopColor = true
+                    }
+                })
+            })
+
+
     
             //custom des boutons pour les objets ajouter au sign
             fabric.Object.prototype.transparentCorners = false;
@@ -1158,6 +1297,8 @@
         if(window.innerWidth < 688){
             showOption.value = true
         }
+
+        // selectMaterial(props.config.data.materials[0])
 
         setIsLoadedToFalse()
 
@@ -1275,13 +1416,158 @@
         div.classList.add("aso-invisible");
     }
 
+    var customSizeActive = ref(false)
 
+    var currentMaterial = ref({})
+    var currentMaterialTextImages = ref({})
     var selectedMaterial = ref('')
+    var materialType = ref('')
+    var firstLoad = ref(false)
     function selectMaterial(material){
+        currentMaterial.value = material
+        currentMaterialTextImages.value = material.data.textImages
+        materialType.value = material.type
         console.log("selectMaterial", material)
         selectedMaterial.value = material.name
 
-        sizees.value = material.data.sizes.allSizes
+        if(material.type == 'simple'){
+            sizees.value = material.data.sizes.allSizes
+            customSizes.value = material.data.sizes.customSize
+            customSizeActive.value = material.data.sizes.customSize.active
+            if(customSizeActive.value){
+                // console.log("custom size", customSizes.value)
+                customSizeValues.value.width = customSizes.value.width.min
+                customSizeValues.value.height = customSizes.value.height.min
+            }
+
+
+            shapees.value = material.data.shapes
+            fixinggs.value = material.data.fixingMethods
+            colorrs.value = material.data.colors
+            borderrs.value = material.data.borders
+
+            if(firstLoad.value){
+                var stopShape = false
+                shapees.value.forEach((shapee, id) => {
+                    allShapes.value.forEach((shape, index) => {
+                        if(shapee.shapeId == index && !stopShape){
+                            selectedShape.value = shape.value
+                            handleGetShape(shape.value)
+
+                            stopShape = true
+                        }
+                    })
+                })
+
+                var stopSize = false
+                sizees.value.forEach((sizee, id) => {
+                    allSizes.value.forEach((size, index) => {
+                        if(sizee.manageSizeId == index && !stopSize){
+                            changeSize(size, sizee)
+                            stopSize = true
+                        }
+                    })
+                })
+
+                var stopFixing = false
+                fixinggs.value.forEach((fixingg, id) => {
+                    allFixings.value.forEach((fixing, index) => {
+                        if(fixingg.fixingMethodId == index && !stopFixing){
+                            selectFixingMethode(fixing.type)
+                            stopFixing = true
+                        }
+                    })
+                })
+
+                var stopBorder = false
+                borderrs.value.forEach((borderr, id) => {
+                    allBorders.value.forEach((border, index) => {
+                        if(borderr.manageBorderId == index && !stopBorder){
+                            selectBorder(border.value, borderr.settings.codeHex)
+                            stopBorder = true
+                        }
+                    })
+                })
+
+                var stopColor = false
+                colorrs.value.forEach((colorr, id) => {
+                    allColors.value.forEach((color, index) => {
+                        if(colorr.manageColorId == index && !stopColor){
+                            changeSignColor(color)
+                            stopColor = true
+                        }
+                    })
+                })
+            }
+        }
+
+        var stop = false
+        var stopOption = false
+        if(material.type == 'advance'){
+            currentMaterial.value.data.forEach(component => {
+                if(!stop){
+                    showOptions('component', component)
+                    stop = true
+                }
+            })
+            advancedComponent.value.options.forEach( option => {
+                if(!stopOption){
+                    selectSignModel(option)
+                    stopOption = true
+                }
+            })
+        }
+
+        firstLoad.value = true
+    }
+
+    var activeSignModelName = ref('')
+    function selectSignModel(model){
+        activeSignModelName.value = model.name
+        // selection du shape 
+        allShapes.value.forEach((shape, index) => {
+            if(model.shapeId == index ){
+                selectedShape.value = shape.value
+                handleGetShape(shape.value)
+            }
+        })
+        var modelSize = {
+            name: model.name,
+            width: model.size.width,
+            height: model.size.height
+        }
+        // selection de la size
+        changeSize(modelSize)
+        console.log(modelSize)
+
+        // selection du fixing methode
+        // allFixings.value.forEach((fixing, index) => {
+        //     if(model.fixingMethodId == index ){
+        //         selectFixingMethode(fixing.type)
+        //     }
+        // })
+        //selection de la couleur
+        setImageToSignBackground(model.image, model.color.name)
+
+
+        // selection de fixing
+        var stopFixing = false
+        fixinggs.value = model.fixingMethods
+        fixinggs.value.forEach(fixingId => {
+            allFixings.value.forEach((fixing, index) => {
+                if(fixingId == index && !stopFixing){
+                    selectFixingMethode(fixing.type)
+                    stopFixing = true
+                }
+            });
+        });
+        colorrs.value = [{color: model.color, image: model.image}]
+
+    }
+
+
+    function setImageToSignBackground(image, coolrName){
+        handleSetImageToSignBackground(image);
     }
 
 
@@ -1323,8 +1609,11 @@
             "height" : 800
         },
     ])
-    var customWidth = ref(0)
-    var customHeight = ref(0)
+    var customSizeValues = ref({
+        label: 'Custom',
+        width: 0,
+        height: 0
+    })
 
     var shapes = ref([
         {
@@ -1520,36 +1809,59 @@
 
 
     var sizees = ref()
+    var customSizes = ref()
     var allSizes = ref()
     var currentSizeName = ref('')
     var currentSize = ref('')
     var currentSizeValues = ref()
-    function changeSize(width, height, name) {
-        currentSizeName.value = name;
-        currentSize.value = {width: width, height: height};
+    var currentSizeThickness = ref(false)
+    function changeSize(sizeData, sizeSetting) {
+        if(sizeSetting){
+            textNumberForSize.value = sizeSetting.textNumber
+            currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.textNumber)
+        }else{
+            currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, null)
+        }
 
-        currentSizeValues.value = handleChangeSize(width, height, name)
+        currentSizeName.value = sizeData.label;
+        if(sizeData.thickness){
+            if(sizeData.thickness.active == true){
+                currentSize.value = {width: sizeData.width, height: sizeData.height, thickness: sizeData.thickness.value};
+                currentSizeThickness.value = sizeData.thickness.active
+            }else{
+                currentSizeThickness.value = sizeData.thickness.active
+                currentSize.value = {width: sizeData.width, height: sizeData.height};
+            }
+        }
+
+        addedTexts.value = currentSizeValues.value.texts
     }
 
+    var allShapes = ref()
+    var shapees = ref()
     var selectedShape = ref('square')
     function selectShape(shape, nwidth, nheight, nTop, nLeft){
         handleSelectShape(shape, nwidth, nheight, nTop, nLeft)
         selectedShape.value = shape
     }
 
+    var allBorders = ref()
+    var borderrs = ref()
     var activeBorder = ref('')
-    function selectBorder(border) {
-        activeBorder.value = handleSelectBorder(border)
-        // console.log(activeBorder.value)
+    function selectBorder(border, color) {
+        activeBorder.value = handleSelectBorder(border, color)
     }
 
+    var allColors = ref()
+    var colorrs = ref()
     var activeSignColor = ref('')
-    function changeSignColor(color) {
+    function changeSignColor(color, setting) {
         activeSignColor.value = color.name
         handleChangeSignColor(color)
-        console.log(activeSignColor.value)
     }
 
+    var allFixings = ref()
+    var fixinggs = ref()
     var activeFixingMethode = ref('')
     function selectFixingMethode(methode){
         activeFixingMethode.value = methode
@@ -1559,6 +1871,7 @@
 
 
 
+    var textNumberForSize = ref(0)
     var addedTexts = ref([])
     function addTextToSign(){
         addedTexts.value =  handleAddTextToSign()

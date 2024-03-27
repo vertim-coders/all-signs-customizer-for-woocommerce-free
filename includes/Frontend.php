@@ -61,19 +61,12 @@ class ASO_Frontend {
                             "data"        => $config["data"]
                         ];
                         $config_fonts = $config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"];
-                        $config_colors = $config["data"]["settings"]["customizerSign"]["text"]["selectedColors"];
                         $config_cliparts =$config["data"]["settings"]["customizerSign"]["images"]["enableClipart"] == true ? $config["data"]["settings"]["customizerSign"]["images"]["enableClipart"]["selectedClipartGroups"] : [];
                         
                         $visibleFonts = [];
                         foreach ( $config_fonts as $font ) {
                             if(isset($all_fonts[$font])){
                                 $visibleFonts[]=$all_fonts[$font];
-                            }
-                        }
-                        $visibleColors = [];
-                        foreach ( $config_colors as $color ) {
-                            if(isset($all_colors[$color])){
-                                $visibleColors[]=$all_colors[$color];
                             }
                         }
                         $visibleCliparts = [];
@@ -88,7 +81,7 @@ class ASO_Frontend {
                             "cliparts"=>$visibleCliparts,
                             "borders"=>$all_borders,
                             "pageSettings" => $pageSettings,
-                            "colors" => $visibleColors,
+                            "colors" => $all_colors,
                             "manageSize" => $all_sizes,
                             "allShapes" => $all_shapes,
                             "allFixingMethod" => $all_fixingMethods,
