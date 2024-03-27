@@ -544,15 +544,15 @@
 		if ( isset( $configs[ $pid ]['config-id'] )){
 			$config_id = $configs[$pid];
 			$meta_value = get_post_meta((int)$config_id['config-id'],"aso-configs-meta",true);
-			$general_options  = $meta_value["settings"]["generals"]["product"]??null;
+			$general_options  = $meta_value["data"]["settings"]["generals"]["product"]??null;
 			$custom_products     = aso_get_custom_products();
 			$anonymous_function  = function ( $vc ) {
 				return $vc->id;
 			};
 			$custom_products_ids = array_map( $anonymous_function, $custom_products );
-			if ( in_array( $pid, $custom_products_ids ) && $general_options!=null && $general_options['hideAddToCartButtonCustomProducts'] ) {
-				wp_localize_script("aso-product-design","cart_hide_button",[
-					"hide_cart_button"=>$general_options['hideAddToCartButtonCustomProducts']
+			if ( in_array( $pid, $custom_products_ids ) && $general_options!=null && $general_options['hideAddToCartButtonOnDetailPage'] ) {
+				wp_localize_script("aso-product-min","cart_hide_button",[
+					"hide_cart_button"=>$general_options['hideAddToCartButtonOnDetailPage']
 				]);
 				add_action( 'wp_footer', [$this,'aso_product_page_script_init'] );
 			}
@@ -566,7 +566,7 @@
 			jQuery(\"[value='".esc_html($pid). "']\").parent().find('.add_to_cart_button').hide();
 			jQuery(\"[value='".esc_html($pid). "']\").parent().find('.single_add_to_cart_button').hide();
 		";
-        wp_add_inline_script( 'aso-product-design', $inline_script );
+        wp_add_inline_script( 'aso-product-min', $inline_script );
 		?>
 	<?php
 	}
@@ -588,25 +588,36 @@
 	 * Add a personalization button on the shop page
 	 */
 	public function get_customize_btn_on_shop_page( $html, $product ) {
+		global $productId;
+		$productId = $product->get_id();
+		$configs = get_post_meta($productId,"product-aso-metas",true);
+		$meta_value = isset($configs[$productId]['config-id']) ? get_post_meta((int)$configs[$productId]['config-id'],"aso-configs-meta",true) : [];
+		$general_options  = $meta_value["data"]["settings"]["generals"]["product"]??null;
 		
-		$configs = get_post_meta($product->get_id(),"product-aso-metas",true);
-		$meta_value = isset($configs[$product->get_id()]['config-id']) ? get_post_meta((int)$configs[$product->get_id()]['config-id'],"aso-configs-meta",true) : [];
-		$general_options  = $meta_value["settings"]["generals"]["product"]??null;
-		
-		if ( $general_options==null || $general_options["hideDesignButtonsOnShopPage"] ) {
-			return $html;
-		}
-
-		$product_class = get_class( $product );
-		
-		if ( $product_class == 'WC_Product_Simple' ) {
-			$aso_product = new aso_Product_Config( $product->get_id() );
-			if ( $aso_product->is_aso_customizable() ) {
-				$html .= wp_kses_post($aso_product->get_buttons());
+		if($general_options != null){
+			if ( !$general_options["hideDesignButtonsOnShopPage"]) {
+				$product_class = get_class( $product );
+				if ( $product_class == 'WC_Product_Simple' ) {
+					$aso_product = new ASO_Product_Config( $productId );
+					if ( $aso_product->is_aso_customizable() ) {
+						$html .= wp_kses_post($aso_product->get_buttons());
+					}			
+				}
 			}
 			
-			return $html;
+			if ( $general_options["hideAddToCartButtonOnShopPage"]) {
+				add_action( 'wp_footer', [$this,"include_jquery_to_hide_add_to_cart_on_shop_page"]);
+			}
 		}
+		return $html;		
+	}
+	
+	public function include_jquery_to_hide_add_to_cart_on_shop_page(){
+		global $productId;
+		$inline_script = "		
+			jQuery(\"[data-product_id='" .esc_attr($productId). "']\").hide();
+		";
+		wp_add_inline_script( 'aso-product-min', $inline_script );
 	}
 
 	/**
@@ -618,22 +629,20 @@
 		$pid                 = $post->ID;
 		$configs = get_post_meta($pid,"product-aso-metas",true);
 		if(isset($configs[$pid]['config-id'])) {
-			$config_id = $configs[$pid]['config-id'];
-			$meta_value = get_post_meta($config_id,"aso-configs-meta",true);
+			//$config_id = $configs[$pid]['config-id'];
+			//$meta_value = get_post_meta($config_id,"aso-configs-meta",true);
 			
-			$general_options  = $meta_value["settings"]["generals"]["product"] ?? null;
+			//$general_options  = $meta_value["data"]["settings"]["generals"]["product"] ?? null;
 			$custom_products     = aso_get_custom_products();
 			$anonymous_function  = function ( $vc ) {
 				return $vc->id;
 			};
 			$custom_products_ids = array_map( $anonymous_function, $custom_products );
 			
-			if ( in_array( $pid, $custom_products_ids ) ) {
-				if ( $general_options!=null && !$general_options['hideAddToCartButtonCustomProducts'] ) {
-					$aso_product = new aso_Product_Config( $product->get_id() );
-					if ( $aso_product->is_aso_customizable() ) {
-						echo wp_kses_post($aso_product->get_buttons());
-					}
+			if ( in_array( $pid, $custom_products_ids ) ) {	
+				$aso_product = new aso_Product_Config( $product->get_id() );
+				if ( $aso_product->is_aso_customizable() ) {
+					echo wp_kses_post($aso_product->get_buttons());
 				}
 			}
 		}

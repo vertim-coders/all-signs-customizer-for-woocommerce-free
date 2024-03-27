@@ -118,3 +118,7 @@ td.is_aso_customizable.column-is_aso_customizable {
   border: 1px solid #ccc; /* Ajoutez une bordure pour distinguer les éléments */
   padding: 10px; /* Ajoutez un peu d'espacement interne pour le contenu */
 }
+.single-product .summary.entry-summary > .aso-buttons-wrap-simple,
+.single-product .summary.entry-summary > .aso-buttons-wrap-variation {
+  display: none;
+}
