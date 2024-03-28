@@ -293,7 +293,6 @@ const defaultSettings = ref({
             showHideMeasurements:"both",
             decimalFormatMeasurements:"with-decimal",
             desktopColumnOrder:"right",
-            showDayNightButton:"display"
         },
         signPart: {
             doublePart:{
@@ -327,12 +326,12 @@ const defaultSettings = ref({
         images: {
             enableUploadImage:true,
             fileUploadScript:{
-            customWithGraphical:false,
-            uploadMinWidth:100,
-            uploadMaxWidth:100,
-            uploadMinHeight:1024,
-            uploadMaxHeight:1024,
-            allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
+                customWithGraphical:false,
+                uploadMinWidth:100,
+                uploadMaxWidth:100,
+                uploadMinHeight:1024,
+                uploadMaxHeight:1024,
+                allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
             },
             enableClipart:{
                 active:true,
@@ -392,6 +391,9 @@ const defaultSettings = ref({
             textHelp:"Help",
             textMaterial:"Material",
             textSize:"Size",
+            customSize:"Custom Size",
+            customSizeButtonDone:"Done",
+            thickness:"Thickness",
             textShape:"Shape",
             textFixingMethods:"Fixing Methods",
             textColor:"Color",
@@ -401,7 +403,7 @@ const defaultSettings = ref({
             textImage:"Image",
         }
     },
-    themes: {
+    themeColors: {
         skin: "default",
         colors: {
             textColorContentHeader:'#000000',

@@ -8,11 +8,9 @@
                             <label class="aso-text-[12px]">Measurement Unit</label>
                             <select v-model="customizer.measurementUnit">
                                 <option value="cm">Centimeters</option>
-                                <option value="in">inches</option>
-                                <option value="mm">milimetres</option>
-                                <option value="cm-in">Centimeters and Inches</option>
-                                <option value="cm-mm">Centimeters and Milimetres</option>
-                                <option value="mm-in">Milimetres and Inches</option>
+                                <option value="in">Inches</option>
+                                <option value="mm">Millimeters</option>
+                                <option value="m">Meters</option>
                             </select>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5">
@@ -34,21 +32,13 @@
                             </select>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5">
-                            <label class="aso-text-[12px]"></label>
+                            <label class="aso-text-[12px]">Desktop Column Order</label>
                             <select v-model="customizer.desktopColumnOrder">
                                 <option value="right">Right</option>
                                 <option value="left">Left</option>
                             </select>
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5">
-                        <label class="aso-text-[12px]"></label>
-                        <select v-model="customizer.showDayNightButton">
-                            <option value="display">display</option>
-                            <option value="hidden">Hidden</option>
-                        </select>
-                    </div>
-                    <div class="aso-text-[11px] aso-text-[#444444]">Display a switch to turn default background into day or right mode</div>
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">

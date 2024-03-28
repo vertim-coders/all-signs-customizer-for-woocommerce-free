@@ -11,6 +11,10 @@
                             </label>
                         </div>
                     </div>
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="aso-font-semibold aso-text-[16px]">Label of option to change face</label>
+                        <input type="text" v-model="signPart.doublePart.label" placeholder="name" class="aso-w-3/5"/>
+                    </div>
                     <div class="aso-flex aso-justify-between" v-if="signPart.doublePart.active">
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-font-semibold aso-text-[16px]">Part 1</label>
@@ -58,6 +62,7 @@ const isLoading =ref(false);
 const signPart = ref({
     doublePart:{
         active:false,
+        label:"Switch Face",
         part1:"Face A",
         part2:"Face B",
         enableCopyDesignFromSide:true

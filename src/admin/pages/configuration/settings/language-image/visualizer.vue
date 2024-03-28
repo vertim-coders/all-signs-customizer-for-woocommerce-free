@@ -91,37 +91,56 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Label of Custom Size</label>
+                    <input type="text" v-model="visualizer.customSize" placeholder="" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Label of Custom Size button Done</label>
+                    <input type="text" v-model="visualizer.customSizeButtonDone" placeholder="" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Thickness</label>
+                    <input type="text" v-model="visualizer.thickness" placeholder="" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Shape</label>
                     <input type="text" v-model="visualizer.textShape" placeholder="" class="aso-w-full"/>
                 </div>
+                
+            </div>
+            <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text Fixing Methods</label>
                     <input type="text" v-model="visualizer.textFixingMethods" placeholder="" class="aso-w-full"/>
                 </div>
-            </div>
-            <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
                     <input type="text" v-model="visualizer.textColor" placeholder="" class="aso-w-full"/>
                 </div>
+                
+            </div>
+            <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text option Text</label>
                     <input type="text" v-model="visualizer.textOptionText" placeholder="" class="aso-w-full"/>
                 </div>
-            </div>
-            <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Border</label>
                     <input type="text" v-model="visualizer.textBorder" placeholder="" class="aso-w-full"/>
                 </div>
+                
+            </div>
+            <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text Product</label>
                     <input type="text" v-model="visualizer.textProduct" placeholder="" class="aso-w-full"/>
                 </div>
-            </div>
-            <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                <label class="aso-text-[12px] aso-text-[#444444]">Text Image</label>
-                <input type="text" v-model="visualizer.textImage" placeholder="" class="aso-w-full"/>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Image</label>
+                    <input type="text" v-model="visualizer.textImage" placeholder="" class="aso-w-full"/>
+                </div>
             </div>
         </div>
         <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
@@ -163,6 +182,9 @@ const visualizer = ref({
     textHelp:"Help",
     textMaterial:"Material",
     textSize:"Size",
+    customSize:"Custom Size",
+    customSizeButtonDone:"Done",
+    thickness:"Thickness",
     textShape:"Shape",
     textFixingMethods:"Fixing Methods",
     textColor:"Color",
