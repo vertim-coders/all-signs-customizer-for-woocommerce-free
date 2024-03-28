@@ -11,7 +11,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2"  v-if="signPart.doublePart.active">
                         <label class="aso-font-semibold aso-text-[16px]">Label of option to change face</label>
                         <input type="text" v-model="signPart.doublePart.label" placeholder="name" class="aso-w-3/5"/>
                     </div>

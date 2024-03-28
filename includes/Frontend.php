@@ -96,7 +96,7 @@ class ASO_Frontend {
                         }
                         
                         $ASO = array(
-                            'skin' => $config["data"]["settings"]['themes']['skin'],
+                            'skin' => $config["data"]["settings"]['themeColors']['skin'],
                             'productID' => $productid,
                             'product'   => $product,
                             'currentConfig' => $configData,

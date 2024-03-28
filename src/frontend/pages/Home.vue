@@ -1,7 +1,7 @@
 <template>
-  <div class="hello">
-    <!-- <Default v-if="skin == 'default'" :config="configData"/> -->
-    <Couffo v-if="skin == 'default'" :config="configData" :manage="manageData"/>
+  <div class="">
+    <Default v-if="skin == 'default'" :config="configData" :manage="manageData"/>
+    <Couffo v-if="skin == 'couffo'" :config="configData" :manage="manageData"/>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ var manageData = ref();
 
 onMounted(() => {
   skin.value = aso_confiurator_data.skin;
+  // console.log(skin.value, 'skin actif');
   configData.value = aso_confiurator_data.currentConfig;
   manageData.value = aso_confiurator_data.managesData;
 });

@@ -1,3 +1,4 @@
+var fixingUrl = aso_confiurator_data.fixing_methods_url;
 var canvas = null;
 var backCanvas = null;
 var activeCanvas = canvas
@@ -60,9 +61,10 @@ function handleCloneCanvas(canvas1, canvas2){
 }
 
 var currentUnit = ''
-function handleGetCurrentUnit(unit){
-    console.log(unit)
+var defaultFontSize = 0
+function handleGetCurrentUnit(unit, fontSize){
     currentUnit = unit;
+    defaultFontSize = fontSize;
 }
 
 
@@ -1068,6 +1070,7 @@ function handleCenterHorizontally(object){
 
 //function pour afficher les borders
 var activeBorder = ''
+var activeBorderColor = ''
 function removeBorder(){
     var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
@@ -1087,6 +1090,9 @@ function removeBorder(){
 }
 function handleSelectBorder(border, color) {
     activeBorder = border
+    if(color){
+        activeBorderColor = color
+    }
     var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
         if(object.type !== 'line'){
@@ -1103,9 +1109,9 @@ function handleSelectBorder(border, color) {
                             object.set('strokeWidth', 6)
                         }
                         if(color){
-                            object.set('stroke', color)
+                            object.set('stroke', activeBorderColor)
                         }else{
-                            object.set('stroke', 'black')
+                            object.set('stroke', activeBorderColor)
                         }
     
                     }
@@ -1170,7 +1176,6 @@ function handleSelectBorder(border, color) {
                             });
                         }
                     }else{
-                        console.log("Canvas")
                         object.set('strokeWidth', 0)                        
                         object.set('stroke', 'transparent')
                     }
@@ -1236,8 +1241,6 @@ function handleGetShape(shape){
 }
 function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
     selectedShape = shape
-    removeBorder()
-    // var currentBackground = canvas.backgroundImage
 
     function setShape(canvas){
         var Objects = canvas.getObjects();
@@ -1580,8 +1583,10 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
         setShape(backCanvas)
     }
 
+    removeBorder()
+    handleSelectBorder(activeBorder, activeBorderColor)
+
     handleSelectFixingMethode(activeFixingMethode)
-    // updateModifications(true, 'selection de shape')
 }
 
 //fonctions concernant les fixings methode
@@ -1631,7 +1636,7 @@ function handleSelectFixingMethode(methode){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
-                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -1647,7 +1652,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -1664,7 +1669,7 @@ function handleSelectFixingMethode(methode){
                                 });
                             }
                             if(sizeRatio == 'big'){
-                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -1681,7 +1686,7 @@ function handleSelectFixingMethode(methode){
         
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -1698,7 +1703,7 @@ function handleSelectFixingMethode(methode){
         
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -1715,7 +1720,7 @@ function handleSelectFixingMethode(methode){
         
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -1734,7 +1739,7 @@ function handleSelectFixingMethode(methode){
         
                         }
                         if(selectedShape == 'triangle'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1750,7 +1755,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1766,7 +1771,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1783,7 +1788,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -1801,7 +1806,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1818,7 +1823,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -1836,7 +1841,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1853,7 +1858,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -1869,7 +1874,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1886,7 +1891,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'stop'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -1902,7 +1907,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -1923,7 +1928,7 @@ function handleSelectFixingMethode(methode){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
-                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                     // img.scaleToWidth(object.width);
                                     // img.scaleToHeight(object.height);
                                     img.scale(fixScale)
@@ -1941,7 +1946,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -1958,7 +1963,7 @@ function handleSelectFixingMethode(methode){
                                 });
                             }
                             if(sizeRatio == 'big'){
-                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -1974,7 +1979,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -1990,7 +1995,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2006,7 +2011,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2024,7 +2029,7 @@ function handleSelectFixingMethode(methode){
                             }
                         }
                         if(selectedShape == 'triangle'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2040,7 +2045,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2056,7 +2061,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2073,7 +2078,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -2091,7 +2096,7 @@ function handleSelectFixingMethode(methode){
                             canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2108,7 +2113,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -2126,7 +2131,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2143,7 +2148,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2159,7 +2164,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2176,7 +2181,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'stop'){
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2192,7 +2197,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/screw-cap.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_screw-cap.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2213,7 +2218,7 @@ function handleSelectFixingMethode(methode){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
-                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2229,7 +2234,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2246,7 +2251,7 @@ function handleSelectFixingMethode(methode){
                                 });
                             }
                             if(sizeRatio == 'big'){
-                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2261,7 +2266,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2277,7 +2282,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2293,7 +2298,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2311,7 +2316,7 @@ function handleSelectFixingMethode(methode){
                             }
                         }
                         if(selectedShape == 'triangle'){
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2327,7 +2332,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2343,7 +2348,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2360,7 +2365,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -2378,7 +2383,7 @@ function handleSelectFixingMethode(methode){
                             canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2395,7 +2400,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -2413,7 +2418,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2430,7 +2435,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2446,7 +2451,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2463,7 +2468,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'stop'){
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2479,7 +2484,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/suction-cup.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_suction-cup.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2500,7 +2505,7 @@ function handleSelectFixingMethode(methode){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
                             if(sizeRatio == 'small'){
-                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2516,7 +2521,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2533,7 +2538,7 @@ function handleSelectFixingMethode(methode){
                                 });
                             }
                             if(sizeRatio == 'big'){
-                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2548,7 +2553,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2564,7 +2569,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2580,7 +2585,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                     img.scale(fixScale)
                                     
                                     img.setCoords();
@@ -2598,7 +2603,7 @@ function handleSelectFixingMethode(methode){
                             }
                         }
                         if(selectedShape == 'triangle'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2614,7 +2619,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2630,7 +2635,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2647,7 +2652,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'oval' || selectedShape == 'rotated-square'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -2665,7 +2670,7 @@ function handleSelectFixingMethode(methode){
                             canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2682,7 +2687,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-left' || selectedShape == 'arrow-left'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 // img.scaleToWidth(object.width);
                                 // img.scaleToHeight(object.height);
                                 img.scale(fixScale)
@@ -2700,7 +2705,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2717,7 +2722,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-right' || selectedShape == 'arrow-right'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2733,7 +2738,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2750,7 +2755,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'stop'){
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2766,7 +2771,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/standoff.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_standoff.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2787,7 +2792,7 @@ function handleSelectFixingMethode(methode){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'turn-right'){
                             if(sizeRatio == 'small'){
-                                fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_flag.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2805,7 +2810,7 @@ function handleSelectFixingMethode(methode){
                                 });
                             }
                             if(sizeRatio == 'big'){
-                                fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_flag.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2821,7 +2826,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../assets/images/fixing-methodes/flag.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_flag.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2840,7 +2845,7 @@ function handleSelectFixingMethode(methode){
                         }
                         if(selectedShape == 'turn-left'){
                             if(sizeRatio == 'small'){
-                                fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_flag-left.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2858,7 +2863,7 @@ function handleSelectFixingMethode(methode){
                                 });
                             }
                             if(sizeRatio == 'big'){
-                                fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_flag-left.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2874,7 +2879,7 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
         
-                                fabric.Image.fromURL('../../fixing-methodes/flag-left.png', function(img) {
+                                fabric.Image.fromURL(fixingUrl+'/im_flag-left.png', function(img) {
                                     img.scale(fixScale)
         
                                     img.setCoords();
@@ -2929,7 +2934,7 @@ function handleSelectFixingMethode(methode){
                     if(methode == 'ceiling'){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2945,7 +2950,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2962,7 +2967,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-left'){
-                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -2978,7 +2983,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -2995,7 +3000,7 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                         if(selectedShape == 'turn-right'){
-                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -3011,7 +3016,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/ceiling.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -3164,7 +3169,7 @@ function handleSelectFixingMethode(methode){
                     if(methode == 'table-clamp'){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                            fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_table-clamp.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -3180,7 +3185,7 @@ function handleSelectFixingMethode(methode){
                                 canva.add(img)
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/table-clamp.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_table-clamp.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -3200,7 +3205,7 @@ function handleSelectFixingMethode(methode){
                     if(methode == 'base-support'){
                         resetFixing(canva)
                         if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                            fabric.Image.fromURL('../../fixing-methodes/base-support-left.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_base-support-left.png', function(img) {
                                 img.scale(fixScale)
         
                                 img.setCoords();
@@ -3217,7 +3222,7 @@ function handleSelectFixingMethode(methode){
                                 // img.sendToBack()
                             });
         
-                            fabric.Image.fromURL('../../fixing-methodes/base-support-right.png', function(img) {
+                            fabric.Image.fromURL(fixingUrl+'/im_base-support-right.png', function(img) {
                                 img.scale(fixScale)
                                 
                                 img.setCoords();
@@ -3647,7 +3652,7 @@ function handleAddTextToSign(clone){
                 selectOnEdit: false,
                 top: sign.top + (sign.height /3),
                 left: sign.left + sign.width/3,
-                fontSize: 100,
+                fontSize: defaultFontSize,
                 uniScaleTransform: true,
                 centeredScaling: true,
                 lockScalingFlip: true,
@@ -3758,16 +3763,18 @@ function handleChangeTextStyle(){
     activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
 }
-function handleChangeTextSize(){
+function handleChangeTextSize(minSize, maxSize){
     var sizeEditor = document.getElementById('aso-text-size')
 
     sizeEditor.addEventListener("input", (event) => {
-        selectedText.size = event.target.value
-
-        var currentText = activeCanvas.getActiveObject();
-        currentText.set('fontSize', selectedText.size)
-        activeCanvas.renderAll()
-        handleGetAddedTextValues(currentText)
+        if(event.target.value < maxSize || event.target.value > minSize){
+            selectedText.size = event.target.value
+    
+            var currentText = activeCanvas.getActiveObject();
+            currentText.set('fontSize', selectedText.size)
+            activeCanvas.renderAll()
+            handleGetAddedTextValues(currentText)
+        }
     })
 }
 function handleChangeTextFontFam(font){
@@ -3775,7 +3782,6 @@ function handleChangeTextFontFam(font){
     currentText.set('fontFamily', font)
     activeCanvas.renderAll()
 
-    console.log(currentText.fontFamily, 'fontFamily')
     handleGetAddedTextValues(currentText)
 
 }
@@ -3872,24 +3878,28 @@ function handleAddImageToSign(image){
 
     var imageInput = document.getElementById('aso-iamge-input')
 
-    // Écouteur d'évènement lorsque l'utilisateur sélectionne un fichier
-    imageInput.addEventListener('change', function(e) {
-        const imgFile = imageInput.files[0]; 
-        // Création d'un objet FileReader
-        const reader = new FileReader();
-        // Lecture du fichier image lorsqu'il est chargé
-        reader.onload = () => {
-            // Stockage de l'image en base64 dans une variable
-            const imgBase64 = reader.result; 
-            // Utilisation de l'image
-            if(!itsDone){
-                useImage(imgBase64); 
-                itsDone = true;
-            }
-        };
-        // Lancement de la lecture comme URL 
-        reader.readAsDataURL(imgFile);        
-    });
+    if(image){
+        useImage(image)
+    }else{
+        // Écouteur d'évènement lorsque l'utilisateur sélectionne un fichier
+        imageInput.addEventListener('change', function(e) {
+            const imgFile = imageInput.files[0]; 
+            // Création d'un objet FileReader
+            const reader = new FileReader();
+            // Lecture du fichier image lorsqu'il est chargé
+            reader.onload = () => {
+                // Stockage de l'image en base64 dans une variable
+                const imgBase64 = reader.result; 
+                // Utilisation de l'image
+                if(!itsDone){
+                    useImage(imgBase64); 
+                    itsDone = true;
+                }
+            };
+            // Lancement de la lecture comme URL 
+            reader.readAsDataURL(imgFile);        
+        });
+    }
     
     function useImage(imgUrl) {
         fabric.Image.fromURL(imgUrl, function(img) {

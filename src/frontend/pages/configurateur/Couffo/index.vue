@@ -100,20 +100,21 @@
             </div>
     
             <div class="aso-relative aso-w-full aso-h-[91%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center aso-bg-[#f5f5f5]">
-                <div class="aso-w-full aso-h-[6%] aso-flex aso-items-center aso-bg-white aso-space-x-3 aso-px-4 aso-border-y">
-                    <span class="aso-text-sm aso-font-medium">Switch face</span>
+                <div v-show="configDoublePart.active" class="aso-w-full aso-h-[6%] aso-flex aso-items-center aso-bg-white aso-space-x-3 aso-px-4 aso-border-y">
+                    <span class="aso-text-sm aso-font-medium">{{configDoublePart.label}}</span>
 
                     <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1 aso-px-2 aso-text-white aso-font-medium aso-h-[80%] aso-w-[6%] aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
                         <span :class="`${activeFace == 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
                         
                         <span :class="`${activeFace == 'front-face' ? 'aso-text-white' : ''} aso-flex aso-full-center aso-pl-1`">
-                            A
+                            {{configDoublePart.part1}}
                         </span>
                         <span :class="`${activeFace == 'back-face' ? '' : 'aso-text-white'} aso-flex aso-full-center aso-pr-1`">
-                            B
+                            {{configDoublePart.part2}}
                         </span>
                     </span>
                 </div>
+
                 <div id="aso-canvas-containers" class="flipper aso-relative aso-w-full aso-h-full lg:aso-h-[84%] aso-border-4 aso-border-black">
                     <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
 
@@ -483,11 +484,11 @@
                                     </svg>                                  
                                 </div>
                             </div>
-                            <div v-show="dropSize" class="aso-grid aso-grid-cols-2 aso-gap-2 aso-w-full aso-full-center">
+                            <div v-show="dropSize" class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                 <div v-for="(sizee, id) in sizees">
                                     <div v-for="(size, index) in allSizes" :key="size.name" class="aso-w-full aso-flex" >
                                         <div v-if="sizee.manageSizeId == index" class="aso-w-full aso-h-full aso-flex">
-                                            <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size, sizee)">
+                                            <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size, sizee, id)">
                                             <label :for="size.width + index" :class="`${currentSizeName == size.label ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                                 aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
@@ -500,7 +501,7 @@
                         </div>
                         
                         <div v-if="customSizeActive" class="aso-space-y-2 aso-w-full">
-                            <p class="aso-text-base aso-font-semibold">Custom</p>
+                            <p class="aso-text-base aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.customSize}}</p>
                             <div class="aso-flex aso-justify-between aso-items-center aso-space-x-2 ">
                                 <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
                                     <label class="aso-text-xs" for="sizeWidth">{{ customSizes.width.label }}</label>
@@ -512,11 +513,11 @@
                                     <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height">
                                 </div>
                             </div>
-                            <span @click="changeSize(customSizeValues)" class="aso-w-full aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-full-center aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">Done</span>
+                            <span @click="changeSize(customSizeValues)" class="aso-w-full aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] font-semi-bold aso-text-sm aso-full-center aso-border aso-px-2 aso-p-1 aso-rounded-md aso-base-animation">{{props.config.data.settings.languageImages.visualizer.customSizeButtonDone}}</span>
                         </div>
 
                         <div v-if="currentSizeThickness" class="aso-space-y-2">
-                            <p class="aso-text-base aso-font-semibold">Thickness</p>
+                            <p class="aso-text-base aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}</p>
                             <div class="aso-flex aso-space-x-2">
                                 <div class="aso-w-full aso-flex aso-flex-col aso-space-y-2">
                                     <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="aso-thickness" :min="currentSize.thickness" :max="currentSize.thickness" :value="currentSize.thickness" disabled >
@@ -647,10 +648,10 @@
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Border</p>    
 
                     <div class="aso-w-full aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
-                        <div class="aso-grid aso-grid-cols-3 lg:aso-grid-cols-3 aso-gap-2 aso-w-full aso-full-center">
+                        <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                             <div v-for="(borderr, id) in borderrs">
                                 <div v-for="(border, index) in allBorders" :key="border.name" class="aso-w-full aso-flex">
-                                    <div v-if="borderr.manageBorderId == index">
+                                    <div v-if="borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)">
                                         <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings.codeHex)">
                                         <label :for="'border' + border.name + index" :class="`${activeBorder == border.value ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                             aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
@@ -714,13 +715,13 @@
                                         </svg>                                  
                                     </div>
                                 </div>
-                                <div v-show="dropFont" class="aso-grid aso-grid-cols-3 aso-gap-2 aso-mt-2 aso-w-full">
-                                    <div class="aso-flex aso-items-center aso-justify-center aso-w-full aso-h-10" v-for="(font, index) in fonts">
-                                        <input type="radio" :id="font.name + index + 1" name="aso-fonts" class=" peer aso-hidden " @change="changeTextFontFam(font.name, index)">
-                                        <label :for="font.name + index + 1" :class="`${fontFamSelected == font.label ? `aso-text-[#016464] aso-border-[#016464]` : `aso-text-zinc-600 aso-border-zinc-600`}
-                                                aso-font-[${font.name}] aso-w-full aso-h-full aso-border-2 aso-justify-center hover:aso-text-[#016464] hover:aso-border-[#016464] aso-text-sm aso-font-medium aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                <div v-show="showFont" class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                                    <div class="aso-flex aso-items-center aso-justify-center aso-w-fit aso-h-10" v-for="(font, index) in allFonts">
+                                        <input type="radio" :id="font.label + index + 1" name="aso-fonts" class=" peer aso-hidden " @change="changeTextFontFam(font.label, index)">
+                                        <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
+                                            aso-font-[${font.label}] aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
-                                            {{font.name}}
+                                            {{font.label}}
                                         </label>
                                     </div>
                                 </div>
@@ -728,7 +729,7 @@
                             </div>
 
                             <div class="aso-w-full aso-flex aso-justify-between">
-                                <div class="aso-space-y-2 aso-w-[45%]">
+                                <div v-if="configTextSettings.enableTextAlignment" :class="`${!configTextFontSettings.active ? `aso-w-full` : `aso-w-[45%]`} aso-space-y-2`">
                                     <p class="aso-font-medium">Text alignment</p>
                                     <div class="aso-flex aso-w-full">
                                         <span @click="changeTextAlign('left')" :class="`${selectedText.align == 'left' ? 'aso-bg-[#016464] aso-text-white' : 'aso-bg-white aso-text-black'} hover:aso-bg-[#016464] hover:aso-text-white aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
@@ -749,10 +750,10 @@
                                     </div>
                                 </div>
                                 
-                                <div class="aso-space-y-2 aso-w-[45%]">
+                                <div v-show="configTextFontSettings.active" :class="`${!configTextSettings.enableTextAlignment ? `aso-w-full` : `aso-w-[45%]`} aso-space-y-2`">
                                     <p class="aso-font-medium">Size</p>
                                     <div class="aso-flex aso-w-full">
-                                        <input type="number" name="" id="aso-text-size" class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" v-model="selectedText.size" @input="changeTextSize">
+                                        <input type="number" name="" id="aso-text-size" class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" :min="configTextFontSettings.minimunFontSize" :max="configTextFontSettings.maximumFontSize" v-model="selectedText.size" @input="changeTextSize(configTextFontSettings.minimunFontSize, configTextFontSettings.maximumFontSize)">
                                     </div>
                                 </div>
                             </div>
@@ -760,8 +761,8 @@
                             <div class="aso-space-y-1">
                                 <p class="aso-font-medium">Color</p>
                                 <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
-                                    <div v-for="(color, index) in colors" class="">
-                                        <div @click="changeTextColor(color.code)" :class="`aso-w-8 aso-h-8 aso-bg-[${color.code}] aso-p-2 aso-rounded-sm aso-border`"></div>
+                                    <div v-for="(color, index) in configTextSettings.colors" class="">
+                                        <div @click="changeTextColor(color.codeHex)" :class="`aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border`"></div>
                                     </div>
                                 </div>
                             </div>
@@ -793,28 +794,28 @@
                                             <p class="aso-text-xs aso-font-semibold">Delete</p>
                                         </span>
 
-                                        <span @click="changeTextWeight" :class="`${selectedText.weight == 'bold' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
+                                        <span v-if="configTextSettings.enableBold" @click="changeTextWeight" :class="`${selectedText.weight == 'bold' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
                                             <svg  fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                 <path d="M12.0151 1.84998C15.2551 1.84998 17.6851 2.25498 19.3051 3.19998C21.0601 4.14498 21.8701 5.76498 21.8701 8.05998C21.8701 9.40998 21.4651 10.625 20.9251 11.57C20.619 12.0316 20.2214 12.4255 19.757 12.7274C19.2926 13.0292 18.7712 13.2326 18.2251 13.325C18.9968 13.5052 19.7289 13.8255 20.3851 14.27C20.9251 14.675 21.4651 15.35 21.8701 16.025C22.2926 17.0029 22.4776 18.0669 22.4101 19.13C22.4578 20.1053 22.2749 21.0781 21.8761 21.9694C21.4773 22.8608 20.874 23.6455 20.1151 24.26C18.1933 25.6325 15.8569 26.3 13.5001 26.15H4.45508V1.84998H12.0151ZM12.5551 11.435C14.0401 11.435 15.1201 11.3 15.6601 10.76C16.3351 10.355 16.6051 9.54497 16.6051 8.73497C16.6051 7.78998 16.2001 7.11497 15.5251 6.70998C14.8501 6.30498 13.7701 6.03498 12.2851 6.03498H9.58508V11.435H12.5551ZM9.58508 15.485V22.1H12.9601C14.4451 22.1 15.6601 21.695 16.2001 21.155C16.8751 20.48 17.1451 19.805 17.1451 18.725C17.1612 18.3169 17.0845 17.9105 16.9208 17.5364C16.7571 17.1622 16.5107 16.8301 16.2001 16.565C15.5251 16.025 14.4451 15.755 12.8251 15.755H9.45008L9.58508 15.485Z" fill="currentColor"/>
                                             </svg>
                                             <p class="aso-text-xs aso-font-semibold">Bold</p>
                                         </span>
 
-                                        <span @click="changeTextStyle" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
+                                        <span v-if="configTextSettings.enableItalic" @click="changeTextStyle" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                 <path d="M11 5H17M7 19H13M14 5L10 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                             <p class="aso-text-xs aso-font-semibold">Italic</p>
                                         </span>
 
-                                        <span @click="underlineText" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
+                                        <span v-if="configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                 <path d="M7 5V10C7 11.3261 7.52678 12.5979 8.46447 13.5355C9.40215 14.4732 10.6739 15 12 15C13.3261 15 14.5979 14.4732 15.5355 13.5355C16.4732 12.5979 17 11.3261 17 10V5M5 19H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                             <p class="aso-text-xs aso-font-semibold">Underline</p>
                                         </span>
 
-                                        <span @click="crossText" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
+                                        <span v-if="configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                 <path d="M7 8V13M7 13C7 14.3261 7.52678 15.5979 8.46447 16.5355C9.40215 17.4732 10.6739 18 12 18C13.3261 18 14.5979 17.4732 15.5355 16.5355C16.4732 15.5979 17 14.3261 17 13M7 13H17M17 13V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="currentColor"/>
@@ -822,7 +823,7 @@
                                             <p class="aso-text-xs aso-font-semibold">Crossline</p>
                                         </span>
 
-                                        <span @click="overlineText" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
+                                        <span v-if="configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.style == 'italic' ? 'aso-text-[#016464]' : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464]`">
                                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                 <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
@@ -840,15 +841,15 @@
 
                     <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-2 aso-overflow-auto aso-scrollBar">
                         <div class="aso-w-full aso-bg-zinc-200 aso-flex aso-flex-col aso-space-y-3 aso-full-center aso-p-4">
-                            <span @click="() =>{editImage = false}" class="aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[#016464] aso-text-white aso-text-md aso-p-2 aso-px-4 aso-rounded-full">
+                            <span v-if="configImageSettingsClipart.active" @click="() =>{editImage = false; showClipart = false}" class="aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[#016464] aso-text-white aso-text-md aso-p-2 aso-px-4 aso-rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                                 </svg>
                                 <p class="aso-text-center">Browse archive image</p>
                             </span>
 
-                            <label class="aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-text-[#016464] aso-border aso-border-solid aso-border-[#016464] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer">
-                                <input @click="addImageToSign" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" accept="image/png, image/gif, image/jpeg" />
+                            <label v-show="configImageSettings.enableUploadImage" class="aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-text-[#016464] aso-border aso-border-solid aso-border-[#016464] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer">
+                                <input @click="addImageToSign()" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" accept="image/png, image/gif, image/jpeg" />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                 </svg>
@@ -857,12 +858,35 @@
                         </div>
 
                         <div v-show="!editImage" class="aso-p-2">
-                            <p class="aso-font-medium">Currently in use</p>
-                            <div class="aso-w-full aso-grid aso-grid-cols-3 aso-gap-3">
-                                <div v-for="(usedImage, index) in usedImages">
-                                    <div @click="editAddedImage(usedImage.object)" class="aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-p-1 aso-border">
-                                        <img :src="usedImage.url" alt="" class="aso-w-full aso-h-full">
-                                        <p class="aso-text-xs">Edit image</p>
+                            <div v-if="usedImages.length > 0" class="aso-space-y-1">
+                                <p class="aso-font-medium">Currently in use</p>
+                                <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                                    <div v-for="(usedImage, index) in usedImages">
+                                        <div @click="editAddedImage(usedImage.object)" class="aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-border aso-cursor-pointer">
+                                            <img :src="usedImage.url" alt="" class="aso-w-20 aso-h-20">
+                                            <p class="aso-text-xs aso-font-medium">Edit image</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="configImageSettingsClipart.active" class="aso-space-y-3">
+                                <p class="aso-font-medium">Cliparts</p>
+                                <div class="aso-flex aso-flex-col aso-space-y-2">
+                                    <div v-for="(clipart, index) in allClipart">
+                                        <div @click="showClipartImages(clipart.cliparts, index)" class="aso-w-full aso-flex aso-flex-col aso-space-y-3 aso-justify-start aso-border aso-border-solid aso-p-3 aso-rounded-lg aso-cursor-pointer">
+                                            <p class="aso-text-base aso-font-semibold">{{clipart.title}}</p>
+                                            <p class="aso-text-xs">{{clipart.description}}</p>
+                                        </div>
+                                        <div v-if="showClipart && clipartId == index">
+                                            <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                                                <div v-for="(image, id) in currentClipart">
+                                                    <div @click="addImageToSign(image.url)" class="aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-border aso-cursor-pointer">
+                                                        <img :src="image.url" alt="" class="aso-w-20 aso-h-20 aso-border aso-border-solid aso-p-1">
+                                                        <p class="aso-text-sm aso-font-medium">{{image.title}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -876,7 +900,7 @@
                                     <p class="aso-flex aso-full-center aso-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
                                 </div>
                             </div>
-                            <div>
+                            <!-- <div>
                                 <p class="aso-font-medium">Border</p>
                                 <div class="aso-w-full aso-grid aso-grid-cols-3 aso-gap-3">
                                     <div v-for="(border, index) in borders" :key="border.name" class="aso-w-full aso-flex">
@@ -891,7 +915,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="aso-space-y-4">
                                 <p class="aso-font-medium">Other custom</p>
                                 <div class="aso-w-full aso-flex aso-items-center">
@@ -949,7 +973,6 @@
 </template>
 
 <script setup>
-// import { fabric } from 'fabric';
     import { ref, onMounted, defineProps } from 'vue';
     import {handleGetCanvas, handleGetCurrentUnit, handleUndo,
         handleRedo,
@@ -993,9 +1016,12 @@
         manage:Object,
     });
     var configSettings = ref({})
+    var configDoublePart = ref({})
+    var configTextSettings = ref({})
+    var configTextFontSettings = ref({})
+    var configImageSettings = ref({})
+    var configImageSettingsClipart = ref({})
 
-    console.log(props.manage)
-    // console.log(props.config)
 
     var isLoaded = ref(true)
     function setIsLoadedToFalse() {
@@ -1021,6 +1047,7 @@
             if(!optionss.contains(e.target) && !optionButton.contains(e.target)) {
                 closeOption()
                 selectText.value = false;
+                editImage.value = false;
             }
         }
     }
@@ -1041,10 +1068,11 @@
 
     }
 
-    var dropFont = ref(false)
+    var showFont = ref(false)
     function dropFontToggle(){
-        dropFont.value = !dropFont.value;
+        showFont.value = !showFont.value;
     }
+
     var dropSize = ref(false)
     function dropSizeToggle(){
         console.log('drop')
@@ -1076,16 +1104,27 @@
 
     onMounted(() => {
         configSettings.value = props.config.data.settings
-        console.log(configSettings.value)
-        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit)    
+        configDoublePart.value = props.config.data.settings.customizerSign.signPart.doublePart
 
         allSizes.value = props.manage.manageSize
         allShapes.value = props.manage.allShapes
         allFixings.value = props.manage.allFixingMethod
         allColors.value = props.manage.colors
         allBorders.value = props.manage.allBorder
+        allFonts.value = props.manage.fonts
+        allClipart.value = props.manage.cliparts
+        
+        configTextSettings.value = props.config.data.settings.customizerSign.text
+        configTextFontSettings.value = props.config.data.settings.customizerSign.text.enableFontSize
+        configImageSettings.value = props.config.data.settings.customizerSign.images
+        configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
+        
+        console.log(props.manage)
+        console.log(configImageSettings.value)
 
-        // console.log(allColors.value, "allColors")
+        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize)    
+
+
         
         selectMaterial(props.config.data.materials[0])
 
@@ -1255,7 +1294,7 @@
             var stopBorder = false
             borderrs.value.forEach((borderr, id) => {
                 allBorders.value.forEach((border, index) => {
-                    if(borderr.manageBorderId == index && !stopBorder){
+                    if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
                         selectBorder(border.value, borderr.settings.codeHex)
                         stopBorder = true
                     }
@@ -1342,16 +1381,12 @@
         if(!flipped.value){
             flipper.classList.add('flipper-switch')
             handleCheckActiveSignFace('back')
-            // signFace.classList.add('aso-invisible')
-            // signBack.classList.remove('aso-invisible')
             activeFace.value = 'back-face'
             activeCanvas = canvasBack
             canvas.discardActiveObject();
         }else{
             flipper.classList.remove('flipper-switch')
             handleCheckActiveSignFace('front')
-            // signBack.classList.add('aso-invisible')
-            // signFace.classList.remove('aso-invisible')
             activeFace.value = 'front-face'
             activeCanvas = canvas
             canvasBack.discardActiveObject();
@@ -1482,7 +1517,7 @@
                 var stopBorder = false
                 borderrs.value.forEach((borderr, id) => {
                     allBorders.value.forEach((border, index) => {
-                        if(borderr.manageBorderId == index && !stopBorder){
+                        if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
                             selectBorder(border.value, borderr.settings.codeHex)
                             stopBorder = true
                         }
@@ -1538,14 +1573,8 @@
         }
         // selection de la size
         changeSize(modelSize)
-        console.log(modelSize)
+        // console.log(modelSize)
 
-        // selection du fixing methode
-        // allFixings.value.forEach((fixing, index) => {
-        //     if(model.fixingMethodId == index ){
-        //         selectFixingMethode(fixing.type)
-        //     }
-        // })
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
 
@@ -1610,7 +1639,7 @@
         },
     ])
     var customSizeValues = ref({
-        label: 'Custom',
+        label: props.config.data.settings.languageImages.visualizer.customSize,
         width: 0,
         height: 0
     })
@@ -1813,9 +1842,14 @@
     var allSizes = ref()
     var currentSizeName = ref('')
     var currentSize = ref('')
+    var currentSizeId = ref(0)
     var currentSizeValues = ref()
     var currentSizeThickness = ref(false)
-    function changeSize(sizeData, sizeSetting) {
+    function changeSize(sizeData, sizeSetting, sizeId) {
+        if(sizeId){
+            // console.log(sizeId, 'size id')
+            currentSizeId.value = sizeId
+        }
         if(sizeSetting){
             textNumberForSize.value = sizeSetting.textNumber
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.textNumber)
@@ -1897,14 +1931,25 @@
         selectText.value = false
     }
 
-    var usedImages = ref()
+    var allClipart = ref({})
+    var currentClipart = ref({})
+    var clipartId = ref(0)
+    var showClipart = ref(false)
+    function showClipartImages(cliparts, id){
+        showClipart.value = true
+        currentClipart.value = cliparts
+        clipartId.value = id
+    }
+    var usedImages = ref({})
     function addImageToSign(image){
-        usedImages.value = handleAddImageToSign()
+        if(image){
+            usedImages.value = handleAddImageToSign(image)
+            editImage.value = true
+        }else{
+            usedImages.value = handleAddImageToSign()
+        }
         console.log("lockToCanvas", usedImages.value)
-        // if(usedImages.value.length > 0){
-        //     editImage.value = true
-            
-        // }
+
     }
     function editAddedImage(image){
         editImage.value = true
@@ -1968,10 +2013,11 @@
     function changeTextStyle(){
         handleChangeTextStyle()
     }
-    function changeTextSize(){
-        handleChangeTextSize()
+    function changeTextSize(min, max){
+        handleChangeTextSize(min, max)
     }
     var fontFamSelected = ref("Arial")
+    var allFonts = ref([])
     function changeTextFontFam(font){
         fontFamSelected.value = font
         handleChangeTextFontFam(font)
