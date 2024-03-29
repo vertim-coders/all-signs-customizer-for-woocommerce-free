@@ -50,19 +50,18 @@
                             </td>
                         </tr>
                         <tr v-for="(shape, key) in shapes" :key=key class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-28 aso-px-8 aso-p-4">
+                            <td class="aso-w-28 aso-px-8 aso-py-2">
                                 {{manageShapes[shape.shapeId].name}}
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-1">
-                                <img :src="manageShapes[shape.shapeId].icon" />
-
+                            <td class="aso-px-6 aso-flex aso-justify-center  aso-py-2">
+                                <img :src="manageShapes[shape.shapeId].icon" v-if="manageShapes[shape.shapeId].icon" class="aso-w-[40px] aso-h-[40px]"/>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-3">
+                            <td class="aso-text-[12px] aso-px-6  aso-py-2">
                                 <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     {{shape.additionalPrice}}
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
+                            <td class=" aso-py-2">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialShape(key,shape)">
                                 </button>

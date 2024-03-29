@@ -56,7 +56,7 @@
                                 {{manageFixingMethods[fixingMethod.fixingMethodId].name}}
                             </td>
                             <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-1 aso-space-x-2">
-                                <img :src="manageFixingMethods[fixingMethod.fixingMethodId].icon" />
+                                <img :src="manageFixingMethods[fixingMethod.fixingMethodId].icon" class="aso-w-[50px] aso-h-[50px]" v-if="manageFixingMethods[fixingMethod.fixingMethodId].icon.trim() != ''"/>
                             </td>
                             <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">

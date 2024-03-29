@@ -54,14 +54,14 @@
                                 {{manageBorders[border.manageBorderId].name}}
                             </td>
                             <td class="aso-px-8 aso-py-3 aso-flex aso-justify-center aso-translate-x-1">
-                                <img :src="manageBorders[border.manageBorderId].icon" />
+                                <img :src="manageBorders[border.manageBorderId].icon" class="aso-w-[50px] aso-h-[50px]" v-if="manageBorders[border.manageBorderId].icon"/>
                             </td>
                             <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
                                     {{border.additionalPrice}}
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
+                            <td class="aso-px-6 aso-flex aso-justify-center">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectMaterialBorder(key,border)">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>

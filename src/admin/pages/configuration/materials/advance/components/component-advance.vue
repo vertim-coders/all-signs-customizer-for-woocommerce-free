@@ -78,7 +78,7 @@
                                 {{componentAdvance.description}}
                             </td>
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
-                                <img v-if="componentAdvance.icon" class="aso-w-10 aso-h-10" :src="componentAdvance.icon" />
+                                <img v-if="componentAdvance.icon.trim() != ''" class="aso-w-10 aso-h-10" :src="componentAdvance.icon" />
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="$router.push('/configs/'+configId+'/materials/'+materialId+'/advance/'+key+'/options')">
