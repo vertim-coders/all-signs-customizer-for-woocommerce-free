@@ -60,7 +60,7 @@
                             
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{ manageColors[color.manageColorId].textColor }}
+                                    {{ manageColors[color.manageColorId].textColor.active ? manageColors[color.manageColorId].textColor.codeHex : 'Disable' }}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">

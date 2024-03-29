@@ -62,7 +62,7 @@
                             
                             <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{color.textColor.active ? color.textColor.codeHex : 'None'}}
+                                    {{color.textColor.active ? color.textColor.codeHex : 'Disable'}}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2 aso-space-x-2">
