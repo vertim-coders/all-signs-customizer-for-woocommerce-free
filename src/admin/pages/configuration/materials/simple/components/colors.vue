@@ -1,8 +1,8 @@
 <template>
     <div class="aso-h-[100vh]">
         <div class="aso-space-y-1 py-2" v-if="!isNewColor">
-            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageColors.length > 0">
-                <button :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newColor">
+            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
+                <button v-if="!isFetching" :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newColor">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
@@ -55,17 +55,17 @@
                         </tr>
                         <tr v-for="(color, key) in colors" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]" :key="key">
                             <td class="aso-text-center aso-px-5 aso-p-4">
-                                {{ manageColors[color.manageColorId].name }}
+                                {{ manageColors[color.manageColorId]? manageColors[color.manageColorId].name :'' }}
                             </td>
                             
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{ manageColors[color.manageColorId].textColor.active ? manageColors[color.manageColorId].textColor.codeHex : 'Disable' }}
+                                    {{ manageColors[color.manageColorId]? manageColors[color.manageColorId].textColor.active ? manageColors[color.manageColorId].textColor.codeHex : 'Disable' : '' }}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F3F6F6] aso-text-[#586374] aso-border-none">
-                                    {{ manageColors[color.manageColorId].backgroundColor }}
+                                    {{ manageColors[color.manageColorId]? manageColors[color.manageColorId].backgroundColor : '' }}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
@@ -250,9 +250,13 @@
             colorId.value = id;
             closeModal();
         }else{
-            color.value = sz;
-            isEdit.value = true;
-            isNewColor.value = true;
+            if(manageColors.value.length >0 ){
+                color.value = sz;
+                isEdit.value = true;
+                isNewColor.value = true;
+            }else{
+                toastMessage('To continue, please add colors to manage colors','warning')
+            }
         }
     }
     const addMaterialColor = async () => {
@@ -280,7 +284,11 @@
 
     
     const newColor = () => {
-      isNewColor.value = true;
+        if(manageColors.value.length >0 ){
+            isNewColor.value = true;
+        }else{
+            toastMessage('To continue you must be add color in manage colors','warning')
+        }
     }
     const back = () => {
         isNewColor.value = false;
