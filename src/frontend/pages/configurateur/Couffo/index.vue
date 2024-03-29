@@ -137,7 +137,7 @@
                             <div>
                                 <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
                             </div>
-                            <div>
+                            <div v-show="angleActive">
                                 <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
                             </div>
                         </div>
@@ -896,7 +896,10 @@
                             <div>
                                 <p class="aso-font-medium">Size</p>
                                 <div class="aso-w-full aso-p-2 aso-space-y-1">
-                                    <input type="range" name="" id="" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageSize">
+                                    <label class="aso-text-xs" for="aso-image-sizeWidth">width</label>
+                                    <input type="range" name="aso-imageSize" id="aso-image-sizeWidth" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageWidth">
+                                    <label class="aso-text-xs" for="aso-image-sizeHeight">height</label>
+                                    <input type="range" name="aso-imageSize" id="aso-image-sizeHeight" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageHeight">
                                     <p class="aso-flex aso-full-center aso-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
                                 </div>
                             </div>
@@ -1004,7 +1007,8 @@
         handleAddImageToSign,
         handleTurnImageLeft,
         handleTurnRightImage,
-        handleChangeImageSize,
+        handleChangeImageWidth,
+        handleChangeImageHeight,
         handleFlipImage,
         handleCheckActiveSignFace,
         handleCloneCanvas,
@@ -1441,9 +1445,13 @@
         canvasBack.setHeight(canvasHeight);
     }
 
-
+    var angleActive = ref(false)
     function showObjectValues(){
         var div = document.getElementById('activeObject-values');
+        var object = activeCanvas.getActiveObject();
+        if(object.type == 'image'){
+            angleActive.value = true
+        }
         div.classList.remove("aso-invisible");
     }
     function closeObjectValues(){
@@ -1838,7 +1846,7 @@
 
 
     var sizees = ref()
-    var customSizes = ref()
+    var customSizes = ref({})
     var allSizes = ref()
     var currentSizeName = ref('')
     var currentSize = ref('')
@@ -1956,9 +1964,13 @@
         canvas.setActiveObject(image);
         handleGetAddedImageValues(image)
     }
-    function changeImageSize(e){
-        var newScale = e.target.value
-        handleChangeImageSize(newScale)
+    function changeImageWidth(e){
+        var newScaleX = e.target.value
+        handleChangeImageWidth(newScaleX)
+    }
+    function changeImageHeight(e){
+        var newScaleY = e.target.value
+        handleChangeImageHeight(newScaleY)
     }
     function selectImageBorder(){
 

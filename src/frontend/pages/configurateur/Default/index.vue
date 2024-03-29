@@ -95,58 +95,58 @@
                         <canvas ref="canvasFace2Ref" class="canvas2 aso-w-full aso-h-full"></canvas>
                     </div>
 
-                    <div v-show="!isLoaded">
-                        <div style="display: none;" id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
-                            <div class="aso-space-y-1 aso-text-sm">
-                                <div>
-                                    <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
-                                </div>
-                                <div>
-                                    <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
-                                </div>
-                                <div>
-                                    <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
-                                </div>
+                </div>
+                <div v-show="!isLoaded">
+                    <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
+                        <div class="aso-space-y-1 aso-text-sm">
+                            <div>
+                                <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
+                            </div>
+                            <div>
+                                <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
+                            </div>
+                            <div v-show="angleActive">
+                                <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
                             </div>
                         </div>
-    
-                        <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-space-x-3 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
-                            <div @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
-                                    <g clip-path="url(#clip0_65_739)">
-                                        <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
-                                        <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
-                                        <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_65_739">
-                                            <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">Clone</p>
-                            </div>
-    
-                            <div @click="deleteObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">Delete</p>
-                            </div>
-    
-                            <div @click="centerVertically()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                                    <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">CenterV</p>
-                            </div>
-    
-                            <div @click="centerHorizontally()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
-                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
-                                    <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
-                                </svg>
-                                <p class="aso-text-[10px] aso-font-semibold">CenterH</p>
-                            </div>
+                    </div>
+
+                    <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-space-x-3 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
+                        <div @click="cloneObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
+                                <g clip-path="url(#clip0_65_739)">
+                                    <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
+                                    <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
+                                    <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_65_739">
+                                        <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">Clone</p>
+                        </div>
+
+                        <div @click="deleteObject()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">Delete</p>
+                        </div>
+
+                        <div @click="centerVertically()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">CenterV</p>
+                        </div>
+
+                        <div @click="centerHorizontally()" class="aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[#016464] aso-cursor-pointer">
+                            <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
+                            </svg>
+                            <p class="aso-text-[10px] aso-font-semibold">CenterH</p>
                         </div>
                     </div>
                 </div>
@@ -302,7 +302,7 @@
                             <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
                                 <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
                                 <label :for="material.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                    <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                    <div :class="`${material.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-1/4 aso-h-20`">
                                         <img v-if="material.icon != ''" :src="material.icon" class="aso-w-full aso-h-full" />
                                     </div>                                
                                     <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
@@ -329,7 +329,7 @@
                             <div v-for="(option, index) in advancedComponent.options" class="aso-space-y-3">
                                 <input type="radio" :id="option.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectSignModel(option)">
                                 <label :for="option.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                        <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                        <div :class="`${option.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-1/4 aso-h-20`">
                                             <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
                                         </div>                                
                                         <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
@@ -420,9 +420,9 @@
                                         <div class="aso-w-full aso-flex" v-if="shapee.shapeId == index">
                                             <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, currentSizeValues.width, currentSizeValues.height, currentSizeValues.top, currentSizeValues.left)">
                                             <label :for="shape.name + index" :class="`${selectedShape == shape.type ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                                aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                                aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
-                                                <div class="aso-w-16 aso-h-16 aso-bg-lime-400">
+                                                <div :class="`${shape.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-16 aso-h-16`">
                                                     <img v-if="shape.icon != ''" :src="shape.icon" class="aso-w-full aso-h-full" />
                                                 </div>
                                                 <p>{{shape.name}}</p>
@@ -443,7 +443,7 @@
                                     <div v-if="fixingg.fixingMethodId == index" class="aso-space-y-3 aso-w-full aso-h-full">
                                         <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
                                         <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                            <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                            <div :class="`${fixing.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-1/4 aso-h-20`">
                                                 <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
                                             </div>
                                             <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
@@ -471,7 +471,7 @@
                                     <div v-if="fixingId == index" class="aso-space-y-3">
                                         <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
                                         <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                            <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                            <div :class="`${fixing.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-1/4 aso-h-20`">
                                                 <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
                                             </div>
                                             <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
@@ -539,7 +539,7 @@
                                             <label :for="'border' + border.name + index" :class="`${activeBorder == border.value ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                                 aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
-                                                <div class="aso-w-16 aso-h-16 aso-bg-lime-400">
+                                                <div :class="`${border.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-16 aso-h-16 aso-bg-lime-400`">
                                                     <img v-if="border.icon != ''" :src="border.icon" class="aso-w-full aso-h-full" />
                                                 </div>
                                                 <p>{{border.name}}</p>
@@ -779,7 +779,10 @@
                                 <div>
                                     <p class="aso-font-medium">Size</p>
                                     <div class="aso-w-full aso-p-2 aso-space-y-1">
-                                        <input type="range" name="" id="" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageSize">
+                                        <label class="aso-text-xs" for="aso-image-sizeWidth">width</label>
+                                        <input type="range" name="aso-imageSize" id="aso-image-sizeWidth" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageWidth">
+                                        <label class="aso-text-xs" for="aso-image-sizeHeight">height</label>
+                                        <input type="range" name="aso-imageSize" id="aso-image-sizeHeight" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageHeight">
                                         <p class="aso-flex aso-full-center aso-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
                                     </div>
                                 </div>
@@ -955,7 +958,8 @@
         handleAddImageToSign,
         handleTurnImageLeft,
         handleTurnRightImage,
-        handleChangeImageSize,
+        handleChangeImageWidth,
+        handleChangeImageHeight,
         handleFlipImage,
         handleCheckActiveSignFace,
         handleCloneCanvas,
@@ -1270,9 +1274,19 @@
             fabric.Object.prototype.borderColor = 'black';
             fabric.Object.prototype.cornerStyle = 'circle';
             
-            
+            canvas.on('object:moving', updateInfoDiv,);
+            canvas.on('object:scaling', updateInfoDiv);
+            canvas.on('object:rotating', updateInfoDiv);
+            canvas.on('selection:created', updateInfoDiv);
+            canvas.on('selection:cleared', closeInfoDiv);
             canvas.on('selection:created', showObjectValues);
             canvas.on('selection:cleared', closeObjectValues);
+
+            canvasBack.on('object:moving', updateInfoDiv,);
+            canvasBack.on('object:scaling', updateInfoDiv);
+            canvasBack.on('object:rotating', updateInfoDiv);
+            canvasBack.on('selection:created', updateInfoDiv);
+            canvasBack.on('selection:cleared', closeInfoDiv);
             canvasBack.on('selection:created', showObjectValues);
             canvasBack.on('selection:cleared', closeObjectValues);
             
@@ -1391,10 +1405,37 @@
         canvasBack.setWidth(canvasWidth);
         canvasBack.setHeight(canvasHeight);
     }
+    function updateInfoDiv() {
+        var infoDiv = document.getElementById('aso-editButtons');
+        
+        
+        var canvasRect = activeCanvas.getElement().getBoundingClientRect();
+        var object = activeCanvas.getActiveObject();
+        var objectRect = object.getBoundingRect();
+        
+        if(object != null){
+            infoDiv.classList.remove("aso-invisible");
+            // Calculez la position de la div en fonction de l'objet du canvas
+            var divLeft = canvasRect.left + objectRect.left + objectRect.width / 2;
+            var divTop = canvasRect.top + objectRect.top + objectRect.height / 2;
+    
+            // Mettez à jour la position de la div
+            infoDiv.style.left = divLeft + 'px';
+            infoDiv.style.top = divTop + 'px';
+        }
+    }
+    function closeInfoDiv(){
+        var infoDiv = document.getElementById('aso-editButtons');
+        infoDiv.classList.add("aso-invisible");
+    }
 
-
+    var angleActive = ref(false)
     function showObjectValues(){
         var div = document.getElementById('activeObject-values');
+        var object = activeCanvas.getActiveObject();
+        if(object.type == 'image'){
+            angleActive.value = true
+        }
         div.classList.remove("aso-invisible");
     }
     function closeObjectValues(){
@@ -1402,8 +1443,8 @@
         div.classList.add("aso-invisible");
     }
 
-    var customSizeActive = ref(false)
 
+    var customSizeActive = ref(false)
     var currentMaterial = ref({})
     var currentMaterialTextImages = ref({})
     var selectedMaterial = ref('')
@@ -1907,9 +1948,13 @@
         canvas.setActiveObject(image);
         handleGetAddedImageValues(image)
     }
-    function changeImageSize(e){
-        var newScale = e.target.value
-        handleChangeImageSize(newScale)
+    function changeImageWidth(e){
+        var newScaleX = e.target.value
+        handleChangeImageWidth(newScaleX)
+    }
+    function changeImageHeight(e){
+        var newScaleY = e.target.value
+        handleChangeImageHeight(newScaleY)
     }
     function selectImageBorder(){
 

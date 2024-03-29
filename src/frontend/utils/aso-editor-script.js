@@ -802,7 +802,7 @@ function lockToCanvas(activeObj) {
     });
 }
 function removeTextById(id, table, canvas) {
-    console.log(id, table, canvas);
+    // console.log(id, table, canvas);
     const index = table.findIndex(item => item.id === id);
     if (index !== -1) {
       table.splice(index, 1);
@@ -888,185 +888,6 @@ function handleCenterHorizontally(object){
     canvas.renderAll()
 }
 
-//fonction d'ajout de text à la sign
-// function HandlehandleAddTextToSign(clone){
-//     console.log('Add text')
-//     if(clone){
-//         var text1JSON = clone.toJSON();  
-//         delete text1JSON.evented;
-
-//         var text2 = new fabric.IText(text1JSON.text ,{
-//             scaleX: text1JSON.scaleX,
-//             scaleY: text1JSON.scaleY,
-//             top: text1JSON.top,
-//             left: text1JSON.left,
-//             fontSize: text1JSON.fontSize,
-//             fill: text1JSON.fill,
-//             textAlign: text1JSON.textAlign,
-//             fontFamily: text1JSON.fontFamily,
-//             fontWeight: text1JSON.fontWeight,
-//             fontStyle: text1JSON.fontStyle,
-//             uniScaleTransform: true,
-//             centeredScaling: true,
-//             // evented: true,
-//             // editable: true,
-//             mouseUpHandler: handlehandleGetAddedTextValues,
-//         })
-//         canvas.add(text2);
-//         lockToCanvas(text2)
-//     }else{
-//         var sign = handleGetObjectByName('safeObject')
-//         var newText = new fabric.IText('Text',{
-//             editable: true,
-//             top: sign.top + (sign.height /3),
-//             left: sign.left + sign.width/3,
-//             fontSize: 100,
-//             uniScaleTransform: true,
-//             centeredScaling: true,
-//             evented: true,
-//             mouseUpHandler: handlehandleGetAddedTextValues,
-//         })
-
-//         canvas.add(newText)
-//         lockToCanvas(newText)
-//     }
-//     canvas.renderAll()
-// }
-//function for get added text value
-// var selectedText = {
-//     object: {},
-//     width: '',
-//     height: '',
-//     left: '',
-//     right: '',
-//     top: '',
-//     bottom: '',
-//     value: '',
-//     align: '',
-//     font: '',
-//     size: '',
-//     weight: 'normal',
-//     style: '',
-// }
-// function handlehandleGetAddedTextValues(transform) {
-//     var container = handleGetObjectByName('safeObject')
-//     if(transform != undefined && transform.type == 'i-text'){
-//         var obj = transform
-//         obj.setCoords();
-//         var objWidht = obj.width * obj.scaleX
-//         var objHeight = obj.height * obj.scaleY
-
-//         // Calculer les limites de l'objet
-//         var objBounds = obj.getBoundingRect();
-
-//         // Récupérer les coins de l'objet
-//         var objLeft = objBounds.left; 
-//         var objTop = objBounds.top;
-
-//         // Calculer par rapport aux dimensions du container
-//         var objLeftInContainer = objLeft - container.left;  
-//         var objRightInContainer = container.width - (objLeftInContainer + objWidht);
-//         var objTopInContainer = objTop - container.top;
-//         var objBottomInContainer = container.height - (objTopInContainer + objHeight);
-
-//         // selectedText.object = obj
-//         // selectedText.width = parseInt(objWidht)
-//         // selectedText.height = parseInt(objHeight)
-//         // selectedText = obj.text
-//         // selectedText.align = obj.textAlign
-//         // selectedText.font = obj.fontFamily
-//         // selectedText.size = obj.fontSize
-//         // selectedText.weight = obj.fontWeight
-//         // selectedText.style = obj.fontStyle
-//         selectedText.object = obj
-//         selectedText.width = parseInt(objWidht),
-//         selectedText.height = parseInt(objHeight),
-//         selectedText.left = parseInt(objLeftInContainer),
-//         selectedText.right = parseInt(objRightInContainer),
-//         selectedText.top = parseInt(objTopInContainer),
-//         selectedText.bottom = parseInt(objBottomInContainer),
-//         selectedText = obj.text
-//         selectedText.align = obj.textAlign
-//         selectedText.font = obj.fontFamily
-//         selectedText.size = obj.fontSize
-//         selectedText.weight = obj.fontWeight
-//         selectedText.style = obj.fontStyle
-//     }else if(transform == undefined){
-//         console.log("No transform")
-//     }else{
-//         var obj = transform.target;
-//         var newCoord = obj.getCoords();
-//         // var objWidht = (newCoord[1].x - newCoord[0].x)
-//         // var objHeight = (newCoord[3].y - newCoord[0].y)
-
-//         obj.setCoords();
-//         var objWidht = obj.width * obj.scaleX
-//         var objHeight = obj.height * obj.scaleY
-
-//         var objBounds = obj.getBoundingRect();
-
-//         var objLeft = objBounds.left; 
-//         var objTop = objBounds.top;
-
-//         var objLeftInContainer = objLeft - container.left;  
-//         var objRightInContainer = container.width - (objLeftInContainer + objWidht);
-//         var objTopInContainer = objTop - container.top;
-//         var objBottomInContainer = container.height - (objTopInContainer + objHeight);
-
-//         // obj.on('scaling', function() {
-//         //     obj.set('fontSize', parseInt(obj.fontSize * obj.scaleX)); 
-//         // });
-//         // obj.on('scaling', function() {
-//         //     var scale = this.get('scaleX');
-//         //     if (scale !== 1) {  
-//         //         // Appliquer nouvelle fontSize uniquement si le scale a changé    
-//         //         var newFontSize = this.get('fontSize') * scale;
-//         //         this.set('fontSize', parseInt(newFontSize) );
-//         //     }    
-//         // });
-                
-//         if(obj.type == 'i-text'){
-//             selectedText.object = obj
-//             selectedText.width = parseInt(objWidht),
-//             selectedText.height = parseInt(objHeight),
-//             selectedText.left = parseInt(objLeftInContainer),
-//             selectedText.right = parseInt(objRightInContainer),
-//             selectedText.top = parseInt(objTopInContainer),
-//             selectedText.bottom = parseInt(objBottomInContainer),
-//             selectedText.value = obj.text
-//             selectedText.align = obj.textAlign
-//             selectedText.font = obj.fontFamily
-//             selectedText.size = obj.fontSize
-//             selectedText.weight = obj.fontWeight
-//             selectedText.style = obj.fontStyle
-
-//             // console.log('new size1', container.width, ratioScale)
-//             // console.log('new size2', (container.width / signRatio))
-
-//             // if(ratioScale == 1){
-                
-//             // }
-//             // console.log('new sizes', getOriginalDimensions(objWidht, objHeight))
-
-//         }
-//     }
-
-//     console.log ({
-//         left: objLeftInContainer,
-//         right: objRightInContainer,
-//         top: objTopInContainer,
-//         bottom: objBottomInContainer,
-//         width: objWidht,
-//         height: objHeight,
-//         // angle: obj.angle,
-//         values: selectedText,
-//     })
-
-//     var currentText = selectedText
-
-//     return currentText
-
-// }
 
 //function pour afficher les borders
 var activeBorder = ''
@@ -2790,7 +2611,7 @@ function handleSelectFixingMethode(methode){
                     }
                     if(methode == 'flag'){
                         resetFixing(canva)
-                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'turn-right'){
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'turn-right' || selectedShape == 'turn-left'){
                             if(sizeRatio == 'small'){
                                 fabric.Image.fromURL(fixingUrl+'/im_flag.png', function(img) {
                                     img.scale(fixScale)
@@ -2842,6 +2663,24 @@ function handleSelectFixingMethode(methode){
                                     canva.add(img)
                                 });
                             }
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'stop'){
+                            fabric.Image.fromURL(fixingUrl+'/im_flag.png', function(img) {
+                                img.scale(fixScale)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height /2 - (newHeight/2))
+                                img.left = object.left - (newWidth / 2)
+                                img.set('name', 'flag1')
+                                img.id = 23
+        
+                                img.selectable = false
+                                canva.add(img)
+                                img.bringToFront()
+                            });
                         }
                         if(selectedShape == 'turn-left'){
                             if(sizeRatio == 'small'){
@@ -2961,6 +2800,23 @@ function handleSelectFixingMethode(methode){
                                 img.left = object.left + ((object.width/5)*4) 
                                 img.set('name', 'ceiling2')
                                 img.id = 27
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'stop'){
+                            fabric.Image.fromURL(fixingUrl+'/im_ceiling.png', function(img) {
+                                img.scale(fixScale)
+        
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/2)
+                                img.left = object.left + (object.width/2) - (newWidth/2)
+                                img.set('name', 'ceiling1')
+                                img.id = 26
         
                                 img.selectable = false
                                 canva.add(img)
@@ -3164,6 +3020,34 @@ function handleSelectFixingMethode(methode){
                                 selectable: false,
                             })
                             canva.add(cableHole1, cableHole2, cableHole3, cableHole4)
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'stop'){
+                            var cableHole1 = new fabric.Rect({
+                                id: 31,
+                                width: object.width*0.07,
+                                height: object.height*0.05,
+                                top: object.top + (object.height /2),
+                                left: object.left + object.width/7 - (object.width*0.05),
+                                fill: '#f5f5f5',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                name: 'cable-hole1',
+        
+                                selectable: false,
+                            })
+                            var cableHole2 = new fabric.Rect({
+                                id: 32,
+                                width: object.width*0.07,
+                                height: object.height*0.05,
+                                top: object.top + (object.height /2),
+                                left: object.left + ((object.width/7)*6),
+                                fill: '#f5f5f5',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                name: 'cable-hole2',
+                                selectable: false,
+                            })
+                            canva.add(cableHole1, cableHole2)
                         }
                     }
                     if(methode == 'table-clamp'){
@@ -3914,6 +3798,7 @@ function handleAddImageToSign(image){
             // img.flipX = true
             img.uniScaleTransform = true
             img.centeredScaling = true
+            img.lockScalingFlip = true,
 
             img.originX = 'center'
             img.originY = 'center'
@@ -3947,16 +3832,23 @@ function handleAddImageToSign(image){
 
     return addedImages
 }
-function handleChangeImageSize(scale){
+function handleChangeImageWidth(scaleX) {
     var currentImage = canvas.getActiveObject();
     if(currentImage.type === 'image'){
-        currentImage.scaleX = scale
-        currentImage.scaleY = scale
-    
+        currentImage.scaleX = scaleX
         canvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
 }
+function handleChangeImageHeight(scaleY) {
+    var currentImage = canvas.getActiveObject();
+    if(currentImage.type === 'image'){
+        currentImage.scaleY = scaleY
+        canvas.requestRenderAll()
+        handleGetAddedImageValues(currentImage)
+    }
+}
+
 function handleSetImageBorder(border){
     var currentImage = canvas.getActiveObject();
     if(currentImage.type === 'image'){
@@ -4037,7 +3929,8 @@ export {
     handleAddImageToSign,
     handleTurnImageLeft,
     handleTurnRightImage,
-    handleChangeImageSize,
+    handleChangeImageWidth,
+    handleChangeImageHeight,
     handleFlipImage,
     handleCheckActiveSignFace,
     handleCloneCanvas,
