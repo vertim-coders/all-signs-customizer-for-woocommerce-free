@@ -1011,6 +1011,7 @@ function handleSelectBorder(border, color) {
 }
 
 var currentSignColor = ''
+var currentSignTextColor = 'black'
 function handleChangeSignColor(color) {
     currentSignColor = color;
     var Objects = activeCanvas.getObjects();
@@ -1019,6 +1020,12 @@ function handleChangeSignColor(color) {
 
             if(object.name == 'safeObject'){
                 object.set('fill', color.backgroundColor)
+            }
+            if(color.textColor.active){
+                currentSignTextColor = color.textColor.codeHex
+                if(object.name == "aso-SignText"){
+                    object.set('fill', color.textColor.codeHex)
+                }
             }
         }
     });
@@ -3536,6 +3543,7 @@ function handleAddTextToSign(clone){
                 selectOnEdit: false,
                 top: sign.top + (sign.height /3),
                 left: sign.left + sign.width/3,
+                fill: currentSignTextColor,
                 fontSize: defaultFontSize,
                 uniScaleTransform: true,
                 centeredScaling: true,
