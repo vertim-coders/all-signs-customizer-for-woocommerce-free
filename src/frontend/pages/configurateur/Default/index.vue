@@ -875,7 +875,7 @@
             </div>
 
 
-            <button v-show="!isLoaded" class="aso-hidden lg:aso-flex aso-full-center aso-w-full aso-h-[10%] aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">{{props.config.data.settings.languageImages.visualizer.textButtonFinish}}</button>
+            <button v-show="!isLoaded" @click="finishConfig" class="aso-hidden lg:aso-flex aso-full-center aso-w-full aso-h-[10%] aso-bg-[#FFBC3C] aso-text-white aso-font-semibold aso-p-2 aso-px-3 aso-base-animation">{{props.config.data.settings.languageImages.visualizer.textButtonFinish}}</button>
 
             <div v-show="!isLoaded" class="lg:aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-4">
                 <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
@@ -969,6 +969,7 @@
         handleCheckActiveSignFace,
         handleCloneCanvas,
         handleSetImageToSignBackground,
+        finishConfiguration,
     } from '@/frontend/utils/aso-editor-script.js'
 
     const props = defineProps({
@@ -2132,6 +2133,36 @@
     }
     function flipImage(){
         handleFlipImage()
+    }
+
+    function finishConfig(){
+        var SignObject = handleGetObjectByName('safeObject', canvas)
+        var textObjects = []
+        var imageObjects = []
+        
+        var objects = canvas.getObjects();
+        for (var i = 0; i < objects.length; i++) {
+            if (objects[i].name === "aso-SignText") {
+                function addUniqueObject(arr, obj, key) {
+                    const exists = arr.some(item => item[key] === obj[key]);
+                    if (!exists) {
+                        arr.push(obj);
+                    }
+                }
+                addUniqueObject(textObjects, objects[i], 'id')
+            }
+            if (objects[i].name === "aso-SignImage") {
+                function addUniqueObject(arr, obj, key) {
+                    const exists = arr.some(item => item[key] === obj[key]);
+                    if (!exists) {
+                        arr.push(obj);
+                    }
+                }
+                addUniqueObject(imageObjects, objects[i], 'id')
+            }
+        }
+        console.log(finishConfiguration(textObjects))
+        console.log(imageObjects,"added unique object")
     }
 
 

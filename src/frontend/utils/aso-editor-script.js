@@ -842,6 +842,7 @@ function handleCloneObject(object) {
         }
         if(cloned.type == 'image'){
             cloned.id = newId += 1
+            cloned.set('name', 'aso-SignImage')
             cloned.on('mousedown', function() {
                 handleGetAddedImageValues(cloned); 
             });
@@ -3205,7 +3206,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(activeCanvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
@@ -3256,7 +3257,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(activeCanvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
@@ -3288,7 +3289,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(activeCanvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
@@ -3316,7 +3317,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
             textBottom.textContent = parseInt(bottom)
             textAngle.textContent = parseInt(angle)
 
-            if(activeCanvas.getActiveObject().type == 'image'){
+            if(activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == 'image'){
                 imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit))
                 imageHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit))
             }
@@ -3399,16 +3400,7 @@ function handleGetAddedTextValues(transform) {
 
         // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
         getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
-        // console.log({
-        //     containerWidth: container.width,
-        //     containerLeft: container.left,
-        //     width: objWidht,
-        //     height: objHeight,
-        //     left: objLeftInContainer,
-        //     right: objRightInContainer,
-        //     top: objTopInContainer,
-        //     bottom: objBottomInContainer
-        // }, "html");
+
 
     }else{
         var obj = transform.target;
@@ -3444,17 +3436,6 @@ function handleGetAddedTextValues(transform) {
             selectedText.linethrough = obj.linethrough
             selectedText.overline = obj.overline
 
-
-
-            // console.log({
-            //     width: objWidht,
-            //     height: objHeight,
-            //     left: objLeftInContainer,
-            //     right: objRightInContainer,
-            //     top: objTopInContainer,
-            //     bottom: objBottomInContainer
-            // })
-
             getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
         }
         
@@ -3468,8 +3449,21 @@ function handleGetAddedTextValues(transform) {
     // console.log('container-left',parseInt(container.left), 'object-left',parseInt((obj.left-(objWidht/2))), 'object-left in sign', parseInt(((obj.left-(objWidht/2))) - (container.left)), 'object-right in sign', parseInt((container.left + container.width)-((obj.left-(objWidht/2))+objWidht)))
     // console.log('container-width',parseInt(container.width), 'object-widht',parseInt((objWidht)))
     // console.log('container-height',parseInt(container.height), 'object-height',parseInt((objHeight)))
-
     // console.log(selectedText.value, textEditor.value)
+    return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
+}
+function finishConfiguration(textsTable){
+    var textsValues = []
+    textsTable.forEach((text)=>{
+        function addTextValues(arr, obj, key) {
+            const exists = arr.some(item => item[key] === obj[key]);
+            if (!exists) {
+                arr.push(obj);
+            }
+        }
+        addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
+    })
+    return textsValues
 }
 
 let newId = 38
@@ -3812,6 +3806,7 @@ function handleAddImageToSign(image){
             img.originY = 'center'
 
             img.id = newId += 1
+            img.name = "aso-SignImage"
 
             img.on('mousedown', function() {
                 handleGetAddedImageValues(img); 
@@ -3943,4 +3938,5 @@ export {
     handleCheckActiveSignFace,
     handleCloneCanvas,
     handleSetImageToSignBackground,
+    finishConfiguration,
 }
