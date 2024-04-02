@@ -3369,10 +3369,6 @@ function handleGetAddedTextValues(transform) {
         // Calculer les limites de l'objet
         var objBounds = obj.getBoundingRect();
 
-        // console.log(objBounds, "bound")
-        // console.log(objBounds.width * obj.scaleX, "boundcxcxwxc")
-        // console.log(obj.left * obj.scaleX, "boundcxcxwxc")
-
         // Récupérer les coins de l'objet
         var objLeft = objBounds.left
         var objTop = objBounds.top 
@@ -3384,8 +3380,6 @@ function handleGetAddedTextValues(transform) {
         var objBottomInContainer = container.height - (objTopInContainer + objHeight);
 
         selectedText.object = obj
-        // selectedText.width = parseInt(objWidht)
-        // selectedText.height = parseInt(objHeight)
         selectedText.value = obj.text
         selectedText.align = obj.textAlign
         selectedText.font = obj.fontFamily
@@ -3405,6 +3399,7 @@ function handleGetAddedTextValues(transform) {
         // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
         getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
 
+        handleCalcTextPrice(obj)
 
     }else{
         var obj = transform.target;
@@ -3442,6 +3437,7 @@ function handleGetAddedTextValues(transform) {
 
             getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
         }
+        handleCalcTextPrice(obj.text.length)
         
         
         var textEditor = document.getElementById('aso-text-editor')
@@ -3455,36 +3451,6 @@ function handleGetAddedTextValues(transform) {
     // console.log('container-height',parseInt(container.height), 'object-height',parseInt((objHeight)))
     // console.log(selectedText.value, textEditor.value)
     return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
-}
-function finishConfiguration(textsTable, iamgesTable){
-    var textsValues = []
-    var iamgesValues = []
-    if(textsTable.length > 0){
-        textsTable.forEach((text)=>{
-            function addTextValues(arr, obj, key) {
-                const exists = arr.some(item => item[key] === obj[key]);
-                if (!exists) {
-                    arr.push(obj);
-                }
-            }
-            addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
-        })
-    }
-    if(iamgesTable.length > 0){
-        iamgesTable.forEach((image)=>{
-            function addTextValues(arr, obj, key) {
-                const exists = arr.some(item => item[key] === obj[key]);
-                if (!exists) {
-                    arr.push(obj);
-                }
-            }
-            addTextValues(iamgesValues, {id: image.id, url:image.getSrc(), values: handleGetAddedImageValues(image)}, 'id')
-        })
-    }
-    return{ 
-        texts: textsValues, 
-        images: iamgesValues
-    }
 }
 
 let newId = 38
@@ -3588,7 +3554,6 @@ function handleAddTextToSign(clone){
             });
             newText.on('selected', () => {   
                 handleGetAddedTextValues(newText);         
-                // console.log("newTextdqdqdqsdqd");
             });
             newText.on('mousedown', function() {
                 handleGetAddedTextValues(newText); 
@@ -3920,6 +3885,62 @@ function handleFlipImage(){
     handleGetAddedImageValues(currentImage)
 }
 
+var totalCharPrice = 0
+var charPrice = 0
+function handleGetCharPrice(price){
+    charPrice = price
+}
+var textsPrice = []
+function handleCalcTextPrice(object){
+    var charPricing = (object.text.length * charPrice)
+    function addUniqueObject(arr, obj, key) {
+        const index = arr.findIndex(item => item[key] === obj[key]);
+        if(index !== -1){
+            arr[index] = obj;
+        }
+        else{
+            arr.push(obj);
+        }
+    }
+    addUniqueObject(textsPrice, {id: object.id, price: charPricing}, 'id')
+    // console.log(textsPrice, "table de prix de text")
+}
+function handleSetPrice(){
+    return textsPrice
+}
+
+
+function handleFinishConfiguration(textsTable, iamgesTable){
+    var textsValues = []
+    var iamgesValues = []
+    if(textsTable.length > 0){
+        textsTable.forEach((text)=>{
+            function addTextValues(arr, obj, key) {
+                const exists = arr.some(item => item[key] === obj[key]);
+                if (!exists) {
+                    arr.push(obj);
+                }
+            }
+            addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
+        })
+    }
+    if(iamgesTable.length > 0){
+        iamgesTable.forEach((image)=>{
+            function addTextValues(arr, obj, key) {
+                const exists = arr.some(item => item[key] === obj[key]);
+                if (!exists) {
+                    arr.push(obj);
+                }
+            }
+            addTextValues(iamgesValues, {id: image.id, url:image.getSrc(), values: handleGetAddedImageValues(image)}, 'id')
+        })
+    }
+    return{ 
+        texts: textsValues, 
+        images: iamgesValues
+    }
+}
+
 
 export {
     handleGetCanvas,
@@ -3960,5 +3981,7 @@ export {
     handleCheckActiveSignFace,
     handleCloneCanvas,
     handleSetImageToSignBackground,
-    finishConfiguration,
+    handleFinishConfiguration,
+    handleGetCharPrice,
+    handleSetPrice,
 }

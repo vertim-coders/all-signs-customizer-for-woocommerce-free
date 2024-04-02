@@ -472,8 +472,8 @@
                     <p class="aso-hidden lg:aso-flex aso-bg-[#016464] aso-text-white aso-text-lg aso-font-semibold aso-p-2 aso-px-4">Sizes</p>    
 
                     <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
-                        <div class="aso-space-y-2">
-                            <p class="aso-font-medium">Suggestions</p>
+                             <p class="aso-font-medium">Suggestions</p>
+                       <div class="aso-space-y-2">
                             <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-text-zinc-800 aso-px-2 aso-border-solid aso-border-2 aso-border-zinc-800 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
                                 <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
                                     <p :class="`lg:aso-text-sm aso-font-semibold`" >{{ currentSizeName }}</p>
@@ -540,7 +540,7 @@
                             <div v-for="(shapee, id) in shapees">
                                 <div v-for="(shape, index) in allShapes" :key="shape.name" class="aso-w-full aso-flex">
                                     <div class="aso-w-full aso-flex" v-if="shapee.shapeId == index">
-                                        <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, currentSizeValues.width, currentSizeValues.height, currentSizeValues.top, currentSizeValues.left)">
+                                        <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, currentSizeValues.width, currentSizeValues.height, currentSizeValues.top, currentSizeValues.left, shapee)">
                                         <label :for="shape.name + index" :class="`${selectedShape == shape.type ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                             aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                         >
@@ -563,7 +563,7 @@
                         <div v-for="(fixingg, id) in fixinggs">
                             <div v-for="(fixing, index) in allFixings">
                                 <div v-if="fixingg.fixingMethodId == index" class="aso-space-y-3 aso-w-full aso-h-full">
-                                    <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
+                                    <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
                                     <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
                                         <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
                                             <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
@@ -591,7 +591,7 @@
                         <div v-for="(fixingId) in fixinggs">
                             <div v-for="(fixing, index) in allFixings">
                                 <div v-if="fixingId == index" class="aso-space-y-3">
-                                    <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type)">
+                                    <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
                                     <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
                                         <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
                                             <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
@@ -657,7 +657,7 @@
                             <div v-for="(borderr, id) in borderrs">
                                 <div v-for="(border, index) in allBorders" :key="border.name" class="aso-w-full aso-flex">
                                     <div v-if="borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)">
-                                        <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings.codeHex)">
+                                        <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)">
                                         <label :for="'border' + border.name + index" :class="`${activeBorder == border.value ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                             aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                         >
@@ -1018,6 +1018,9 @@
         handleCheckActiveSignFace,
         handleCloneCanvas,
         handleSetImageToSignBackground,
+        handleFinishConfiguration,
+        handleGetCharPrice,
+        handleSetPrice,
     } from '@/frontend/utils/aso-editor-script.js'
 
     const props = defineProps({
@@ -1370,7 +1373,7 @@
             fixinggs.value.forEach((fixingg, id) => {
                 allFixings.value.forEach((fixing, index) => {
                     if(fixingg.fixingMethodId == index && !stopFixing){
-                        selectFixingMethode(fixing.type)
+                        selectFixingMethode(fixing.type, fixingg)
                         stopFixing = true
                     }
                 })
@@ -1380,7 +1383,7 @@
             borderrs.value.forEach((borderr, id) => {
                 allBorders.value.forEach((border, index) => {
                     if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
-                        selectBorder(border.value, borderr.settings.codeHex)
+                        selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
                         stopBorder = true
                     }
                 })
@@ -1533,10 +1536,12 @@
             angleActive.value = true
         }
         div.classList.remove("aso-invisible");
+        console.log( handleSetPrice())
     }
     function closeObjectValues(){
         var div = document.getElementById('activeObject-values');
         div.classList.add("aso-invisible");
+        console.log( handleSetPrice())
     }
 
     var customSizeActive = ref(false)
@@ -1616,7 +1621,7 @@
                 fixinggs.value.forEach((fixingg, id) => {
                     allFixings.value.forEach((fixing, index) => {
                         if(fixingg.fixingMethodId == index && !stopFixing){
-                            selectFixingMethode(fixing.type)
+                            selectFixingMethode(fixing.type, fixingg)
                             stopFixing = true
                         }
                     })
@@ -1626,7 +1631,7 @@
                 borderrs.value.forEach((borderr, id) => {
                     allBorders.value.forEach((border, index) => {
                         if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
-                            selectBorder(border.value, borderr.settings.codeHex)
+                            selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
                             stopBorder = true
                         }
                     })
@@ -1636,7 +1641,7 @@
                 colorrs.value.forEach((colorr, id) => {
                     allColors.value.forEach((color, index) => {
                         if(colorr.manageColorId == index && !stopColor){
-                            changeSignColor(color)
+                            changeSignColor(color, colorr)
                             stopColor = true
                         }
                     })
@@ -1977,6 +1982,9 @@
         }
 
         addedTexts.value = currentSizeValues.value.texts
+        
+        var sizeBasePrice = sizeSetting.basePrice
+        handleGetCharPrice(sizeSetting.charPrice)
     }
 
     var allShapes = ref({})
@@ -1985,6 +1993,8 @@
     function selectShape(shape, nwidth, nheight, nTop, nLeft){
         handleSelectShape(shape, nwidth, nheight, nTop, nLeft)
         selectedShape.value = shape
+
+        var shapePrice = setting.additionalPrice
     }
 
     var allBorders = ref({})
@@ -1992,6 +2002,8 @@
     var activeBorder = ref('')
     function selectBorder(border, color) {
         activeBorder.value = handleSelectBorder(border, color)
+
+        var borderPrice = price
     }
 
     var allColors = ref({})
@@ -2011,6 +2023,8 @@
     function selectFixingMethode(methode){
         activeFixingMethode.value = methode
         handleSelectFixingMethode(methode)
+        
+        var fixingPrice = setting.additionalPrice
     }
 
 
@@ -2117,6 +2131,7 @@
 
     function changeTextValue(){
         handleChangeTextValue()
+        console.log( handleSetPrice())
     }
     function changeTextWeight(){
         var weight = handleChangeTextWeight()
@@ -2192,9 +2207,9 @@
                 addUniqueObject(imageObjects, objects[i], 'id')
             }
         }
-        // console.log(finishConfiguration(textObjects, imageObjects))
+        // console.log(handleFinishConfiguration(textObjects, imageObjects))
 
-        var addedObject = finishConfiguration(textObjects, imageObjects)
+        var addedObject = handleFinishConfiguration(textObjects, imageObjects)
 
 
         var configData = {
