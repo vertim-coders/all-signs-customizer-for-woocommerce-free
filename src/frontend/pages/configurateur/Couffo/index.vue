@@ -374,7 +374,7 @@
                     </div>
                 </div>
 
-                <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableText) || materialType == 'advance'" @click="showOptions('text')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableText && sizees.length > 0 ) || materialType == 'advance'" @click="showOptions('text')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg class="aso-w-6 aso-h-6" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
                             <path id="Vector" d="M15.5757 11.5411C15.453 11.1569 15.2131 10.8229 14.8912 10.588C14.5693 10.3531 14.1823 10.2296 13.7868 10.2356H13.6335C13.2341 10.226 12.8422 10.3477 12.5156 10.5827C12.189 10.8177 11.9448 11.1537 11.819 11.5411L1.45625 34.6756C1.33756 34.9142 1.27624 35.1782 1.27736 35.4458C1.27736 35.7921 1.41198 36.1242 1.65161 36.369C1.89124 36.6138 2.21625 36.7514 2.55514 36.7514C2.85996 36.7559 3.15822 36.6608 3.40645 36.4799C3.65467 36.2991 3.8399 36.042 3.93514 35.7461L6.59291 29.6753H20.6485L23.3062 35.6678C23.411 35.9742 23.6035 36.2413 23.8587 36.4345C24.1139 36.6278 24.42 36.7381 24.7374 36.7514C25.1034 36.7514 25.4544 36.6028 25.7132 36.3384C25.972 36.074 26.1174 35.7154 26.1174 35.3414C26.102 35.0844 26.0414 34.8323 25.9385 34.5972L15.5757 11.5411ZM7.76847 27.0381L13.6335 13.6953L19.5112 27.0381H7.76847Z" fill="currentColor"/>
@@ -391,7 +391,7 @@
                     </div>
                 </div>
 
-                <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableImage) || materialType == 'advance'" @click="showOptions('image')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
+                <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableImage && sizees.length > 0 ) || materialType == 'advance'" @click="showOptions('image')" class="aso-w-[80%] aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-gradient-to-b aso-from-[#1B3448] aso-to-[#1F2226] hover:aso-from-[#1F2226] hover:aso-to-[#1B3448] aso-text-white aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                     </svg>
@@ -1556,6 +1556,8 @@
         if(material.type == 'simple'){
             if(material.data.sizes.allSizes){
                 sizees.value = material.data.sizes.allSizes
+            }else{
+                sizees.value = []
             }
             if(material.data.sizes.customSize){
                 customSizes.value = material.data.sizes.customSize
@@ -1943,7 +1945,7 @@
 
 
 
-    var sizees = ref({})
+    var sizees = ref([])
     var customSizes = ref({})
     var allSizes = ref({})
     var currentSizeName = ref('')
@@ -1978,7 +1980,7 @@
     }
 
     var allShapes = ref({})
-    var shapees = ref({})
+    var shapees = ref([])
     var selectedShape = ref('square')
     function selectShape(shape, nwidth, nheight, nTop, nLeft){
         handleSelectShape(shape, nwidth, nheight, nTop, nLeft)
@@ -1986,14 +1988,14 @@
     }
 
     var allBorders = ref({})
-    var borderrs = ref({})
+    var borderrs = ref([])
     var activeBorder = ref('')
     function selectBorder(border, color) {
         activeBorder.value = handleSelectBorder(border, color)
     }
 
     var allColors = ref({})
-    var colorrs = ref({})
+    var colorrs = ref([])
     var activeSignColor = ref('')
     var signTextColor = ref(false)
     function changeSignColor(color, setting) {
@@ -2003,7 +2005,7 @@
     }
 
     var allFixings = ref({})
-    var fixinggs = ref({})
+    var fixinggs = ref([])
     var activeFixingMethode = ref('')
     function selectFixingMethode(methode){
         activeFixingMethode.value = methode
