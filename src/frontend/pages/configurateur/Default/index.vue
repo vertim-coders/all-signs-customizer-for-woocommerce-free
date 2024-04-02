@@ -1541,9 +1541,15 @@
         selectedMaterial.value = material.name
 
         if(material.type == 'simple'){
-            sizees.value = material.data.sizes.allSizes
-            customSizes.value = material.data.sizes.customSize
-            customSizeActive.value = material.data.sizes.customSize.active
+            if(material.data.sizes.allSizes){
+                sizees.value = material.data.sizes.allSizes
+            }
+            if(material.data.sizes.customSize){
+                customSizes.value = material.data.sizes.customSize
+                customSizeActive.value = material.data.sizes.customSize.active
+            }
+            // if(material.data.sizes.customSize){
+            // }
             if(customSizeActive.value){
                 // console.log("custom size", customSizes.value)
                 customSizeValues.value.width = customSizes.value.width.min
@@ -1574,14 +1580,22 @@
                 }
 
                 var stopSize = false
-                sizees.value.forEach((sizee, id) => {
-                    allSizes.value.forEach((size, index) => {
-                        if(sizee.manageSizeId == index && !stopSize){
-                            changeSize(size, sizee)
-                            stopSize = true
-                        }
+                if(sizees.value.length >0){
+                    sizees.value.forEach((sizee, id) => {
+                        allSizes.value.forEach((size, index) => {
+                            if(sizee.manageSizeId == index && !stopSize){
+                                changeSize(size, sizee)
+                                stopSize = true
+                            }
+                        })
                     })
-                })
+                }else{
+                    var size ={
+                        width: 0,
+                        height: 0
+                    }
+                    changeSize(size)
+                }
 
                 var stopFixing = false
                 fixinggs.value.forEach((fixingg, id) => {
