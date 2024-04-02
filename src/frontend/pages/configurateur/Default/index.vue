@@ -1987,8 +1987,9 @@
     var signTextColor = ref(false)
     function changeSignColor(color, setting) {
         signTextColor.value = color.textColor.active
-        activeSignColor.value = color.name
-        handleChangeSignColor(color)
+        activeSignColor.value = color.name;
+        var defTextColor = configTextSettings.value.colors[0].codeHex
+        handleChangeSignColor(color, defTextColor)
     }
 
     var allFixings = ref({})
@@ -2152,10 +2153,10 @@
     }
 
     function finishConfig(){
-        var SignObject = handleGetObjectByName('safeObject', canvas)
+        var heightValue = handleGetObjectByName('height-value', canvas)
+        var widthValue = handleGetObjectByName('width-value', canvas)
         var textObjects = []
         var imageObjects = []
-        var array = []
         
         var objects = canvas.getObjects();
         for (var i = 0; i < objects.length; i++) {
@@ -2178,9 +2179,28 @@
                 addUniqueObject(imageObjects, objects[i], 'id')
             }
         }
-        console.log(finishConfiguration(textObjects))
-        console.log(imageObjects,"added unique object")
-        console.log(array.length,"object lengght")
+        // console.log(finishConfiguration(textObjects, imageObjects))
+
+        var addedObject = finishConfiguration(textObjects, imageObjects)
+
+
+        var configData = {
+            sign: {
+                width: widthValue.text,
+                height: heightValue.text,
+                shape: selectedShape.value,
+                color: activeSignColor.value,
+                border: {
+                    type: activeBorder.value.type,
+                    color: activeBorder.value.color,
+                },
+                fixingMethod: activeFixingMethode.value,
+            },
+            texts: addedObject.texts,
+            images: addedObject.images,
+        }
+
+        console.log(configData, "Added")
     }
 
 

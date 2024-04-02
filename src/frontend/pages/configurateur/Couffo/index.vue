@@ -2000,8 +2000,9 @@
     var signTextColor = ref(false)
     function changeSignColor(color, setting) {
         signTextColor.value = color.textColor.active
-        activeSignColor.value = color.name
-        handleChangeSignColor(color)
+        activeSignColor.value = color.name;
+        var defTextColor = configTextSettings.value.colors[0].codeHex
+        handleChangeSignColor(color, defTextColor)
     }
 
     var allFixings = ref({})
@@ -2162,6 +2163,57 @@
     }
     function flipImage(){
         handleFlipImage()
+    }
+
+    function finishConfig(){
+        var heightValue = handleGetObjectByName('height-value', canvas)
+        var widthValue = handleGetObjectByName('width-value', canvas)
+        var textObjects = []
+        var imageObjects = []
+        
+        var objects = canvas.getObjects();
+        for (var i = 0; i < objects.length; i++) {
+            if (objects[i].name === "aso-SignText") {
+                function addUniqueObject(arr, obj, key) {
+                    const exists = arr.some(item => item[key] === obj[key]);
+                    if (!exists) {
+                        arr.push(obj);
+                    }
+                }
+                addUniqueObject(textObjects, objects[i], 'id')
+            }
+            if (objects[i].name === "aso-SignImage") {
+                function addUniqueObject(arr, obj, key) {
+                    const exists = arr.some(item => item[key] === obj[key]);
+                    if (!exists) {
+                        arr.push(obj);
+                    }
+                }
+                addUniqueObject(imageObjects, objects[i], 'id')
+            }
+        }
+        // console.log(finishConfiguration(textObjects, imageObjects))
+
+        var addedObject = finishConfiguration(textObjects, imageObjects)
+
+
+        var configData = {
+            sign: {
+                width: widthValue.text,
+                height: heightValue.text,
+                shape: selectedShape.value,
+                color: activeSignColor.value,
+                border: {
+                    type: activeBorder.value.type,
+                    color: activeBorder.value.color,
+                },
+                fixingMethod: activeFixingMethode.value,
+            },
+            texts: addedObject.texts,
+            images: addedObject.images,
+        }
+
+        console.log(configData, "Added")
     }
 
 

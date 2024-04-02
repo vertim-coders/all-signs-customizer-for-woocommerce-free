@@ -1008,12 +1008,12 @@ function handleSelectBorder(border, color) {
     });
     activeCanvas.renderAll();
 
-    return border
+    return {type: border, color: color}
 }
 
 var currentSignColor = ''
 var currentSignTextColor = 'black'
-function handleChangeSignColor(color) {
+function handleChangeSignColor(color, defTextColor) {
     currentSignColor = color;
     var Objects = activeCanvas.getObjects();
     Objects.forEach(function(object){
@@ -1026,6 +1026,10 @@ function handleChangeSignColor(color) {
                 currentSignTextColor = color.textColor.codeHex
                 if(object.name == "aso-SignText"){
                     object.set('fill', color.textColor.codeHex)
+                }
+            }else{
+                if(object.name == "aso-SignText"){
+                    object.set('fill', defTextColor)
                 }
             }
         }
@@ -3452,18 +3456,35 @@ function handleGetAddedTextValues(transform) {
     // console.log(selectedText.value, textEditor.value)
     return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
 }
-function finishConfiguration(textsTable){
+function finishConfiguration(textsTable, iamgesTable){
     var textsValues = []
-    textsTable.forEach((text)=>{
-        function addTextValues(arr, obj, key) {
-            const exists = arr.some(item => item[key] === obj[key]);
-            if (!exists) {
-                arr.push(obj);
+    var iamgesValues = []
+    if(textsTable.length > 0){
+        textsTable.forEach((text)=>{
+            function addTextValues(arr, obj, key) {
+                const exists = arr.some(item => item[key] === obj[key]);
+                if (!exists) {
+                    arr.push(obj);
+                }
             }
-        }
-        addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
-    })
-    return textsValues
+            addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
+        })
+    }
+    if(iamgesTable.length > 0){
+        iamgesTable.forEach((image)=>{
+            function addTextValues(arr, obj, key) {
+                const exists = arr.some(item => item[key] === obj[key]);
+                if (!exists) {
+                    arr.push(obj);
+                }
+            }
+            addTextValues(iamgesValues, {id: image.id, url:image.getSrc(), values: handleGetAddedImageValues(image)}, 'id')
+        })
+    }
+    return{ 
+        texts: textsValues, 
+        images: iamgesValues
+    }
 }
 
 let newId = 38
@@ -3755,7 +3776,7 @@ function handleGetAddedImageValues(object){
     // console.log('container-width',parseInt(container.width), 'object-widht',parseInt((objWidht)))
     // console.log('container-height',parseInt(container.height), 'object-height',parseInt((objHeight)))
 
-    // 
+    return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer, object.angle)
 }
 var addedImages = []
 function handleAddImageToSign(image){
@@ -3829,6 +3850,7 @@ function handleAddImageToSign(image){
 
 
             updateModifications(true, "==ajout d'image ==")
+            // console.log(img.getSrc(), "image source")
 
         });
     }
