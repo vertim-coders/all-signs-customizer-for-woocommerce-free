@@ -161,25 +161,30 @@
     } 
     function aso_get_custom_products() {
         global $wpdb;
-
-        // Préparation de la base de la requête
-        $query = "SELECT p.id FROM $wpdb->posts p JOIN $wpdb->postmeta pm ON pm.post_id = p.id WHERE p.post_type = 'product' AND pm.meta_key = %s";
-
-        // Sécurisation de la clé meta
-        $query = $wpdb->prepare($query, 'product-aso-metas');
-
-        // Conditions dynamiques sécurisées
+        $query = "SELECT p.id 
+                  FROM {$wpdb->posts} p 
+                  JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id 
+                  WHERE p.post_type = 'product' AND pm.meta_key = %s";
+        $params = ['product-aso-metas'];
         $conditions = [];
+        $placeholders = [];
+    
         for ($i = 1; $i <= 9; $i++) {
-            $conditions[] = $wpdb->prepare("pm.meta_value LIKE %s", '%config-id";s:' . $i . '%');
+            $conditions[] = "pm.meta_value LIKE %s";
+            $placeholders[] = '%config-id";s:' . $i . ':%';
         }
-        $conditions[] = "pm.meta_value LIKE '%config-id\";i:%'"; // Pour les entiers, le pattern est statique, donc directement inclus
 
-        // Assemblage final de la requête
-        $query .= " AND (" . join(' OR ', $conditions) . ")";
+        if (!empty($conditions)) {
+            $query .= " AND (" . join(' OR ', $conditions) . ")";
+        }
 
-        // Exécution de la requête
-        $products = $wpdb->get_results($query);
+        $params = array_merge($params, $placeholders);
 
+        $products = $wpdb->get_results($wpdb->prepare(
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $query, 
+            $params
+        ));
+    
         return $products;
     }

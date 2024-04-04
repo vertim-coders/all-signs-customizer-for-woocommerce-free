@@ -31,7 +31,7 @@
                                 thickness
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
-                                Add Price
+                                Base Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Action
@@ -108,24 +108,24 @@
                 <div class="aso-space-y-6 aso-pt-12" v-if="sizes.customSize.active">
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-font-normal">Width label</label>
+                            <label for="" class="aso-bold aso-font-normal">Width label</label>
                             <input type="text" v-model="sizes.customSize.width.label" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-font-normal">Height label</label>
+                            <label for="" class="aso-bold aso-font-normal">Height label</label>
                             <input type="text" v-model="sizes.customSize.height.label" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                     </div>
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-font-normal">Min width</label>
+                            <label for="" class="aso-bold aso-font-normal">Min width</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.width.min" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
                             
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-font-normal">Min Height</label>
+                            <label for="" class="aso-bold aso-font-normal">Min Height</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.height.min" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
@@ -133,14 +133,14 @@
                     </div>
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-font-normal">Max Width</label>
+                            <label for="" class="aso-bold aso-font-normal">Max Width</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.width.max" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
                             
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-font-normal">Max height</label>
+                            <label for="" class="aso-bold aso-font-normal">Max height</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.height.max" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
@@ -166,40 +166,42 @@
         <div class="aso-space-y-2" v-if="isNewSize && manageSizes.length >0 ">
             <div class="aso-bg-[#F8F9FB] aso-space-y-6 aso-px-4 aso-py-8">
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-font-normal">Select Size</label>
+                    <label for="" class="aso-text-[14px] aso-font-bold">Select Size</label>
                     <select v-model="size.manageSizeId" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option v-for="(size,key) in manageSizes" :value="key">{{ size.label }}</option>
+                        <option v-for="(size,key) in manageSizes" :value="key" >{{ size.label }}</option>
                     </select>
                 </div>
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                        <label for="" class="aso-font-normal">Text number</label>
-                        <div class="">
-                            <input type="number" v-model="size.textNumber" placeholder="0" class="aso-rounded aso-w-full aso-h-[30px]">
-                        </div>
-                        
-                    </div>
-                    <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                        <label for="" class="aso-font-normal">Max text char</label>
-                        <div class="">
-                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]">
-                        </div>
-                    </div>
-                </div>
-                <div class="aso-flex aso-justify-between">
-                    <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                        <label for="" class="aso-font-normal">Base Price</label>
+                        <label for="" class="aso-text-[14px] aso-font-bold">Base Price</label>
                         <div class="aso-relative">
                             <input type="number" v-model="size.basePrice" placeholder="25" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                         
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                        <label for="" class="aso-font-normal">Char Price</label>
+                        <label for="" class="aso-text-[14px] aso-font-bold">Min char text to start applying the base price</label>
+                        <div class="">
+                            <input type="number" v-model="size.startPriceAtChar" placeholder="0" class="aso-rounded aso-w-full aso-h-[30px]">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[14px] aso-font-bold">Max text char</label>
+                        <div class="">
+                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]">
+                        </div>
+                        <p class="aso-text-[11px]">Set -1 if you don't want to limit</p>
+                    </div>
+                    
+                    <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[14px] aso-font-bold">Char Price</label>
                         <div class="aso-relative">
                             <input type="number" v-model="size.charPrice" placeholder="25" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
-                        
+                        <p class="aso-text-[11px] aso-invisible">Invisible</p>
                     </div>
                     
                 </div>
@@ -299,8 +301,9 @@
     const noSizesFound = ref('');
     const size = ref({
         manageSizeId:0,
+        startPriceAtChar:1,
         textNumber:0,
-        maxTextChar:0,
+        maxTextChar:-1,
         charPrice:0,
         basePrice:0
     });
@@ -382,7 +385,6 @@
         sizes.value.allSizes.push(size.value);
         await updateMaterialSize();
     }
-
     const selectMaterialSize = (id,sz,isdeleting=false) => {
         if(isdeleting){
             sizeId.value = id;
@@ -404,11 +406,13 @@
         sizes.value.allSizes[sizeId.value] = size.value;
         await updateMaterialSize();
     }
+    
     const deleteMaterialSize = async () => {
         isLoading.value = true;
         sizes.value.allSizes.splice(sizeId.value, 1);
         await updateMaterialSize();
     }
+
     const newSize = () => {
         if(manageSizes.value.length >0) {
             isNewSize.value = true;

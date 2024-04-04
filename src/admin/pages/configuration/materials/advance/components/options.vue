@@ -117,17 +117,17 @@
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-4">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Title</label>
+                        <label for="" class="aso-font-bold">Title</label>
                         <input v-model="option.name" type="text" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Description</label>
+                        <label for="" class="aso-font-bold">Description</label>
                         <input v-model="option.description" type="text" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                 </div>
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Upload Option Icon</label>
+                        <label for="" class="aso-font-bold">Upload Option Icon</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
                                 <button @click="selectOptionIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer aso-whitespace-nowrap">upload Icon</button>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Upload Option Backgound Image</label>
+                        <label for="" class="aso-font-bold">Upload Option Backgound Image</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
                                 <button @click="selectOptionImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer aso-whitespace-nowrap">upload Background Image</button>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                        <label for="" class="">Fixing method</label>
+                        <label for="" class="aso-font-bold">Fixing method</label>
                         <Multiselect
                             v-model="option.fixingMethods"
                             mode="tags"
@@ -181,22 +181,8 @@
                             </template>
                         </Multiselect>
                     </div>
-                    <div class="aso-w-2/5 aso-space-y-2">
-                        <label for="" class="">Size</label>
-                        <div class="aso-flex aso-justify-between aso-items-center aso-space-x-4">
-                            <div class="aso-w-2/5">
-                                <input type="number" v-model="option.size.width" placeholder="width" class="aso-w-full aso-h-[35px]">
-                            </div>
-                            <span class="aso-font-bold">x</span>
-                            <div class="aso-w-2/5">
-                                <input type="number" v-model="option.size.height" placeholder="height" class="aso-w-full aso-h-[35px]">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Shape</label>
+                        <label for="" class="aso-font-bold">Shape</label>
                         <Multiselect
                             v-model="option.shapeId"
                             placeholder="Select your fixing methods"
@@ -210,20 +196,71 @@
                                 <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
                                 </div>
                             </template>
-
+    
                             <template v-slot:option="{ option }">
                                 <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
                             </template>
                         </Multiselect>
                     </div>
+                </div>
+                
+                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                    <label for="" class="aso-font-bold">Size</label>
+                    <div class="aso-flex aso-justify-between aso-items-center aso-space-x-10 aso-px-10">
+                        <div class="aso-w-2/5">
+                            <label class="">Width</label>    
+                            <input type="number" v-model="option.size.width" placeholder="width" class="aso-w-full aso-h-[35px]">
+                        </div>
+                        <span class="aso-font-bold aso-text-center">x</span>
+                        <div class="aso-w-2/5">
+                            <label class="">Height</label>        
+                            <input type="number" v-model="option.size.height" placeholder="height" class="aso-w-full aso-h-[35px]">
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-px-10">
+                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[14px]">Base Price</label>
+                            <div class="aso-relative">
+                                <input type="number" v-model="option.size.basePrice" placeholder="25" class="aso-rounded aso-w-full aso-h-[30px]">
+                            </div>
+                            
+                        </div>
+                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[14px]">Min char text to start applying the base price</label>
+                            <div class="">
+                                <input type="number" v-model="option.size.startPriceAtChar" placeholder="0" class="aso-rounded aso-w-full aso-h-[30px]">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-px-10">
+                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[14px]">Max text char</label>
+                            <div class="">
+                                <input type="number" v-model="option.size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]">
+                            </div>
+                            <p class="aso-text-[11px]">Set -1 if you don't want to limit</p>
+                        </div>
+                        
+                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[14px]">Char Price</label>
+                            <div class="aso-relative">
+                                <input type="number" v-model="option.size.charPrice" placeholder="25" class="aso-rounded aso-w-full aso-h-[30px]">
+                            </div>
+                            <p class="aso-text-[11px] aso-invisible">Invisible</p>
+                        </div>
+                        
+                    </div>              
+                </div>
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-space-y-2">
+                        <label for="" class="aso-font-normal">Additional Price</label>
+                        <input type="number" v-model="option.additionalPrice" class="aso-rounded aso-w-full aso-h-[35px]">                    
+                    </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Color Name</label>
                         <input v-model="option.color.name" type="text" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
-                </div>
-                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                    <label for="" class="aso-font-normal">Additional Price</label>
-                    <input type="number" v-model="option.additionalPrice" class="aso-rounded aso-w-full aso-h-[35px]">                    
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
@@ -310,7 +347,11 @@ const option = ref({
     shapeId:0,
     size:{
         width:0,
-        height:0
+        height:0,
+        basePrice:0,
+        startPriceAtChar:1,
+        maxTextChar:-1,
+        charPrice:0
     },
     additionalPrice:0
 });
