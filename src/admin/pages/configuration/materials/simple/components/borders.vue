@@ -101,7 +101,6 @@
                         trackBy="id"
                         :options="MaterialSimpleSizes"
                         mode="tags"
-                        :searchable="true"
                     />
                     <span class="aso-text-[#444444] aso-text-[12px]">exclude the sizes of this border</span>
                     
@@ -111,10 +110,10 @@
                     <span class="aso-text-[12px] aso-text-[#444444]">Border colors</span>
                     <div class="aso-grid aso-grid-cols-3 aso-gap-4">
                         <div class="aso-flex aso-justify-start aso-space-x-2" v-for="(color,key) in border.settings.colors">
-                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                            <!-- <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                                 <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
                                 <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].name" autocomplete="off"> 
-                            </div>
+                            </div> -->
                             <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                                 <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
                                 <div class="aso-relative aso-flex">
@@ -133,6 +132,10 @@
                                     />
                                 </div>
                                 
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Price</label>
+                                <input type="number" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].additionalPrice" @blur="border.settings.colors[key].additionalPrice.trim()==''? border.settings.colors[key].additionalPrice = 0 : ''"> 
                             </div>
                             <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                                 <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>

@@ -55,13 +55,13 @@ const router = createRouter({
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/additional-options",
-      name: "Simple-AdditionalOptions",
+      path: "/configs/:configId/materials/:materialId/simple/others-components",
+      name: "Simple-OthersComponents",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/additional-options/:additionalOptionID",
-      name: "Simple-AdditionalOptions-Options",
+      path: "/configs/:configId/materials/:materialId/simple/others-components/:additionalOptionID",
+      name: "Simple-OthersComponents-Options",
       component: Simple,
     },
     {
