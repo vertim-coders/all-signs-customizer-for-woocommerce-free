@@ -3,7 +3,7 @@
         <div class="aso-space-y-1" v-show="!isNewColor">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-px-4 aso-py-4">
                 <span class="aso-font-bold">
-                    Color Palette
+                    Material Colors Palettes
                 </span>
             </div>
             
@@ -15,7 +15,7 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Add new color palette
+                        Add new color
                     </div>
                 </button>
             </div>

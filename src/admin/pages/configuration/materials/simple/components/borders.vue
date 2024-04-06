@@ -108,27 +108,57 @@
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-semibold">Border settings</label>
-                    <span class="aso-text-[12px] aso-text-[#444444]">border color</span>
-                    <div class="aso-relative aso-flex">
-                        <input
-                            id="colorPicker"
-                            type="color"
-                            v-model="border.settings.codeHex"
-                            @input="changeBorderColor"
-                            class="aso-w-9 aso-h-[30px]"
-                        />
-                        <input
-                            type="text"
-                            v-model="border.settings.codeHex"
-                            @input="changeBorderColor"
-                            class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
-                        />
+                    <span class="aso-text-[12px] aso-text-[#444444]">Border colors</span>
+                    <div class="aso-grid aso-grid-cols-3 aso-gap-4">
+                        <div class="aso-flex aso-justify-start aso-space-x-2" v-for="(color,key) in border.settings.colors">
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
+                                <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].name" autocomplete="off"> 
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <div class="aso-relative aso-flex">
+                                    <input
+                                        id="colorPicker"
+                                        type="color"
+                                        v-model="border.settings.colors[key].codeHex"
+                                        @input="(e)=>changeColorCodeHex(e,key)"
+                                        class="aso-w-9 aso-h-[30px]"
+                                    />
+                                    <input
+                                        type="text"
+                                        v-model="border.settings.colors[key].codeHex"
+                                        @input="(e)=>changeColorCodeHex(e,key)"
+                                        class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                    />
+                                </div>
+                                
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <div class="aso-relative aso-flex">
+                                    <button @click="removeColor(key)" class="aso-w-[50px] aso-h-full aso-border-solid aso-border-red-600 aso-rounded aso-bg-red-600 aso-cursor-pointer aso-text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-[70%] aso-h-[70%]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aso-pt-4">
+                        <button @click="addNewColor" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span class="aso-font-semibold aso-text-[16px]">Add</span>
+                        </button>
                     </div>
                     
                 </div>
                 <div class="aso-flex aso-py-4 aso-space-x-16">
                     <div class="aso-flex aso-font-semibold">
-                        Enable border width
+                        Enable Custom border width
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
                             <label for="aso-toggle" @click="enableBorderWidth" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
                             <div :class="{'aso-translate-x-[110%]': border.settings.enableBorderWidth, 'aso-bg-active': border.settings.enableBorderWidth }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
@@ -136,7 +166,7 @@
                         </div>
                     </div>
                     <div class="aso-flex aso-font-semibold">
-                        Enable border Color
+                        Enable custom border Color
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
                             <label for="aso-toggle" @click="enableBorderColor" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
                             <div :class="{'aso-translate-x-[110%]': border.settings.enableBorderColor, 'aso-bg-active': border.settings.enableBorderColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
@@ -231,7 +261,7 @@
         additionalPrice:0,
         excludeSizes: [],
         settings:{
-            codeHex:"#000000",
+            colors:[],
             enableBorderWidth:true,
             enableBorderColor:true,
         }
@@ -330,6 +360,18 @@
         }
     };
 
+    const addNewColor = ()=> {
+        border.value.settings.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
+    }
+    const removeColor = (key)=> {
+        border.value.settings.colors.splice(key,1);
+    }
+    const changeColorCodeHex = (event,key) => {
+        if(event.target.value[0]!=='#'){
+            event.target.value = '#'+ event.target.value;
+        }
+        border.value.settings.colors[key].codeHex = event.target.value;
+    }
     const addBorders = async () => {
         isLoading.value = true;
         borders.value.push(border.value);

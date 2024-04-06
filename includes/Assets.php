@@ -94,7 +94,7 @@ class Assets {
             ],
             'aso-admin' => [
                 'src'       => ASO_ASSETS . '/js/admin.js',
-                'deps'      => [ 'jquery', 'aso-vendor', 'aso-runtime' ],
+                'deps'      => [ 'jquery','aso-vendor', 'aso-runtime' ],
                 'version'   => filemtime( ASO_PATH . '/assets/js/admin.js' ),
                 'in_footer' => true
             ],
@@ -116,6 +116,10 @@ class Assets {
             ],
             'aso-toast' => [
                 'src'       => ASO_ASSETS . '/utilities/toast.min.js',
+                'in_footer' => true
+            ],
+            'aso-tinymce-script' => [
+                'src'       => includes_url('/js/tinymce/') . 'tinymce.min.js',
                 'in_footer' => true
             ]
         ];
