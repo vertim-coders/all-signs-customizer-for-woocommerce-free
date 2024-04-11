@@ -55,7 +55,7 @@
                             <td class="aso-w-28 aso-text-center aso-px-8 aso-p-4">
                                 {{manageFixingMethods[fixingMethod.fixingMethodId].name}}
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-1 aso-space-x-2">
+                            <td class="aso-px-6 aso-flex aso-justify-center aso-space-x-2">
                                 <img :src="manageFixingMethods[fixingMethod.fixingMethodId].icon" class="aso-w-[50px] aso-h-[50px]" v-if="manageFixingMethods[fixingMethod.fixingMethodId].icon.trim() != ''"/>
                             </td>
                             <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-2">
@@ -63,7 +63,7 @@
                                     {{fixingMethod.additionalPrice}}
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
+                            <td class="aso-px-6 aso-text-center aso-justify-center aso-translate-y-1 aso-space-x-2">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialFixingMethod(key,fixingMethod)">
                                 </button>

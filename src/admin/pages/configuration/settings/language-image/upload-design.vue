@@ -8,7 +8,7 @@
                     <div class="aso-text-[11px]">Enable custom design link</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="aso-toggle" @click="handleEnableCustomDesignLink" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': uploadDesign.activate, 'aso-bg-active': uploadDesign.activate }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[white] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <div :class="{'aso-translate-x-[100%]': uploadDesign.activate, 'aso-bg-active': uploadDesign.activate }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>

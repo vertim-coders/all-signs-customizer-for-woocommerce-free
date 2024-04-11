@@ -165,11 +165,12 @@ class ASO_Api_Configs extends WP_REST_Controller {
         );
         
         $updatePosts = wp_update_post($args);
+        $meta = get_post_meta($post_id,true);
         if(!is_wp_error($updatePosts)){
             $data = [
                 "icon"=>$params["icon"],
                 "popImg"=>$params["popImg"],
-                "data" =>get_post_meta($post_id,true)
+                "data" => $meta['data']
             ];
             update_post_meta($post_id,'aso-configs-meta',$data);
             return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","ASO") ) );

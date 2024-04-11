@@ -67,7 +67,7 @@
                     <div class="aso-text-[16px]">Enable Custom color</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="aso-toggle" @click="handleEnableCustomColor" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': text.enableCustomColor, 'aso-bg-active': text.enableCustomColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <div :class="{'aso-translate-x-[100%]': text.enableCustomColor, 'aso-bg-active': text.enableCustomColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                         <div class="aso-text-[16px]">Enable font size</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
                             <label for="aso-toggle" @click="handleEnableFontSize" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableFontSize.active, 'aso-bg-active': text.enableFontSize }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableFontSize.active, 'aso-bg-active': text.enableFontSize }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableBold" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableBold, 'aso-bg-active': text.enableBold }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableBold, 'aso-bg-active': text.enableBold }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableUnderline" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableUnderline, 'aso-bg-active': text.enableUnderline }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableUnderline, 'aso-bg-active': text.enableUnderline }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableOverline" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableOverline, 'aso-bg-active': text.enableOverline }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableOverline, 'aso-bg-active': text.enableOverline }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableStrike" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableStrike, 'aso-bg-active': text.enableStrike }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableStrike, 'aso-bg-active': text.enableStrike }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableItalic" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableItalic, 'aso-bg-active': text.enableItalic }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableItalic, 'aso-bg-active': text.enableItalic }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableOpacity" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableOpacity, 'aso-bg-active': text.enableOpacity }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableOpacity, 'aso-bg-active': text.enableOpacity }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableBorder" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableBorder, 'aso-bg-active': text.enableBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableBorder, 'aso-bg-active': text.enableBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleEnableTextAlignment" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableTextAlignment, 'aso-bg-active': text.enableTextAlignment }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableTextAlignment, 'aso-bg-active': text.enableTextAlignment }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -240,7 +240,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableCurvedUp" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableCurvedUp, 'aso-bg-active': text.enableCurvedUp }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableCurvedUp, 'aso-bg-active': text.enableCurvedUp }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -253,7 +253,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="aso-toggle" @click="handleEnableCurvedDown" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': text.enableCurvedDown, 'aso-bg-active': text.enableCurvedDown }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="{'aso-translate-x-[100%]': text.enableCurvedDown, 'aso-bg-active': text.enableCurvedDown }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>

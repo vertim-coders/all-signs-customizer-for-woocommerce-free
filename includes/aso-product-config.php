@@ -588,7 +588,6 @@
 	 * Add a personalization button on the shop page
 	 */
 	public function get_customize_btn_on_shop_page( $html, $product ) {
-		global $productId;
 		$productId = $product->get_id();
 		$configs = get_post_meta($productId,"product-aso-metas",true);
 		$meta_value = isset($configs[$productId]['config-id']) ? get_post_meta((int)$configs[$productId]['config-id'],"aso-configs-meta",true) : [];
@@ -606,18 +605,13 @@
 			}
 			
 			if ( $general_options["hideAddToCartButtonOnShopPage"]) {
-				add_action( 'wp_footer', [$this,"include_jquery_to_hide_add_to_cart_on_shop_page"]);
+				$inline_script = "		
+					jQuery(\"[data-product_id='" .esc_attr($productId). "']\").hide();
+				";
+				wp_add_inline_script( 'aso-product-min', $inline_script );
 			}
 		}
 		return $html;		
-	}
-	
-	public function include_jquery_to_hide_add_to_cart_on_shop_page(){
-		global $productId;
-		$inline_script = "		
-			jQuery(\"[data-product_id='" .esc_attr($productId). "']\").hide();
-		";
-		wp_add_inline_script( 'aso-product-min', $inline_script );
 	}
 
 	/**
