@@ -34,6 +34,9 @@
                                 Base Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Action
                             </th>
                             
@@ -41,14 +44,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr  v-if="sizes.allSizes.length == 0 && !isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noSizesFound}}</p>
@@ -56,7 +59,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-for="(size, key) in sizes.allSizes" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(size, key) in sizes.allSizes" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-w-28 aso-text-center aso-p-4">
                                 {{ manageSizes[size.manageSizeId].label }}
                             </td>
@@ -81,7 +84,14 @@
                                     {{size.basePrice}}
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
+                            <td class="aso-text-[12px] aso-px-6 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': sizes.allSizes[key].isDefault, 'aso-bg-active': sizes.allSizes[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </span>
+                            </td>
+                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-3">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialSize(key,size)">
                                 </button>
@@ -100,8 +110,8 @@
                 <div class="aso-flex ">
                     Custom size
                     <div class="aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
-                        <label for="aso-toggle" @click="changeCustomSizeActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[120%]': sizes.customSize.active, 'aso-bg-active': sizes.customSize.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[6.5px] -aso-translate-x-[5px] aso-duration-100 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <label for="aso-toggle" @click="changeCustomSizeActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                        <div :class="{'aso-translate-x-[120%]': sizes.customSize.active, 'aso-bg-active': sizes.customSize.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>
@@ -168,7 +178,7 @@
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[14px] aso-font-bold">Select Size</label>
                     <select v-model="size.manageSizeId" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option v-for="(size,key) in manageSizes" :value="key" >{{ size.label }}</option>
+                        <option v-for="(size,key) in manageSizes" :value="key" :key="key" >{{ size.label }}</option>
                     </select>
                 </div>
                 <div class="aso-flex aso-justify-between">
@@ -300,6 +310,7 @@
     const openModal = ref(false);
     const noSizesFound = ref('');
     const size = ref({
+        isDefault:false,
         manageSizeId:0,
         startPriceAtChar:1,
         textNumber:0,
@@ -358,6 +369,7 @@
             isLoading.value = false;
             isNewSize.value = false;
             size.value = {
+                isDefault:false,
                 manageSizeId:0,
                 textNumber:0,
                 maxTextChar:0,
@@ -370,6 +382,7 @@
             toastMessage(result.message,"error");
             isNewSize.value = false;
             size.value = {
+                isDefault:false,
                 manageSizeId:0,
                 textNumber:0,
                 maxTextChar:0,
@@ -425,6 +438,7 @@
         isEdit.value = false;
         sizeId.value  = null;
         size.value = {
+            isDefault:false,
             manageSizeId:0,
             textNumber:0,
             maxTextChar:0,
@@ -436,8 +450,16 @@
     const closeModal = () => {
         openModal.value = !openModal.value;
     }
-    const handleTransform = ref('translateX(100%)');
     const changeCustomSizeActive = () => {
        sizes.value.customSize.active = !sizes.value.customSize.active;
     };
+    const selectDefault = async(key) =>{
+        sizes.value.allSizes[key].isDefault = true;
+        for(let i=0; i<sizes.value.allSizes.length; i++){
+            if(i != key ){
+                sizes.value.allSizes[i].isDefault = false;
+            }
+        }
+       await updateSizeInMaterialSize();
+    }
 </script>

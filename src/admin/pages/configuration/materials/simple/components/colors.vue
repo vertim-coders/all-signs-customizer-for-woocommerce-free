@@ -30,6 +30,9 @@
                                 Additional Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Action
                             </th>
                             
@@ -38,14 +41,14 @@
                     <tbody class="aso-bg-white">
                         
                         <tr v-if="isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr  v-if="colors.length == 0 && !isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noColorsFound}}</p>
@@ -71,6 +74,13 @@
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     {{color.additionalPrice}}
+                                </span>
+                            </td>
+                            <td class="aso-pl-10 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': colors[key].isDefault, 'aso-bg-active': colors[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-2">
@@ -229,6 +239,7 @@
             isNewColor.value = false;
             openModal.value = false;
             color.value = {
+                isDefault:false,
                 manageColorId:0,
                 additionalPrice:0
             };
@@ -238,6 +249,7 @@
             isNewColor.value = false;
             openModal.value = false;
             color.value = {
+                isDefault:false,
                 manageColorId:0,
                 additionalPrice:0
             };
@@ -295,9 +307,19 @@
         isEdit.value = false;
         colorId.value  = null;
         color.value = {
+            isDefault:false,
             manageColorId:0,
             additionalPrice:0
         };
 
+    }
+    const selectDefault = async(key) =>{
+        colors.value[key].isDefault = true;
+        for(let i=0; i<colors.value.length; i++){
+            if(i != key ){
+                colors.value[i].isDefault = false;
+            }
+        }
+       await updateColorInMaterialColor();
     }
 </script>
