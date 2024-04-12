@@ -83,42 +83,48 @@
                     <p class="aso-text-md aso-font-medium aso-text-black">Upload Font</p>
                     <label for="uploadFont2" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer">
                     <input id="uploadFont2" type="radio" name="upload-font" class="aso-sr-only aso-peer" :value="false" v-model="font.isGoogleFont" :checked="!font.isGoogleFont">
-                    <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3.5 aso-border aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[80%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[0px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-rounded-full after:aso-h-5 after:aso-w-5 after:aso-transition-all after:aso-shadow-lg`"></div>
+                    <div class="peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3.5 aso-border aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[80%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[0px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-rounded-full after:aso-h-5 after:aso-w-5 after:aso-transition-all after:aso-shadow-lg"></div>
                     </label>
                 </div>
             </div>
-            <div v-if="font.isGoogleFont" class="aso-px-20 aso-space-y-[5px]">
-                <Multiselect
-                    v-model="selectedGoogleFont"
-                    placeholder="Select your font"
-                    label="name"
-                    trackBy="name"
-                    :options="allGoogleFonts"
-                    :searchable="true"
-                    :loading="isFetching"
-                    @select="(option)=>{font.label = option[0].label}"
-                >
-                    <template v-slot:option="{ option }">
-                        {{ option.name }}
-                    </template>
+            <div v-if="font.isGoogleFont" class="aso-px-20">
+                <div class="aso-py-3 aso-space-y-3">
+                    <label class="aso-text-md aso-font-medium aso-text-black">Choose Google font</label>
+                    <Multiselect
+                        v-model="selectedGoogleFont"
+                        placeholder="Select your font"
+                        label="name"
+                        trackBy="name"
+                        :options="allGoogleFonts"
+                        :searchable="true"
+                        :loading="isFetching"
+                        @select="(option)=>{font.label = option[0].label}"
+                    >
+                        <template v-slot:option="{ option }">
+                            {{ option.name }}
+                        </template>
 
-                </Multiselect>
-                <Multiselect
-                    v-model="font.url"
-                    placeholder="Select your variant"
-                    label="name"
-                    trackBy="name"
-                    :options="selectedGoogleFont"
-                    :searchable="true"
-                >
-                    <template v-slot:option="{ option }">
-                        {{ option.name }}
-                    </template>
-
-                </Multiselect>
-                <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-2':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-6 aso-px-6`">
+                    </Multiselect>
+                </div>
+                <div class="aso-py-3 aso-space-y-3">
+                    <label class="aso-text-md aso-font-medium aso-text-black">Choose Google font Variant</label>
+                    <Multiselect
+                        v-model="font.url"
+                        placeholder="Select your variant"
+                        label="name"
+                        trackBy="name"
+                        :options="selectedGoogleFont"
+                        :searchable="true"
+                    >
+                        <template v-slot:option="{ option }">
+                            {{ option.name }}
+                        </template>
+    
+                    </Multiselect>
+                </div>
+                <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-2':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-4`">
                     <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black`">Font Label</label>
-                    <input type="text" v-model="font.label" :class="`aso-w-full aso-h-[35px] ${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid ':''} `" />
+                    <input type="text" v-model="font.label" :class="`aso-w-full aso-h-[35px] ${emptyFontLabel ? 'aso-border-red-500 aso-text-red-500 aso-border-solid ':''} `"/>
                 </div>
             </div>
             <div class="aso-flex aso-flex-col aso-space-x-2 aso-w-10/12" v-if="!font.isGoogleFont">
