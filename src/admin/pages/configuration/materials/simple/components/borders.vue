@@ -27,6 +27,9 @@
                                 Additional Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Action
                             </th>
                             
@@ -34,14 +37,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr v-if="borders.length == 0 && !isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noBordersFound}}</p>
@@ -61,7 +64,14 @@
                                     {{border.additionalPrice}}
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center">
+                            <td class="aso-pl-12 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': borders[key].isDefault, 'aso-bg-active': borders[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </span>
+                            </td>
+                            <td class="aso-px-6 aso-flex aso-justify-center -aso-translate-y-4">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectMaterialBorder(key,border)">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>
@@ -109,7 +119,7 @@
                     <label for="" class="aso-text-[16px] aso-font-semibold">Border settings</label>
                     <span class="aso-text-[12px] aso-text-[#444444]">Border colors</span>
                     <div class="aso-grid aso-grid-cols-3 aso-gap-4">
-                        <div class="aso-flex aso-justify-start aso-space-x-2" v-for="(color,key) in border.settings.colors">
+                        <div class="aso-flex aso-justify-start aso-space-x-2" :key="key" v-for="(color,key) in border.settings.colors">
                             <!-- <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                                 <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
                                 <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].name" autocomplete="off"> 
@@ -163,16 +173,16 @@
                     <div class="aso-flex aso-font-semibold">
                         Enable Custom border width
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="enableBorderWidth" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[120%]': border.settings.enableBorderWidth, 'aso-bg-active': border.settings.enableBorderWidth }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="aso-toggle" @click="enableBorderWidth" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                            <div :class="{'aso-translate-x-[100%]': border.settings.enableBorderWidth, 'aso-bg-active': border.settings.enableBorderWidth }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
                     <div class="aso-flex aso-font-semibold">
                         Enable custom border Color
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="enableBorderColor" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-8 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[120%]': border.settings.enableBorderColor, 'aso-bg-active': border.settings.enableBorderColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="aso-toggle" @click="enableBorderColor" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                            <div :class="{'aso-translate-x-[100%]': border.settings.enableBorderColor, 'aso-bg-active': border.settings.enableBorderColor }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
@@ -325,6 +335,7 @@
             isNewBorder.value = false;
             openModal.value = false;
             border.value = {
+                isDefault:false,
                 manageBorderId:0,
                 additionalPrice:0,
                 excludeSizes: [],
@@ -340,6 +351,7 @@
             isNewBorder.value = false;
             openModal.value = false;
             border.value = {
+                isDefault:false,
                 manageBorderId:0,
                 additionalPrice:0,
                 excludeSizes: [],
@@ -405,6 +417,7 @@
         isEdit.value = false;
         borderId.value  = null;
         border.value = {
+            isDefault:false,
             manageBorderId:0,
             additionalPrice:0,
             excludeSizes: [],
@@ -423,11 +436,14 @@
         border.value.settings.enableBorderColor = !border.value.settings.enableBorderColor;
     };
 
-
-    const changeBorderColor = (event) => {
-    if(event.target.value[0]!=='#'){
-        event.target.value = '#'+ event.target.value;
+    const selectDefault = async(key) =>{
+        borders.value[key].isDefault = true;
+        for(let i=0; i<borders.value.length; i++){
+            if(i != key ){
+                borders.value[i].isDefault = false;
+            }
+        }
+       await updateMaterialBorders();
     }
-    border.value.settings.codeHex = event.target.value;
-}
+
 </script>

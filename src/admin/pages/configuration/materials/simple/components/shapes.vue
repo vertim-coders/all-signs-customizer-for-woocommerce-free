@@ -27,6 +27,9 @@
                                 Additional Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Action
                             </th>
                             
@@ -59,6 +62,13 @@
                             <td class="aso-text-[12px] aso-px-6  aso-py-2">
                                 <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     {{shape.additionalPrice}}
+                                </span>
+                            </td>
+                            <td class="aso-pl-28 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': shapes[key].isDefault, 'aso-bg-active': shapes[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
                                 </span>
                             </td>
                             <td class=" aso-py-2">
@@ -212,6 +222,7 @@
             isNewShape.value = false;
             openModal.value = false;
             shape.value = {
+                isDefault:false,
                 shapeId:0,
                 additionalPrice:0
             };
@@ -221,6 +232,7 @@
             isNewShape.value = false;
             openModal.value = false;
             shape.value = {
+                isDefault:false,
                 shapeId:0,
                 additionalPrice:0
             };
@@ -268,9 +280,19 @@
         isEdit.value = false;
         shapeId.value  = null;
         shape.value = {
+            isDefault:false,
             shapeId:0,
             additionalPrice:0
         };
     };
+    const selectDefault = async(key) =>{
+        shapes.value[key].isDefault = true;
+        for(let i=0; i<shapes.value.length; i++){
+            if(i != key ){
+                shapes.value[i].isDefault = false;
+            }
+        }
+       await updateMaterialShapes();
+    }
     
 </script>
