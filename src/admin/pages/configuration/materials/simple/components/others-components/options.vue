@@ -43,7 +43,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="options.length == 0 && !isFetching">
+                        <tr v-if="additionalOption.options.length == 0 && !isFetching">
                             <td colspan="6">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
@@ -53,7 +53,7 @@
                             </td>
                         </tr>
                         
-                        <tr v-for="(option,key) in options" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(option,key) in additionalOption.options" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-px-8 aso-p-4">
                                 {{option.title}}
                             </td>
@@ -217,9 +217,13 @@
     const isFetching = ref(false);
     const isNewOptions = ref(false);
     const isLoading = ref(false);
-    const options = ref([]);
     const optionId = ref(null);
-
+    const additionalOption = ref({
+        title:"",
+        description:"",
+        icon:"",
+        options: [],
+    });
     const isEdit = ref(false);
     const openModal = ref(false);
     const noOptionsFound = ref('');
@@ -228,6 +232,7 @@
         description:"",
         icon:"",
         image:"",
+        isDefault:false,
         additionalPrice:0,
     });
 
@@ -240,9 +245,9 @@
         const result = await api.getMaterialSimpleAdditionalOptionsItems(configID.value,materialId.value,additionalOptionId.value);
         
         if(!result.message){
-            options.value = result;
+            additionalOption.value = result.data;
         }else{
-            options.value = [];
+            additionalOption.value = result.data;
             noOptionsFound.value = result.message;
         }
     };
@@ -254,7 +259,7 @@
             option.value = sz;
             closeModal();
         }else{
-            option.value = sz;
+            option.value = {...option.value,...sz};
             optionId.value = id;
             isEdit.value = true;
             isNewOptions.value = true;

@@ -936,9 +936,9 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(isset($meta_value["data"]['materials'][$material_id]) && isset($meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id])){
                 if(count($meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options']) > 0){
-                    return rest_ensure_response($meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options']);
+                    return rest_ensure_response( ["data"=>$meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]]);
                 }else{
-                    return rest_ensure_response(["message"=>__("No Options Found")]);
+                    return rest_ensure_response(["data"=>$meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id],"message"=>__("No Options Found","ASO")]);
                 }
             }else{
                 return rest_ensure_response(["sucess"=>false,"message"=>__("No Additional Option data found","ASO")]);
