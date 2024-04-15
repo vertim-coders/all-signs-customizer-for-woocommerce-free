@@ -9,16 +9,16 @@
                     <div class="aso-flex aso-font-semibold">
                         Use ider id as zip name
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleZipName" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-7 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': output.zipName, 'aso-bg-active': output.zipName }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="aso-toggle" @click="handleZipName" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                <div :class="{'aso-translate-x-[100%]': output.zipName, 'aso-bg-active': output.zipName }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>
                     <div class="aso-flex aso-font-semibold">
                         Calculate retina output
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleCalculateOutput" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-7 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': output.calculateOutput, 'aso-bg-active': output.calculateOutput }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="aso-toggle" @click="handleCalculateOutput" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                <div :class="{'aso-translate-x-[100%]': output.calculateOutput, 'aso-bg-active': output.calculateOutput }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                     </div>

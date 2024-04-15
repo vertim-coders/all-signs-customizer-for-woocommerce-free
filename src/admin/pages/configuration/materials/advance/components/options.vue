@@ -53,6 +53,9 @@
                                 Color
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Action
                             </th>
                             
@@ -60,14 +63,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="5">
+                            <td colspan="6">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="options.length == 0 && !isFetching">
-                            <td colspan="5">
+                        <tr v-if="componentAdvance.options.length == 0 && !isFetching">
+                            <td colspan="6">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noOptionsFound}}</p>
@@ -75,7 +78,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-for="(option,key) in options" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(option,key) in componentAdvance.options" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 
                                 <span class="aso-py-1 aso-text-[14px]">
@@ -93,6 +96,13 @@
                            <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
                                     {{option.color.name}}
+                                </span>
+                            </td>
+                            <td class="aso-pl-10 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': componentAdvance.options[key].isDefault, 'aso-bg-active': componentAdvance.options[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
@@ -332,7 +342,12 @@ const materialId = ref(route.params.materialId);
 const componentId = ref(route.params.componentId);
 const config = ref("");
 const material = ref("");
-const options = ref([]);
+const componentAdvance = ref({
+    name:"",
+    description:"",
+    icon:"",
+    options:[]
+});
 const option = ref({
     name:"",
     description:"",
@@ -391,12 +406,12 @@ const fetchAllShapes = async () => {
 const fetchMaterialAdvanceOptions = async () => {
     const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
     if(result.component){
-        options.value = result.component.options;
+        componentAdvance.value = result.component;
         componentName.value = result.component.name
         noOptionsFound.value = result.message;
         isFetching.value = false;
     }else{
-        options.value = [];
+        componentAdvance.value = result.component;
         componentName.value = ''
         noOptionsFound.value = result.message;
         isFetching.value = false;
@@ -661,5 +676,33 @@ const back = () => {
         },
         additionalPrice:0
     }
+}
+
+const updateComponentAdvance = async () => {
+        isLoading.value = true;
+        const result = await api.updateMaterialAdvanceComponent(configId.value,materialId.value,componentId.value,componentAdvance.value);
+        if(result.success){
+            if(result.success == true ) {
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning");
+            }
+            isLoading.value = false;
+            
+        }else{
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            
+        }
+    };
+
+const selectDefault = async(key) =>{
+    componentAdvance.value.options[key].isDefault = true;
+    for(let i=0; i<componentAdvance.value.options.length; i++){
+        if(i != key ){
+            componentAdvance.value.options[i].isDefault = false;
+        }
+    }
+    await updateComponentAdvance();
 }
 </script>

@@ -222,7 +222,6 @@
     });
     const fetchMaterialAdditionalOptions = async () => {
         const result = await api.getMaterialSimpleAdditionalOptions(configID.value,materialId.value);
-        
         if(!result.message){
             additionalOptions.value = result;
         }else{

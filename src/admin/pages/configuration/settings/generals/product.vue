@@ -10,7 +10,7 @@
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleDesignFromScratch" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': product.designFromScratch, 'aso-bg-active': product.designFromScratch }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                <div :class="{'aso-translate-x-[100%]': product.designFromScratch, 'aso-bg-active': product.designFromScratch }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                         <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -29,7 +29,7 @@
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleRedirectAfterAddingToCart" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': product.redirectAfterAddingToCart, 'aso-bg-active': product.redirectAfterAddingToCart }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                <div :class="{'aso-translate-x-[100%]': product.redirectAfterAddingToCart, 'aso-bg-active': product.redirectAfterAddingToCart }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                         <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -48,7 +48,7 @@
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleHideAddToCartButtonOnDetailPage" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': product.hideAddToCartButtonOnDetailPage, 'aso-bg-active': product.hideAddToCartButtonOnDetailPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                <div :class="{'aso-translate-x-[100%]': product.hideAddToCartButtonOnDetailPage, 'aso-bg-active': product.hideAddToCartButtonOnDetailPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                         <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -67,7 +67,7 @@
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleHideDesignButtonsOnShopPage" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': product.hideDesignButtonsOnShopPage, 'aso-bg-active': product.hideDesignButtonsOnShopPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                <div :class="{'aso-translate-x-[100%]': product.hideDesignButtonsOnShopPage, 'aso-bg-active': product.hideDesignButtonsOnShopPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                         <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -86,7 +86,7 @@
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleHideAddToCartButtonOnShopPage" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': product.hideAddToCartButtonOnShopPage, 'aso-bg-active': product.hideAddToCartButtonOnShopPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] aso-duration-100 -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                <div :class="{'aso-translate-x-[100%]': product.hideAddToCartButtonOnShopPage, 'aso-bg-active': product.hideAddToCartButtonOnShopPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                         <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>

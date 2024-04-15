@@ -100,11 +100,11 @@
                         <label for="" class="aso-font-normal">Title</label>
                         <input type="text" v-model="clipart.title" placeholder="chien" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
-                            <div class="aso-flex aso-space-x-2">
-                                <button @click="selectClipartImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                            <div class="aso-flex">
+                                <button @click="selectClipartImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-3 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload image</button>
                                 <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
                                     <img v-if="clipart.url != ''" :src="clipart.url" alt="" class="aso-absolute aso-w-full aso-h-full">
                                     <button v-if="clipart.url != ''" @click="()=>{clipart.url = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">

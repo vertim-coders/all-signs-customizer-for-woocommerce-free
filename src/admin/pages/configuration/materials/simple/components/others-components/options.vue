@@ -30,6 +30,9 @@
                                 Additional Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-semibold">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-semibold">
                                 Action
                             </th>
                             
@@ -37,14 +40,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr v-if="additionalOption.options.length == 0 && !isFetching">
-                            <td colspan="6">
+                            <td colspan="7">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noOptionsFound}}</p>
@@ -68,6 +71,13 @@
                             <td class="aso-text-[12px] aso-px-6 aso-py-3">
                                 <span class="aso-w-fit aso-text-center aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
                                     {{option.additionalPrice}}
+                                </span>
+                            </td>
+                            <td class="aso-pl-10 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': additionalOption.options[key].isDefault, 'aso-bg-active': additionalOption.options[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-3">
@@ -440,6 +450,34 @@
                 }
             )
             .open();
+    }
+
+    const updateMaterialAdditionalOption = async () => {
+        isLoading.value = true;
+        const result = await api.updateMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value,additionalOption.value);
+        if(result.success){
+            if(result.success == true ) {
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning");
+            }
+            isLoading.value = false;
+            
+        }else{
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            
+        }
+    };
+
+    const selectDefault = async(key) =>{
+        additionalOption.value.options[key].isDefault = true;
+        for(let i=0; i<additionalOption.value.options.length; i++){
+            if(i != key ){
+                additionalOption.value.options[i].isDefault = false;
+            }
+        }
+       await updateMaterialAdditionalOption();
     }
     
 </script>
