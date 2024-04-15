@@ -540,20 +540,19 @@ function handleGetObjectByName(name, canva) {
     return null;
 }
 
-var FtextObjects = [];
-var BtextObjects = [];
+var FtextObjects = [{text: ''}];
+var BtextObjects = [{text: ''}];
 function handleGetTextObjects1(name) {
     var array = [];
     FtextObjects = []
     var objects
-    // if(canva){
-    // }
     objects = canvas.getObjects();
     for (var i = 0; i < objects.length; i++) {
         if (objects[i].name === name) {
             function addUniqueObject(arr, obj, key) {
                 const exists = arr.some(item => item[key] === obj[key]);
                 if (!exists) {
+                    obj.set('canvas', canvas);
                   arr.push(obj);
                 }
             }
@@ -597,11 +596,22 @@ var preHeight = 0
 var firstWidth = 0
 var firstHeight = 0
 
-var textNumberForSize
+var maxTextCharForSize = 0
 
 var firstLoad = false
-function handleChangeSize(width, height, name, nbText) {
-    textNumberForSize = nbText
+// function checkCharsLenght(){
+//     FtextObjects = handleGetTextObjects1('aso-SignText')
+//     BtextObjects = handleGetTextObjects2('aso-SignText')
+
+//     frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+//     backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+
+//     console.log(frontTextCharLength, backTextCharLength, "aso-SignText")
+
+// }
+function handleChangeSize(width, height, name, maxChar) {
+    console.log(maxChar, "aso-SignText")
+    maxTextCharForSize = maxChar
 
     currentSizeName = name;
     currentSize = {width: width, height: height}
@@ -689,54 +699,110 @@ function handleChangeSize(width, height, name, nbText) {
         canvas.renderAll()
     }
 
+    var stop = false
     setMeasurmentValue(canvas)
     if(firstLoad){
         setMeasurmentValue(backCanvas)
+
+        if(maxChar != -1){
+            FtextObjects = handleGetTextObjects1('aso-SignText')
+            BtextObjects = handleGetTextObjects2('aso-SignText')
+
+            function adjustTextCharacters(textObjects, maxCharacters, canva) {
+                let totalCharacters = 0;
+              
+                // Calculer le nombre total de caractères dans les objets "text"
+                textObjects.forEach(obj => {
+                  totalCharacters += obj.text.length;
+                });
+              
+                // Si le total est inférieur ou égal au maximum, on ne fait rien
+                if (totalCharacters <= maxCharacters) {
+                  return;
+                }
+              
+                // Sinon, on commence par supprimer des caractères du dernier objet
+                let charsToRemove = totalCharacters - maxCharacters;
+                for (let i = textObjects.length - 1; i >= 0; i--) {
+                    const obj = textObjects[i];
+                    // obj.set('canvas', activeCanvas);
+                    if (obj.text.length > charsToRemove) {
+                        canva.discardActiveObject();
+                        canva.remove(obj);
+                        // Supprimer les caractères en trop de cet objet
+                        obj.text = obj.text.slice(0, obj.text.length - charsToRemove);
+                        obj.set('text', obj.text)
+
+                        canva.add(obj);
+                        obj.set('scaleX', obj.scaleX + 0.001)
+                        obj.set('scaleY', obj.scaleY + 0.001)
+
+                        charsToRemove = 0;
+                        break;
+                    } else {
+                        // Supprimer complètement cet objet
+                        charsToRemove -= obj.text.length;
+                        textObjects.splice(i, 1);
+                        
+                        canva.getObjects().forEach(function(obj){
+                            if(obj.name === 'aso-SignText'){
+                                function syncTextObjectsByFace(bigArray, textObjects, targetFace) {
+                                    // Parcourir les objets du grand tableau qui ont la face cible
+                                    bigArray.forEach((bigObj, index) => {
+                                        console.log(bigObj.canvas.name,"can")
+                                        if (bigObj.canvas.name === targetFace) {
+                                            // Trouver l'objet correspondant dans le petit tableau
+                                            const smallObj = textObjects.find(obj => obj.id === bigObj.id);
+                                            
+                                            if (smallObj) {
+                                                console.log(bigObj.canvas.name, "array", index)
+                                                // L'objet existe dans le petit tableau, on le remplace
+                                                bigArray[index] = smallObj;
+                                            } else {
+                                                // L'objet n'existe pas dans le petit tableau, on le supprime
+                                                bigArray.splice(index, 1);
+                                                index--;
+                                            }
+                                        }
+                                    });
+                                
+                                    return bigArray;
+                                }
+                                addedTexts = syncTextObjectsByFace(addedTexts, textObjects, canva.name)
+                                console.log(addedTexts, "1969089151")
+
+                            }
+                        })
+
+                        canva.remove(obj)
+                    }
+                
+                    // Si on a supprimé tous les caractères en trop, on peut arrêter
+                    if (charsToRemove <= 0) {
+                        break;
+                    }
+                }
+
+                canva.renderAll();
+            }
+            adjustTextCharacters(FtextObjects, maxChar, canvas)
+            adjustTextCharacters(BtextObjects, maxChar, backCanvas)
+        }
+        FtextObjects = handleGetTextObjects1('aso-SignText')
+        BtextObjects = handleGetTextObjects2('aso-SignText')
     }
 
     handleSelectShape(selectedShape, newSignWidth, newSignHeight, newRectTop, newRectLeft)
     handleSelectFixingMethode(activeFixingMethode)
 
-    
-    if(nbText != null){
-        // textNumberForSize = nbText
-        // console.log(nbText, "max text")
-        var stop1 = false
-        canvas.getObjects().forEach(object => {
-            if(object.name == 'aso-SignText' && nbText < handleGetTextObjects1('aso-SignText').length && !stop1){
-                var surplus = addedTexts.length - nbText
-                // console.log(`surplus text.`, addedTexts.length, 'é', nbText)
-                for(let i = 0; i < nbText ; i++){
-                    canvas.remove(object)
-                    removeTextById(object.id, addedTexts)
-                    removeTextById(object.id, handleGetTextObjects1('aso-SignText'), canvas.name)
-                    canvas.requestRenderAll()
-                    stop = true
-                }
-            }
-        });
-        
-        faceTextCount = handleGetTextObjects1('aso-SignText').length
-        
-        var stop2 = false
-        if(firstLoad){
-            backCanvas.getObjects().forEach(object => {
-                if(object.name == 'aso-SignText' && nbText < handleGetTextObjects2('aso-SignText').length && !stop2){
-                    var surplus = addedTexts.length - nbText
-                    // console.log(`surplus text.`, addedTexts.length, 'é', nbText)
-                    for(let i = 0; i < nbText ; i++){
-                        backCanvas.remove(object)
-                        removeTextById(object.id, addedTexts)
-                        removeTextById(object.id, handleGetTextObjects2('aso-SignText'), backCanvas.name)
-                        backCanvas.requestRenderAll()
-                        stop = true
-                    }
-                }
-            });
-    
-            backTextCount = handleGetTextObjects2('aso-SignText').length
-        }
-    }
+
+    handleCalcTextPrice()  
+    // if(activeSignFace === 'front' && frontTextCharLength > 0){
+    // }
+    // if(activeSignFace === 'back' && backTextCharLength > 0){
+    //     handleCalcTextPrice(BtextObjects[BtextObjects.length - 1])  
+    // }
+
 
 
 
@@ -818,10 +884,9 @@ function handleDeleteObject(object) {
     if(target.type == 'i-text'){
         removeTextById(target.id, addedTexts)
         removeTextById(object.id, handleGetTextObjects1('aso-SignText'), canvas.name)
-        faceTextCount = handleGetTextObjects1('aso-SignText').length
         removeTextById(object.id, handleGetTextObjects2('aso-SignText'), canvas.name)
-        backTextCount = handleGetTextObjects2('aso-SignText').length
-        // console.log('deleted', addedTexts)
+        
+        removeDeletedTextPrice(textsPrice, addedTexts) 
         return addedTexts
     }
     if(target.type == 'image'){
@@ -838,6 +903,8 @@ function handleCloneObject(object) {
         cloned.left += 10;
         cloned.top += 10;
         if(cloned.type == 'i-text'){
+            cloned.set('canvas', activeCanvas);
+            // console.log(cloned.canvas, "cloned canvas");
             handleAddTextToSign(cloned)
         }
         if(cloned.type == 'image'){
@@ -3399,7 +3466,7 @@ function handleGetAddedTextValues(transform) {
         // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
         getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
 
-        handleCalcTextPrice(obj)
+        handleCalcTextPrice()
 
     }else{
         var obj = transform.target;
@@ -3437,7 +3504,7 @@ function handleGetAddedTextValues(transform) {
 
             getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
         }
-        handleCalcTextPrice(obj.text.length)
+        handleCalcTextPrice()
         
         
         var textEditor = document.getElementById('aso-text-editor')
@@ -3456,11 +3523,14 @@ function handleGetAddedTextValues(transform) {
 let newId = 38
 
 var addedTexts = []
-var faceTextCount = 0
-var backTextCount = 0
+var faceTextCharCount = 0
+var backTextCharCount = 0
 function handleAddTextToSign(clone){
-    if(textNumberForSize != null && (((faceTextCount < textNumberForSize && activeSignFace == 'front') || (backTextCount < textNumberForSize && activeSignFace == 'back'))) || textNumberForSize == null){
+
+    if(maxTextCharForSize === -1 || ((activeSignFace === 'back' && backTextCharLength < maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize > frontTextCharLength))){
         if(clone){
+            var cloneCanvas = clone.canvas
+
             var text1JSON = clone.toJSON();  
             // console.log(text1JSON)
             delete text1JSON.evented;
@@ -3490,6 +3560,7 @@ function handleAddTextToSign(clone){
                 originY: 'center',
                 // mouseUpHandler: handleGetAddedTextValues,
             })
+            text2.set('canvas', cloneCanvas)
     
             text2.on('editing:entered', () => {
                 handleGetAddedTextValues(text2);  
@@ -3499,8 +3570,6 @@ function handleAddTextToSign(clone){
             });
             text2.on('selected', () => {   
                 handleGetAddedTextValues(text2);         
-                // console.log("newTextdqdqdqsdqd");
-    
             });
             text2.on('mousedown', function() {
                 handleGetAddedTextValues(text2); 
@@ -3520,7 +3589,7 @@ function handleAddTextToSign(clone){
             var newText = new fabric.IText('Text',{
                 id: newId += 1,
                 name: 'aso-SignText',
-                editable: true,
+                // editable: true,
                 selectOnEdit: false,
                 top: sign.top + (sign.height /3),
                 left: sign.left + sign.width/3,
@@ -3544,11 +3613,27 @@ function handleAddTextToSign(clone){
                 // pathStartOffset: 0
                 // minScaleLimit: 0.3
             })
+            function onInput(e) {
+                const textObject = e.target;
+                const maxCharacters = 10;
+              
+                console.log('dqsdqsdqdqdqdqdqdqsd')
+                if (textObject.text.length > maxCharacters) {
+                //   textObject.text = textObject.text.slice(0, maxCharacters);
+                }
+              
+                textObject.set('width', textObject.width);
+                textObject.set('height', textObject.height);
+                canvas.renderAll();
+            }
+            newText.on('before:render', onInput);
+            console.log(newText.onInput());
     
     
             newText.on('editing:entered', () => {
                 handleGetAddedTextValues(newText);  
             });
+            
             newText.on('editing:exited', () => {   
                 handleGetAddedTextValues(newText);              
             });
@@ -3578,30 +3663,58 @@ function handleAddTextToSign(clone){
         }
         activeCanvas.renderAll()
         updateModifications(true, '==ajout de text==')
-
-        if(activeSignFace == 'front'){
-            faceTextCount += 1
-        }else{
-            backTextCount += 1
-        }
     }
-    // console.log(handleGetTextObjects('aso-SignText', activeCanvas).length, 'current texts')
+
+    FtextObjects = handleGetTextObjects1('aso-SignText')
+    BtextObjects = handleGetTextObjects2('aso-SignText')
+
+    frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+    backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+    // if(backTextCharLength === undefined){
+    //     backTextCharLength = 0
+    // }
+
+    handleCalcTextPrice()
+    
     return addedTexts
 }
 
+var frontTextCharLength = 0
+var backTextCharLength = 0
+function sumOptionsPrice(arr, key) {
+    return arr.reduce((sum, obj) => sum + obj[key], '');
+}
 function handleChangeTextValue(event){
     var editor = document.getElementById('aso-text-editor')
-
-    editor.addEventListener("input", (event) => {
-        // console.log(event.target.value)
+        
+    var currentText = activeCanvas.getActiveObject();
+    if(maxTextCharForSize === -1 || ((activeSignFace === 'back' && backTextCharLength < maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize > frontTextCharLength))){
         selectedText.value = event.target.value
-
-        var currentText = activeCanvas.getActiveObject();
         currentText.set('text', String(selectedText.value))
         activeCanvas.requestRenderAll()
         handleGetAddedTextValues(currentText)
+    }else {
+        if (event.inputType === 'insertText') {
+            event.target.value = selectedText.value
+            event.preventDefault();
+        }else if(event.inputType === 'deleteContentBackward'){
+            // editor.disabled = false;
+            selectedText.value = event.target.value;
+            currentText.set('text', String(selectedText.value));
+            activeCanvas.requestRenderAll();
+            handleGetAddedTextValues(currentText);
+        }
+    }
+    // FtextObjects = handleGetTextObjects1('aso-SignText')
+    // BtextObjects = handleGetTextObjects2('aso-SignText')
 
-    } )
+    frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+    backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+    // if(backTextCharLength === undefined){
+    //     backTextCharLength = 0
+    // }
+
+    console.log(frontTextCharLength, "frontTextCharLength")
 }
 function handleChangeTextAlign(align){
     var currentText = selectedText.object;
@@ -3803,9 +3916,9 @@ function handleAddImageToSign(image){
                 updateModifications(true, "deposer l'image ")
             });
 
-            canvas.add(img)
+            activeCanvas.add(img)
             img.bringToFront()
-            canvas.setActiveObject(img)
+            activeCanvas.setActiveObject(img)
             lockToCanvas(img)
 
             handleCenterHorizontally(img)
@@ -3823,33 +3936,33 @@ function handleAddImageToSign(image){
     return addedImages
 }
 function handleChangeImageWidth(scaleX) {
-    var currentImage = canvas.getActiveObject();
+    var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
         currentImage.scaleX = scaleX
-        canvas.requestRenderAll()
+        activeCanvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
 }
 function handleChangeImageHeight(scaleY) {
-    var currentImage = canvas.getActiveObject();
+    var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
         currentImage.scaleY = scaleY
-        canvas.requestRenderAll()
+        activeCanvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
 }
 
 function handleSetImageBorder(border){
-    var currentImage = canvas.getActiveObject();
+    var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
 
     
-        canvas.requestRenderAll()
+        activeCanvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
 }
 function handleTurnImageLeft(){
-    var currentImage = canvas.getActiveObject();
+    var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
         if(currentImage.angle == 0){
             currentImage.set('angle', 360)
@@ -3857,12 +3970,12 @@ function handleTurnImageLeft(){
         var newAngle = currentImage.angle - 90
         currentImage.set('angle', newAngle)
     
-        canvas.requestRenderAll()
+        activeCanvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
 }
 function handleTurnRightImage(){
-    var currentImage = canvas.getActiveObject();
+    var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
         var newAngle = currentImage.angle + 90
         currentImage.set('angle', newAngle)
@@ -3870,49 +3983,90 @@ function handleTurnRightImage(){
             currentImage.set('angle', 0)
         }
     
-        canvas.requestRenderAll()
+        activeCanvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
 }
 function handleFlipImage(){
-    var currentImage = canvas.getActiveObject();
+    var currentImage = activeCanvas.getActiveObject();
     if(currentImage.flipX == false){
         currentImage.set('flipX', true)
     }else if(currentImage.flipX == true){
         currentImage.set('flipX', false)
     }
-    canvas.requestRenderAll()
+    activeCanvas.requestRenderAll()
     handleGetAddedImageValues(currentImage)
 }
 
 var totalCharPrice = 0
 var charPrice = 0
-function handleGetCharPrice(price){
+var startPriceAtChar= 0
+function handleGetCharPrice(price, startAt){
+    console.log(startAt, "charPrice")
     charPrice = price
+    startPriceAtChar = startAt
 }
-var textsPrice = []
-function handleCalcTextPrice(object){
-    var charPricing = (object.text.length * charPrice)
-    function addUniqueObject(arr, obj, key) {
-        const index = arr.findIndex(item => item[key] === obj[key]);
-        if(index !== -1){
-            arr[index] = obj;
+var textsPrice = 0
+function removeDeletedTextPrice(priceTable, textObjects) {
+    // Parcourir les objets du grand tableau qui ont la face cible
+    priceTable.forEach((priceObj, index) => {
+        // Trouver l'objet correspondant dans le petit tableau
+        const smallObj = textObjects.find(obj => obj.id === priceObj.id);
+        
+        if (!smallObj) {
+            // L'objet n'existe pas dans le petit tableau, on le supprime
+            priceTable.splice(index, 1);
+            index--;
         }
-        else{
-            arr.push(obj);
+        console.log(textsPrice, "table de prix de text")
+    });
+
+    return priceTable;
+}
+function handleCalcTextPrice(object){
+    var avalaibleFaceChars = 0
+    var avalaibleBackChars = 0
+
+    if((activeSignFace === 'front' && startPriceAtChar < frontTextCharLength) || (activeSignFace === 'back' && backTextCharLength > startPriceAtChar)){
+        // var avalaibleChars = object.text.length - startPriceAtChar
+        // var charPricing = avalaibleChars * charPrice
+
+        // console.log(avalaibleChars, "available chars for pricing")
+
+        // function addUniqueObject(arr, obj, key) {
+        //     const index = arr.findIndex(item => item[key] === obj[key]);
+        //     if(index !== -1){
+        //         arr[index] = obj;
+        //     }
+        //     else{
+        //         arr.push(obj);
+        //     }
+        // }
+        // addUniqueObject(textsPrice, {id: object.id, price: charPricing}, 'id')
+
+        // removeDeletedTextPrice(textsPrice, addedTexts) 
+        // console.log(textsPrice, "table de prix de text")
+        if(frontTextCharLength > startPriceAtChar){
+            avalaibleFaceChars = (sumOptionsPrice(FtextObjects, 'text').length) - startPriceAtChar
+        }
+        if(backTextCharLength > startPriceAtChar){
+            avalaibleBackChars = (sumOptionsPrice(BtextObjects, 'text').length) - startPriceAtChar
         }
     }
-    addUniqueObject(textsPrice, {id: object.id, price: charPricing}, 'id')
-    // console.log(textsPrice, "table de prix de text")
+    else{
+        textsPrice = 0
+    }
+
+    textsPrice = (avalaibleFaceChars + avalaibleBackChars) * charPrice
 }
 function handleSetPrice(){
     return textsPrice
 }
 
 
-function handleFinishConfiguration(textsTable, iamgesTable){
+function handleFinishConfiguration(textsTable, imagesTable){
     var textsValues = []
-    var iamgesValues = []
+    var imagesValues = []
     if(textsTable.length > 0){
         textsTable.forEach((text)=>{
             function addTextValues(arr, obj, key) {
@@ -3924,20 +4078,20 @@ function handleFinishConfiguration(textsTable, iamgesTable){
             addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
         })
     }
-    if(iamgesTable.length > 0){
-        iamgesTable.forEach((image)=>{
+    if(imagesTable.length > 0){
+        imagesTable.forEach((image)=>{
             function addTextValues(arr, obj, key) {
                 const exists = arr.some(item => item[key] === obj[key]);
                 if (!exists) {
                     arr.push(obj);
                 }
             }
-            addTextValues(iamgesValues, {id: image.id, url:image.getSrc(), values: handleGetAddedImageValues(image)}, 'id')
+            addTextValues(imagesValues, {id: image.id, url:image.getSrc(), values: handleGetAddedImageValues(image)}, 'id')
         })
     }
     return{ 
         texts: textsValues, 
-        images: iamgesValues
+        images: imagesValues
     }
 }
 
