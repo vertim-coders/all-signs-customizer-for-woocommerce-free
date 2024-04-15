@@ -43,6 +43,9 @@
                                 icon
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
+                                Default
+                            </th>
+                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Action
                             </th>
                             
@@ -50,14 +53,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="4">
+                            <td colspan="5">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr v-if="componentAdvances.length == 0 && !isFetching">
-                            <td colspan="4">
+                            <td colspan="5">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noComponentAdvancesFound}}</p>
@@ -79,6 +82,13 @@
                             </td>
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img v-if="componentAdvance.icon.trim() != ''" class="aso-w-10 aso-h-10" :src="componentAdvance.icon" />
+                            </td>
+                            <td class="aso-pl-10 aso-py-2">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': componentAdvances[key].isDefault, 'aso-bg-active': componentAdvances[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="$router.push('/configs/'+configId+'/materials/'+materialId+'/advance/'+key+'/options')">
@@ -233,6 +243,7 @@
         
         if(!result.message){
             componentAdvances.value = result.data;
+            console.log(result.data)
             noComponentAdvancesFound.value = "No data Found";
         }else{
             noComponentAdvancesFound.value = result.message;
@@ -272,6 +283,26 @@
             };
         }
     };
+
+    const updateMaterialAdvanceComponents= async () =>{
+        isLoading.value = true;
+        const result = await api.updateMaterialAdvanceComponents(configId.value,materialId.value,componentAdvances.value);
+        console.log(result);
+        /* if(result.success){
+            await fetchMaterialComponentAdvances();
+            if(result.success == true ) {
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning");
+            }
+            isLoading.value = false;
+            
+        }else{
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            
+        } */
+    }
 
     const selectComponentAdvance = (id,sz,isDeleting=false) => {
         if(isDeleting){
@@ -391,4 +422,13 @@
             )
             .open();
     }
+const selectDefault = async(key) =>{
+    componentAdvances.value[key].isDefault = true;
+    for(let i=0; i<componentAdvances.value.length; i++){
+        if(i != key ){
+            componentAdvances.value[i].isDefault = false;
+        }
+    }
+    await updateMaterialAdvanceComponents();
+}
 </script>

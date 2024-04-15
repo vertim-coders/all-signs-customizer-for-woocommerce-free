@@ -264,7 +264,9 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             if(is_array($meta) && !empty($meta)){
                 $components = json_decode($request->get_body(),true);
                 $meta['data']["materials"][$material_id]['data']=$components;
-                $update = update_post_meta($config_id,'aso-configs-meta',$meta);
+                var_dump($meta['data']["materials"][$material_id]['data']);
+                die();
+                //$update = update_post_meta($config_id,'aso-configs-meta',$meta);
                 if($update === true){
                     return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
                 }else{
