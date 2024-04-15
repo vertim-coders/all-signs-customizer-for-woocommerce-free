@@ -513,7 +513,18 @@ const api = {
   },
 
   //Function related to Material with component
-
+  updateMaterialAdvanceComponents: async (configId, materialId, components) => {
+    const post = await axios.post(
+      aso_api_url +
+        "/configs/" +
+        configId +
+        "/materials/" +
+        materialId +
+        "/components/update",
+      components
+    );
+    return post.data;
+  },
   // create component
   addMaterialAdvanceComponent: async (configId, materialId, component) => {
     const post = await axios.post(

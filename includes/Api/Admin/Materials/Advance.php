@@ -29,9 +29,29 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $this->namespace,
             $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/components',
             array(
-                
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
+                    'callback'            => array( $this, 'create_component' ),
+                    'permission_callback' => array( $this, 'get_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            $this->rest_base.'/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/components/update',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => array( $this, 'create_component' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
@@ -221,6 +241,29 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             if(is_array($meta) && !empty($meta)){
                 $new_component = json_decode($request->get_body(),true);
                 array_push($meta['data']["materials"][$material_id]['data'],$new_component);
+                $update = update_post_meta($config_id,'aso-configs-meta',$meta);
+                if($update === true){
+                    return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
+                }else{
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
+                }
+                
+            }else{
+                return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["message"=>__("No Configuration found","ASO")]);
+        }
+        
+    }
+    public function update_components( $request ){
+        $config_id = $request->get_param('config_id');
+        $material_id = $request->get_param('material_id');
+        if($config_id != 0){
+            $meta = get_post_meta($config_id,'aso-configs-meta',true);
+            if(is_array($meta) && !empty($meta)){
+                $components = json_decode($request->get_body(),true);
+                $meta['data']["materials"][$material_id]['data']=$components;
                 $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                 if($update === true){
                     return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
