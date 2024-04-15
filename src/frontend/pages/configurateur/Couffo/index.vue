@@ -540,7 +540,7 @@
                             <div v-for="(shapee, id) in shapees">
                                 <div v-for="(shape, index) in allShapes" :key="shape.name" class="aso-w-full aso-flex">
                                     <div class="aso-w-full aso-flex" v-if="shapee.shapeId == index">
-                                        <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, currentSizeValues.width, currentSizeValues.height, currentSizeValues.top, currentSizeValues.left, shapee)">
+                                        <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, shapee)">
                                         <label :for="shape.name + index" :class="`${selectedShape == shape.type ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                             aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                         >
@@ -624,7 +624,7 @@
                         <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                             <div v-for="(colorr, id) in colorrs">
                                 <div v-for="(color, index) in allColors" >
-                                    <div v-if="colorr.manageColorId == index" @click="changeSignColor(color, colorr)" :class="`${activeSignColor == color.name ? `aso-border-4 aso-border-[#016464]` : `` } aso-w-16 aso-h-16 aso-bg-[${color.backgroundColor}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${color.textColor.codeHex}] aso-rounded-full aso-cursor-pointer`"> C </div>
+                                    <div v-if="colorr.manageColorId == index" @click="changeSignColor(color, colorr)" :class="`${activeFace === 'front-face' && activeSignColor === color.name || activeFace === 'back-face' && activeSignFace2Color === color.name ? `aso-border-2 aso-border-4 aso-border-solid` : `` } aso-w-16 aso-h-16 aso-bg-[${color.backgroundColor}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${color.textColor.codeHex}] aso-rounded-full aso-cursor-pointer`"> C </div>
                                 </div>
                             </div>
                             <!-- <label for="setColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${simpleColor}] aso-flex aso-full-center aso-rounded-full`">
@@ -658,10 +658,10 @@
                                 <div v-for="(border, index) in allBorders" :key="border.name" class="aso-w-full aso-flex">
                                     <div v-if="borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)">
                                         <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)">
-                                        <label :for="'border' + border.name + index" :class="`${activeBorder == border.value ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
+                                        <label :for="'border' + border.name + index" :class="`${activeFace === 'front-face' && activeFace1Border === border.value || activeFace === 'back-face' && activeFace2Border === border.value ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                             aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                         >
-                                            <div class="aso-w-16 aso-h-16 aso-bg-lime-400">
+                                            <div :class="`${border.icon != '' ? `` : `aso-bg-lime-400 aso-rounded-md`} aso-w-16 aso-h-16 aso-bg-lime-400`">
                                                 <img v-if="border.icon != ''" :src="border.icon" class="aso-w-full aso-h-full" />
                                             </div>
                                             <p>{{border.name}}</p>
@@ -1114,17 +1114,19 @@
             break;
 
             case "text":
-                if(currentMaterialTextImages.value.enableText){
-                    step.value = option;
-                    showOption.value = true;
-                }
+                // if(currentMaterialTextImages.value.enableText){
+                // }
+                // if((materialType == 'simple' && currentMaterialTextImages.enableText && sizees.length > 0 ) || materialType == 'advance'){
+                // }
+                step.value = option;
+                showOption.value = true;
             break;
 
             case "image":
-                if(currentMaterialTextImages.value.enableImage){
-                    step.value = option;
-                    showOption.value = true;
-                }
+                // if(currentMaterialTextImages.value.enableImage){
+                // }
+                step.value = option;
+                showOption.value = true;
             break;
 
             case "component":
@@ -1196,14 +1198,11 @@
         configImageSettings.value = props.config.data.settings.customizerSign.images
         configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
         
-        // console.log(configImageSettings.value)
+        console.log(props.manage)
+        console.log(configImageSettings.value)
 
-        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize)    
-
-
+        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize)
         
-        selectMaterial(props.config.data.materials[0])
-
 
         var optionss = document.querySelector('#aso-options-container')
         document.addEventListener('click', handleDocumentClick)
@@ -1332,7 +1331,10 @@
             // hLine.bringToFront()
             // wLine.bringToFront()
     
+            selectMaterial(props.config.data.materials[0])
+
     
+
             // selectedShape.value = shapes.value[0].name
             // handleGetShape(shapes.value[0].name)
             var stopShape = false
@@ -1342,6 +1344,12 @@
                         if(shapee.shapeId == index && !stopShape){
                             selectedShape.value = shape.value
                             handleGetShape(shape.value)
+                            // selectShape(shape.value, shapee)
+                            var shapePriceObject = {
+                                name: "shape",
+                                price: shapee.additionalPrice
+                            }
+                            getOptionPrice(shapePriceObject)
                             stopShape = true
                         }
                     })
@@ -1351,22 +1359,24 @@
                 handleGetShape('square')
             }
     
-            var stopSize = false
-            if(sizees.value.length >0){
-                sizees.value.forEach((sizee, id) => {
-                    allSizes.value.forEach((size, index) => {
-                        if(sizee.manageSizeId == index && !stopSize){
-                            changeSize(size, sizee)
-                            stopSize = true
-                        }
+            if(materialType.value === 'simple'){
+                var stopSize = false
+                if(sizees.value.length >0){
+                    sizees.value.forEach((sizee, id) => {
+                        allSizes.value.forEach((size, index) => {
+                            if(sizee.manageSizeId == index && !stopSize){
+                                changeSize(size, sizee, id)
+                                stopSize = true
+                            }
+                        })
                     })
-                })
-            }else{
-                var size ={
-                    width: 0,
-                    height: 0
+                }else{
+                    var size ={
+                        width: 0,
+                        height: 0
+                    }
+                    changeSize(size)
                 }
-                changeSize(size)
             }
 
             var stopFixing = false
@@ -1399,13 +1409,27 @@
                 })
             })
 
+            if(materialType.value === 'advance'){
+                currentMaterial.value.data.forEach(component => {
+                    if(!stop){
+                        showOptions('component', component)
+                        stop = true
+                    }
+                    selectSignModel(advancedComponent.value.options[0])
+                })
+                advancedComponent.value.options.forEach( option => {
+                    // if(!stopOption){
+                    //     stopOption = true
+                    // }
+                })
+            }
 
+    
             //custom des boutons pour les objets ajouter au sign
             fabric.Object.prototype.transparentCorners = false;
             fabric.Object.prototype.cornerColor = 'black';
             fabric.Object.prototype.borderColor = 'black';
             fabric.Object.prototype.cornerStyle = 'circle';
-            
             
             canvas.on('selection:created', showObjectValues);
             canvas.on('selection:cleared', closeObjectValues);
@@ -1439,7 +1463,7 @@
         var options = handleUndo()
         currentSizeName.value = options.sizeName
         selectedShape.value = options.shape
-        activeBorder.value = options.border
+        activeFace1Border.value = options.border
         activeFixingMethode.value = options.fixing
         activeSignColor.value = options.signColor
         console.log(options)
@@ -1449,7 +1473,7 @@
         var options = handleRedo()
         currentSizeName.value = options.sizeName
         selectedShape.value = options.shape
-        activeBorder.value = options.border
+        activeFace1Border.value = options.border
         activeFixingMethode.value = options.fixing
         activeSignColor.value = options.signColor
         console.log(options)
@@ -1536,16 +1560,25 @@
             angleActive.value = true
         }
         div.classList.remove("aso-invisible");
-        console.log( handleSetPrice())
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        getOptionPrice(priceObject)
     }
     function closeObjectValues(){
         var div = document.getElementById('activeObject-values');
         div.classList.add("aso-invisible");
-        console.log( handleSetPrice())
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        getOptionPrice(priceObject)
     }
 
     var customSizeActive = ref(false)
-
     var currentMaterial = ref({})
     var currentMaterialTextImages = ref({})
     var selectedMaterial = ref('')
@@ -1590,6 +1623,11 @@
                             if(shapee.shapeId == index && !stopShape){
                                 selectedShape.value = shape.value
                                 handleGetShape(shape.value)
+                                var shapePriceObject = {
+                                    name: "shape",
+                                    price: shapee.additionalPrice
+                                }
+                                getOptionPrice(shapePriceObject)
                                 stopShape = true
                             }
                         })
@@ -1604,7 +1642,7 @@
                     sizees.value.forEach((sizee, id) => {
                         allSizes.value.forEach((size, index) => {
                             if(sizee.manageSizeId == index && !stopSize){
-                                changeSize(size, sizee)
+                                changeSize(size, sizee, id)
                                 stopSize = true
                             }
                         })
@@ -1684,17 +1722,23 @@
             width: model.size.width,
             height: model.size.height
         }
+        var modelSizeSetting = {
+            basePrice: model.size.basePrice,
+            charPrice: model.size.charPrice,
+            maxTextChar: model.size.maxTextChar,
+            startPriceAtChar: model.size.startPriceAtChar,
+        }
         // selection de la size
-        changeSize(modelSize)
-        // console.log(modelSize)
+        changeSize(modelSize, modelSizeSetting)
+        // console.log(model, "model size")
 
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
 
-
         // selection de fixing
         var stopFixing = false
         fixinggs.value = model.fixingMethods
+        // console.log(model.fixingMethods,"fixing materail advance")
         fixinggs.value.forEach(fixingId => {
             allFixings.value.forEach((fixing, index) => {
                 if(fixingId == index && !stopFixing){
@@ -1703,8 +1747,16 @@
                 }
             });
         });
+
+        // selection de fixing
         colorrs.value = [{color: model.color, image: model.image}]
 
+        var modelPrice = model.additionalPrice
+        var modelPriceObject = {
+            name: "model",
+            price: modelPrice
+        }
+        getOptionPrice(modelPriceObject)
     }
 
 
@@ -1960,12 +2012,11 @@
     var currentSizeThickness = ref(false)
     function changeSize(sizeData, sizeSetting, sizeId) {
         if(sizeId){
-            // console.log(sizeId, 'size id')
             currentSizeId.value = sizeId
         }
         if(sizeSetting){
             textNumberForSize.value = sizeSetting.textNumber
-            currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.textNumber)
+            currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
         }else{
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, null)
         }
@@ -1982,51 +2033,195 @@
         }
 
         addedTexts.value = currentSizeValues.value.texts
-        
-        var sizeBasePrice = sizeSetting.basePrice
-        handleGetCharPrice(sizeSetting.charPrice)
+
+        if(sizeSetting){
+            var sizeBasePrice = sizeSetting.basePrice
+            handleGetCharPrice(sizeSetting.charPrice, sizeSetting.startPriceAtChar)
+            var sizeBasePriceObject = {
+                name: "sizeTextBase",
+                price: sizeBasePrice
+            }
+            getOptionPrice(sizeBasePriceObject)
+        }
     }
 
     var allShapes = ref({})
     var shapees = ref([])
     var selectedShape = ref('square')
-    function selectShape(shape, nwidth, nheight, nTop, nLeft){
-        handleSelectShape(shape, nwidth, nheight, nTop, nLeft)
+    function selectShape(shape, setting){
+
+        handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, currentSizeValues.value.top, currentSizeValues.value.left)
         selectedShape.value = shape
 
         var shapePrice = setting.additionalPrice
+        var shapePriceObject = {
+            name: "shape",
+            price: shapePrice
+        }
+        getOptionPrice(shapePriceObject)
     }
 
+    var firstBorderCheck = ref(true)
     var allBorders = ref({})
     var borderrs = ref([])
-    var activeBorder = ref('')
-    function selectBorder(border, color) {
-        activeBorder.value = handleSelectBorder(border, color)
+    var activeFace1Border = ref('')
+    var activeFace2Border = ref('')
+    var activeFace1BorderColor = ref('')
+    var activeFace2BorderColor = ref('')
+    function selectBorder(border, color, price) {
+        var border1Price = 0
+        var border2Price = 0
 
-        var borderPrice = price
+        if(firstBorderCheck.value){
+            var activeBorder = handleSelectBorder(border, color)
+            if(configDoublePart.value.active){
+                activeFace1Border.value = activeBorder.type;
+                activeFace1BorderColor.value = activeBorder.color;
+                border1Price = price
+
+                activeFace2Border.value = activeBorder.type;
+                activeFace2BorderColor.value = activeBorder.color;
+                border2Price = price
+
+                var borderPrice1Object = {
+                    name: "border1",
+                    price: border1Price
+                }
+                getOptionPrice(borderPrice1Object)
+
+                var borderPrice2Object = {
+                    name: "border2",
+                    price: border2Price
+                }
+                getOptionPrice(borderPrice2Object)
+            }else{
+                activeFace1Border.value = activeBorder.type;
+                activeFace1BorderColor.value = activeBorder.color;
+                border1Price = price
+
+                var borderPrice1Object = {
+                    name: "border1",
+                    price: border1Price
+                }
+                getOptionPrice(borderPrice1Object)
+            }
+        }else{
+            var activeBorder = handleSelectBorder(border, color)
+
+            if(activeFace.value === "front-face"){
+                activeFace1Border.value = activeBorder.type;
+                activeFace1BorderColor.value = activeBorder.color;
+                border1Price = price
+                
+                var borderPrice1Object = {
+                    name: "border1",
+                    price: border1Price
+                }
+                getOptionPrice(borderPrice1Object)
+            }
+            if(configDoublePart.value.active && activeFace.value === "back-face"){
+                activeFace2Border.value = activeBorder.type;
+                activeFace2BorderColor.value = activeBorder.color;
+                border2Price = price
+
+                var borderPrice2Object = {
+                    name: "border2",
+                    price: border2Price
+                }
+                getOptionPrice(borderPrice2Object)
+            }
+        }
+        
+        // handleSelectBorder(border, color)
+        firstBorderCheck.value = false
     }
 
+    var firstColorCheck = ref(true)
     var allColors = ref({})
     var colorrs = ref([])
     var activeSignColor = ref('')
+    var activeSignFace2Color = ref('')
     var signTextColor = ref(false)
     function changeSignColor(color, setting) {
+        // console.log(color.name, "changeSignColor")
+        var color1Price = 0
+        var color2Price = 0
         signTextColor.value = color.textColor.active
-        activeSignColor.value = color.name;
+
+        if(firstColorCheck.value){
+            if(configDoublePart.value.active){
+                activeSignColor.value = color.name;
+                color1Price = setting.additionalPrice
+    
+                activeSignFace2Color.value = color.name;
+                color2Price = setting.additionalPrice
+    
+                var colorPrice1Object = {
+                    name: "color1",
+                    price: color1Price
+                }
+                getOptionPrice(colorPrice1Object)
+    
+                var colorPrice2Object = {
+                    name: "color2",
+                    price: color2Price
+                }
+                getOptionPrice(colorPrice2Object)
+            }else{
+                activeSignColor.value = color.name;
+                color1Price = setting.additionalPrice
+                var colorPrice1Object = {
+                    name: "color1",
+                    price: color1Price
+                }
+                getOptionPrice(colorPrice1Object)
+            }
+        }else{
+            if(activeFace.value === "front-face"){
+                activeSignColor.value = color.name;
+                color1Price = setting.additionalPrice
+                
+                var colorPrice1Object = {
+                    name: "color1",
+                    price: color1Price
+                }
+                getOptionPrice(colorPrice1Object)
+            }
+
+            if(configDoublePart.value.active && activeFace.value === "back-face"){
+                activeSignFace2Color.value = color.name;
+                color2Price = setting.additionalPrice
+
+                var colorPrice2Object = {
+                    name: "color2",
+                    price: color2Price
+                }
+                getOptionPrice(colorPrice2Object)
+            }
+        }
+
         var defTextColor = configTextSettings.value.colors[0].codeHex
         handleChangeSignColor(color, defTextColor)
+
+        firstColorCheck.value = false
     }
 
     var allFixings = ref({})
     var fixinggs = ref([])
     var activeFixingMethode = ref('')
-    function selectFixingMethode(methode){
+    function selectFixingMethode(methode, setting){
         activeFixingMethode.value = methode
         handleSelectFixingMethode(methode)
-        
-        var fixingPrice = setting.additionalPrice
-    }
 
+        if(setting){
+            var fixingPrice = setting.additionalPrice
+            var fixingPriceObject = {
+                name: "fixing",
+                price: fixingPrice
+            }
+            getOptionPrice(fixingPriceObject)
+        }
+    }
 
 
 
@@ -2038,7 +2233,12 @@
             var index = addedTexts.value.length - 1
             getTextObject(addedTexts.value[index])
         }
-        // console.log(addedTexts.value)
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        getOptionPrice(priceObject)
     }
     function getTextObject(object) {
         if(activeFace.value == object.canvas.name){
@@ -2129,9 +2329,15 @@
 		var canvas = target.canvas;
     }
 
-    function changeTextValue(){
-        handleChangeTextValue()
-        console.log( handleSetPrice())
+    function changeTextValue(event){
+        handleChangeTextValue(event)
+
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        getOptionPrice(priceObject)
     }
     function changeTextWeight(){
         var weight = handleChangeTextWeight()
@@ -2180,9 +2386,71 @@
         handleFlipImage()
     }
 
+    var optionsPrices = ref([])
+    var textsPrices = ref(0)
+    var finalPrices = ref(0)
+    function getOptionPrice(priceObject){
+        // console.log(priceObject, "priceObject")
+        function addUniqueObject(arr, obj, key) {
+            const index = arr.findIndex(item => item[key] === obj[key]);
+            if(index !== -1){
+                arr[index] = obj;
+            }
+            else{
+                arr.push(obj);
+            }
+        }
+        addUniqueObject(optionsPrices.value, priceObject, 'name')
+
+        function removeObjectByName(arr, name) {
+            const index = arr.findIndex(item => item.name === name);
+            if(index !== -1){
+                arr.splice(index, 1);
+            }
+        }
+        function sumOptionsPrice(arr, key) {
+            return arr.reduce((sum, obj) => sum + obj[key], 0);
+        }
+
+        if(materialType.value === 'advance'){
+            removeObjectByName(optionsPrices.value, 'none')
+            removeObjectByName(optionsPrices.value, 'shape')
+            removeObjectByName(optionsPrices.value, 'color1')
+            removeObjectByName(optionsPrices.value, 'color2')
+            removeObjectByName(optionsPrices.value, 'border1')
+            removeObjectByName(optionsPrices.value, 'border2')
+
+            // console.log("options pricing advance", optionsPrices.value)
+//             console.log("PRIX TOTAL",sumOptionsPrice(optionsPrices.value, 'price'))
+
+        }else{
+            removeObjectByName(optionsPrices.value, 'none')
+            removeObjectByName(optionsPrices.value, 'model')
+            
+            // console.log("options pricing simple", optionsPrices.value)
+            // console.log("texts pricing simple", textsPrices.value)
+
+        }
+        finalPrices.value = sumOptionsPrice(optionsPrices.value, 'price') + textsPrices.value;
+        console.log("PRIX TOTAL options",sumOptionsPrice(optionsPrices.value, 'price'))
+        console.log("PRIX TOTAL texts",textsPrices.value)
+        // console.log("TOTAL PRICE", finalPrices.value)
+    }
+
     function finishConfig(){
         var heightValue = handleGetObjectByName('height-value', canvas)
         var widthValue = handleGetObjectByName('width-value', canvas)
+        var thicknessValue = 'none'
+        switch(currentSizeThickness.value) {
+            case false:
+                thicknessValue = 'none'
+            break;
+            case true:
+                thicknessValue = String(currentSize.value.thickness + " " + configSettings.value.customizerSign.customizerOptions.measurementUnit)
+            break;
+        }
+
+        var configData = {}
         var textObjects = []
         var imageObjects = []
         
@@ -2207,20 +2475,18 @@
                 addUniqueObject(imageObjects, objects[i], 'id')
             }
         }
-        // console.log(handleFinishConfiguration(textObjects, imageObjects))
-
         var addedObject = handleFinishConfiguration(textObjects, imageObjects)
 
-
-        var configData = {
+        configData = {
             sign: {
                 width: widthValue.text,
                 height: heightValue.text,
+                thickness: thicknessValue,
                 shape: selectedShape.value,
                 color: activeSignColor.value,
                 border: {
-                    type: activeBorder.value.type,
-                    color: activeBorder.value.color,
+                    type: activeFace1Border.value,
+                    color: activeFace1BorderColor.value,
                 },
                 fixingMethod: activeFixingMethode.value,
             },
@@ -2228,7 +2494,67 @@
             images: addedObject.images,
         }
 
+        if(configDoublePart.value.active){
+            var face2TextObjects = []
+            var face2ImageObjects = []
+            var objects = canvasBack.getObjects();
+
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].name === "aso-SignText") {
+                    function addUniqueObject(arr, obj, key) {
+                        const exists = arr.some(item => item[key] === obj[key]);
+                        if (!exists) {
+                            arr.push(obj);
+                        }
+                    }
+                    addUniqueObject(face2TextObjects, objects[i], 'id')
+                }
+                if (objects[i].name === "aso-SignImage") {
+                    function addUniqueObject(arr, obj, key) {
+                        const exists = arr.some(item => item[key] === obj[key]);
+                        if (!exists) {
+                            arr.push(obj);
+                        }
+                    }
+                    addUniqueObject(face2ImageObjects, objects[i], 'id')
+                }
+            }
+            var face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects)
+            configData = {
+                sign: {
+                    width: widthValue.text,
+                    height: heightValue.text,
+                    thickness: thicknessValue,
+                    shape: selectedShape.value,
+                    color: {
+                        face1: activeSignColor.value,
+                        face2: activeSignFace2Color.value,
+                    },
+                    border: {
+                        face1: {
+                            type: activeFace1Border.value,
+                            color: activeFace1BorderColor.value,
+                        },
+                        face2: {
+                            type: activeFace2Border.value,
+                            color: activeFace2BorderColor.value,
+                        },
+                    },
+                    fixingMethod: activeFixingMethode.value,
+                },
+                texts: {
+                    face1 :addedObject.texts,
+                    face2 :face2AddedObject.texts
+                },
+                images: {
+                    face1 :addedObject.images,
+                    face2 :face2AddedObject.images
+                },
+            }
+
+        }
         console.log(configData, "Added")
+
     }
 
 
