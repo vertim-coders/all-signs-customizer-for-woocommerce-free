@@ -2,12 +2,12 @@
     <div>
         <div class="aso-space-y-4" v-if="!isNewFixingMethod">
             <div>
-                <div class="aso-bg-[#F8F9FB] aso-text-[14px] aso-font-bold aso-px-4 aso-py-4 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
+                <div class="aso-sticky aso-z-[9999] aso-top-[105px] aso-bg-[#F8F9FB] aso-text-[14px] aso-font-bold aso-px-4 aso-py-4 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     List of Fixing methods
                 </div>   
                 <div class="aso-relative" id="monTableau">
                 <table class="aso-text-center aso-w-full aso-border aso-border-collapse aso-border-0">
-                    <thead class="aso-bg-[#f0f0f1]">
+                    <thead class="aso-bg-[#f0f0f1] aso-sticky aso-z-[9999] aso-w-full aso-top-[150px]">
                         <tr class="">
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Title
@@ -17,9 +17,6 @@
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Icons
-                            </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
-                                PopupImg
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Action
@@ -49,9 +46,6 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img :src="fixingMethod.icon" class="aso-w-8 aso-h-8" v-if="fixingMethod.icon != ''"/>
                             </td>
-                            <td class="aso-px-6 aso-justify-center aso-translate-y-1">
-                                <img :src="fixingMethod.image" class="aso-w-8 aso-h-8" v-if="fixingMethod.image != ''"/>
-                            </td> 
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2 aso-translate-y-2">
                                 
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectFixingMethod(key,fixingMethod)">
@@ -59,10 +53,6 @@
                                 </button>
                             </td>
                         </tr>
-                        
-                        
-                        
-                        
                     </tbody>
                 </table>
             </div>
@@ -106,15 +96,7 @@
                         <label class="aso-text-[12px] aso-text-[#444444]">PopupImg</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
-                                <button @click="selectFixingMethodImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload image</button>
-                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
-                                    <img v-if="fixingMethod.image != ''" :src="fixingMethod.image" alt="" class="aso-absolute aso-w-full aso-h-full">
-                                    <button v-if="fixingMethod.image != ''" @click="()=>{fixingMethod.image = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                        </svg>
-                                    </button>
-                                </div>
+                                <button @click="closeTnymceModal" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">Pop For Example</button>
                             </div>
                         </div>
                     </div>
@@ -144,6 +126,22 @@
             </div>
         </div>
     </div>
+    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-full">
+        <div class="aso-relative aso-top-[50px] aso-p-4 aso-w-full aso-max-w-[60%] aso-max-h-fit">
+            <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700 aso-px-4">
+                <div class="aso-px-[10px] aso-pt-[5px]">
+                    <textarea name="" id="aso-admin-tinymce" cols="30" rows="10"></textarea>
+                </div>
+                <div class="aso-p-4 md:p-5 aso-text-center">
+                    <button @click="savePopImg" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#0164646] aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        Save
+                    </button>
+                    <button @click.stop="closeTnymceModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -156,12 +154,35 @@ const isLoading = ref(false);
 const isEdit = ref(false);
 const fixingMethodId = ref(null);
 const fixingMethods = ref([]);
-const fixingMethod = ref({});
+const fixingMethod = ref({
+    name : "",
+    description:"",
+    icon : '',
+    popImg: "",
+    type : ''
+});
+const openTnyMce = ref(false);
 onMounted(async ()=>{
     isFetching.value = true;
     await fetchFixingMethods();
     isFetching.value = false;
+    tinymce.init({
+        selector: '#aso-admin-tinymce',
+        plugins: [
+            'link image',
+            'media paste'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code',
+        menubar: 'file edit insert format table',
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        height: 400,
+        width: '100%',
+        branding: false
+    });
 });
+
 
 const fetchFixingMethods = async () => {
     const result = await api.getGlobalFixingMethods();
@@ -174,8 +195,9 @@ const fetchFixingMethods = async () => {
 const isNewFixingMethod = ref(false);
 
 const selectFixingMethod = (id,fx) =>{
-    fixingMethodId.value = id
-    fixingMethod.value = fx
+    fixingMethodId.value = id;
+    tinyMCE.activeEditor.setContent(fx.popImg);
+    fixingMethod.value = fx;
     addNewFixingMethod();
 }
 const addNewFixingMethod = () => {
@@ -234,7 +256,7 @@ const selectFixingMethodIcon = async(e) => {
         )
         .open();
 }
-const selectFixingMethodImage = async(e) => { 
+/* const selectFixingMethodImage = async(e) => { 
     e.preventDefault();
     var uploader = wp.media(
         {
@@ -253,13 +275,21 @@ const selectFixingMethodImage = async(e) => {
                     function (attachment) {
                         attachment = attachment.toJSON();
                         if (attachment.type == "image") {
-                            fixingMethod.value.image = (attachment.url);
+                            fixingMethod.value.popImg = (attachment.url);
                         }
                     }
                 );
             }
         )
         .open();
+} */
+const closeTnymceModal = ()=>{
+    openTnyMce.value = !openTnyMce.value;
+}
+
+const savePopImg = ()=>{
+    fixingMethod.value.popImg = tinyMCE.activeEditor.getContent();
+    openTnyMce.value = false;
 }
 const back = () => {
     isNewFixingMethod.value = false;

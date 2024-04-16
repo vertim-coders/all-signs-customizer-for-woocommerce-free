@@ -28,11 +28,10 @@
             <!-- Table which display all materials -->
             <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full">
-                    <div class="aso-grid aso-grid-cols-6 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
+                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
                         <div class="aso-flex aso-items-center aso-justify-center">Component Name</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Description</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Behavior (type)</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
                     </div>
@@ -44,7 +43,7 @@
                             <p class="aso-text-2xl aso-font-bold">{{notFoundMessage}}</p>
                         </div>
                     </div>
-                    <div v-for="(material,key) in materials" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-6 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b aso-border-solid aso-border-gray-200 aso-gap-x-16 dark:aso-border-gray-700">
+                    <div v-for="(material,key) in materials" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b aso-border-solid aso-border-gray-200 aso-gap-x-16 dark:aso-border-gray-700">
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4">
                             <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                 <span class="aso-text-[12px]">{{getInitials(material.name)}}</span> 
@@ -54,9 +53,6 @@
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis">{{material.description}}</div>
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="material.icon" alt="" v-if="material.icon!=''">
-                        </div> 
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
-                            <img class="aso-w-10 aso-h-10 aso-rounded" :src="material.popImg" alt="" v-if="material.popImg!=''">
                         </div>
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
                             <span :class="`aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-text-center aso-px-2 ${material.type == 'simple' ? 'aso-bg-[#EEF5FF] aso-text-black' :'aso-bg-[#9ACD321F] aso-text-[#466801]'} aso-border-none`">
@@ -126,15 +122,15 @@
                         <label for="" class="aso-font-normal">Upload PopupImg</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
-                                <button @click="selectMaterialPopImg" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
-                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                <button @click="closeTnymceModal" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">Pop For Image</button>
+                                <!-- <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
                                     <img v-if="newMaterial.popImg != ''" :src="newMaterial.popImg" alt="" class="aso-absolute aso-w-full aso-h-full">
                                     <button v-if="newMaterial.popImg != ''" @click="()=>{newMaterial.popImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -197,81 +193,233 @@
             </div>
         </div>
     </div>
+    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-full">
+        <div class="aso-relative aso-top-[50px] aso-p-4 aso-w-full aso-max-w-[60%] aso-max-h-fit">
+            <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700 aso-px-4">
+                <div class="aso-px-[10px] aso-pt-[5px]">
+                    <textarea name="" id="aso-admin-tinymce" cols="30" rows="10"></textarea>
+                </div>
+                <div class="aso-p-4 md:p-5 aso-text-center">
+                    <button @click="savePopImg" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#0164646] aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        Save
+                    </button>
+                    <button @click.stop="closeTnymceModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
   </template>
   
   <script setup>
-    import api from '@/admin/Api/api';
-    import {onMounted, ref} from 'vue';
-    import { useRoute } from 'vue-router';
-    import toastMessage from '@/admin/utils/functions'
-    import router from '@/admin/router';
+import api from '@/admin/Api/api';
+import {onMounted, ref} from 'vue';
+import { useRoute } from 'vue-router';
+import toastMessage from '@/admin/utils/functions'
+import router from '@/admin/router';
 
-    const route = useRoute()
-    const configID = ref(route.params.configId)
-    const config =ref("");
-    const materials = ref([]);
-    const newMaterial = ref({
+const route = useRoute()
+const configID = ref(route.params.configId)
+const config =ref("");
+const materials = ref([]);
+const newMaterial = ref({
+    name:"",
+    description:"",
+    icon:"",
+    popImg:"",
+    type:"simple",
+});
+const materialId = ref(0);
+const isLoading = ref(false);
+const isFetching = ref(false);
+const isNewComponent = ref(false);
+const isEdit = ref(false);
+const openModal = ref(false);
+const openTnyMce = ref(false)
+const deleteMaterial = ref({
+    id:null,
+    name:""
+})
+const notFoundMessage = ref('');
+
+const fetchMaterials = async () => {
+const result = await api.getMaterials(configID.value);
+if(!result.message){
+    materials.value = result;
+}else{
+    materials.value = [];
+    notFoundMessage.value = result.message;
+}
+isFetching.value = false;
+}
+const getInitials = (str) => {
+    const words = str.split(' ');
+    const initials = words.map(word => word.trim().charAt(0).toUpperCase());
+    const result = initials.join('');
+    return result;
+}
+
+onMounted(async() => {
+    isFetching.value = true;
+    const res = await api.getConfig(configID.value);
+    config.value = res.name;
+    await fetchMaterials();
+    tinymce.init({
+        selector: '#aso-admin-tinymce',
+        plugins: [
+            'link image',
+            'media paste'
+        ],
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code',
+        menubar: 'file edit insert format table',
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        height: 400,
+        width: '100%',
+        branding: false
+    });
+
+});
+
+/**Function for adding */
+
+const addNewMaterial = async () => {
+isLoading.value = true;
+const result = await api.addMaterial(configID.value,newMaterial.value);
+if(result.success){
+    await fetchMaterials();
+    isLoading.value = false;
+    isNewComponent.value = false;
+    newMaterial.value = {
         name:"",
         description:"",
         icon:"",
         popImg:"",
         type:"simple",
-    });
-    const materialId = ref(0);
-    const isLoading = ref(false);
-    const isFetching = ref(false);
-    const configMaterial = ref(true);
-    const isNewComponent = ref(false);
-    const isEdit = ref(false);
-    const openModal = ref(false);
-    const deleteMaterial = ref({
-        id:null,
-        name:""
-    })
-    const notFoundMessage = ref('');
-
-const fetchMaterials = async () => {
-    const result = await api.getMaterials(configID.value);
-    if(!result.message){
-        materials.value = result;
-    }else{
-        materials.value = [];
-        notFoundMessage.value = result.message;
     }
-    isFetching.value = false;
-  }
-    const getInitials = (str) => {
-        const words = str.split(' ');
-        const initials = words.map(word => word.trim().charAt(0).toUpperCase());
-        const result = initials.join('');
-        return result;
+    toastMessage(result.message)
+}else{
+    isLoading.value = false;
+    isNewComponent.value = false;
+    newMaterial.value = {
+        name:"",
+        description:"",
+        icon:"",
+        popImg:"",
+        type:"simple",
     }
+    toastMessage(result.message,"error");
+}
+}
 
-    onMounted(async() => {
-        isFetching.value = true;
-        const res = await api.getConfig(configID.value);
-        config.value = res.name;
-        await fetchMaterials();
+/** Fonction for image selection */
+const selectMaterialIcon = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Material Icon",
+            button: {
+                text: "Select Icon"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            newMaterial.value.icon = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+/* const selectMaterialPopImg = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Material Pop Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            newMaterial.value.popImg = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+} */
 
-    });
+/** Function for Editing */
 
-  /**Function for adding */
+const selectMaterialEdit = (material, id) => {
+    materialId.value = id;
+    newMaterial.value = material;
+    tinyMCE.activeEditor.setContent(material.popImg);
+    isEdit.value = true;
+    isNewComponent.value = true;
+}
 
-  const addNewMaterial = async () => {
+const closeTnymceModal = ()=>{
+    openTnyMce.value = !openTnyMce.value;
+}
+const savePopImg = ()=>{
+    newMaterial.value.popImg = tinyMCE.activeEditor.getContent();
+    openTnyMce.value = false;
+}
+
+
+const updateMaterial = async () => {
     isLoading.value = true;
-    const result = await api.addMaterial(configID.value,newMaterial.value);
+    const result = await api.updateMarerial(configID.value,materialId.value,newMaterial.value);
     if(result.success){
         await fetchMaterials();
-        isLoading.value = false;
-        isNewComponent.value = false;
-        newMaterial.value = {
-            name:"",
-            description:"",
-            icon:"",
-            popImg:"",
-            type:"simple",
+        if(result.sucess = true){
+            await fetchMaterials();
+            isLoading.value = false;
+            isNewComponent.value = false;
+            newMaterial.value = {
+                name:"",
+                description:"",
+                icon:"",
+                popImg:"",
+                type:"simple",
+            }
+            
+            isEdit.value = false;
+            toastMessage(result.message);
+        }else{
+            isLoading.value = false;
+            isNewComponent.value = false;
+            newMaterial.value = {
+                name:"",
+                description:"",
+                icon:"",
+                popImg:"",
+                type:"simple",
+            }
+            isEdit.value = false;
+            toastMessage(result.message,"warning");
         }
-        toastMessage(result.message)
     }else{
         isLoading.value = false;
         isNewComponent.value = false;
@@ -284,170 +432,58 @@ const fetchMaterials = async () => {
         }
         toastMessage(result.message,"error");
     }
-  }
+    
+}
 
-  /** Fonction for image selection */
-    const selectMaterialIcon = async(e) => { 
-        e.preventDefault();
-        var uploader = wp.media(
-            {
-                title: "Select Material Icon",
-                button: {
-                    text: "Select Icon"
-                },
-                multiple: false
-            }
-        )
-            .on(
-                'select',
-                function () {
-                    var selection = uploader.state().get('selection');
-                    selection.map(
-                        function (attachment) {
-                            attachment = attachment.toJSON();
-                            if (attachment.type == "image") {
-                                newMaterial.value.icon = (attachment.url);
-                            }
-                        }
-                    );
-                }
-            )
-            .open();
-    }
-    const selectMaterialPopImg = async(e) => { 
-        e.preventDefault();
-        var uploader = wp.media(
-            {
-                title: "Select Material Pop Image",
-                button: {
-                    text: "Select Image"
-                },
-                multiple: false
-            }
-        )
-            .on(
-                'select',
-                function () {
-                    var selection = uploader.state().get('selection');
-                    selection.map(
-                        function (attachment) {
-                            attachment = attachment.toJSON();
-                            if (attachment.type == "image") {
-                                newMaterial.value.popImg = (attachment.url);
-                            }
-                        }
-                    );
-                }
-            )
-            .open();
-    }
+/** Function for deleting */
+const selectMaterialDelete = (id, name) => {
+    deleteMaterial.value = {id: id, name: name};
+    closeModal();
+}
 
-    /** Function for Editing */
-
-    const selectMaterialEdit = (material, id) => {
-        materialId.value = id;
-        newMaterial.value = material;
-        isEdit.value = true;
-        isNewComponent.value = true;
+const delMaterial = async () => {
+    isLoading.value = true;
+    const result = await api.deleteMaterial(configID.value,deleteMaterial.value.id);
+    if(result.success){
+        await fetchMaterials();
+        isLoading.value =false;
+        toastMessage(result.message)
+    }else{
+        isLoading.value =false;
+        toastMessage(result.message,"error");
     }
     
+    closeModal();
+}
 
-    const updateMaterial = async () => {
-        isLoading.value = true;
-        const result = await api.updateMarerial(configID.value,materialId.value,newMaterial.value);
-        if(result.success){
-            await fetchMaterials();
-            if(result.sucess = true){
-                await fetchMaterials();
-                isLoading.value = false;
-                isNewComponent.value = false;
-                newMaterial.value = {
-                    name:"",
-                    description:"",
-                    icon:"",
-                    popImg:"",
-                    type:"simple",
-                }
-                
-                isEdit.value = false;
-                toastMessage(result.message);
-            }else{
-                isLoading.value = false;
-                isNewComponent.value = false;
-                newMaterial.value = {
-                    name:"",
-                    description:"",
-                    icon:"",
-                    popImg:"",
-                    type:"simple",
-                }
-                isEdit.value = false;
-                toastMessage(result.message,"warning");
-            }
-        }else{
-            isLoading.value = false;
-            isNewComponent.value = false;
-            newMaterial.value = {
-                name:"",
-                description:"",
-                icon:"",
-                popImg:"",
-                type:"simple",
-            }
-            toastMessage(result.message,"error");
-        }
-       
+/** Modal Function */
+const closeModal = ()=>{
+    if(!isLoading.value){        
+        openModal.value = !openModal.value;
     }
+}
 
-    /** Function for deleting */
-    const selectMaterialDelete = (id, name) => {
-        deleteMaterial.value = {id: id, name: name};
-        closeModal();
+const addComponent = () => {
+    isNewComponent.value = true;
+}
+const back = () => {
+    isNewComponent.value = false;
+    isEdit.value = false;
+    newMaterial.value = {
+        name:"",
+        description:"",
+        icon:"",
+        popImg:"",
+        type:"simple",
     }
+}
 
-    const delMaterial = async () => {
-        isLoading.value = true;
-        const result = await api.deleteMaterial(configID.value,deleteMaterial.value.id);
-        if(result.success){
-            await fetchMaterials();
-            isLoading.value =false;
-            toastMessage(result.message)
-        }else{
-            isLoading.value =false;
-            toastMessage(result.message,"error");
-        }
-        
-        closeModal();
+const redirectToMaterail = (materialId,type) => {
+    if(type == 'simple'){
+        router.push('/configs/'+configID.value+'/materials/'+materialId+'/simple/sizes');
+    }else{
+        router.push('/configs/'+configID.value+'/materials/'+materialId+'/advance');
     }
-
-    /** Modal Function */
-    const closeModal = ()=>{
-        if(!isLoading.value){        
-            openModal.value = !openModal.value;
-        }
-    }
-  
-    const addComponent = () => {
-        isNewComponent.value = true;
-    }
-    const back = () => {
-        isNewComponent.value = false;
-        isEdit.value = false;
-        newMaterial.value = {
-            name:"",
-            description:"",
-            icon:"",
-            popImg:"",
-            type:"simple",
-        }
-    }
-
-    const redirectToMaterail = (materialId,type) => {
-        if(type == 'simple'){
-            router.push('/configs/'+configID.value+'/materials/'+materialId+'/simple/sizes');
-        }else{
-            router.push('/configs/'+configID.value+'/materials/'+materialId+'/advance');
-        }
-    }
+}
   </script>
   
