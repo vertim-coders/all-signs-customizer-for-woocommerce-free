@@ -52,7 +52,7 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             array(
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'create_component' ),
+                    'callback'            => array( $this, 'update_components' ),
                     'permission_callback' => array( $this, 'get_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -263,14 +263,16 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $components = json_decode($request->get_body(),true);
-                $meta['data']["materials"][$material_id]['data']=$components;
-                var_dump($meta['data']["materials"][$material_id]['data']);
-                die();
-                //$update = update_post_meta($config_id,'aso-configs-meta',$meta);
-                if($update === true){
-                    return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
+                if($meta['data']["materials"][$material_id]['data'] != $components) {
+                    $meta['data']["materials"][$material_id]['data']=$components;
+                    $update = update_post_meta($config_id,'aso-configs-meta',$meta);
+                    if($update === true){
+                        return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
+                    }else{
+                        return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
+                    }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component has not been added","ASO")]);
+                    return rest_ensure_response(["success"=>"same", "message"=>__("No change observed in components","ASO")]);
                 }
                 
             }else{

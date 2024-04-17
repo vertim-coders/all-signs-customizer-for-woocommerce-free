@@ -164,17 +164,17 @@ final class ASO_All_Signs_Options {
         $borders = [
             [
                 'name' => 'None',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/borders/ic_border_none.svg',
                 'value' => 'none'
             ],
             [
                 'name' => 'Normal',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/borders/ic_border_thin.svg',
                 'value' => 'normal'
             ],
             [
                 'name' => 'Old World',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/borders/ic_border_old_world.svg',
                 'value' => 'old-world'
             ]
         ];
@@ -187,61 +187,62 @@ final class ASO_All_Signs_Options {
         $shapes = [
             [
                 'name' => 'Oval',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_oval.svg',
                 'value' => 'oval'
             ],
             [
                 'name' => 'Square',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_square.svg',
                 'value' => 'square'
             ],
             [
                 'name' => 'Triangle',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_triangle.svg',
                 'value' => 'triangle'
             ],
             [
                 'name' => 'Rounded Square',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_rounded.svg',
                 'value' => 'rounded-square'
             ],
             [
                 'name' => 'Rotated Square',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_rotated_square.svg',
                 'value' => 'rotated-square'
             ],
             [
                 'name' => 'Turn Left',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_turn_left.svg',
                 'value' => 'turn-left'
             ],
             [
                 'name' => 'Turn Right',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_turn_right.svg',
                 'value' => 'turn-right'
             ],
             [
                 'name' => 'Arrow Left',
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_arrow_left.svg',
                 'value' => 'arrow-left'
             ],
             [
                 'name' => 'Arrow Right',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_arrow_right.svg',
                 'value' => 'arrow-right'
             ],
             [
                 'name' => 'Stop',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_stop.svg',
                 'value' => 'stop'
             ],
             [
                 'name' => 'Rounded Top',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_rounded_top.svg',
                 'value' => 'rounded-top'
             ],
             [
                 'name' => 'Rounded Sides',
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/shapes/ic_shape_rounded_sides.svg',
                 'value' => 'rounded-sides'
             ]
         ];
@@ -255,91 +256,91 @@ final class ASO_All_Signs_Options {
             [
                 'name' => 'None',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_none.svg',
                 "popImg"=>"",
                 'type' => 'none'
             ],
             [
                 'name' => 'Screw',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_screw.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_screw.svg',
                 "popImg"=>"",
                 'type' => 'screw'
             ],
             [
                 'name' => 'Screw Cap',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_screw-cap.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_screw_cap.svg',
                 "popImg"=>"",
                 'type' => 'screw-cap'
             ],
             [
                 'name' => 'Stand Off',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_standoff.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_standoff.svg',
                 "popImg"=>"",
                 'type' => 'standoff'
             ],
             [
                 'name' => 'Hanging',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_hanging.svg',
                 "popImg"=>"",
                 'type' => 'hanging'
             ],
             [
                 'name' => 'Flag',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_flag.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_flag.svg',
                 "popImg"=>"",
                 'type' => 'flag'
             ],
             [
                 'name' => 'Suction Cup',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_suction-cup.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_suction_cup.svg',
                 "popImg"=>"",
                 'type' => 'suction-cup'
             ],
             [
                 'name' => 'Table Stand',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_table-clamp.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_table_clamp.svg',
                 "popImg"=>"",
                 'type' => 'table-stand'
             ],
             [
                 'name' => 'Ceiling',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_ceiling.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_ceiling.svg',
                 "popImg"=>"",
                 'type' => 'ceiling'
             ],
             [
                 'name' => 'Pole Attachment',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_pole_attachment.svg',
                 "popImg"=>"",
                 'type' => 'pole-attachment'
             ],
             [
                 'name' => 'Cable Labeling',
                 "description"=>"",
-                "icon" => "",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_cable_label.svg',
                 "popImg"=>"",
                 'type' => 'cable-labeling'
             ],
             [
                 'name' => 'Table Clamp',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_table-clamp.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_table_clamp.svg',
                 "popImg"=>"",
                 'type' => 'table-clamp'
             ],
             [
                 'name' => 'Base Support',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/im_base-support.png',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_base_support.svg',
                 "popImg"=>"",
                 'type' => 'base-support'
             ],
