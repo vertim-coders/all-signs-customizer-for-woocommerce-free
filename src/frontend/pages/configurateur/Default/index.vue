@@ -72,13 +72,13 @@
                 <div v-show="configDoublePart.active" class="aso-w-full aso-h-[6%] aso-flex aso-items-center aso-bg-white aso-space-x-3 aso-px-4 aso-border-y">
                     <span class="aso-text-sm aso-font-medium">{{configDoublePart.label}}</span>
 
-                    <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1 aso-px-2 aso-text-white aso-font-medium aso-h-[80%] aso-w-[6%] aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
-                        <span :class="`${activeFace == 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
+                    <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1.5 aso-font-medium aso-h-[80%] aso-w-fit aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
+                        <span :class="`${activeFace === 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
                         
-                        <span :class="`${activeFace == 'front-face' ? 'aso-text-white' : ''} aso-flex aso-full-center aso-pl-1`">
+                        <span :class="`${activeFace === 'front-face' ? 'aso-text-white' : 'aso-text-black'} aso-flex aso-full-center aso-pr-1 aso-z-10`">
                             {{configDoublePart.part1}}
                         </span>
-                        <span :class="`${activeFace == 'back-face' ? '' : 'aso-text-white'} aso-flex aso-full-center aso-pr-1`">
+                        <span :class="`${activeFace !== 'front-face' ? 'aso-text-white' : 'aso-text-black'} aso-flex aso-full-center aso-pl-1 aso-z-10`">
                             {{configDoublePart.part2}}
                         </span>
                     </span>
@@ -184,8 +184,8 @@
                             </div>
                         </div>
                         
-                        <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="aso-w-fit" >
-                            <div @click="showOptions('component', component)" class="aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-transparent lg:aso-bg-white hover:aso-bg-[#016565] hover:aso-text-white aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation">
+                        <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="aso-w-fit aso-h-[90%]" >
+                            <div @click="showOptions('component', component)" class="aso-w-fit aso-h-full aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-transparent lg:aso-bg-white hover:aso-bg-[#016565] hover:aso-text-white aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation">
                                 <svg class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <g id="fluent-mdl2:product-release">
                                     <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
@@ -1291,16 +1291,27 @@
             if(shapees.value.length >0){
                 shapees.value.forEach((shapee, id) => {
                     allShapes.value.forEach((shape, index) => {
-                        if(shapee.shapeId == index && !stopShape){
-                            selectedShape.value = shape.value
-                            handleGetShape(shape.value)
-                            // selectShape(shape.value, shapee)
-                            var shapePriceObject = {
-                                name: "shape",
-                                price: shapee.additionalPrice
+                        if(shapee.shapeId == index){
+                            if(shapee.isDefault){
+                                selectedShape.value = shape.value
+                                handleGetShape(shape.value)
+                                var shapePriceObject = {
+                                    name: "shape",
+                                    price: shapee.additionalPrice
+                                }
+                                getOptionPrice(shapePriceObject)
                             }
-                            getOptionPrice(shapePriceObject)
-                            stopShape = true
+                            if(!shapee.isDefault  && !stopShape){
+                                selectedShape.value = shape.value
+                                handleGetShape(shape.value)
+                                // selectShape(shape.value, shapee)
+                                var shapePriceObject = {
+                                    name: "shape",
+                                    price: shapee.additionalPrice
+                                }
+                                getOptionPrice(shapePriceObject)
+                                stopShape = true
+                            }
                         }
                     })
                 })
@@ -1314,9 +1325,14 @@
                 if(sizees.value.length >0){
                     sizees.value.forEach((sizee, id) => {
                         allSizes.value.forEach((size, index) => {
-                            if(sizee.manageSizeId == index && !stopSize){
-                                changeSize(size, sizee, id)
-                                stopSize = true
+                            if(sizee.manageSizeId == index){
+                                if(sizee.isDefault){
+                                    changeSize(size, sizee, id)
+                                }
+                                if(!sizee.isDefault && !stopSize){
+                                    changeSize(size, sizee, id)
+                                    stopSize = true
+                                }
                             }
                         })
                     })
@@ -1332,9 +1348,14 @@
             var stopFixing = false
             fixinggs.value.forEach((fixingg, id) => {
                 allFixings.value.forEach((fixing, index) => {
-                    if(fixingg.fixingMethodId == index && !stopFixing){
-                        selectFixingMethode(fixing.type, fixingg)
-                        stopFixing = true
+                    if(fixingg.fixingMethodId == index){
+                        if(fixingg.isDefault){
+                            selectFixingMethode(fixing.type, fixingg)
+                        }
+                        if(!fixingg.isDefault && !stopFixing){
+                            selectFixingMethode(fixing.type, fixingg)
+                            stopFixing = true
+                        }
                     }
                 })
             })
@@ -1342,9 +1363,14 @@
             var stopBorder = false
             borderrs.value.forEach((borderr, id) => {
                 allBorders.value.forEach((border, index) => {
-                    if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
-                        selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
-                        stopBorder = true
+                    if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)){
+                        if(borderr.isDefault){
+                            selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
+                        }
+                        if(!borderr.isDefault && !stopBorder){
+                            selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
+                            stopBorder = true
+                        }
                     }
                 })
             })
@@ -1352,25 +1378,40 @@
             var stopColor = false
             colorrs.value.forEach((colorr, id) => {
                 allColors.value.forEach((color, index) => {
-                    if(colorr.manageColorId == index && !stopColor){
-                        changeSignColor(color, colorr)
-                        stopColor = true
+                    if(colorr.manageColorId == index){
+                        if(colorr.isDefault){
+                            changeSignColor(color, colorr)
+                        }
+                        if(!colorr.isDefault && !stopColor){
+                            changeSignColor(color, colorr)
+                            stopColor = true
+                        }
                     }
                 })
             })
 
+            var stopDefOption = false
+            var stopOption = false
             if(materialType.value === 'advance'){
                 currentMaterial.value.data.forEach(component => {
                     if(!stop){
                         showOptions('component', component)
                         stop = true
                     }
-                    selectSignModel(advancedComponent.value.options[0])
                 })
                 advancedComponent.value.options.forEach( option => {
-                    // if(!stopOption){
-                    //     stopOption = true
-                    // }
+                    if(!stopDefOption){
+                        if(option.isDefault){
+                            console.log("option")
+                            selectSignModel(option)
+                            stopDefOption = true
+                        }
+                        if(!option.isDefault && stopDefOption && !stopOption){
+                            selectSignModel(option)
+                            stopDefOption = true
+                            stopOption = true
+                        }
+                    }
                 })
             }
 
@@ -1673,6 +1714,7 @@
         }
 
         var stop = false
+        var stopDefOption = false
         var stopOption = false
         if(material.type == 'advance'){
             currentMaterial.value.data.forEach(component => {
@@ -1682,9 +1724,17 @@
                 }
             })
             advancedComponent.value.options.forEach( option => {
-                if(!stopOption){
-                    selectSignModel(option)
-                    stopOption = true
+                if(!stopDefOption){
+                    if(option.isDefault){
+                        console.log("option")
+                        selectSignModel(option)
+                        stopDefOption = true
+                    }
+                    if(!option.isDefault && stopDefOption && !stopOption){
+                        selectSignModel(option)
+                        stopDefOption = true
+                        stopOption = true
+                    }
                 }
             })
         }
@@ -1695,13 +1745,30 @@
     var activeSignModelName = ref('')
     function selectSignModel(model){
         activeSignModelName.value = model.name
+
+        // selection de fixing
+        var stopFixing = false
+        fixinggs.value = model.fixingMethods
+        // console.log(model.fixingMethods,"fixing materail advance")
+        fixinggs.value.forEach(fixingId => {
+            allFixings.value.forEach((fixing, index) => {
+                if(fixingId == index && !stopFixing){
+                    // selectFixingMethode(fixing.type)
+                    activeFixingMethode.value = fixing.type
+                    stopFixing = true
+                }
+            });
+        });
+
         // selection du shape 
         allShapes.value.forEach((shape, index) => {
             if(model.shapeId == index ){
                 selectedShape.value = shape.value
-                handleGetShape(shape.value)
+                handleGetShape(shape.value,  activeFixingMethode.value)
             }
         })
+
+        // selection de la size
         var modelSize = {
             name: model.name,
             width: model.size.width,
@@ -1713,27 +1780,12 @@
             maxTextChar: model.size.maxTextChar,
             startPriceAtChar: model.size.startPriceAtChar,
         }
-        // selection de la size
         changeSize(modelSize, modelSizeSetting)
-        // console.log(model, "model size")
 
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
 
-        // selection de fixing
-        var stopFixing = false
-        fixinggs.value = model.fixingMethods
-        // console.log(model.fixingMethods,"fixing materail advance")
-        fixinggs.value.forEach(fixingId => {
-            allFixings.value.forEach((fixing, index) => {
-                if(fixingId == index && !stopFixing){
-                    selectFixingMethode(fixing.type)
-                    stopFixing = true
-                }
-            });
-        });
-
-        // selection de fixing
+        // selection de la couleur
         colorrs.value = [{color: model.color, image: model.image}]
 
         var modelPrice = model.additionalPrice

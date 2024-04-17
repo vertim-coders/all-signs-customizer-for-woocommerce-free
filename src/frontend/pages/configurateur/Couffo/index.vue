@@ -103,13 +103,13 @@
                 <div v-show="configDoublePart.active" class="aso-w-full aso-h-[6%] aso-flex aso-items-center aso-bg-white aso-space-x-3 aso-px-4 aso-border-y">
                     <span class="aso-text-sm aso-font-medium">{{configDoublePart.label}}</span>
 
-                    <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1 aso-px-2 aso-text-white aso-font-medium aso-h-[80%] aso-w-[6%] aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
-                        <span :class="`${activeFace == 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
+                    <span @click="flipRect" :class="`aso-mx-2 aso-rounded-full aso-p-1.5 aso-font-medium aso-h-[80%] aso-w-fit aso-bg-zinc-200 aso-relative aso-flex aso-justify-between aso-items-center aso-border`">
+                        <span :class="`${activeFace === 'front-face' ? 'aso-left-[3%]' : 'aso-translate-x-[100%] aso-right-[53%]'} aso-bg-[#016464] aso-translate-x aso-absolute aso-w-[50%] aso-h-[90%] aso-transition-all ease-in duration-200 z-0 aso-rounded-full aso-top-[5%]`"></span>
                         
-                        <span :class="`${activeFace == 'front-face' ? 'aso-text-white' : ''} aso-flex aso-full-center aso-pl-1`">
+                        <span :class="`${activeFace === 'front-face' ? 'aso-text-white' : 'aso-text-black'} aso-flex aso-full-center aso-pr-1 aso-z-10`">
                             {{configDoublePart.part1}}
                         </span>
-                        <span :class="`${activeFace == 'back-face' ? '' : 'aso-text-white'} aso-flex aso-full-center aso-pr-1`">
+                        <span :class="`${activeFace !== 'front-face' ? 'aso-text-white' : 'aso-text-black'} aso-flex aso-full-center aso-pl-1 aso-z-10`">
                             {{configDoublePart.part2}}
                         </span>
                     </span>
@@ -183,7 +183,7 @@
                     </div> -->
                 </div>
 
-                <div id="aso-editButtons" class="aso-absolute aso-bottom-0 aso-w-full aso-h-[10%]  aso-hidden lg:aso-flex aso-full-center aso-bg-white aso-space-x-4">
+                <div class="aso-absolute aso-bottom-0 aso-w-full aso-h-[10%]  aso-hidden lg:aso-flex aso-full-center aso-bg-white aso-space-x-4">
                     
                     <div class="aso-w-1/3 aso-flex aso-full-center aso-space-x-4">
                         <span class="aso-flex">
@@ -216,12 +216,12 @@
                         </span>
                     </div>
 
-                    <div class="aso-w-1/3 aso-flex aso-full-center aso-space-x-2">
+                    <div id="aso-price" class="aso-w-1/3 aso-flex aso-full-center aso-space-x-2">
                         <div class="aso-text-center aso-text-lg aso-font-semibold">
                             {{props.config.data.settings.languageImages.visualizer.textBeforePrice}}
                         </div>
                         <div class="aso-flex aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
-                            $ 495,09
+                            $ {{finalPrices}}
                         </div>
                         <div class="aso-text-center aso-text-lg aso-font-semibold">
                             {{props.config.data.settings.languageImages.visualizer.textAfterPrice}}
@@ -403,7 +403,7 @@
         </div>
 
         <div class="aso-w-full aso-h-[32%] lg:aso-w-fit lg:aso-h-fit">
-            <div v-show="showOption" id="aso-options-container" class="aso-relative lg:aso-absolute lg:aso-left-[8%] lg:aso-top-[10%] aso-w-full lg:aso-w-[30%] aso-h-[85%] lg:aso-h-[70%] aso-bg-white aso-rounded-md lg:aso-shadow-xl">
+            <div v-show="showOption" id="aso-options-container" class="aso-relative lg:aso-absolute lg:aso-left-[8%] lg:aso-top-[10%] aso-w-full lg:aso-w-[30%] aso-h-[85%] lg:aso-h-[70%] aso-bg-white aso-rounded-md lg:aso-shadow-xl aso-z-20">
                 <div class="aso-hidden lg:aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
                     <span @click="closeOption" class="aso-flex aso-bg-[#016464] aso-text-white hover:aso-bg-[#029797] aso-p-1 aso-rounded-md aso-base-animation">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -446,10 +446,10 @@
                         <div v-for="(option, index) in advancedComponent.options" class="aso-space-y-3">
                             <input type="radio" :id="option.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectSignModel(option)">
                             <label :for="option.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                    <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
-                                        <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
-                                    </div>                                
-                                    <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
+                                <div :class="`${option.icon === '' ? `aso-bg-lime-400` : `` } aso-w-1/4 aso-h-20`">
+                                    <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
+                                </div>                                
+                                <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
                                     <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ option.name }}</p>
                                     <p class="aso-text-xs">{{ option.description }}</p>
                                     <p class="aso-text-xs">{{ option.size.width }}x{{ option.size.height }}</p>
@@ -544,7 +544,7 @@
                                         <label :for="shape.name + index" :class="`${selectedShape == shape.type ? `aso-text-[#016464]` : `aso-text-zinc-800 aso-border-zinc-800`} 
                                             aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                         >
-                                            <div class="aso-w-16 aso-h-16 aso-bg-lime-400">
+                                            <div :class="`${shape.icon === '' ? `aso-bg-lime-400` : ``} aso-w-16 aso-h-16`">
                                                 <img v-if="shape.icon != ''" :src="shape.icon" class="aso-w-full aso-h-full" />
                                             </div>
                                             <p>{{shape.name}}</p>
@@ -565,7 +565,7 @@
                                 <div v-if="fixingg.fixingMethodId == index" class="aso-space-y-3 aso-w-full aso-h-full">
                                     <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
                                     <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                        <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                        <div :class="`${fixing.icon === '' ? `aso-bg-lime-400` : `` } aso-w-1/4 aso-h-20`">
                                             <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
                                         </div>
                                         <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
@@ -593,7 +593,7 @@
                                 <div v-if="fixingId == index" class="aso-space-y-3">
                                     <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
                                     <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
-                                        <div class="aso-w-1/4 aso-h-20 aso-bg-lime-400 ">
+                                        <div :class="`${fixing.icon === '' ? `aso-bg-lime-400` : `` } aso-w-1/4 aso-h-20`">
                                             <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
                                         </div>
                                         <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
@@ -1198,8 +1198,8 @@
         configImageSettings.value = props.config.data.settings.customizerSign.images
         configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
         
-        console.log(props.manage)
-        console.log(configImageSettings.value)
+        // console.log(props.manage)
+        // console.log(configImageSettings.value)
 
         handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize)
         
@@ -1341,16 +1341,27 @@
             if(shapees.value.length >0){
                 shapees.value.forEach((shapee, id) => {
                     allShapes.value.forEach((shape, index) => {
-                        if(shapee.shapeId == index && !stopShape){
-                            selectedShape.value = shape.value
-                            handleGetShape(shape.value)
-                            // selectShape(shape.value, shapee)
-                            var shapePriceObject = {
-                                name: "shape",
-                                price: shapee.additionalPrice
+                        if(shapee.shapeId == index){
+                            if(shapee.isDefault){
+                                selectedShape.value = shape.value
+                                handleGetShape(shape.value)
+                                var shapePriceObject = {
+                                    name: "shape",
+                                    price: shapee.additionalPrice
+                                }
+                                getOptionPrice(shapePriceObject)
                             }
-                            getOptionPrice(shapePriceObject)
-                            stopShape = true
+                            if(!shapee.isDefault  && !stopShape){
+                                selectedShape.value = shape.value
+                                handleGetShape(shape.value)
+                                // selectShape(shape.value, shapee)
+                                var shapePriceObject = {
+                                    name: "shape",
+                                    price: shapee.additionalPrice
+                                }
+                                getOptionPrice(shapePriceObject)
+                                stopShape = true
+                            }
                         }
                     })
                 })
@@ -1364,9 +1375,14 @@
                 if(sizees.value.length >0){
                     sizees.value.forEach((sizee, id) => {
                         allSizes.value.forEach((size, index) => {
-                            if(sizee.manageSizeId == index && !stopSize){
-                                changeSize(size, sizee, id)
-                                stopSize = true
+                            if(sizee.manageSizeId == index){
+                                if(sizee.isDefault){
+                                    changeSize(size, sizee, id)
+                                }
+                                if(!sizee.isDefault && !stopSize){
+                                    changeSize(size, sizee, id)
+                                    stopSize = true
+                                }
                             }
                         })
                     })
@@ -1382,9 +1398,14 @@
             var stopFixing = false
             fixinggs.value.forEach((fixingg, id) => {
                 allFixings.value.forEach((fixing, index) => {
-                    if(fixingg.fixingMethodId == index && !stopFixing){
-                        selectFixingMethode(fixing.type, fixingg)
-                        stopFixing = true
+                    if(fixingg.fixingMethodId == index){
+                        if(fixingg.isDefault){
+                            selectFixingMethode(fixing.type, fixingg)
+                        }
+                        if(!fixingg.isDefault && !stopFixing){
+                            selectFixingMethode(fixing.type, fixingg)
+                            stopFixing = true
+                        }
                     }
                 })
             })
@@ -1392,9 +1413,14 @@
             var stopBorder = false
             borderrs.value.forEach((borderr, id) => {
                 allBorders.value.forEach((border, index) => {
-                    if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
-                        selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
-                        stopBorder = true
+                    if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)){
+                        if(borderr.isDefault){
+                            selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
+                        }
+                        if(!borderr.isDefault && !stopBorder){
+                            selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
+                            stopBorder = true
+                        }
                     }
                 })
             })
@@ -1402,25 +1428,40 @@
             var stopColor = false
             colorrs.value.forEach((colorr, id) => {
                 allColors.value.forEach((color, index) => {
-                    if(colorr.manageColorId == index && !stopColor){
-                        changeSignColor(color, colorr)
-                        stopColor = true
+                    if(colorr.manageColorId == index){
+                        if(colorr.isDefault){
+                            changeSignColor(color, colorr)
+                        }
+                        if(!colorr.isDefault && !stopColor){
+                            changeSignColor(color, colorr)
+                            stopColor = true
+                        }
                     }
                 })
             })
 
+            var stopDefOption = false
+            var stopOption = false
             if(materialType.value === 'advance'){
                 currentMaterial.value.data.forEach(component => {
                     if(!stop){
                         showOptions('component', component)
                         stop = true
                     }
-                    selectSignModel(advancedComponent.value.options[0])
                 })
                 advancedComponent.value.options.forEach( option => {
-                    // if(!stopOption){
-                    //     stopOption = true
-                    // }
+                    if(!stopDefOption){
+                        if(option.isDefault){
+                            console.log("option")
+                            selectSignModel(option)
+                            stopDefOption = true
+                        }
+                        if(!option.isDefault && stopDefOption && !stopOption){
+                            selectSignModel(option)
+                            stopDefOption = true
+                            stopOption = true
+                        }
+                    }
                 })
             }
 
@@ -1617,18 +1658,30 @@
 
             if(firstLoad.value){
                 var stopShape = false
-                if(shapes.value.length >0){
+                if(shapees.value.length >0){
                     shapees.value.forEach((shapee, id) => {
                         allShapes.value.forEach((shape, index) => {
-                            if(shapee.shapeId == index && !stopShape){
-                                selectedShape.value = shape.value
-                                handleGetShape(shape.value)
-                                var shapePriceObject = {
-                                    name: "shape",
-                                    price: shapee.additionalPrice
+                            if(shapee.shapeId == index){
+                                if(shapee.isDefault){
+                                    selectedShape.value = shape.value
+                                    handleGetShape(shape.value)
+                                    var shapePriceObject = {
+                                        name: "shape",
+                                        price: shapee.additionalPrice
+                                    }
+                                    getOptionPrice(shapePriceObject)
                                 }
-                                getOptionPrice(shapePriceObject)
-                                stopShape = true
+                                if(!shapee.isDefault  && !stopShape){
+                                    selectedShape.value = shape.value
+                                    handleGetShape(shape.value)
+                                    // selectShape(shape.value, shapee)
+                                    var shapePriceObject = {
+                                        name: "shape",
+                                        price: shapee.additionalPrice
+                                    }
+                                    getOptionPrice(shapePriceObject)
+                                    stopShape = true
+                                }
                             }
                         })
                     })
@@ -1641,9 +1694,14 @@
                 if(sizees.value.length >0){
                     sizees.value.forEach((sizee, id) => {
                         allSizes.value.forEach((size, index) => {
-                            if(sizee.manageSizeId == index && !stopSize){
-                                changeSize(size, sizee, id)
-                                stopSize = true
+                            if(sizee.manageSizeId == index){
+                                if(sizee.isDefault){
+                                    changeSize(size, sizee, id)
+                                }
+                                if(!sizee.isDefault && !stopSize){
+                                    changeSize(size, sizee, id)
+                                    stopSize = true
+                                }
                             }
                         })
                     })
@@ -1658,9 +1716,14 @@
                 var stopFixing = false
                 fixinggs.value.forEach((fixingg, id) => {
                     allFixings.value.forEach((fixing, index) => {
-                        if(fixingg.fixingMethodId == index && !stopFixing){
-                            selectFixingMethode(fixing.type, fixingg)
-                            stopFixing = true
+                        if(fixingg.fixingMethodId == index){
+                            if(fixingg.isDefault){
+                                selectFixingMethode(fixing.type, fixingg)
+                            }
+                            if(!fixingg.isDefault && !stopFixing){
+                                selectFixingMethode(fixing.type, fixingg)
+                                stopFixing = true
+                            }
                         }
                     })
                 })
@@ -1668,9 +1731,14 @@
                 var stopBorder = false
                 borderrs.value.forEach((borderr, id) => {
                     allBorders.value.forEach((border, index) => {
-                        if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId) && !stopBorder){
-                            selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
-                            stopBorder = true
+                        if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)){
+                            if(borderr.isDefault){
+                                selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
+                            }
+                            if(!borderr.isDefault && !stopBorder){
+                                selectBorder(border.value, borderr.settings.codeHex, borderr.additionalPrice)
+                                stopBorder = true
+                            }
                         }
                     })
                 })
@@ -1678,9 +1746,14 @@
                 var stopColor = false
                 colorrs.value.forEach((colorr, id) => {
                     allColors.value.forEach((color, index) => {
-                        if(colorr.manageColorId == index && !stopColor){
-                            changeSignColor(color, colorr)
-                            stopColor = true
+                        if(colorr.manageColorId == index){
+                            if(colorr.isDefault){
+                                changeSignColor(color, colorr)
+                            }
+                            if(!colorr.isDefault && !stopColor){
+                                changeSignColor(color, colorr)
+                                stopColor = true
+                            }
                         }
                     })
                 })
@@ -1688,6 +1761,7 @@
         }
 
         var stop = false
+        var stopDefOption = false
         var stopOption = false
         if(material.type == 'advance'){
             currentMaterial.value.data.forEach(component => {
@@ -1697,9 +1771,17 @@
                 }
             })
             advancedComponent.value.options.forEach( option => {
-                if(!stopOption){
-                    selectSignModel(option)
-                    stopOption = true
+                if(!stopDefOption){
+                    if(option.isDefault){
+                        console.log("option")
+                        selectSignModel(option)
+                        stopDefOption = true
+                    }
+                    if(!option.isDefault && stopDefOption && !stopOption){
+                        selectSignModel(option)
+                        stopDefOption = true
+                        stopOption = true
+                    }
                 }
             })
         }
@@ -1710,13 +1792,30 @@
     var activeSignModelName = ref('')
     function selectSignModel(model){
         activeSignModelName.value = model.name
+
+        // selection de fixing
+        var stopFixing = false
+        fixinggs.value = model.fixingMethods
+        // console.log(model.fixingMethods,"fixing materail advance")
+        fixinggs.value.forEach(fixingId => {
+            allFixings.value.forEach((fixing, index) => {
+                if(fixingId == index && !stopFixing){
+                    // selectFixingMethode(fixing.type)
+                    activeFixingMethode.value = fixing.type
+                    stopFixing = true
+                }
+            });
+        });
+
         // selection du shape 
         allShapes.value.forEach((shape, index) => {
             if(model.shapeId == index ){
                 selectedShape.value = shape.value
-                handleGetShape(shape.value)
+                handleGetShape(shape.value,  activeFixingMethode.value)
             }
         })
+
+        // selection de la size
         var modelSize = {
             name: model.name,
             width: model.size.width,
@@ -1728,27 +1827,12 @@
             maxTextChar: model.size.maxTextChar,
             startPriceAtChar: model.size.startPriceAtChar,
         }
-        // selection de la size
         changeSize(modelSize, modelSizeSetting)
-        // console.log(model, "model size")
 
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
 
-        // selection de fixing
-        var stopFixing = false
-        fixinggs.value = model.fixingMethods
-        // console.log(model.fixingMethods,"fixing materail advance")
-        fixinggs.value.forEach(fixingId => {
-            allFixings.value.forEach((fixing, index) => {
-                if(fixingId == index && !stopFixing){
-                    selectFixingMethode(fixing.type)
-                    stopFixing = true
-                }
-            });
-        });
-
-        // selection de fixing
+        // selection de la couleur
         colorrs.value = [{color: model.color, image: model.image}]
 
         var modelPrice = model.additionalPrice
@@ -2432,8 +2516,8 @@
 
         }
         finalPrices.value = sumOptionsPrice(optionsPrices.value, 'price') + textsPrices.value;
-        console.log("PRIX TOTAL options",sumOptionsPrice(optionsPrices.value, 'price'))
-        console.log("PRIX TOTAL texts",textsPrices.value)
+        // console.log("PRIX TOTAL options",sumOptionsPrice(optionsPrices.value, 'price'))
+        // console.log("PRIX TOTAL texts",textsPrices.value)
         // console.log("TOTAL PRICE", finalPrices.value)
     }
 

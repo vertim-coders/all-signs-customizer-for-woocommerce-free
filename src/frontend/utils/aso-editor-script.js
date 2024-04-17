@@ -610,7 +610,8 @@ var firstLoad = false
 
 // }
 function handleChangeSize(width, height, name, maxChar) {
-    console.log(maxChar, "aso-SignText")
+    // console.log(maxChar, "aso-SignText")
+    
     maxTextCharForSize = maxChar
 
     currentSizeName = name;
@@ -1136,13 +1137,17 @@ function handleSetImageToSignBackground(image){
 
 //fonctions concernant le choix de shapes
 var selectedShape = ''
-function handleGetShape(shape){
+function handleGetShape(shape, fixing){
     selectedShape = shape
+    if(fixing){
+        activeFixingMethode = fixing
+    }
 }
 function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
     selectedShape = shape
 
     function setShape(canvas){
+        resetFixing(canvas)
         var Objects = canvas.getObjects();
         Objects.forEach(function(object){
             if (object.type !== 'line') {
@@ -1515,15 +1520,14 @@ function resetFixing(canva){
         })
     }
     reset(canva)
-    // reset(canva)
-    // if(firstLoad){
-    // }
 }
 var activeFixingMethode = ''
 function handleSelectFixingMethode(methode){
     activeFixingMethode = methode
 
     function setFixing(canva){
+        resetFixing(canva)
+
         canva.getObjects().forEach(function(object){
             if (object.type !== 'line') {
         
@@ -3219,7 +3223,7 @@ function handleSelectFixingMethode(methode){
 
     setTimeout(function() {
         // Comptez le nombre d'objets sur le canvas
-        var nombreObjets = canvas.getObjects().length;
+        var nombreObjets = canvas.getObjects().filter(objet => objet.name === 'standoff1');
         updateModifications(true, 'selection de fixing')
 
         // console.log("Nombre d'objets après ajout :", nombreObjets);
@@ -4002,7 +4006,7 @@ var totalCharPrice = 0
 var charPrice = 0
 var startPriceAtChar= 0
 function handleGetCharPrice(price, startAt){
-    console.log(startAt, "charPrice")
+    // console.log(startAt, "charPrice")
     charPrice = price
     startPriceAtChar = startAt
 }
