@@ -92,7 +92,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-font-normal">Select border</label>
                         <select v-model="border.manageBorderId" type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                            <option :value="key" v-for="brder, key in manageBorders" :key="key">
+                            <option :value="key" v-for="brder, key in notSelectedManageBorders" :key="key">
                                 {{ brder.name }}
                             </option>
                         </select>
@@ -125,7 +125,7 @@
                                 <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].name" autocomplete="off"> 
                             </div> -->
                             <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">price</label>
                                 <div class="aso-relative aso-flex">
                                     <input
                                         id="colorPicker"
@@ -145,10 +145,12 @@
                             </div>
                             <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                                 <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Price</label>
-                                <input type="number" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].additionalPrice" @blur="border.settings.colors[key].additionalPrice.trim()==''? border.settings.colors[key].additionalPrice = 0 : ''"> 
+                                <div class="aso-relative aso-flex">
+                                    <input type="number" class="aso-rounded aso-w-full aso-h-[30px]" v-model="border.settings.colors[key].additionalPrice" @blur="border.settings.colors[key].additionalPrice.trim()==''? border.settings.colors[key].additionalPrice = 0 : ''"> 
+                                </div>
                             </div>
                             <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Price</label>
                                 <div class="aso-relative aso-flex">
                                     <button @click="removeColor(key)" class="aso-w-[50px] aso-h-full aso-border-solid aso-border-red-600 aso-rounded aso-bg-red-600 aso-cursor-pointer aso-text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-[70%] aso-h-[70%]">
@@ -218,7 +220,7 @@
             </div>
         </div>
          <!-- Delete Modal-->
-         <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+         <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -261,6 +263,7 @@
     const isLoading = ref(false);
     const borders = ref([]);
     const manageBorders = ref([]);
+    const notSelectedManageBorders = ref({})
     const MaterialSimpleSizes = ref([]);
     const manageSizes = ref([]);
     const borderId = ref(null);
@@ -279,6 +282,27 @@
             enableBorderColor:true,
         }
     });
+
+    const checkNotSelectedManageBorders = ( key= -1) => {
+        var notSelectedManageBorders = {};
+        let index = 0; 
+        while (index < manageBorders.value.length) {
+            var indexUse = false;
+            for (let i = 0; i <  borders.value.length; i++) {
+                if(index == borders.value[i].manageBorderId){
+                    indexUse = true;
+                }
+            }
+            if(!indexUse){
+                notSelectedManageBorders[index] = manageBorders.value[index];
+            }
+            index++;
+        }
+        if(key!=-1){
+            notSelectedManageBorders[key] = manageBorders.value[key];
+        }
+        return notSelectedManageBorders;
+    }
     onMounted(async ()=>{
         isFetching.value = true;
         await fetchManageSizes();
@@ -364,12 +388,13 @@
         }
     };
 
-    const selectMaterialBorder = (id,sz,isDeleting=false) => {
+    const selectMaterialBorder = (id,bd,isDeleting=false) => {
         if(isDeleting){
             borderId.value = id;
             closeModal();
         }else{
-            border.value = sz;
+            border.value = bd;
+            notSelectedManageBorders.value = checkNotSelectedManageBorders(bd.manageBorderId);
             isEdit.value = true;
             isNewBorder.value = true;
         }
@@ -377,6 +402,7 @@
 
     const addNewColor = ()=> {
         border.value.settings.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
+        notSelectedManageBorders.value = checkNotSelectedManageBorders();
     }
     const removeColor = (key)=> {
         border.value.settings.colors.splice(key,1);
@@ -411,6 +437,7 @@
 
     const newBorder = () => {
         isNewBorder.value = true;
+        notSelectedManageBorders.value = checkNotSelectedManageBorders();
     }
     const back = () => {
         isNewBorder.value = false;

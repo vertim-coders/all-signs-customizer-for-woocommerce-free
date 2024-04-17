@@ -178,7 +178,7 @@
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[14px] aso-font-bold">Select Size</label>
                     <select v-model="size.manageSizeId" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option v-for="(size,key) in manageSizes" :value="key" :key="key" >{{ size.label }}</option>
+                        <option v-for="(size,key) in notSelectedManageSizes" :value="key" :key="key" >{{ size.label }}</option>
                     </select>
                 </div>
                 <div class="aso-flex aso-justify-between">
@@ -248,7 +248,7 @@
             
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -289,6 +289,7 @@
     const isNewSize = ref(false);
     const isLoading = ref(false);
     const manageSizes = ref([]);
+    const notSelectedManageSizes = ref({});
     const sizeId = ref(null);
     const sizes = ref({
         customSize:{
@@ -322,6 +323,7 @@
         isFetching.value = true;
         await fetchManageSizes();
         await fetchMaterialSizes();
+        notSelectedManageSizes.value = checkNotSelectedManageSizes();
         isFetching.value = false;
     });
     
@@ -405,6 +407,7 @@
         }else{
             if(manageSizes.value.length >0) {
                 size.value = sz;
+                notSelectedManageSizes.value = checkNotSelectedManageSizes(sz.manageSizeId);
                 isEdit.value = true;
                 isNewSize.value = true;
             }else{
@@ -412,6 +415,26 @@
             }
             
         }
+    }
+    const checkNotSelectedManageSizes = ( key= -1) => {
+        var notSelectedManageSizes = {};
+        let index = 0; 
+        while (index < manageSizes.value.length) {
+            var indexUse = false;
+            for (let i = 0; i <  sizes.value.allSizes.length; i++) {
+                if(index == sizes.value.allSizes[i].manageSizeId){
+                    indexUse = true;
+                }
+            }
+            if(!indexUse){
+                notSelectedManageSizes[index] = manageSizes.value[index];
+            }
+            index++;
+        }
+        if(key!=-1){
+            notSelectedManageSizes[key] = manageSizes.value[key];
+        }
+        return notSelectedManageSizes;
     }
 
     const updateSizeInMaterialSize = async () => {
@@ -429,6 +452,7 @@
     const newSize = () => {
         if(manageSizes.value.length >0) {
             isNewSize.value = true;
+            notSelectedManageSizes.value = checkNotSelectedManageSizes();
         }else{
             toastMessage('To continue, please add sizes to manage size','warning')
         }

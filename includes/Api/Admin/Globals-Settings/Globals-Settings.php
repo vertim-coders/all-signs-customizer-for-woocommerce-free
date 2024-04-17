@@ -327,8 +327,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
   
       $page_id = wp_insert_post($new_page);
       
-      if($page_id){
-        return rest_ensure_response($page_id);
+      if(!is_wp_error($page_id)){
+        return rest_ensure_response(["id"=>$page_id,"message"=>__("Page created successfully","ASO")]);
       }else{
         return rest_ensure_response(["message"=>__("Page was not created","ASO")]);
       }

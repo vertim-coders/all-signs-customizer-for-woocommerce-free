@@ -10,7 +10,7 @@
                     Material
                 </div>
             </div>
-            <div v-if="!isFetching" class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-w-full aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
+            <div v-if="!isFetching" class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
                 
                 <div class="aso-w-1/4">
                     <button class="aso-flex aso-w-fit aso-h-[fit] aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addComponent">

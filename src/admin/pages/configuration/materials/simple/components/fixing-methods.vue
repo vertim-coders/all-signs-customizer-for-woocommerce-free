@@ -88,13 +88,13 @@
         </div>
         <div class="aso-space-y-2" v-if="isNewFixing">
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
-                Add new fixing methods
+                {{isEdit ? 'Edit fixing methiod' : 'Add new fixing methods' }}
             </div>
-            <div class="aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
+            <div class="aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-if="isEdit">
                 <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select fixing methods</label>
                     <select v-model="fixingMethod.fixingMethodId" class="aso-w-full aso-h-[30px]">
-                        <option :value="key" v-for="fx, key in manageFixingMethods" :key="key">
+                        <option :value="key" v-for="fx, key in notSelectedManageFixingMethods" :key="key">
                             {{ fx.name }}
                         </option>
                     </select>
@@ -103,7 +103,37 @@
                 <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
                     <input type="number" v-model="fixingMethod.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
-                    
+                </div>
+            </div>
+            <div v-if="!isEdit">
+                <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-for="(fixingMethod,key) in addNewFixingMethods">
+                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select fixing methods</label>
+                        <select v-model="addNewFixingMethods[key].fixingMethodId" class="aso-w-full aso-h-[30px]">
+                            <option :value="key" v-for="fx, key in notSelectedManageFixingMethods" :key="key">
+                                {{ fx.name }}
+                            </option>
+                        </select>
+                        
+                    </div>
+                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
+                        <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                        
+                    </div>
+                    <div @click="handleDeleteMaterialFixingMethod(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="aso-pt-4" v-if="Object.keys(notSelectedManageFixingMethods).length > 0">
+                    <button :disabled="isLoading" @click="handleAddMaterialFixingMethod" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="aso-font-semibold aso-text-[16px]">Add Color</span>
+                    </button>
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
@@ -136,7 +166,7 @@
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -177,15 +207,58 @@
     const isLoading = ref(false);
     const fixingMethods = ref([]);
     const manageFixingMethods = ref([])
+    const notSelectedManageFixingMethods = ref({});
+    const addNewFixingMethods = ref([
+        {
+            isDefault:false,
+            fixingMethodId:0,
+            additionalPrice:0,
+        }
+    ]);
     const fixingMethodId = ref(null);
     
     const isEdit = ref(false);
     const openModal = ref(false);
     const noFixingMethodsFound = ref('');
     const fixingMethod = ref({
+        isDefault:false,
         fixingMethodId:0,
         additionalPrice:0,
     });
+
+    const checkNotSelectedManageFixingMethods = ( key= -1) => {
+        var notSelectedManageFixingMethods = {};
+        let index = 0; 
+        while (index < manageFixingMethods.value.length) {
+            var indexUse = false;
+            for (let i = 0; i <  fixingMethods.value.length; i++) {
+                if(index == fixingMethods.value[i].fixingMethodId){
+                    indexUse = true;
+                }
+            }
+            if(!indexUse){
+                notSelectedManageFixingMethods[index] = manageFixingMethods.value[index];
+            }
+            index++;
+        }
+        if(key!=-1){
+            notSelectedManageFixingMethods[key] = manageFixingMethods.value[key];
+        }
+        return notSelectedManageFixingMethods;
+    }
+
+    const handleAddMaterialFixingMethod = () =>{
+        addNewFixingMethods.value.push({
+            isDefault:false,
+            fixingMethodId:0,
+            additionalPrice:0,
+        });
+    }
+    const handleDeleteMaterialFixingMethod = (key) =>{
+        if(key!=0){
+            addNewFixingMethods.value.splice(key);
+        }
+    }
 
     onMounted(async ()=>{
         isFetching.value = true;
@@ -240,19 +313,22 @@
             };
         }
     }
-    const selectMaterialFixingMethod = (id,sz,isDeleting=false) => {
+    const selectMaterialFixingMethod = (id,fx,isDeleting=false) => {
         if(isDeleting){
             fixingMethodId.value = id;
             closeModal();
         }else{
-            fixingMethod.value = sz;
+            fixingMethod.value = fx;
+            notSelectedManageFixingMethods.value = checkNotSelectedManageFixingMethods(fx.fixingMethodId);
             isEdit.value = true;
             isNewFixing.value = true;
         }
     }
     const addFixingMethods = async () => {
         isLoading.value = true;
-        fixingMethods.value.push(fixingMethod.value);
+        for (let index = 0; index < addNewFixingMethods.value.length; index++) {
+            fixingMethods.value.push(addNewFixingMethods.value[index]);
+        }
         await updateFixingMethods();
     }
     const updateMaterialFixingMethods = async () => {
@@ -275,7 +351,12 @@
     
 
     const newFixing = () => {
-      isNewFixing.value = true;
+        notSelectedManageFixingMethods.value = checkNotSelectedManageFixingMethods();
+        if(Object.keys(notSelectedManageFixingMethods.value).length>0){
+            isNewFixing.value = true;
+        }else{
+            toastMessage('No Shapes to choose','warning');
+        }
     }
     const back = () => {
         isNewFixing.value = false;

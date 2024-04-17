@@ -9,7 +9,7 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Add new color palette
+                        Add new colors palettes
                     </div>
                 </button>
             </div>
@@ -99,13 +99,13 @@
         <div class="aso-space-y-2" v-if="isNewColor && manageColors.length >0 ">
                 
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
-                Add new color 
+                {{isEdit ? 'Edit Color':'Add news colors'}}
             </div>
-            <div class="aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
+            <div class="aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-if="isEdit">
                 <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
                     <select v-model="color.manageColorId" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option v-for="(color,key) in manageColors" :value="key" :key="key">
+                        <option v-for="(color,key) in notSelectedManageColors" :value="key" :key="key">
                             {{ color.name }}
                         </option>
                     </select>
@@ -115,6 +115,36 @@
                     <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
                     <input type="number" v-model="color.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
                     
+                </div>
+            </div>
+            <div v-if="!isEdit">
+                <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-for="(color,key) in addColors">
+                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
+                        <select v-model="addColors[key].manageColorId" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <option v-for="(color,key) in notSelectedManageColors" :value="key" :key="key">
+                                {{ color.name }}
+                            </option>
+                        </select>
+                        
+                    </div>
+                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
+                        <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                    </div>
+                    <div @click="handleDeleteNewMaterialColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="aso-pt-4" v-if="Object.keys(notSelectedManageColors).length > 0">
+                    <button :disabled="isLoading" @click="handleAddNewMaterialColor" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="aso-font-semibold aso-text-[16px]">Add Color</span>
+                    </button>
                 </div>
             </div>
                 
@@ -150,7 +180,7 @@
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -197,9 +227,19 @@
     const openModal = ref(false);
     const noColorsFound = ref('');
     const color = ref({
+        isDefault:false,
         manageColorId:0,
         additionalPrice:0,
     });
+
+    const addColors = ref([
+        {
+            isDefault:false,
+            manageColorId:0,
+            additionalPrice:0,
+        }
+    ]);
+    const notSelectedManageColors = ref({})
 
     onMounted(async ()=>{
         isFetching.value = true;
@@ -238,32 +278,37 @@
             isLoading.value = false;
             isNewColor.value = false;
             openModal.value = false;
-            color.value = {
-                isDefault:false,
-                manageColorId:0,
-                additionalPrice:0
-            };
+            addColors.value = [
+                {
+                    isDefault:false,
+                    manageColorId:0,
+                    additionalPrice:0
+                }
+            ];
         }else{
             isLoading.value = false;
             toastMessage(result.message,"error");
             isNewColor.value = false;
             openModal.value = false;
-            color.value = {
-                isDefault:false,
-                manageColorId:0,
-                additionalPrice:0
-            };
+            addColors.value = [
+                {
+                    isDefault:false,
+                    manageColorId:0,
+                    additionalPrice:0
+                }
+            ];
         }
     }
     
 
-    const selectMaterialColor = (id,sz,isdeleting=false) => {
+    const selectMaterialColor = (id,col,isdeleting=false) => {
         if(isdeleting){
             colorId.value = id;
             closeModal();
         }else{
             if(manageColors.value.length >0 ){
-                color.value = sz;
+                color.value = col;
+                notSelectedManageColors.value = checkNotSelectedManageColors(col.manageColorId)
                 isEdit.value = true;
                 isNewColor.value = true;
             }else{
@@ -271,9 +316,33 @@
             }
         }
     }
+
+    const checkNotSelectedManageColors = ( key= -1) => {
+        var notSelectedManageColors = {};
+        let index = 0; 
+        while (index < manageColors.value.length) {
+            var indexUse = false;
+            for (let i = 0; i <  colors.value.length; i++) {
+                if(index == colors.value[i].manageColorId){
+                    indexUse = true;
+                }
+            }
+            if(!indexUse){
+                notSelectedManageColors[index] = manageColors.value[index];
+            }
+            index++;
+        }
+        if(key!=-1){
+            notSelectedManageColors[key] = manageColors.value[key];
+        }
+        return notSelectedManageColors;
+    }
+
     const addMaterialColor = async () => {
         isLoading.value = true;
-        colors.value.push(color.value);
+        for (let index = 0; index < addColors.value.length; index++) {
+            colors.value.push(addColors.value[index]);
+        }
         await updateMaterialColor();
     }
     
@@ -297,9 +366,14 @@
     
     const newColor = () => {
         if(manageColors.value.length >0 ){
-            isNewColor.value = true;
+            notSelectedManageColors.value = checkNotSelectedManageColors();
+            if(Object.keys(notSelectedManageColors.value).length>0){
+                isNewColor.value = true;
+            }else{
+                toastMessage('No colors to choose','warning');
+            }
         }else{
-            toastMessage('To continue you must be add color in manage colors','warning')
+            toastMessage('To continue you must be add color in manage colors','warning');
         }
     }
     const back = () => {
@@ -311,8 +385,29 @@
             manageColorId:0,
             additionalPrice:0
         };
+        addColors.value = [
+            {
+                isDefault:false,
+                manageColorId:0,
+                additionalPrice:0
+            }
+        ];
 
     }
+
+    const handleAddNewMaterialColor = () => {
+        addColors.value.push({
+            isDefault:false,
+            manageColorId:0,
+            additionalPrice:0
+        });
+    }
+    const handleDeleteNewMaterialColor = (key) => {
+        if(key!=0){
+            addColors.value.splice(key);
+        }
+    }
+
     const selectDefault = async(key) =>{
         colors.value[key].isDefault = true;
         for(let i=0; i<colors.value.length; i++){
