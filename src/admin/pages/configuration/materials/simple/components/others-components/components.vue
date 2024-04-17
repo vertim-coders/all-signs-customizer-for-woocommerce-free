@@ -72,7 +72,7 @@
                             <td class="aso-px-6 aso-justify-center aso-translate-y-1">
                                 <img v-if="additionalOption.icon" class="aso-w-10 aso-h-10" :src="additionalOption.icon" />
                             </td>
-                            <td class="aso-px-6 aso-text-center aso-space-x-2">
+                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="router.push('/configs/'+configID+'/materials/'+materialId+'/simple/others-components/'+key)">
                                     <img class="aso-w-4 aso-h-4" src="../../../../../../../../assets/icons/ic_manage.svg" alt="">
                                     <span class="aso-text-[12px]">
