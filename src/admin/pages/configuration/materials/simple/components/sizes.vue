@@ -91,7 +91,7 @@
                                     </label>
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-translate-y-3">
+                            <td class="aso-px-6 aso-text-center">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialSize(key,size)">
                                 </button>

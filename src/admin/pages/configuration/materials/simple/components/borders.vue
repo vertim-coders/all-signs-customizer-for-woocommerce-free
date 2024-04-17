@@ -56,7 +56,7 @@
                             <td class="aso-text-center aso-px-6 aso-p-4">
                                 {{manageBorders[border.manageBorderId].name}}
                             </td>
-                            <td class="aso-px-8 aso-py-3 aso-flex aso-justify-center aso-translate-x-1">
+                            <td class="aso-px-8 aso-py-3 aso-flex aso-justify-center aso-items-center">
                                 <img :src="manageBorders[border.manageBorderId].icon" class="aso-w-[50px] aso-h-[50px]" v-if="manageBorders[border.manageBorderId].icon"/>
                             </td>
                             <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-3">
@@ -71,7 +71,7 @@
                                     </label>
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center -aso-translate-y-4">
+                            <td class="aso-px-6 aso-text-center">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectMaterialBorder(key,border)">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>
@@ -449,7 +449,7 @@
             additionalPrice:0,
             excludeSizes: [],
             settings:{
-                codeHex:"#ffffff",
+                colors:[],
                 enableBorderWidth:true,
                 enableBorderColor:true,
             }

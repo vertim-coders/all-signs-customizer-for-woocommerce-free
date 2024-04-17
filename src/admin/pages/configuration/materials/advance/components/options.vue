@@ -105,7 +105,7 @@
                                     </label>
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                            <td class="aso-px-6 aso-text-center aso-space-x-2">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectOption(key,option)">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="">
                                 </button>

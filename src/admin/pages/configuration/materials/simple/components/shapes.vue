@@ -71,7 +71,7 @@
                                     </label>
                                 </span>
                             </td>
-                            <td class=" aso-py-2">
+                            <td class="aso-text-center">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialShape(key,shape)">
                                 </button>
@@ -255,7 +255,7 @@
     }
     const handleDeleteMaterialShape = (key) =>{
         if(key!=0){
-            addNewShapes.value.splice(key);
+            addNewShapes.value.splice(key,1);
         }
     }
 

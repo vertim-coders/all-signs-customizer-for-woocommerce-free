@@ -73,7 +73,7 @@
                                     </label>
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-text-center aso-justify-center aso-translate-y-1 aso-space-x-2">
+                            <td class="aso-px-6 aso-text-center">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
                                     <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialFixingMethod(key,fixingMethod)">
                                 </button>
@@ -256,7 +256,7 @@
     }
     const handleDeleteMaterialFixingMethod = (key) =>{
         if(key!=0){
-            addNewFixingMethods.value.splice(key);
+            addNewFixingMethods.value.splice(key,1);
         }
     }
 
