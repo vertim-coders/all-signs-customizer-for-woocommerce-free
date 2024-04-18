@@ -104,14 +104,14 @@
                             <input
                                 id="colorPicker"
                                 type="color"
-                                v-model="themes.colors.backgroundColorHeaderContentSide"
-                                @input="updateBackgroundColorHeaderContentSideCodeHex"
+                                v-model="themes.colors.backgroundColorContentSide"
+                                @input="updatebackgroundColorContentSideCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
-                                v-model="themes.colors.backgroundColorHeaderContentSide"
-                                @input="updateBackgroundColorHeaderContentSideCodeHex"
+                                v-model="themes.colors.backgroundColorContentSide"
+                                @input="updatebackgroundColorContentSideCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -474,6 +474,86 @@
                     </div>
                 </div>
             </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
+                
+                
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Color text Button Finish</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.textColorButtonFinish"
+                                @input="updateTextColorButtonFinishCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.textColorButtonFinish"
+                                @input="updateTextColorButtonFinishCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="so-text-[12px] aso-text-[#444444]">Background color Button Finish</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.backgroundColorButtonFinish"
+                                @input="updateBackgroundColorButtonFinishCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.backgroundColorButtonFinish"
+                                @input="updateBackgroundColorButtonFinishCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Color text Hover Button Finish</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.textColorHoverButtonFinish"
+                                @input="updateTextColorHoverButtonFinishCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.textColorHoverButtonFinish"
+                                @input="updateTextColorHoverButtonFinishCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="so-text-[12px] aso-text-[#444444]">Background color Hover Button Finish</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.backgroundColorHoverButtonFinish"
+                                @input="updateBackgroundColorHoverButtonFinishCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.backgroundColorHoverButtonFinish"
+                                @input="updateBackgroundColorHoverButtonFinishCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
         <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
@@ -503,7 +583,7 @@ const themes = ref({
         textColorContentHeader:'#000000',
         backgroundColorHeader:'#000000',
         textColorContentSideMenu:'#000000',
-        backgroundColorHeaderContentSide:'#000000',
+        backgroundColorContentSide:'#000000',
         textColorOptionsMenu:'#000000',
         backgroundColorOptionsMenu:'#000000',
         textColorButtonSave:'#000000',
@@ -522,6 +602,10 @@ const themes = ref({
         backgroundColorHoverButtonRestartAll:'#000000',
         textColorButtonRestartAll:'#000000',
         backgroundColorButtonRestartAll:'#000000',
+        textColorButtonFinish:'#000000',
+        backgroundColorButtonFinish:'#000000',
+        textColorHoverButtonFinish:'#000000',
+        backgroundColorHoverButtonFinish:'#000000',
     }
 });
 onMounted(async() => {
@@ -569,11 +653,11 @@ const updateTextColorContentSideMenuCodeHex = (event) => {
     }
     themes.value.colors.textColorContentSideMenu = event.target.value;
 }
-const updateBackgroundColorHeaderContentSideCodeHex = (event) => {
+const updatebackgroundColorContentSideCodeHex = (event) => {
     if(event.target.value[0]!=='#'){
         event.target.value = '#'+ event.target.value;
     }
-    themes.value.colors.backgroundColorHeaderContentSide = event.target.value;
+    themes.value.colors.backgroundColorContentSide = event.target.value;
 }
 const updateTextColorOptionsMenuCodeHex = (event) => {
     if(event.target.value[0]!=='#'){
@@ -684,6 +768,31 @@ const updateTextColorButtonRestartAllCodeHex = (event) => {
         event.target.value = '#'+ event.target.value;
     }
     themes.value.colors.textColorButtonRestartAll = event.target.value;
+}
+
+const updateTextColorButtonFinishCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorButtonFinish = event.target.value;
+}
+const updateTextColorHoverButtonFinishCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.textColorHoverButtonFinish = event.target.value;
+}
+const updateBackgroundColorButtonFinishCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorButtonFinish = event.target.value;
+}
+const updateBackgroundColorHoverButtonFinishCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.backgroundColorHoverButtonFinish = event.target.value;
 }
 
 </script>

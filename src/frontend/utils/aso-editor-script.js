@@ -2,10 +2,16 @@ var fixingUrl = aso_confiurator_data.fixing_methods_url;
 var canvas = null;
 var backCanvas = null;
 var activeCanvas = canvas
-function handleGetCanvas(canvas1, canvas2){
-    // console.log('canvas getted', canvas1, canvas2)
+var doubleFace = false;
+function handleGetCanvas(canvas1, canvas2, statut){
+    // console.log('canvas getted', statut)
     canvas = canvas1
     backCanvas = canvas2
+    if(statut === 'double'){
+        doubleFace = true
+    }else{
+        doubleFace = false
+    }
     activeCanvas = canvas
 }
 var activeSignFace = 'front'
@@ -662,28 +668,28 @@ function handleChangeSize(width, height, name, maxChar) {
         Objects.forEach(object => {
             if(object.name == 'heightLine'){
                 object.set({
-                    x1 : (newRectLeft + newSignWidth + 20), 
+                    x1 : (newRectLeft + newSignWidth + 30), 
                     y1: newRectTop, 
-                    x2: (newRectLeft + newSignWidth + 20), 
+                    x2: (newRectLeft + newSignWidth + 30), 
                     y2: (newRectTop + newSignHeight)
                 })
             }
             if(object.name == 'widthLine'){
                 object.set({
                     x1: newRectLeft, 
-                    y1: (newRectTop + newSignHeight + 18.5), 
-                    x2: (newRectLeft + newSignWidth + 18.5), 
-                    y2: (newRectTop + newSignHeight + 18.5)
+                    y1: (newRectTop + newSignHeight + 28.5), 
+                    x2: (newRectLeft + newSignWidth + 10), 
+                    y2: (newRectTop + newSignHeight + 28.5)
                 })
             }
             if(object.name == 'height-value'){
                 object.top = newRectTop + (newSignHeight/2)
-                object.left = newRectLeft + newSignWidth + 25
+                object.left = newRectLeft + newSignWidth + 35
                 object.text = String(height + ' ' + currentUnit)
             }
             if(object.name == 'width-value'){
                 object.left = newRectLeft + (newSignWidth/2)
-                object.top = newRectTop + (newSignHeight + 25)
+                object.top = newRectTop + (newSignHeight + 35)
                 object.text = String(width + ' ' + currentUnit)
             }
             if(selectedShape == 'square'){
@@ -888,6 +894,14 @@ function handleDeleteObject(object) {
         removeTextById(object.id, handleGetTextObjects2('aso-SignText'), canvas.name)
         
         removeDeletedTextPrice(textsPrice, addedTexts) 
+
+        // calcul des prix en fonctions des caractères restants
+        FtextObjects = handleGetTextObjects1('aso-SignText')
+        BtextObjects = handleGetTextObjects2('aso-SignText')
+        frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+        backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+    
+        handleCalcTextPrice()
         return addedTexts
     }
     if(target.type == 'image'){
@@ -961,8 +975,11 @@ function handleCenterHorizontally(object){
 //function pour afficher les borders
 var activeBorder = ''
 var activeBorderColor = ''
-function removeBorder(){
-    var Objects = activeCanvas.getObjects();
+var activeBorder2 = ''
+var activeBorderColor2 = ''
+var firstBorderCheck = true
+function removeBorder(canva){
+    var Objects = canva.getObjects();
     Objects.forEach(function(object){
         if(object.type !== 'line'){
             if(object.name == 'safeObject'){
@@ -971,138 +988,215 @@ function removeBorder(){
 
                 var oldWorld =handleGetObjectByName('old-world-border')
                 if(oldWorld != null){
-                    activeCanvas.remove(oldWorld)
+                    canva.remove(oldWorld)
                 }
             }
         }
     });
-    activeCanvas.renderAll();
+    canva.renderAll();
 }
 function handleSelectBorder(border, color) {
-    activeBorder = border
-    if(color){
-        activeBorderColor = color
+    // console.log("handleSelectBorder", border);
+    if(!firstLoad){
+        activeBorder = border
+        activeBorder2 = border
+        if(color){
+            activeBorderColor = color
+            activeBorderColor2 = color
+        }
+        setBorder(canvas, activeBorder, activeBorderColor)
+        setBorder(backCanvas, activeBorder2, activeBorderColor2)
+    }else{
+        if(activeSignFace === 'front'){
+            activeBorder = border
+            if(color){
+                activeBorderColor = color
+            }
+            setBorder(canvas, activeBorder, activeBorderColor)
+            setBorder(backCanvas, activeBorder2, activeBorderColor2)
+        }
+        if(activeSignFace === 'back'){
+            activeBorder2 = border
+            if(color){
+                activeBorderColor2 = color
+            }
+            setBorder(canvas, activeBorder, activeBorderColor)
+            setBorder(backCanvas, activeBorder2, activeBorderColor2)
+
+        }
     }
-    var Objects = activeCanvas.getObjects();
-    Objects.forEach(function(object){
-        if(object.type !== 'line'){
-            if(object.name == 'safeObject'){
-                if(border != 'old-wold'){
-                    if(border == 'none'){
-                        removeBorder()
-                    }else if(border == 'normal'){
-                        removeBorder()
+    function setBorder(canva, currBorder, activeColor){
+        // console.log(currBorder, activeColor, "setBorder")
+        var Objects = canva.getObjects();
+        Objects.forEach(function(object){
+            if(object.type !== 'line'){
+                if(object.name === 'safeObject'){
+                    if(currBorder === 'none'){
+                        removeBorder(canva)
+                    }if(currBorder === 'normal'){
+                        removeBorder(canva)
                         if(sizeRatio == 'small'){
                             object.set('strokeWidth', 11)
                         }
                         if(sizeRatio == 'big'){
                             object.set('strokeWidth', 6)
                         }
-                        if(color){
-                            object.set('stroke', activeBorderColor)
+                        if(activeColor){
+                            object.set('stroke', activeColor)
                         }else{
-                            object.set('stroke', activeBorderColor)
+                            object.set('stroke', activeColor)
+                        }
+    
+                    }
+                    if(currBorder === 'old-wold'){
+                        // fabric.util.loadImage('../../old-world-border.png', function(img) {
+                        //     var scaleX = object.width / img.width;
+                        //     var scaleY = object.height / img.height;
+                        //     var pattern = new fabric.Pattern({
+                        //         source: img,
+                        //         repeat: 'no-repeat',
+                        //         patternTransform: [scaleX, 0, 0, scaleY, 0, 0]
+                        //     });
+    
+                        //     console.log(pattern)
+                            
+                        //     // object.set('fill', pattern);
+                        //     canvas.add(pattern);
+                        //     canvas.renderAll();
+                        // });
+    
+                        object.set('strokeWidth', 0)                        
+                        object.set('stroke', 'transparent')
+    
+                        if(selectedShape == 'square'){
+                            if(sizeRatio == 'small'){
+                                fabric.util.loadImage('../../old-world-smallBorder.png', function(img) {
+                                    var scaleX = object.width / img.width;
+                                    var scaleY = object.height / img.height;
+                                    var imageOverlay = new fabric.Image(img, {
+                                    left: object.left,
+                                    top: object.top,
+                                    scaleX: scaleX,
+                                    scaleY: scaleY,
+                                    name: 'old-world-border',
+                                    selectable: false,
+                                    });
+                                
+                                    canva.add(imageOverlay);
+                                    imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                                    canva.renderAll();
+                                });
+                            }
+                            if(sizeRatio == 'big'){
+                                fabric.util.loadImage('../../old-world-bigBorder.png', function(img) {
+                                    var scaleX = object.width / img.width;
+                                    var scaleY = object.height / img.height;
+                                    var imageOverlay = new fabric.Image(img, {
+                                    left: object.left,
+                                    top: object.top,
+                                    scaleX: scaleX,
+                                    scaleY: scaleY,
+                                    name: 'old-world-border',
+                                    id: 6,
+                                    selectable: false,
+                                    });
+                                
+                                    canva.add(imageOverlay);
+                                    updateModifications(true, '==ajout de border==')
+                                    imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                                    canva.renderAll();
+                                });
+                            }
+                        }else{
+                            object.set('strokeWidth', 0)                        
+                            object.set('stroke', 'transparent')
                         }
     
                     }
                 }
-                if(border == 'old-wold'){
-                    // fabric.util.loadImage('../../old-world-border.png', function(img) {
-                    //     var scaleX = object.width / img.width;
-                    //     var scaleY = object.height / img.height;
-                    //     var pattern = new fabric.Pattern({
-                    //         source: img,
-                    //         repeat: 'no-repeat',
-                    //         patternTransform: [scaleX, 0, 0, scaleY, 0, 0]
-                    //     });
-
-                    //     console.log(pattern)
-                        
-                    //     // object.set('fill', pattern);
-                    //     canvas.add(pattern);
-                    //     canvas.renderAll();
-                    // });
-
-                    object.set('strokeWidth', 0)                        
-                    object.set('stroke', 'transparent')
-
-                    if(selectedShape == 'square'){
-                        if(sizeRatio == 'small'){
-                            fabric.util.loadImage('../../old-world-smallBorder.png', function(img) {
-                                var scaleX = object.width / img.width;
-                                var scaleY = object.height / img.height;
-                                var imageOverlay = new fabric.Image(img, {
-                                left: object.left,
-                                top: object.top,
-                                scaleX: scaleX,
-                                scaleY: scaleY,
-                                name: 'old-world-border',
-                                selectable: false,
-                                });
-                            
-                                activeCanvas.add(imageOverlay);
-                                imageOverlay.moveTo(activeCanvas.getObjects().length); // Déplacer l'image au-dessus du rectangle
-                                activeCanvas.renderAll();
-                            });
-                        }
-                        if(sizeRatio == 'big'){
-                            fabric.util.loadImage('../../old-world-bigBorder.png', function(img) {
-                                var scaleX = object.width / img.width;
-                                var scaleY = object.height / img.height;
-                                var imageOverlay = new fabric.Image(img, {
-                                left: object.left,
-                                top: object.top,
-                                scaleX: scaleX,
-                                scaleY: scaleY,
-                                name: 'old-world-border',
-                                id: 6,
-                                selectable: false,
-                                });
-                            
-                                activeCanvas.add(imageOverlay);
-                                updateModifications(true, '==ajout de border==')
-                                imageOverlay.moveTo(activeCanvas.getObjects().length); // Déplacer l'image au-dessus du rectangle
-                                activeCanvas.renderAll();
-                            });
-                        }
-                    }else{
-                        object.set('strokeWidth', 0)                        
-                        object.set('stroke', 'transparent')
-                    }
-
-                }
             }
-        }
-    });
-    activeCanvas.renderAll();
+        });
+        canva.renderAll();
+    }
+    firstBorderCheck = false
 
     return {type: border, color: color}
 }
 
+function handlechangeBorderColor(color){
+    if(!firstLoad){
+        activeBorderColor = color;
+        activeBorderColor2 = color;
+
+        setBorderColor(activeBorder, activeBorderColor, canvas)
+        setBorderColor(activeBorder, activeBorderColor, backCanvas)
+    }else{
+        if(activeSignFace === 'front'){
+            activeBorderColor = color;
+            setBorderColor(activeBorder, activeBorderColor, canvas)    
+        }
+        if(activeSignFace === 'back'){
+            activeBorderColor2 = color;
+            setBorderColor(activeBorder2, activeBorderColor2, backCanvas)    
+        }
+    }
+    
+    function setBorderColor(border, color, canva){
+        if(border === 'normal'){
+            var Objects = canva.getObjects();
+            Objects.forEach(function(object){
+                if(object.name === 'safeObject'){
+                    if(sizeRatio == 'small'){
+                        object.set('strokeWidth', 11)
+                    }
+                    if(sizeRatio == 'big'){
+                        object.set('strokeWidth', 6)
+                    }
+                    object.set('stroke', color)
+                }
+            })
+            canva.renderAll()
+        }
+        if(border === "old-world"){
+    
+        }
+    }
+}
+
 var currentSignColor = ''
 var currentSignTextColor = 'black'
-function handleChangeSignColor(color, defTextColor) {
+function handleChangeSignColor(color, defTextColor, start) {
     currentSignColor = color;
-    var Objects = activeCanvas.getObjects();
-    Objects.forEach(function(object){
-        if (object.type !== 'line') {
+    function setSignColor(canva){
+        var Objects = canva.getObjects();
+        Objects.forEach(function(object){
+            if (object.type !== 'line') {
+    
+                if(object.name == 'safeObject'){
+                    object.set('fill', color.backgroundColor)
+                }
+                if(color.textColor.active){
+                    currentSignTextColor = color.textColor.codeHex
+                    if(object.name == "aso-SignText"){
+                        object.set('fill', color.textColor.codeHex)
+                    }
+                }else{
+                    if(object.name == "aso-SignText"){
+                        object.set('fill', defTextColor)
+                    }
+                }
+            }
+        });
+        canva.renderAll();
+    }
 
-            if(object.name == 'safeObject'){
-                object.set('fill', color.backgroundColor)
-            }
-            if(color.textColor.active){
-                currentSignTextColor = color.textColor.codeHex
-                if(object.name == "aso-SignText"){
-                    object.set('fill', color.textColor.codeHex)
-                }
-            }else{
-                if(object.name == "aso-SignText"){
-                    object.set('fill', defTextColor)
-                }
-            }
-        }
-    });
-    activeCanvas.renderAll();
+    if(start){
+        setSignColor(canvas)
+        setSignColor(backCanvas)
+    }else{
+        setSignColor(activeCanvas)
+    }
+
     updateModifications(true, 'changer sign color')
 
     return color
@@ -1201,7 +1295,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                               
                             canvas.remove(object);
                             canvas.add(squareShape);
-                            handleSelectBorder(activeBorder)
                             // console.log(squareShape.getCenterPoint(), 'square shape');
                             squareShape.sendToBack();
                             canvas.centerObject(squareShape);
@@ -1227,7 +1320,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             })
                             canvas.remove(object)
                             canvas.add(roundedSquareShape)
-                            handleSelectBorder(activeBorder)
                             roundedSquareShape.sendToBack()
                             canvas.centerObject(roundedSquareShape)
                             // updateModifications(true)
@@ -1247,7 +1339,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             });
                             canvas.remove(object)
                             canvas.add(ellipseShape)
-                            handleSelectBorder(activeBorder)
                             ellipseShape.sendToBack()
                             canvas.centerObject(ellipseShape)
                             // updateModifications(true)
@@ -1271,7 +1362,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             })
                             canvas.remove(object)
                             canvas.add(triangleShape)
-                            handleSelectBorder(activeBorder)
                             triangleShape.sendToBack()
                             canvas.centerObject(triangleShape)
                             // updateModifications(true)
@@ -1296,7 +1386,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             )
                             canvas.remove(object)
                             canvas.add(rotatedSquareShape)
-                            handleSelectBorder(activeBorder)
                             rotatedSquareShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1321,7 +1410,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             )
                             canvas.remove(object)
                             canvas.add(turnLeftShape)
-                            handleSelectBorder(activeBorder)
                             turnLeftShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1346,7 +1434,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             )
                             canvas.remove(object)
                             canvas.add(turnRightShape)
-                            handleSelectBorder(activeBorder)
                             turnRightShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1373,7 +1460,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             )
                             canvas.remove(object)
                             canvas.add(arrowRightShape)
-                            handleSelectBorder(activeBorder)
                             arrowRightShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1400,7 +1486,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             )
                             canvas.remove(object)
                             canvas.add(arrowLeftShape)
-                            handleSelectBorder(activeBorder)
                             arrowLeftShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1428,7 +1513,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             )
                             canvas.remove(object)
                             canvas.add(stopShape)
-                            handleSelectBorder(activeBorder)
                             stopShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1450,7 +1534,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             })
                             canvas.remove(object)
                             canvas.add(roundedTopShape)
-                            handleSelectBorder(activeBorder)
                             roundedTopShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1472,7 +1555,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             })
                             canvas.remove(object)
                             canvas.add(roundedSidesShape)
-                            handleSelectBorder(activeBorder)
                             roundedSidesShape.sendToBack()
                             // updateModifications(true)
                         break;
@@ -1488,8 +1570,20 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
         setShape(backCanvas)
     }
 
-    removeBorder()
-    handleSelectBorder(activeBorder, activeBorderColor)
+    if(!firstLoad){
+        removeBorder(canvas)
+        handleSelectBorder(activeBorder, activeBorderColor)
+    }
+    if(firstLoad){
+        if(activeSignFace === 'front'){
+            removeBorder(canvas)
+            handleSelectBorder(activeBorder, activeBorderColor)
+        }
+        if(activeSignFace === 'back'){
+            removeBorder(backCanvas)
+            handleSelectBorder(activeBorder2, activeBorderColor2)
+        }
+    }
 
     handleSelectFixingMethode(activeFixingMethode)
 }
@@ -3718,7 +3812,7 @@ function handleChangeTextValue(event){
     //     backTextCharLength = 0
     // }
 
-    console.log(frontTextCharLength, "frontTextCharLength")
+    // console.log(frontTextCharLength, "frontTextCharLength")
 }
 function handleChangeTextAlign(align){
     var currentText = selectedText.object;
@@ -3822,6 +3916,10 @@ var selectedImage = {
     bottom: '',
     angle: 0,
 }
+var imageSettings = {}
+function handleGetImageSettings(settings){
+    imageSettings = settings
+}
 function handleGetAddedImageValues(object){
     var container = handleGetObjectByName('safeObject')
     var newCoord = object.getCoords();
@@ -3862,34 +3960,6 @@ function handleGetAddedImageValues(object){
 }
 var addedImages = []
 function handleAddImageToSign(image){
-    var sign = handleGetObjectByName('safeObject')
-    var itsDone = false;
-
-    var imageInput = document.getElementById('aso-iamge-input')
-
-    if(image){
-        useImage(image)
-    }else{
-        // Écouteur d'évènement lorsque l'utilisateur sélectionne un fichier
-        imageInput.addEventListener('change', function(e) {
-            const imgFile = imageInput.files[0]; 
-            // Création d'un objet FileReader
-            const reader = new FileReader();
-            // Lecture du fichier image lorsqu'il est chargé
-            reader.onload = () => {
-                // Stockage de l'image en base64 dans une variable
-                const imgBase64 = reader.result; 
-                // Utilisation de l'image
-                if(!itsDone){
-                    useImage(imgBase64); 
-                    itsDone = true;
-                }
-            };
-            // Lancement de la lecture comme URL 
-            reader.readAsDataURL(imgFile);        
-        });
-    }
-    
     function useImage(imgUrl) {
         fabric.Image.fromURL(imgUrl, function(img) {
             img.scale(0.4)
@@ -3937,7 +4007,87 @@ function handleAddImageToSign(image){
         });
     }
 
-    return addedImages
+    var sign = handleGetObjectByName('safeObject')
+    var itsDone = false;
+    var imageError = ""
+
+    var imageInput = document.getElementById('aso-iamge-input')
+
+    function checkImageSize(file, maxWidth, minWidth) {
+        return new Promise((resolve, reject) => {
+            // Crée une nouvelle image
+            const img = new Image();
+        
+            // Charge l'image à partir du fichier
+            img.src = URL.createObjectURL(file);
+        
+            img.onload = () => {
+                const width = img.width;
+                const height = img.height;
+        
+                // Vérifie si l'image respecte les conditions de taille
+                if (width > maxWidth || width < minWidth) {
+                    reject(console.log(`L'image doit avoir une taille comprise entre ${minWidth} et ${maxWidth}`));
+                } else {
+                    resolve(file);
+                }
+            };
+        
+            img.onerror = () => {
+                reject(console.log('Impossible de charger l\'image'));
+            };
+        });
+    }
+
+
+    return new Promise((resolve, reject) => {
+        if (image) {
+            useImage(image);
+            resolve({ images: addedImages, error: "" });
+        } else {
+            imageInput.addEventListener('change', function(e) {
+                const imgFile = imageInput.files[0];
+        
+                if(imageSettings.fileUploadScript.customWithGraphical){
+                    checkImageSize(imgFile, imageSettings.fileUploadScript.uploadMaxWidth, imageSettings.fileUploadScript.uploadMinWidth)
+                    .then((validFile) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                        const imgBase64 = reader.result;
+                        if (!itsDone) {
+                            useImage(imgBase64);
+                            itsDone = true;
+                            resolve({ images: addedImages, error: "" });
+                        }
+                        };
+                        reader.readAsDataURL(validFile);
+                    })
+                    .catch((error) => {
+                        // console.log(error);
+                        imageError = `L'image doit avoir une taille comprise entre ${imageSettings.fileUploadScript.uploadMinWidth}px et ${imageSettings.fileUploadScript.uploadMaxWidth}px de largeur`;
+                        reject({ images: addedImages, error: imageError });
+                    });
+                }else{
+                    // Création d'un objet FileReader
+                    const reader = new FileReader();
+                    // Lecture du fichier image lorsqu'il est chargé
+                    reader.onload = () => {
+                        // Stockage de l'image en base64 dans une variable
+                        const imgBase64 = reader.result; 
+                        // Utilisation de l'image
+                        if(!itsDone){
+                            useImage(imgBase64); 
+                            itsDone = true;
+                        }
+                    };
+                    // Lancement de la lecture comme URL 
+                    reader.readAsDataURL(imgFile);  
+                    
+                    resolve({ images: addedImages, error: "" });
+                }
+            });
+        }
+    });
 }
 function handleChangeImageWidth(scaleX) {
     var currentImage = activeCanvas.getActiveObject();
@@ -4022,7 +4172,7 @@ function removeDeletedTextPrice(priceTable, textObjects) {
             priceTable.splice(index, 1);
             index--;
         }
-        console.log(textsPrice, "table de prix de text")
+        // console.log(textsPrice, "table de prix de text")
     });
 
     return priceTable;
@@ -4052,9 +4202,15 @@ function handleCalcTextPrice(object){
         // console.log(textsPrice, "table de prix de text")
         if(frontTextCharLength > startPriceAtChar){
             avalaibleFaceChars = (sumOptionsPrice(FtextObjects, 'text').length) - startPriceAtChar
+            if(avalaibleFaceChars < 0){
+                avalaibleFaceChars = 0
+            }
         }
         if(backTextCharLength > startPriceAtChar){
             avalaibleBackChars = (sumOptionsPrice(BtextObjects, 'text').length) - startPriceAtChar
+            if(avalaibleBackChars < 0){
+                avalaibleBackChars = 0
+            }
         }
     }
     else{
@@ -4112,6 +4268,7 @@ export {
     handleCloneObject,
     handleCenterVertically,
     handleCenterHorizontally,
+    handlechangeBorderColor,
     handleSelectBorder,
     handleChangeSignColor,
     handleGetShape,
@@ -4129,6 +4286,7 @@ export {
     handleUnderlineText,
     handleCrossText,
     handleOverlineText,
+    handleGetImageSettings,
     handleGetAddedImageValues,
     handleAddImageToSign,
     handleTurnImageLeft,
