@@ -41,4 +41,16 @@
     border: solid 1px !important;
   }
 
+  .aso-inputImage{
+    /* aso-text-md  */
+    display: flex !important;
+    padding: 8px 14px 8px 14px !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+}
+.aso-inputImage svg, .aso-inputImage p{
+    margin-left: 5px !important;
+    margin-right: 5px !important
+}
+
 }

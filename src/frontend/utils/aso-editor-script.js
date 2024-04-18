@@ -1,4 +1,5 @@
 var fixingUrl = aso_confiurator_data.fixing_methods_url;
+var borderUrl = aso_confiurator_data.borders_url;
 var canvas = null;
 var backCanvas = null;
 var activeCanvas = canvas
@@ -996,7 +997,7 @@ function removeBorder(canva){
     canva.renderAll();
 }
 function handleSelectBorder(border, color) {
-    // console.log("handleSelectBorder", border);
+    console.log("handleSelectBorder", border);
     if(!firstLoad){
         activeBorder = border
         activeBorder2 = border
@@ -1048,7 +1049,7 @@ function handleSelectBorder(border, color) {
                         }
     
                     }
-                    if(currBorder === 'old-wold'){
+                    if(currBorder === 'old-world'){
                         // fabric.util.loadImage('../../old-world-border.png', function(img) {
                         //     var scaleX = object.width / img.width;
                         //     var scaleY = object.height / img.height;
@@ -1068,42 +1069,58 @@ function handleSelectBorder(border, color) {
                         object.set('strokeWidth', 0)                        
                         object.set('stroke', 'transparent')
     
-                        if(selectedShape == 'square'){
-                            if(sizeRatio == 'small'){
-                                fabric.util.loadImage('../../old-world-smallBorder.png', function(img) {
-                                    var scaleX = object.width / img.width;
-                                    var scaleY = object.height / img.height;
-                                    var imageOverlay = new fabric.Image(img, {
-                                    left: object.left,
-                                    top: object.top,
-                                    scaleX: scaleX,
-                                    scaleY: scaleY,
-                                    name: 'old-world-border',
-                                    selectable: false,
-                                    });
+                        if(selectedShape === 'square' || selectedShape === 'rounded-square'){
+                            if(sizeRatio === 'small'){
+                                // fabric.util.loadImage( borderUrl+'/im_old-world.svg', function(img) {
+                                //     var scaleX = object.width / img.width;
+                                //     var scaleY = object.height / img.height;
+                                //     var imageOverlay = new fabric.Image(img, {
+                                //         left: object.left,
+                                //         top: object.top,
+                                //         scaleX: scaleX,
+                                //         scaleY: scaleY,
+                                //         name: 'old-world-border',
+                                //         selectable: false,
+                                //     });
                                 
-                                    canva.add(imageOverlay);
-                                    imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                                //     canva.add(imageOverlay);
+                                //     imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                                //     canva.renderAll();
+                                // });
+                                fabric.loadSVGFromURL(borderUrl+'/im_old-world.svg', (objects, options) => {
+                                    var scaleX = object.width / objects[0].width                                 ;
+                                    var scaleY = object.height / objects[0].height;
+
+                                    const svgGroup = fabric.util.groupSVGElements(objects);
+                                    svgGroup.set('fill', activeColor)
+                                    svgGroup.set('left', object.left)
+                                    svgGroup.set('top', object.top)
+                                    svgGroup.scaleX = scaleX
+                                    svgGroup.scaleY = scaleY
+                                    svgGroup.name = 'old-world-border',
+                                    svgGroup.selectable = false,
+
+                                    // console.log("svg", svgGroup);
+                                    canva.add(svgGroup);
                                     canva.renderAll();
                                 });
                             }
-                            if(sizeRatio == 'big'){
-                                fabric.util.loadImage('../../old-world-bigBorder.png', function(img) {
-                                    var scaleX = object.width / img.width;
-                                    var scaleY = object.height / img.height;
-                                    var imageOverlay = new fabric.Image(img, {
-                                    left: object.left,
-                                    top: object.top,
-                                    scaleX: scaleX,
-                                    scaleY: scaleY,
-                                    name: 'old-world-border',
-                                    id: 6,
-                                    selectable: false,
-                                    });
-                                
-                                    canva.add(imageOverlay);
-                                    updateModifications(true, '==ajout de border==')
-                                    imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
+                            if(sizeRatio === 'big'){
+                                fabric.loadSVGFromURL(borderUrl+'/im_old-world.svg', (objects, options) => {
+                                    var scaleX = object.width / objects[0].width                                 ;
+                                    var scaleY = object.height / objects[0].height;
+
+                                    const svgGroup = fabric.util.groupSVGElements(objects);
+                                    svgGroup.set('fill', activeColor)
+                                    svgGroup.set('left', object.left)
+                                    svgGroup.set('top', object.top)
+                                    svgGroup.scaleX = scaleX
+                                    svgGroup.scaleY = scaleY
+                                    svgGroup.name = 'old-world-border',
+                                    svgGroup.selectable = false,
+
+                                    // console.log("svg", svgGroup);
+                                    canva.add(svgGroup);
                                     canva.renderAll();
                                 });
                             }
@@ -1158,7 +1175,13 @@ function handlechangeBorderColor(color){
             canva.renderAll()
         }
         if(border === "old-world"){
-    
+            canva.getObjects().forEach(objet => {
+                if(objet.name === 'old-world-border'){
+                    objet.set('fill', color)
+                }
+            });
+
+            canva.renderAll()
         }
     }
 }

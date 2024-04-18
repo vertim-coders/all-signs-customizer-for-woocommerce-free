@@ -110,6 +110,7 @@ class ASO_Frontend {
                             'currency_pos'       => get_option('woocommerce_currency_pos'),
                             'variations'          => $available_variations,
                             "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
+                            "borders_url"  => ASO_ASSETS.'/images/borders',
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
                         ?>
