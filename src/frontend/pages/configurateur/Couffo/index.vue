@@ -895,8 +895,8 @@
                                 <p class="aso-text-center">Browse archive image</p>
                             </span>
 
-                            <label v-show="configImageSettings.enableUploadImage" :class="`aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer`">
-                                <input @click="addImageToSign()" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" :accept="configImagesFormat" />
+                            <label v-show="configImageSettings.enableUploadImage" :class="`aso-w-3/4 aso-inputImage aso-full-center aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-text-md`">
+                                <input @click="addImageToSign()" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" :accept="configImagesFormat" style="display: none;"/>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                 </svg>
@@ -1383,6 +1383,7 @@
                         if(!borderr.isDefault && !stopBorder){
                             selectBorder(border.value, borderr.settings, borderr.additionalPrice)
                             stopBorder = true
+                            console.log("stopBorder")
                         }
                     }
                 })
@@ -1431,6 +1432,7 @@
                             if(sizee.manageSizeId == index){
                                 if(sizee.isDefault){
                                     changeSize(size, sizee, id)
+                                    stopSize = true
                                 }
                                 if(!sizee.isDefault && !stopSize){
                                     changeSize(size, sizee, id)
