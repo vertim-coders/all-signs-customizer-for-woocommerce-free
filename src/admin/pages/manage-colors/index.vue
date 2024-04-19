@@ -377,22 +377,22 @@ import toastMessage from '@/admin/utils/functions';
         isNewColor.value = false;
     }
 
-    const changeTextColor = (event) => {
-        if(event.target.value[0]!=='#'){
-            event.target.value = '#'+ event.target.value;
-        }
-        newColor.value.textColor.codeHex = event.target.value;
+const changeTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
     }
+    newColor.value.textColor.codeHex = event.target.value;
+}
 
-    const handleChangeTextColorActive = () => {
-        newColor.value.textColor.active = !newColor.value.textColor.active;
+const handleChangeTextColorActive = () => {
+    newColor.value.textColor.active = !newColor.value.textColor.active;
+}
+const changeBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
     }
-    const changeBackgroundColor = (event) => {
-        if(event.target.value[0]!=='#'){
-            event.target.value = '#'+ event.target.value;
-        }
-        newColor.value.backgroundColor = event.target.value;
-    }
+    newColor.value.backgroundColor = event.target.value;
+}
 
     const closeModal = () => {
         openModal.value =!openModal.value;

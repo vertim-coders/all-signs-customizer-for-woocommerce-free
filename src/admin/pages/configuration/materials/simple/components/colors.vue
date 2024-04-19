@@ -1,8 +1,8 @@
 <template>
-    <div class="aso-h-[100vh]">
+    <div class="aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden">
         <div class="aso-space-y-1 py-2" v-if="!isNewColor">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
-                <button v-if="!isFetching" :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newColor">
+                <button v-if="!isFetching" :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newColor">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
@@ -58,18 +58,24 @@
                         </tr>
                         <tr v-for="(color, key) in colors" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]" :key="key">
                             <td class="aso-text-center aso-px-5 aso-p-4">
-                                {{ manageColors[color.manageColorId]? manageColors[color.manageColorId].name :'' }}
+                                {{ color.name }}
                             </td>
                             
-                            <td class="aso-text-[12px] aso-px-6 aso-py-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{ manageColors[color.manageColorId]? manageColors[color.manageColorId].textColor.active ? manageColors[color.manageColorId].textColor.codeHex : 'Disable' : '' }}
-                                </span>
+                            <td class="aso-text-[12px] aso-px-6">
+                                <div class="aso-text-[12px] aso-px-6 aso-py-2 aso-flex aso-justify-center aso-items-center">
+                                    <span v-if="!color.textColor.active" class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
+                                        Disable
+                                    </span>
+                                    <div v-if="color.textColor.active" :class="`aso-text-center aso-bg-[${color.textColor.codeHex}] aso-border-solid aso-border-[#000000] aso-rounded-full aso-w-[25px] aso-h-[25px]`"></div>
+                                </div>
                             </td>
-                            <td class="aso-text-[12px] aso-px-6 aso-py-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F3F6F6] aso-text-[#586374] aso-border-none">
-                                    {{ manageColors[color.manageColorId]? manageColors[color.manageColorId].backgroundColor : '' }}
-                                </span>
+                            <td class="aso-text-[12px] aso-px-6">
+                                <div class="aso-text-[12px] aso-px-6 aso-py-2 aso-flex aso-justify-center aso-items-center">
+                                    <div v-if="color.pattern.active" class="aso-relative">
+                                        <img :src="color.pattern.url" alt="" srcset="" class="aso-w-[50px] aso-h-[50px] aso-rounded">
+                                    </div>
+                                    <div :class="`aso-text-center aso-bg-[${color.pattern.codeHex}] aso-border-solid aso-border-[#000000] aso-rounded-full aso-w-[25px] aso-h-[25px]`"  v-if="!color.pattern.active"></div>
+                                </div>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
@@ -96,49 +102,259 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-2" v-if="isNewColor && manageColors.length >0 ">
+        <div class="aso-space-y-2" v-if="isNewColor">
                 
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
                 {{isEdit ? 'Edit Color':'Add news colors'}}
             </div>
-            <div class="aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-if="isEdit">
-                <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
-                    <select v-model="color.manageColorId" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option v-for="(color,key) in notSelectedManageColors" :value="key" :key="key">
-                            {{ color.name }}
-                        </option>
-                    </select>
-                    
-                </div>
-                <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                    <input type="number" v-model="color.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
-                    
-                </div>
-            </div>
-            <div v-if="!isEdit">
-                <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-for="(color,key) in addColors">
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
-                        <select v-model="addColors[key].manageColorId" class="aso-rounded aso-w-full aso-h-[30px]">
-                            <option v-for="(color,key) in notSelectedManageColors" :value="key" :key="key">
-                                {{ color.name }}
-                            </option>
-                        </select>
-                        
+            <div class="aso-space-y-2" v-if="isEdit">
+                <div class="aso-relative aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-2">
+                    <div class="aso-flex aso-justify-between">
+                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Color Name</label>
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="color.name"> 
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Color Preview Image</label>
+                            <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                                <div class="aso-flex aso-space-x-2">
+                                    <button @click="selectMaterialPrevImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                    <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                        <img v-if="color.prevImg != ''" :src="color.prevImg" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                        <button v-if="color.prevImg != ''" @click="()=>{color.prevImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>             
+                        </div> 
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-items-center">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start">
+                            <div>
+                                <label for="">Use Color Pattern</label>
+                                <p>use a variety code for the color of the article or an image</p>
+                            </div>
+                            <div class="aso-flex aso-space-x-2 aso-items-center">
+                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                <div class="aso-flex aso-items-center">
+                                    <label for="aso-toggle" @click="handleChangePatterActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': color.pattern.active, 'aso-bg-active': color.pattern.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </div>
+                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                            </div>
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="!color.pattern.active">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Material Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="color.pattern.codeHex"
+                                    @input="changeBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="color.pattern.codeHex"
+                                    @input="changeBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                />
+                            </div>                        
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.pattern.active">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Background Image</label>
+                            <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                                <div class="aso-flex aso-space-x-2">
+                                    <button @click="(e)=>selectMaterialBackgroundImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                    <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                        <img v-if="color.pattern.url != ''" :src="color.pattern.url" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                        <button v-if="color.pattern.url != ''" @click="()=>{color.pattern.url = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>             
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-items-center">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start">
+                            <div>
+                                <label for="">Enable Text Color</label>
+                                <p>Activate this option to force a single color for texts</p>
+                            </div>
+                            <div class="aso-flex aso-space-x-2 aso-items-center">
+                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                <div class="aso-flex aso-items-center">
+                                    <label for="aso-toggle" @click="handleChangeTextColorActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': color.textColor.active, 'aso-bg-active': color.textColor.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </div>
+                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                            </div>
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.textColor.active">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="color.textColor.codeHex"
+                                    @input="changeTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="color.textColor.codeHex"
+                                    @input="changeTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                />
+                            </div>                        
+                        </div>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input type="number" v-model="color.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="color.additionalPrice.trim()==''?color.additionalPrice=0:''">
                     </div>
-                    <div @click="handleDeleteNewMaterialColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full">
+                </div>
+            </div>
+            <div class="aso-space-y-2" v-if="!isEdit">
+                <div class="aso-relative aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-2" v-for="(color,key) in addColors">
+                    <div v-if="!dropdownColors[key]">
+                        <h2 class="aso-text-[15px] aso-font-bold">{{ key+1 }}.</h2>
+                    </div>
+                    <div class="aso-flex aso-justify-between" v-show="dropdownColors[key]">
+                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Color Name</label>
+                            <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="addColors[key].name"> 
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Color Preview Image</label>
+                            <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                                <div class="aso-flex aso-space-x-2">
+                                    <button @click="(e)=>selectMaterialPrevImage(e,key)" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                    <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                        <img v-if="addColors[key].prevImg != ''" :src="addColors[key].prevImg" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                        <button v-if="addColors[key].prevImg != ''" @click="()=>{addColors[key].prevImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>             
+                        </div> 
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-items-center" v-show="dropdownColors[key]">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start">
+                            <div>
+                                <label for="">Use Color Pattern</label>
+                                <p>use a variety code for the color of the article or an image</p>
+                            </div>
+                            <div class="aso-flex aso-space-x-2 aso-items-center">
+                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                <div class="aso-flex aso-items-center">
+                                    <label for="aso-toggle" @click="handleChangePatterActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': addColors[key].pattern.active, 'aso-bg-active': addColors[key].pattern.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </div>
+                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                            </div>
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="!addColors[key].pattern.active">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Material Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="addColors[key].pattern.codeHex"
+                                    @input="(e)=>changeBackgroundColor(e,key)"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="addColors[key].pattern.codeHex"
+                                    @input="(e)=>changeBackgroundColor(e,key)"
+                                    class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                />
+                            </div>                        
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="addColors[key].pattern.active">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Background Image</label>
+                            <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                                <div class="aso-flex aso-space-x-2">
+                                    <button @click="(e)=>selectMaterialBackgroundImage(e,key)" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                    <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                        <img v-if="addColors[key].pattern.url != ''" :src="addColors[key].pattern.url" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                        <button v-if="addColors[key].pattern.url != ''" @click="()=>{addColors[key].pattern.url = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>             
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-items-center" v-show="dropdownColors[key]">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start">
+                            <label for="">Enable Text Color</label>
+                            <div class="aso-flex aso-space-x-2 aso-items-center">
+                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                <div class="aso-flex aso-items-center">
+                                    <label for="aso-toggle" @click="handleChangeTextColorActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': addColors[key].textColor.active, 'aso-bg-active': addColors[key].textColor.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </div>
+                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                            </div>
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="addColors[key].textColor.active">
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="addColors[key].textColor.codeHex"
+                                    @input="changeTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="addColors[key].textColor.codeHex"
+                                    @input="changeTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                />
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col" v-show="dropdownColors[key]">
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
+                        <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]"  @blur="addColors[key].additionalPrice.trim()==''?addColors[key].additionalPrice=0:''">
+                    </div>
+                    <div @click="handleDeleteNewMaterialColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-my-0  aso-top-0 aso-shadow-md aso-rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </div>
+                    <div v-if="dropdownColors[key]" @click="dropdownColors[key]=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+                        </svg>
+                    </div>
+                    <div v-if="!dropdownColors[key]" @click="dropdownColors[key]=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                        </svg>
+                    </div>
                 </div>
-                <div class="aso-pt-4" v-if="Object.keys(notSelectedManageColors).length > 0">
+                <div class="aso-pt-4">
                     <button :disabled="isLoading" @click="handleAddNewMaterialColor" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -147,8 +363,7 @@
                     </button>
                 </div>
             </div>
-                
-                
+            
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
                     <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
@@ -179,6 +394,7 @@
                 </div>
             </div>
         </div>
+       
         <!-- Delete Modal-->
         <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
@@ -207,184 +423,147 @@
     </div>
 </template>
 <script setup>
-    import api from "@/admin/Api/api";
-    import { ref,onMounted } from "vue";
-    import { useRoute } from 'vue-router';
-    import toastMessage from "@/admin/utils/functions";
-    
-    const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
+import api from "@/admin/Api/api";
+import { ref,onMounted } from "vue";
+import { useRoute } from 'vue-router';
+import toastMessage from "@/admin/utils/functions";
 
-    const isFetching = ref(false);
-    const isNewColor = ref(false);
-    const isLoading = ref(false);
-    const manageColors = ref([]);
-    const colorId = ref(null);
-    const colors = ref ([]);
-    
-    const isEdit = ref(false);
-    const openModal = ref(false);
-    const noColorsFound = ref('');
-    const color = ref({
+const route = useRoute()
+const configID = ref(route.params.configId);
+const materialId = ref(route.params.materialId);
+const dropdownColors = ref([true])
+const isFetching = ref(false);
+const isNewColor = ref(false);
+const isLoading = ref(false);
+const colorId = ref(null);
+const colors = ref ([]);
+
+const isEdit = ref(false);
+const openModal = ref(false);
+const noColorsFound = ref('');
+const color = ref({
+    isDefault:false,
+    name:'',
+    textColor:{
+        active:false,
+        codeHex:'#000000'
+    },
+    pattern:{
+        active:false,
+        codeHex:'#000000',
+        url:""
+    },
+    prevImg:"",
+    additionalPrice:0,
+});
+
+const addColors = ref([
+    {
         isDefault:false,
-        manageColorId:0,
+        name:'',
+        textColor:{
+            active:false,
+            codeHex:'#000000'
+        },
+        pattern:{
+            active:false,
+            codeHex:'#000000',
+            url:""
+        },
+        prevImg:"",
         additionalPrice:0,
-    });
+    }
+]);
 
-    const addColors = ref([
-        {
-            isDefault:false,
-            manageColorId:0,
-            additionalPrice:0,
-        }
-    ]);
-    const notSelectedManageColors = ref({})
+onMounted(async ()=>{
+    isFetching.value = true;
+    await fetchMaterialColors();
+    isFetching.value = false;
+});
 
-    onMounted(async ()=>{
-        isFetching.value = true;
-        await fetchManageColors();
+const fetchMaterialColors = async () => {
+    const result = await api.getMaterialSimpleColors(configID.value,materialId.value);
+    if(!result.message){
+        colors.value = result;
+    }else{
+        colors.value = [];
+        noColorsFound.value = result.message;
+    }
+};
+
+const changeTextColor = (event,key=-1) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    if(key==-1){
+        color.value.textColor.codeHex = event.target.value;
+    }else{
+        addColors.value[key].textColor.codeHex = event.target.value;
+    }
+}
+
+const handleChangeTextColorActive= (key=-1) => {
+    if(key==-1){
+        color.value.textColor.active = ! color.value.textColor.active;
+    }else{
+        addColors.value[key].textColor.active = !addColors.value[key].textColor.active;
+    }
+}
+const handleChangePatterActive= (key=-1) => {
+    if(key==-1){
+        color.value.pattern.active = ! color.value.pattern.active;
+    }else{
+        addColors.value[key].pattern.active = !addColors.value[key].pattern.active;
+    }
+}
+const changeBackgroundColor = (event,key=-1) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    if(key==-1){
+        color.value.pattern.codeHex = event.target.value;
+    }else{
+        addColors.value[key].pattern.codeHex = event.target.value;
+    }
+}
+
+const updateMaterialColor = async () => {
+    isLoading.value = true;
+    checkIfThereDefault();
+    const result = await api.updateMaterialSimpleColors(configID.value,materialId.value,colors.value);
+    if(result.success){
         await fetchMaterialColors();
-        isFetching.value = false;
-    });
-    
-   const fetchMaterialColors = async () => {
-        const result = await api.getMaterialSimpleColors(configID.value,materialId.value);
-        if(!result.message){
-            colors.value = result;
+        if(result.success == true ) {
+            toastMessage(result.message);
         }else{
-            colors.value = [];
-            noColorsFound.value = result.message;
+            toastMessage(result.message,"warning");
         }
-    };
-
-    const fetchManageColors = async () => {
-        const result = await api.getManageColorsPalettes();
-        if(!result.message){
-            manageColors.value = result;
-        }
-    }
-    
-    const updateMaterialColor = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleColors(configID.value,materialId.value,colors.value);
-        if(result.success){
-            await fetchMaterialColors();
-            if(result.success == true ) {
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning");
-            }
-            isLoading.value = false;
-            isNewColor.value = false;
-            openModal.value = false;
-            addColors.value = [
-                {
-                    isDefault:false,
-                    manageColorId:0,
-                    additionalPrice:0
-                }
-            ];
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewColor.value = false;
-            openModal.value = false;
-            addColors.value = [
-                {
-                    isDefault:false,
-                    manageColorId:0,
-                    additionalPrice:0
-                }
-            ];
-        }
-    }
-    
-
-    const selectMaterialColor = (id,col,isdeleting=false) => {
-        if(isdeleting){
-            colorId.value = id;
-            closeModal();
-        }else{
-            if(manageColors.value.length >0 ){
-                color.value = col;
-                notSelectedManageColors.value = checkNotSelectedManageColors(col.manageColorId)
-                isEdit.value = true;
-                isNewColor.value = true;
-            }else{
-                toastMessage('To continue, please add colors to manage colors','warning')
-            }
-        }
-    }
-
-    const checkNotSelectedManageColors = ( key= -1) => {
-        var notSelectedManageColors = {};
-        let index = 0; 
-        while (index < manageColors.value.length) {
-            var indexUse = false;
-            for (let i = 0; i <  colors.value.length; i++) {
-                if(index == colors.value[i].manageColorId){
-                    indexUse = true;
-                }
-            }
-            if(!indexUse){
-                notSelectedManageColors[index] = manageColors.value[index];
-            }
-            index++;
-        }
-        if(key!=-1){
-            notSelectedManageColors[key] = manageColors.value[key];
-        }
-        return notSelectedManageColors;
-    }
-
-    const addMaterialColor = async () => {
-        isLoading.value = true;
-        for (let index = 0; index < addColors.value.length; index++) {
-            colors.value.push(addColors.value[index]);
-        }
-        await updateMaterialColor();
-    }
-    
-    const updateColorInMaterialColor = async () => {
-        isLoading.value = true;
-        colors.value[colorId.value]=color.value;
-        await updateMaterialColor();
-    }
-
-    const deleteMaterialColor = async () => {
-        isLoading.value = true;
-        colors.value.splice(colorId.value,1);
-        await updateMaterialColor();
-    }
-
-
-    const closeModal = () => {
-        openModal.value = !openModal.value;
-    }
-
-    
-    const newColor = () => {
-        if(manageColors.value.length >0 ){
-            notSelectedManageColors.value = checkNotSelectedManageColors();
-            if(Object.keys(notSelectedManageColors.value).length>0){
-                isNewColor.value = true;
-            }else{
-                toastMessage('No colors to choose','warning');
-            }
-        }else{
-            toastMessage('To continue you must be add color in manage colors','warning');
-        }
-    }
-    const back = () => {
+        isLoading.value = false;
         isNewColor.value = false;
-        isEdit.value = false;
-        colorId.value  = null;
-        color.value = {
-            isDefault:false,
-            manageColorId:0,
-            additionalPrice:0
-        };
+        openModal.value = false;
+        addColors.value = [
+            {
+                isDefault:false,
+                name:'',
+                textColor:{
+                    active:false,
+                    codeHex:'#000000'
+                },
+                pattern:{
+                    active:false,
+                    codeHex:'#000000',
+                    url:""
+                },
+                prevImg:"",
+                additionalPrice:0,
+            }
+        ];
+        dropdownColors.value=[true];
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewColor.value = false;
+        openModal.value = false;
         addColors.value = [
             {
                 isDefault:false,
@@ -392,34 +571,207 @@
                 additionalPrice:0
             }
         ];
-
+        dropdownColors.value=[true];
     }
+}
 
-    const handleAddNewMaterialColor = () => {
-        addColors.value.push({
+const checkIfThereDefault = ()=> {
+    var hasDefault = false;
+    let index =0;
+    while (index<colors.value.length && !hasDefault) {
+        if(colors.value[index].isDefault){
+            hasDefault = true;
+        }
+    }
+    if(!hasDefault){
+        colors.value[0].isDefault = true;
+    }
+}
+
+
+const selectMaterialColor = (id,col,isdeleting=false) => {
+    if(isdeleting){
+        colorId.value = id;
+        closeModal();
+    }else{
+        color.value = col;
+        isEdit.value = true;
+        isNewColor.value = true;
+    }
+}
+
+
+const addMaterialColor = async () => {
+    isLoading.value = true;
+    for (let index = 0; index < addColors.value.length; index++) {
+        colors.value.push(addColors.value[index]);
+    }
+    await updateMaterialColor();
+}
+
+const updateColorInMaterialColor = async () => {
+    isLoading.value = true;
+    colors.value[colorId.value]=color.value;
+    await updateMaterialColor();
+}
+
+const deleteMaterialColor = async () => {
+    isLoading.value = true;
+    colors.value.splice(colorId.value,1);
+    await updateMaterialColor();
+}
+
+
+const closeModal = () => {
+    openModal.value = !openModal.value;
+}
+
+
+const newColor = () => {
+    isNewColor.value = true;
+}
+const back = () => {
+    isNewColor.value = false;
+    isEdit.value = false;
+    colorId.value  = null;
+    color.value = {
+        isDefault:false,
+        name:'',
+        textColor:{
+            active:false,
+            codeHex:'#000000'
+        },
+        pattern:{
+            active:false,
+            codeHex:'#000000',
+            url:""
+        },
+        prevImg:"",
+        additionalPrice:0,
+    };
+    addColors.value = [
+        {
             isDefault:false,
-            manageColorId:0,
-            additionalPrice:0
-        });
-    }
-    const handleDeleteNewMaterialColor = (key) => {
-        var tab = [];
-        for (let index = 0; index < addColors.value.length; index++) {
-            tab.push(addColors.value[index])
+            name:'',
+            textColor:{
+                active:false,
+                codeHex:'#000000'
+            },
+            pattern:{
+                active:false,
+                codeHex:'#000000',
+                url:""
+            },
+            prevImg:"",
+            additionalPrice:0,
         }
-        tab.splice(key,1);
-        if(tab.length>0){
-            addColors.value=tab;
-        }
-    }
+    ];
+    dropdownColors.value=[true];
 
-    const selectDefault = async(key) =>{
-        colors.value[key].isDefault = true;
-        for(let i=0; i<colors.value.length; i++){
-            if(i != key ){
-                colors.value[i].isDefault = false;
-            }
+}
+const selectMaterialBackgroundImage = async(e,key=-1) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Material Pop Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
         }
-       await updateColorInMaterialColor();
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            if(isEdit.value){
+                                color.value.pattern.url = (attachment.url);
+                            }else{
+                                addColors.value[key].pattern.url = (attachment.url);
+                            }
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const selectMaterialPrevImage = async(e,key=-1) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Color Preview Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            if(isEdit.value){
+                                color.value.prevImg = (attachment.url);
+                            }else{
+                                addColors.value[key].prevImg = (attachment.url);
+                            }
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+
+const handleAddNewMaterialColor = () => {
+    addColors.value.push({
+        isDefault:false,
+        name:'',
+        textColor:{
+            active:false,
+            codeHex:'#000000'
+        },
+        pattern:{
+            active:false,
+            codeHex:'#000000',
+            url:""
+        },
+        prevImg:"",
+        additionalPrice:0,
+    });
+    for (let index = 0; index < dropdownColors.value.length; index++) {
+        dropdownColors.value[index]=false;
     }
+    dropdownColors.value.push(true);
+}
+const handleDeleteNewMaterialColor = (key) => {
+    var tab = [];
+    for (let index = 0; index < addColors.value.length; index++) {
+        tab.push(addColors.value[index])
+    }
+    tab.splice(key,1);
+    if(tab.length>0){
+        addColors.value=tab;
+        dropdownColors.value.splice(key,1);
+    }
+}
+
+const selectDefault = async(key) =>{
+    colors.value[key].isDefault = true;
+    for(let i=0; i<colors.value.length; i++){
+        if(i != key ){
+            colors.value[i].isDefault = false;
+        }
+    }
+    await updateColorInMaterialColor();
+}
 </script>

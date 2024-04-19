@@ -261,6 +261,13 @@ final class ASO_All_Signs_Options {
                 'type' => 'none'
             ],
             [
+                'name' => 'Adhesive Tape',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_adhesive_tape.svg',
+                "popImg"=>"",
+                'type' => 'adhesive-tape'
+            ],
+            [
                 'name' => 'Screw',
                 "description"=>"",
                 "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_screw.svg',
