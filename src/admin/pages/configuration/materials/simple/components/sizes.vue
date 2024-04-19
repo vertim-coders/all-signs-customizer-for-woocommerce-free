@@ -61,23 +61,23 @@
                         </tr>
                         <tr v-for="(size, key) in sizes.allSizes" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-w-28 aso-text-center aso-p-4">
-                                {{ manageSizes[size.manageSizeId].label }}
+                                {{ size.label }}
                             </td>
                             <td class="aso-px-6 aso-text-[12px] aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    {{ manageSizes[size.manageSizeId].width }}
+                                    {{ size.width }}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{ manageSizes[size.manageSizeId].height }}
+                                    {{ size.height }}
                                 </span>
                             </td>
                             <td class="aso-px-6  aso-text-[12px]  aso-py-2">
-                                <span v-if="manageSizes[size.manageSizeId].thickness.active" class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                   {{manageSizes[size.manageSizeId].thickness.value}}
+                                <span v-if="size.thickness.active" class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                   {{size.thickness.value}}
                                 </span>
-                                <span v-if="!manageSizes[size.manageSizeId].thickness.active">NONE</span>
+                                <span v-if="!size.thickness.active">NONE</span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
@@ -173,26 +173,54 @@
                 </div>
             </div>
         </div>
-        <div class="aso-space-y-2" v-if="isNewSize && manageSizes.length >0 ">
+        <div class="aso-space-y-2" v-if="isNewSize">
             <div class="aso-bg-[#F8F9FB] aso-space-y-6 aso-px-4 aso-py-8">
-                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-text-[14px] aso-font-bold">Select Size</label>
-                    <select v-model="size.manageSizeId" class="aso-rounded aso-w-full aso-h-[30px]">
-                        <option v-for="(size,key) in notSelectedManageSizes" :value="key" :key="key" >{{ size.label }}</option>
-                    </select>
+                <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8">
+                    <div class="aso-flex aso-justify-between">
+                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                            <label for="" class="aso-text-[14px] aso-font-bold">Label</label>
+                            <input type="text" v-model="size.label"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="(size.width.trim()=='' || size.width==0) ? size.width=10:''">
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between">
+                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                            <label for="" class="aso-text-[14px] aso-font-bold">Width</label>
+                            <input type="number" v-model="size.width"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="(size.width.trim()=='' || size.width==0) ? size.width=10:''">
+                        </div>
+                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
+                            <label for="" class="aso-text-[14px] aso-font-bold">Height</label>
+                            <input type="number"  v-model="size.height"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="(size.height.trim()=='' || size.height==0) ? size.height=10:''">
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-justify-between aso-items-center">
+                        <div class="aso-flex aso-w-1/2 aso-text-[16px]">
+                            <label for="" class="aso-text-[14px] aso-font-bold">Thickness</label>
+                            <div class="aso-flex aso-items-center">
+                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                                    <label for="aso-toggle" @click="size.thickness.active = !size.thickness.active" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': size.thickness.active, 'aso-bg-active': size.thickness.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="aso-ml-[230px] aso-w-1/2 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]" v-if="size.thickness.active">
+                            <label for="" class="aso-text-[14px] aso-font-bold">Thickness</label>
+                            <input type="number" v-model="size.thickness.value" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        </div>
+                    </div>
                 </div>
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Base Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.basePrice.trim()==''? size.basePrice=0:''">
                         </div>
                         
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Min char text to start applying the base price</label>
                         <div class="">
-                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.startPriceAtChar.trim()==''? size.startPriceAtChar=1:''">
                         </div>
                         
                     </div>
@@ -201,7 +229,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Max text char</label>
                         <div class="">
-                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.maxTextChar.trim()==''? size.maxTextChar=-1:''">
                         </div>
                         <p class="aso-text-[11px]">Set -1 if you don't want to limit</p>
                     </div>
@@ -209,7 +237,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Char Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.charPrice.trim()==''? size.charPrice=0:''">
                         </div>
                         <p class="aso-text-[11px] aso-invisible">Invisible</p>
                     </div>
@@ -262,7 +290,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
                         <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this size?</h3>
-                        <input v-model="manageSizes[size.manageSizeId].label" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <input v-model="size.label" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
                         <button @click="deleteMaterialSize" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Yes, I'm sure
@@ -276,214 +304,212 @@
     </div>
 </template>
 <script setup>
-    import api from "@/admin/Api/api";
-    import { ref,onMounted } from "vue";
-    import { useRoute } from 'vue-router';
-    import toastMessage from "@/admin/utils/functions";
+import api from "@/admin/Api/api";
+import { ref,onMounted } from "vue";
+import { useRoute } from 'vue-router';
+import toastMessage from "@/admin/utils/functions";
 
-    const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
+const route = useRoute()
+const configID = ref(route.params.configId);
+const materialId = ref(route.params.materialId);
 
-    const isFetching = ref(false);
-    const isNewSize = ref(false);
-    const isLoading = ref(false);
-    const manageSizes = ref([]);
-    const notSelectedManageSizes = ref({});
-    const sizeId = ref(null);
-    const sizes = ref({
-        customSize:{
-            active:false,
-            width:{
-                label:'Width',
-                min:0,
-                max:0
-            },
-            height:{
-                label:'Height',
-                min:0,
-                max:0
-            }
+const isFetching = ref(false);
+const isNewSize = ref(false);
+const isLoading = ref(false);
+const sizeId = ref(null);
+const sizes = ref({
+    customSize:{
+        active:false,
+        width:{
+            label:'Width',
+            min:0,
+            max:0
         },
-        allSizes:[]
-    });
-    const isEdit = ref(false);
-    const openModal = ref(false);
-    const noSizesFound = ref('');
-    const size = ref({
-        isDefault:false,
-        manageSizeId:0,
-        startPriceAtChar:1,
-        textNumber:0,
-        maxTextChar:-1,
-        charPrice:0,
-        basePrice:0
-    });
-    onMounted(async ()=>{
-        isFetching.value = true;
-        await fetchManageSizes();
-        await fetchMaterialSizes();
-        notSelectedManageSizes.value = checkNotSelectedManageSizes();
-        isFetching.value = false;
-    });
-    
-    const fetchMaterialSizes = async () => {
-        const result = await api.getMaterialSimpleSizes(configID.value,materialId.value);
-        if(!result.message){
-            sizes.value = result;
-        }else{
-            sizes.value = {
-                customSize:{
-                    active:false,
-                    width:{
-                        label:'Width',
-                        min:0,
-                        max:0
-                    },
-                    height:{
-                        label:'Height',
-                        min:0,
-                        max:0
-                    }
+        height:{
+            label:'Height',
+            min:0,
+            max:0
+        }
+    },
+    allSizes:[]
+});
+const isEdit = ref(false);
+const openModal = ref(false);
+const noSizesFound = ref('');
+const size = ref({
+    isDefault:false,
+    label:"",
+    width:0,
+    height:0,
+    thickness:{
+        active:false,
+        value:0
+    },
+    startPriceAtChar:1,
+    textNumber:0,
+    maxTextChar:-1,
+    charPrice:0,
+    basePrice:0
+});
+onMounted(async ()=>{
+    isFetching.value = true;
+    await fetchMaterialSizes();
+    isFetching.value = false;
+});
+
+const fetchMaterialSizes = async () => {
+    const result = await api.getMaterialSimpleSizes(configID.value,materialId.value);
+    if(!result.message){
+        sizes.value = result;
+    }else{
+        sizes.value = {
+            customSize:{
+                active:false,
+                width:{
+                    label:'Width',
+                    min:0,
+                    max:0
                 },
-                allSizes:[]
-            };
-            noSizesFound.value = result.message;
-        }
-    }
-    const fetchManageSizes = async () => {
-        const result = await api.getManageSizes();
-        if(!result.message){
-            manageSizes.value = result;
-        }
-    }
-
-    const updateMaterialSize = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleSizes(configID.value,materialId.value,sizes.value);
-        if(result.success){
-            await fetchMaterialSizes();
-            if(result.success == true ) {
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning");
-            }
-            isLoading.value = false;
-            isNewSize.value = false;
-            size.value = {
-                isDefault:false,
-                manageSizeId:0,
-                textNumber:0,
-                maxTextChar:0,
-                charPrice:0,
-                basePrice:0
-            };
-           openModal.value = false;
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewSize.value = false;
-            size.value = {
-                isDefault:false,
-                manageSizeId:0,
-                textNumber:0,
-                maxTextChar:0,
-                charPrice:0,
-                basePrice:0
-            };
-           openModal.value = false;
-        }
-    }
-
-    const addMaterialSize = async () => {
-        isLoading.value = true;
-        sizes.value.allSizes.push(size.value);
-        await updateMaterialSize();
-    }
-    const selectMaterialSize = (id,sz,isdeleting=false) => {
-        if(isdeleting){
-            sizeId.value = id;
-            closeModal();
-        }else{
-            if(manageSizes.value.length >0) {
-                size.value = sz;
-                notSelectedManageSizes.value = checkNotSelectedManageSizes(sz.manageSizeId);
-                isEdit.value = true;
-                isNewSize.value = true;
-            }else{
-                toastMessage('To continue, please add sizes to manage size','warning')
-            }
-            
-        }
-    }
-    const checkNotSelectedManageSizes = ( key= -1) => {
-        var notSelectedManageSizes = {};
-        let index = 0; 
-        while (index < manageSizes.value.length) {
-            var indexUse = false;
-            for (let i = 0; i <  sizes.value.allSizes.length; i++) {
-                if(index == sizes.value.allSizes[i].manageSizeId){
-                    indexUse = true;
+                height:{
+                    label:'Height',
+                    min:0,
+                    max:0
                 }
-            }
-            if(!indexUse){
-                notSelectedManageSizes[index] = manageSizes.value[index];
-            }
-            index++;
-        }
-        if(key!=-1){
-            notSelectedManageSizes[key] = manageSizes.value[key];
-        }
-        return notSelectedManageSizes;
+            },
+            allSizes:[]
+        };
+        noSizesFound.value = result.message;
     }
+}
 
-    const updateSizeInMaterialSize = async () => {
-        isLoading.value = true;
-        sizes.value.allSizes[sizeId.value] = size.value;
-        await updateMaterialSize();
+const checkIfThereDefault = ()=> {
+    var hasDefault = false;
+    let index =0;
+    while (index<sizes.value.allSizes.length && !hasDefault) {
+        if(sizes.value.allSizes[index].isDefault){
+            hasDefault = true;
+        }
+        index++;
     }
-    
-    const deleteMaterialSize = async () => {
-        isLoading.value = true;
-        sizes.value.allSizes.splice(sizeId.value, 1);
-        await updateMaterialSize();
+    if(!hasDefault){
+        sizes.value.allSizes[0].isDefault = true;
     }
-
-    const newSize = () => {
-        if(manageSizes.value.length >0) {
-            isNewSize.value = true;
-            notSelectedManageSizes.value = checkNotSelectedManageSizes();
+}
+const updateMaterialSize = async () => {
+    isLoading.value = true;
+    checkIfThereDefault();
+    const result = await api.updateMaterialSimpleSizes(configID.value,materialId.value,sizes.value);
+    if(result.success){
+        await fetchMaterialSizes();
+        if(result.success == true ) {
+            toastMessage(result.message);
         }else{
-            toastMessage('To continue, please add sizes to manage size','warning')
+            toastMessage(result.message,"warning");
         }
-    }
-    const back = () => {
+        isLoading.value = false;
         isNewSize.value = false;
-        isEdit.value = false;
-        sizeId.value  = null;
         size.value = {
             isDefault:false,
-            manageSizeId:0,
+            label:"",
+            width:0,
+            height:0,
+            thickness:{
+                active:false,
+                value:0
+            },
+            startPriceAtChar:1,
+            textNumber:0,
+            maxTextChar:-1,
+            charPrice:0,
+            basePrice:0
+        };
+        openModal.value = false;
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewSize.value = false;
+        size.value = {
+            isDefault:false,
+            label:"",
+            width:0,
+            height:0,
+            thickness:{
+                active:false,
+                value:0
+            },
             textNumber:0,
             maxTextChar:0,
             charPrice:0,
             basePrice:0
         };
+        openModal.value = false;
+    }
+}
 
+const addMaterialSize = async () => {
+    isLoading.value = true;
+    sizes.value.allSizes.push(size.value);
+    await updateMaterialSize();
+}
+const selectMaterialSize = (id,sz,isdeleting=false) => {
+    if(isdeleting){
+        sizeId.value = id;
+        closeModal();
+    }else{
+        size.value = sz;            
+        isEdit.value = true;
+        isNewSize.value = true;            
     }
-    const closeModal = () => {
-        openModal.value = !openModal.value;
-    }
-    const changeCustomSizeActive = () => {
-       sizes.value.customSize.active = !sizes.value.customSize.active;
+}
+
+const updateSizeInMaterialSize = async () => {
+    isLoading.value = true;
+    sizes.value.allSizes[sizeId.value] = size.value;
+    await updateMaterialSize();
+}
+
+const deleteMaterialSize = async () => {
+    isLoading.value = true;
+    sizes.value.allSizes.splice(sizeId.value, 1);
+    await updateMaterialSize();
+}
+
+const newSize = () => {
+    isNewSize.value = true;
+}
+const back = () => {
+    isNewSize.value = false;
+    isEdit.value = false;
+    sizeId.value  = null;
+    size.value = {
+        isDefault:false,
+        label:"",
+        width:0,
+        height:0,
+        thickness:{
+            active:false,
+            value:0
+        },
+        textNumber:0,
+        maxTextChar:0,
+        charPrice:0,
+        basePrice:0
     };
-    const selectDefault = async(key) =>{
-        sizes.value.allSizes[key].isDefault = true;
-        for(let i=0; i<sizes.value.allSizes.length; i++){
-            if(i != key ){
-                sizes.value.allSizes[i].isDefault = false;
-            }
+
+}
+const closeModal = () => {
+    openModal.value = !openModal.value;
+}
+const changeCustomSizeActive = () => {
+    sizes.value.customSize.active = !sizes.value.customSize.active;
+};
+const selectDefault = async(key) =>{
+    sizes.value.allSizes[key].isDefault = true;
+    for(let i=0; i<sizes.value.allSizes.length; i++){
+        if(i != key ){
+            sizes.value.allSizes[i].isDefault = false;
         }
-       await updateSizeInMaterialSize();
     }
+    await updateSizeInMaterialSize();
+}
 </script>
