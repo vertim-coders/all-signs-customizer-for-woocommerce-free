@@ -185,14 +185,14 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Base Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.basePrice" placeholder="25" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                         
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Min char text to start applying the base price</label>
                         <div class="">
-                            <input type="number" v-model="size.startPriceAtChar" placeholder="0" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                         
                     </div>
@@ -209,7 +209,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Char Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.charPrice" placeholder="25" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                         <p class="aso-text-[11px] aso-invisible">Invisible</p>
                     </div>

@@ -31,18 +31,8 @@
                             <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMinWidth.trim() ==''){image.fileUploadScript.uploadMinWidth=100}}"/>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Upload min height (px)</label>
-                            <input type="number" v-model="image.fileUploadScript.uploadMinHeight" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMinHeight.trim()==''){image.fileUploadScript.uploadMinHeight = 100}}"/>
-                        </div>
-                    </div>
-                    <div class="aso-flex aso-justify-between aso-space-x-6 aso-space-y-2">
-                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-text-[12px] aso-text-[#444444]">Upload Max width (px)</label>
                             <input type="number" v-model="image.fileUploadScript.uploadMaxWidth" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMaxWidth.trim()==''){image.fileUploadScript.uploadMaxWidth =1024}}"/>
-                        </div>
-                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Upload Max height (px)</label>
-                            <input type="number" v-model="image.fileUploadScript.uploadMaxHeight" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMaxHeight.trim()==''){image.fileUploadScript.uploadMaxHeight =1024}}"/>
                         </div>
                     </div>
                     <div class="aso-pt-2">
@@ -211,8 +201,6 @@ const image = ref({
       customWithGraphical:false,
       uploadMinWidth:100,
       uploadMaxWidth:100,
-      uploadMinHeight:1024,
-      uploadMaxHeight:1024,
       allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
     },
     enableClipart:{

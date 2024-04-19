@@ -292,8 +292,10 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         $group_id = $request->get_param('group_id');
         $all_groups = get_option("aso-manages-cliparts",[]);
         if(isset($all_groups[$group_id])) {
-            $new_item = json_decode($request->get_body(),true);
-            array_push($all_groups[$group_id]["cliparts"],$new_item);
+            $new_items = json_decode($request->get_body(),true);
+            foreach ($new_items as $key => $item) {
+                array_push($all_groups[$group_id]["cliparts"],$item);
+            }
             $update = update_option("aso-manages-cliparts",$all_groups);
             if($update){
                 return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  added with success","ASO")] );

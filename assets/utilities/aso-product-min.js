@@ -1,28 +1,3 @@
-const toastMessage = (text, action = "success") => {
-  toastr.options = {
-    closeButton: true,
-    debug: false,
-    newestOnTop: false,
-    progressBar: false,
-    positionClass: "toast-bottom-right",
-    preventDuplicates: false,
-    showDuration: "500",
-    hideDuration: "100",
-    timeOut: "1000",
-    extendedTimeOut: "1000",
-    showEasing: "swing",
-    hideEasing: "linear",
-    showMethod: "fadeIn",
-    hideMethod: "fadeOut",
-  };
-  if (action == "success") {
-    toastr.success(text);
-  } else if (action == "warning") {
-    toastr.warning(text);
-  } else {
-    toastr.error(text);
-  }
-};
 var aso_ajax_url = aso_ajax_object.ajax_url;
 (function ($) {
   "use strict";

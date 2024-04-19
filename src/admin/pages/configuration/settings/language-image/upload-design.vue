@@ -17,12 +17,12 @@
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-3/5 aso-space-y-2" v-if="uploadDesign.activate">
                     <label class="aso-text-[12px] aso-text-[#444444]">Custom Design Link</label>
-                    <input type="text" v-model="uploadDesign.link" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="uploadDesign.link" class="aso-w-full"/>
                     <span class="aso-text-[12px] aso-text-[#444444]">URL to redirect customers on your store that will allow for more complex graphic design quote submissions.</span>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-3/5 aso-space-y-2" v-if="uploadDesign.activate">
                     <label class="aso-text-[12px] aso-text-[#444444]">Phrase for link to submit custom design page</label>
-                    <input type="text" v-model="uploadDesign.phraseSubmitCustom" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="uploadDesign.phraseSubmitCustom" class="aso-w-full"/>
 
                 </div>
                 

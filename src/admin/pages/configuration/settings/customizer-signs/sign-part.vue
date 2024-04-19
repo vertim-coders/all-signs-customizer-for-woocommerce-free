@@ -13,16 +13,16 @@
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2"  v-if="signPart.doublePart.active">
                         <label class="aso-font-semibold aso-text-[16px]">Label of option to change face</label>
-                        <input type="text" v-model="signPart.doublePart.label" placeholder="name" class="aso-w-3/5"/>
+                        <input type="text" v-model="signPart.doublePart.label" class="aso-w-3/5"/>
                     </div>
                     <div class="aso-flex aso-justify-between" v-if="signPart.doublePart.active">
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-font-semibold aso-text-[16px]">Part 1</label>
-                            <input type="text" v-model="signPart.doublePart.part1" placeholder="name" class="aso-w-full"/>
+                            <input type="text" v-model="signPart.doublePart.part1" class="aso-w-full"/>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-font-semibold aso-text-[16px]">Part 2</label>
-                            <input type="text" v-model="signPart.doublePart.part2" placeholder="name" class="aso-w-full"/>
+                            <input type="text" v-model="signPart.doublePart.part2" class="aso-w-full"/>
                         </div>
                     </div>
                     <div class="aso-flex aso-space-x-3" v-if="signPart.doublePart.active">

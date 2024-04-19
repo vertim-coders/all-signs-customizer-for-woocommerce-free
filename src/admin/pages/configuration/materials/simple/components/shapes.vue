@@ -254,8 +254,13 @@
         });
     }
     const handleDeleteMaterialShape = (key) =>{
-        if(key!=0){
-            addNewShapes.value.splice(key,1);
+        var tab = [];
+        for (let index = 0; index < addNewShapes.value.length; index++) {
+            tab.push(addNewShapes.value[index])
+        }
+        tab.splice(key,1);
+        if(tab.length>0){
+            addNewShapes.value=tab;
         }
     }
 

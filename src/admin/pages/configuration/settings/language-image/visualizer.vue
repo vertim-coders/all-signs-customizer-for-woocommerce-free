@@ -5,41 +5,41 @@
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Title Header</label>
-                    <input type="text" v-model="visualizer.titleHeader" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.titleHeader" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text button refresh</label>
-                    <input type="text" v-model="visualizer.textButtonRefresh" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textButtonRefresh" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text button back</label>
-                    <input type="text" v-model="visualizer.textButtonBack" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textButtonBack" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text button next</label>
-                    <input type="text" v-model="visualizer.textButtonNext" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textButtonNext" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Before Price</label>
-                    <input type="text" v-model="visualizer.textBeforePrice" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textBeforePrice" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text After Price</label>
-                    <input type="text" v-model="visualizer.textAfterPrice" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textAfterPrice" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text button finish</label>
-                    <input type="text" v-model="visualizer.textButtonFinish" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textButtonFinish" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text button Add to cart</label>
-                    <input type="text" v-model="visualizer.textAddToCart" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textAddToCart" class="aso-w-full"/>
                 </div>
             </div>
             
@@ -49,31 +49,31 @@
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Preview text</label>
-                    <input type="text" v-model="visualizer.textPreview" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textPreview" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Share text</label>
-                    <input type="text" v-model="visualizer.textShare" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textShare" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Import text</label>
-                    <input type="text" v-model="visualizer.textImport" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textImport" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Download text</label>
-                    <input type="text" v-model="visualizer.textDownload" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textDownload" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Save text</label>
-                    <input type="text" v-model="visualizer.textSave" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textSave" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Help text</label>
-                    <input type="text" v-model="visualizer.textHelp" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textHelp" class="aso-w-full"/>
                 </div>
             </div>
         </div>
@@ -82,64 +82,64 @@
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Material</label>
-                    <input type="text" v-model="visualizer.textMaterial" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textMaterial" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text Size</label>
-                    <input type="text" v-model="visualizer.textSize" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textSize" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Label of Custom Size</label>
-                    <input type="text" v-model="visualizer.customSize" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.customSize" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Label of Custom Size button Done</label>
-                    <input type="text" v-model="visualizer.customSizeButtonDone" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.customSizeButtonDone" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Thickness</label>
-                    <input type="text" v-model="visualizer.thickness" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.thickness" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Shape</label>
-                    <input type="text" v-model="visualizer.textShape" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textShape" class="aso-w-full"/>
                 </div>
                 
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text Fixing Methods</label>
-                    <input type="text" v-model="visualizer.textFixingMethods" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textFixingMethods" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
-                    <input type="text" v-model="visualizer.textColor" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textColor" class="aso-w-full"/>
                 </div>
                 
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text option Text</label>
-                    <input type="text" v-model="visualizer.textOptionText" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textOptionText" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Border</label>
-                    <input type="text" v-model="visualizer.textBorder" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textBorder" class="aso-w-full"/>
                 </div>
                 
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Text Product</label>
-                    <input type="text" v-model="visualizer.textProduct" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textProduct" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text Image</label>
-                    <input type="text" v-model="visualizer.textImage" placeholder="" class="aso-w-full"/>
+                    <input type="text" v-model="visualizer.textImage" class="aso-w-full"/>
                 </div>
             </div>
         </div>

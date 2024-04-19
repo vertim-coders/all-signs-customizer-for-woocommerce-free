@@ -364,7 +364,7 @@
                 additionalPrice:0,
                 excludeSizes: [],
                 settings:{
-                    codeHex:"#ffffff",
+                    colors:[],
                     enableBorderWidth:true,
                     enableBorderColor:true,
                 }
@@ -380,7 +380,7 @@
                 additionalPrice:0,
                 excludeSizes: [],
                 settings:{
-                    codeHex:"#ffffff",
+                    colors:[],
                     enableBorderWidth:true,
                     enableBorderColor:true,
                 }

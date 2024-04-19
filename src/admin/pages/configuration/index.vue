@@ -334,8 +334,6 @@ const defaultSettings = ref({
                 customWithGraphical:false,
                 uploadMinWidth:100,
                 uploadMaxWidth:100,
-                uploadMinHeight:1024,
-                uploadMaxHeight:1024,
                 allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
             },
             enableClipart:{

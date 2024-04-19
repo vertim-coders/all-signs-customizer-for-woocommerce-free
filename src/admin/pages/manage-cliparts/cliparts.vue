@@ -1,16 +1,16 @@
 <template>
     <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-show="!isNew">
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2">
-                <div class="aso-text-[16px] aso-font-bold">
-                    Clipart group
+            <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2 aso-sticky aso-top-[80px] aso-z-[999]">
+                <div class="aso-text-[16px] aso-font-bold aso-cursor-pointer" @click="$router.push('/manage-cliparts')" >
+                    Clipart groups
                 </div>
                 <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../assets/icons/ic_crochet.svg" alt="">
                 <div class="aso-text-[14px] aso-text-[#292C33] aso-translate-y-0.5">
                     {{groupTitle}}
                 </div>
             </div>
-            <div v-if="!isFetching" class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
+            <div v-if="!isFetching" class="so-sticky aso-top-[120px] aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2 aso-sticky aso-top-[130px] aso-z-[999]">
                 <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addClipart">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
@@ -18,13 +18,13 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Add new clipart
+                        Add new cliparts
                     </div>
                 </button>
             </div>
-            <div class="aso-relative" id="monTableau">
+            <div id="monTableau" class="aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden">
                 <table class="aso-text-center aso-border aso-border-collapse aso-border-0 aso-w-full">
-                    <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
+                    <thead class="aso-text-[14px] aso-bg-[#f0f0f1] aso-sticky aso-top-[0px] aso-z-[99]">
                         <tr class="">
                             <th scope="col" class="aso-font-normal aso-px-6 aso-py-3">
                                 Title
@@ -49,7 +49,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr  v-if="cliparts.length == 0 && !isFetching">
+                        <tr  v-if="clipartGroups.length == 0 && !isFetching">
                             <td colspan="4">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[306px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
@@ -58,7 +58,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-for="(clipart,key) in cliparts" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(clipart,key) in clipartGroups" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-px-6 aso-text-[14px] aso-py-2">
                                 {{clipart.title}}
                             </td>
@@ -88,17 +88,26 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-1" v-show="isNew">
+        <div class="aso-space-y-1" v-if="isNew">
             <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2">
                 <div class="aso-text-[16px] aso-font-bold">
-                    Add clipart
+                    {{isEdit ? 'Edit clipart' :'Add cliparts'}}
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8">
+            <div class="aso-flex aso-bg-[#F8F9FB] aso-space-x-10 aso-font-semibold aso-px-4 aso-py-4" v-if="!isEdit">
+                <label>Upload Images</label>
+                <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
+                    <label for="aso-toggle" @click="handleUseApi" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                        <div :class="{'aso-translate-x-[100%]': useApi, 'aso-bg-active': useApi }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                    </label>
+                </div>
+                <label>Use Cliparts API</label>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8" v-if="!useApi && isEdit">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                         <label for="" class="aso-font-normal">Title</label>
-                        <input type="text" v-model="clipart.title" placeholder="chien" class="aso-rounded aso-w-full aso-h-[35px]">
+                        <input type="text" v-model="clipart.title"  class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
@@ -122,6 +131,128 @@
                     <input type="number" v-model="clipart.additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]"/>
                 </div>
             </div>
+            <div class="aso-relative aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-2 aso-h-[60vh] aso-overflow-y-auto aso-overflow-x-hidden" v-if="!useApi && !isEdit">
+                <div class="aso-flex aso-justify-between aso-items-center aso-relative aso-space-x-2" v-for="(clipart,key) in cliparts">
+                    <div class="aso-w-1/4 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                        <label for="" class="aso-font-normal">Title</label>
+                        <input type="text" v-model="cliparts[key].title"  class="aso-rounded aso-w-full aso-h-[35px]">
+                    </div>
+                    <div class="aso-w-1/4 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                        <label for="" class="aso-font-normal">Additional Price</label>
+                        <input type="number" v-model="cliparts[key].additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]"/>
+                    </div>
+                    <div class="aso-w-1/4 aso-flex aso-flex-col aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Upload icon</label>
+                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                            <div class="aso-flex">
+                                <button @click="(e)=>selectClipartImage(e,key)" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-3 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload image</button>
+                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                    <img v-if="cliparts[key].url != ''" :src="cliparts[key].url" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="cliparts[key].url != ''" @click="()=>{cliparts[key].url = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div @click="handleDeleteClipartSelected(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="aso-pt-4">
+                    <button :disabled="isLoading" @click="handleAddClipart" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="aso-font-semibold aso-text-[16px]">Add cliparts</span>
+                    </button>
+                </div>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8" v-if="useApi && !makeChoice">
+                <div class="aso-flex aso-justify-start aso-items-center">
+                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                        <select id="" v-model="selectedCategory" class="aso-h-[40px]">
+                            <option value="animals">Animals</option>
+                            <option value="arrows">Arrows</option>
+                            <option value="decorationFestivities">Decoration & Festivities</option>
+                            <option value="emojisFlags">Emojis & Flags</option>
+                            <option value="foodsDrinks">Foods & Drinks</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="householdTools">Household Tools</option>
+                            <option value="mostPopular">Most Popular</option>
+                            <option value="peoples">Peoples</option>
+                            <option value="plantsNature">Plants & Nature</option>
+                            <option value="prohibitionsWarnings">Prohibitions & Warnings</option>
+                            <option value="shapes">Shapes</option>
+                            <option value="sportActivities">Sport & Activities</option>
+                            <option value="symbolsMarkings">Symbols & Markings</option>
+                            <option value="vehiclesTraffic">Vehicles & Traffic</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="aso-bg-[#016464] aso-rounded">
+                        <button @click="getApiCliparts" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                            <span class="aso-font-semibold aso-text-[16px]">Get</span>
+                        </button>
+                    </div>
+                </div>
+                <div v-if="apiCliparts.length>0">
+                    <h2 class="aso-font-bold aso-font-[15px]">Images found</h2>
+                </div>
+                <div class="aso-grid aso-grid-cols-8 aso-py-4 aso-px-4 aso-h-[50vh] aso-overflow-y-auto aso-overflow-x-hidden" v-if="apiCliparts.length>0">
+                    <div v-for="(clipart,key) in apiCliparts" class="aso-relative aso-flex aso-justify-center aso-items-center aso-w-[60px] aso-h-[60px] aso-rounded" :class="clipartsSelected[key] ? 'aso-ring-4 aso-ring-[#016464]' : ''">
+                        <input type="checkbox" :id="'clipart'+key" class="hiddenInput" @change="(e)=>handleSelectClipart(e,key)">
+                        <label :for="'clipart'+key">
+                            <div v-if="clipartsSelected[key]" class="aso-z-[2] aso-absolute aso-top-0 aso-right-0 aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
+                                <input type="checkbox" :id="'clipart'+key" :checked="clipartsSelected[key]??false">
+                            </div>
+                            <div class="aso-w-[50px] aso-h-[50px] aso-relative">
+                                <img :src="clipart" alt="Image 1" class="aso-w-full aso-h-full aso-cursor-pointer aso-absolute aso-rounded">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="aso-flex aso-justify-end aso-items-center" v-if="Object.keys(clipartsSelected).length > 0">
+                    <div class="aso-bg-[#016464] aso-rounded">
+                        <button @click="displayAllChoice" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                            <span class="aso-font-semibold aso-text-[16px]">I made my choices</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-x-4" v-if="makeChoice">
+                <div class="aso-grid aso-grid-cols-3 aso-py-4 aso-px-4 aso-h-[50vh] aso-overflow-y-auto aso-overflow-x-hidden">
+                    <div class="aso-flex aso-justify-between aso-items-center aso-relative aso-space-x-2" v-for="(clipart,key) in cliparts">
+                        <div class="aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
+                            <label for="" class="aso-font-normal">Image</label>
+                            <div :class="`aso-relative aso-w-[60px] aso-h-[60px] aso-rounded-md aso-overflow-hidden`">
+                                <img v-if="clipart.url != ''" :src="clipart.url" alt="" class="aso-absolute aso-w-full aso-h-full">
+                            </div>
+                        </div>
+                        <div class="aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                            <label for="" class="aso-font-normal">Title</label>
+                            <input type="text" v-model="cliparts[key].title" class="aso-rounded aso-w-full aso-h-[35px]">
+                        </div>
+                        <div class=" aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
+                            <label for="" class="aso-font-normal">Additional Price</label>
+                            <input type="number" v-model="cliparts[key].additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]"/>
+                        </div>
+                        <div @click="handleDeleteClipartSelected(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
                     <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
@@ -153,7 +284,7 @@
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-[99999] aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -180,179 +311,259 @@
     </div>
 </template>
 <script setup>
-    import {onMounted, ref} from 'vue';
-    import api from '@/admin/Api/api';
-    import toastMessage from '@/admin/utils/functions';
-    import { useRoute } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import api from '@/admin/Api/api';
+import toastMessage from '@/admin/utils/functions';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
 
-    const route = useRoute();
-    const groupId = ref(route.params.groupId);
-    const cliparts = ref([]);
-    const clipart = ref({
+const route = useRoute();
+const groupId = ref(route.params.groupId);
+const clipartGroups = ref([]);
+const apiCliparts = ref([]);
+const cliparts = ref([
+    {
+        title:"",
+        url:"",
+        additionalPrice:0
+    }
+]);
+const allCliparts = ref({});
+const clipart = ref({
+    title:"",
+    url:"",
+    additionalPrice:0
+});
+const makeChoice = ref(false);
+const useApi = ref(false);
+const selectedCategory = ref('animals');
+const currency_symbol = ref(aso_data.currencySymbol);
+const groupTitle = ref('');
+const clipartId = ref(null);
+const isFetching = ref(false);
+const isLoading = ref(false);
+const notFoundMessage = ref('');
+const isNew = ref(false);
+const isEdit = ref(false);
+const openModal = ref(false);
+onMounted(async () => {
+    isFetching.value = true;
+    await fetchCliparts(); 
+    await fetchApiCliparts();
+});
+
+const handleUseApi = ()=>{
+    useApi.value = !useApi.value;
+}
+const changeMakeChoice = ()=> {
+    makeChoice.value = !makeChoice.value;
+}
+
+const displayAllChoice= ()=> {
+    var tab = [];
+    for (const key in clipartsSelected.value) {
+        if (Object.hasOwnProperty.call(clipartsSelected.value, key)) {
+            tab.push({title:'',url:clipartsSelected.value[key],additionalPrice:0})
+        }
+    }
+    cliparts.value = tab;
+    changeMakeChoice();
+}
+
+const handleDeleteClipartSelected = (key)=>{
+    var tab = [];
+    for (let index = 0; index < cliparts.value.length; index++) {
+        tab.push(cliparts.value[index])
+    }
+    tab.splice(key,1);
+    if(tab.length>0){
+        cliparts.value= tab;
+    }
+}
+
+const getApiCliparts = ()=>{
+    apiCliparts.value = allCliparts.value[selectedCategory.value];
+}
+const fetchApiCliparts = async()=>{
+    const result = await axios.get("http://localhost/vlc-server/wp-content/uploads/aso-cliparts/cliparts.json");
+    allCliparts.value = result.data;
+}
+const clipartsSelected = ref({})
+const handleSelectClipart = (e,key)=> {
+    if(e.target.checked) {
+        clipartsSelected.value[key]=apiCliparts.value[key];
+    }else{
+        delete clipartsSelected.value[key];
+    }
+}
+
+const fetchCliparts = async () => {
+    const result = await api.getManageClipartItems(groupId.value);
+    groupTitle.value = result.groupTitle;
+    if(!result.notFoundMessage){
+        clipartGroups.value = result.cliparts;
+    }else{
+        notFoundMessage.value = result.notFoundMessage;
+    }
+    isFetching.value = false;
+}
+const handleAddClipart = ()=> {
+    cliparts.value.push({
         title:"",
         url:"",
         additionalPrice:0
     });
-    const currency_symbol = ref(aso_data.currencySymbol);
-    const groupTitle = ref('');
-    const clipartId = ref(null);
-    const isFetching = ref(false);
-    const isLoading = ref(false);
-    const notFoundMessage = ref('');
-    const isNew = ref(false);
-    const isEdit = ref(false);
-    const openModal = ref(false);
-    onMounted(async () => {
-       isFetching.value = true;
-       await fetchCliparts(); 
-    });
-
-    const fetchCliparts = async () => {
-        const result = await api.getManageClipartItems(groupId.value);
-        groupTitle.value = result.groupTitle;
-        if(!result.notFoundMessage){
-            cliparts.value = result.cliparts;
-        }else{
-            notFoundMessage.value = result.notFoundMessage;
-        }
-        isFetching.value = false;
-    }
-    const saveClipart = async ()=>{
-        isLoading.value = true;
-        const result = await api.addManageclipartItem(groupId.value,clipart.value);
-        if(result.success){
-            await fetchCliparts();
-            isLoading.value= false;
-            toastMessage(result.message);
-            isNew.value = false;
-            clipart.value = {
-                title:"",
-                url:"",
-                additionalPrice:0
-            }
-
-        }else{
-            isLoading.value= false;
-            toastMessage(result.message,'error');
-            isNew.value = false;
-            clipart.value = {
-                title:"",
-                url:"",
-                additionalPrice:0
-            }
-
-        }
-    }
-    const selectClipart = (id,cl,isdeleting=false) => {
-        clipartId.value = id;
-        clipart.value = cl;
-        if(isdeleting){
-            closeModal();
-        }else{
-            isEdit.value = true;
-            addClipart();
-        }
-    }
-    const updateClipart = async ()=>{
-        isLoading.value = true;
-        const result = await api.updateManageClipartItem(groupId.value,clipartId.value,clipart.value);
-        if(result.success){
-            await fetchCliparts();
-            isLoading.value= false;
-            if(result.success == true){
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning")
-            }
-            isNew.value = false;
-            clipartId.value = null;
-            clipart.value = {
-                title:"",
-                url:"",
-                additionalPrice:0
-            }
-
-        }else{
-            isLoading.value= false;
-            toastMessage(result.message,'error');
-            isNew.value = false;
-            clipartId.value = null;
-            clipart.value = {
-                title:"",
-                url:"",
-                additionalPrice:0
-            }
-
-        }
-    }
-    const deleteClipart = async ()=>{
-        isLoading.value = true;
-        const result = await api.deleteManageclipartItem(groupId.value,clipartId.value);
-        if(result.success){
-            await fetchCliparts();
-            isLoading.value= false;
-            toastMessage(result.message);
-            clipartId.value = null;
-            clipart.value = {
-                title:"",
-                url:"",
-                additionalPrice:0
-            }
-            closeModal();
-        }else{
-            isLoading.value= false;
-            toastMessage(result.message,'error');
-            clipartId.value = null;
-            clipart.value = {
-                title:"",
-                url:"",
-                additionalPrice:0
-            }
-            closeModal();
-        }
-    }
-    const closeModal = () => {
-        openModal.value = !openModal.value;
-    }
-
-    const selectClipartImage = async(e) => { 
-        e.preventDefault();
-        var uploader = wp.media(
-            {
-                title: "Select Image",
-                button: {
-                    text: "Select Image"
-                },
-                multiple: false
-            }
-        )
-            .on(
-                'select',
-                function () {
-                    var selection = uploader.state().get('selection');
-                    selection.map(
-                        function (attachment) {
-                            attachment = attachment.toJSON();
-                            if (attachment.type == "image") {
-                                clipart.value.url = (attachment.url);
-                            }
-                        }
-                    );
-                }
-            )
-            .open();
-    }
-    const addClipart = () => {
-        isNew.value = true;
-    }
-    const back = () => {
+}
+const saveClipart = async ()=>{
+    isLoading.value = true;
+    const result = await api.addManageclipartItem(groupId.value,cliparts.value);
+    if(result.success){
+        await fetchCliparts();
+        isLoading.value= false;
+        toastMessage(result.message);
         isNew.value = false;
-        isEdit.value = false;
+        cliparts.value = [{
+            title:"",
+            url:"",
+            additionalPrice:0
+        }];
+        clipartsSelected.value = {};
+        makeChoice.value=false;
+
+    }else{
+        isLoading.value= false;
+        toastMessage(result.message,'error');
+        isNew.value = false;
+        cliparts.value = [{
+            title:"",
+            url:"",
+            additionalPrice:0
+        }];
+        clipartsSelected.value = {};
+        makeChoice.value=false;
+    }
+}
+const selectClipart = (id,cl,isdeleting=false) => {
+    clipartId.value = id;
+    clipart.value = cl;
+    if(isdeleting){
+        closeModal();
+    }else{
+        isEdit.value = true;
+        addClipart();
+    }
+}
+const updateClipart = async ()=>{
+    isLoading.value = true;
+    const result = await api.updateManageClipartItem(groupId.value,clipartId.value,clipart.value);
+    if(result.success){
+        await fetchCliparts();
+        isLoading.value= false;
+        if(result.success == true){
+            toastMessage(result.message);
+        }else{
+            toastMessage(result.message,"warning")
+        }
+        isNew.value = false;
+        clipartId.value = null;
         clipart.value = {
             title:"",
             url:"",
             additionalPrice:0
         }
+
+    }else{
+        isLoading.value= false;
+        toastMessage(result.message,'error');
+        isNew.value = false;
         clipartId.value = null;
+        clipart.value = {
+            title:"",
+            url:"",
+            additionalPrice:0
+        }
+
     }
+}
+const deleteClipart = async ()=>{
+    isLoading.value = true;
+    const result = await api.deleteManageclipartItem(groupId.value,clipartId.value);
+    if(result.success){
+        await fetchCliparts();
+        isLoading.value= false;
+        toastMessage(result.message);
+        clipartId.value = null;
+        clipart.value = {
+            title:"",
+            url:"",
+            additionalPrice:0
+        }
+        closeModal();
+    }else{
+        isLoading.value= false;
+        toastMessage(result.message,'error');
+        clipartId.value = null;
+        clipart.value = {
+            title:"",
+            url:"",
+            additionalPrice:0
+        }
+        closeModal();
+    }
+}
+const closeModal = () => {
+    openModal.value = !openModal.value;
+}
+
+const selectClipartImage = async(e,key=-1) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            if(isEdit.value){
+                                clipart.value.url = (attachment.url);
+                            }else{
+                                cliparts.value[key].url = (attachment.url);
+                            }
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const addClipart = () => {
+    isNew.value = true;
+}
+const back = () => {
+    isNew.value = false;
+    isEdit.value = false;
+    clipart.value = {
+        title:"",
+        url:"",
+        additionalPrice:0
+    }
+    clipartsSelected.value = {};
+    cliparts.value = [{
+        title:"",
+        url:"",
+        additionalPrice:0
+    }];
+    makeChoice.value=false;
+    clipartId.value = null;
+}
 </script>

@@ -403,8 +403,13 @@
         });
     }
     const handleDeleteNewMaterialColor = (key) => {
-        if(key!=0){
-            addColors.value.splice(key,1);
+        var tab = [];
+        for (let index = 0; index < addColors.value.length; index++) {
+            tab.push(addColors.value[index])
+        }
+        tab.splice(key,1);
+        if(tab.length>0){
+            addColors.value=tab;
         }
     }
 

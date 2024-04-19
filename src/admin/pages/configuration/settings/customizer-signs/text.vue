@@ -84,15 +84,15 @@
                 <div class="aso-flex aso-justify-between aso-space-x-6" v-if="text.enableFontSize.active">
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px]">Minimun font size</label>
-                        <input type="number" v-model="text.enableFontSize.minimumFontSize" @blur="()=>{ if(text.enableFontSize.minimumFontSize.trim()=='') {text.enableFontSize.minimumFontSize=12}}" placeholder="name" class="aso-w-full"/>
+                        <input type="number" v-model="text.enableFontSize.minimumFontSize" @blur="()=>{ if(text.enableFontSize.minimumFontSize.trim()=='') {text.enableFontSize.minimumFontSize=12}}" class="aso-w-full"/>
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px]">Maximum font size</label>
-                        <input type="number" v-model="text.enableFontSize.maximumFontSize" @blur="()=>{ if(text.enableFontSize.maximumFontSize.trim()=='') {text.enableFontSize.maximumFontSize=30}}" placeholder="name" class="aso-w-full"/>
+                        <input type="number" v-model="text.enableFontSize.maximumFontSize" @blur="()=>{ if(text.enableFontSize.maximumFontSize.trim()=='') {text.enableFontSize.maximumFontSize=30}}" class="aso-w-full"/>
                     </div>
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                         <label class="aso-text-[12px]">Default size</label>
-                        <input type="number" v-model="text.enableFontSize.defaultFontSize" @blur="()=>{ if(text.enableFontSize.defaultFontSize.trim()=='') {text.enableFontSize.defaultFontSize=16}}" placeholder="name" class="aso-w-full"/>
+                        <input type="number" v-model="text.enableFontSize.defaultFontSize" @blur="()=>{ if(text.enableFontSize.defaultFontSize.trim()=='') {text.enableFontSize.defaultFontSize=16}}" class="aso-w-full"/>
                     </div>
                 </div>
                 <div class="aso-text-[16px] aso-font-bold">enable text options</div>
