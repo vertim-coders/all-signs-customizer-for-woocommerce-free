@@ -43,10 +43,8 @@ class ASO_Frontend {
                 if($configId !=0){
                     $config = get_post_meta($configId,"aso-configs-meta",true);
                     $pageSettings = get_option("aso_config_page",[])["others"];
-                    $all_colors = get_option("aso-manages-colors",[]);
                     $all_cliparts_groups = get_option("aso-manages-cliparts",[]);
                     $all_fonts = get_option("aso-manages-fonts",[]);
-                    $all_sizes = get_option("aso-manages-sizes",[]);
                     $all_shapes = get_option("aso_all_shapes",[]);
                     $all_fixingMethods = get_option("aso_all_fixingMethods",[]);
                     $all_borders = get_option("aso_all_borders",[]);
@@ -75,14 +73,11 @@ class ASO_Frontend {
                                 $visibleCliparts[]=$all_cliparts_groups[$part];
                             }
                         }
-
                         $all_manages = [
                             "fonts"=>$visibleFonts,
                             "cliparts"=>$visibleCliparts,
                             "borders"=>$all_borders,
                             "pageSettings" => $pageSettings,
-                            "colors" => $all_colors,
-                            "manageSize" => $all_sizes,
                             "allShapes" => $all_shapes,
                             "allFixingMethod" => $all_fixingMethods,
                             "allBorder" => $all_borders,
