@@ -59,44 +59,44 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-for="(size, key) in sizes.allSizes" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(sz, key) in sizes.allSizes" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-w-28 aso-text-center aso-p-4">
-                                {{ size.label }}
+                                {{ sz.label }}
                             </td>
                             <td class="aso-px-6 aso-text-[12px] aso-py-3">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                    {{ size.width }}
+                                    {{ sz.width }}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
-                                    {{ size.height }}
+                                    {{ sz.height }}
                                 </span>
                             </td>
                             <td class="aso-px-6  aso-text-[12px]  aso-py-2">
-                                <span v-if="size.thickness.active" class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                   {{size.thickness.value}}
+                                <span v-if="sz.thickness.active" class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                                   {{sz.thickness.value}}
                                 </span>
-                                <span v-if="!size.thickness.active">NONE</span>
+                                <span v-if="!sz.thickness.active">NONE</span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
-                                    {{size.basePrice}}
+                                    {{sz.basePrice}}
                                 </span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
                                     <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': sizes.allSizes[key].isDefault, 'aso-bg-active': sizes.allSizes[key].isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="{'aso-translate-x-[100%]': sz.isDefault, 'aso-bg-active': sz.isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-text-center">
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialSize(key,size)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialSize(key,sz)">
                                 </button>
                                 <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialSize(key,size,true)">
+                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialSize(key,sz,true)">
                                 </button>
                             </td>
                         </tr>       
@@ -179,17 +179,17 @@
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                             <label for="" class="aso-text-[14px] aso-font-bold">Label</label>
-                            <input type="text" v-model="size.label"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="(size.width.trim()=='' || size.width==0) ? size.width=10:''">
+                            <input type="text" v-model="size.label"  class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                     </div>
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                             <label for="" class="aso-text-[14px] aso-font-bold">Width</label>
-                            <input type="number" v-model="size.width"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="(size.width.trim()=='' || size.width==0) ? size.width=10:''">
+                            <input type="number" v-model="size.width"  class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                             <label for="" class="aso-text-[14px] aso-font-bold">Height</label>
-                            <input type="number"  v-model="size.height"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="(size.height.trim()=='' || size.height==0) ? size.height=10:''">
+                            <input type="number"  v-model="size.height"  class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                     </div>
                     <div class="aso-flex aso-justify-between aso-items-center">
@@ -213,14 +213,14 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Base Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.basePrice.trim()==''? size.basePrice=0:''">
+                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.basePrice ==''? size.basePrice=0:''">
                         </div>
                         
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Min char text to start applying the base price</label>
                         <div class="">
-                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.startPriceAtChar.trim()==''? size.startPriceAtChar=1:''">
+                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.startPriceAtChar ==''? size.startPriceAtChar=1:''">
                         </div>
                         
                     </div>
@@ -229,7 +229,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Max text char</label>
                         <div class="">
-                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.maxTextChar.trim()==''? size.maxTextChar=-1:''">
+                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.maxTextChar ==''? size.maxTextChar=-1:''">
                         </div>
                         <p class="aso-text-[11px]">Set -1 if you don't want to limit</p>
                     </div>
@@ -237,7 +237,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Char Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.charPrice.trim()==''? size.charPrice=0:''">
+                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.charPrice ==''? size.charPrice=0:''">
                         </div>
                         <p class="aso-text-[11px] aso-invisible">Invisible</p>
                     </div>
@@ -359,26 +359,12 @@ onMounted(async ()=>{
 
 const fetchMaterialSizes = async () => {
     const result = await api.getMaterialSimpleSizes(configID.value,materialId.value);
-    if(!result.message){
-        sizes.value = result;
-    }else{
-        sizes.value = {
-            customSize:{
-                active:false,
-                width:{
-                    label:'Width',
-                    min:0,
-                    max:0
-                },
-                height:{
-                    label:'Height',
-                    min:0,
-                    max:0
-                }
-            },
-            allSizes:[]
-        };
+    
+    if(result.message){
         noSizesFound.value = result.message;
+        sizes.value = result.materialSizes;
+    }else{
+        sizes.value = result;
     }
 }
 

@@ -84,7 +84,7 @@
                     </tbody>
                 </table>
             </div>
-            <div v-show="!isLoading" class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-py-2 aso-px-4 aso-bg-[#F8F9FB]">
+            <div v-show="!isFetching" class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-py-2 aso-px-4 aso-bg-[#F8F9FB]">
                 <label for="" class="aso-text-[16px] aso-font-semibold">Borders settings</label>
                 <span class="aso-text-[12px] aso-text-[#444444]">Borders colors</span>
                 <div class="aso-grid aso-grid-cols-2 aso-gap-4">
@@ -139,7 +139,7 @@
                     </button>
                 </div>
             </div>
-            <div v-show="!isLoading" class="aso-flex aso-py-4 aso-px-4 aso-space-x-16 aso-bg-[#F8F9FB]">
+            <div v-show="!isFetching" class="aso-flex aso-py-4 aso-px-4 aso-space-x-16 aso-bg-[#F8F9FB]">
                 <div class="aso-flex aso-font-semibold">
                     Enable Custom border width
                     <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
@@ -157,7 +157,7 @@
                     </div>
                 </div>
             </div>
-            <div v-show="!isLoading" class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+            <div v-show="!isFetching" class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
                     <button @click="addBorders" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white  aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer">
                         <div class="aso-translate-y-1">
@@ -383,16 +383,9 @@ const fetchMaterialShapes = async () => {
 
 const fetchMaterialBorders = async () => {
     const result = await api.getMaterialSimpleBorders(configID.value,materialId.value);
-    if(!result.message){
-        if(result.materialBorders.settings){
-            borders.value = result.materialBorders;
-        }else{
-            borders.value = {...borders.value,allBorders:result.materialBorders.allBorders};
-        }
-        manageBorders.value=result.manageBorders;
-    }else{
-        borders.value = [];
-        manageBorders.value=result.manageBorders;
+    borders.value = result.materialBorders;
+    manageBorders.value=result.manageBorders;
+    if(result.message){
         noBordersFound.value = result.message;
     }
 };

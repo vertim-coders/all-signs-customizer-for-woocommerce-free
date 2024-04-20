@@ -150,12 +150,41 @@ class ASO_Api_Materials extends WP_REST_Controller {
                             "popImg"=>$new_material['popImg'],
                             "type"=>$new_material['type'],
                             "data"=>[
-                                'sizes'=>[],
-                                'borders'=>[],
+                                'sizes'=>[
+                                    "customSize"=>[
+                                        "active"=>false,
+                                        "width"=>[
+                                            "label"=>'Width',
+                                            "min"=>0,
+                                            "max"=>0
+                                        ],
+                                        "height"=>[
+                                            "label"=>'Height',
+                                            "min"=>0,
+                                            "max"=>0
+                                        ]
+                                    ],
+                                    "allSizes"=>[]
+                                ],
+                                'borders'=>[
+                                    "settings"=>[
+                                        "colors"=>[],
+                                        "enableBorderWidth"=>true,
+                                        "enableBorderColor"=>true,
+                                    ],
+                                    "allBorders"=>[],
+                                ],
                                 'shapes'=>[],
                                 "textImages"=>["enableText"=>true,"enableImage"=>true],
                                 'fixingMethods'=>[],
-                                'colors'=>[],
+                                'colors'=>[
+                                    "customColors"=>[
+                                        "active"=>true,
+                                        "label"=>"Custom Colors",
+                                        "prevImg"=>"",
+                                    ],
+                                    "allColors"=>[]
+                                ],
                                 "additionalOptions"=>[]
                             ]
                         ];

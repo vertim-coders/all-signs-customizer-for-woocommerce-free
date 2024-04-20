@@ -563,10 +563,10 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
-                    if(isset($meta_value['data']['materials'][$material_id]['data']['sizes']) && !empty($meta_value['data']['materials'][$material_id]['data']['sizes']['allSizes'])){
+                    if(count($meta_value['data']['materials'][$material_id]['data']['sizes']['allSizes'])>0){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['sizes']);
                     }else{
-                        return rest_ensure_response(["message"=>__('Sizes not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Sizes not found',"ASO"),"materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes']]);
                     }    
                 }
                 else{
@@ -633,10 +633,10 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
                     $all_manage_borders = get_option("aso_all_borders",[]);
-                    if($meta_value['data']['materials'][$material_id]['data']['borders']){
+                    if(count($meta_value['data']['materials'][$material_id]['data']['borders']["allBorders"])>0){
                         return rest_ensure_response(["materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Border not found',"ASO"),"manageBorders"=>$all_manage_borders]);
+                        return rest_ensure_response(["message"=>__('Border not found',"ASO"),"materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders]);
                     }    
                 }
                 else{
@@ -769,10 +769,10 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
-                    if($meta_value['data']['materials'][$material_id]['data']['colors']){
+                    if(count($meta_value['data']['materials'][$material_id]['data']['colors']["allColors"])>0){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['colors']);
                     }else{
-                        return rest_ensure_response(["message"=>__('Color not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Color not found',"ASO"),"colors"=>$meta_value['data']['materials'][$material_id]['data']['colors']]);
                     }    
                 }
                 else{

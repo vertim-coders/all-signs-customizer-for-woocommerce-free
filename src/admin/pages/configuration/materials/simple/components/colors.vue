@@ -571,22 +571,11 @@ onMounted(async ()=>{
 
 const fetchMaterialColors = async () => {
     const result = await api.getMaterialSimpleColors(configID.value,materialId.value);
-    if(!result.message){
-        if(!result.customColors){
-            colors.value = {...colors.value,allColors:result};
-        }else{
-            colors.value = result;
-        }
-    }else{
-        colors.value = {
-            customColors:{
-                active:true,
-                label:"Custom Colors",
-                prevImg:""
-            },
-            allColors:[]
-        };
+    if(result.message){
         noColorsFound.value = result.message;
+        colors.value = result.colors;
+    }else{
+        colors.value = result;
     }
 };
 
