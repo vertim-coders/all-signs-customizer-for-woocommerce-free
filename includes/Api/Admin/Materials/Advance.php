@@ -240,7 +240,23 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $new_component = json_decode($request->get_body(),true);
-                array_push($meta['data']["materials"][$material_id]['data'],$new_component);
+                if(count($meta['data']["materials"][$material_id]['data'])>0){
+                    $i=0;
+                    $hasDefault=false;
+                    while ($i<count($meta['data']["materials"][$material_id]['data'])) {
+                        if($meta['data']["materials"][$material_id]['data'][$i]["isDefault"]){
+                            $hasDefault = true;
+                        }
+                        $i++;
+                    }
+                    if(!$hasDefault){
+                        $meta['data']["materials"][$material_id]['data'][0]["isDefault"]=true;
+                    }
+                    array_push($meta['data']["materials"][$material_id]['data'],$new_component);
+                }else{
+                    $new_component["isDefault"]=true;
+                    $meta['data']["materials"][$material_id]['data'][0]=$new_component;
+                }
                 $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                 if($update === true){
                     return rest_ensure_response(["success"=>true, "message"=>__("Materiel component successfully added","ASO")]);
@@ -394,7 +410,23 @@ class ASO_Materials_Advance extends WP_REST_Controller {
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
                 $option = json_decode($request->get_body(),true);
-                array_push($meta['data']["materials"][$material_id]['data'][$component_id]['options'],$option);
+                if(count($meta['data']["materials"][$material_id]['data'][$component_id]['options'])>0){
+                    $i=0;
+                    $hasDefault=false;
+                    while ($i<count($meta['data']["materials"][$material_id]['data'][$component_id]['options'])) {
+                        if($meta['data']["materials"][$material_id]['data'][$component_id]['options'][$i]["isDefault"]){
+                            $hasDefault = true;
+                        }
+                        $i++;
+                    }
+                    if(!$hasDefault){
+                        $meta['data']["materials"][$material_id]['data'][$component_id]['options'][0]["isDefault"]=true;
+                    }
+                    array_push($meta['data']["materials"][$material_id]['data'][$component_id]['options'],$option);
+                }else{
+                    $option["isDefault"]=true;
+                    $meta['data']["materials"][$material_id]['data'][$component_id]['options'][0]=$option;
+                }
                 $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                 if($update === true){
                     return rest_ensure_response(["success"=>true, "message"=>__("Materiel component option successfully added","ASO")]);

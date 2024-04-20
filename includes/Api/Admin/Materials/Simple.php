@@ -346,7 +346,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             array(
                 array(
                     'methods'             => \WP_REST_Server::CREATABLE,
-                    'callback'            => array( $this, 'create_material_Options' ),
+                    'callback'            => array( $this, 'create_Option_in_AdditionalOption' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -371,7 +371,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             array(
                 array(
                     'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_material_Option' ),
+                    'callback'            => array( $this, 'get_Option_In_AdditionalOption' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -394,7 +394,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::EDITABLE,
-                    'callback'            => array( $this, 'update_material_Option' ),
+                    'callback'            => array( $this, 'update_Option_In_AdditionalOption' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -417,7 +417,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                 ),
                 array(
                     'methods'             => \WP_REST_Server::DELETABLE,
-                    'callback'            => array( $this, 'delete_material_Option' ),
+                    'callback'            => array( $this, 'delete_Option_In_AdditionalOption' ),
                     'permission_callback' => array( $this, 'get_items_permissions_check' ),
                     'args'                => array(
                         'config_id' => array (
@@ -493,10 +493,11 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
+                    $all_manages_shapes = get_option("aso_all_shapes",[]);
                     if(isset($meta_value['data']['materials'][$material_id]['data']['shapes']) && count($meta_value['data']['materials'][$material_id]['data']['shapes']) > 0){
-                        return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['shapes']);
+                        return rest_ensure_response(["materialShapes"=>$meta_value['data']['materials'][$material_id]['data']['shapes'],"manageShapes"=>$all_manages_shapes]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Shape not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Shape not found',"ASO"),"manageShapes"=>$all_manages_shapes]);
                     }    
                 }
                 else{
@@ -631,10 +632,11 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
+                    $all_manage_borders = get_option("aso_all_borders",[]);
                     if($meta_value['data']['materials'][$material_id]['data']['borders']){
-                        return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['borders']);
+                        return rest_ensure_response(["materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Border not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Border not found',"ASO"),"manageBorders"=>$all_manage_borders]);
                     }    
                 }
                 else{
@@ -800,7 +802,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id]) && $meta_value['data']['materials'][$material_id]['type'] === "simple"){
                     $new_fixingMethods = json_decode($request->get_body(),true);
-                    if($meta_value['data']['materials'][$material_id]['data']['fixingMethods'] !== $new_fixingMethods){
+                    if($meta_value['data']['materials'][$material_id]['data']['fixingMethods'] != $new_fixingMethods){
                         $meta_value['data']['materials'][$material_id]['data']['fixingMethods'] = $new_fixingMethods;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
@@ -836,10 +838,11 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
+                    $all_manage_fixingMethods = get_option("aso_all_fixingMethods",[]);
                     if($meta_value['data']['materials'][$material_id]['data']['fixingMethods']){
-                        return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['fixingMethods']);
+                        return rest_ensure_response(["materialFixingMethods"=>$meta_value['data']['materials'][$material_id]['data']['fixingMethods'],"manageFixingMethods"=>$all_manage_fixingMethods]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Fixing Methods not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Fixing Methods not found',"ASO"),"manageFixingMethods"=>$all_manage_fixingMethods]);
                     }    
                 }
                 else{
@@ -854,7 +857,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         
     }
     /**
-     * Create material additionnal option.
+     * Create material additional option.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
@@ -892,7 +895,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }
     } 
     /**
-     * Read material additionnal option.
+     * Read material additional option.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
@@ -922,7 +925,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }    
     }
     /**
-     * Read material additionnal option.
+     * Read material additional option.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
@@ -948,7 +951,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         }    
     }
     /**
-     * update material additionnal option.
+     * update material additional option.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
@@ -991,7 +994,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
         } 
     }
     /**
-     * Delatable material additionnal option.
+     * Delatable material additional option.
      *
      * @param WP_REST_Request $request Full details about the request.
      *
@@ -1030,7 +1033,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function create_material_Options ($request) {
+    public function create_Option_in_AdditionalOption ($request) {
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $additional_id = $request->get_param('additional_id');
@@ -1039,14 +1042,23 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             if (is_array($meta) && !empty($meta)) {
                 if (isset($meta["data"]['materials'][$material_id]) && isset($meta["data"]['materials'][$material_id]['data']['additionalOptions']) && isset($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options']) ) {
                     $new_option = json_decode($request->get_body(), true);
-                    $option = [
-                        "title" => $new_option['title'],
-                        "description" => $new_option['description'],
-                        "icon" => $new_option['icon'],
-                        "image"=>$new_option['image'],
-                        "additionalPrice"=>$new_option['additionalPrice'] 
-                    ];
-                    array_push($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'], $option);
+                    if(count($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'])>0){
+                        $i=0;
+                        $hasDefault=false;
+                        while ($i<count($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'])) {
+                            if($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][$i]["isDefault"]){
+                                $hasDefault = true;
+                            }
+                            $i++;
+                        }
+                        if(!$hasDefault){
+                            $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][0]["isDefault"]=true;
+                        }
+                        array_push($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'], $new_option);
+                    }else{
+                        $new_option["isDefault"]=true;
+                        $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][0]=$new_option;
+                    }
                     $update = update_post_meta($config_id, 'aso-configs-meta', $meta);
                     if ($update === true) {
                         return rest_ensure_response(["success" => true, "message" => __("Material component Option successfully added", "ASO")]);
@@ -1070,7 +1082,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function get_material_Option ($request) {
+    public function get_Option_In_AdditionalOption ($request) {
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $additional_id = $request->get_param('additional_id');
@@ -1102,7 +1114,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function update_material_Option ($request) {
+    public function update_Option_In_AdditionalOption ($request) {
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $additional_id = $request->get_param('additional_id');
@@ -1147,7 +1159,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
      *
      * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function delete_material_Option ($request) {
+    public function delete_Option_In_AdditionalOption ($request) {
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $additional_id = $request->get_param('additional_id');

@@ -385,7 +385,7 @@ const getApiCliparts = ()=>{
     apiCliparts.value = allCliparts.value[selectedCategory.value];
 }
 const fetchApiCliparts = async()=>{
-    const result = await axios.get("http://localhost/vlc-server/wp-content/uploads/aso-cliparts/cliparts.json");
+    const result = await axios.get("https://signsdesigner.us/app/aso-cliparts/cliparts.json");
     allCliparts.value = result.data;
 }
 const clipartsSelected = ref({})

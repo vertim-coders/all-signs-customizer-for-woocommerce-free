@@ -2,7 +2,7 @@
     <div class="aso-h-[100vh]">
         <div class="aso-space-y-1" v-if="!isNewShape">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageShapes.length > 0">
-                <button class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="newShape">
+                <button :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newShape">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
@@ -91,12 +91,24 @@
             <div>
                 <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-if="isEdit">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
-                        <select v-model="shape.shapeId" type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                            <option :value="key" v-for="shpe, key in notSelectedManageShapes" :key="key">
-                                {{ shpe.name }}
-                            </option>
-                        </select>
+                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select shape</label>
+                        <Multiselect
+                            v-model="shape.shapeId"
+                            placeholder="Select Border"
+                            :options="notSelectedManageShapes"
+                            label="name"
+                            trackBy="name"
+                        >
+                            <template v-slot:singleLabel="{ value }">
+                                <div class="multiselect-single-label">
+                                    <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
+                                </div>
+                            </template>
+    
+                            <template v-slot:option="{ option }">
+                                <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
+                            </template>
+                        </Multiselect>
                         
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
@@ -108,12 +120,24 @@
                 <div v-if="!isEdit">
                     <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-for="(shape,key) in addNewShapes">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select color</label>
-                            <select v-model="addNewShapes[key].shapeId" type="text" class="aso-rounded aso-w-full aso-h-[30px]">
-                                <option :value="key" v-for="shpe, key in notSelectedManageShapes" :key="key">
-                                    {{ shpe.name }}
-                                </option>
-                            </select>
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select Shape</label>
+                            <Multiselect
+                                v-model="addNewShapes[key].shapeId"
+                                placeholder="Select Border"
+                                :options="notSelectedManageShapes"
+                                label="name"
+                                trackBy="name"
+                            >
+                                <template v-slot:singleLabel="{ value }">
+                                    <div class="multiselect-single-label">
+                                        <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
+                                    </div>
+                                </template>
+        
+                                <template v-slot:option="{ option }">
+                                    <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
+                                </template>
+                            </Multiselect>
                             
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
@@ -193,189 +217,124 @@
     </div>
 </template>
 <script setup>
-    import api from "@/admin/Api/api";
-    import { ref,onMounted } from "vue";
-    import { useRoute } from 'vue-router';
-    import toastMessage from "@/admin/utils/functions";
+import api from "@/admin/Api/api";
+import { ref,onMounted } from "vue";
+import { useRoute } from 'vue-router';
+import toastMessage from "@/admin/utils/functions";
+import Multiselect from '@vueform/multiselect'
 
-    const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
+const route = useRoute()
+const configID = ref(route.params.configId);
+const materialId = ref(route.params.materialId);
 
-    const isFetching = ref(false);
-    const isNewShape = ref(false);
-    const isLoading = ref(false);
-    const shapes = ref([]);
-    const manageShapes = ref([]);
-    const shapeId = ref(null);
+const isFetching = ref(false);
+const isNewShape = ref(false);
+const isLoading = ref(false);
+const shapes = ref([]);
+const manageShapes = ref([]);
+const shapeId = ref(null);
 
-    const isEdit = ref(false);
-    const openModal = ref(false);
-    const noShapesFound = ref('');
-    const shape = ref({
+const isEdit = ref(false);
+const openModal = ref(false);
+const noShapesFound = ref('');
+const shape = ref({
+    isDefault:false,
+    shapeId:0,
+    additionalPrice:0,
+});
+const addNewShapes = ref([{
+    isDefault:false,
+    shapeId:0,
+    additionalPrice:0,
+}]);
+
+const notSelectedManageShapes = ref([]);
+
+const checkNotSelectedManageShapes = ( key= -1) => {
+    var notSelectedManageShapes = [];
+    let index = 0; 
+    while (index < manageShapes.value.length) {
+        var indexUse = false;
+        for (let i = 0; i <  shapes.value.length; i++) {
+            if(index == shapes.value[i].shapeId){
+                indexUse = true;
+            }
+        }
+        if(!indexUse){
+            notSelectedManageShapes.push({...manageShapes.value[index],value:index});
+        }
+        index++;
+    }
+    if(key!=-1){
+        notSelectedManageShapes.push({...manageShapes.value[index],value:index});
+    }
+    return notSelectedManageShapes;
+}
+
+const handleAddMaterialShape = () =>{
+    addNewShapes.value.push({
         isDefault:false,
         shapeId:0,
         additionalPrice:0,
     });
-    const addNewShapes = ref([{
-        isDefault:false,
-        shapeId:0,
-        additionalPrice:0,
-    }]);
-
-    const notSelectedManageShapes = ref({});
-
-    const checkNotSelectedManageShapes = ( key= -1) => {
-        var notSelectedManageShapes = {};
-        let index = 0; 
-        while (index < manageShapes.value.length) {
-            var indexUse = false;
-            for (let i = 0; i <  shapes.value.length; i++) {
-                if(index == shapes.value[i].shapeId){
-                    indexUse = true;
-                }
-            }
-            if(!indexUse){
-                notSelectedManageShapes[index] = manageShapes.value[index];
-            }
-            index++;
-        }
-        if(key!=-1){
-            notSelectedManageShapes[key] = manageShapes.value[key];
-        }
-        return notSelectedManageShapes;
+}
+const handleDeleteMaterialShape = (key) =>{
+    var tab = [];
+    for (let index = 0; index < addNewShapes.value.length; index++) {
+        tab.push(addNewShapes.value[index])
     }
-
-    const handleAddMaterialShape = () =>{
-        addNewShapes.value.push({
-            isDefault:false,
-            shapeId:0,
-            additionalPrice:0,
-        });
+    tab.splice(key,1);
+    if(tab.length>0){
+        addNewShapes.value=tab;
     }
-    const handleDeleteMaterialShape = (key) =>{
-        var tab = [];
-        for (let index = 0; index < addNewShapes.value.length; index++) {
-            tab.push(addNewShapes.value[index])
-        }
-        tab.splice(key,1);
-        if(tab.length>0){
-            addNewShapes.value=tab;
-        }
-    }
+}
 
-    onMounted(async ()=>{
-        isFetching.value = true;
-        await fetchShapes();
+onMounted(async ()=>{
+    isFetching.value = true;
+    await fetchMaterialShapes();
+    isFetching.value = false;
+});
+
+const fetchMaterialShapes = async () => {
+    const result = await api.getMaterialSimpleShapes(configID.value,materialId.value);
+    if(!result.message){
+        manageShapes.value = result.manageShapes;
+        shapes.value = result.materialShapes;
+    }else{
+        shapes.value = [];
+        manageShapes.value = result.manageShapes;
+        noShapesFound.value = result.message;
+    }
+};
+
+const checkIfThereDefault = ()=> {
+var hasDefault = false;
+let index =0;
+while (index<shapes.value.length && !hasDefault) {
+    if(shapes.value[index].isDefault){
+        hasDefault = true;
+    }
+    index++;
+}
+if(!hasDefault){
+    shapes.value[0].isDefault = true;
+}
+}
+
+const updateShapes = async () => {
+    isLoading.value = true;
+    checkIfThereDefault();
+    const result = await api.updateMaterialSimpleShapes(configID.value,materialId.value,shapes.value);
+    if(result.success){
         await fetchMaterialShapes();
-        isFetching.value = false;
-    });
-
-    const fetchMaterialShapes = async () => {
-        const result = await api.getMaterialSimpleShapes(configID.value,materialId.value);
-        if(!result.message){
-            shapes.value = result;
+        if(result.success == true ) {
+            toastMessage(result.message);
         }else{
-            shapes.value = [];
-            noShapesFound.value = result.message;
+            toastMessage(result.message,"warning");
         }
-    };
-    const fetchShapes = async () => {
-        const result = await api.getGlobalShapes();
-        if(!result.message){
-            manageShapes.value = result;
-        }
-    }
-    
-    const updateShapes = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleShapes(configID.value,materialId.value,shapes.value);
-        if(result.success){
-            await fetchMaterialShapes();
-            if(result.success == true ) {
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning");
-            }
-            isLoading.value = false;
-            isNewShape.value = false;
-            openModal.value = false;
-            shape.value = {
-                isDefault:false,
-                shapeId:0,
-                additionalPrice:0
-            };
-            addNewShapes.value =[{
-                isDefault:false,
-                shapeId:0,
-                additionalPrice:0,
-            }];
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewShape.value = false;
-            openModal.value = false;
-            shape.value = {
-                isDefault:false,
-                shapeId:0,
-                additionalPrice:0
-            };
-            addNewShapes.value =[{
-                isDefault:false,
-                shapeId:0,
-                additionalPrice:0,
-            }];
-        }
-    };
-
-    const selectMaterialShape = (id,sh,isDeleting=false) => {
-        if(isDeleting){
-            shapeId.value = id;
-            closeModal();
-        }else{
-            shape.value = sh;
-            isEdit.value = true;
-            notSelectedManageShapes.value = checkNotSelectedManageShapes(sh.shapeId);
-            isNewShape.value = true;
-        }
-    };
-
-    const addShapes = async () => {
-        isLoading.value = true;
-        for (let index = 0; index < addNewShapes.value.length; index++) {
-            shapes.value.push(addNewShapes.value[index]);
-        }
-        await updateShapes();
-    };
-    const updateMaterialShapes = async () => {
-        isLoading.value = true;
-        shapes.value[shapeId.value] = shape.value;
-        await updateShapes();
-    };
-
-    const deleteShapes = async () => {
-        isLoading.value = true;
-        shapes.value.splice(shapeId.value,1);
-        await updateShapes();
-    };
-
-
-    const closeModal = () => {
-        openModal.value = !openModal.value;
-    };
-
-    const newShape = () => {
-        notSelectedManageShapes.value = checkNotSelectedManageShapes();
-        if(Object.keys(notSelectedManageShapes.value).length>0){
-            isNewShape.value = true;
-        }else{
-            toastMessage('No Shapes to choose','warning');
-        }
-    };
-    const back = () => {
+        isLoading.value = false;
         isNewShape.value = false;
-        isEdit.value = false;
-        shapeId.value  = null;
+        openModal.value = false;
         shape.value = {
             isDefault:false,
             shapeId:0,
@@ -386,15 +345,91 @@
             shapeId:0,
             additionalPrice:0,
         }];
-    };
-    const selectDefault = async(key) =>{
-        shapes.value[key].isDefault = true;
-        for(let i=0; i<shapes.value.length; i++){
-            if(i != key ){
-                shapes.value[i].isDefault = false;
-            }
-        }
-       await updateMaterialShapes();
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewShape.value = false;
+        openModal.value = false;
+        shape.value = {
+            isDefault:false,
+            shapeId:0,
+            additionalPrice:0
+        };
+        addNewShapes.value =[{
+            isDefault:false,
+            shapeId:0,
+            additionalPrice:0,
+        }];
     }
+};
+
+const selectMaterialShape = (id,sh,isDeleting=false) => {
+    if(isDeleting){
+        shapeId.value = id;
+        closeModal();
+    }else{
+        shape.value = sh;
+        isEdit.value = true;
+        notSelectedManageShapes.value = checkNotSelectedManageShapes(sh.shapeId);
+        isNewShape.value = true;
+    }
+};
+
+const addShapes = async () => {
+    isLoading.value = true;
+    for (let index = 0; index < addNewShapes.value.length; index++) {
+        shapes.value.push(addNewShapes.value[index]);
+    }
+    await updateShapes();
+};
+const updateMaterialShapes = async () => {
+    isLoading.value = true;
+    shapes.value[shapeId.value] = shape.value;
+    await updateShapes();
+};
+
+const deleteShapes = async () => {
+    isLoading.value = true;
+    shapes.value.splice(shapeId.value,1);
+    await updateShapes();
+};
+
+
+const closeModal = () => {
+    openModal.value = !openModal.value;
+};
+
+const newShape = () => {
+    notSelectedManageShapes.value = checkNotSelectedManageShapes();
+    if(Object.keys(notSelectedManageShapes.value).length>0){
+        isNewShape.value = true;
+    }else{
+        toastMessage('No Shapes to choose','warning');
+    }
+};
+const back = () => {
+    isNewShape.value = false;
+    isEdit.value = false;
+    shapeId.value  = null;
+    shape.value = {
+        isDefault:false,
+        shapeId:0,
+        additionalPrice:0
+    };
+    addNewShapes.value =[{
+        isDefault:false,
+        shapeId:0,
+        additionalPrice:0,
+    }];
+};
+const selectDefault = async(key) =>{
+    shapes.value[key].isDefault = true;
+    for(let i=0; i<shapes.value.length; i++){
+        if(i != key ){
+            shapes.value[i].isDefault = false;
+        }
+    }
+    await updateMaterialShapes();
+}
     
 </script>

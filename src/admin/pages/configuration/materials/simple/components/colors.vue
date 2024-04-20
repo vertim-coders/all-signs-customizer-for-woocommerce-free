@@ -248,6 +248,21 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                             </div>
                         </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start" v-if="color.textColor.active">
+                            <div>
+                                <label for="">Use same color for border</label>
+                                <p>Activate this option to force a single color for borders</p>
+                            </div>
+                            <div class="aso-flex aso-space-x-2 aso-items-center">
+                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                <div class="aso-flex aso-items-center">
+                                    <label for="aso-toggle" @click="handleChangeSameForBorderColorActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': color.textColor.sameForBorder, 'aso-bg-active': color.textColor.sameForBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </div>
+                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                            </div>
+                        </div>
                         <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.textColor.active">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
                             <div class="aso-relative aso-flex">
@@ -310,13 +325,13 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
                                     <label for="aso-toggle" @click="handleChangePatterActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': addColors[key].pattern.active, 'aso-bg-active': addColors[key].pattern.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="{'aso-translate-x-[100%]': color.pattern.active, 'aso-bg-active': color.pattern.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </div>
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                             </div>
                         </div>
-                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="!addColors[key].pattern.active">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="!color.pattern.active">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Material Background Color</label>
                             <div class="aso-relative aso-flex">
                                 <input
@@ -334,7 +349,7 @@
                                 />
                             </div>                        
                         </div>
-                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="addColors[key].pattern.active">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.pattern.active">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Background Image</label>
                             <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
                                 <div class="aso-flex aso-space-x-2">
@@ -364,20 +379,35 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                             </div>
                         </div>
-                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="addColors[key].textColor.active">
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start" v-if="color.textColor.active">
+                            <div>
+                                <label for="">Use same color for border</label>
+                                <p>Activate this option to force a single color for borders</p>
+                            </div>
+                            <div class="aso-flex aso-space-x-2 aso-items-center">
+                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                <div class="aso-flex aso-items-center">
+                                    <label for="aso-toggle" @click="handleChangeSameForBorderColorActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                        <div :class="{'aso-translate-x-[100%]': color.textColor.sameForBorder, 'aso-bg-active': color.textColor.sameForBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                    </label>
+                                </div>
+                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                            </div>
+                        </div>
+                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.textColor.active">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
                             <div class="aso-relative aso-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="addColors[key].textColor.codeHex"
-                                    @input="changeTextColor"
+                                    @input="(e)=>changeTextColor(e,key)"
                                     class="aso-w-9 aso-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="addColors[key].textColor.codeHex"
-                                    @input="changeTextColor"
+                                    @input="(e)=>changeTextColor(e,key)"
                                     class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
                                 />
                             </div>                        
@@ -503,6 +533,7 @@ const color = ref({
     name:'',
     textColor:{
         active:false,
+        sameForBorder:false,
         codeHex:'#000000'
     },
     pattern:{
@@ -563,7 +594,7 @@ const changeTextColor = (event,key=-1) => {
     if(event.target.value[0]!=='#'){
         event.target.value = '#'+ event.target.value;
     }
-    if(key==-1){
+    if(isEdit.value){
         color.value.textColor.codeHex = event.target.value;
     }else{
         addColors.value[key].textColor.codeHex = event.target.value;
@@ -574,14 +605,21 @@ const handleChangeCustomColorsActive = () => {
     colors.value.customColors.active = ! colors.value.customColors.active;
 }
 const handleChangeTextColorActive= (key=-1) => {
-    if(key==-1){
+    if(isEdit.value){
         color.value.textColor.active = ! color.value.textColor.active;
     }else{
         addColors.value[key].textColor.active = !addColors.value[key].textColor.active;
     }
 }
+const handleChangeSameForBorderColorActive= (key=-1) => {
+    if(isEdit.value){
+        color.value.textColor.sameForBorder = ! color.value.textColor.sameForBorder;
+    }else{
+        addColors.value[key].textColor.sameForBorder = !addColors.value[key].textColor.sameForBorder;
+    }
+}
 const handleChangePatterActive= (key=-1) => {
-    if(key==-1){
+    if(isEdit.value){
         color.value.pattern.active = ! color.value.pattern.active;
     }else{
         addColors.value[key].pattern.active = !addColors.value[key].pattern.active;
@@ -591,7 +629,7 @@ const changeBackgroundColor = (event,key=-1) => {
     if(event.target.value[0]!=='#'){
         event.target.value = '#'+ event.target.value;
     }
-    if(key==-1){
+    if(isEdit.value){
         color.value.pattern.codeHex = event.target.value;
     }else{
         addColors.value[key].pattern.codeHex = event.target.value;
@@ -618,7 +656,8 @@ const updateMaterialColor = async () => {
                 name:'',
                 textColor:{
                     active:false,
-                    codeHex:'#000000'
+                    sameForBorder:false,
+                    codeHex:'#000000',
                 },
                 pattern:{
                     active:false,
@@ -638,8 +677,19 @@ const updateMaterialColor = async () => {
         addColors.value = [
             {
                 isDefault:false,
-                manageColorId:0,
-                additionalPrice:0
+                name:'',
+                textColor:{
+                    active:false,
+                    sameForBorder:false,
+                    codeHex:'#000000',
+                },
+                pattern:{
+                    active:false,
+                    codeHex:'#000000',
+                    url:""
+                },
+                prevImg:"",
+                additionalPrice:0,
             }
         ];
         dropdownColors.value=[true];
@@ -711,6 +761,7 @@ const back = () => {
         name:'',
         textColor:{
             active:false,
+            sameForBorder:false,
             codeHex:'#000000'
         },
         pattern:{
@@ -823,6 +874,8 @@ const selectCustomPrevImage = async(e,key=-1) => {
                         attachment = attachment.toJSON();
                         if (attachment.type == "image") {
                             colors.value.customColors.prevImg = (attachment.url);
+                        }else{
+                            addColors.value[key].customColors.prevImg = (attachment.url);
                         }
                     }
                 );

@@ -423,7 +423,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	public function update_fixing_methods_options_globals_settings($request){
 		$fixingMethod=json_decode($request->get_body(),true);
 		$fixingMethod_id=$request->get_param('fixingMethod_id');
-		$all_fixingMethods= get_option("aso_all_fixingMethods",[]); ;
+		$all_fixingMethods= get_option("aso_all_fixingMethods",[]);
 		if($all_fixingMethods[$fixingMethod_id]){
       if($all_fixingMethods[$fixingMethod_id] != $fixingMethod){
         $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
