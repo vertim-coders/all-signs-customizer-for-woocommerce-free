@@ -377,7 +377,7 @@ const checkIfThereDefault = ()=> {
         }
         index++;
     }
-    if(!hasDefault){
+    if(!hasDefault && sizes.value.allSizes[0]){
         sizes.value.allSizes[0].isDefault = true;
     }
 }

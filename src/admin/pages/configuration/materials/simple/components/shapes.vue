@@ -308,17 +308,17 @@ const fetchMaterialShapes = async () => {
 };
 
 const checkIfThereDefault = ()=> {
-var hasDefault = false;
-let index =0;
-while (index<shapes.value.length && !hasDefault) {
-    if(shapes.value[index].isDefault){
-        hasDefault = true;
+    var hasDefault = false;
+    let index =0;
+    while (index<shapes.value.length && !hasDefault) {
+        if(shapes.value[index].isDefault){
+            hasDefault = true;
+        }
+        index++;
     }
-    index++;
-}
-if(!hasDefault){
-    shapes.value[0].isDefault = true;
-}
+    if(!hasDefault && shapes.value[0]){
+        shapes.value[0].isDefault = true;
+    }
 }
 
 const updateShapes = async () => {

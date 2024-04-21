@@ -420,10 +420,9 @@ const checkIfThereDefault = ()=> {
         }
         index++;
     }
-    if(fixingMethods.value.length>0){
-        if(!hasDefault){
-            fixingMethods.value[0].isDefault = true;
-        }
+    
+    if(!hasDefault && fixingMethods.value[0]){
+        fixingMethods.value[0].isDefault = true;
     }
 }
 const updateFixingMethods = async () => {

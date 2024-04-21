@@ -694,7 +694,7 @@ const checkIfThereDefault = ()=> {
         }
         index++;
     }
-    if(!hasDefault){
+    if(!hasDefault && colors.value.allColors[0]){
         colors.value.allColors[0].isDefault = true;
     }
 }
