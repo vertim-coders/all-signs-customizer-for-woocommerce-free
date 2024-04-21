@@ -5,10 +5,8 @@ import Advance from "@/admin/pages/configuration/materials/advance/index.vue";
 import ManageFonts from "@/admin/pages/manage-fonts/index.vue";
 import ManageCliparts from "@/admin/pages/manage-cliparts/index.vue";
 import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
-import ManageColors from "@/admin/pages/manage-colors/index.vue";
 import Settings from "@/admin/pages/configuration/settings/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
-import ManageSizes from "@/admin/pages/manage-sizes/index.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
@@ -108,16 +106,6 @@ const router = createRouter({
       path: "/manage-cliparts/:groupId/cliparts",
       name: "cliparts",
       component: Cliparts,
-    },
-    {
-      path: "/manage-colors",
-      name: "managecolors",
-      component: ManageColors,
-    },
-    {
-      path: "/manage-sizes",
-      name: "managesizes",
-      component: ManageSizes,
     },
     {
       path: "/global-settings/border",
