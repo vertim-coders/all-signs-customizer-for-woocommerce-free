@@ -312,7 +312,7 @@ final class ASO_All_Signs_Options {
             [
                 'name' => 'Table Stand',
                 "description"=>"",
-                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_table_clamp.svg',
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_table_stand.svg',
                 "popImg"=>"",
                 'type' => 'table-stand'
             ],
@@ -350,6 +350,48 @@ final class ASO_All_Signs_Options {
                 "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_base_support.svg',
                 "popImg"=>"",
                 'type' => 'base-support'
+            ],
+            [
+                'name' => 'Magnetic Strip',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_magnetic_strip.svg',
+                "popImg"=>"",
+                'type' => 'magnetic-strip'
+            ],
+            [
+                'name' => 'Keyring',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_keyring.svg',
+                "popImg"=>"",
+                'type' => 'keyring'
+            ],
+            [
+                'name' => 'Sign Holder',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_sign_holder.svg',
+                "popImg"=>"",
+                'type' => 'sign-holder'
+            ],
+            [
+                'name' => 'Eyelets',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_eyelets.svg',
+                "popImg"=>"",
+                'type' => 'eyelets'
+            ],
+            [
+                'name' => 'S Hook',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_s_hook.svg',
+                "popImg"=>"",
+                'type' => 's-hook'
+            ],
+            [
+                'name' => 'Roll Up',
+                "description"=>"",
+                "icon" => ASO_ASSETS.'/images/fixing-methodes/ic_fixmethod_roll_up.svg',
+                "popImg"=>"",
+                'type' => 'roll-up'
             ],
         ];
         $have_fixingMethods = get_option("aso_all_fixingMethods");

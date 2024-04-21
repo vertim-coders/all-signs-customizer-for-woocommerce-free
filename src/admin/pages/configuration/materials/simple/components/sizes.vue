@@ -28,9 +28,6 @@
                                 Height
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
-                                thickness
-                            </th>
-                            <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
                                 Base Price
                             </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-font-normal">
@@ -44,14 +41,14 @@
                     </thead>
                     <tbody class="aso-bg-white">
                         <tr v-if="isFetching">
-                            <td colspan="7">
+                            <td colspan="6">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                     <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr  v-if="sizes.allSizes.length == 0 && !isFetching">
-                            <td colspan="7">
+                            <td colspan="6">
                                 <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
                                     <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
                                         <p class="aso-text-2xl aso-font-bold">{{noSizesFound}}</p>
@@ -72,12 +69,6 @@
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#F8E7E7] aso-text-[#EF5A35] aso-border-none">
                                     {{ sz.height }}
                                 </span>
-                            </td>
-                            <td class="aso-px-6  aso-text-[12px]  aso-py-2">
-                                <span v-if="sz.thickness.active" class="aso-w-fit aso-rounded-lg aso-text-center aso-p-1 aso-px-2 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
-                                   {{sz.thickness.value}}
-                                </span>
-                                <span v-if="!sz.thickness.active">NONE</span>
                             </td>
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-rounded-lg aso-text-center aso-px-2 aso-p-1 aso-bg-[#EF5A354D] aso-text-[#000000] aso-border-none">
@@ -106,6 +97,37 @@
             </div>
         </div>
         <div class="aso-space-y-2" v-if="!isFetching && !isNewSize">
+            <div class="aso-bg-[#F8F9FB] aso-py-4 aso-px-8">
+                <div class="aso-flex aso-w-1/2 aso-text-[16px]">
+                    <label for="" class="aso-text-[14px] aso-font-bold">Thickness</label>
+                    <div class="aso-flex aso-items-center">
+                        <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
+                            <label for="aso-toggle" @click="sizes.thickness.active = !sizes.thickness.active" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                <div :class="{'aso-translate-x-[100%]': sizes.thickness.active, 'aso-bg-active': sizes.thickness.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <label for="" class="aso-text-[14px] aso-font-bold aso-invisible">Values</label>
+                <div v-if="sizes.thickness.active" class="aso-grid aso-grid-cols-5 aso-gap-4">
+                    <div class="aso-relative aso-space-y-2 aso-py-2 aso-flex aso-flex-col aso-text-[12px]" v-for="thick,key in sizes.thickness.values">
+                        <input type="number" v-model="sizes.thickness.values[key]" class="aso-rounded aso-w-[80%] aso-h-[30px]">
+                        <div @click="handleDeleteThickness(key)" class="aso-bg-white aso-flex aso-absolute aso-justify-center aso-items-center aso-right-6 aso-my-0  -aso-top-4 aso-shadow-md aso-rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <button :disabled="isLoading" @click="handleAddNewThickness" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-2 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span class="aso-font-semibold aso-text-[16px]">More</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-medium aso-px-8 aso-py-8 ">
                 <div class="aso-flex ">
                     Custom size
@@ -192,24 +214,8 @@
                             <input type="number"  v-model="size.height"  class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
                     </div>
-                    <div class="aso-flex aso-justify-between aso-items-center">
-                        <div class="aso-flex aso-w-1/2 aso-text-[16px]">
-                            <label for="" class="aso-text-[14px] aso-font-bold">Thickness</label>
-                            <div class="aso-flex aso-items-center">
-                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
-                                    <label for="aso-toggle" @click="size.thickness.active = !size.thickness.active" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': size.thickness.active, 'aso-bg-active': size.thickness.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
-                                    </label>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="aso-ml-[230px] aso-w-1/2 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]" v-if="size.thickness.active">
-                            <label for="" class="aso-text-[14px] aso-font-bold">Thickness</label>
-                            <input type="number" v-model="size.thickness.value" class="aso-rounded aso-w-[80%] aso-h-[30px]">
-                        </div>
-                    </div>
                 </div>
-                <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-justify-between aso-px-4">
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Base Price</label>
                         <div class="aso-relative">
@@ -225,7 +231,7 @@
                         
                     </div>
                 </div>
-                <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-justify-between aso-px-4">
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Max text char</label>
                         <div class="">
@@ -331,6 +337,10 @@ const sizes = ref({
             max:0
         }
     },
+    thickness: {
+        active: false,
+        values: []
+    },
     allSizes:[]
 });
 const isEdit = ref(false);
@@ -341,10 +351,6 @@ const size = ref({
     label:"",
     width:0,
     height:0,
-    thickness:{
-        active:false,
-        value:0
-    },
     startPriceAtChar:1,
     textNumber:0,
     maxTextChar:-1,
@@ -366,6 +372,7 @@ const fetchMaterialSizes = async () => {
     }else{
         sizes.value = result;
     }
+    console.log(sizes.value);
 }
 
 const checkIfThereDefault = ()=> {
@@ -399,10 +406,6 @@ const updateMaterialSize = async () => {
             label:"",
             width:0,
             height:0,
-            thickness:{
-                active:false,
-                value:0
-            },
             startPriceAtChar:1,
             textNumber:0,
             maxTextChar:-1,
@@ -419,10 +422,6 @@ const updateMaterialSize = async () => {
             label:"",
             width:0,
             height:0,
-            thickness:{
-                active:false,
-                value:0
-            },
             textNumber:0,
             maxTextChar:0,
             charPrice:0,
@@ -472,10 +471,6 @@ const back = () => {
         label:"",
         width:0,
         height:0,
-        thickness:{
-            active:false,
-            value:0
-        },
         textNumber:0,
         maxTextChar:0,
         charPrice:0,
@@ -497,5 +492,11 @@ const selectDefault = async(key) =>{
         }
     }
     await updateSizeInMaterialSize();
+}
+const handleAddNewThickness = ()=> {
+    sizes.value.thickness.values.push(0);
+}
+const handleDeleteThickness = (key)=> {
+    sizes.value.thickness.values.splice(key,1);
 }
 </script>

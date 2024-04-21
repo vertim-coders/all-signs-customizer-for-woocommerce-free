@@ -10,6 +10,9 @@
                         <thead class="aso-bg-[#f0f0f1]">
                             <tr class="">
                                 <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
+                                    ID
+                                </th>
+                                <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                     Title
                                 </th>
                                 <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
@@ -23,20 +26,23 @@
                         </thead>
                         <tbody class="aso-bg-white" >
                             <tr v-if="isFetching">
-                                <td colspan="5">
+                                <td colspan="6">
                                     <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
                                         <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
                                     </div>
                                 </td>
                             </tr>
                             <tr  v-for="shape, key in manageShapes" :key=key class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                                <td class="aso-px-6 aso-text-[14px] aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                                <td>
+                                    {{key}}
+                                </td>
+                                <td class="aso-px-6 aso-text-[14px] aso-py-2 aso-text-center aso-space-x-2">
                                     {{shape.name}}
                                 </td>
                                 <td class="aso-px-6 aso-py-2 aso-text-center aso-text-[11px]">
                                     <img :src="shape.icon" class="aso-w-6 aso-h-6" v-if="shape.icon != ''"/>
                                 </td>
-                                <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
+                                <td class="aso-px-6 aso-py-2 aso-text-center aso-space-x-2">
                                     <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectShapes(key,shape)">
                                         <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_edit.svg" alt="">
                                     </button>

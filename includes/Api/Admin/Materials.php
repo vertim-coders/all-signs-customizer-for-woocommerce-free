@@ -164,6 +164,10 @@ class ASO_Api_Materials extends WP_REST_Controller {
                                             "max"=>0
                                         ]
                                     ],
+                                    "thickness"=> [
+                                        "active"=> false,
+                                        "values"=> []
+                                    ],
                                     "allSizes"=>[]
                                 ],
                                 'borders'=>[

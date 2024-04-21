@@ -248,11 +248,10 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="aso-flex aso-items-center aso-justify-center">
                         <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start" v-if="color.textColor.active">
-                            <div>
-                                <label for="">Use same color for border</label>
-                                <p>Activate this option to force a single color for borders</p>
-                            </div>
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Use same color for border</label>
                             <div class="aso-flex aso-space-x-2 aso-items-center">
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
@@ -264,22 +263,31 @@
                             </div>
                         </div>
                         <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.textColor.active">
-                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="color.textColor.codeHex"
-                                    @input="changeTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="color.textColor.codeHex"
-                                    @input="changeTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
-                                />
-                            </div>                        
+                            <div class="aso-flex aso-space-x-4">
+                                <div class="aso-flex aso-flex-col">
+                                    <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
+                                    <input type="text" v-model="color.textColor.name" id="">
+                                </div>
+                                <div class="aso-flex aso-flex-col">
+                                    <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Name</label>
+                                    <div class="aso-relative aso-flex">
+                                        <input
+                                            id="colorPicker"
+                                            type="color"
+                                            v-model="color.textColor.codeHex"
+                                            @input="(e)=>changeTextColor"
+                                            class="aso-w-9 aso-h-[30px]"
+                                        />
+                                        <input
+                                            type="text"
+                                            v-model="color.textColor.codeHex"
+                                            @input="(e)=>changeTextColor"
+                                            class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                        />
+                                    </div> 
+                                </div>
+                                
+                            </div>                       
                         </div>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
@@ -366,9 +374,9 @@
                             </div>             
                         </div>
                     </div>
-                    <div class="aso-flex aso-justify-between aso-items-center" v-show="dropdownColors[key]">
+                    <div class="aso-justify-between aso-items-center aso-space-y-2" v-show="dropdownColors[key]">
                         <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start">
-                            <label for="">Enable Text Color</label>
+                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Enable Text Color</label>
                             <div class="aso-flex aso-space-x-2 aso-items-center">
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
@@ -379,38 +387,46 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                             </div>
                         </div>
-                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start" v-if="color.textColor.active">
-                            <div>
-                                <label for="">Use same color for border</label>
-                                <p>Activate this option to force a single color for borders</p>
-                            </div>
-                            <div class="aso-flex aso-space-x-2 aso-items-center">
-                                <span class="aso-text-[#444444] aso-text-[11px]">No</span>
-                                <div class="aso-flex aso-items-center">
-                                    <label for="aso-toggle" @click="handleChangeSameForBorderColorActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': color.textColor.sameForBorder, 'aso-bg-active': color.textColor.sameForBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
-                                    </label>
+                        <div class="aso-flex aso-items-center aso-justify-center">
+                            <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-justify-start" v-if="color.textColor.active">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Use same color for border</label>
+                                <div class="aso-flex aso-space-x-2 aso-items-center">
+                                    <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                                    <div class="aso-flex aso-items-center">
+                                        <label for="aso-toggle" @click="handleChangeSameForBorderColorActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                            <div :class="{'aso-translate-x-[100%]': color.textColor.sameForBorder, 'aso-bg-active': color.textColor.sameForBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        </label>
+                                    </div>
+                                    <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                                 </div>
-                                <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
                             </div>
-                        </div>
-                        <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.textColor.active">
-                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Text color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="addColors[key].textColor.codeHex"
-                                    @input="(e)=>changeTextColor(e,key)"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="addColors[key].textColor.codeHex"
-                                    @input="(e)=>changeTextColor(e,key)"
-                                    class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
-                                />
-                            </div>                        
+                            <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col" v-if="color.textColor.active">
+                                <div class="aso-flex aso-space-x-4">
+                                    <div class="aso-flex aso-flex-col">
+                                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
+                                        <input type="text" v-model="addColors[key].textColor.name" id="">
+                                    </div>
+                                    <div class="aso-flex aso-flex-col">
+                                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Name</label>
+                                        <div class="aso-relative aso-flex">
+                                            <input
+                                                id="colorPicker"
+                                                type="color"
+                                                v-model="addColors[key].textColor.codeHex"
+                                                @input="(e)=>changeTextColor(e,key)"
+                                                class="aso-w-9 aso-h-[30px]"
+                                            />
+                                            <input
+                                                type="text"
+                                                v-model="addColors[key].textColor.codeHex"
+                                                @input="(e)=>changeTextColor(e,key)"
+                                                class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                            />
+                                        </div> 
+                                    </div>
+                                    
+                                </div>                       
+                            </div>
                         </div>
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col" v-show="dropdownColors[key]">
@@ -534,6 +550,7 @@ const color = ref({
     textColor:{
         active:false,
         sameForBorder:false,
+        name:"",
         codeHex:'#000000'
     },
     pattern:{
@@ -646,6 +663,7 @@ const updateMaterialColor = async () => {
                 textColor:{
                     active:false,
                     sameForBorder:false,
+                    name:"",
                     codeHex:'#000000',
                 },
                 pattern:{
@@ -670,6 +688,7 @@ const updateMaterialColor = async () => {
                 textColor:{
                     active:false,
                     sameForBorder:false,
+                    name:"",
                     codeHex:'#000000',
                 },
                 pattern:{
