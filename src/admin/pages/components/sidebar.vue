@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-fixed aso-right-0 aso-top-[83px] aso-z-[9999] aso-w-[85px] aso-h-[85vh] aso-bg-[#016464] aso-py-4 aso-items-center aso-flex aso-justify-evenly aso-flex-col">
+    <div class="aso-fixed aso-right-0 aso-top-[83px] aso-z-[9999] aso-w-[85px] aso-h-[85vh] aso-bg-[#016464] aso-py-4 aso-items-center aso-flex aso-justify-start aso-space-y-4 aso-flex-col">
         <div class="aso-flex aso-relative aso-justify-center aso-items-center">
             <button :class="`aso-w-fit aso-h-fit aso-bg-transparent aso-border-none aso-text-white hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer ${$route.path == '/manage-fonts' ? 'aso-opacity-100' :'aso-opacity-50'}`" @click="()=>this.$router.push('/manage-fonts')">
                 <svg class="aso-w-6 aso-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">

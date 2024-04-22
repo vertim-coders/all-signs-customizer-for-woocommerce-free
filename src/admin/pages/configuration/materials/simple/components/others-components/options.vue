@@ -119,7 +119,7 @@
                         <input type="text" v-model="option.description" class="aso-rounded aso-w-full aso-h-[30px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-justify-between aso-pb-12">
+                <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-flex aso-space-x-2">
@@ -149,6 +149,30 @@
                                 </div>
                         </div>
                     </div>
+                </div>
+                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
+                    <label for="" class="aso-text-[16px] aso-font-normal">Exclude Material Colors</label>
+                    <Multiselect
+                            v-model="option.excludeColors"
+                            placeholder="Select shapes"
+                            :options="MaterialColors"
+                            label="name"
+                            trackBy="name"
+                            mode="tags"
+                        >
+                            <template v-slot:singleLabel="{ value }">
+                                <div class="multiselect-single-label ">
+                                    <div :class="`aso-w-6 aso-h-6 aso-rounded aso-mr-2 aso-bg-[${value.codeHex}]`"> </div>
+                                    {{ value.name }}
+                                </div>
+                            </template>
+    
+                            <template v-slot:option="{ option }">
+                                <div :class="`aso-w-6 aso-h-6 aso-rounded aso-mr-2 aso-bg-[${option.codeHex}]`"> </div>
+                                    {{ option.name }}
+                            </template>
+                        </Multiselect>
+                    <span class="aso-text-[#444444] aso-text-[12px]">exclude the material colors for this options</span>   
                 </div>
                 <div class="aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                     <label for="" class="aso-font-normal">Additional Price</label>
@@ -213,175 +237,90 @@
     </div>
 </template>
 <script setup>
-    import api from "@/admin/Api/api";
-    import { ref,onMounted } from "vue";
-    import router from '@/admin/router'
-    import { useRoute } from 'vue-router';
-    import toastMessage from "@/admin/utils/functions";
+import Multiselect from '@vueform/multiselect'
+import api from "@/admin/Api/api";
+import { ref,onMounted } from "vue";
+import router from '@/admin/router'
+import { useRoute } from 'vue-router';
+import toastMessage from "@/admin/utils/functions";
 
-    const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
-    const additionalOptionId = ref(route.params.additionalOptionID);
+const route = useRoute()
+const configID = ref(route.params.configId);
+const materialId = ref(route.params.materialId);
+const additionalOptionId = ref(route.params.additionalOptionID);
 
-    const isFetching = ref(false);
-    const isNewOptions = ref(false);
-    const isLoading = ref(false);
-    const optionId = ref(null);
-    const additionalOption = ref({
-        title:"",
-        description:"",
-        icon:"",
-        options: [],
-    });
-    const isEdit = ref(false);
-    const openModal = ref(false);
-    const noOptionsFound = ref('');
-    const option = ref({
-        title:"",
-        description:"",
-        icon:"",
-        image:"",
-        isDefault:false,
-        additionalPrice:0,
-    });
+const isFetching = ref(false);
+const isNewOptions = ref(false);
+const isLoading = ref(false);
+const optionId = ref(null);
+const additionalOption = ref({
+    title:"",
+    description:"",
+    icon:"",
+    options: [],
+});
+const isEdit = ref(false);
+const openModal = ref(false);
+const noOptionsFound = ref('');
+const option = ref({
+    title:"",
+    description:"",
+    icon:"",
+    image:"",
+    excludeColors:[],
+    isDefault:false,
+    additionalPrice:0,
+});
+const MaterialColors = ref([]);
 
-    onMounted(async ()=>{
-        isFetching.value = true;
-        await fetchMaterialOptions();
-        isFetching.value = false;
-    });
-    const fetchMaterialOptions = async () => {
-        const result = await api.getMaterialSimpleAdditionalOptionsItems(configID.value,materialId.value,additionalOptionId.value);
-        
-        if(!result.message){
-            additionalOption.value = result.data;
-        }else{
-            additionalOption.value = result.data;
-            noOptionsFound.value = result.message;
+onMounted(async ()=>{
+    isFetching.value = true;
+    await fetchMaterialColors();
+    await fetchMaterialOptions();
+    isFetching.value = false;
+});
+const fetchMaterialOptions = async () => {
+    const result = await api.getMaterialSimpleAdditionalOptionsItems(configID.value,materialId.value,additionalOptionId.value);       
+    if(!result.message){
+        additionalOption.value = result.data;
+    }else{
+        additionalOption.value = result.data;
+        noOptionsFound.value = result.message;
+    }
+};
+const fetchMaterialColors = async () => {
+    const result = await api.getMaterialSimpleColors(configID.value,materialId.value);
+    if(!result.message){
+        var tab=[];
+        for (let index = 0; index < result.allColors.length; index++) {
+           tab.push({name:result.allColors[index].name,value:index,codeHex:result.allColors[index].pattern.codeHex});
+            
         }
-    };
+        MaterialColors.value = tab;
+    }
+};
 
-    
-    const selectOption = (id,sz,isDeleting=false) => {
-        if(isDeleting){
-            optionId.value = id;
-            option.value = sz;
-            closeModal();
-        }else{
-            option.value = {...option.value,...sz};
-            optionId.value = id;
-            isEdit.value = true;
-            isNewOptions.value = true;
-        }
-    };
 
-    const addMaterialOption = async () => {
-        isLoading.value = true;
-        const result = await api.addMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,option.value);
-        if(result.success){
-            await fetchMaterialOptions();
-            isLoading.value = false;
-            toastMessage(result.message);
-            isNewOptions.value = false;
-            openModal.value = false;
-            option.value = {
-                title:"",
-                description:"",
-                icon:"",
-                image:"",
-                additionalPrice:0,
-            };
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewOptions.value = false;
-            openModal.value = false;
-            option.value = {
-                title:"",
-                description:"",
-                icon:"",
-                image:"",
-                additionalPrice:0,
-            };
-        }
-    };
-
-    const updateMaterialOption = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value,option.value);
-        if(result.success){
-            await fetchMaterialOptions();
-            if(result.success == true ) {
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning");
-            }
-            isLoading.value = false;
-            isNewOptions.value = false;
-            openModal.value = false;
-            optionId.value = null;
-            option.value = {
-                title:"",
-                description:"",
-                icon:"",
-                image:"",
-                additionalPrice:0,
-            };
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewOptions.value = false;
-            optionId.value = null;
-            openModal.value = false;
-            option.value = {
-                title:"",
-                description:"",
-                icon:"",
-                image:"",
-                additionalPrice:0,
-            };
-        }
-    };
-    const deleteOption = async () => {
-        isLoading.value = true;
-        const result = await api.deleteMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value);
-        if(result.success){
-            await fetchMaterialOptions();
-            isLoading.value = false;
-            toastMessage(result.message);
-            isNewOptions.value = false;
-            openModal.value = false;
-            optionId.value = null;
-            option.value = {
-                title:"",
-                description:"",
-                icon:"",
-                image:"",
-                additionalPrice:0,
-            };
-        }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewOptions.value = false;
-            optionId.value = null;
-            openModal.value = false;
-            option.value = {
-                title:"",
-                icon:"",
-                description:"",
-                image:"",
-                additionalPrice:0,
-            };
-        }
-    };
-    const addOption = () => {
+const selectOption = (id,sz,isDeleting=false) => {
+    if(isDeleting){
+        optionId.value = id;
+        option.value = sz;
+        closeModal();
+    }else{
+        option.value = {...option.value,...sz};
+        optionId.value = id;
+        isEdit.value = true;
         isNewOptions.value = true;
     }
-    const back = () => {
-        isNewOptions.value = false;
+};
+
+const addMaterialOption = async () => {
+    isLoading.value = true;
+    const result = await api.addMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,option.value);
+    if(result.success){
+        await fetchMaterialOptions();
         isLoading.value = false;
-        optionId.value = null;
+        toastMessage(result.message);
         isNewOptions.value = false;
         openModal.value = false;
         option.value = {
@@ -389,95 +328,208 @@
             description:"",
             icon:"",
             image:"",
+            excludeColors:[],
+            isDefault:false,
+            additionalPrice:0,
+        };
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewOptions.value = false;
+        openModal.value = false;
+        option.value = {
+            title:"",
+            description:"",
+            icon:"",
+            image:"",
+            excludeColors:[],
+            isDefault:false,
             additionalPrice:0,
         };
     }
+};
 
-    const closeModal = () => {
-        openModal.value = !openModal.value;
-    };
-
-    const selectOptionsIcon = async(e) => { 
-        e.preventDefault();
-        var uploader = wp.media(
-            {
-                title: "Select Options Icon",
-                button: {
-                    text: "Select Icon"
-                },
-                multiple: false
-            }
-        )
-            .on(
-                'select',
-                function () {
-                    var selection = uploader.state().get('selection');
-                    selection.map(
-                        function (attachment) {
-                            attachment = attachment.toJSON();
-                            if (attachment.type == "image") {
-                                option.value.icon = (attachment.url);
-                            }
-                        }
-                    );
-                }
-            )
-            .open();
-    }
-    const selectOptionsBackgroundImage = async(e) => { 
-        e.preventDefault();
-        var uploader = wp.media(
-            {
-                title: "Select Options background image",
-                button: {
-                    text: "Select background image"
-                },
-                multiple: false
-            }
-        )
-            .on(
-                'select',
-                function () {
-                    var selection = uploader.state().get('selection');
-                    selection.map(
-                        function (attachment) {
-                            attachment = attachment.toJSON();
-                            if (attachment.type == "image") {
-                                option.value.image = (attachment.url);
-                            }
-                        }
-                    );
-                }
-            )
-            .open();
-    }
-
-    const updateMaterialAdditionalOption = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value,additionalOption.value);
-        if(result.success){
-            if(result.success == true ) {
-                toastMessage(result.message);
-            }else{
-                toastMessage(result.message,"warning");
-            }
-            isLoading.value = false;
-            
+const updateMaterialOption = async () => {
+    isLoading.value = true;
+    const result = await api.updateMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value,option.value);
+    if(result.success){
+        await fetchMaterialOptions();
+        if(result.success == true ) {
+            toastMessage(result.message);
         }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            
+            toastMessage(result.message,"warning");
         }
-    };
-
-    const selectDefault = async(key) =>{
-        additionalOption.value.options[key].isDefault = true;
-        for(let i=0; i<additionalOption.value.options.length; i++){
-            if(i != key ){
-                additionalOption.value.options[i].isDefault = false;
-            }
-        }
-       await updateMaterialAdditionalOption();
+        isLoading.value = false;
+        isNewOptions.value = false;
+        openModal.value = false;
+        optionId.value = null;
+        option.value = {
+            title:"",
+            description:"",
+            icon:"",
+            image:"",
+            excludeColors:[],
+            isDefault:false,
+            additionalPrice:0,
+        };
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewOptions.value = false;
+        optionId.value = null;
+        openModal.value = false;
+        option.value = {
+            title:"",
+            description:"",
+            icon:"",
+            image:"",
+            excludeColors:[],
+            isDefault:false,
+            additionalPrice:0,
+        };
     }
+};
+const deleteOption = async () => {
+    isLoading.value = true;
+    const result = await api.deleteMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value);
+    if(result.success){
+        await fetchMaterialOptions();
+        isLoading.value = false;
+        toastMessage(result.message);
+        isNewOptions.value = false;
+        openModal.value = false;
+        optionId.value = null;
+        option.value = {
+            title:"",
+            description:"",
+            icon:"",
+            image:"",
+            excludeColors:[],
+            isDefault:false,
+            additionalPrice:0,
+        };
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        isNewOptions.value = false;
+        optionId.value = null;
+        openModal.value = false;
+        option.value = {
+            title:"",
+            description:"",
+            icon:"",
+            image:"",
+            excludeColors:[],
+            isDefault:false,
+            additionalPrice:0,
+        };
+    }
+};
+const addOption = () => {
+    isNewOptions.value = true;
+}
+const back = () => {
+    isNewOptions.value = false;
+    isLoading.value = false;
+    optionId.value = null;
+    isNewOptions.value = false;
+    openModal.value = false;
+    option.value = {
+        title:"",
+        description:"",
+        icon:"",
+        image:"",
+        excludeColors:[],
+        isDefault:false,
+        additionalPrice:0,
+    };
+}
+
+const closeModal = () => {
+    openModal.value = !openModal.value;
+};
+
+const selectOptionsIcon = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Options Icon",
+            button: {
+                text: "Select Icon"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            option.value.icon = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const selectOptionsBackgroundImage = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Options background image",
+            button: {
+                text: "Select background image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            option.value.image = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+
+const updateMaterialAdditionalOption = async () => {
+    isLoading.value = true;
+    const result = await api.updateMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value,additionalOption.value);
+    if(result.success){
+        if(result.success == true ) {
+            toastMessage(result.message);
+        }else{
+            toastMessage(result.message,"warning");
+        }
+        isLoading.value = false;
+        
+    }else{
+        isLoading.value = false;
+        toastMessage(result.message,"error");
+        
+    }
+};
+
+const selectDefault = async(key) =>{
+    additionalOption.value.options[key].isDefault = true;
+    for(let i=0; i<additionalOption.value.options.length; i++){
+        if(i != key ){
+            additionalOption.value.options[i].isDefault = false;
+        }
+    }
+    await updateMaterialAdditionalOption();
+}
     
 </script>
