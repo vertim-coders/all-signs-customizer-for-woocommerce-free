@@ -222,7 +222,7 @@
                             </div>
                         </div>
 
-                        <div v-if="borderrs.length > 0 && materialType == 'simple'" @click="showOptions('border')" :class="`aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1 lg:aso-bg-[${configColors.backgroundButton}] lg:hover:aso-bg-[${configColors.backgroundColorHoverButton}] lg:aso-text-[${configColors.textColorButton}] lg:hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation`">
+                        <div v-if="materialType == 'simple'" @click="showOptions('border')" :class="`aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1 lg:aso-bg-[${configColors.backgroundButton}] lg:hover:aso-bg-[${configColors.backgroundColorHoverButton}] lg:aso-text-[${configColors.textColorButton}] lg:hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation`">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />
                             </svg>
@@ -231,7 +231,7 @@
                             </div>
                         </div>
     
-                        <div v-if="colorrs.length > 0" @click="showOptions('color')" :class="`aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1 lg:aso-bg-[${configColors.backgroundButton}] lg:hover:aso-bg-[${configColors.backgroundColorHoverButton}] lg:aso-text-[${configColors.textColorButton}] lg:hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation`">
+                        <div  @click="showOptions('color')" :class="`aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1 lg:aso-bg-[${configColors.backgroundButton}] lg:hover:aso-bg-[${configColors.backgroundColorHoverButton}] lg:aso-text-[${configColors.textColorButton}] lg:hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation`">
                             <svg class="aso-w-6 aso-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="tdesign:fill-color-1">
                                 <path id="Vector" d="M20.0004 0.0888367L39.9137 20.5L36.6671 23.8278V23.9167H36.5804L24.7137 36.08C23.4635 37.3611 21.7682 38.0807 20.0004 38.0807C18.2326 38.0807 16.5373 37.3611 15.2871 36.08L4.8004 25.3329C4.18131 24.6983 3.69021 23.945 3.35516 23.1159C3.02011 22.2869 2.84766 21.3983 2.84766 20.5009C2.84766 19.6035 3.02011 18.7149 3.35516 17.8858C3.69021 17.0567 4.18131 16.3034 4.8004 15.6688L12.1971 8.08554L7.64373 3.41667L10.0004 1.00109L14.5554 5.66996L20.0004 0.0888367ZM14.5554 10.5028L7.15873 18.0844C6.50873 18.7507 6.18207 19.6253 6.18207 20.5H35.1987L20.0004 4.92L16.9137 8.08554L22.3571 13.6667L20.0004 16.0823L14.5554 10.5028ZM8.13373 23.9167L17.6437 33.6644C18.2688 34.3049 19.1165 34.6648 20.0004 34.6648C20.8843 34.6648 21.732 34.3049 22.3571 33.6644L31.8671 23.9167H8.13373ZM36.2504 31.4145L38.4404 34.2504C39.4087 35.5043 39.4087 37.4074 38.4404 38.6596C38.1824 39.0048 37.8511 39.2852 37.4717 39.4797C37.0922 39.6741 36.6746 39.7775 36.2504 39.782C35.3671 39.782 34.5837 39.3378 34.0604 38.6596C33.0921 37.4074 33.0921 35.5043 34.0604 34.2504L36.2504 31.4145Z" fill="currentColor"/>
@@ -341,32 +341,15 @@
                         <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
                             <p class="aso-font-medium">Suggestions</p>
                             <div class="aso-space-y-2">
-                                <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-text-zinc-800 aso-px-2 aso-border-solid aso-border-2 aso-border-zinc-800 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
-                                    <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
-                                        <p :class="`lg:aso-text-sm aso-font-semibold`" >{{ currentSizeName }}</p>
-                                    </div>
-                                    <div class="aso-flex aso-items-center aso-justify-center">
-                                        <svg v-show="!dropSize" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 lg:w-5 lg:aso-h-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                        <svg v-show="dropSize" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 lg:w-5 lg:aso-h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                                        </svg>                                  
-                                    </div>
-                                </div>
-                                <div v-show="dropSize">
-                                    <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                        <div v-for="(sizee, id) in sizees">
-                                            <div v-for="(size, index) in allSizes" :key="size.name" class="aso-w-full aso-flex" >
-                                                <div v-if="sizee.manageSizeId == index" class="aso-w-full aso-h-full aso-flex">
-                                                    <input type="radio" :id="size.width + index" name="aso-sizes" class=" peer aso-hidden" @change="changeSize(size, sizee, id)">
-                                                    <label :for="size.width + index" :class="`${currentSizeName == size.label ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                                        aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
-                                                    >
-                                                        {{ size.label }}
-                                                    </label>
-                                                </div>
-                                            </div>
+                                <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                                    <div v-for="(sizee, id) in sizees">
+                                        <div class="aso-w-full aso-h-full aso-flex">
+                                            <input type="radio" :id="'aso' + sizee.label + sizee.width + index" name="aso-sizes" class=" peer aso-hidden" @click="changeSize({label: sizee.label, width:sizee.width, height:sizee.height}, {textNumber: sizee.textNumber, charPrice: sizee.charPrice, basePrice: sizee.basePrice, maxTextChar: sizee.maxTextChar, startPriceAtChar: sizee.startPriceAtChar}, id )">
+                                            <label :for="'aso' + sizee.label + sizee.width + index" :class="`${currentSizeName == sizee.label ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}]` : ``} 
+                                                aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundColorHeader}] hover:aso-border-[${configColors.backgroundColorHeader}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                            >
+                                                {{ sizee.label }}
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -392,9 +375,16 @@
 
                             <div v-if="currentSizeThickness" class="aso-space-y-2">
                                 <p class="aso-text-base aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}</p>
-                                <div class="aso-flex aso-space-x-2">
-                                    <div class="aso-w-full aso-flex aso-flex-col aso-space-y-2">
-                                        <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="aso-thickness" :min="currentSize.thickness" :max="currentSize.thickness" :value="currentSize.thickness" disabled >
+                                <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                                    <div v-for="(thick, id) in thicknesss.values">
+                                        <div class="aso-w-full aso-h-full aso-flex">
+                                            <input type="radio" :id="'aso' + thick + id" name="aso-sizes" class=" peer aso-hidden" @click="selectSizeThickness(thick)">
+                                            <label :for="'aso' + thick + id" :class="`${currentThickValue == thick ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}]` : `aso-text-zinc-800 aso-border-zinc-800`} 
+                                                aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundColorHeader}] hover:aso-border-[${configColors.backgroundColorHeader}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                            >
+                                                {{ thick }} {{ configUnit }}
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -409,9 +399,9 @@
                                 <div v-for="(shapee, id) in shapees">
                                     <div v-for="(shape, index) in allShapes" :key="shape.name" class="aso-w-full aso-flex">
                                         <div class="aso-w-full aso-flex" v-if="shapee.shapeId == index">
-                                            <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, shapee)">
-                                            <label :for="shape.name + index" :class="`${selectedShape == shape.type ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} 
-                                                aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                            <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, shapee, id)">
+                                            <label :for="shape.name + index" :class="`${selectedShape == shape.value ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} 
+                                                aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundColorHeader}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
                                                 <div :class="`${shape.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-16 aso-h-16`">
                                                     <img v-if="shape.icon != ''" :src="shape.icon" class="aso-w-full aso-h-full" />
@@ -431,8 +421,8 @@
                         <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
                             <div v-for="(fixingg, id) in fixinggs">
                                 <div v-for="(fixing, index) in allFixings">
-                                    <div v-if="fixingg.fixingMethodId == index" class="aso-space-y-3 aso-w-full aso-h-full">
-                                        <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
+                                    <div v-if="fixingg.fixingMethodId == index && (!fixingg.excludeShapes.includes(currentShapeId) && !fixingg.excludeSizes.includes(currentSizeId))" class="aso-space-y-3 aso-w-full aso-h-full">
+                                        <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg, id)">
                                         <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2">
                                             <div :class="`${fixing.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
                                                 <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
@@ -489,19 +479,40 @@
                         <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>    
 
                         <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
-                            <p class="aso-font-medium" >List of colors</p>
+                            <!-- <p class="aso-font-medium" >List of colors</p> -->
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                <div v-for="(colorr, id) in colorrs">
-                                    <div v-for="(color, index) in allColors" >
-                                        <div v-if="colorr.manageColorId == index" @click="changeSignColor(color, colorr)" :class="`${activeFace === 'front-face' && activeSignColor === color.name || activeFace === 'back-face' && activeSignFace2Color === color.name ? `aso-border-2 aso-border-4 aso-border-solid` : `` } aso-w-16 aso-h-16 aso-bg-[${color.backgroundColor}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${color.textColor.codeHex}] aso-rounded-full aso-cursor-pointer`"> C </div>
+                                <div v-for="(colorr, id) in colorrs.allColors" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                                    <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
+                                        <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-w-full aso-h-full`" />
+                                        <span v-if="colorr.textColor.active">C</span>
                                     </div>
+                                    <div v-if="colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-relative aso-w-16 aso-h-16 aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
+                                        <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-w-full aso-h-full`" />
+                                        <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`aso-w-full aso-h-full`" />
+                                        <span v-if="colorr.textColor.active" :class="`aso-absolute aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%]`">C</span>
+                                    </div>
+
+                                    <p class="aso-text-sm">{{colorr.name }}</p>
                                 </div>
-                                <!-- <label for="setColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-10 aso-h-10 aso-bg-[${simpleColor}] aso-flex aso-full-center aso-rounded-full`">
-                                    <input id="setColor" type="color" v-model="simpleColor" class="aso-invisible" @change="changeSignColor({name: 'custom', code: simpleColor})"/>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" :fill="simpleColor" class="aso-w-11 aso-h-11">
-                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                            </div>
+                            <div v-if="colorrs.customColors.active" :class="`aso-flex aso-flex-col aso-space-y-2`">
+                                <p class="aso-font-medium">{{colorrs.customColors.label}}</p>
+                                <label for="setColor" :class="`${activeSignColor == colorrs.customColors.label ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
+                                    <input id="setColor" type="color" v-model="simpleColor" class="aso-hidden" @change="changeSignColor(colorrs.customColors.label, {active: false, codeHex: simpleColor, url: ''}, {active: false, codeHex: '', sameForBorder: false}, 0)"/>
+                                    <svg v-if="colorrs.customColors.prevImg === ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
+                                        <g fill="none" fill-rule="evenodd">
+                                            <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                            <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                            <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                            <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                            <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                            <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                            <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                            <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                        </g>
                                     </svg>
-                                </label> -->
+                                    <img v-if="colorrs.customColors.prevImg !== ''" class="aso-w-full aso-h-full"/>
+                                </label>
                             </div>
                         </div>
 
@@ -523,10 +534,10 @@
 
                         <div class="aso-w-full aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                <div v-for="(borderr, id) in borderrs">
+                                <div v-for="(borderr, id) in borderrs.allBorders">
                                     <div v-for="(border, index) in allBorders" :key="border.name" class="aso-w-full aso-flex">
-                                        <div v-if="borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)">
-                                            <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @click="selectBorder(border.value, borderr.settings, borderr.additionalPrice)">
+                                        <div v-if="borderr.manageBorderId == index && (!borderr.excludeShapes.includes(currentShapeId) && !borderr.excludeSizes.includes(currentSizeId))">
+                                            <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings, borderr.additionalPrice, borderr.excludeShapes, borderr.excludeSizes, id)">
                                             <label :for="'border' + border.name + index" :class="`${activeFace === 'front-face' && activeFace1Border === border.value || activeFace === 'back-face' && activeFace2Border === border.value ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} 
                                                 aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[#016464] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
@@ -540,17 +551,27 @@
                                 </div>
                             </div>
 
-                            <div v-if="(activeFace === 'front-face' && borderColors1.length > 0) || (activeFace === 'back-face' && borderColors2.length > 0)" class="aso-p-2">
+                            <div v-if="colorForBorder && (activeFace === 'front-face' && borderColors1.length > 0) || (activeFace === 'back-face' && borderColors2.length > 0)" class="aso-p-2">
                                 <p class="aso-font-medium">Colors</p>
                                 <div v-if="activeFace === 'front-face'">
                                     <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                        <div v-for="(color, index) in borderColors1" >
-                                            <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace1BorderColor === color.codeHex ? `aso-border-solid` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>
+                                        <div v-for="(color, index) in borderColors1" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                                            <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace1BorderColor === color.codeHex ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>
+                                            <p class="aso-text-xs">{{color.name}}</p>
                                         </div>
-                                        <label v-if="customBorderColor1" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full`">
+                                        <label v-if="customBorderColor1" :class="`${activeSignColor == 'custom' ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
                                             <input id="setColor" type="color" v-model="borderCustomColor1" class="aso-hidden" @change="changeBorderColor($event.target.value , 0)" />
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" :fill="borderCustomColor1" class="aso-w-12 aso-h-12">
-                                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
+                                                <g fill="none" fill-rule="evenodd">
+                                                    <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                    <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                    <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                    <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                    <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                    <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                    <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                    <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                </g>
                                             </svg>
                                         </label>
                                     </div>
@@ -558,15 +579,26 @@
 
                                 <div v-if="activeFace === 'back-face'">
                                     <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                        <div v-for="(color, index) in borderColors2" >
-                                            <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace2BorderColor === color.codeHex ? `aso-border-solid` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>
+                                        <div v-for="(color, index) in borderColors2"  class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                                            <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace2BorderColor === color.codeHex ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>
+                                            <p class="aso-text-xs">{{color.name}}</p>    
                                         </div>
-                                        <label v-if="customBorderColor2" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full`">
+                                        <label v-if="customBorderColor2" :class="`${activeSignColor == 'custom' ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
                                             <input id="setColor" type="color" v-model="borderCustomColor2" class="aso-hidden" @change="changeBorderColor($event.target.value , 0)" />
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" :fill="borderCustomColor2" class="aso-w-12 aso-h-12">
-                                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
+                                                <g fill="none" fill-rule="evenodd">
+                                                    <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                    <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                    <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                    <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                    <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                    <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                    <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                    <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                </g>
                                             </svg>
                                         </label>
+
                                     </div>
                                 </div>
                             </div>
@@ -622,8 +654,8 @@
                                     <div v-show="showFont" class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                         <div class="aso-flex aso-items-center aso-justify-center aso-w-fit aso-h-10" v-for="(font, index) in allFonts">
                                             <input type="radio" :id="font.label + index + 1" name="aso-fonts" class=" peer aso-hidden " @change="changeTextFontFam(font.label, index)">
-                                            <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `aso-text-[#FFBC3C] aso-border-[#FFBC3C]` : `aso-text-zinc-800 aso-border-zinc-800`} 
-                                                aso-font-[${font.label}] aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[#FFBC3C] hover:aso-border-[#FFBC3C] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                            <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `aso-ring-2 aso-ring-[${configColors.backgroundButton}] aso-text-[${configColors.backgroundButton}]` : ``} 
+                                                aso-font-[${font.label}] aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundButton}] hover:aso-border-[${configColors.backgroundButton}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                                 >
                                                 {{font.label}}
                                             </label>
@@ -666,13 +698,22 @@
                                     <p class="aso-font-medium">Color</p>
                                     <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
                                         <div v-for="(color, index) in configTextSettings.colors" class="">
-                                            <div @click="changeTextColor(color.codeHex)" :class="`aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border`"></div>
+                                            <div @click="changeTextColor(color.codeHex)" :class="`aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
                                         </div>
 
-                                        <label v-if="configTextSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-8 aso-h-8 aso-flex aso-full-center aso-overflow-hidden`">
+                                        <label v-if="configTextSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-8 aso-h-8 aso-flex aso-full-center aso-overflow-hidden aso-cursor-pointer`">
                                             <input id="setColor" type="color" v-model="customTextColor" class="aso-hidden" @change="changeTextColor($event.target.value)" />
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" :fill="customTextColor" class="aso-w-full aso-h-full">
-                                                <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
+                                                <g fill="none" fill-rule="evenodd">
+                                                    <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                    <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                    <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                    <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                    <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                    <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                    <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                    <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                </g>
                                             </svg>
                                         </label>
                                     </div>
@@ -682,7 +723,7 @@
                                     <p class="aso-font-medium">Other custom</p>
                                     <div class="aso-w-full aso-flex aso-items-center">
                                         <div class="aso-flex aso-flex-wrap aso-gap-3">
-                                            <span @click="cloneObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span @click="cloneObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <g clip-path="url(#clip0_65_739)">
                                                         <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
@@ -698,35 +739,35 @@
                                                 <p class="aso-text-xs aso-font-semibold">Clone</p>
                                             </span>
 
-                                            <span @click="deleteObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span @click="deleteObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                 </svg>
                                                 <p class="aso-text-xs aso-font-semibold">Delete</p>
                                             </span>
 
-                                            <span v-if="configTextSettings.enableBold" @click="changeTextWeight" :class="`${selectedText.weight == 'bold' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span v-if="configTextSettings.enableBold" @click="changeTextWeight" :class="`${selectedText.weight == 'bold' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg  fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M12.0151 1.84998C15.2551 1.84998 17.6851 2.25498 19.3051 3.19998C21.0601 4.14498 21.8701 5.76498 21.8701 8.05998C21.8701 9.40998 21.4651 10.625 20.9251 11.57C20.619 12.0316 20.2214 12.4255 19.757 12.7274C19.2926 13.0292 18.7712 13.2326 18.2251 13.325C18.9968 13.5052 19.7289 13.8255 20.3851 14.27C20.9251 14.675 21.4651 15.35 21.8701 16.025C22.2926 17.0029 22.4776 18.0669 22.4101 19.13C22.4578 20.1053 22.2749 21.0781 21.8761 21.9694C21.4773 22.8608 20.874 23.6455 20.1151 24.26C18.1933 25.6325 15.8569 26.3 13.5001 26.15H4.45508V1.84998H12.0151ZM12.5551 11.435C14.0401 11.435 15.1201 11.3 15.6601 10.76C16.3351 10.355 16.6051 9.54497 16.6051 8.73497C16.6051 7.78998 16.2001 7.11497 15.5251 6.70998C14.8501 6.30498 13.7701 6.03498 12.2851 6.03498H9.58508V11.435H12.5551ZM9.58508 15.485V22.1H12.9601C14.4451 22.1 15.6601 21.695 16.2001 21.155C16.8751 20.48 17.1451 19.805 17.1451 18.725C17.1612 18.3169 17.0845 17.9105 16.9208 17.5364C16.7571 17.1622 16.5107 16.8301 16.2001 16.565C15.5251 16.025 14.4451 15.755 12.8251 15.755H9.45008L9.58508 15.485Z" fill="currentColor"/>
                                                 </svg>
                                                 <p class="aso-text-xs aso-font-semibold">Bold</p>
                                             </span>
 
-                                            <span v-if="configTextSettings.enableItalic" @click="changeTextStyle" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span v-if="configTextSettings.enableItalic" @click="changeTextStyle" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M11 5H17M7 19H13M14 5L10 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
                                                 <p class="aso-text-xs aso-font-semibold">Italic</p>
                                             </span>
 
-                                            <span v-if="configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span v-if="configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M7 5V10C7 11.3261 7.52678 12.5979 8.46447 13.5355C9.40215 14.4732 10.6739 15 12 15C13.3261 15 14.5979 14.4732 15.5355 13.5355C16.4732 12.5979 17 11.3261 17 10V5M5 19H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
                                                 <p class="aso-text-xs aso-font-semibold">Underline</p>
                                             </span>
 
-                                            <span v-if="configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span v-if="configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M7 8V13M7 13C7 14.3261 7.52678 15.5979 8.46447 16.5355C9.40215 17.4732 10.6739 18 12 18C13.3261 18 14.5979 17.4732 15.5355 16.5355C16.4732 15.5979 17 14.3261 17 13M7 13H17M17 13V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="currentColor"/>
@@ -734,7 +775,7 @@
                                                 <p class="aso-text-xs aso-font-semibold">Crossline</p>
                                             </span>
 
-                                            <span v-if="configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}]`">
+                                            <span v-if="configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
@@ -760,7 +801,7 @@
                                 </span>
 
                                 <label v-show="configImageSettings.enableUploadImage" :class="`aso-w-3/4 aso-inputImage aso-full-center aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-text-md`">
-                                    <input @click="addImageToSign()" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" :accept="configImagesFormat" style="display: none;" />
+                                    <input @click="addImageToSign()" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" :accept="configImagesFormat" style="display: none;"/>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                     </svg>
@@ -980,6 +1021,7 @@
     var configImageSettings = ref({})
     var configImagesFormat = ref("")
     var configImageSettingsClipart = ref({})
+    var configUnit = ref("")
 
     // console.log(props.config.data.settings.themeColors)
 
@@ -1048,14 +1090,14 @@
             break;
 
             case "border":
-                if(borderrs.value.length > 0){
+                if(borderrs.value.allBorders.length > 0){
                     step.value = option;
                     showOption.value = true;
                 }
             break;
 
             case "color":
-                if(colorrs.value.length > 0){
+                if(colorrs.value.allColors.length > 0){
                     step.value = option;
                     showOption.value = true;
                 }
@@ -1134,7 +1176,7 @@
         configSettings.value = props.config.data.settings
         configDoublePart.value = props.config.data.settings.customizerSign.signPart.doublePart
 
-        allSizes.value = props.manage.manageSize
+        // allSizes.value = props.manage.manageSize
         allShapes.value = props.manage.allShapes
         allFixings.value = props.manage.allFixingMethod
         allColors.value = props.manage.colors
@@ -1147,15 +1189,16 @@
         configImageSettings.value = props.config.data.settings.customizerSign.images
         configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
         
-        console.log(configImageSettings.value.fileUploadScript.allowedUploadsExtentions)
+        // console.log(configImageSettings.value.fileUploadScript.allowedUploadsExtentions)
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
-        console.log(configImagesFormat.value)
+        // console.log(configImagesFormat.value)
 
         handleGetImageSettings(configImageSettings.value)
         // console.log(configImageSettings.value)
 
         handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize)
+        configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
         
         var optionss = document.querySelector('#aso-options-container')
         document.addEventListener('click', handleDocumentClick)
@@ -1294,138 +1337,11 @@
             // wLine.bringToFront()
     
             selectMaterial(props.config.data.materials[0])
-
-    
-
-            var stopBorder = false
-            borderrs.value.forEach((borderr, id) => {
-                allBorders.value.forEach((border, index) => {
-                    if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)){
-                        if(borderr.isDefault){
-                            selectBorder(border.value, borderr.settings, borderr.additionalPrice)
-                            stopBorder = true
-                        }
-                        if(!borderr.isDefault && !stopBorder){
-                            selectBorder(border.value, borderr.settings, borderr.additionalPrice)
-                            stopBorder = true
-                        }
-                    }
-                })
-            })
-
-            // selectedShape.value = shapes.value[0].name
-            // handleGetShape(shapes.value[0].name)
-            var stopShape = false
-            if(shapees.value.length >0){
-                shapees.value.forEach((shapee, id) => {
-                    allShapes.value.forEach((shape, index) => {
-                        if(shapee.shapeId == index){
-                            if(shapee.isDefault){
-                                selectedShape.value = shape.value
-                                handleGetShape(shape.value)
-                                var shapePriceObject = {
-                                    name: "shape",
-                                    price: shapee.additionalPrice
-                                }
-                                getOptionPrice(shapePriceObject)
-                            }
-                            if(!shapee.isDefault  && !stopShape){
-                                selectedShape.value = shape.value
-                                handleGetShape(shape.value)
-                                // selectShape(shape.value, shapee)
-                                var shapePriceObject = {
-                                    name: "shape",
-                                    price: shapee.additionalPrice
-                                }
-                                getOptionPrice(shapePriceObject)
-                                stopShape = true
-                            }
-                        }
-                    })
-                })
-            }else{
-                selectedShape.value = 'square'
-                handleGetShape('square')
-            }
-    
             if(materialType.value === 'simple'){
-                var stopSize = false
-                if(sizees.value.length >0){
-                    sizees.value.forEach((sizee, id) => {
-                        allSizes.value.forEach((size, index) => {
-                            if(sizee.manageSizeId == index){
-                                if(sizee.isDefault){
-                                    changeSize(size, sizee, id)
-                                }
-                                if(!sizee.isDefault && !stopSize){
-                                    changeSize(size, sizee, id)
-                                    stopSize = true
-                                }
-                            }
-                        })
-                    })
-                }else{
-                    var size ={
-                        width: 0,
-                        height: 0
-                    }
-                    changeSize(size)
-                }
+                selectSimpleFirstValue()
             }
-
-            var stopFixing = false
-            fixinggs.value.forEach((fixingg, id) => {
-                allFixings.value.forEach((fixing, index) => {
-                    if(fixingg.fixingMethodId == index){
-                        if(fixingg.isDefault){
-                            selectFixingMethode(fixing.type, fixingg)
-                        }
-                        if(!fixingg.isDefault && !stopFixing){
-                            selectFixingMethode(fixing.type, fixingg)
-                            stopFixing = true
-                        }
-                    }
-                })
-            })
-
-            var stopColor = false
-            colorrs.value.forEach((colorr, id) => {
-                allColors.value.forEach((color, index) => {
-                    if(colorr.manageColorId == index){
-                        if(colorr.isDefault){
-                            changeSignColor(color, colorr)
-                        }
-                        if(!colorr.isDefault && !stopColor){
-                            changeSignColor(color, colorr)
-                            stopColor = true
-                        }
-                    }
-                })
-            })
-
-            var stopDefOption = false
-            var stopOption = false
             if(materialType.value === 'advance'){
-                currentMaterial.value.data.forEach(component => {
-                    if(!stop){
-                        showOptions('component', component)
-                        stop = true
-                    }
-                })
-                advancedComponent.value.options.forEach( option => {
-                    if(!stopDefOption){
-                        if(option.isDefault){
-                            console.log("option")
-                            selectSignModel(option)
-                            stopDefOption = true
-                        }
-                        if(!option.isDefault && stopDefOption && !stopOption){
-                            selectSignModel(option)
-                            stopDefOption = true
-                            stopOption = true
-                        }
-                    }
-                })
+                selectAdvanceFirstValue()
             }
 
     
@@ -1472,6 +1388,230 @@
         }
 
     });
+
+    var matchingFixings = ref([])
+    var matchingBorders = ref([])
+    function selectSimpleFirstValue(){
+        var stopSize = false
+        if(sizees.value.length >0){
+            sizees.value.forEach((sizee, id) => {
+                if(sizee.isDefault){
+                    currentSizeId.value = id
+                    stopSize = true
+                }
+                // if(!sizee.isDefault && !stopSize){
+                //     // console.log("change")
+                //     changeSize(size, sizee, id)
+                //     stopSize = true
+                // }
+            })
+        }else{
+            var size ={
+                width: 0,
+                height: 0
+            }
+            changeSize(size)
+        }
+
+        var stopColor = false
+        if(colorrs.value.allColors.length > 0){
+            var index = 0
+            var haveDefault = false
+            while (index < colorrs.value.allColors.length && !haveDefault) {
+                if(colorrs.value.allColors[index].isDefault){
+                    // console.log(colorrs.value.allColors[index], "default")
+                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice )
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice )
+            }
+        }else{
+            // changeSignColor(color, colorr)
+        }
+
+        var stopBorder = false
+        if(borderrs.value.allBorders.length > 0){
+            borderrs.value.allBorders.forEach((borderr, id) => {
+                allBorders.value.forEach((border, index) => {
+                    if(borderr.manageBorderId == index){
+                        matchingBorders.value.push({border, borderr})
+                    }
+                })
+            })
+            let index = 0
+            var haveDefault = false
+            while (index < matchingBorders.value.length && !haveDefault) {
+                if(matchingBorders.value[index].borderr.isDefault){
+                    // console.log(matchingBorders[index].borderr, "Default")
+                    selectBorder(matchingBorders.value[index].border.value, matchingBorders.value[index].borderr.settings, matchingBorders.value[index].borderr.additionalPrice, matchingBorders.value[index].borderr.excludeShapes, matchingBorders.value[index].borderr.excludeSizes)
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                console.log("first")
+                selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes)
+            }
+        }else{
+        }
+
+        // selectedShape.value = shapes.value[0].name
+        // handleGetShape(shapes.value[0].name)
+        var stopShape = false
+        var matchingShapes = []
+        if(shapees.value.length >0){
+            shapees.value.forEach((shapee, id) => {
+                allShapes.value.forEach((shape, index) => {
+                    if(shapee.shapeId == index){
+                        matchingShapes.push({shape, shapee})
+                        // console.log(id, "shapee.shape")
+                    }
+                })
+            })
+            let index = 0
+            var haveDefault = false
+            while (index < matchingShapes.length && !haveDefault) {
+                if(matchingShapes[index].shapee.isDefault){
+                    selectedShape.value = matchingShapes[index].shape.value
+                    // currentShapeId.value = matchingShapes[index].shapee.shapeId
+                    currentShapeId.value = index
+                    handleGetShape(matchingShapes[index].shape.value)
+                    var shapePriceObject = {
+                        name: "shape",
+                        price: matchingShapes[index].shapee.additionalPrice
+                    }
+                    getOptionPrice(shapePriceObject)
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                // console.log("first", matchingShapes[0])
+                selectedShape.value = matchingShapes[0].shape.value
+                // currentShapeId.value = matchingShapes[0].shapee.shapeId
+                currentShapeId.value = 0
+                handleGetShape(matchingShapes[0].shape.value)
+                var shapePriceObject = {
+                    name: "shape",
+                    price: matchingShapes[0].shapee.additionalPrice
+                }
+                getOptionPrice(shapePriceObject)
+            }
+        }else{
+            selectedShape.value = 'square'
+            handleGetShape('square')
+        }
+
+        var stopFixing = false
+        if(fixinggs.value.length > 0){
+            fixinggs.value.forEach((fixingg, id) => {
+                allFixings.value.forEach((fixing, index) => {
+                    if(fixingg.fixingMethodId == index && !fixingg.excludeSizes.includes(currentSizeId) && !fixingg.excludeShapes.includes(currentShapeId)){
+                        matchingFixings.value.push({fixing, fixingg})
+                        // console.log(matchingFixings)
+                    }
+                })
+            })
+            let index = 0
+            var haveDefault = false
+            while (index < matchingFixings.length && !haveDefault) {
+                if(matchingFixings.value[index].fixingg.isDefault){
+                    // console.log(matchingFixings[index], "default")
+                    selectFixingMethode(matchingFixings.value[index].fixing.type, matchingFixings.value[index].fixingg, index)
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+            }
+        }else{
+            selectFixingMethode('none')
+        }
+
+        var stopSize = false
+        var matchingSizes = []
+        if(sizees.value.length >0){
+            var index = 0
+            var haveDefault = false
+            while (index < sizees.value.length && !haveDefault) {
+                if(sizees.value[index].isDefault){
+                    var sizeData = {
+                        label: sizees.value[index].label,
+                        width: sizees.value[index].width,
+                        height: sizees.value[index].height,
+                        // thickness: (sizees.value[index].thickness.active ? sizees.value[index].thickness : {active: false, value: 0}),
+                    };
+                    var settings = {
+                        textNumber: sizees.value[index].textNumber, 
+                        charPrice: sizees.value[index].charPrice,
+                        basePrice: sizees.value[index].basePrice,
+                        maxTextChar: sizees.value[index].maxTextChar,
+                        startPriceAtChar: sizees.value[index].startPriceAtChar,
+                    }
+                    changeSize(sizeData, settings, index); 
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                var sizeData = {
+                    label: sizees.value[0].label,
+                    width: sizees.value[0].width,
+                    height: sizees.value[0].height,
+                    // thickness: (sizees.value[0].thickness.active ? sizees.value[0].thickness : {active: false, value: 0}),
+                };
+                var settings = {
+                    textNumber: sizees.value[0].textNumber, 
+                    charPrice: sizees.value[0].charPrice,
+                    basePrice: sizees.value[0].basePrice,
+                    maxTextChar: sizees.value[0].maxTextChar,
+                    startPriceAtChar: sizees.value[0].startPriceAtChar,
+                }
+                changeSize(sizeData, settings, 0); 
+            }
+        }else{
+            var size ={
+                width: 0,
+                height: 0
+            }
+            changeSize(size)
+        }
+
+    }
+    function selectAdvanceFirstValue(){
+        var stopDefOption = false
+        var stopOption = false
+        currentMaterial.value.data.forEach(component => {
+            if(!stop){
+                showOptions('component', component)
+                stop = true
+            }
+        })
+        advancedComponent.value.options.forEach( option => {
+            if(!stopDefOption){
+                if(option.isDefault){
+                    console.log("option")
+                    selectSignModel(option)
+                    stopDefOption = true
+                }
+                if(!option.isDefault && stopDefOption && !stopOption){
+                    selectSignModel(option)
+                    stopDefOption = true
+                    stopOption = true
+                }
+            }
+        })
+    }
+
 
 
     function undo() {
@@ -1627,12 +1767,13 @@
         currentMaterial.value = material
         currentMaterialTextImages.value = material.data.textImages
         materialType.value = material.type
-        console.log("selectMaterial", material)
+        // console.log("selectMaterial", material)
         selectedMaterial.value = material.name
 
         if(material.type == 'simple'){
             if(material.data.sizes.allSizes){
                 sizees.value = material.data.sizes.allSizes
+                thicknesss.value = material.data.sizes.thickness
             }else{
                 sizees.value = []
             }
@@ -1654,110 +1795,10 @@
             colorrs.value = material.data.colors
             borderrs.value = material.data.borders
 
+            // console.log(colorrs.value, "color")
+
             if(firstLoad.value){
-                var stopShape = false
-                if(shapees.value.length >0){
-                    shapees.value.forEach((shapee, id) => {
-                        allShapes.value.forEach((shape, index) => {
-                            if(shapee.shapeId == index){
-                                if(shapee.isDefault){
-                                    selectedShape.value = shape.value
-                                    handleGetShape(shape.value)
-                                    var shapePriceObject = {
-                                        name: "shape",
-                                        price: shapee.additionalPrice
-                                    }
-                                    getOptionPrice(shapePriceObject)
-                                }
-                                if(!shapee.isDefault  && !stopShape){
-                                    selectedShape.value = shape.value
-                                    handleGetShape(shape.value)
-                                    // selectShape(shape.value, shapee)
-                                    var shapePriceObject = {
-                                        name: "shape",
-                                        price: shapee.additionalPrice
-                                    }
-                                    getOptionPrice(shapePriceObject)
-                                    stopShape = true
-                                }
-                            }
-                        })
-                    })
-                }else{
-                    selectedShape.value = 'square'
-                    handleGetShape('square')
-                }
-
-                var stopSize = false
-                if(sizees.value.length >0){
-                    sizees.value.forEach((sizee, id) => {
-                        allSizes.value.forEach((size, index) => {
-                            if(sizee.manageSizeId == index){
-                                if(sizee.isDefault){
-                                    changeSize(size, sizee, id)
-                                }
-                                if(!sizee.isDefault && !stopSize){
-                                    changeSize(size, sizee, id)
-                                    stopSize = true
-                                }
-                            }
-                        })
-                    })
-                }else{
-                    var size ={
-                        width: 0,
-                        height: 0
-                    }
-                    changeSize(size)
-                }
-
-                var stopFixing = false
-                fixinggs.value.forEach((fixingg, id) => {
-                    allFixings.value.forEach((fixing, index) => {
-                        if(fixingg.fixingMethodId == index){
-                            if(fixingg.isDefault){
-                                selectFixingMethode(fixing.type, fixingg)
-                            }
-                            if(!fixingg.isDefault && !stopFixing){
-                                selectFixingMethode(fixing.type, fixingg)
-                                stopFixing = true
-                            }
-                        }
-                    })
-                })
-
-                var stopBorder = false
-                borderrs.value.forEach((borderr, id) => {
-                    allBorders.value.forEach((border, index) => {
-                        if(borderr.manageBorderId == index && !borderr.excludeSizes.includes(currentSizeId)){
-                            if(borderr.isDefault){
-                                selectBorder(border.value, borderr.settings, borderr.additionalPrice)
-                                stopBorder = true
-                            }
-                            if(!borderr.isDefault && !stopBorder){
-                                selectBorder(border.value, borderr.settings, borderr.additionalPrice)
-                                stopBorder = true
-                            }
-                        }
-                    })
-                })
-
-                var stopColor = false
-                colorrs.value.forEach((colorr, id) => {
-                    allColors.value.forEach((color, index) => {
-                        if(colorr.manageColorId == index){
-                            if(colorr.isDefault){
-                                changeSignColor(color, colorr)
-                            }
-                            if(!colorr.isDefault && !stopColor){
-                                changeSignColor(color, colorr, 'start')
-                                activeSignColor.value = color.name
-                                activeSignFace2Color.value = color.name
-                                stopColor = true
-                            }
-                        }
-                    })
-                })
+                selectSimpleFirstValue()
             }
         }
 
@@ -1774,11 +1815,12 @@
             advancedComponent.value.options.forEach( option => {
                 if(!stopDefOption){
                     if(option.isDefault){
-                        console.log("option")
+                        console.log('default')
                         selectSignModel(option)
                         stopDefOption = true
                     }
                     if(!option.isDefault && stopDefOption && !stopOption){
+                        console.log('first')
                         selectSignModel(option)
                         stopDefOption = true
                         stopOption = true
@@ -2102,6 +2144,7 @@
 
 
     var sizees = ref([])
+    var thicknesss = ref([])
     var customSizes = ref({})
     var allSizes = ref({})
     var currentSizeName = ref('')
@@ -2110,9 +2153,11 @@
     var currentSizeValues = ref()
     var currentSizeThickness = ref(false)
     function changeSize(sizeData, sizeSetting, sizeId) {
-        if(sizeId){
+        // console.log(sizeData, sizeSetting, sizeId, "change size")
+        if(sizeId != undefined){
             currentSizeId.value = sizeId
         }
+
         if(sizeSetting){
             textNumberForSize.value = sizeSetting.textNumber
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
@@ -2121,14 +2166,10 @@
         }
 
         currentSizeName.value = sizeData.label;
-        if(sizeData.thickness){
-            if(sizeData.thickness.active == true){
-                currentSize.value = {width: sizeData.width, height: sizeData.height, thickness: sizeData.thickness.value};
-                currentSizeThickness.value = sizeData.thickness.active
-            }else{
-                currentSizeThickness.value = sizeData.thickness.active
-                currentSize.value = {width: sizeData.width, height: sizeData.height};
-            }
+        if(thicknesss.value.active){
+            currentSizeThickness.value = thicknesss.value.active
+            selectSizeThickness(thicknesss.value.values[0])
+
         }
 
         addedTexts.value = currentSizeValues.value.texts
@@ -2142,12 +2183,69 @@
             }
             getOptionPrice(sizeBasePriceObject)
         }
+
+        if(sizeId != undefined){
+            // desactivation du fixingMethode si il n'est pas actif pour la size selectionné
+            if(fixingExcludeSizes.value.includes(sizeId)){
+                if(activeFixingId.value == matchingFixings.value.length-1){
+                    selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+                }
+                selectFixingMethode(matchingFixings.value[activeFixingId.value+1].fixing.type, matchingFixings.value[activeFixingId.value+1].fixingg, activeFixingId.value+1)
+            }
+
+            // desactivation du border si il n'est pas actif pour la size selectionné
+            if(activeFace.value == 'front-face'){
+                if(border1ExcludeSizes.value.includes(sizeId)){
+                    if(face1BorderId.value === matchingBorders.value.length-1){
+                        selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0)
+                    }
+                    selectBorder(matchingBorders.value[face1BorderId.value+1].border.value, matchingBorders.value[face1BorderId.value+1].borderr.settings, matchingBorders.value[face1BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face1BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face1BorderId.value+1].borderr.excludeSizes, face1BorderId.value+1)
+                }
+            }
+            if(activeFace.value == 'back-face'){
+                if(border2ExcludeSizes.value.includes(sizeId)){
+                    if(face2BorderId.value === matchingBorders.value.length-1){
+                        selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0)
+                    }
+                    selectBorder(matchingBorders.value[face2BorderId.value+1].border.value, matchingBorders.value[face2BorderId.value+1].borderr.settings, matchingBorders.value[face2BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face2BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face2BorderId.value+1].borderr.excludeSizes, face2BorderId.value+1)
+                }
+            }
+        }
+    }
+    var currentThickValue = ref(0)
+    function selectSizeThickness(thick){
+        currentThickValue.value = thick
     }
 
     var allShapes = ref({})
     var shapees = ref([])
     var selectedShape = ref('square')
-    function selectShape(shape, setting){
+    var currentShapeId = ref(0)
+    function selectShape(shape, setting, shapeId){
+        // currentShapeId.value = setting.shapeId
+        currentShapeId.value = shapeId
+        if(fixingExcludeShapes.value.includes(shapeId)){
+            if(activeFixingId === matchingFixings.value.length-1){
+                selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+            }
+            selectFixingMethode(matchingFixings.value[activeFixingId+1].fixing.type, matchingFixings.value[activeFixingId+1].fixingg, activeFixingId+1)
+        }
+        if(activeFace.value == 'front-face'){
+            if(border1ExcludeShapes.value.includes(shapeId)){
+                if(face1BorderId.value === matchingBorders.value.length-1){
+                    selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0)
+                }
+                selectBorder(matchingBorders.value[face1BorderId.value+1].border.value, matchingBorders.value[face1BorderId.value+1].borderr.settings, matchingBorders.value[face1BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face1BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face1BorderId.value+1].borderr.excludeSizes, face1BorderId.value+1)
+            }
+        }
+        if(activeFace.value == 'back-face'){
+            if(border2ExcludeShapes.value.includes(shapeId)){
+                if(face2BorderId.value === matchingBorders.value.length-1){
+                    selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0)
+                }
+                selectBorder(matchingBorders.value[face2BorderId.value+1].border.value, matchingBorders.value[face2BorderId.value+1].borderr.settings, matchingBorders.value[face2BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face2BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face2BorderId.value+1].borderr.excludeSizes, face2BorderId.value+1)
+            }
+        }
 
         handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, currentSizeValues.value.top, currentSizeValues.value.left)
         selectedShape.value = shape
@@ -2163,6 +2261,9 @@
     var firstBorderCheck = ref(true)
     var allBorders = ref({})
     var borderrs = ref([])
+    var borderSettings = ref([])
+    var face1BorderId = ref('')
+    var face2BorderId = ref('')
     var activeFace1Border = ref('')
     var activeFace2Border = ref('')
     var activeFace1BorderColor = ref('')
@@ -2171,26 +2272,40 @@
     var borderColors2 = ref({})
     var customBorderColor1 = ref(false)
     var customBorderColor2 = ref(false)
-    function selectBorder(border, settings, price) {
+    var border1ExcludeShapes = ref([])
+    var border2ExcludeShapes = ref([])
+    var border1ExcludeSizes = ref([])
+    var border2ExcludeSizes = ref([])
+    function selectBorder(border, settings, price, excludeShapes, excludeSizes, id) {
         var border1Price = 0
         var border2Price = 0
 
         if(firstBorderCheck.value){
-            var activeBorder = handleSelectBorder(border, (settings.colors.length > 0 ? settings.colors[0].codeHex : '' ))
-            var colors = (settings.colors.length > 0 ? settings.colors : {} )
-            var customColor = settings.enableBorderColor
+            var currentId = id
+            var activeBorder = handleSelectBorder(border)
+            var colors = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
+            firstBorderColor.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors[0] : {} )
+            var customColor = borderrs.value.settings.enableBorderColor
+            var exShapes = excludeShapes
+            var exSizes = excludeSizes
 
             if(configDoublePart.value.active){
+                face1BorderId.value = currentId
                 activeFace1Border.value = activeBorder.type;
-                activeFace1BorderColor.value = activeBorder.color;
+                // activeFace1BorderColor.value = activeBorder.color;
                 borderColors1.value = colors
                 customBorderColor1.value = customColor
+                border1ExcludeShapes.value = exShapes
+                border1ExcludeSizes.value = exSizes
                 border1Price = price
 
+                face2BorderId.value = currentId
                 activeFace2Border.value = activeBorder.type;
-                activeFace2BorderColor.value = activeBorder.color;
+                // activeFace2BorderColor.value = activeBorder.color;
                 borderColors2.value = colors
                 customBorderColor2.value = customColor
+                border2ExcludeShapes.value = exShapes
+                border2ExcludeSizes.value = exSizes
                 border2Price = price
 
                 var borderPrice1Object = {
@@ -2205,14 +2320,21 @@
                 }
                 getOptionPrice(borderPrice2Object)
 
-                if(colors.length > 0){
-                    changeBorderColor(colors[0].codeHex, colors[0].additionalPrice)
+                if(colorForBorder.value){
+                    if(colors.length > 0){
+                        changeBorderColor(colors[0].codeHex, colors[0].additionalPrice)
+                    }
+                }else{
+                    changeBorderColor(colorTextColor.value, 0)
                 }
             }else{
+                face1BorderId.value = currentId
                 activeFace1Border.value = activeBorder.type;
-                activeFace1BorderColor.value = activeBorder.color;
+                // activeFace1BorderColor.value = activeBorder.color;
                 borderColors1.value = colors
                 customBorderColor1.value = customColor
+                border1ExcludeShapes.value = exShapes
+                border1ExcludeSizes.value = exSizes
                 border1Price = price
 
                 var borderPrice1Object = {
@@ -2221,20 +2343,31 @@
                 }
                 getOptionPrice(borderPrice1Object)
 
-                if(colors.length > 0){
-                    changeBorderColor(colors[0].codeHex, colors[0].additionalPrice)
+                if(colorForBorder.value){
+                    if(colors.length > 0){
+                        changeBorderColor(colors[0].codeHex, colors[0].additionalPrice)
+                    }
+                }else{
+                    changeBorderColor(colorTextColor.value, 0)
                 }
             }
         }else{
-            var activeBorder = handleSelectBorder(border, (settings.colors.length > 0 ? settings.colors[0].codeHex : '' ))
-            var colors = (settings.colors.length > 0 ? settings.colors : {} )
-            var customColor = settings.enableBorderColor
+            var currentId = id
+            var activeBorder = handleSelectBorder(border)
+            var colors = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
+            firstBorderColor.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors[0] : {} )
+            var customColor = borderrs.value.settings.enableBorderColor
+            var exShapes = excludeShapes
+            var exSizes = excludeSizes
 
             if(activeFace.value === "front-face"){
+                face1BorderId.value = currentId
                 activeFace1Border.value = activeBorder.type;
-                activeFace1BorderColor.value = activeBorder.color;
+                // activeFace1BorderColor.value = activeBorder.color;
                 borderColors1.value = colors
                 customBorderColor1.value = customColor
+                border1ExcludeShapes.value = exShapes
+                border1ExcludeSizes.value = exSizes
                 border1Price = price
                 
                 var borderPrice1Object = {
@@ -2243,15 +2376,22 @@
                 }
                 getOptionPrice(borderPrice1Object)
 
-                if(borderColors1.value.length > 0){
-                    changeBorderColor(borderColors1.value[0].codeHex, borderColors1.value[0].additionalPrice)
+                if(colorForBorder.value){
+                    if(borderColors1.value.length > 0){
+                        changeBorderColor(borderColors1.value[0].codeHex, borderColors1.value[0].additionalPrice)
+                    }
+                }else{
+                    changeBorderColor(colorTextColor.value, 0)
                 }
             }
             if(configDoublePart.value.active && activeFace.value === "back-face"){
+                face2BorderId.value = currentId
                 activeFace2Border.value = activeBorder.type;
-                activeFace2BorderColor.value = activeBorder.color;
+                // activeFace2BorderColor.value = activeBorder.color;
                 borderColors2.value = colors
                 customBorderColor2.value = customColor
+                border2ExcludeShapes.value = exShapes
+                border2ExcludeSizes.value = exSizes
                 border2Price = price
 
                 var borderPrice2Object = {
@@ -2260,8 +2400,12 @@
                 }
                 getOptionPrice(borderPrice2Object)
 
-                if(borderColors2.value.length > 0){
-                    changeBorderColor(borderColors2.value[0].codeHex, borderColors2.value[0].additionalPrice)
+                if(colorForBorder.value){
+                    if(borderColors2.value.length > 0){
+                        changeBorderColor(borderColors2.value[0].codeHex, borderColors2.value[0].additionalPrice)
+                    }
+                }else{
+                    changeBorderColor(colorTextColor.value, 0)
                 }
             }
         }
@@ -2269,8 +2413,10 @@
     }
 
     var firstBorderColorCheck = ref(true)
+    var firstBorderColor = ref({})
     var borderCustomColor1 = ref("#000000")
     var borderCustomColor2 = ref("#000000")
+    var colorForBorder = ref(false)
     function changeBorderColor(colorHex, price){
         if(firstBorderColorCheck.value){
             activeFace1BorderColor.value = colorHex
@@ -2324,19 +2470,20 @@
     var activeSignColor = ref('')
     var activeSignFace2Color = ref('')
     var signTextColor = ref(false)
-    function changeSignColor(color, setting, start) {
+    var colorTextColor = ref("")
+    function changeSignColor(name, pattern, textColor, price) {
         // console.log(color.name, "changeSignColor")
         var color1Price = 0
         var color2Price = 0
-        signTextColor.value = color.textColor.active
+        signTextColor.value = textColor.active
 
         if(firstColorCheck.value){
             if(configDoublePart.value.active){
-                activeSignColor.value = color.name;
-                color1Price = setting.additionalPrice
+                activeSignColor.value = name;
+                color1Price = price
     
-                activeSignFace2Color.value = color.name;
-                color2Price = setting.additionalPrice
+                activeSignFace2Color.value = name;
+                color2Price = price
     
                 var colorPrice1Object = {
                     name: "color1",
@@ -2350,8 +2497,8 @@
                 }
                 getOptionPrice(colorPrice2Object)
             }else{
-                activeSignColor.value = color.name;
-                color1Price = setting.additionalPrice
+                activeSignColor.value = name;
+                color1Price = price
                 var colorPrice1Object = {
                     name: "color1",
                     price: color1Price
@@ -2360,8 +2507,8 @@
             }
         }else{
             if(activeFace.value === "front-face"){
-                activeSignColor.value = color.name;
-                color1Price = setting.additionalPrice
+                activeSignColor.value = name;
+                color1Price = price
                 
                 var colorPrice1Object = {
                     name: "color1",
@@ -2371,8 +2518,8 @@
             }
 
             if(configDoublePart.value.active && activeFace.value === "back-face"){
-                activeSignFace2Color.value = color.name;
-                color2Price = setting.additionalPrice
+                activeSignFace2Color.value = name;
+                color2Price = price
 
                 var colorPrice2Object = {
                     name: "color2",
@@ -2382,11 +2529,23 @@
             }
         }
 
-        var defTextColor = configTextSettings.value.colors[0].codeHex
-        if(start){
-            handleChangeSignColor(color, defTextColor, start)
+        var defTextColor = (configTextSettings.value.colors.length > 0 ? configTextSettings.value.colors[0].codeHex : "#000000")
+        // console.log("change", textColor)
+        if(textColor.active){
+            handleChangeSignColor(name, pattern, textColor)
+            if(textColor.sameForBorder){
+                changeBorderColor(textColor.codeHex, 0)
+                colorTextColor.value = textColor.codeHex
+                colorForBorder.value = false
+            }
+            if(!textColor.sameForBorder){
+                colorForBorder.value = true
+                changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
+            }
         }else{
-            handleChangeSignColor(color, defTextColor)
+            colorForBorder.value = true
+            handleChangeSignColor(name, pattern, textColor, defTextColor)
+            changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
         }
 
         firstColorCheck.value = false
@@ -2394,12 +2553,19 @@
 
     var allFixings = ref({})
     var fixinggs = ref([])
+    var activeFixingId = ref(0)
     var activeFixingMethode = ref('')
-    function selectFixingMethode(methode, setting){
+    var fixingExcludeShapes = ref({})
+    var fixingExcludeSizes = ref({})
+    function selectFixingMethode(methode, setting, id){
+        console.log(methode, "select")
+        activeFixingId.value = id
         activeFixingMethode.value = methode
         handleSelectFixingMethode(methode)
 
         if(setting){
+            fixingExcludeShapes.value = setting.excludeShapes
+            fixingExcludeSizes.value = setting.excludeSizes
             var fixingPrice = setting.additionalPrice
             var fixingPriceObject = {
                 name: "fixing",
@@ -2407,6 +2573,7 @@
             }
             getOptionPrice(fixingPriceObject)
         }
+
     }
 
 

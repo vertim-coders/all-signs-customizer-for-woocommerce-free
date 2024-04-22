@@ -894,15 +894,13 @@ function handleDeleteObject(object) {
         removeTextById(object.id, handleGetTextObjects1('aso-SignText'), canvas.name)
         removeTextById(object.id, handleGetTextObjects2('aso-SignText'), canvas.name)
         
-        removeDeletedTextPrice(textsPrice, addedTexts) 
-
         // calcul des prix en fonctions des caractères restants
         FtextObjects = handleGetTextObjects1('aso-SignText')
         BtextObjects = handleGetTextObjects2('aso-SignText')
         frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
         backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
     
-        handleCalcTextPrice()
+        handleCalcTextPrice("delete text")
         return addedTexts
     }
     if(target.type == 'image'){
@@ -997,7 +995,7 @@ function removeBorder(canva){
     canva.renderAll();
 }
 function handleSelectBorder(border, color) {
-    console.log("handleSelectBorder", border);
+    // console.log("handleSelectBorder", border);
     if(!firstLoad){
         activeBorder = border
         activeBorder2 = border
@@ -1034,7 +1032,8 @@ function handleSelectBorder(border, color) {
                 if(object.name === 'safeObject'){
                     if(currBorder === 'none'){
                         removeBorder(canva)
-                    }if(currBorder === 'normal'){
+                    }
+                    if(currBorder === 'normal'){
                         removeBorder(canva)
                         if(sizeRatio == 'small'){
                             object.set('strokeWidth', 11)
@@ -1139,7 +1138,6 @@ function handleSelectBorder(border, color) {
 
     return {type: border, color: color}
 }
-
 function handlechangeBorderColor(color){
     if(!firstLoad){
         activeBorderColor = color;
@@ -1188,24 +1186,41 @@ function handlechangeBorderColor(color){
 
 var currentSignColor = ''
 var currentSignTextColor = 'black'
-function handleChangeSignColor(color, defTextColor, start) {
-    currentSignColor = color;
+var firstColorSet = true;
+var signBackground = 'color'
+var patternUrl = ''
+function handleChangeSignColor(name, pattern, textColor, defTextColor) {
+    currentSignColor = name;
+    // console.log(textColor, "changeSignColor")
     function setSignColor(canva){
         var Objects = canva.getObjects();
         Objects.forEach(function(object){
             if (object.type !== 'line') {
     
                 if(object.name == 'safeObject'){
-                    object.set('fill', color.backgroundColor)
+                    if(pattern.active){
+                        signBackground = 'pattern'
+                        patternUrl = pattern.url
+                        setPattern(canva, pattern.url)
+                    }else{
+                        signBackground = 'color'
+                        object.set('fill', pattern.codeHex)
+                    }
                 }
-                if(color.textColor.active){
-                    currentSignTextColor = color.textColor.codeHex
+                if(textColor.active){
+                    currentSignTextColor = textColor.codeHex
                     if(object.name == "aso-SignText"){
-                        object.set('fill', color.textColor.codeHex)
+                        object.set('fill', textColor.codeHex)
+                    }
+                    if(textColor.sameForBorder){
+                        handlechangeBorderColor(textColor.codeHex)
+                        // console.log("change")
                     }
                 }else{
                     if(object.name == "aso-SignText"){
-                        object.set('fill', defTextColor)
+                        if(defTextColor){
+                            object.set('fill', defTextColor)
+                        }
                     }
                 }
             }
@@ -1213,7 +1228,7 @@ function handleChangeSignColor(color, defTextColor, start) {
         canva.renderAll();
     }
 
-    if(start){
+    if(firstColorSet){
         setSignColor(canvas)
         setSignColor(backCanvas)
     }else{
@@ -1221,34 +1236,35 @@ function handleChangeSignColor(color, defTextColor, start) {
     }
 
     updateModifications(true, 'changer sign color')
+    firstColorSet = false
 
-    return color
+    return name
+}
+function setPattern(canva, image){
+    // var object = handleGetObjectByName('safeObject', canvas)
+    canva.getObjects().forEach((object, index) =>{
+        if(object.name === 'safeObject'){
+            fabric.util.loadImage(image, function(img) {
+                var scaleX = object.width / img.width;
+                var scaleY = object.height / img.height;
+                var pattern = new fabric.Pattern({
+                    source: img,
+                    repeat: 'no-repeat',
+                    patternTransform: [scaleX, 0, 0, scaleY, 0, 0]
+                });
+        
+                // console.log(pattern)
+                
+                object.set('fill', pattern);
+                // canvas.add(pattern);
+                canva.renderAll();
+            });
+        }
+    })
 }
 function handleSetImageToSignBackground(image){
-    function setPattern(canva){
-        // var object = handleGetObjectByName('safeObject', canvas)
-        canva.getObjects().forEach((object, index) =>{
-            if(object.name === 'safeObject'){
-                fabric.util.loadImage(image, function(img) {
-                    var scaleX = object.width / img.width;
-                    var scaleY = object.height / img.height;
-                    var pattern = new fabric.Pattern({
-                        source: img,
-                        repeat: 'no-repeat',
-                        patternTransform: [scaleX, 0, 0, scaleY, 0, 0]
-                    });
-            
-                    // console.log(pattern)
-                    
-                    object.set('fill', pattern);
-                    // canvas.add(pattern);
-                    canva.renderAll();
-                });
-            }
-        })
-    }
-    setPattern(canvas)
-    setPattern(backCanvas)
+    setPattern(canvas, image)
+    setPattern(backCanvas, image)
 }
 
 
@@ -1589,8 +1605,14 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
     }
 
     setShape(canvas)
+    if(signBackground === 'pattern'){
+        setPattern(canvas, patternUrl);
+    }
     if(firstLoad){
         setShape(backCanvas)
+        if(signBackground === 'pattern'){
+            setPattern(canvas, patternUrl);
+        }
     }
 
     if(!firstLoad){
@@ -1627,6 +1649,7 @@ function resetFixing(canva){
                     || object.name == 'hanging-hole' || object.name == 'hanging-hole1' || object.name == 'hanging-hole2'
                     || object.name == 'pole'
                     || object.name == 'cable-hole1' || object.name == 'cable-hole2' || object.name == 'cable-hole3' || object.name == 'cable-hole4'
+                    || object.name == 'eyelet1' || object.name == 'eyelet2' || object.name == 'eyelet3' || object.name == 'eyelet4'
                     || object.name == 'table-clamp1' || object.name == 'table-clamp2'
                     || object.name == 'base-support1' || object.name == 'base-support2'
                 ){
@@ -3324,6 +3347,78 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                     }
+                    if(methode == 'eyelets'){
+                        resetFixing(canva)
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square'){
+                            fabric.Image.fromURL(fixingUrl+'/im_eyelets.png', function(img) {
+                                img.scale(0.15)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top
+                                img.left = object.left
+                                img.flipX = true
+                                img.set('name', 'eyelet1')
+                                img.id = 39
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+    
+                            fabric.Image.fromURL(fixingUrl+'/im_eyelets.png', function(img) {
+                                img.scale(0.15)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top
+                                img.left = object.left + object.width - newWidth
+                                img.set('name', 'eyelet2')
+                                img.id = 40
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            fabric.Image.fromURL(fixingUrl+'/im_eyelets.png', function(img) {
+                                img.scale(0.15)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - newHeight
+                                img.left = object.left
+                                img.flipX = true
+                                img.flipY = true
+                                img.set('name', 'eyelet3')
+                                img.id = 41
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            fabric.Image.fromURL(fixingUrl+'/im_eyelets.png', function(img) {
+                                img.scale(0.15)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - newHeight
+                                img.left = object.left + object.width - newWidth
+                                img.flipY = true
+                                img.set('name', 'eyelet4')
+                                img.id = 42
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+                        }
+                    }
         
                 }  
             }if(object.type == 'line'){
@@ -3641,7 +3736,7 @@ function handleGetAddedTextValues(transform) {
     return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
 }
 
-let newId = 38
+let newId = 42
 
 var addedTexts = []
 var faceTextCharCount = 0
@@ -4200,7 +4295,7 @@ function removeDeletedTextPrice(priceTable, textObjects) {
 
     return priceTable;
 }
-function handleCalcTextPrice(object){
+function handleCalcTextPrice(position){
     var avalaibleFaceChars = 0
     var avalaibleBackChars = 0
 
