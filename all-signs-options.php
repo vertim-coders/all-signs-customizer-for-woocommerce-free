@@ -173,6 +173,11 @@ final class ASO_All_Signs_Options {
                 'value' => 'normal'
             ],
             [
+                'name' => 'Rounded Corners',
+                "icon" => ASO_ASSETS.'/images/borders/ic_border_rounded_corners.svg',
+                'value' => 'rounded-corners'
+            ],
+            [
                 'name' => 'Old World',
                 "icon" => ASO_ASSETS.'/images/borders/ic_border_old_world.svg',
                 'value' => 'old-world'
