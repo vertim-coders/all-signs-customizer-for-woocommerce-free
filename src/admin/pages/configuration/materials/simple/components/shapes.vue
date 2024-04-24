@@ -94,7 +94,7 @@
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select shape</label>
                         <Multiselect
                             v-model="shape.shapeId"
-                            placeholder="Select Border"
+                            placeholder="Select Shape"
                             :options="notSelectedManageShapes"
                             label="name"
                             trackBy="name"
@@ -266,7 +266,7 @@ const checkNotSelectedManageShapes = ( key= -1) => {
         index++;
     }
     if(key!=-1){
-        notSelectedManageShapes.push({...manageShapes.value[index],value:index});
+        notSelectedManageShapes.push({...manageShapes.value[key],value:key});
     }
     return notSelectedManageShapes;
 }
@@ -371,6 +371,7 @@ const selectMaterialShape = (id,sh,isDeleting=false) => {
         shape.value = sh;
         isEdit.value = true;
         notSelectedManageShapes.value = checkNotSelectedManageShapes(sh.shapeId);
+        shapeId.value = id;
         isNewShape.value = true;
     }
 };
@@ -401,11 +402,7 @@ const closeModal = () => {
 
 const newShape = () => {
     notSelectedManageShapes.value = checkNotSelectedManageShapes();
-    if(Object.keys(notSelectedManageShapes.value).length>0){
-        isNewShape.value = true;
-    }else{
-        toastMessage('No Shapes to choose','warning');
-    }
+    isNewShape.value = true;
 };
 const back = () => {
     isNewShape.value = false;

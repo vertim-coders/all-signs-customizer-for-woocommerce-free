@@ -415,6 +415,7 @@ const updateBorders = async () => {
         }
         isLoading.value = false;
         isNewBorder.value = false;
+        isEdit.value=false;
         openModal.value = false;
         border.value = {
             isDefault:false,
@@ -428,6 +429,7 @@ const updateBorders = async () => {
         toastMessage(result.message,"error");
         isNewBorder.value = false;
         openModal.value = false;
+        isEdit.value=false;
         border.value = {
             isDefault:false,
             manageBorderId:0,

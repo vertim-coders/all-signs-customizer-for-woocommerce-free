@@ -136,7 +136,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "a7d843743c7734d614cf"; }
+/******/ 		__webpack_require__.h = function() { return "d2a097f6b13b7ef04376"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -644,9 +644,10 @@
 /******/ 				if (event.type === 'load') {
 /******/ 					resolve();
 /******/ 				} else {
-/******/ 					var errorType = event && (event.type === 'load' ? 'missing' : event.type);
+/******/ 					var errorType = event && event.type;
 /******/ 					var realHref = event && event.target && event.target.href || fullhref;
-/******/ 					var err = new Error("Loading CSS chunk " + chunkId + " failed.\n(" + realHref + ")");
+/******/ 					var err = new Error("Loading CSS chunk " + chunkId + " failed.\n(" + errorType + ": " + realHref + ")");
+/******/ 					err.name = "ChunkLoadError";
 /******/ 					err.code = "CSS_CHUNK_LOAD_FAILED";
 /******/ 					err.type = errorType;
 /******/ 					err.request = realHref;

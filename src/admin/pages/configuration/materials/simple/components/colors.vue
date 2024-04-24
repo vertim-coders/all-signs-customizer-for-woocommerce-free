@@ -506,7 +506,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
                         <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this color?</h3>
-                        <input v-model="manageColors[color.manageColorId].name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <input v-model="color.name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
                         <button @click="deleteMaterialColor" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Yes, I'm sure
@@ -722,6 +722,7 @@ const checkIfThereDefault = ()=> {
 const selectMaterialColor = (id,col,isdeleting=false) => {
     if(isdeleting){
         colorId.value = id;
+        color.value = col;
         closeModal();
     }else{
         color.value = col;
@@ -741,13 +742,13 @@ const addMaterialColor = async () => {
 
 const updateColorInMaterialColor = async () => {
     isLoading.value = true;
-    colors.value[colorId.value]=color.value;
+    colors.value.allColors[colorId.value]=color.value;
     await updateMaterialColor();
 }
 
 const deleteMaterialColor = async () => {
     isLoading.value = true;
-    colors.value.splice(colorId.value,1);
+    colors.value.allColors.splice(colorId.value,1);
     await updateMaterialColor();
 }
 
@@ -927,7 +928,7 @@ const handleDeleteNewMaterialColor = (key) => {
 
 const selectDefault = async(key) =>{
     colors.value.allColors[key].isDefault = true;
-    for(let i=0; i<colors.value.length; i++){
+    for(let i=0; i<colors.value.allColors.length; i++){
         if(i != key ){
             colors.value.allColors[i].isDefault = false;
         }
