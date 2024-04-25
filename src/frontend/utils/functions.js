@@ -24,7 +24,7 @@ async function addToCart(ajax_url, cart_data, nonce, redirect_to_cart) {
   }
 }
 function formatPrice(price) {
-  let formattedPrice = parseFloat(price).toFixed(aso_confiurator_data.decimals);
+  let formattedPrice = parseFloat(price + parseFloat(aso_confiurator_data.regularPrice)).toFixed(aso_confiurator_data.decimals);
 
   switch (aso_confiurator_data.currency_pos) {
     case "left":

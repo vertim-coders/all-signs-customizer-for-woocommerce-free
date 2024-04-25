@@ -910,7 +910,7 @@ function handleDeleteObject(object) {
     }
     updateModifications(true, 'delete')
 }
-function handleCloneObject(object) {
+function handleCloneObject(object, imageId) {
     var target = object;
     var canvas = target.canvas;
     target.clone(function(cloned) {
@@ -922,15 +922,20 @@ function handleCloneObject(object) {
             handleAddTextToSign(cloned)
         }
         if(cloned.type == 'image'){
-            cloned.id = newId += 1
-            cloned.set('name', 'aso-SignImage')
-            cloned.on('mousedown', function() {
-                handleGetAddedImageValues(cloned); 
-            });
-            canvas.add(cloned);
-            lockToCanvas(cloned)
+            // cloned.id = newId += 1
+            // cloned.set('name', 'aso-SignImage')
+            // cloned.on('mousedown', function() {
+            //     handleGetAddedImageValues(cloned); 
+            // });
+            // canvas.add(cloned);
+            // lockToCanvas(cloned)
+            handleAddImageToSign(cloned.getSrc(), imageId)
+            // console.log(addedImages)
         }
     });
+    if(object.type === 'image'){
+        return addedImages
+    }
 }
 function handleCenterVertically(object){
     var target = object;
@@ -984,12 +989,20 @@ function removeBorder(canva){
             if(object.name == 'safeObject'){
                 object.set('strokeWidth', 0)                        
                 object.set('stroke', 'transparent')
-
-                var oldWorld =handleGetObjectByName('old-world-border')
-                if(oldWorld != null){
-                    canva.remove(oldWorld)
-                }
             }
+            if(object.name == 'old-world-border'){
+                canva.remove(object)
+            }
+            if(object.name == 'rounded-corners-border'){
+                canva.remove(object)
+            }
+            // var oldWorld = handleGetObjectByName('old-world-border')
+            // var roundedCorner = handleGetObjectByName('rounded-corners-border')
+            // if(oldWorld != null){
+            // }
+            // if(roundedCorner != null){
+            //     canva.remove(roundedCorner)
+            // }
         }
     });
     canva.renderAll();
@@ -1039,7 +1052,7 @@ function handleSelectBorder(border, color) {
                             object.set('strokeWidth', 11)
                         }
                         if(sizeRatio == 'big'){
-                            object.set('strokeWidth', 6)
+                            object.set('strokeWidth', 16)
                         }
                         if(activeColor){
                             object.set('stroke', activeColor)
@@ -1065,8 +1078,7 @@ function handleSelectBorder(border, color) {
                         //     canvas.renderAll();
                         // });
     
-                        object.set('strokeWidth', 0)                        
-                        object.set('stroke', 'transparent')
+                        removeBorder(canva)
     
                         if(selectedShape === 'square' || selectedShape === 'rounded-square'){
                             if(sizeRatio === 'small'){
@@ -1129,6 +1141,53 @@ function handleSelectBorder(border, color) {
                         }
     
                     }
+                    if(currBorder === 'rounded-corners'){
+                        removeBorder(canva)
+    
+                        if(selectedShape === 'square' || selectedShape === 'rounded-square'){
+                            if(sizeRatio === 'small'){
+                                fabric.loadSVGFromURL(borderUrl+'/im_rounded-corner.svg', (objects, options) => {
+                                    var scaleX = object.width / objects[0].width                                 ;
+                                    var scaleY = object.height / objects[0].height;
+
+                                    const svgGroup = fabric.util.groupSVGElements(objects);
+                                    svgGroup.set('fill', activeColor)
+                                    svgGroup.set('left', object.left)
+                                    svgGroup.set('top', object.top)
+                                    svgGroup.scaleX = scaleX
+                                    svgGroup.scaleY = scaleY
+                                    svgGroup.name = 'rounded-corners-border',
+                                    svgGroup.selectable = false,
+
+                                    // console.log("svg", svgGroup);
+                                    canva.add(svgGroup);
+                                    canva.renderAll();
+                                });
+                            }
+                            if(sizeRatio === 'big'){
+                                fabric.loadSVGFromURL(borderUrl+'/im_rounded-corner.svg', (objects, options) => {
+                                    var scaleX = object.width / objects[0].width                                 ;
+                                    var scaleY = object.height / objects[0].height;
+
+                                    const svgGroup = fabric.util.groupSVGElements(objects);
+                                    svgGroup.set('fill', activeColor)
+                                    svgGroup.set('left', object.left)
+                                    svgGroup.set('top', object.top)
+                                    svgGroup.scaleX = scaleX
+                                    svgGroup.scaleY = scaleY
+                                    svgGroup.name = 'rounded-corners-border',
+                                    svgGroup.selectable = false,
+
+                                    // console.log("svg", svgGroup);
+                                    canva.add(svgGroup);
+                                    canva.renderAll();
+                                });
+                            }
+                        }else{
+                            object.set('strokeWidth', 0)                        
+                            object.set('stroke', 'transparent')
+                        }
+                    }
                 }
             }
         });
@@ -1175,6 +1234,15 @@ function handlechangeBorderColor(color){
         if(border === "old-world"){
             canva.getObjects().forEach(objet => {
                 if(objet.name === 'old-world-border'){
+                    objet.set('fill', color)
+                }
+            });
+
+            canva.renderAll()
+        }
+        if(border === "rounded-corners"){
+            canva.getObjects().forEach(objet => {
+                if(objet.name === 'rounded-corners-border'){
                     objet.set('fill', color)
                 }
             });
@@ -1652,6 +1720,10 @@ function resetFixing(canva){
                     || object.name == 'eyelet1' || object.name == 'eyelet2' || object.name == 'eyelet3' || object.name == 'eyelet4'
                     || object.name == 'table-clamp1' || object.name == 'table-clamp2'
                     || object.name == 'base-support1' || object.name == 'base-support2'
+                    || object.name == 'keyring-hole' || object.name == 'keyring'
+                    || object.name == 's-hook-hole' || object.name == 's-hook'
+                    || object.name == 'roll-up-top' || object.name == 'roll-up-bottom'
+                    || object.name == 'sign-holder-top' || object.name == 'sign-holder-bottom'
                 ){
                     canvas.remove(object)
                     canvas.renderAll()
@@ -3419,10 +3491,310 @@ function handleSelectFixingMethode(methode){
                             });
                         }
                     }
+                    if(methode == 'keyring'){
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+                            fabric.Image.fromURL(fixingUrl+'/im_keyring.png', function(img) {
+                                img.scale(0.25)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/1.4) 
+                                img.left = object.left - (newWidth/2.5),
+                                // img.flipX = true
+                                img.set('name', 'keyring')
+                                img.id = 44
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var keyringHole = new fabric.Circle({
+                                id: 43,
+                                radius: object.height * 0.05,
+                                fill: '#f5f5f5',
+                                top: object.top + 13,
+                                left: object.left +13,
+                                name : 'keyring-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                        if(selectedShape == 'oval' || selectedShape == 'stop'){
+                            fabric.Image.fromURL(fixingUrl+'/im_keyring_oval.png', function(img) {
+                                img.scale(0.25)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/1.4) 
+                                img.left = object.left + (object.width/2) - (newWidth/2),
+                                // img.flipX = true
+                                img.set('name', 'keyring')
+                                img.id = 44
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var newRadius = object.height * 0.05
+                            var keyringHole = new fabric.Circle({
+                                id: 43,
+                                radius: newRadius,
+                                fill: '#f5f5f5',
+                                top: object.top + 15,
+                                left: object.left + object.width/2 - newRadius,
+                                name : 'keyring-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                        if(selectedShape == 'rotated-square'){
+                            fabric.Image.fromURL(fixingUrl+'/im_keyring_losange.png', function(img) {
+                                img.scale(0.25)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/1.4) 
+                                img.left = object.left + (object.width/2) - (newWidth/2),
+                                // img.flipX = true
+                                img.set('name', 'keyring')
+                                img.id = 44
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var newRadius = object.height * 0.05
+                            var keyringHole = new fabric.Circle({
+                                id: 43,
+                                radius: newRadius,
+                                fill: '#f5f5f5',
+                                top: object.top + 15,
+                                left: object.left + object.width/2 - newRadius,
+                                name : 'keyring-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                        if(selectedShape == 'triangle'){
+                            fabric.Image.fromURL(fixingUrl+'/im_keyring_triangle.png', function(img) {
+                                img.scale(0.25)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + (object.height/10) - (newHeight/1.2) 
+                                img.left = object.left + (object.width/2) - (newWidth/2),
+                                // img.flipX = true
+                                img.set('name', 'keyring')
+                                img.id = 44
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var newRadius = object.height * 0.05
+                            var keyringHole = new fabric.Circle({
+                                id: 43,
+                                radius: newRadius,
+                                fill: '#f5f5f5',
+                                top: object.top + (object.height/10),
+                                left: object.left + object.width/2 - newRadius,
+                                name : 'keyring-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                    }
+                    if(methode == 's-hook'){
+                        if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides' || selectedShape == 'oval' || selectedShape == 'stop'){
+                            fabric.Image.fromURL(fixingUrl+'/im_s-hook.png', function(img) {
+                                img.scale(0.6)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/1.4) 
+                                img.left = object.left + (object.width/2) - (newWidth/2),
+                                // img.flipX = true
+                                img.set('name', 's-hook')
+                                img.id = 45
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var newRadius = object.height * 0.05
+                            var keyringHole = new fabric.Circle({
+                                id: 46,
+                                radius: newRadius,
+                                fill: '#f5f5f5',
+                                top: object.top + (object.height/25),
+                                left: object.left + object.width/2 - newRadius,
+                                name : 's-hook-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                        if(selectedShape == 'rotated-square'){
+                            fabric.Image.fromURL(fixingUrl+'/im_s-hook_losange.png', function(img) {
+                                img.scale(0.6)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/1.5) 
+                                img.left = object.left + (object.width/2) - (newWidth/1.9),
+                                // img.flipX = true
+                                img.set('name', 's-hook')
+                                img.id = 45
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var newRadius = object.height * 0.05
+                            var keyringHole = new fabric.Circle({
+                                id: 46,
+                                radius: newRadius,
+                                fill: '#f5f5f5',
+                                top: object.top + (object.height/15),
+                                left: object.left + object.width/2 - newRadius,
+                                name : 's-hook-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                        if(selectedShape == 'triangle'){
+                            fabric.Image.fromURL(fixingUrl+'/im_s-hook_triangle.png', function(img) {
+                                img.scale(0.6)
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight/1.6) 
+                                img.left = object.left + (object.width/2) - (newWidth/1.9),
+                                // img.flipX = true
+                                img.set('name', 's-hook')
+                                img.id = 45
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+
+                            var newRadius = object.height * 0.05
+                            var keyringHole = new fabric.Circle({
+                                id: 46,
+                                radius: newRadius,
+                                fill: '#f5f5f5',
+                                top: object.top + (object.height/10),
+                                left: object.left + object.width/2 - newRadius,
+                                name : 's-hook-hole',
+                                strokeWidth: 2,
+                                stroke: 'grey',
+                                selectable: false,
+                            })
+                            canva.add(keyringHole)
+                        }
+                    }
+                    if(methode == 'roll-up'){
+                        if(selectedShape == 'square'){
+                            fabric.Image.fromURL(fixingUrl+'/im_roll-up_top.png', function(img) {
+                                var scaleX = object.width / img.width;
+                                img.scaleX = scaleX
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight) 
+                                img.left = object.left
+                                img.set('name', 'roll-up-top')
+                                img.id = 47
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+                            fabric.Image.fromURL(fixingUrl+'/im_roll-up_bottom.jpg', function(img) {
+                                var scaleX = object.width / img.width;
+                                img.scaleX = scaleX
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height     
+                                img.left = object.left
+                                img.set('name', 'roll-up-bottom')
+                                img.id = 48
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+                        }
+                    }
+                    if(methode == 'sign-holder'){
+                        if(selectedShape == 'square'){
+                            fabric.Image.fromURL(fixingUrl+'/im_sign-holder.png', function(img) {
+                                var scaleX = object.width / img.width;
+                                img.scaleX = scaleX
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top - (newHeight) + (newHeight/2)
+                                img.left = object.left
+                                img.set('name', 'sign-holder-top')
+                                img.id = 47
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+                            fabric.Image.fromURL(fixingUrl+'/im_sign-holder.png', function(img) {
+                                var scaleX = object.width / img.width;
+                                img.scaleX = scaleX
+    
+                                img.setCoords();
+                                var newWidth = img.width * img.scaleX;
+                                var newHeight = img.height * img.scaleY;
+        
+                                img.top = object.top + object.height - (newHeight/2)   
+                                img.left = object.left
+                                img.flipY = true
+                                img.set('name', 'sign-holder-bottom')
+                                img.id = 48
+        
+                                img.selectable = false
+                                canva.add(img)
+                            });
+                        }
+                    }
         
                 }  
-            }if(object.type == 'line'){
-                object.sendToBack()
+            }if(object.type === 'line'){
+                object.bringToFront()
             }
         }); 
         canva.renderAll();
@@ -3736,7 +4108,7 @@ function handleGetAddedTextValues(transform) {
     return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer)
 }
 
-let newId = 42
+let newId = 49
 
 var addedTexts = []
 var faceTextCharCount = 0
@@ -4077,8 +4449,8 @@ function handleGetAddedImageValues(object){
     return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer, object.angle)
 }
 var addedImages = []
-function handleAddImageToSign(image){
-    function useImage(imgUrl) {
+function handleAddImageToSign(image, imageId){
+    function useImage(imgUrl, imgId) {
         fabric.Image.fromURL(imgUrl, function(img) {
             img.scale(0.4)
 
@@ -4098,6 +4470,7 @@ function handleAddImageToSign(image){
 
             img.id = newId += 1
             img.name = "aso-SignImage"
+            img.priceId = (imgId ? imgId : 0)
 
             img.on('mousedown', function() {
                 handleGetAddedImageValues(img); 
@@ -4160,7 +4533,7 @@ function handleAddImageToSign(image){
 
     return new Promise((resolve, reject) => {
         if (image) {
-            useImage(image);
+            useImage(image, imageId);
             resolve({ images: addedImages, error: "" });
         } else {
             imageInput.addEventListener('change', function(e) {
