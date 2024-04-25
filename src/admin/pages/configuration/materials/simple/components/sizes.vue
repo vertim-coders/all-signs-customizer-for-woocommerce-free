@@ -354,6 +354,7 @@ const size = ref({
     startPriceAtChar:1,
     textNumber:0,
     maxTextChar:-1,
+    minCharText:0,
     charPrice:0,
     basePrice:0
 });
@@ -372,7 +373,6 @@ const fetchMaterialSizes = async () => {
     }else{
         sizes.value = result;
     }
-    console.log(sizes.value);
 }
 
 const checkIfThereDefault = ()=> {
@@ -409,6 +409,7 @@ const updateMaterialSize = async () => {
             startPriceAtChar:1,
             textNumber:0,
             maxTextChar:-1,
+            minCharText:0,
             charPrice:0,
             basePrice:0
         };
@@ -422,8 +423,10 @@ const updateMaterialSize = async () => {
             label:"",
             width:0,
             height:0,
+            startPriceAtChar:1,
             textNumber:0,
-            maxTextChar:0,
+            maxTextChar:-1,
+            minCharText:0,
             charPrice:0,
             basePrice:0
         };
@@ -439,6 +442,7 @@ const addMaterialSize = async () => {
 const selectMaterialSize = (id,sz,isdeleting=false) => {
     if(isdeleting){
         sizeId.value = id;
+        size.value = sz;            
         closeModal();
     }else{
         size.value = sz;            
@@ -471,8 +475,10 @@ const back = () => {
         label:"",
         width:0,
         height:0,
+        startPriceAtChar:1,
         textNumber:0,
-        maxTextChar:0,
+        maxTextChar:-1,
+        minCharText:0,
         charPrice:0,
         basePrice:0
     };

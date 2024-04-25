@@ -65,6 +65,7 @@ class ASO_Admin {
             <div id="aso-admin-app"></div>
             <?php wp_localize_script("aso-admin","aso_data",[
                 "rest_url"=>$api_url."aso/v1",
+                "assets_url"=>ASO_ASSETS,
                 "version"=> ASO_VERSION,
                 'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
                 'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
