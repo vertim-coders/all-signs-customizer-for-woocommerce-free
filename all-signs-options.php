@@ -183,10 +183,18 @@ final class ASO_All_Signs_Options {
                 'value' => 'old-world'
             ]
         ];
-        //$have_borders = get_option("aso_all_borders");
-        //if($have_borders == false){
+        $have_borders = get_option("aso_all_borders");
+        if($have_borders == false){
             update_option("aso_all_borders",$borders);
-        //}
+        }else{
+            $differenceCles = array_diff_key($borders,$have_borders);
+            if(count($differenceCles)>0){
+                foreach ($differenceCles as $key => $value) {
+                    $have_borders[$key]=$value;
+                }
+                update_option("aso_all_borders",$have_borders);
+            }
+        }
     }
     private function aso_define_shapes(){
         $shapes = [
@@ -251,10 +259,18 @@ final class ASO_All_Signs_Options {
                 'value' => 'rounded-sides'
             ]
         ];
-       // $have_shapes = get_option("aso_all_shapes");
-        //if($have_shapes == false){
+       $have_shapes = get_option("aso_all_shapes");
+        if($have_shapes == false){
             update_option("aso_all_shapes",$shapes);
-        //}
+        }else{
+            $differenceCles = array_diff_key($shapes,$have_shapes);
+            if(count($differenceCles)>0){
+                foreach ($differenceCles as $key => $value) {
+                    $have_shapes[$key]=$value;
+                }
+                update_option("aso_all_shapes",$have_shapes);
+            }
+        }
     }
     private function aso_define_fixingMethods(){
         $fixingMethods = [
@@ -399,10 +415,18 @@ final class ASO_All_Signs_Options {
                 'type' => 'roll-up'
             ],
         ];
-       // $have_fixingMethods = get_option("aso_all_fixingMethods");
-//if($have_fixingMethods == false){
+        $have_fixingMethods = get_option("aso_all_fixingMethods");
+        if($have_fixingMethods == false){
             update_option("aso_all_fixingMethods",$fixingMethods);
-       // }
+        }else{
+            $differenceCles = array_diff_key($fixingMethods,$have_fixingMethods);
+            if(count($differenceCles)>0){
+                foreach ($differenceCles as $key => $value) {
+                    $have_fixingMethods[$key]=$value;
+                }
+                update_option("aso_all_fixingMethods",$have_fixingMethods);
+            }
+        }
     }
 
     /**

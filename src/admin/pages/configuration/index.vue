@@ -190,20 +190,11 @@
                         Include demo data?
                     </div>
                     <div class="aso-text-[16px] aso-p-4 aso-flex aso-justify-center aso-items-center">
-                        To help you get started we can automatically add fonts, colors, prices and sizes to your 
+                        To help you get started we can automatically add some data for your 
                         new configuration
                     </div>
                 </div>
                 <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
-                    <div class="aso-bg-[#016464] aso-rounded">
-                        <button :disabled="isLoading" class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-3 aso-text-white aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white aso-cursor-pointer" @click="includeDemo = true;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
-                            </svg>
-
-                            Include demo data
-                        </button>
-                    </div>
                     <div class="aso-bg-[#016464] aso-rounded">
                         <button :disabled="isLoading" class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-3 aso-text-white aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white aso-cursor-pointer" @click="()=>includeMetaData(false)">
                             <img src="../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading"/>
@@ -211,6 +202,15 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                             No Include demo data
+                        </button>
+                    </div>
+                    <div class="aso-bg-[#016464] aso-rounded">
+                        <button :disabled="isLoading" class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-3 aso-text-white aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white aso-cursor-pointer" @click="includeDemo = true;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
+                            </svg>
+
+                            Include demo data
                         </button>
                     </div>
                 </div>
@@ -250,6 +250,16 @@
                 </Multiselect>
             </div>
             <div class="aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB]">
+                <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
+                    <div class="aso-bg-[#016464] aso-rounded">
+                        <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
+                            <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
+                            </svg>
+                            <div class="aso-font-semibold aso-text-[16px]">Back</div>
+                        </button>
+                    </div>
+                </div>
                 <div class="aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                     <div class="aso-bg-[#016464] aso-rounded">
                         <button @click="includeMetaData(true)" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white  aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer">
@@ -260,17 +270,6 @@
                                 </svg>
                             </div>
                             <span class="aso-font-semibold aso-text-[16px]">Done</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
-                    <div class="aso-bg-[#016464] aso-rounded">
-                        <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
-                            <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
-                            </svg>
-
-                            <div class="aso-font-semibold aso-text-[16px]">Back</div>
                         </button>
                     </div>
                 </div>
@@ -437,7 +436,7 @@ const defaultSettings = ref({
             changeIconShareSideBar:'',
             changeIconMaterial:'',
             changeIconShape:'',
-            changeIconFixingMethod:'',
+            changeIconfixingMethods:'',
             changeIconProduct:'',
             changeIconSize:'',
             changeIconText:'',
@@ -4449,7 +4448,7 @@ const metaConfigs = ref({
                         enableText: true,
                         enableImage: true
                     },
-                    fixingMethod: [
+                    fixingMethods: [
                         {
                             isDefault:true,
                             fixingMethodId: 0,
@@ -4800,7 +4799,7 @@ const metaConfigs = ref({
                         enableText: true,
                         enableImage: true
                     },
-                    fixingMethod: [
+                    fixingMethods: [
                         {
                             isDefault:true,
                             fixingMethodId: 0,
