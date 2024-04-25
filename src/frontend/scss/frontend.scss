@@ -1,3 +1,6 @@
+:root {
+  --aso-scrollBar-color: #000000
+}
 #aso-frontend-app {
   p {
     margin: 0 !important;
@@ -14,7 +17,7 @@
     overflow: scroll;
   }
   .aso-scrollBar::-webkit-scrollbar-thumb {
-    background-color: #016464;
+    background-color: var(--aso-scrollBar-color);
     border-radius: 20px;
   }
    

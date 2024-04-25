@@ -53,4 +53,8 @@ function formatPrice(price) {
   return formattedPrice;
 }
 
-export { addToCart, formatPrice };
+function setScrollColor(color) {
+  document.documentElement.style.setProperty("--aso-scrollBar-color", color);
+}
+
+export { addToCart, formatPrice, setScrollColor };

@@ -412,8 +412,8 @@
                                     <div :class="`${material.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-1/4 aso-h-20`">
                                         <img v-if="material.icon != ''" :src="material.icon" class="aso-w-full aso-h-full" />
                                     </div>                                
-                                    <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                        <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
+                                    <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
+                                        <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
                                         <p class="aso-text-xs">{{ material.description }}</p>
                                         <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
                                             <span v-if="material.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
@@ -439,8 +439,8 @@
                                     <div :class="`${option.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
                                         <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
                                     </div>                                
-                                    <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                        <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ option.name }}</p>
+                                    <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
+                                        <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ option.name }}</p>
                                         <p class="aso-text-xs">{{ option.description }}</p>
                                         <p class="aso-text-xs">{{ option.size.width }}x{{ option.size.height }}</p>
                                         <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
@@ -462,13 +462,13 @@
                         <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textSize}}</p>    
     
                         <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
-                            <p class="aso-font-medium">Suggestions</p>
+                            <!-- <p class="aso-font-medium">Suggestions</p> -->
                             <div class="aso-space-y-2">
                                 <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                     <div v-for="(sizee, id) in sizees">
                                         <div class="aso-w-full aso-h-full aso-flex">
                                             <input type="radio" :id="'aso' + sizee.label + sizee.width + index" name="aso-sizes" class=" peer aso-hidden" @click="changeSize({label: sizee.label, width:sizee.width, height:sizee.height}, {textNumber: sizee.textNumber, charPrice: sizee.charPrice, basePrice: sizee.basePrice, maxTextChar: sizee.maxTextChar, startPriceAtChar: sizee.startPriceAtChar}, id )">
-                                            <label :for="'aso' + sizee.label + sizee.width + index" :class="`${currentSizeName == sizee.label ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}]` : ``} 
+                                            <label :for="'aso' + sizee.label + sizee.width + index" :class="`${currentSizeName == sizee.label ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}]` : `aso-text-[${configColors.textColorOptionsMenu}]`} 
                                                 aso-w-full aso-h-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundColorHeader}] hover:aso-border-[${configColors.backgroundColorHeader}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
                                                 {{ sizee.label }}
@@ -523,7 +523,7 @@
                                     <div v-for="(shape, index) in allShapes" :key="shape.name" class="aso-w-full aso-flex">
                                         <div class="aso-w-full aso-flex" v-if="shapee.shapeId == index">
                                             <input type="radio" :id="shape.name + index" name="aso-shape" class="peer aso-hidden" @change="selectShape(shape.value, shapee, id)">
-                                            <label :for="shape.name + index" :class="`${selectedShape == shape.value ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} 
+                                            <label :for="shape.name + index" :class="`${selectedShape == shape.value ? `aso-text-[${configColors.backgroundColorHeader}]` : `aso-text-[${configColors.textColorOptionsMenu}]`} 
                                                 aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundColorHeader}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
                                                 <div :class="`${shape.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-16 aso-h-16`">
@@ -551,8 +551,8 @@
                                             <div :class="`${fixing.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
                                                 <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
                                             </div>
-                                            <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                                <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }} <span class="aso-text-[11px]">({{ fixingg.additionalPrice }} {{props.currency}})</span> </p>
+                                            <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
+                                                <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ fixing.name }} <span class="aso-text-[11px]">({{ fixingg.additionalPrice }} {{props.currency}})</span> </p>
                                                 <p class="aso-text-xs">{{ fixing.description }}</p>
                                                 <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
                                                     <span v-if="fixing.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
@@ -579,8 +579,8 @@
                                             <div :class="`${fixing.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
                                                 <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
                                             </div>
-                                            <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                                <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
+                                            <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
+                                                <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
                                                 <p class="aso-text-xs">{{ fixing.description }}</p>
                                                 <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
                                                     <span v-if="fixing.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
@@ -603,7 +603,6 @@
                         <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>    
     
                         <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
-                            <!-- <p class="aso-font-medium" >List of colors</p> -->
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                 <div v-for="(colorr, id) in colorrs.allColors" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
                                     <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
@@ -648,7 +647,7 @@
                                     <div class="aso-w-16 aso-h-16 aso-rounded-full aso-overflow-hidden">
                                         <img :src="colorr.image" class="aso-w-full aso-h-full" />
                                     </div>
-                                    <!-- <div>{{ colorr.color.name }}</div> -->
+                                    <p class="aso-text-sm">{{colorr.name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -663,7 +662,7 @@
                                     <div v-for="(border, index) in allBorders" :key="border.name" class="aso-w-full aso-flex">
                                         <div v-if="borderr.manageBorderId == index && (!borderr.excludeShapes.includes(currentShapeId) && !borderr.excludeSizes.includes(currentSizeId))">
                                             <input type="radio" :id="'border' + border.name + index" name="aso-borders" class="peer aso-hidden" @change="selectBorder(border.value, borderr.settings, borderr.additionalPrice, borderr.excludeShapes, borderr.excludeSizes, id)">
-                                            <label :for="'border' + border.name + index" :class="`${activeFace === 'front-face' && activeFace1Border === border.value || activeFace === 'back-face' && activeFace2Border === border.value ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} 
+                                            <label :for="'border' + border.name + index" :class="`${activeFace === 'front-face' && activeFace1Border === border.value || activeFace === 'back-face' && activeFace2Border === border.value ? `aso-text-[${configColors.backgroundColorHeader}]` : `aso-text-[${configColors.textColorOptionsMenu}]`} 
                                                 aso-w-full aso-h-full aso-flex aso-flex-col aso-space-y-1 aso-full-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundColorHeader}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                             >
                                                 <div :class="`${border.icon != '' ? `` : `aso-bg-[${configColors.backgroundColorHeader}]`} aso-w-16 aso-h-16`">
@@ -1028,8 +1027,8 @@
                                         <div :class="`${option.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
                                             <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
                                         </div>
-                                        <div class="aso-w-3/4 aso-flex aso-flex-col aso-space-y-1">
-                                            <p class="aso-text-sm aso-text-black aso-font-medium first-letter:aso-uppercase">{{ option.title }} <span class="aso-text-[11px]">({{option.additionalPrice}} {{props.currency}})</span></p>
+                                        <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
+                                            <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ option.title }} <span class="aso-text-[11px]">({{option.additionalPrice}} {{props.currency}})</span></p>
                                             <p class="aso-text-xs">{{ option.description }}</p>
                                             <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
                                                 <span class="aso-invisible aso-text-transparent">example</span> {{console.log(addOptionSelected.some(item => item.option === addOptionsValue.title))}}
@@ -1071,7 +1070,7 @@
                 <p class="aso-text-xl aso-font-bold aso-text-center">Summary</p>
             </div>
 
-            <div class="aso-flex aso-flex-col aso-overflow-auto">
+            <div class="aso-flex aso-flex-col aso-overflow-auto aso-scrollBar">
                 <div v-if=" selectedMaterial != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <p :class="`aso-text-[#000000] aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textMaterial ?? 'Material' }}</p>
                     <p :class="`aso-text-[#473e3e] aso-text-[14px]`">{{ selectedMaterial}}</p>
@@ -1098,7 +1097,7 @@
                                 {{configData.sign.width}}
                             </span>
                         </p>
-                        <p class="aso-text-[13px]" v-show="thicknesss.active"><span class="aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}: </span> 
+                        <p class="aso-text-[13px]" v-if="materialType === 'simple' && thicknesss.active"><span class="aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}: </span> 
                             <span>
                                 {{currentThickValue}}
                             </span>
@@ -1106,7 +1105,7 @@
                     </div>
                 </div>
 
-                <div v-if="activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                <div v-if="materialType === 'simple' && activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3 aso-text-[#000000]`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
@@ -1142,6 +1141,30 @@
                     </p>
                 </div>
 
+                <!-- <div v-if="materialType === 'advance' && activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                    <div :class="`aso-w-1/3 aso-text-[#000000]`">
+                        <p v-if="props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>
+                        <p v-if="!props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
+                    </div>
+                    <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
+                        <div class="aso-flex aso-space-x-2 aso-full-center">
+                            <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
+                            <span class="lowercase first-letter:uppercase">{{activeSignColor}}</span>
+                            <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
+                                <img :src="activeSignColorCode1" class="aso-w-[35px] aso-h-[35px]" />
+                            </span>
+                        </div>
+
+                        <div v-if="configDoublePart.active" class="aso-flex aso-space-x-2 aso-full-center">
+                            <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
+                            <span class="lowercase first-letter:uppercase">{{activeSignFace2Color}}</span>
+                            <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
+                                <img :src="activeSignColorCode1" class="aso-w-[35px] aso-h-[35px]" />
+                            </span>
+                        </div>
+                    </p>
+                </div> -->
+
                 <div v-if="activeFixingMethode != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-text-[#000000]`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textFixingMethods" class="aso-text-[16px] aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>
@@ -1150,7 +1173,7 @@
                     <p :class="`aso-text-[#473e3e] aso-text-[15px] lowercase first-letter:uppercase`">{{activeFixingMethode}}</p>
                 </div>
 
-                <div v-if="activeFace1Border != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                <div v-if="materialType === 'simple' && activeFace1Border != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3 aso-text-[#000000]`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textBorder" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textBorder}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textBorder" class="aso-text-[16px] text-black aso-font-semibold">Border</p>
@@ -1198,7 +1221,7 @@
                     </p>
                 </div>
 
-                <div v-if="addOptionSelected.length > 0" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2" v-for="(option, index) in addOptionSelected">
+                <div v-if="materialType === 'simple' && addOptionSelected.length > 0" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2" v-for="(option, index) in addOptionSelected">
                     <p :class="`aso-text-[#000000] aso-text-[16px] aso-font-semibold`">{{option.option}}</p>
                     <p :class="`aso-text-[#473e3e] aso-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
                 </div>
@@ -1279,7 +1302,10 @@
 
             </div>
 
-            <div @click="() => finish = false" >Edit</div>
+            <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
+                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</div>
+                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
+            </div>
         </div>
 
 
@@ -1330,7 +1356,7 @@
         handleGetCharPrice,
         handleSetPrice,
     } from '@/frontend/utils/aso-editor-script.js';
-    import { formatPrice } from '@/frontend/utils/functions.js'
+    import { formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
 
     const props = defineProps({
         config:Object,
@@ -1709,6 +1735,7 @@
 
         // selectMaterial(props.config.data.materials[0])
 
+        setScrollColor(configColors.value.backgroundColorHeader)
         setIsLoadedToFalse()
 
         return {
@@ -1719,7 +1746,7 @@
 
     var matchingFixings = ref([])
     var matchingBorders = ref([])
-    function selectSimpleFirstValue(){
+    function selectSimpleFirstValue(restart) {
         var stopSize = false
         if(sizees.value.length >0){
             sizees.value.forEach((sizee, id) => {
@@ -1775,14 +1802,14 @@
             while (index < colorrs.value.allColors.length && !haveDefault) {
                 if(colorrs.value.allColors[index].isDefault){
                     // console.log(colorrs.value.allColors[index], "default")
-                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice )
+                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice, restart )
                     haveDefault = true
                     break;
                 }
                 index++;
             }
             if(!haveDefault){
-                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice )
+                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice, restart )
             }
         }else{
             // changeSignColor(color, colorr)
@@ -1851,14 +1878,16 @@
             while (index < matchingFixings.length && !haveDefault) {
                 if(matchingFixings.value[index].fixingg.isDefault){
                     // console.log(matchingFixings[index], "default")
-                    selectFixingMethode(matchingFixings.value[index].fixing.type, matchingFixings.value[index].fixingg, index)
+                    // selectFixingMethode(matchingFixings.value[index].fixing.type, matchingFixings.value[index].fixingg, index)
+                    fixingExcludeSizes.value = matchingFixings.value[index].fixingg.excludeSizes
                     haveDefault = true
                     break;
                 }
                 index++;
             }
             if(!haveDefault){
-                selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+                // selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+                fixingExcludeSizes.value = matchingFixings.value[0].fixingg.excludeSizes
             }
         }else{
             selectFixingMethode('none')
@@ -1914,6 +1943,34 @@
             changeSize(size)
         }
 
+        var stopFixing = false
+        if(fixinggs.value.length > 0){
+            fixinggs.value.forEach((fixingg, id) => {
+                allFixings.value.forEach((fixing, index) => {
+                    if(fixingg.fixingMethodId == index && !fixingg.excludeSizes.includes(currentSizeId) && !fixingg.excludeShapes.includes(currentShapeId)){
+                        matchingFixings.value.push({fixing, fixingg})
+                        // console.log(matchingFixings)
+                    }
+                })
+            })
+            let index = 0
+            var haveDefault = false
+            while (index < matchingFixings.length && !haveDefault) {
+                if(matchingFixings.value[index].fixingg.isDefault){
+                    // console.log(matchingFixings[index], "default")
+                    selectFixingMethode(matchingFixings.value[index].fixing.type, matchingFixings.value[index].fixingg, index)
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+            }
+        }else{
+            selectFixingMethode('none')
+        }
+
         if(additionalOptions.value.length > 0){
             additionalOptions.value.forEach(addOption => {
                 let index = 0
@@ -1962,22 +2019,22 @@
 
     function undo() {
         var options = handleUndo()
-        currentSizeName.value = options.sizeName
-        selectedShape.value = options.shape
-        activeFace1Border.value = options.border
-        activeFixingMethode.value = options.fixing
-        activeSignColor.value = options.signColor
-        console.log(options)
+        // currentSizeName.value = options.sizeName
+        // selectedShape.value = options.shape
+        // activeFace1Border.value = options.border
+        // activeFixingMethode.value = options.fixing
+        // activeSignColor.value = options.signColor
+        // console.log(options)
         
     }
     function redo() {
         var options = handleRedo()
-        currentSizeName.value = options.sizeName
-        selectedShape.value = options.shape
-        activeFace1Border.value = options.border
-        activeFixingMethode.value = options.fixing
-        activeSignColor.value = options.signColor
-        console.log(options)
+        // currentSizeName.value = options.sizeName
+        // selectedShape.value = options.shape
+        // activeFace1Border.value = options.border
+        // activeFixingMethode.value = options.fixing
+        // activeSignColor.value = options.signColor
+        // console.log(options)
     }
     function clearAll() {
         handleClearAll()
@@ -2157,6 +2214,19 @@
     function selectSignModel(model){
         activeSignModelName.value = model.name
 
+        selectBorder('none')
+        var borderPrice1Object = {
+            name: "border1",
+            price: 0
+        }
+        getOptionPrice(borderPrice1Object)
+
+        var borderPrice2Object = {
+            name: "border2",
+            price: 0
+        }
+        getOptionPrice(borderPrice2Object)
+
         // selection de fixing
         var stopFixing = false
         fixinggs.value = model.fixingMethods
@@ -2192,12 +2262,24 @@
             startPriceAtChar: model.size.startPriceAtChar,
         }
         changeSize(modelSize, modelSizeSetting)
+        currentThickValue.value = -99
 
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
+        if(configDoublePart.value.active){
+            activeSignColor.value = model.color.name
+            activeSignColorCode1.value = model.image
+            
+            activeSignFace2Color.value = model.color.name
+             activeSignColorCode2.value = model.image
+        }else{
+            activeSignColor.value = model.color.name
+            activeSignColorCode1.value = model.image
+        }
 
         // selection de la couleur
         colorrs.value = [{color: model.color, image: model.image}]
+        firstColorCheck.value = true
 
         var modelPrice = model.additionalPrice
         var modelPriceObject = {
@@ -2554,6 +2636,11 @@
                 // }
                 // selectFixingMethode(matchingFixings.value[activeFixingId.value+1].fixing.type, matchingFixings.value[activeFixingId.value+1].fixingg, activeFixingId.value+1)
                 selectFixingMethode('none')
+                var fixingPriceObject = {
+                    name: "fixing",
+                    price: 0
+                }
+                getOptionPrice(fixingPriceObject)
             }
 
             // desactivation du border si il n'est pas actif pour la size selectionné
@@ -2564,6 +2651,11 @@
                     // }
                     // selectBorder(matchingBorders.value[face1BorderId.value+1].border.value, matchingBorders.value[face1BorderId.value+1].borderr.settings, matchingBorders.value[face1BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face1BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face1BorderId.value+1].borderr.excludeSizes, face1BorderId.value+1)
                     selectBorder('none')
+                    var borderPrice1Object = {
+                        name: "border1",
+                        price: 0
+                    }
+                    getOptionPrice(borderPrice1Object)
                 }
             }
             if(activeFace.value == 'back-face'){
@@ -2573,6 +2665,11 @@
                     // }
                     // selectBorder(matchingBorders.value[face2BorderId.value+1].border.value, matchingBorders.value[face2BorderId.value+1].borderr.settings, matchingBorders.value[face2BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face2BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face2BorderId.value+1].borderr.excludeSizes, face2BorderId.value+1)
                     selectBorder('none')
+                    var borderPrice2Object = {
+                        name: "border2",
+                        price: 0
+                    }
+                    getOptionPrice(borderPrice2Object)
                 }
             }
         }
@@ -2595,6 +2692,11 @@
             // }
             // selectFixingMethode(matchingFixings.value[activeFixingId+1].fixing.type, matchingFixings.value[activeFixingId+1].fixingg, activeFixingId+1)
             selectFixingMethode('none')
+            var fixingPriceObject = {
+                name: "fixing",
+                price: 0
+            }
+            getOptionPrice(fixingPriceObject)
         }
         if(activeFace.value == 'front-face'){
             if(border1ExcludeShapes.value.includes(shapeId)){
@@ -2603,6 +2705,11 @@
                 // }
                 // selectBorder(matchingBorders.value[face1BorderId.value+1].border.value, matchingBorders.value[face1BorderId.value+1].borderr.settings, matchingBorders.value[face1BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face1BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face1BorderId.value+1].borderr.excludeSizes, face1BorderId.value+1)
                 selectBorder('none')
+                var borderPrice1Object = {
+                    name: "border1",
+                    price: 0
+                }
+                getOptionPrice(borderPrice1Object)
             }
         }
         if(activeFace.value == 'back-face'){
@@ -2612,6 +2719,11 @@
                 // }
                 // selectBorder(matchingBorders.value[face2BorderId.value+1].border.value, matchingBorders.value[face2BorderId.value+1].borderr.settings, matchingBorders.value[face2BorderId.value+1].borderr.additionalPrice, matchingBorders.value[face2BorderId.value+1].borderr.excludeShapes, matchingBorders.value[face2BorderId.value+1].borderr.excludeSizes, face2BorderId.value+1)
                 selectBorder('none')
+                var borderPrice2Object = {
+                    name: "border2",
+                    price: 0
+                }
+                getOptionPrice(borderPrice2Object)
 
             }
         }
@@ -3411,9 +3523,12 @@
             sign: {
                 width: widthValue.text,
                 height: heightValue.text,
-                thickness: thicknessValue,
+                thickness: (currentThickValue.value !== -99 ? currentThickValue.value : 'none'),
                 shape: selectedShape.value,
-                color: activeSignColor.value,
+                color: {
+                    name: activeSignColor.value,
+                    codeHex: activeSignColorCode1.value,
+                },
                 border: {
                     type: activeFace1Border.value,
                     color: activeFace1BorderColor.value,
@@ -3423,7 +3538,7 @@
             },
             texts: addedObject.texts,
             images: addedObject.images,
-            designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
+            // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
 
         }
 
@@ -3457,11 +3572,17 @@
                 sign: {
                     width: widthValue.text,
                     height: heightValue.text,
-                    thickness: thicknessValue,
+                    thickness: (currentThickValue.value !== -99 ? currentThickValue.value : 'none'),
                     shape: selectedShape.value,
                     color: {
-                        face1: activeSignColor.value,
-                        face2: activeSignFace2Color.value,
+                        face1: {
+                            name: activeSignColor.value,
+                            codeHex: activeSignColorCode1.value
+                        },
+                        face2: {
+                            name: activeSignFace2Color.value,
+                            codeHex : activeSignColorCode2.value
+                        },
                     },
                     border: {
                         face1: {
@@ -3485,10 +3606,10 @@
                     face1 :addedObject.images,
                     face2 :face2AddedObject.images
                 },
-                designImages: {
-                    face1: generateImage(canvas, configOutputSettings.value.filesFormat),
-                    face2: generateImage(canvasBack, configOutputSettings.value.filesFormat),
-                }
+                // designImages: {
+                //     face1: generateImage(canvas, configOutputSettings.value.filesFormat),
+                //     face2: generateImage(canvasBack, configOutputSettings.value.filesFormat),
+                // }
             }
 
         }
@@ -3524,12 +3645,19 @@
         if(format !== 'svg'){
             if(format === 'jpeg'){
                 url = canva.toDataURL({
-                    format: 'jpg', // ou 'jpeg'
+                    format: 'jpg',
                     quality: 0.8
                 });
-            }else{
+            }
+            if(format === 'png'){
                 url = canva.toDataURL({
-                    format: format, // ou 'jpeg'
+                    format: format,
+                    quality: 0.8
+                });
+            }
+            else{
+                url = canva.toDataURL({
+                    format: 'png',
                     quality: 0.8
                 });
             }
