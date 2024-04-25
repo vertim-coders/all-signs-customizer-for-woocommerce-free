@@ -478,28 +478,33 @@ const defaultSettings = ref({
     themeColors: {
         skin: "default",
         colors: {
-            textColorContentHeader:'#000000',
-            backgroundColorHeader:'#000000',
-            textColorContentSideMenu:'#000000',
-            backgroundColorHeaderContentSide:'#000000',
-            textColorOptionsMenu:'#000000',
-            backgroundColorOptionsMenu:'#000000',
-            textColorButtonSave:'#000000',
-            backgroundColorTextButtonSave:'#000000',
-            textColorHoverButtonSave:'#000000',
-            backgroundColorHoverButtonSave:'#000000',
-            textColorButton:'#000000',
-            backgroundButton:'#000000',
-            textColorHoverButton:'#000000',
-            backgroundColorHoverButton:'#000000',
-            textColorButtonHelp:'#000000',
-            backgroundColorButtonHelp:'#000000',
-            textColorHoverButtonHelp:'#000000',
-            backgroundColorHoverButtonHelp:'#000000',
-            textColorHoverButtonRestartAll:'#000000',
-            backgroundColorHoverButtonRestartAll:'#000000',
-            textColorButtonRestartAll:'#000000',
-            backgroundColorButtonRestartAll:'#000000',
+            textColorContentHeader: "#000000",
+            backgroundColorHeader: "#ffffff",
+            textColorContentSideMenu: "#000000",
+            backgroundColorHeaderContentSide: "#000000",
+            textColorOptionsMenu: "#ffffff",
+            backgroundColorOptionsMenu: "#016464",
+            textColorButtonSave: "#000000",
+            backgroundColorTextButtonSave: "#ffffff",
+            textColorHoverButtonSave: "#000000",
+            backgroundColorHoverButtonSave: "#ffffff",
+            textColorButton: "#ffffff",
+            backgroundButton: "#016464",
+            textColorHoverButton: "#ffffff",
+            backgroundColorHoverButton: "#016464",
+            textColorButtonHelp: "#ffffff",
+            backgroundColorButtonHelp: "#016464",
+            textColorHoverButtonHelp: "#ffffff",
+            backgroundColorHoverButtonHelp: "#016464",
+            textColorHoverButtonRestartAll: "#ffffff",
+            backgroundColorHoverButtonRestartAll: "#000000",
+            textColorButtonRestartAll: "#ffffff",
+            backgroundColorButtonRestartAll: "#000000",
+            textColorButtonFinish: "#ffffff",
+            textColorHoverButtonFinish: "#f0f0f0",
+            backgroundColorButtonFinish: "#FFBC3C",
+            backgroundColorHoverButtonFinish: "#edad35",
+            backgroundColorContentSide: "#ffffff"
         }
     },
     sortOptions: []
@@ -1235,7 +1240,7 @@ const metaConfigs = ref({
                         {
                             title: "Frosted",
                             description: "",
-                            icon: "",
+                            icon: "https://signsdesigner.us/app/demos/acrylic-signs/ic_frosted.svg",
                             options: [
                                 {
                                     title: "Standard",
@@ -2076,7 +2081,7 @@ const metaConfigs = ref({
                         {
                             title: "Reflective",
                             description: "",
-                            icon: "",
+                            icon: "https://signsdesigner.us/app/demos/aluminium-signs/ic_frosted.svg",
                             options: [
                                 {
                                     title: "Standard",
