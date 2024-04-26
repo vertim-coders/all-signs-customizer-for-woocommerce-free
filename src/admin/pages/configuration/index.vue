@@ -65,8 +65,11 @@
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="config.popImg" alt="" v-if="config.popImg!=''">
                         </div>
                         <div class="aso-flex aso-space-x-2 aso-justify-center aso-items-center aso-text-gray-500 dark:aso-text-gray-400">
-                            <button class="aso-bg-transparent aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
+                           <!--  <button class="aso-bg-transparent aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_preview.svg" alt="">
+                            </button> -->
+                            <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectEditConfig(config)">
+                                <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
                             <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="()=>$router.push('/configs/'+config.id+'/materials')">
                                 <img class="aso-w-4 aso-h-4" src="../../../../assets/icons/ic_manage.svg" alt="">
@@ -74,11 +77,20 @@
                                     Manage
                                 </span>
                             </button>
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectEditConfig(config)">
-                                <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
-                            </button>
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectDeleteConfig(config.id,config.name)">
-                                <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_delete.svg" alt="">
+                            <button class="aso-border-none aso-bg-white aso-relative" @click="handleOpenConfigParams(key)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-rotate-90 aso-h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                </svg>
+                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showPrams[key]=false;">
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectEditConfig(config,true)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                        </svg>
+                                    </button>
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectDeleteConfig(config.id,config.name)">
+                                        <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_delete.svg" alt="">
+                                    </button>
+                                </div>
                             </button>
                         </div>
                     </div>
@@ -301,6 +313,35 @@
                 </div>
             </div>
         </div>        
+        <!-- Delete Modal-->
+        <div v-if="openCloneModal" @click.self="closeCloneModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="closeCloneModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close modal</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Give the name of the new design, which will be an imitation of the current one.</h3>
+                        <input v-model="newConfig.name" class="aso-rounded aso-w-full aso-h-[35px] aso-text-start aso-p-4 aso-my-2 aso-border-solid aso-border-gray-400" />
+                        <button @click="addNewConfig(newConfig)" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-w-5" v-if="!isLoading">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+
+                            Clone
+                        </button>
+                        <button @click.stop="closeCloneModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
 </template>
 
@@ -311,7 +352,8 @@ import toastMessage from '@/admin/utils/functions'
 import Multiselect from '@vueform/multiselect'
 
 const isNewConfig = ref(false);
-
+const showParams = ref([]);
+const openCloneModal = ref(false);
 const newConfig = ref({
     name:"",
     description:"",
@@ -356,8 +398,10 @@ const defaultSettings = ref({
             designFromScratch:true,
             redirectAfterAddingToCart:true,
             hideAddToCartButtonOnDetailPage:true,
-            hideDesignButtonsOnShopPage:true,
-            hideAddToCartButtonOnShopPage:true
+            hideDesignButtonsOnShopPage:false,
+            hideAddToCartButtonOnShopPage:true,
+            redirectToCheckOutPage:false,
+            displayRecapsOnCheckout:false,
         }
     },
     customizerSign: {
@@ -370,6 +414,7 @@ const defaultSettings = ref({
         signPart: {
             doublePart:{
                 active:false,
+                label:"Switch Face",
                 part1:"Face A",
                 part2:"Face B",
                 enableCopyDesignFromSide:true
@@ -446,7 +491,7 @@ const defaultSettings = ref({
             changeIconImage:'',
         },
         visualizer: {
-            titleHeader:"Plastic Signs",
+            titleHeader:"",
             textButtonRefresh:"Restart all",
             textButtonBack:"Undo",
             textButtonNext:"Redo",
@@ -812,7 +857,7 @@ const metaConfigs = ref({
                             {
                                 isDefault: false,
                                 name: "Black",
-                                    textColor: {
+                                textColor: {
                                     active: false,
                                         sameForBorder:false,
                                     name:"",
@@ -1000,76 +1045,76 @@ const metaConfigs = ref({
                     ],
                     borders: {
                         settings: {
-                        colors: [
-                            {
-                                name: "White",
-                                codeHex: "#ffffff",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Black",
-                                codeHex: "#000000",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Blue",
-                                codeHex: "#004f86",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Red",
-                                codeHex: "#c4271d",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Green",
-                                codeHex: "#009251",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Yellow",
-                                codeHex: "#fee900",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Gray",
-                                codeHex: "#4f5756",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Pink",
-                                codeHex: "#bc4077",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Purple",
-                                codeHex: "#554585",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Orange",
-                                codeHex: "#e15616",
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                name: "Brown",
-                                codeHex: "#523d2a",
-                                prevImg: "",
-                                additionalPrice: 0
-                            }
-                        ],
-                        enableBorderWidth: false,
-                        enableBorderColor: true
+                            colors: [
+                                {
+                                    name: "White",
+                                    codeHex: "#ffffff",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Black",
+                                    codeHex: "#000000",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Blue",
+                                    codeHex: "#004f86",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Red",
+                                    codeHex: "#c4271d",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Green",
+                                    codeHex: "#009251",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Yellow",
+                                    codeHex: "#fee900",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Gray",
+                                    codeHex: "#4f5756",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Pink",
+                                    codeHex: "#bc4077",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Purple",
+                                    codeHex: "#554585",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Orange",
+                                    codeHex: "#e15616",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                },
+                                {
+                                    name: "Brown",
+                                    codeHex: "#523d2a",
+                                    prevImg: "",
+                                    additionalPrice: 0
+                                }
+                            ],
+                            enableBorderWidth: false,
+                            enableBorderColor: true
                         },
                         allBorders: [
                             {
@@ -8263,14 +8308,39 @@ onMounted(async () => {
     canAddNew.value = true;
 });
 
-const fetchConfigs = async () => {
+const closeCloneModal = ()=> {
+    openCloneModal.value=false;
+    newConfig.value = {
+        name:"",
+        description:"",
+        icon:"",
+        popImg:"",
+    }
+}
 
+const fetchConfigs = async () => {
+    let tab=[];
     const allConfigs = await api.getConfigs();
     configs.value = allConfigs.data;
+    for (let index = 0; index < allConfigs.data.length; index++) {
+        tab.push(false);
+        
+    }
+    showParams.value = tab;
     totalPages.value = allConfigs.totalPages;
     totalConfigsFound.value = allConfigs.totalConfigsFound;
     pages.value = allConfigs.totalPages;
     isFetching.value = false;
+}
+
+const handleOpenConfigParams = (key)=>{
+    for (let index = 0; index < showParams.value.length; index++) {
+       if(key!=index){
+        showParams.value[index]=false;
+       }else{
+        showParams.value[key]=!showParams.value[key];
+       }
+    }
 }
 
 /**Function search */
@@ -8279,6 +8349,12 @@ const searchInputEmpty = async (e) => {
         isFetching.value = true;
         const response = await api.getConfigs();
         configs.value = response.data;
+        let tab=[];
+        for (let index = 0; index < response.data.length; index++) {
+            tab.push(false);
+            
+        }
+        showParams.value = tab;
         pages.value = response.totalPages;
         page.value = 1;
         isFetching.value = false;
@@ -8295,6 +8371,12 @@ const handleSearchChange = async (e) => {
         response = await api.getConfigs();
     }
     configs.value = response.data;
+    let tab=[];
+    for (let index = 0; index < response.data.length; index++) {
+        tab.push(false);
+        
+    }
+    showParams.value = tab;
     pages.value = response.totalPages;
     page.value = 1;
     isFetching.value = false;
@@ -8305,6 +8387,12 @@ const handleNextPage = async() => {
    if(pages.value >= nextPage){
        var response = await api.getConfigs('?page='+nextPage)
        configs.value = response.data;
+       let tab=[];
+        for (let index = 0; index < response.data.length; index++) {
+            tab.push(false);
+            
+        }
+        showParams.value = tab;
        page.value = nextPage;
     }
         
@@ -8312,6 +8400,12 @@ const handleNextPage = async() => {
 const changePage = async(pg) => {
     var response = await api.getConfigs('?page='+pg)
     configs.value = response.data;
+    let tab=[];
+        for (let index = 0; index < response.data.length; index++) {
+            tab.push(false);
+            
+        }
+        showParams.value = tab;
     pages.value = response.totalPages;
     page.value = pg;
 }
@@ -8338,6 +8432,184 @@ const addNewConfig = async (configuration) => {
             popImg:"",
         }
         toastMessage(result.message);
+        selectedDemo.value = 'acrylic';
+        openCloneModal.value=false;
+        defaultSettings.value = {
+            settings: {
+                generals: {
+                    mobile: {
+                        showNavigatorMenu:"off",
+                        showNavigationMenuFirst:"yes",
+                        mobileSelectionOptionsDisplay:"horizontally-stack"
+                    },
+                    output: {
+                        filesFormat:'png',
+                        waterMark:'',
+                        zipOutputFiles:{
+                            active:true,
+                            zipOutFolderPrefix:'aso_',
+                        },
+                        designComposition:true
+                    },
+                    product: {
+                        designFromScratch:true,
+                        redirectAfterAddingToCart:true,
+                        hideAddToCartButtonOnDetailPage:true,
+                        hideDesignButtonsOnShopPage:true,
+                        hideAddToCartButtonOnShopPage:true
+                    }
+                },
+                customizerSign: {
+                    customizerOptions: {
+                        measurementUnit:"cm",
+                        showHideMeasurements:"both",
+                        decimalFormatMeasurements:"with-decimal",
+                        desktopColumnOrder:"right",
+                    },
+                    signPart: {
+                        doublePart:{
+                            active:false,
+                            label:"Switch Face",
+                            part1:"Face A",
+                            part2:"Face B",
+                            enableCopyDesignFromSide:true
+                        }
+                    },
+                    text: {
+                        selectedFonts: [],
+                        colors:[],
+                        enableCustomColor:true,
+                        enableFontSize:{
+                            active:true,
+                            minimumFontSize:12,
+                            maximumFontSize:30,
+                            defaultFontSize:16,
+                        },
+                        enableBold:true,
+                        enableUnderline:true,
+                        enableOverline:true,
+                        enableStrike:true,
+                        enableItalic:true,
+                        enableOpacity:true,
+                        enableBorder:true,
+                        enableTextAlignment:true,
+                        enableCurvedUp:true,
+                        enableCurvedDown:true,
+                    },
+                    images: {
+                        enableUploadImage:true,
+                        fileUploadScript:{
+                            customWithGraphical:false,
+                            uploadMinWidth:100,
+                            uploadMaxWidth:100,
+                            allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
+                        },
+                        enableClipart:{
+                            active:true,
+                            selectedClipartGroups:[],
+                        },
+                        filter: {
+                            active:true,
+                            enableGreyscale:true,
+                            enableOpacity:true,
+                            enableEmbross:true,
+                            enableBlur:true,
+                            enableSepia:true,
+                            enableSharpen:true,
+                        }
+                    }
+                },
+                languageImages: {
+                    uploadDesign: {
+                        activate: false,
+                        link: "",
+                        phraseSubmitCustom: "Take a customization"
+                    },
+                    images: {
+                        resetAllIcon:'',
+                        cancelAnAction:'',
+                        icon:'',
+                        changeIconPreview:'',
+                        changeIconImport:'',
+                        changeIconShare:'',
+                        changeIconSaveProject:'',
+                        changeIconShareSideBar:'',
+                        changeIconMaterial:'',
+                        changeIconShape:'',
+                        changeIconfixingMethods:'',
+                        changeIconProduct:'',
+                        changeIconSize:'',
+                        changeIconText:'',
+                        changeIconColor:'',
+                        changeIconSizeMenu:'',
+                        changeIconBorder:'',
+                        changeIconImage:'',
+                    },
+                    visualizer: {
+                        titleHeader:"",
+                        textButtonRefresh:"Restart all",
+                        textButtonBack:"Undo",
+                        textButtonNext:"Redo",
+                        textBeforePrice:"",
+                        textAfterPrice:"TVA Include",
+                        textButtonFinish:"Finish",
+                        textAddToCart:"Add To Cart",
+                        textPreview:"Preview",
+                        textShare:"Share",
+                        textImport:"Import",
+                        textDownload:"Download",
+                        textSave:"Save",
+                        textHelp:"Help",
+                        textMaterial:"Material",
+                        textSize:"Size",
+                        customSize:"Custom Size",
+                        customSizeButtonDone:"Done",
+                        thickness:"Thickness",
+                        textShape:"Shape",
+                        textFixingMethods:"Fixing Methods",
+                        textColor:"Color",
+                        textOptionText:"Text",
+                        textBorder:"Border",
+                        textProduct:"Product",
+                        textImage:"Image",
+                    }
+                },
+                themeColors: {
+                    skin: "default",
+                    colors: {
+                        textColorContentHeader: "#000000",
+                        backgroundColorHeader: "#ffffff",
+                        textColorContentSideMenu: "#000000",
+                        backgroundColorHeaderContentSide: "#000000",
+                        textColorOptionsMenu: "#ffffff",
+                        backgroundColorOptionsMenu: "#016464",
+                        textColorButtonSave: "#000000",
+                        backgroundColorTextButtonSave: "#ffffff",
+                        textColorHoverButtonSave: "#000000",
+                        backgroundColorHoverButtonSave: "#ffffff",
+                        textColorButton: "#ffffff",
+                        backgroundButton: "#016464",
+                        textColorHoverButton: "#ffffff",
+                        backgroundColorHoverButton: "#016464",
+                        textColorButtonHelp: "#ffffff",
+                        backgroundColorButtonHelp: "#016464",
+                        textColorHoverButtonHelp: "#ffffff",
+                        backgroundColorHoverButtonHelp: "#016464",
+                        textColorHoverButtonRestartAll: "#ffffff",
+                        backgroundColorHoverButtonRestartAll: "#000000",
+                        textColorButtonRestartAll: "#ffffff",
+                        backgroundColorButtonRestartAll: "#000000",
+                        textColorButtonFinish: "#ffffff",
+                        textColorHoverButtonFinish: "#f0f0f0",
+                        backgroundColorButtonFinish: "#FFBC3C",
+                        backgroundColorHoverButtonFinish: "#edad35",
+                        backgroundColorContentSide: "#ffffff"
+                    }
+                },
+                sortOptions: []
+            }
+        }
+        
     }else{
         newConfig.value = {
             name:"",
@@ -8346,6 +8618,184 @@ const addNewConfig = async (configuration) => {
             popImg:"",
         }
         toastMessage(result.message,"error");
+        openCloneModal.value=false;
+        selectedDemo.value = 'acrylic';
+        defaultSettings.value = {
+            settings: {
+                generals: {
+                    mobile: {
+                        showNavigatorMenu:"off",
+                        showNavigationMenuFirst:"yes",
+                        mobileSelectionOptionsDisplay:"horizontally-stack"
+                    },
+                    output: {
+                        filesFormat:'png',
+                        waterMark:'',
+                        zipOutputFiles:{
+                            active:true,
+                            zipOutFolderPrefix:'aso_',
+                        },
+                        designComposition:true
+                    },
+                    product: {
+                        designFromScratch:true,
+                        redirectAfterAddingToCart:true,
+                        hideAddToCartButtonOnDetailPage:true,
+                        hideDesignButtonsOnShopPage:true,
+                        hideAddToCartButtonOnShopPage:true
+                    }
+                },
+                customizerSign: {
+                    customizerOptions: {
+                        measurementUnit:"cm",
+                        showHideMeasurements:"both",
+                        decimalFormatMeasurements:"with-decimal",
+                        desktopColumnOrder:"right",
+                    },
+                    signPart: {
+                        doublePart:{
+                            active:false,
+                            label:"Switch Face",
+                            part1:"Face A",
+                            part2:"Face B",
+                            enableCopyDesignFromSide:true
+                        }
+                    },
+                    text: {
+                        selectedFonts: [],
+                        colors:[],
+                        enableCustomColor:true,
+                        enableFontSize:{
+                            active:true,
+                            minimumFontSize:12,
+                            maximumFontSize:30,
+                            defaultFontSize:16,
+                        },
+                        enableBold:true,
+                        enableUnderline:true,
+                        enableOverline:true,
+                        enableStrike:true,
+                        enableItalic:true,
+                        enableOpacity:true,
+                        enableBorder:true,
+                        enableTextAlignment:true,
+                        enableCurvedUp:true,
+                        enableCurvedDown:true,
+                    },
+                    images: {
+                        enableUploadImage:true,
+                        fileUploadScript:{
+                            customWithGraphical:false,
+                            uploadMinWidth:100,
+                            uploadMaxWidth:100,
+                            allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
+                        },
+                        enableClipart:{
+                            active:true,
+                            selectedClipartGroups:[],
+                        },
+                        filter: {
+                            active:true,
+                            enableGreyscale:true,
+                            enableOpacity:true,
+                            enableEmbross:true,
+                            enableBlur:true,
+                            enableSepia:true,
+                            enableSharpen:true,
+                        }
+                    }
+                },
+                languageImages: {
+                    uploadDesign: {
+                        activate: false,
+                        link: "",
+                        phraseSubmitCustom: "Take a customization"
+                    },
+                    images: {
+                        resetAllIcon:'',
+                        cancelAnAction:'',
+                        icon:'',
+                        changeIconPreview:'',
+                        changeIconImport:'',
+                        changeIconShare:'',
+                        changeIconSaveProject:'',
+                        changeIconShareSideBar:'',
+                        changeIconMaterial:'',
+                        changeIconShape:'',
+                        changeIconfixingMethods:'',
+                        changeIconProduct:'',
+                        changeIconSize:'',
+                        changeIconText:'',
+                        changeIconColor:'',
+                        changeIconSizeMenu:'',
+                        changeIconBorder:'',
+                        changeIconImage:'',
+                    },
+                    visualizer: {
+                        titleHeader:"",
+                        textButtonRefresh:"Restart all",
+                        textButtonBack:"Undo",
+                        textButtonNext:"Redo",
+                        textBeforePrice:"",
+                        textAfterPrice:"TVA Include",
+                        textButtonFinish:"Finish",
+                        textAddToCart:"Add To Cart",
+                        textPreview:"Preview",
+                        textShare:"Share",
+                        textImport:"Import",
+                        textDownload:"Download",
+                        textSave:"Save",
+                        textHelp:"Help",
+                        textMaterial:"Material",
+                        textSize:"Size",
+                        customSize:"Custom Size",
+                        customSizeButtonDone:"Done",
+                        thickness:"Thickness",
+                        textShape:"Shape",
+                        textFixingMethods:"Fixing Methods",
+                        textColor:"Color",
+                        textOptionText:"Text",
+                        textBorder:"Border",
+                        textProduct:"Product",
+                        textImage:"Image",
+                    }
+                },
+                themeColors: {
+                    skin: "default",
+                    colors: {
+                        textColorContentHeader: "#000000",
+                        backgroundColorHeader: "#ffffff",
+                        textColorContentSideMenu: "#000000",
+                        backgroundColorHeaderContentSide: "#000000",
+                        textColorOptionsMenu: "#ffffff",
+                        backgroundColorOptionsMenu: "#016464",
+                        textColorButtonSave: "#000000",
+                        backgroundColorTextButtonSave: "#ffffff",
+                        textColorHoverButtonSave: "#000000",
+                        backgroundColorHoverButtonSave: "#ffffff",
+                        textColorButton: "#ffffff",
+                        backgroundButton: "#016464",
+                        textColorHoverButton: "#ffffff",
+                        backgroundColorHoverButton: "#016464",
+                        textColorButtonHelp: "#ffffff",
+                        backgroundColorButtonHelp: "#016464",
+                        textColorHoverButtonHelp: "#ffffff",
+                        backgroundColorHoverButtonHelp: "#016464",
+                        textColorHoverButtonRestartAll: "#ffffff",
+                        backgroundColorHoverButtonRestartAll: "#000000",
+                        textColorButtonRestartAll: "#ffffff",
+                        backgroundColorButtonRestartAll: "#000000",
+                        textColorButtonFinish: "#ffffff",
+                        textColorHoverButtonFinish: "#f0f0f0",
+                        backgroundColorButtonFinish: "#FFBC3C",
+                        backgroundColorHoverButtonFinish: "#edad35",
+                        backgroundColorContentSide: "#ffffff"
+                    }
+                },
+                sortOptions: []
+            }
+        }
+        
     }
     isLoading.value = false;
 }
@@ -8381,10 +8831,15 @@ const includeMetaData = async (state) => {
 }
 
 /* Function pour edit config */
-const selectEditConfig = (config)=>{
-    newConfig.value = {id:config.id,name:config.name, description:config.description, icon:config.icon, popImg:config.popImg}
-    step.value = 1;
-    isEdit.value = true;
+const selectEditConfig = (config,duplicate=false)=>{
+    if(duplicate){
+        newConfig.value = config;
+        openCloneModal.value=true;
+    }else{
+        newConfig.value = {id:config.id,name:config.name, description:config.description, icon:config.icon, popImg:config.popImg}
+        step.value = 1;
+        isEdit.value = true;
+    }
 }
 const updateConfig = async () => {
     isLoading.value = true;
