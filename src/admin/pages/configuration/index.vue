@@ -406,7 +406,7 @@ const defaultSettings = ref({
     },
     customizerSign: {
         customizerOptions: {
-            measurementUnit:"cm",
+            measurementUnit:"mm",
             showHideMeasurements:"both",
             decimalFormatMeasurements:"with-decimal",
             desktopColumnOrder:"right",
@@ -426,8 +426,6 @@ const defaultSettings = ref({
             enableCustomColor:true,
             enableFontSize:{
                 active:true,
-                minimumFontSize:12,
-                maximumFontSize:30,
                 defaultFontSize:16,
             },
             enableBold:true,
@@ -491,7 +489,7 @@ const defaultSettings = ref({
             changeIconImage:'',
         },
         visualizer: {
-            titleHeader:"",
+            titleHeader:"Make Your Own Sign",
             textButtonRefresh:"Restart all",
             textButtonBack:"Undo",
             textButtonNext:"Redo",
@@ -557,783 +555,701 @@ const defaultSettings = ref({
 const metaConfigs = ref({
     "acrylic":{
         materials: [
-            {
-                icon: "",
-                name: "Acrylic",
-                type: "simple",
-                popupImg: "",
-                description: "",
-                data: {
-                    sizes: {
-                        allSizes: [
-                            {
-                                isDefault: true,
-                                label: "100x50",
-                                width: 100,
-                                height: 50,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "100x100",
-                                width: 100,
-                                height: 100,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "150x100",
-                                width: 150,
-                                height: 100,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "200x100",
-                                width: 200,
-                                height: 100,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "250x100",
-                                width: 250,
-                                height: 100,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "250x150",
-                                width: 250,
-                                height: 150,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "300x100",
-                                width: 300,
-                                height: 100,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "300x150",
-                                width: 300,
-                                height: 150,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "300x200",
-                                width: 300,
-                                height: 200,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "400x300",
-                                width: 400,
-                                height: 300,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "400x100",
-                                width: 400,
-                                height: 100,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "500x300",
-                                width: 500,
-                                height: 300,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "500x400",
-                                width: 500,
-                                height: 400,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "500x500",
-                                width: 500,
-                                height: 500,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "600x400",
-                                width: 600,
-                                height: 400,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "800x800",
-                                width: 800,
-                                height: 800,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "1000x500",
-                                width: 1000,
-                                height: 500,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "1200x800",
-                                width: 1200,
-                                height: 800,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                label: "1400x900",
-                                width: 1400,
-                                height: 900,
-                                startPriceAtChar: 1,
-                                textNumber: 0,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0,
-                                basePrice: 0
-                            }
-                        ],
-                        thickness: {
-                            active: false,
+			{
+				icon: "",
+				name: "Acrylic",
+				type: "simple",
+				popupImg: "",
+				description: "",
+				data: {
+					sizes: {
+						allSizes: [
+							{
+								isDefault: true,
+								label: "100x50",
+								width: 100,
+								height: 50,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "100x100",
+								width: 100,
+								height: 100,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "150x100",
+								width: 150,
+								height: 100,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "200x100",
+								width: 200,
+								height: 100,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "250x100",
+								width: 250,
+								height: 100,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "250x150",
+								width: 250,
+								height: 150,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "300x100",
+								width: 300,
+								height: 100,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "300x150",
+								width: 300,
+								height: 150,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "300x200",
+								width: 300,
+								height: 200,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "400x300",
+								width: 400,
+								height: 300,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "400x100",
+								width: 400,
+								height: 100,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "500x300",
+								width: 500,
+								height: 300,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "500x400",
+								width: 500,
+								height: 400,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "500x500",
+								width: 500,
+								height: 500,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "600x400",
+								width: 600,
+								height: 400,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "800x800",
+								width: 800,
+								height: 800,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "1000x500",
+								width: 1000,
+								height: 500,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "1200x800",
+								width: 1200,
+								height: 800,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							},
+							{
+								isDefault: false,
+								label: "1400x900",
+								width: 1400,
+								height: 900,
+								startPriceAtChar: 1,
+								textNumber: 0,
+								maxTextChar: -1,
+								charPrice: 0,
+								basePrice: 0
+							}
+						],
+						thickness: {
+							active: false,
                             values:[]
-                        },
-                        customSize: {
-                            active: true,
-                            width: {
-                                max: 1400,
-                                min: 100,
-                                label: "Width"
-                            },
-                            height: {
-                                max: 900,
-                                min: 50,
-                                label: "Height"
-                            }
-                        }
-                    },
-                    colors: {
-                        customColors: {
-                            active: true,
-                            label: "Custom Colors",
-                            prevImg: ""
-                        },
-                        allColors: [
-                            {
-                                isDefault: true,
-                                name: "Transparent",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                    active: true,
-                                    codeHex: "#f0f0f0",
-                                    url: "https://signsdesigner.us/app/demos/acrylic-signs/acrylic-sign.png"
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "White",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                    active: false,
-                                    codeHex: "#ffffff",
-                                    url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Black",
-                                textColor: {
-                                    active: false,
-                                        sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                    active: false,
-                                    codeHex: "#000000",
-                                    url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Blue",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                    active: false,
-                                    codeHex: "#004f86",
-                                    url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Red",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                    active: false,
-                                    codeHex: "#c4271d",
-                                    url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Green",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#009251",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Yellow",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#fee900",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Gray",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#4f5756",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Pink",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#bc4077",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Purple",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#554585",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Orange",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#e15616",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            },
-                            {
-                                isDefault: false,
-                                name: "Brown",
-                                textColor: {
-                                    active: false,
-                                    sameForBorder:false,
-                                    name:"",
-                                    codeHex:'#000000',
-                                },
-                                pattern: {
-                                active: false,
-                                codeHex: "#523d2a",
-                                url: ""
-                                },
-                                prevImg: "",
-                                additionalPrice: 0
-                            }
-                        ]
-                    },
-                    shapes: [
-                        {
-                            isDefault:true,
-                            shapeId: 3,
-                            additionalPrice: 0
-                        },
-                        {
-                            isDefault:false,
-                            shapeId: 1,
-                            additionalPrice: 0
-                        },
-                        {
-                            isDefault:false,
-                            shapeId: 0,
-                            additionalPrice: 0
-                        }
-                    ],
-                    borders: {
-                        settings: {
-                            colors: [
-                                {
-                                    name: "White",
-                                    codeHex: "#ffffff",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Black",
-                                    codeHex: "#000000",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Blue",
-                                    codeHex: "#004f86",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Red",
-                                    codeHex: "#c4271d",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Green",
-                                    codeHex: "#009251",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Yellow",
-                                    codeHex: "#fee900",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Gray",
-                                    codeHex: "#4f5756",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Pink",
-                                    codeHex: "#bc4077",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Purple",
-                                    codeHex: "#554585",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Orange",
-                                    codeHex: "#e15616",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                },
-                                {
-                                    name: "Brown",
-                                    codeHex: "#523d2a",
-                                    prevImg: "",
-                                    additionalPrice: 0
-                                }
-                            ],
-                            enableBorderWidth: false,
-                            enableBorderColor: true
-                        },
-                        allBorders: [
-                            {
-                                manageBorderId: 0,
-                                additionalPrice: 0,
-                                excludeSizes: [],
-                                excludeShapes: [],
-                                isDefault:true,
-                            },
-                            {
-                                manageBorderId: 1,
-                                additionalPrice: 0,
-                                excludeSizes: [],
-                                excludeShapes: [],
-                                isDefault:false,
-                            },
-                            {
-                                manageBorderId: 2,
-                                additionalPrice: 0,
-                                excludeSizes: [],
-                                excludeShapes: [],
-                                isDefault:false,
-                            }
-                        ]
-                    },
-                    textImages: {
-                        enableText: true,
-                        enableImage: true
-                    },
-                    fixingMethods: [
-                        {
-                            fixingMethodId: 0,
-                            additionalPrice: 0,
-                            excludeSizes: [],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:true,
-                        },
-                        {
-                            fixingMethodId: 2,
-                            additionalPrice: 0.2,
-                            excludeSizes: [],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:false,
-                        },
-                        {
-                            fixingMethodId: 3,
-                            additionalPrice: 4.7,
-                            excludeSizes: [],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:false,
-                        },
-                        {
-                            fixingMethodId: 4,
-                            additionalPrice: 12.8,
-                            excludeSizes: [
-                                16,
-                                18,
-                                19
-                            ],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:false,
-                        },
-                        {
-                            fixingMethodId: 6,
-                            additionalPrice: 4.8,
-                            excludeSizes: [
-                                16,
-                                17,
-                                18,
-                                19
-                            ],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:false,
-                        },
-                        {
-                            fixingMethodId: 5,
-                            additionalPrice: 1.2,
-                            excludeSizes: [],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:false,
-                        },
-                        {
-                            fixingMethodId: 9,
-                            additionalPrice: 14.5,
-                            excludeSizes: [
-                                1,
-                                2,
-                                17,
-                                18,
-                                19
-                            ],
-                            excludeShapes: [
-                                2,
-                                4,
-                                5,
-                                6,
-                                7,
-                                8,
-                                9,
-                                10,
-                                11
-                            ],
-                            isDefault:false,
-                        }
-                    ],
-                    additionalOptions: [
-                        {
-                            title: "Frosted",
-                            description: "",
-                            icon: "https://signsdesigner.us/app/demos/acrylic-signs/ic_frosted.svg",
-                            options: [
-                                {
-                                    title: "Standard",
-                                    description: "",
-                                    icon: aso_data.assets_url+'/images/demos/ic_none.svg',
-                                    image: "",
-                                    excludeColors: [
-                                        2,
-                                        3,
-                                        4,
-                                        5,
-                                        6,
-                                        7,
-                                        8,
-                                        9,
-                                        10,
-                                        11,
-                                        12
-                                    ],
-                                    isDefault: true,
-                                    additionalPrice: 0
-                                },
-                                {
-                                    title: "Frosted",
-                                    description: "",
-                                    icon: "https://signsdesigner.us/app/demos/acrylic-signs/frosted.png",
-                                    image: "https://signsdesigner.us/app/demos/acrylic-signs/frosted.png",
-                                    excludeColors: [
-                                        2,
-                                        3,
-                                        4,
-                                        5,
-                                        6,
-                                        7,
-                                        8,
-                                        9,
-                                        10,
-                                        11,
-                                        12
-                                    ],
-                                    isDefault: false,
-                                    additionalPrice: 0
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        ]
+						},
+						customSize: {
+							active: true,
+							width: {
+								max: 1400,
+								min: 100,
+								label: "Width"
+							},
+							height: {
+								max: 900,
+								min: 50,
+								label: "Height"
+							}
+						}
+					},
+					colors: {
+						customColors: {
+							active: false,
+							label: "Custom Colors",
+							prevImg: ""
+						},
+						allColors: [
+							{
+								isDefault: true,
+								name: "Transparent",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: true,
+									codeHex: "#f0f0f0",
+									url: "https://signsdesigner.us/app/demos/acrylic-signs/acrylic-sign.png"
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "White",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#ffffff",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Black",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#000000",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Blue",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#004f86",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Red",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#c4271d",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Green",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#009251",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Yellow",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#fee900",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Gray",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#4f5756",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Pink",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#bc4077",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Purple",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#554585",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Orange",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#e15616",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							},
+							{
+								isDefault: false,
+								name: "Brown",
+								textColor: {
+									active: false
+								},
+								pattern: {
+									active: false,
+									codeHex: "#523d2a",
+									url: ""
+								},
+								prevImg: "",
+								additionalPrice: 0
+							}
+						]
+					},
+					shapes: [
+						{
+							isDefault: false,
+							shapeId: 3,
+							additionalPrice: 0
+						},
+						{
+							isDefault: true,
+							shapeId: 1,
+							additionalPrice: 0
+						},
+						{
+							isDefault: false,
+							shapeId: 0,
+							additionalPrice: 0
+						}
+					],
+					borders: {
+						settings: {
+							colors: [
+								{
+									name: "White",
+									codeHex: "#ffffff",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Black",
+									codeHex: "#000000",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Blue",
+									codeHex: "#004f86",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Red",
+									codeHex: "#c4271d",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Green",
+									codeHex: "#009251",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Yellow",
+									codeHex: "#fee900",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Gray",
+									codeHex: "#4f5756",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Pink",
+									codeHex: "#bc4077",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Purple",
+									codeHex: "#554585",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Orange",
+									codeHex: "#e15616",
+									prevImg: "",
+									additionalPrice: 0
+								},
+								{
+									name: "Brown",
+									codeHex: "#523d2a",
+									prevImg: "",
+									additionalPrice: 0
+								}
+							],
+							enableBorderWidth: false,
+							enableBorderColor: true
+						},
+						allBorders: [
+							{
+								isDefault: false,
+								manageBorderId: 0,
+								additionalPrice: 0,
+								excludeSizes: [],
+								excludeShapes: []
+							},
+							{
+								isDefault: true,
+								manageBorderId: 1,
+								additionalPrice: 0,
+								excludeSizes: [],
+								excludeShapes: []
+							},
+							{
+								isDefault: false,
+								manageBorderId: 3,
+								additionalPrice: 0,
+								excludeSizes: [],
+								excludeShapes: [2]
+							}
+						]
+					},
+					textImages: {
+						enableText: true,
+						enableImage: true
+					},
+					fixingMethods: [
+						{
+							fixingMethodId: 0,
+							additionalPrice: 0,
+							excludeSizes: [],
+							excludeShapes: []
+						},
+						{
+							fixingMethodId: 2,
+							additionalPrice: 0.2,
+							excludeSizes: [],
+							excludeShapes: [
+								2,
+								4,
+								5,
+								6,
+								7,
+								8,
+								9,
+								10,
+								11
+							]
+						},
+						{
+							fixingMethodId: 3,
+							additionalPrice: 4.7,
+							excludeSizes: [],
+							excludeShapes: [
+								2,
+								4,
+								5,
+								6,
+								7,
+								8,
+								9,
+								10,
+								11
+							]
+						},
+						{
+							fixingMethodId: 4,
+							additionalPrice: 12.8,
+							excludeSizes: [
+								18,
+								19
+							],
+							excludeShapes: [
+								2,
+								4,
+								5,
+								6,
+								7,
+								8,
+								9,
+								10,
+								11
+							]
+						},
+						{
+							fixingMethodId: 6,
+							additionalPrice: 4.8,
+							excludeSizes: [
+								15,
+								16,
+								17,
+								18,
+								19
+							],
+							excludeShapes: [
+								0,
+								2,
+								4,
+								5,
+								6,
+								7,
+								8,
+								9,
+								10,
+								11
+							]
+						},
+						{
+							fixingMethodId: 5,
+							additionalPrice: 1.2,
+							excludeSizes: [],
+							excludeShapes: [
+								2,
+								4,
+								5,
+								6,
+								7,
+								8,
+								9,
+								10,
+								11
+							]
+						},
+						{
+							fixingMethodId: 9,
+							additionalPrice: 21,
+							excludeSizes: [
+								1,
+								2,
+								16,
+								17,
+								18,
+								19
+							],
+							excludeShapes: [
+								2,
+								4,
+								5,
+								6,
+								7,
+								8,
+								9,
+								10,
+								11
+							]
+						}
+					],
+					additionalOptions: [
+						{
+							title: "Frosted",
+							description: "",
+							icon: "https://signsdesigner.us/app/demos/acrylic-signs/ic_frosted.svg",
+							options: [
+								{
+									title: "Standard",
+									description: "",
+									icon: aso_data.assets_url+'/images/demos/ic_none.svg',
+									image: "",
+									excludeColors: [],
+									isDefault: true,
+									additionalPrice: 0
+								},
+								{
+									title: "Frosted",
+									description: "",
+									icon: "https://signsdesigner.us/app/demos/acrylic-signs/frosted.png",
+									image: "https://signsdesigner.us/app/demos/acrylic-signs/frosted.png",
+									excludeColors: [
+										2,
+										3,
+										4,
+										5,
+										6,
+										7,
+										8,
+										9,
+										10,
+										11,
+										12
+									],
+									isDefault: false,
+									additionalPrice: 0
+								}
+							]
+						}
+					]
+				}
+			}
+		]
     },
     "aluminium":{
         materials: [
