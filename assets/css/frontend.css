@@ -65,6 +65,10 @@
 /*!**************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/frontend/scss/frontend.scss ***!
   \**************************************************************************************************************************/
+:root {
+  --aso-scrollBar-color: #000000
+; }
+
 #aso-frontend-app p {
   margin: 0 !important; }
 
@@ -78,7 +82,7 @@
   overflow: scroll; }
 
 #aso-frontend-app .aso-scrollBar::-webkit-scrollbar-thumb {
-  background-color: #016464;
+  background-color: var(--aso-scrollBar-color);
   border-radius: 20px; }
 
 #aso-frontend-app .aso-base-animation {

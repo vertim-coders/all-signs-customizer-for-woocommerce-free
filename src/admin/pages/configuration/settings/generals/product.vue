@@ -23,13 +23,52 @@
             <div class="">
                 <div class="aso-flex aso-bg-transparent aso-border-solid aso-border-[1px] aso-border-[#E0E0E0] aso-rounded-t aso-p-3 aso-py-4">
                     <div class="aso-font-bold aso-text-[14px] aso-w-2/4">
-                        Redirect after adding a custom design to the cart
+                        Redirect to cart page after adding a custom design to the cart
                     </div>
                     <div class="aso-flex aso-space-x-2 aso-justify-end aso-w-2/4">
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="aso-toggle" @click="handleRedirectAfterAddingToCart" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
                                 <div :class="{'aso-translate-x-[100%]': product.redirectAfterAddingToCart, 'aso-bg-active': product.redirectAfterAddingToCart }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            </label>
+                        </div>
+                        <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                    </div>                        
+                </div>
+               
+                <div class="aso-bg-transparent aso-text-[11px] aso-text-[#444444] aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#E0E0E0] aso-rounded aso-rounded-t-none aso-p-3">
+                    This options allow  you to define what to do after adding a design to the cart
+                </div>
+            </div>
+            <div class="">
+                <div class="aso-flex aso-bg-transparent aso-border-solid aso-border-[1px] aso-border-[#E0E0E0] aso-rounded-t aso-p-3 aso-py-4">
+                    <div class="aso-font-bold aso-text-[14px] aso-w-2/4">
+                        Redirect to checkout page after adding a custom design to the cart
+                    </div>
+                    <div class="aso-flex aso-space-x-2 aso-justify-end aso-w-2/4">
+                        <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                        <div class="aso-flex aso-items-center -aso-translate-y-2">
+                            <label for="aso-toggle" @click="handleRedirectAfterAddingToCart" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                <div :class="{'aso-translate-x-[100%]': product.redirectToCheckOutPage, 'aso-bg-active': product.redirectToCheckOutPage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            </label>
+                        </div>
+                        <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
+                    </div>                        
+                </div>
+                <div class="aso-bg-transparent aso-text-[11px] aso-text-[#444444] aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#E0E0E0] aso-rounded aso-rounded-t-none aso-p-3">
+                    This options allow  you to define what to do after adding a design to the cart
+                </div>
+            </div>
+            <div class="">
+                <div class="aso-flex aso-bg-transparent aso-border-solid aso-border-[1px] aso-border-[#E0E0E0] aso-rounded-t aso-p-3 aso-py-4">
+                    <div class="aso-font-bold aso-text-[14px] aso-w-2/4">
+                        Display or no recap on checkout page
+                    </div>
+                    <div class="aso-flex aso-space-x-2 aso-justify-end aso-w-2/4">
+                        <span class="aso-text-[#444444] aso-text-[11px]">No</span>
+                        <div class="aso-flex aso-items-center -aso-translate-y-2">
+                            <label for="aso-toggle" @click="handleDisplayRecapsOnCheckout" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                <div :class="{'aso-translate-x-[100%]': product.displayRecapsOnCheckout, 'aso-bg-active': product.displayRecapsOnCheckout }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </div>
                         <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -80,7 +119,7 @@
             <div class="">
                 <div class="aso-flex aso-bg-transparent aso-border-solid aso-border-[1px] aso-border-[#E0E0E0] aso-rounded-t aso-p-3 aso-py-4">
                     <div class="aso-font-bold aso-text-[14px] aso-w-2/4">
-                        hide to add to cart buttons for custom product on shop
+                        hide add to cart buttons for custom product on shop
                     </div>
                     <div class="aso-flex aso-space-x-2 aso-justify-end aso-w-2/4">
                         <span class="aso-text-[#444444] aso-text-[11px]">No</span>
@@ -124,8 +163,10 @@ const product = ref({
     designFromScratch:true,
     redirectAfterAddingToCart:true,
     hideAddToCartButtonOnDetailPage:true,
-    hideDesignButtonsOnShopPage:true,
-    hideAddToCartButtonOnShopPage:true
+    hideDesignButtonsOnShopPage:false,
+    hideAddToCartButtonOnShopPage:true,
+    redirectToCheckOutPage:false,
+    displayRecapsOnCheckout:false,
 });
 onMounted(() => {
     if(props.data){
@@ -162,7 +203,16 @@ const handleHideAddToCartButtonOnShopPage = () => {
 const handleHideDesignButtonsOnShopPage = () => {
     product.value.hideDesignButtonsOnShopPage = !product.value.hideDesignButtonsOnShopPage;
 };
+const handleDisplayRecapsOnCheckout = () => {
+    product.value.displayRecapsOnCheckout = !product.value.displayRecapsOnCheckout;
+};
 const handleRedirectAfterAddingToCart = () => {
-    product.value.redirectAfterAddingToCart = !product.value.redirectAfterAddingToCart;
+    if(product.value.redirectAfterAddingToCart){
+        product.value.redirectAfterAddingToCart = false;
+        product.value.redirectToCheckOutPage = true;
+    }else{
+        product.value.redirectAfterAddingToCart = true;
+        product.value.redirectToCheckOutPage = false;
+    }
 };
 </script> 
