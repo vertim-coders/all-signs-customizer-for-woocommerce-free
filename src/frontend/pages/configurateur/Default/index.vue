@@ -507,11 +507,11 @@
                             <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
                                 <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                     <div v-for="(colorr, id) in colorrs.allColors" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                                        <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
+                                        <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
                                             <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-w-full aso-h-full`" />
                                             <span v-if="colorr.textColor.active">C</span>
                                         </div>
-                                        <div v-if="colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-relative aso-w-16 aso-h-16 aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
+                                        <div v-if="colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-relative aso-w-16 aso-h-16 aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
                                             <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-w-full aso-h-full`" />
                                             <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`aso-w-full aso-h-full`" />
                                             <span v-if="colorr.textColor.active" :class="`aso-absolute aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%]`">C</span>
@@ -523,7 +523,7 @@
                                 </div>
                                 <div v-if="colorrs.customColors.active" :class="`aso-flex aso-flex-col aso-space-y-2`">
                                     <p class="aso-font-medium">{{colorrs.customColors.label}}</p>
-                                    <label for="setColor" :class="`${activeSignColor == colorrs.customColors.label ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
+                                    <label for="setColor" :class="`${activeSignColor == colorrs.customColors.label ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
                                         <input id="setColor" type="color" v-model="simpleColor" class="aso-hidden" @change="changeSignColor(colorrs.customColors.label, {active: false, codeHex: simpleColor, url: ''}, {active: false, codeHex: '', sameForBorder: false}, 0)"/>
                                         <svg v-if="colorrs.customColors.prevImg === ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
                                             <g fill="none" fill-rule="evenodd">
@@ -583,11 +583,11 @@
                                     <div v-if="activeFace === 'front-face'">
                                         <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                             <div v-for="(color, index) in borderColors1" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace1BorderColor === color.codeHex ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>           
+                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace1BorderColor === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>           
                                                 <p class="aso-text-xs">{{color.name}}</p>
                                                 <p class="aso-text-[10px] aso-leading-normal">({{color.additionalPrice}} {{props.currency}})</p>
                                             </div>
-                                            <label v-if="customBorderColor1" :class="`${activeSignColor == 'custom' ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
+                                            <label v-if="customBorderColor1" :class="`${activeSignColor == 'custom' ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
                                                 <input id="setColor" type="color" v-model="borderCustomColor1" class="aso-hidden" @change="changeBorderColor($event.target.value , 0)" />
                                                 <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
                                                     <g fill="none" fill-rule="evenodd">
@@ -608,11 +608,11 @@
                                     <div v-if="activeFace === 'back-face'">
                                         <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                             <div v-for="(color, index) in borderColors2"  class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace2BorderColor === color.codeHex ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>
+                                                <div @click="changeBorderColor(color.codeHex, color.additionalPrice)" :class="`${activeFace2BorderColor === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : ``} aso-w-12 aso-h-12 aso-bg-[${color.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-rounded-full aso-cursor-pointer`"></div>
                                                 <p class="aso-text-xs">{{color.name}}</p>    
                                                 <p class="aso-text-[10px] aso-leading-normal">({{color.additionalPrice}} {{props.currency}})</p>
                                             </div>
-                                            <label v-if="customBorderColor2" :class="`${activeSignColor == 'custom' ? `aso-ring-4 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
+                                            <label v-if="customBorderColor2" :class="`${activeSignColor == 'custom' ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-12 aso-h-12 aso-flex aso-full-center aso-rounded-full aso-overflow-hidden`">
                                                 <input id="setColor" type="color" v-model="borderCustomColor2" class="aso-hidden" @change="changeBorderColor($event.target.value , 0)" />
                                                 <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
                                                     <g fill="none" fill-rule="evenodd">
@@ -656,7 +656,7 @@
                                     <p class="aso-font-medium" v-show="addedTexts.length > 0">Text added</p>
                                     <div class="aso-p-2 aso-space-y-2">
                                         <div v-for="(textObject, index) in addedTexts">
-                                            <div :class="`${activeFace == textObject.canvas.name ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-bg-zinc-100 aso-p-2`" @click="getTextObject(textObject)">
+                                            <div :class="`${activeFace == textObject.canvasName ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-bg-zinc-100 aso-p-2`" @click="getTextObject(textObject)">
                                                 <p class="aso-text-sm">Text object {{ index }}</p>
                                                 <p class="aso-text-xs">{{textObject.text}}</p>
                                             </div>
@@ -843,7 +843,7 @@
                                         <p class="aso-font-medium">Currently in use</p>
                                         <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                             <div v-for="(usedImage, index) in usedImages">
-                                                <div @click="editAddedImage(usedImage.object)" :class="`${activeFace == usedImage.object.canvas.name ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-border aso-cursor-pointer`">
+                                                <div @click="editAddedImage(usedImage.object)" :class="`${activeFace == usedImage.object.canvasName ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-border aso-cursor-pointer`">
                                                     <img :src="usedImage.url" alt="" class="aso-w-20 aso-h-20">
                                                     <p class="aso-text-xs aso-font-medium">Edit image</p>
                                                 </div>
@@ -1291,6 +1291,7 @@
         handleChangeSignColor,
         handleGetShape,
         handleSelectShape,
+        handleGetActiveFixing,
         handleSelectFixingMethode,
         handleGetAddedTextValues,
         handleAddTextToSign,
@@ -1337,8 +1338,9 @@
     var configImageSettingsClipart = ref({})
     var configUnit = ref("")
     var configSectionIcons = ref({})
+    var configOutputSettings = ref({})
 
-    // console.log(props.config.data.settings.languageImages.images)
+    console.log(props.config.data.settings.generals.output)
 
     var isLoaded = ref(true)
     function setIsLoadedToFalse() {
@@ -1513,6 +1515,7 @@
         configImageSettings.value = props.config.data.settings.customizerSign.images
         configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
         configSectionIcons.value = props.config.data.settings.languageImages.images
+        configOutputSettings.value = props.config.data.settings.generals.output
         
         console.log(configSectionIcons.value)
 
@@ -1706,6 +1709,7 @@
         }
 
         // selectMaterial(props.config.data.materials[0])
+
         setScrollColor(configColors.value.backgroundColorHeader)
         setIsLoadedToFalse()
 
@@ -1717,7 +1721,7 @@
 
     var matchingFixings = ref([])
     var matchingBorders = ref([])
-    function selectSimpleFirstValue(restart) {
+    function selectSimpleFirstValue() {
         var stopSize = false
         if(sizees.value.length >0){
             sizees.value.forEach((sizee, id) => {
@@ -1773,14 +1777,14 @@
             while (index < colorrs.value.allColors.length && !haveDefault) {
                 if(colorrs.value.allColors[index].isDefault){
                     // console.log(colorrs.value.allColors[index], "default")
-                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice, restart )
+                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice )
                     haveDefault = true
                     break;
                 }
                 index++;
             }
             if(!haveDefault){
-                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice, restart )
+                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice )
             }
         }else{
             // changeSignColor(color, colorr)
@@ -1804,7 +1808,6 @@
             while (index < matchingShapes.length && !haveDefault) {
                 if(matchingShapes[index].shapee.isDefault){
                     selectedShape.value = matchingShapes[index].shape.value
-                    // currentShapeId.value = matchingShapes[index].shapee.shapeId
                     currentShapeId.value = index
                     handleGetShape(matchingShapes[index].shape.value)
                     var shapePriceObject = {
@@ -1820,7 +1823,6 @@
             if(!haveDefault){
                 // console.log("first", matchingShapes[0])
                 selectedShape.value = matchingShapes[0].shape.value
-                // currentShapeId.value = matchingShapes[0].shapee.shapeId
                 currentShapeId.value = 0
                 handleGetShape(matchingShapes[0].shape.value)
                 var shapePriceObject = {
@@ -1846,19 +1848,40 @@
             })
             let index = 0
             var haveDefault = false
-            while (index < matchingFixings.length && !haveDefault) {
+            while (index < matchingFixings.value.length && !haveDefault) {
                 if(matchingFixings.value[index].fixingg.isDefault){
-                    // console.log(matchingFixings[index], "default")
-                    // selectFixingMethode(matchingFixings.value[index].fixing.type, matchingFixings.value[index].fixingg, index)
+                    handleGetActiveFixing(matchingFixings.value[index].fixing.type)
+                    activeFixingMethode.value = matchingFixings.value[index].fixing.type
                     fixingExcludeSizes.value = matchingFixings.value[index].fixingg.excludeSizes
+                    fixingExcludeShapes.value = matchingFixings.value[index].fixingg.excludeShapes
+                    activeFixingId.value = index
+
+                    var fixingPrice = matchingFixings.value[index].fixingg.additionalPrice
+                    var fixingPriceObject = {
+                        name: "fixing",
+                        price: fixingPrice
+                    }
+                    getOptionPrice(fixingPriceObject)
+
                     haveDefault = true
                     break;
                 }
                 index++;
             }
             if(!haveDefault){
-                // selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+                handleGetActiveFixing(matchingFixings.value[0].fixing.type)
+                activeFixingMethode.value = matchingFixings.value[0].fixing.type
                 fixingExcludeSizes.value = matchingFixings.value[0].fixingg.excludeSizes
+                fixingExcludeShapes.value = matchingFixings.value[0].fixingg.excludeShapes
+                activeFixingId.value = 0
+
+                var fixingPrice = matchingFixings.value[0].fixingg.additionalPrice
+                var fixingPriceObject = {
+                    name: "fixing",
+                    price: fixingPrice
+                }
+                getOptionPrice(fixingPriceObject)
+
             }
         }else{
             selectFixingMethode('none')
@@ -1912,34 +1935,6 @@
                 height: 0
             }
             changeSize(size)
-        }
-
-        var stopFixing = false
-        if(fixinggs.value.length > 0){
-            fixinggs.value.forEach((fixingg, id) => {
-                allFixings.value.forEach((fixing, index) => {
-                    if(fixingg.fixingMethodId == index && !fixingg.excludeSizes.includes(currentSizeId) && !fixingg.excludeShapes.includes(currentShapeId)){
-                        matchingFixings.value.push({fixing, fixingg})
-                        // console.log(matchingFixings)
-                    }
-                })
-            })
-            let index = 0
-            var haveDefault = false
-            while (index < matchingFixings.length && !haveDefault) {
-                if(matchingFixings.value[index].fixingg.isDefault){
-                    // console.log(matchingFixings[index], "default")
-                    selectFixingMethode(matchingFixings.value[index].fixing.type, matchingFixings.value[index].fixingg, index)
-                    haveDefault = true
-                    break;
-                }
-                index++;
-            }
-            if(!haveDefault){
-                selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
-            }
-        }else{
-            selectFixingMethode('none')
         }
 
         if(additionalOptions.value.length > 0){
@@ -2040,9 +2035,6 @@
         var canvasWidth = canvasContainer.clientWidth;
         var canvasHeight = canvasContainer.clientHeight;
 
-        // console.log(window.innerWidth, window.innerHeight)
-        // console.log("canvas-container", canvasWidth, canvasHeight)
-
         let windowRatio = canvasWidth / canvasHeight;
         let targetRatio = 16/9;
 
@@ -2068,17 +2060,33 @@
         canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
         canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
 
-        // canvas.getObjects().forEach(obj => {
-        //     obj.scaleX *= scaleRatio;
-        //     obj.scaleY *= scaleRatio;
-        //     obj.setCoords();
-        // });
+        ajustCanvasContent(canvas)
+        ajustCanvasContent(canvasBack)
         
         canvas.setWidth(canvasWidth);
         canvas.setHeight(canvasHeight);
 
         canvasBack.setWidth(canvasWidth);
         canvasBack.setHeight(canvasHeight);
+
+        function ajustCanvasContent(canva){
+            var group = new fabric.Group(canva.getObjects())
+            canva.centerObject(group);
+            var items = group._objects;
+            group._restoreObjectsState();
+            canva.remove(group);
+            canva.getObjects().forEach((obj) => {
+                obj.setCoords()
+                if(obj.name === 'safeObject'){
+                    console.log(obj.left, obj.top, "safeObject is safe")
+                    if(firstLoad){
+                        currentSizeValues.value.left = obj.left 
+                        currentSizeValues.value.top = obj.top
+                    }
+                }
+            })
+            canva.renderAll();
+        }
     }
     function updateInfoDiv() {
         var infoDiv = document.getElementById('aso-editButtons');
@@ -2170,7 +2178,7 @@
             additionalOptions.value = material.data.additionalOptions
 
             if(firstLoad.value){
-                selectSimpleFirstValue('restart')
+                selectSimpleFirstValue()
             }
         }
 
@@ -2273,6 +2281,7 @@
 
         // selection de la couleur
         colorrs.value = [{color: model.color, image: model.image}]
+        firstColorCheck.value = true
 
         var modelPrice = model.additionalPrice
         var modelPriceObject = {
@@ -2587,7 +2596,7 @@
     var currentSizeName = ref('')
     var currentSize = ref('')
     var currentSizeId = ref(0)
-    var currentSizeValues = ref()
+    var currentSizeValues = ref({})
     var currentSizeThickness = ref(false)
     function changeSize(sizeData, sizeSetting, sizeId) {
         // console.log(sizeData, sizeSetting, sizeId, "change size")
@@ -2717,6 +2726,7 @@
                     price: 0
                 }
                 getOptionPrice(borderPrice2Object)
+
             }
         }
 
@@ -2966,13 +2976,13 @@
     var colorTextColorName2 = ref("")
     var colorTextCodeHex1 = ref("")
     var colorTextCodeHex2 = ref("")
-    function changeSignColor(name, pattern, textColor, price, restart) {
+    function changeSignColor(name, pattern, textColor, price) {
         // console.log(color.name, "changeSignColor")
         var color1Price = 0
         var color2Price = 0
         signTextColor.value = textColor.active
 
-        if(firstColorCheck.value || restart !== ''){
+        if(firstColorCheck.value){
             if(configDoublePart.value.active){
                 activeSignColor.value = name;
                 color1Price = price
@@ -3156,7 +3166,7 @@
     var fixingExcludeShapes = ref({})
     var fixingExcludeSizes = ref({})
     function selectFixingMethode(methode, setting, id){
-        console.log(methode, "select")
+        // console.log(methode, "select")
         activeFixingId.value = id
         activeFixingMethode.value = methode
         handleSelectFixingMethode(methode)
@@ -3197,6 +3207,7 @@
 
         var addOptionPrice = price
         var addOptionPriceObject = {
+            type: 'add-Option',
             name: addOption,
             price: addOptionPrice
         }
@@ -3219,7 +3230,7 @@
         getOptionPrice(priceObject)
     }
     function getTextObject(object) {
-        if(activeFace.value == object.canvas.name){
+        if(activeFace.value == object.canvasName){
             selectText.value = true
             object.selected = true;
     
@@ -3278,7 +3289,7 @@
         // console.log(usedImages.value, "currznt images")
     }
     function editAddedImage(image){
-        if(activeFace.value === image.canvas.name){
+        if(activeFace.value === image.canvasName){
             editImage.value = true
             activeCanvas.setActiveObject(image);
             handleGetAddedImageValues(image)
@@ -3416,6 +3427,12 @@
                 arr.splice(index, 1);
             }
         }
+        function removeObjectByType(arr, type){
+            const index = arr.findIndex(item => item.type === type);
+            if(index !== -1){
+                arr.splice(index, 1);
+            } 
+        }
         function sumOptionsPrice(arr, key) {
             return arr.reduce((sum, obj) => sum + obj[key], 0);
         }
@@ -3427,6 +3444,8 @@
             removeObjectByName(optionsPrices.value, 'color2')
             removeObjectByName(optionsPrices.value, 'border1')
             removeObjectByName(optionsPrices.value, 'border2')
+
+            removeObjectByType(optionsPrices.value, 'add-Option')
 
             // console.log("options pricing advance", optionsPrices.value)
             // console.log("PRIX TOTAL",sumOptionsPrice(optionsPrices.value, 'price'))
@@ -3637,12 +3656,19 @@
         if(format !== 'svg'){
             if(format === 'jpeg'){
                 url = canva.toDataURL({
-                    format: 'jpg', // ou 'jpeg'
+                    format: 'jpg',
                     quality: 0.8
                 });
-            }else{
+            }
+            if(format === 'png'){
                 url = canva.toDataURL({
-                    format: format, // ou 'jpeg'
+                    format: format,
+                    quality: 0.8
+                });
+            }
+            else{
+                url = canva.toDataURL({
+                    format: 'png',
                     quality: 0.8
                 });
             }

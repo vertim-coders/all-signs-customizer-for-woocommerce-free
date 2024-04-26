@@ -96,267 +96,267 @@ var mods = 0;
 
 let currentStateIndex = 0;
 //fonction de sauvegarde de l'état
-function updateModifications(savehistory, position) {
-    // console.log(position)
-    if (savehistory === true) {
-        if(state.length <= 6){
-            let objects = handleCheckObjects()
-            // console.log(objects, "object saved")
+// function updateModifications(savehistory, position) {
+//     // console.log(position)
+//     if (savehistory === true) {
+//         if(state.length <= 6){
+//             let objects = handleCheckObjects()
+//             // console.log(objects, "object saved")
     
-            // Sérialiser chaque objet en détail
-            let serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
+//             // Sérialiser chaque objet en détail
+//             let serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
     
-            // Récupérer l'état JSON du canvas 
-            let jsonData = canvas.toJSON();
+//             // Récupérer l'état JSON du canvas 
+//             let jsonData = canvas.toJSON();
     
-            // Combiner le JSON avec les objets sérialisés
-            let canvasState = {
-                jsonData: jsonData,
-                objects: serializedObjects,
-                options: {
-                    size: 0,
-                    sizeName: currentSizeName,
-                    shape: selectedShape,
-                    border: activeBorder,
-                    signColor: currentSignColor,
-                    fixing: activeFixingMethode
-                },
-            };
+//             // Combiner le JSON avec les objets sérialisés
+//             let canvasState = {
+//                 jsonData: jsonData,
+//                 objects: serializedObjects,
+//                 options: {
+//                     size: 0,
+//                     sizeName: currentSizeName,
+//                     shape: selectedShape,
+//                     border: activeBorder,
+//                     signColor: currentSignColor,
+//                     fixing: activeFixingMethode
+//                 },
+//             };
     
-            state.push(canvasState);
-            currentStateIndex = state.length - 1;
-        }
-    }
-    // console.log(state, "state")
-}
+//             state.push(canvasState);
+//             currentStateIndex = state.length - 1;
+//         }
+//     }
+//     // console.log(state, "state")
+// }
 
-function handleUndo() {
-  if (mods < state.length && currentStateIndex > 0) {
-    const canvasState = state[state.length - 1 - mods - 1];
-    const currentObjects = canvas.getObjects();
-    const activeOptions = canvasState.options
+// function handleUndo() {
+//   if (mods < state.length && currentStateIndex > 0) {
+//     const canvasState = state[state.length - 1 - mods - 1];
+//     const currentObjects = canvas.getObjects();
+//     const activeOptions = canvasState.options
 
-    canvas.discardActiveObject();
-    // Supprimer les objets qui n'existent pas dans l'état précédent
-    currentObjects.forEach(obj => {
-      if (!canvasState.objects.some(prevObj => prevObj.id === obj.id)) {
-        // console.log(obj.id, 'undo - borderA');
-        canvas.remove(obj);
-      }
-    });
+//     canvas.discardActiveObject();
+//     // Supprimer les objets qui n'existent pas dans l'état précédent
+//     currentObjects.forEach(obj => {
+//       if (!canvasState.objects.some(prevObj => prevObj.id === obj.id)) {
+//         // console.log(obj.id, 'undo - borderA');
+//         canvas.remove(obj);
+//       }
+//     });
 
-    // Remplacer les objets existants par leur version précédente
-    if (canvasState.objects.length > 0) {
-      canvasState.objects.forEach(prevObj => {
-        const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
-        if (currentObj) {
-        //   console.log(currentObj.id, 'undo - borderZ');
+//     // Remplacer les objets existants par leur version précédente
+//     if (canvasState.objects.length > 0) {
+//       canvasState.objects.forEach(prevObj => {
+//         const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
+//         if (currentObj) {
+//         //   console.log(currentObj.id, 'undo - borderZ');
 
-          fabric.util.enlivenObjects([prevObj], objects => {
-            const newObj = objects[0];
-            if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
-                newObj.on('editing:entered', () => {
-                    handleGetAddedTextValues(newObj);  
-                });
-                newObj.on('editing:exited', () => {
-                    handleGetAddedTextValues(newObj);              
-                });
-                newObj.on('selected', () => {   
-                    handleGetAddedTextValues(newObj);         
-                    console.log("newTextdqdqdqsdqd");
+//           fabric.util.enlivenObjects([prevObj], objects => {
+//             const newObj = objects[0];
+//             if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
+//                 newObj.on('editing:entered', () => {
+//                     handleGetAddedTextValues(newObj);  
+//                 });
+//                 newObj.on('editing:exited', () => {
+//                     handleGetAddedTextValues(newObj);              
+//                 });
+//                 newObj.on('selected', () => {   
+//                     handleGetAddedTextValues(newObj);         
+//                     console.log("newTextdqdqdqsdqd");
         
-                });
-                newObj.on('mousedown', function() {
-                    handleGetAddedTextValues(newObj); 
-                    updateModifications(true, 'deposer le text')
-                });
-                newObj.on('mouseup', function() {
-                    handleGetAddedTextValues(newObj); 
-                    updateModifications(true, 'deposer le text')
-                });
-            }
-            if(newObj.type === 'image' && newObj.id != 6 ){
-                newObj.on('mousedown', function() {
-                    handleGetAddedImageValues(newObj); 
-                    updateModifications(true, "deposer l'image ")
-                });
-                newObj.on('mouseup', function() {
-                    handleGetAddedImageValues(newObj); 
-                    updateModifications(true, "deposer l'image ")
-                });
-                newObj.on('selected', function() {
-                    handleGetAddedImageValues(newObj); 
-                    updateModifications(true, "deposer l'image ")
-                });
-            }
-            canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
-            canvas.remove(currentObj);
-          });
+//                 });
+//                 newObj.on('mousedown', function() {
+//                     handleGetAddedTextValues(newObj); 
+//                     updateModifications(true, 'deposer le text')
+//                 });
+//                 newObj.on('mouseup', function() {
+//                     handleGetAddedTextValues(newObj); 
+//                     updateModifications(true, 'deposer le text')
+//                 });
+//             }
+//             if(newObj.type === 'image' && newObj.id != 6 ){
+//                 newObj.on('mousedown', function() {
+//                     handleGetAddedImageValues(newObj); 
+//                     updateModifications(true, "deposer l'image ")
+//                 });
+//                 newObj.on('mouseup', function() {
+//                     handleGetAddedImageValues(newObj); 
+//                     updateModifications(true, "deposer l'image ")
+//                 });
+//                 newObj.on('selected', function() {
+//                     handleGetAddedImageValues(newObj); 
+//                     updateModifications(true, "deposer l'image ")
+//                 });
+//             }
+//             canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
+//             canvas.remove(currentObj);
+//           });
 
-          currentSizeName = activeOptions.sizeName;
-          selectedShape = activeOptions.shape
-          activeBorder = activeOptions.border
-          currentSignColor = activeOptions.signColor
-          activeFixingMethode = activeOptions.fixing
+//           currentSizeName = activeOptions.sizeName;
+//           selectedShape = activeOptions.shape
+//           activeBorder = activeOptions.border
+//           currentSignColor = activeOptions.signColor
+//           activeFixingMethode = activeOptions.fixing
 
-        }
-      });
-    }
+//         }
+//       });
+//     }
 
-    canvas.renderAll();
-    mods += 1;
+//     canvas.renderAll();
+//     mods += 1;
 
-    currentStateIndex -= 1;
+//     currentStateIndex -= 1;
 
-    console.log('cuurent state', currentStateIndex)
-    return {
-        sizeName: currentSizeName,
-        shape: selectedShape,
-        signBorder: activeBorder,
-        signColor: currentSignColor,
-        fixing: activeFixingMethode,
-    }
-  }
-}
-function handleRedo() {
-    if (mods > 0) {
-        const canvasState = state[state.length - mods];
-        const currentObjects = canvas.getObjects();
-        const activeOptions = canvasState.options
+//     console.log('cuurent state', currentStateIndex)
+//     return {
+//         sizeName: currentSizeName,
+//         shape: selectedShape,
+//         signBorder: activeBorder,
+//         signColor: currentSignColor,
+//         fixing: activeFixingMethode,
+//     }
+//   }
+// }
+// function handleRedo() {
+//     if (mods > 0) {
+//         const canvasState = state[state.length - mods];
+//         const currentObjects = canvas.getObjects();
+//         const activeOptions = canvasState.options
 
 
-        canvas.discardActiveObject();
-        // Supprimer les objets qui n'existent pas dans l'état suivant
-        currentObjects.forEach(obj => {
-            if (!canvasState.objects.some(nextObj => nextObj.id == obj.id)) {
-                // console.log(obj.id, 'redo - borderA');
-                canvas.remove(obj);
-            }
-        });
+//         canvas.discardActiveObject();
+//         // Supprimer les objets qui n'existent pas dans l'état suivant
+//         currentObjects.forEach(obj => {
+//             if (!canvasState.objects.some(nextObj => nextObj.id == obj.id)) {
+//                 // console.log(obj.id, 'redo - borderA');
+//                 canvas.remove(obj);
+//             }
+//         });
   
-      // Ajouter les objets qui n'existent pas dans l'état actuel
-        // canvasState.objects.forEach(nextObj => {
-        //     if (!currentObjects.some(obj => obj.id == nextObj.id)) {
-        //     console.log(nextObj.id, 'redo - borderB');
+//       // Ajouter les objets qui n'existent pas dans l'état actuel
+//         // canvasState.objects.forEach(nextObj => {
+//         //     if (!currentObjects.some(obj => obj.id == nextObj.id)) {
+//         //     console.log(nextObj.id, 'redo - borderB');
     
-        //     fabric.util.enlivenObjects([nextObj], objects => {
-        //         const newObj = objects[0];
-        //         canvas.add(newObj);
-        //     });
-        //     }
-        // });
+//         //     fabric.util.enlivenObjects([nextObj], objects => {
+//         //         const newObj = objects[0];
+//         //         canvas.add(newObj);
+//         //     });
+//         //     }
+//         // });
 
-        canvasState.objects.forEach(nextObj => {
-            const currentObj = currentObjects.find(obj => obj.id === nextObj.id);
-            if (currentObj) {
-            //   console.log(currentObj.id, 'redo - borderZ');
+//         canvasState.objects.forEach(nextObj => {
+//             const currentObj = currentObjects.find(obj => obj.id === nextObj.id);
+//             if (currentObj) {
+//             //   console.log(currentObj.id, 'redo - borderZ');
     
-              fabric.util.enlivenObjects([nextObj], objects => {
-                const newObj = objects[0];
-                if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
-                    newObj.on('editing:entered', () => {
-                        handleGetAddedTextValues(newObj);  
-                    });
-                    newObj.on('editing:exited', () => {
-                        handleGetAddedTextValues(newObj);              
-                    });
-                    newObj.on('selected', () => {   
-                        handleGetAddedTextValues(newObj);         
-                        console.log("newTextdqdqdqsdqd");
+//               fabric.util.enlivenObjects([nextObj], objects => {
+//                 const newObj = objects[0];
+//                 if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
+//                     newObj.on('editing:entered', () => {
+//                         handleGetAddedTextValues(newObj);  
+//                     });
+//                     newObj.on('editing:exited', () => {
+//                         handleGetAddedTextValues(newObj);              
+//                     });
+//                     newObj.on('selected', () => {   
+//                         handleGetAddedTextValues(newObj);         
+//                         console.log("newTextdqdqdqsdqd");
             
-                    });
-                    newObj.on('mousedown', function() {
-                        handleGetAddedTextValues(newObj); 
-                        updateModifications(true, 'deposer le text')
-                    });
-                    newObj.on('mouseup', function() {
-                        handleGetAddedTextValues(newObj); 
-                        updateModifications(true, 'deposer le text')
-                    });
-                }
-                if(newObj.type === 'image' && newObj.id != 6 ){
-                    newObj.on('mousedown', function() {
-                        handleGetAddedImageValues(newObj); 
-                        updateModifications(true, "deposer l'image ")
-                    });
-                    newObj.on('mouseup', function() {
-                        handleGetAddedImageValues(newObj); 
-                        updateModifications(true, "deposer l'image ")
-                    });
-                    newObj.on('selected', function() {
-                        handleGetAddedImageValues(newObj); 
-                        updateModifications(true, "deposer l'image ")
-                    });
-                }
-                // canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
-                canvas.remove(currentObj);
-                canvas.add(newObj);
+//                     });
+//                     newObj.on('mousedown', function() {
+//                         handleGetAddedTextValues(newObj); 
+//                         updateModifications(true, 'deposer le text')
+//                     });
+//                     newObj.on('mouseup', function() {
+//                         handleGetAddedTextValues(newObj); 
+//                         updateModifications(true, 'deposer le text')
+//                     });
+//                 }
+//                 if(newObj.type === 'image' && newObj.id != 6 ){
+//                     newObj.on('mousedown', function() {
+//                         handleGetAddedImageValues(newObj); 
+//                         updateModifications(true, "deposer l'image ")
+//                     });
+//                     newObj.on('mouseup', function() {
+//                         handleGetAddedImageValues(newObj); 
+//                         updateModifications(true, "deposer l'image ")
+//                     });
+//                     newObj.on('selected', function() {
+//                         handleGetAddedImageValues(newObj); 
+//                         updateModifications(true, "deposer l'image ")
+//                     });
+//                 }
+//                 // canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
+//                 canvas.remove(currentObj);
+//                 canvas.add(newObj);
 
-              });
-            }
-            if (!currentObjects.some(obj => obj.id == nextObj.id)) {
-                console.log(nextObj.id, 'redo - borderB');
+//               });
+//             }
+//             if (!currentObjects.some(obj => obj.id == nextObj.id)) {
+//                 console.log(nextObj.id, 'redo - borderB');
         
-                fabric.util.enlivenObjects([nextObj], objects => {
-                    const newObj = objects[0];
-                    if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
-                        newObj.on('editing:entered', () => {
-                            handleGetAddedTextValues(newObj);  
-                        });
-                        newObj.on('editing:exited', () => {
-                            handleGetAddedTextValues(newObj);              
-                        });
-                        newObj.on('selected', () => {   
-                            handleGetAddedTextValues(newObj);         
+//                 fabric.util.enlivenObjects([nextObj], objects => {
+//                     const newObj = objects[0];
+//                     if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
+//                         newObj.on('editing:entered', () => {
+//                             handleGetAddedTextValues(newObj);  
+//                         });
+//                         newObj.on('editing:exited', () => {
+//                             handleGetAddedTextValues(newObj);              
+//                         });
+//                         newObj.on('selected', () => {   
+//                             handleGetAddedTextValues(newObj);         
                 
-                        });
-                        newObj.on('mousedown', function() {
-                            handleGetAddedTextValues(newObj); 
-                            updateModifications(true, 'deposer le text')
-                        });
-                        newObj.on('mouseup', function() {
-                            handleGetAddedTextValues(newObj); 
-                            updateModifications(true, 'deposer le text')
-                        });
-                    }
-                    if(newObj.type === 'image' && newObj.id != 6 ){
-                        newObj.on('mousedown', function() {
-                            handleGetAddedImageValues(newObj); 
-                            updateModifications(true, "deposer l'image ")
-                        });
-                        newObj.on('mouseup', function() {
-                            handleGetAddedImageValues(newObj); 
-                            updateModifications(true, "deposer l'image ")
-                        });
-                        newObj.on('selected', function() {
-                            handleGetAddedImageValues(newObj); 
-                            updateModifications(true, "deposer l'image ")
-                        });
-                    }
-                    canvas.add(newObj);
-                });
-            }
-            currentSizeName = activeOptions.sizeName;
-            selectedShape = activeOptions.shape
-            activeBorder = activeOptions.border
-            currentSignColor = activeOptions.signColor
-            activeFixingMethode = activeOptions.fixing
-          });
+//                         });
+//                         newObj.on('mousedown', function() {
+//                             handleGetAddedTextValues(newObj); 
+//                             updateModifications(true, 'deposer le text')
+//                         });
+//                         newObj.on('mouseup', function() {
+//                             handleGetAddedTextValues(newObj); 
+//                             updateModifications(true, 'deposer le text')
+//                         });
+//                     }
+//                     if(newObj.type === 'image' && newObj.id != 6 ){
+//                         newObj.on('mousedown', function() {
+//                             handleGetAddedImageValues(newObj); 
+//                             updateModifications(true, "deposer l'image ")
+//                         });
+//                         newObj.on('mouseup', function() {
+//                             handleGetAddedImageValues(newObj); 
+//                             updateModifications(true, "deposer l'image ")
+//                         });
+//                         newObj.on('selected', function() {
+//                             handleGetAddedImageValues(newObj); 
+//                             updateModifications(true, "deposer l'image ")
+//                         });
+//                     }
+//                     canvas.add(newObj);
+//                 });
+//             }
+//             currentSizeName = activeOptions.sizeName;
+//             selectedShape = activeOptions.shape
+//             activeBorder = activeOptions.border
+//             currentSignColor = activeOptions.signColor
+//             activeFixingMethode = activeOptions.fixing
+//           });
   
-      canvas.renderAll();
-      mods -= 1;
-      currentStateIndex += 1;
+//       canvas.renderAll();
+//       mods -= 1;
+//       currentStateIndex += 1;
 
-    console.log('cuurent state', currentStateIndex)
-    }
-    return {
-        sizeName: currentSizeName,
-        shape: selectedShape,
-        signBorder: activeBorder,
-        signColor: currentSignColor,
-        fixing: activeFixingMethode,
-    }
-}
+//     console.log('cuurent state', currentStateIndex)
+//     }
+//     return {
+//         sizeName: currentSizeName,
+//         shape: selectedShape,
+//         signBorder: activeBorder,
+//         signColor: currentSignColor,
+//         fixing: activeFixingMethode,
+//     }
+// }
 function handleClearAll() {
     
     const canvasState = state[0];
@@ -393,6 +393,109 @@ function handleClearAll() {
     currentStateIndex = 0;
     state = [state[0]]     
 }
+
+
+var currentConfig = {
+    canvasState             : [],
+    currentStateIndex       : -1,
+    undoStatus              : false,
+    redoStatus              : false,
+    undoFinishedStatus      : 1,
+    redoFinishedStatus      : 1,
+    // undoButton              : document.getElementById('undo'),
+    // redoButton              : document.getElementById('redo'),
+};
+
+function updateModifications() {
+    if((currentConfig.undoStatus == false && currentConfig.redoStatus == false)){
+        var jsonData = canvas.toJSON(['name', 'id', 'selectable', 'canvasName', 'priceId']);
+        
+        // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
+        console.log(jsonData, "qsdqsd");
+
+        var canvasAsJson = JSON.stringify(jsonData);
+
+        if(currentConfig.currentStateIndex < currentConfig.canvasState.length-1){
+            var indexToBeInserted = currentConfig.currentStateIndex+1;
+            currentConfig.canvasState[indexToBeInserted] = canvasAsJson;
+            var numberOfElementsToRetain = indexToBeInserted+1;
+            currentConfig.canvasState = currentConfig.canvasState.splice(0,numberOfElementsToRetain);
+        }else{
+            currentConfig.canvasState.push(canvasAsJson);
+        }
+            currentConfig.currentStateIndex = currentConfig.canvasState.length-1;
+        if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
+            // currentConfig.redoButton.disabled= "disabled";
+        }
+    }
+}
+
+function handleUndo() {
+    if(currentConfig.undoFinishedStatus){
+        if(currentConfig.currentStateIndex == -1){
+        currentConfig.undoStatus = false;
+        }
+        else{
+        if (currentConfig.canvasState.length >= 1) {
+        currentConfig.undoFinishedStatus = 0;
+          if(currentConfig.currentStateIndex != 0){
+                currentConfig.undoStatus = true;
+              canvas.loadFromJSON(currentConfig.canvasState[currentConfig.currentStateIndex-1],function(){
+                            var jsonData = JSON.parse(currentConfig.canvasState[currentConfig.currentStateIndex-1]);
+                        canvas.renderAll();
+                      currentConfig.undoStatus = false;
+                      currentConfig.currentStateIndex -= 1;
+                            // currentConfig.undoButton.removeAttribute("disabled");
+                            if(currentConfig.currentStateIndex !== currentConfig.canvasState.length-1){
+                                // currentConfig.redoButton.removeAttribute('disabled');
+                            }
+                        currentConfig.undoFinishedStatus = 1;
+              });
+          }
+          else if(currentConfig.currentStateIndex == 0){
+               canvas.clear();
+                    currentConfig.undoFinishedStatus = 1;
+                    // currentConfig.undoButton.disabled= "disabled";
+                    // currentConfig.redoButton.removeAttribute('disabled');
+              currentConfig.currentStateIndex -= 1;
+          }
+        }
+        }
+    }
+}
+
+function handleRedo() {
+    if(currentConfig.redoFinishedStatus){
+        if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
+            // currentConfig.redoButton.disabled= "disabled";
+        }else{
+          if (currentConfig.canvasState.length > currentConfig.currentStateIndex && currentConfig.canvasState.length != 0){
+                currentConfig.redoFinishedStatus = 0;
+            currentConfig.redoStatus = true;
+          canvas.loadFromJSON(currentConfig.canvasState[currentConfig.currentStateIndex+1],function(){
+                        var jsonData = JSON.parse(currentConfig.canvasState[currentConfig.currentStateIndex+1]);
+                    canvas.renderAll();
+                    currentConfig.redoStatus = false;
+                  currentConfig.currentStateIndex += 1;
+                        if(currentConfig.currentStateIndex != -1){
+                            // currentConfig.undoButton.removeAttribute('disabled');
+                        }
+                    currentConfig.redoFinishedStatus = 1;
+        if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
+        //   currentConfig.redoButton.disabled= "disabled";
+        }
+          });
+        }
+        }
+    }
+}
+
+
+
+
+
+
+
 
 
 
@@ -801,7 +904,6 @@ function handleChangeSize(width, height, name, maxChar) {
     }
 
     handleSelectShape(selectedShape, newSignWidth, newSignHeight, newRectTop, newRectLeft)
-    handleSelectFixingMethode(activeFixingMethode)
 
 
     handleCalcTextPrice()  
@@ -1259,7 +1361,6 @@ var signBackground = 'color'
 var patternUrl = ''
 function handleChangeSignColor(name, pattern, textColor, defTextColor) {
     currentSignColor = name;
-    // console.log(textColor, "changeSignColor")
     function setSignColor(canva){
         var Objects = canva.getObjects();
         Objects.forEach(function(object){
@@ -1360,34 +1461,9 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                 var objectId = object.id;
     
                 if(object.name == 'safeObject'){
+                    object.setCoords()
                     switch (shape){
                         case 'square':
-                            // var squareShape = new fabric.Rect({
-                            //     height: height,
-                            //     width: width,
-                            //     left: left,
-                            //     top: top,
-                            //     fill: objectfill,
-                            //     selectable: false,                                
-                            //     name: 'safeObject',
-                            //     shadow: defaultShadow,
-    
-                            // })
-                            // canvas.remove(object)
-                            // canvas.add(squareShape)
-    
-                            // fabric.util.loadImage('../../old-world-border.png', function (img) {
-                            //     squareShape.setPatternFill({
-                            //       source: img,
-                            //       repeat: 'no-repeat',
-                            //       patternTransform: [0.2, 0, 0, 0.2, 0, 0]
-                            //     });
-                            //     canvas.renderAll();
-                            //   });
-    
-                            // console.log(squareShape.getCenterPoint(), 'square shape')
-                            // squareShape.sendToBack()
-                            // canvas.centerObject(squareShape)
                             var squareShape = new fabric.Rect({
                                 height: height,
                                 width: width,
@@ -1402,10 +1478,7 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                               
                             canvas.remove(object);
                             canvas.add(squareShape);
-                            // console.log(squareShape.getCenterPoint(), 'square shape');
                             squareShape.sendToBack();
-                            canvas.centerObject(squareShape);
-                            // updateModifications(true)
                         break;
                         
                         case 'rounded-square':
@@ -1421,15 +1494,10 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                                 name: 'safeObject',
                                 shadow: defaultShadow,
                                 id: objectId,
-                                // strokeWidth: 5,
-                                // stroke: 'black'
-    
                             })
                             canvas.remove(object)
                             canvas.add(roundedSquareShape)
                             roundedSquareShape.sendToBack()
-                            canvas.centerObject(roundedSquareShape)
-                            // updateModifications(true)
                         break;
     
                         case 'oval':
@@ -1447,11 +1515,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(ellipseShape)
                             ellipseShape.sendToBack()
-                            canvas.centerObject(ellipseShape)
-                            // updateModifications(true)
-                            // ellipseShape.on('selected', function() {
-                            //     canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, 0.5) // set zoom at static value for now
-                            // })
                         break;
     
                         case 'triangle':
@@ -1470,8 +1533,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(triangleShape)
                             triangleShape.sendToBack()
-                            canvas.centerObject(triangleShape)
-                            // updateModifications(true)
                         break;
                         
                         case 'rotated-square':
@@ -1494,7 +1555,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(rotatedSquareShape)
                             rotatedSquareShape.sendToBack()
-                            // updateModifications(true)
                         break;
     
                         case 'turn-left':
@@ -1518,7 +1578,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(turnLeftShape)
                             turnLeftShape.sendToBack()
-                            // updateModifications(true)
                         break;
     
                         case 'turn-right':
@@ -1542,7 +1601,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(turnRightShape)
                             turnRightShape.sendToBack()
-                            // updateModifications(true)
                         break;
                         
                         case 'arrow-right':
@@ -1568,7 +1626,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(arrowRightShape)
                             arrowRightShape.sendToBack()
-                            // updateModifications(true)
                         break;
     
                         case 'arrow-left':
@@ -1594,7 +1651,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(arrowLeftShape)
                             arrowLeftShape.sendToBack()
-                            // updateModifications(true)
                         break;
     
                         case 'stop':
@@ -1621,7 +1677,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(stopShape)
                             stopShape.sendToBack()
-                            // updateModifications(true)
                         break;
     
                         case 'rounded-top':
@@ -1642,7 +1697,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(roundedTopShape)
                             roundedTopShape.sendToBack()
-                            // updateModifications(true)
                         break;
     
                         case 'rounded-sides':
@@ -1663,7 +1717,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
                             canvas.remove(object)
                             canvas.add(roundedSidesShape)
                             roundedSidesShape.sendToBack()
-                            // updateModifications(true)
                         break;
                     }
                 }
@@ -1733,8 +1786,12 @@ function resetFixing(canva){
     }
     reset(canva)
 }
+function handleGetActiveFixing(type){
+    activeFixingMethode = type
+}
 var activeFixingMethode = ''
 function handleSelectFixingMethode(methode){
+    // console.log(methode, "Fixing methode")
     activeFixingMethode = methode
 
     function setFixing(canva){
@@ -4126,6 +4183,7 @@ function handleAddTextToSign(clone){
             var text2 = new fabric.IText(text1JSON.text ,{
                 id: newId += 1,
                 name: 'aso-SignText',
+                canvasName: activeCanvas.name,
                 evented: true,
                 editable: true,
                 scaleX: text1JSON.scaleX,
@@ -4177,6 +4235,7 @@ function handleAddTextToSign(clone){
             var newText = new fabric.IText('Text',{
                 id: newId += 1,
                 name: 'aso-SignText',
+                canvasName: activeCanvas.name,
                 // editable: true,
                 selectOnEdit: false,
                 top: sign.top + (sign.height /3),
@@ -4470,6 +4529,7 @@ function handleAddImageToSign(image, imageId){
 
             img.id = newId += 1
             img.name = "aso-SignImage"
+            img.canvasName = activeCanvas.name
             img.priceId = (imgId ? imgId : 0)
 
             img.on('mousedown', function() {
@@ -4764,6 +4824,7 @@ export {
     handleChangeSignColor,
     handleGetShape,
     handleSelectShape,
+    handleGetActiveFixing,
     handleSelectFixingMethode,
     handleGetAddedTextValues,
     handleAddTextToSign,
