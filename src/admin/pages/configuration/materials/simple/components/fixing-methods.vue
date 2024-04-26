@@ -146,7 +146,7 @@
                 
             </div>
             <div v-if="!isEdit">
-                <div class="aso-relative aso-flex aso-flex-col aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-for="(fixingMethod,key) in addNewFixingMethods">
+                <div class="aso-relative aso-flex aso-flex-col aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" :key="key" v-for="(fixingMethod,key) in addNewFixingMethods">
                     <div v-if="!dropdownFixingMethods[key]">
                         <h2 class="aso-text-[15px] aso-font-bold">{{ key+1 }}.</h2>
                     </div>
@@ -201,18 +201,18 @@
                         <span class="aso-text-[#444444] aso-text-[12px]">exclude the sizes of this fixing Method</span>
                         
                     </div>
-                    <div @click="handleDeleteMaterialFixingMethod(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <div @click="handleDeleteMaterialFixingMethod(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </div>
-                    <div v-if="dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <div v-if="dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                         </svg>
                     </div>
-                    <div v-if="!dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <div v-if="!dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                         </svg>

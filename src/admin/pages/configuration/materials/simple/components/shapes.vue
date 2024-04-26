@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div v-if="!isEdit">
-                    <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-for="(shape,key) in addNewShapes">
+                    <div class="aso-relative aso-flex aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" :key="key" v-for="(shape,key) in addNewShapes">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select Shape</label>
                             <Multiselect
@@ -144,14 +144,14 @@
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
                             <input type="number" v-model="addNewShapes[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
-                        <div @click="handleDeleteMaterialShape(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full">
+                        <div @click="handleDeleteMaterialShape(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
                         </div>
                     </div>
                     <div class="aso-pt-4" v-if="Object.keys(notSelectedManageShapes).length > 0">
-                        <button :disabled="isLoading" @click="handleAddMaterialShape" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                        <button :disabled="isLoading" @click="handleAddMaterialShape" class="aso-flex aso-justify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
