@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-h-[100vh] w-full">
+    <div class="aso-h-[100vh] aso-w-full">
         <div v-if="step==0">
             <div  class="aso-pb-4 aso-bg-[#F8F9FB] aso-px-4 aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
@@ -51,17 +51,17 @@
                         </div>
                     </div>
                     <div v-if="!isFetching" v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b aso-border-solid aso-border-gray-200 aso-gap-x-16 dark:aso-border-gray-700">
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4" @click="()=>$router.push('/configs/'+config.id+'/materials')">
+                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
                             <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                 <span class="aso-text-[12px]">{{getInitials(config.name)}}</span> 
                             </span>
                             <span>{{ config.name }}</span>
                         </div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis" @click="()=>$router.push('/configs/'+config.id+'/materials')">{{config.description}}</div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.id+'/materials')">
+                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">{{config.description}}</div>
+                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
                         </div> 
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.id+'/materials')">
+                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="config.popImg" alt="" v-if="config.popImg!=''">
                         </div>
                         <div class="aso-flex aso-space-x-2 aso-justify-center aso-items-center aso-text-gray-500 dark:aso-text-gray-400">
@@ -71,7 +71,7 @@
                             <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectEditConfig(config)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
-                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="()=>$router.push('/configs/'+config.id+'/materials')">
+                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
                                 <img class="aso-w-4 aso-h-4" src="../../../../assets/icons/ic_manage.svg" alt="">
                                 <span class="aso-text-[12px]">
                                     Manage
@@ -314,7 +314,7 @@
                 </div>
             </div>
         </div>        
-        <!-- Delete Modal-->
+        <!-- Clone Modal-->
         <div v-if="openCloneModal" @click.self="closeCloneModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">

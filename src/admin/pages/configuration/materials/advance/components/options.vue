@@ -5,11 +5,11 @@
                 {{config}}
             </div>
             <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div class="aso-text-[16px] aso-cursor-pointer" v-if="config.trim() != ''" @click="()=>$router.push('/configs/'+configId+'/materials')">
+            <div class="aso-text-[16px] aso-cursor-pointer" v-if="config.trim() != ''" @click="()=>$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials')">
                 Material
             </div>
             <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div class="aso-text-[16px] aso-cursor-pointer" v-if="material.trim() != ''" @click="()=>$router.push('/configs/'+configId+'/materials/'+materialId+'/advance')">
+            <div class="aso-text-[16px] aso-cursor-pointer" v-if="material.trim() != ''" @click="()=>$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/advance')">
                 {{material}}
             </div>
             <img v-if="componentName.trim()!=''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -338,10 +338,11 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute()
 const configId = ref(route.params.configId);
+const config = route.params.config.replace(/-/," ");
 const materialId = ref(route.params.materialId);
+const material = route.params.material.replace(/-/," ");
 const componentId = ref(route.params.componentId);
-const config = ref("");
-const material = ref("");
+const componentName = route.params.component.replace(/-/," ");
 const componentAdvance = ref({
     name:"",
     description:"",
@@ -371,7 +372,6 @@ const option = ref({
     additionalPrice:0
 });
 const noOptionsFound = ref('');
-const componentName = ref('');
 const fixingMethods = ref([]);
 const shapes = ref([]);
 const  optionId = ref(null);
@@ -383,10 +383,6 @@ const isEdit = ref(false);
 
 onMounted(async() => {
     isFetching.value = true;
-    const res = await api.getConfig(configId.value);
-    config.value = res.name;
-    const resp = await api.getMaterial(configId.value,materialId.value);
-    material.value = resp.name;
     await fetchAllFixingMethods();
     await fetchAllShapes();
     await fetchMaterialAdvanceOptions();
@@ -407,12 +403,10 @@ const fetchMaterialAdvanceOptions = async () => {
     const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
     if(result.component){
         componentAdvance.value = result.component;
-        componentName.value = result.component.name
         noOptionsFound.value = result.message;
         isFetching.value = false;
     }else{
         componentAdvance.value = result.component;
-        componentName.value = ''
         noOptionsFound.value = result.message;
         isFetching.value = false;
     }
