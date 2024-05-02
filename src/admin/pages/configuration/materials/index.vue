@@ -29,7 +29,7 @@
             <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full">
                     <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
-                        <div class="aso-flex aso-items-center aso-justify-center">Component Name</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Material Name</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Description</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Behavior (type)</div>
@@ -69,9 +69,24 @@
                             <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectMaterialEdit(material,key)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
-                                <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
-                            </button>
+                            
+                            <div class="aso-bg-white aso-relative">
+                                <button class="aso-bg-transparent aso-border-none aso-cursor-pointer" @click="handleOpenMaterialParams(key)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-rotate-90 aso-h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                    </svg>
+                                </button>
+                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded">
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectMaterialEdit(material,true)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                        </svg>
+                                    </button>
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
+                                        <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,8 +94,8 @@
         </div>
         <div class="aso-space-y-0.5" v-if="isNewComponent">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold aso-text-[16px]">
-                    Name config
+                <div  v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
+                    {{config}}
                 </div>
                 <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
                 <div class="aso-text-[16px]">
@@ -88,7 +103,7 @@
                 </div>
             </div>
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
-                Add component
+                Add material
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-6">
                 <div class="aso-flex aso-justify-between">
@@ -136,7 +151,7 @@
                     </div>
                 </div>
                 <div class="aso-space-y-2 aso-pt-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-font-bold">Behevior (type)</label>
+                    <label for="" class="aso-font-bold">Type</label>
                     <select name="" id="" class="aso-w-full aso-h-[30px] aso-font-normal" v-model="newMaterial.type" :disabled="isEdit">
                         <option value="simple">Simple</option>
                         <option value="advance">Advance</option>

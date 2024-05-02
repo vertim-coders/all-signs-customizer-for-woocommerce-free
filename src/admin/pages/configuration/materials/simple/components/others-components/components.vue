@@ -17,9 +17,6 @@
                 <table class="aso-text-center aso-border aso-border-collapse aso-border-0 aso-w-full">
                     <thead class="aso-bg-[#f0f0f1]">
                         <tr class="">
-                            <th scope="col" class="aso-p-4 aso-w-12">
-                                
-                            </th>
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 Title
                             </th>
@@ -53,11 +50,6 @@
                             </td>
                         </tr>
                         <tr v-for="(additionalOption,key) in additionalOptions" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-[5%] aso-p-4">
-                                <span class="aso-flex aso-justify-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="aso-w-4 aso-h-4  aso-bg-gray-100 aso-border-gray-300 aso-rounded focus:aso-ring-blue-500">
-                                </span>
-                            </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
                                 <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                     <span class="aso-text-[12px]">{{getInitials(additionalOption.title)}}</span> 

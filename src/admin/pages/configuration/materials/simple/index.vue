@@ -37,7 +37,7 @@
                     </svg>
 
                     <div class="aso-text-[14px]">
-                        Material colors
+                        Colors
                     </div>
                 </button>
             </div>
@@ -105,7 +105,7 @@
 
 
                     <div class="aso-text-[14px]">
-                        Others components
+                        Additional components
                     </div>
                 </button>
             </div>
