@@ -905,5 +905,61 @@ const api = {
     );
     return outputSetting.data;
   },
+  //custom additional
+  getCustomAdditionals: async (config) => {
+    const CustomAdditionals = await axios.get(
+      aso_api_url + "/configs/" + config + "/custom-additionals"
+    );
+    return CustomAdditionals.data;
+  },
+  updateCustomAdditionals: async (config, CustomAdditionals) => {
+    const state = await axios.post(
+      aso_api_url + "/configs/" + config + "/custom-additionals/update",
+      CustomAdditionals
+    );
+    return state.data;
+  },
+  addCustomAdditional: async (config, CustomAdditional) => {
+    const state = await axios.post(
+      aso_api_url + "/configs/" + config + "/custom-additionals",
+      CustomAdditional
+    );
+    return state.data;
+  },
+  updateCustomAdditional: async (
+    config,
+    CustomAdditionalId,
+    CustomAdditional
+  ) => {
+    const state = await axios.post(
+      aso_api_url +
+        "/configs/" +
+        config +
+        "/custom-additionals/" +
+        CustomAdditionalId,
+      CustomAdditional
+    );
+    return state.data;
+  },
+  getCustomAdditional: async (config, CustomAdditionalId) => {
+    const CustomAdditional = await axios.get(
+      aso_api_url +
+        "/configs/" +
+        config +
+        "/custom-additionals/" +
+        CustomAdditionalId
+    );
+    return CustomAdditional.data;
+  },
+  deleteCustomAdditional: async (config, CustomAdditionalId) => {
+    const CustomAdditional = await axios.delete(
+      aso_api_url +
+        "/configs/" +
+        config +
+        "/custom-additionals/" +
+        CustomAdditionalId
+    );
+    return CustomAdditional.data;
+  },
 };
 export default api;

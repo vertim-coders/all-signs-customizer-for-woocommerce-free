@@ -60,7 +60,7 @@
                             </span>
                         </div>
                         <div class="aso-flex aso-space-x-[1.5px] aso-justify-center aso-items-center aso-text-gray-500 dark:aso-text-gray-400">
-                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="redirectToMaterail(key,material.type)">
+                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="redirectToMaterail(key,material.name,material.type)">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../assets/icons/ic_manage.svg" alt="">
                                 <span class="aso-text-[12px]">
                                     Manage
@@ -220,7 +220,7 @@ import router from '@/admin/router';
 
 const route = useRoute()
 const configID = ref(route.params.configId)
-const config =ref("");
+const config =route.params.config.replace(/-/,' ');
 const materials = ref([]);
 const newMaterial = ref({
     name:"",
@@ -261,8 +261,6 @@ const getInitials = (str) => {
 
 onMounted(async() => {
     isFetching.value = true;
-    const res = await api.getConfig(configID.value);
-    config.value = res.name;
     await fetchMaterials();
     tinymce.init({
         selector: '#aso-admin-tinymce',
@@ -478,11 +476,11 @@ const back = () => {
     }
 }
 
-const redirectToMaterail = (materialId,type) => {
+const redirectToMaterail = (materialId,materiral,type) => {
     if(type == 'simple'){
-        router.push('/configs/'+configID.value+'/materials/'+materialId+'/simple/sizes');
+        router.push('/configs/'+config+'/'+configID.value+'/materials/'+materiral+'/'+materialId+'/simple/sizes');
     }else{
-        router.push('/configs/'+configID.value+'/materials/'+materialId+'/advance');
+        router.push('/configs/'+config+'/'+configID.value+'/materials/'+materiral+'/'+materialId+'/advance');
     }
 }
   </script>

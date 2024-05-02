@@ -7,6 +7,7 @@ import ManageCliparts from "@/admin/pages/manage-cliparts/index.vue";
 import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
 import Settings from "@/admin/pages/configuration/settings/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
+import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
@@ -18,79 +19,84 @@ const router = createRouter({
       component: Configuration,
     },
     {
-      path: "/configs/:configId/materials",
+      path: "/configs/:config/:configId/materials",
       name: "materials",
       component: Materials,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/sizes",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/sizes",
       name: "Simple-Sizes",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/borders",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/borders",
       name: "Simple-Borders",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/colors",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/colors",
       name: "Simple-Colors",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/fixing-methods",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/fixing-methods",
       name: "Simple-FixingMethods",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/shapes",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/shapes",
       name: "Simple-Shapes",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/text-images",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/text-images",
       name: "Simple-TextImages",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/others-components",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components",
       name: "Simple-OthersComponents",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/simple/others-components/:additionalOptionID",
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components/:additionalOptionID",
       name: "Simple-OthersComponents-Options",
       component: Simple,
     },
     {
-      path: "/configs/:configId/materials/:materialId/advance",
+      path: "/configs/:config/:configId/materials/:material/:materialId/advance",
       name: "Material-Advance",
       component: Advance,
     },
     {
-      path: "/configs/:configId/materials/:materialId/advance/:componentId/options",
+      path: "/configs/:config/:configId/materials/:material/:materialId/advance/:component/:componentId/options",
       name: "Material-Advance-options",
       component: Advance,
     },
     {
-      path: "/configs/:configId/settings/generals",
+      path: "/configs/:config/:configId/settings/generals",
       name: "config-settings-generals",
       component: Settings,
     },
     {
-      path: "/configs/:configId/settings/customizer-options",
+      path: "/configs/:config/:configId/settings/customizer-options",
       name: "config-settings-customizer-options",
       component: Settings,
     },
     {
-      path: "/configs/:configId/settings/language-images",
+      path: "/configs/:config/:configId/settings/language-images",
       name: "config-settings-languages-images",
       component: Settings,
     },
     {
-      path: "/configs/:configId/settings/themes-colors",
+      path: "/configs/:config/:configId/settings/themes-colors",
       name: "config-settings-themes-colors",
       component: Settings,
+    },
+    {
+      path: "/configs/:config/:configId/additional-options",
+      name: "config-additional-options",
+      component: AdditionalOptions,
     },
     {
       path: "/manage-fonts",
