@@ -143,65 +143,73 @@ class ASO_Api_Materials extends WP_REST_Controller {
                 $new_material = json_decode($request->get_body(),true);
                 if(in_array($new_material['type'],['simple','advance'])){
                     if($new_material['type'] === 'simple'){
-                        $material = [
-                            "name"=>$new_material['name'],
-                            "description"=>$new_material['description'],
-                            "icon"=>$new_material['icon'],
-                            "popImg"=>$new_material['popImg'],
-                            "type"=>$new_material['type'],
-                            "data"=>[
-                                'sizes'=>[
-                                    "customSize"=>[
-                                        "active"=>false,
-                                        "width"=>[
-                                            "label"=>'Width',
-                                            "min"=>0,
-                                            "max"=>0
+                        if(isset($new_material['data'])){
+                            $material = $new_material;
+                        }else{
+                            $material = [
+                                "name"=>$new_material['name'],
+                                "description"=>$new_material['description'],
+                                "icon"=>$new_material['icon'],
+                                "popImg"=>$new_material['popImg'],
+                                "type"=>$new_material['type'],
+                                "data"=>[
+                                    'sizes'=>[
+                                        "customSize"=>[
+                                            "active"=>false,
+                                            "width"=>[
+                                                "label"=>'Width',
+                                                "min"=>0,
+                                                "max"=>0
+                                            ],
+                                            "height"=>[
+                                                "label"=>'Height',
+                                                "min"=>0,
+                                                "max"=>0
+                                            ]
                                         ],
-                                        "height"=>[
-                                            "label"=>'Height',
-                                            "min"=>0,
-                                            "max"=>0
-                                        ]
+                                        "thickness"=> [
+                                            "active"=> false,
+                                            "values"=> []
+                                        ],
+                                        "allSizes"=>[]
                                     ],
-                                    "thickness"=> [
-                                        "active"=> false,
-                                        "values"=> []
+                                    'borders'=>[
+                                        "settings"=>[
+                                            "colors"=>[],
+                                            "enableBorderWidth"=>true,
+                                            "enableBorderColor"=>true,
+                                        ],
+                                        "allBorders"=>[],
                                     ],
-                                    "allSizes"=>[]
-                                ],
-                                'borders'=>[
-                                    "settings"=>[
-                                        "colors"=>[],
-                                        "enableBorderWidth"=>true,
-                                        "enableBorderColor"=>true,
+                                    'shapes'=>[],
+                                    "textImages"=>["enableText"=>true,"enableImage"=>true],
+                                    'fixingMethods'=>[],
+                                    'colors'=>[
+                                        "customColors"=>[
+                                            "active"=>true,
+                                            "label"=>"Custom Colors",
+                                            "prevImg"=>"",
+                                        ],
+                                        "allColors"=>[]
                                     ],
-                                    "allBorders"=>[],
-                                ],
-                                'shapes'=>[],
-                                "textImages"=>["enableText"=>true,"enableImage"=>true],
-                                'fixingMethods'=>[],
-                                'colors'=>[
-                                    "customColors"=>[
-                                        "active"=>true,
-                                        "label"=>"Custom Colors",
-                                        "prevImg"=>"",
-                                    ],
-                                    "allColors"=>[]
-                                ],
-                                "additionalOptions"=>[]
-                            ]
-                        ];
+                                    "additionalOptions"=>[]
+                                ]
+                            ];
+                        }
                         array_push($meta["data"]['materials'],$material);
                     }elseif ($new_material['type'] === 'advance'){
-                        $material = [
-                            "name"=>$new_material['name'],
-                            "description"=>$new_material['description'],
-                            "icon"=>$new_material['icon'],
-                            "popImg"=>$new_material['popImg'],
-                            "type"=>$new_material['type'],
-                            "data"=>[]
-                        ];
+                        if(isset($new_material['data'])){
+                            $material = $new_material;
+                        }else{
+                            $material = [
+                                "name"=>$new_material['name'],
+                                "description"=>$new_material['description'],
+                                "icon"=>$new_material['icon'],
+                                "popImg"=>$new_material['popImg'],
+                                "type"=>$new_material['type'],
+                                "data"=>[]
+                            ];
+                        }
                         array_push($meta["data"]['materials'],$material);
                     }
                     $update = update_post_meta($config_id,'aso-configs-meta',$meta);
