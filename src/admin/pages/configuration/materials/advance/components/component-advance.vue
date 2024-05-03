@@ -111,7 +111,7 @@
         </div>
         <div class="aso-space-y-1" v-if="isNewComponentAdvance">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 ">
-                            Add sub component
+                Add component
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-20">
                 <div class="aso-flex aso-justify-between aso-px-4 aso-py-4">
