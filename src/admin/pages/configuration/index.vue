@@ -207,16 +207,6 @@
                     </div>
                 </div>
                 <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
-                    
-                    <div class="aso-bg-[#016464] aso-rounded">
-                        <button :disabled="isLoading" class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-3 aso-text-white aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white aso-cursor-pointer" @click="includeDemo = true;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
-                            </svg>
-
-                            Include demo data
-                        </button>
-                    </div>
                     <div class="aso-bg-[#016464] aso-rounded">
                         <button :disabled="isLoading" class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-3 aso-text-white aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white aso-cursor-pointer" @click="()=>includeMetaData(false)">
                             <img src="../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading"/>
@@ -224,6 +214,15 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
                             No Include demo data
+                        </button>
+                    </div>
+                    <div class="aso-bg-[#016464] aso-rounded">
+                        <button :disabled="isLoading" class="aso-font-semibold aso-text-[16px] aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-3 aso-text-white aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white aso-cursor-pointer" @click="includeDemo = true;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
+                            </svg>
+
+                            Include demo data
                         </button>
                     </div>
                 </div>
@@ -560,7 +559,7 @@ const metaConfigs = ref({
 				icon: "",
 				name: "Acrylic",
 				type: "simple",
-				popupImg: "",
+				popImg: "",
 				description: "",
 				data: {
 					sizes: {
@@ -1258,7 +1257,7 @@ const metaConfigs = ref({
                 icon: "",
                 name: "Aluminium",
                 type: "simple",
-                popupImg: "",
+                popImg: "",
                 description: "",
                 data: {
                     sizes: {
@@ -5064,7 +5063,7 @@ const metaConfigs = ref({
 				icon: "https://signsdesigner.us/app/demos/wood-signs/wood_birch.png",
 				name: "Birch",
 				type: "simple",
-				popupImg: "",
+				popImg: "",
 				description: "",
 				data: {
 					sizes: {
@@ -5616,7 +5615,7 @@ const metaConfigs = ref({
 				icon: "https://signsdesigner.us/app/demos/wood-signs/wood_oak.png",
 				name: "Oak",
 				type: "simple",
-				popupImg: "",
+				popImg: "",
 				description: "",
 				data: {
 					sizes: {
@@ -6169,7 +6168,7 @@ const metaConfigs = ref({
                 icon: "https://signsdesigner.us/app/demos/double-sided/aluminium.png",
                 name: "Aluminium",
                 type: "simple",
-                popupImg: "",
+                popImg: "",
                 description: "Double-sided aluminium composite (Gobond) consist of a sandwich layer with a surface layer of aluminium and a polyethylene core.",
                 data: {
                 sizes: {
@@ -6913,7 +6912,7 @@ const metaConfigs = ref({
                 icon: "https://signsdesigner.us/app/demos/double-sided/plastic.png",
                 name: "Plastic",
                 type: "simple",
-                popupImg: "",
+                popImg: "",
                 description: "Foam PVC Forex). Light, flexible material.",
                 data: {
                 sizes: {
@@ -7566,7 +7565,7 @@ const metaConfigs = ref({
                 icon: "https://signsdesigner.us/app/demos/double-sided/eco_board.png",
                 name: "Eco board",
                 type: "simple",
-                popupImg: "",
+                popImg: "",
                 description: "Quality cardboard(pressed board) with a wood fibre core. A lightweight, stable and rigid material perfect for hanging.",
                 data: {
                 sizes: {

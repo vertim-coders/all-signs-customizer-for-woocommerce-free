@@ -76,8 +76,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                     </svg>
                                 </button>
-                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded">
-                                    <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectMaterialEdit(material,true)">
+                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showPrams[key]=false;">
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectCloneMaterial(material)">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
                                         </svg>
@@ -224,7 +224,7 @@
                         <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Give the name of the new material, which will be an imitation of the current one.</h3>
                         <input v-model="newMaterial.name" class="aso-rounded aso-w-full aso-h-[35px] aso-text-start aso-p-4 aso-my-2 aso-border-solid aso-border-gray-400" />
                         <button @click="addNewMaterial" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-w-5" v-if="!isLoading">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
@@ -285,16 +285,31 @@ const deleteMaterial = ref({
     name:""
 })
 const notFoundMessage = ref('');
-
+const showParams = ref([]);
 const fetchMaterials = async () => {
     const result = await api.getMaterials(configID.value);
     if(!result.message){
+        let tab=[];
         materials.value = result;
+        for (let index = 0; index < result.length; index++) {
+            tab.push(false);
+            
+        }
+        showParams.value = tab;
     }else{
         materials.value = [];
         notFoundMessage.value = result.message;
     }
     isFetching.value = false;
+}
+const handleOpenMaterialParams  = (key)=>{
+    for (let index = 0; index < showParams.value.length; index++) {
+       if(key!=index){
+        showParams.value[index]=false;
+       }else{
+        showParams.value[key]=!showParams.value[key];
+       }
+    }
 }
 const getInitials = (str) => {
     const words = str.split(' ');
@@ -304,8 +319,6 @@ const getInitials = (str) => {
 }
 
 onMounted(async() => {
-    isFetching.value = true;
-    await fetchMaterials();
     tinymce.init({
         selector: '#aso-admin-tinymce',
         plugins: [
@@ -317,10 +330,12 @@ onMounted(async() => {
         relative_urls: false,
         remove_script_host: false,
         convert_urls: true,
-        height: 400,
+        height: 200,
         width: '100%',
         branding: false
     });
+    isFetching.value = true;
+    await fetchMaterials();
 
 });
 
@@ -340,6 +355,7 @@ const addNewMaterial = async () => {
             popImg:"",
             type:"simple",
         }
+        openCloneModal.value=false;
         toastMessage(result.message)
     }else{
         isLoading.value = false;
@@ -351,6 +367,7 @@ const addNewMaterial = async () => {
             popImg:"",
             type:"simple",
         }
+        openCloneModal.value=false;
         toastMessage(result.message,"error");
     }
 }
@@ -416,16 +433,20 @@ const selectMaterialIcon = async(e) => {
 const selectMaterialEdit = (material, id) => {
     materialId.value = id;
     newMaterial.value = material;
-    tinyMCE.activeEditor.setContent(material.popImg);
+    tinymce.activeEditor.setContent(material.popImg);
     isEdit.value = true;
     isNewComponent.value = true;
+}
+const selectCloneMaterial = (material)=> {
+    newMaterial.value = material;
+    openCloneModal.value = true;
 }
 
 const closeTnymceModal = ()=>{
     openTnyMce.value = !openTnyMce.value;
 }
 const savePopImg = ()=>{
-    newMaterial.value.popImg = tinyMCE.activeEditor.getContent();
+    newMaterial.value.popImg = tinymce.activeEditor.getContent();
     openTnyMce.value = false;
 }
 
@@ -506,7 +527,14 @@ const closeModal = ()=>{
 }
 const closeCloneModal = ()=>{
     if(!isLoading.value){        
-        openCloneModal.value = !openCloneModal.value;
+        openCloneModal.value = false;
+        newMaterial.value = {
+            name:"",
+            description:"",
+            icon:"",
+            popImg:"",
+            type:"simple",
+        }
     }
 }
 
