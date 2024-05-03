@@ -1,7 +1,27 @@
 
 <template>
-    <div :class="`aso-bg-white aso-flex aso-flex-col aso-space-y-3 aso-border-b-[2px]`">
-        
+    <div class="aso-space-y-1">
+        <div class="aso-bg-white aso-shadow-md aso-justify-center aso-items-center aso-px-4 aso-py-4">
+            <p class="aso-text-[14px] aso-font-bold">2- Set the Label and Description</p>
+            <p class="aso-text-[12px]">This text will display above the input options.</p>
+            <div class="aso-flex aso-justify-between aso-space-x-12">
+                <div class="aso-w-2/5 aso-space-y-2">
+                    <label>Label</label>
+                    <input v-model="noteType.label" type="text" class="aso-w-full" value=""/>
+                </div>
+                <div class="aso-w-2/5 aso-space-y-2">
+                    <label>Description</label>
+                    <input v-model="noteType.description" type="text" class="aso-w-full" value=""/>
+                </div>
+            </div>
+        </div>
+        <div class="aso-bg-white aso-shadow-md aso-justify-center aso-items-center aso-px-4 aso-py-4">
+            <p class="aso-text-[14px] aso-font-bold">3- Note Input</p>
+            <p class="aso-text-[12px]">Character limit (optional)</p>
+            <p class="aso-text-[12px]">Displays as a textarea field for customers to type any additional requirements.</p>
+            <input v-model="noteType.label" type="number" class="aso-w-3/4" value=""/>
+            <p class="aso-text-[12px]">The maximum number of text characters for notes.</p>
+        </div>
     </div>
 </template>
 
@@ -26,10 +46,7 @@ const noteType = ref({
   description: "",
   noteLimitChar: ''
 });
-var isLoading = ref(false)
-//var translateText= ref(ncpcData.ncpc_translate_text.configuration);
-var backButtonText = "Back";
-var saveButtonText = "Save";
+var isLoading = ref(false);
 
 var emptyLabel = ref(false);
 
