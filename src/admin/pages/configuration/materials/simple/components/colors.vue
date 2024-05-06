@@ -438,7 +438,7 @@
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
                         <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]"  @blur="addColors[key].additionalPrice.trim()==''?addColors[key].additionalPrice=0:''">
                     </div>
-                    <div @click="handleDeleteColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-my-0  aso-top-0 aso-shadow-md aso-rounded-full">
+                    <div @click="handleDeleteColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-my-0  aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>

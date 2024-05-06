@@ -146,9 +146,13 @@
                 
             </div>
             <div v-if="!isEdit">
-                <div class="aso-relative aso-flex aso-flex-col aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" :key="key" v-for="(fixingMethod,key) in addNewFixingMethods">
-                    <div v-if="!dropdownFixingMethods[key]">
+                <div class="aso-relative aso-flex aso-flex-col aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" :key="key" v-for="(fx,key) in addNewFixingMethods">
+                    <div v-if="!dropdownFixingMethods[key]" class="aso-flex aso-space-x-4">
                         <h2 class="aso-text-[15px] aso-font-bold">{{ key+1 }}.</h2>
+                        <div class="aso-translate-y-3.5">
+                            <span class="aso-text-[15px] aso-font-bold">{{ manageFixingMethods[fx.fixingMethodId].name }}</span>
+                            <span class="aso-text-[15px] aso-font-bold"> - {{ addNewFixingMethods[key].additionalPrice }}</span>
+                        </div>
                     </div>
                     <div class="aso-flex aso-justify-between" v-show="dropdownFixingMethods[key]">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
@@ -281,6 +285,31 @@
                 </div>
             </div>
         </div>
+        <!-- Delete Modal-->
+        <div v-if="openAlert" @click.self="closeAlert" :key="key" v-for="(fx,key) in addNewFixingMethods" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="closeAlert" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-alert-hide="popup-alert">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close alert</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this color?</h3>
+                        <input v-model="manageFixingMethods[fx.fixingMethodId].name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <button @click="handleDeleteNewFixMethod(key)" data-alert-hide="popup-alert" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            Yes, I'm sure
+                        </button>
+                        <button @click.stop="closeAlert" data-alert-hide="popup-alert" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
@@ -315,6 +344,7 @@ const fixingMethodId = ref(null);
 
 const isEdit = ref(false);
 const openModal = ref(false);
+const openAlert = ref(false);
 const noFixingMethodsFound = ref('');
 const fixingMethod = ref({
     isDefault:false,
@@ -358,16 +388,8 @@ const handleAddMaterialFixingMethod = () =>{
     }
     dropdownFixingMethods.value.push(true);
 }
-const handleDeleteMaterialFixingMethod = (key) =>{
-    var tab = [];
-    for (let index = 0; index < addNewFixingMethods.value.length; index++) {
-        tab.push(addNewFixingMethods.value[index])
-    }
-    tab.splice(key,1);
-    if(tab.length>0){
-        addNewFixingMethods.value=tab;
-        dropdownFixingMethods.value.splice(key,1);
-    }
+const handleDeleteMaterialFixingMethod = () =>{
+    openAlert.value = true
 }
 const fetchMaterialSizes = async () => {
     const sizesResult = await api.getMaterialSimpleSizes(configID.value, materialId.value);
@@ -514,7 +536,9 @@ const deleteFixingMethods = async () => {
 const closeModal = () => {
     openModal.value = !openModal.value;
 }
-
+const closeAlert = () => {
+    openAlert.value = !openAlert.value;
+}
 
 
 const newFixing = () => {
@@ -554,5 +578,17 @@ const selectDefault = async(key) =>{
         }
     }
     await updateMaterialFixingMethods();
+}
+const handleDeleteNewFixMethod = (key) =>{
+    var tab = [];
+    for (let index = 0; index < addNewFixingMethods.value.length; index++) {
+        tab.push(addNewFixingMethods.value[index])
+    }
+    tab.splice(key,1);
+    if(tab.length>0){
+        addNewFixingMethods.value=tab;
+        dropdownFixingMethods.value.splice(key,1);
+    }
+    closeAlert()
 }
 </script>
