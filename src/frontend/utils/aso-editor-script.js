@@ -1,6 +1,7 @@
 var fixingUrl = aso_confiurator_data.fixing_methods_url;
 var borderUrl = aso_confiurator_data.borders_url;
 var canvas = null;
+var canvasBackground = ''
 var backCanvas = null;
 var activeCanvas = canvas
 var doubleFace = false;
@@ -26,45 +27,61 @@ function handleCheckActiveSignFace(face){
     }
 }
 
-function handleCloneCanvas(canvas1, canvas2){
+// function handleCloneCanvas(canvas1, canvas2){
+//     console.log("handledqsdqsd")
+//     setTimeout(function() {
+//         var objects = canvas1.getObjects();
+//         var serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
+//         var jsonData = canvas1.toJSON();
     
-    setTimeout(function() {
-        var objects = canvas1.getObjects();
-        var serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
-        var jsonData = canvas.toJSON();
+//         var canvas1State = {
+//             jsonData: jsonData,
+//             objects: serializedObjects
+//         };
     
-        var canvas1State = {
-            jsonData: jsonData,
-            objects: serializedObjects
-        };
+//         canvas2.discardActiveObject();
+//         var currentObjects = canvas2.getObjects();
+//         // currentObjects.forEach(obj => {
+//         //     if (!canvas1State.objects.some(prevObj => prevObj.id === obj.id)) {
+//         //       // console.log(obj.id, 'undo - borderA');
+//         //       canvas2.remove(obj);
+//         //     }
+//         // });
     
-        canvas2.discardActiveObject();
-        var currentObjects = canvas2.getObjects();
-        // currentObjects.forEach(obj => {
-        //     if (!canvas1State.objects.some(prevObj => prevObj.id === obj.id)) {
-        //       // console.log(obj.id, 'undo - borderA');
-        //       canvas2.remove(obj);
-        //     }
-        // });
+//         var verifiedId = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]
     
-        var verifiedId = [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37]
+//         canvas1State.objects.forEach(prevObj => {
+//             const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
     
-        canvas1State.objects.forEach(prevObj => {
-            const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
+//             fabric.util.enlivenObjects([prevObj], objects => {
+//                 const newObj = objects[0];
+//                 if (verifiedId.includes(newObj.id)){
+//                     canvas2.insertAt(newObj, currentObjects.indexOf(currentObj));
+//                     canvas2.remove(currentObj);
+//                 }
+//             });
+//         });
     
-            fabric.util.enlivenObjects([prevObj], objects => {
-                const newObj = objects[0];
-                if (verifiedId.includes(newObj.id)){
-                    canvas2.insertAt(newObj, currentObjects.indexOf(currentObj));
-                    canvas2.remove(currentObj);
-                }
-            });
-        });
-    
-        canvas2.renderAll();
+//         canvas2.renderAll();
 
-    },100)
-    // console.log(backCanvas)
+//     },100)
+//     // console.log(backCanvas)
+// }
+function handleCloneCanvas(){
+    var jsonData = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip'])
+    var canvasAsJson = JSON.stringify(jsonData)
+    
+    // function recreateState(canva, stateJson){
+    // }
+    const currentState = JSON.parse(canvasAsJson);
+    backCanvas.clear();
+    currentState.objects.forEach(function(obj){
+        fabric.util.enlivenObjects([obj], function(prevObject) {                            
+
+            backCanvas.add(...prevObject);
+            backCanvas.renderAll();
+        });
+    })
 }
 
 var currentUnit = ''
@@ -357,110 +374,195 @@ let currentStateIndex = 0;
 //         fixing: activeFixingMethode,
 //     }
 // }
-function handleClearAll() {
+// function handleClearAll() {
     
-    const canvasState = state[0];
-    const currentObjects = canvas.getObjects();
+//     const canvasState = state[0];
+//     const currentObjects = canvas.getObjects();
 
-    canvas.discardActiveObject();
-    // Supprimer les objets qui n'existent pas dans l'état précédent
-    currentObjects.forEach(obj => {
-        if (!canvasState.objects.some(prevObj => prevObj.id === obj.id)) {
-        // console.log(obj.id, 'undo - borderA');
-        canvas.remove(obj);
-        }
-    });
+//     canvas.discardActiveObject();
+//     // Supprimer les objets qui n'existent pas dans l'état précédent
+//     currentObjects.forEach(obj => {
+//         if (!canvasState.objects.some(prevObj => prevObj.id === obj.id)) {
+//         // console.log(obj.id, 'undo - borderA');
+//         canvas.remove(obj);
+//         }
+//     });
 
-    // Remplacer les objets existants par leur version précédente
-    if (canvasState.objects.length > 0) {
-        canvasState.objects.forEach(prevObj => {
-        const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
-        if (currentObj) {
-        //   console.log(currentObj.id, 'undo - borderZ');
+//     // Remplacer les objets existants par leur version précédente
+//     if (canvasState.objects.length > 0) {
+//         canvasState.objects.forEach(prevObj => {
+//         const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
+//         if (currentObj) {
+//         //   console.log(currentObj.id, 'undo - borderZ');
 
-            fabric.util.enlivenObjects([prevObj], objects => {
-            const newObj = objects[0];
-            canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
-            canvas.remove(currentObj);
-            });
-        }
-        });
-    }
+//             fabric.util.enlivenObjects([prevObj], objects => {
+//             const newObj = objects[0];
+//             canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
+//             canvas.remove(currentObj);
+//             });
+//         }
+//         });
+//     }
 
-    canvas.renderAll();
-    mods = 0;
+//     canvas.renderAll();
+//     mods = 0;
 
-    currentStateIndex = 0;
-    state = [state[0]]     
-}
+//     currentStateIndex = 0;
+//     state = [state[0]]     
+// }
 
 
 var currentConfig = {
-    canvasState             : [],
-    currentStateIndex       : -1,
-    undoStatus              : false,
-    redoStatus              : false,
-    undoFinishedStatus      : 1,
-    redoFinishedStatus      : 1,
-    // undoButton              : document.getElementById('undo'),
-    // redoButton              : document.getElementById('redo'),
+    canvasState: [],
+    canvasObjects: [],
+    currentStateIndex: -1,
+    undoStatus: false,
+    redoStatus: false,
+    undoFinishedStatus: 1,
+    redoFinishedStatus: 1,
 };
-
-function updateModifications() {
+function updateModifications(good, position) {
+    // console.log(position)
     if((currentConfig.undoStatus == false && currentConfig.redoStatus == false)){
-        var jsonData = canvas.toJSON(['name', 'id', 'selectable', 'canvasName', 'priceId']);
+        var objects = {
+            texts: [...addedTexts],
+            images: [...addedImages],
+            maxChars: maxTextCharForSize,
+            fixScale: fixScale,
+            sizeRatio: sizeRatio,
+        }
+        var frontJsonData = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip']);
+        var backJsonData = backCanvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip']);
         
         // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
-        console.log(jsonData, "qsdqsd");
+        // console.log(frontJsonData.objects, "qsdqsd");
+        // console.log(backJsonData.objects, "qsdqsd");
 
-        var canvasAsJson = JSON.stringify(jsonData);
+        var canvasAsJson = JSON.stringify(frontJsonData);
+        var backCanvasAsJson = JSON.stringify(backJsonData);
 
         if(currentConfig.currentStateIndex < currentConfig.canvasState.length-1){
             var indexToBeInserted = currentConfig.currentStateIndex+1;
-            currentConfig.canvasState[indexToBeInserted] = canvasAsJson;
+            currentConfig.canvasState[indexToBeInserted] = {front: canvasAsJson, back: backCanvasAsJson};
+            currentConfig.canvasObjects[indexToBeInserted] = objects;
             var numberOfElementsToRetain = indexToBeInserted+1;
             currentConfig.canvasState = currentConfig.canvasState.splice(0,numberOfElementsToRetain);
         }else{
-            currentConfig.canvasState.push(canvasAsJson);
+            currentConfig.canvasState.push({front: canvasAsJson, back: backCanvasAsJson});
+            currentConfig.canvasObjects.push(objects);
         }
             currentConfig.currentStateIndex = currentConfig.canvasState.length-1;
         if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
             // currentConfig.redoButton.disabled= "disabled";
         }
     }
+    console.log(currentConfig.canvasState, "canvasState JS")
 }
 
 function handleUndo() {
     if(currentConfig.undoFinishedStatus){
         if(currentConfig.currentStateIndex == -1){
-        currentConfig.undoStatus = false;
+            currentConfig.undoStatus = false;
         }
         else{
-        if (currentConfig.canvasState.length >= 1) {
-        currentConfig.undoFinishedStatus = 0;
-          if(currentConfig.currentStateIndex != 0){
-                currentConfig.undoStatus = true;
-              canvas.loadFromJSON(currentConfig.canvasState[currentConfig.currentStateIndex-1],function(){
-                            var jsonData = JSON.parse(currentConfig.canvasState[currentConfig.currentStateIndex-1]);
-                        canvas.renderAll();
-                      currentConfig.undoStatus = false;
-                      currentConfig.currentStateIndex -= 1;
-                            // currentConfig.undoButton.removeAttribute("disabled");
-                            if(currentConfig.currentStateIndex !== currentConfig.canvasState.length-1){
-                                // currentConfig.redoButton.removeAttribute('disabled');
-                            }
-                        currentConfig.undoFinishedStatus = 1;
-              });
-          }
-          else if(currentConfig.currentStateIndex == 0){
-               canvas.clear();
+            if (currentConfig.canvasState.length >= 1) {
+                currentConfig.undoFinishedStatus = 0;
+                if(currentConfig.currentStateIndex != 0){
+                    // currentConfig.undoStatus = true;
+                    // canvas.loadFromJSON(currentConfig.canvasState[currentConfig.currentStateIndex-1],function(){
+                    //     var jsonData = JSON.parse(currentConfig.canvasState[currentConfig.currentStateIndex-1]);
+                    //     canvas.renderAll();
+                    //     currentConfig.undoStatus = false;
+                    //     currentConfig.currentStateIndex -= 1;
+                    //     // currentConfig.undoButton.removeAttribute("disabled");
+                    //     if(currentConfig.currentStateIndex !== currentConfig.canvasState.length-1){
+                    //         // currentConfig.redoButton.removeAttribute('disabled');
+                    //     }
+                    //     currentConfig.undoFinishedStatus = 1;
+                    // });
+                    function recreateState(canva, stateJson){
+                        const currentState = JSON.parse(stateJson);
+                        canva.clear();
+                        currentState.objects.forEach(function(obj){
+                            fabric.util.enlivenObjects([obj], function(prevObject) {                            
+                                if(prevObject[0].name === 'aso-SignText'){
+                                    prevObject[0].on('editing:entered', () => {
+                                        handleGetAddedTextValues(prevObject[0]);  
+                                    });
+                                    prevObject[0].on('editing:exited', () => {
+                                        handleGetAddedTextValues(prevObject[0]);
+                                        resizeText(prevObject[0]);
+                                    });
+                                    prevObject[0].on('selected', () => {   
+                                        handleGetAddedTextValues(prevObject[0]);         
+                                    });
+                                    prevObject[0].on('mousedown', function() {
+                                        handleGetAddedTextValues(prevObject[0]); 
+                                    });
+                                    prevObject[0].on('mouseup', function() {
+                                        handleGetAddedTextValues(prevObject[0]); 
+                                    });
+                                }
+                                if(prevObject[0].name === 'aso-SignImage'){
+                                    prevObject[0].on('mousedown', function() {
+                                        handleGetAddedImageValues(prevObject[0]); 
+                                    });
+                                    prevObject[0].on('mouseup', function() {
+                                        handleGetAddedImageValues(prevObject[0]); 
+                                    });
+                                }
+                                canva.add(...prevObject);
+                                canva.renderAll();
+                            });
+                        })
+                    }
+
+                    recreateState(canvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].front)
+                    recreateState(backCanvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].back)
+
+                    // console.log(currentConfig.canvasObjects[currentConfig.currentStateIndex-1], "maxChars")
+                    addedTexts = currentConfig.canvasObjects[currentConfig.currentStateIndex-1].texts
+                    maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex-1].maxChars
+                    addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex-1].images;
+
+                    fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex-1].fixScale;
+                    sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex-1].sizeRatio;
+
+                    currentConfig.undoStatus = false;
+                    currentConfig.currentStateIndex -= 1;
+                    // currentConfig.undoButton.removeAttribute("disabled");
+                    if (currentConfig.currentStateIndex !== currentConfig.canvasState.length - 1) {
+                        // currentConfig.redoButton.removeAttribute('disabled');
+                    }
+                    currentConfig.undoFinishedStatus = 1;
+                }
+                else if(currentConfig.currentStateIndex == 0){
+                    canvas.clear();
+                    backCanvas.clear();
+
+                    addedTexts = currentConfig.canvasObjects[0].texts
+                    maxTextCharForSize = currentConfig.canvasObjects[0].maxChar
+                    addedImages = currentConfig.canvasObjects[0].images;
+
+                    fixScale = currentConfig.canvasObjects[0].fixScale;
+                    sizeRatio = currentConfig.canvasObjects[0].sizeRatio;
+
                     currentConfig.undoFinishedStatus = 1;
                     // currentConfig.undoButton.disabled= "disabled";
                     // currentConfig.redoButton.removeAttribute('disabled');
-              currentConfig.currentStateIndex -= 1;
-          }
+                    currentConfig.currentStateIndex -= 1;
+                }
+            }
         }
-        }
+    }
+    FtextObjects = handleGetTextObjects1('aso-SignText')
+    BtextObjects = handleGetTextObjects2('aso-SignText')
+    frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+    backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+
+    return {
+        texts: addedTexts,
+        images: addedImages,
     }
 }
 
@@ -469,27 +571,119 @@ function handleRedo() {
         if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
             // currentConfig.redoButton.disabled= "disabled";
         }else{
-          if (currentConfig.canvasState.length > currentConfig.currentStateIndex && currentConfig.canvasState.length != 0){
+            if (currentConfig.canvasState.length > currentConfig.currentStateIndex && currentConfig.canvasState.length != 0){
                 currentConfig.redoFinishedStatus = 0;
-            currentConfig.redoStatus = true;
-          canvas.loadFromJSON(currentConfig.canvasState[currentConfig.currentStateIndex+1],function(){
-                        var jsonData = JSON.parse(currentConfig.canvasState[currentConfig.currentStateIndex+1]);
-                    canvas.renderAll();
-                    currentConfig.redoStatus = false;
-                  currentConfig.currentStateIndex += 1;
-                        if(currentConfig.currentStateIndex != -1){
-                            // currentConfig.undoButton.removeAttribute('disabled');
-                        }
-                    currentConfig.redoFinishedStatus = 1;
-        if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
-        //   currentConfig.redoButton.disabled= "disabled";
+                currentConfig.redoStatus = true;
+                // canvas.loadFromJSON(currentConfig.canvasState[currentConfig.currentStateIndex+1],function(){
+                //     var jsonData = JSON.parse(currentConfig.canvasState[currentConfig.currentStateIndex+1]);
+                //     canvas.renderAll();
+
+                //     }
+                // );
+                function recreateState(canva, stateJson){
+                    const currentState = JSON.parse(stateJson);
+                    canva.clear();
+                    currentState.objects.forEach(function(obj){
+                        fabric.util.enlivenObjects([obj], function(nextObject) {                            
+                            if(nextObject[0].name === 'aso-SignText'){
+                                nextObject[0].on('editing:entered', () => {
+                                    handleGetAddedTextValues(nextObject[0]);  
+                                });
+                                nextObject[0].on('editing:exited', () => {
+                                    handleGetAddedTextValues(nextObject[0]);
+                                    resizeText(nextObject[0]);
+                                });
+                                nextObject[0].on('selected', () => {   
+                                    handleGetAddedTextValues(nextObject[0]);         
+                                });
+                                nextObject[0].on('mousedown', function() {
+                                    handleGetAddedTextValues(nextObject[0]); 
+                                });
+                                nextObject[0].on('mouseup', function() {
+                                    handleGetAddedTextValues(nextObject[0]); 
+                                });
+                            }
+                            if(nextObject[0].name === 'aso-SignImage'){
+                                nextObject[0].on('mousedown', function() {
+                                    handleGetAddedImageValues(nextObject[0]); 
+                                });
+                                nextObject[0].on('mouseup', function() {
+                                    handleGetAddedImageValues(nextObject[0]); 
+                                });
+                            }
+                            canva.add(...nextObject);
+                            canva.renderAll();
+                        });
+                    })
+                }
+
+                recreateState(canvas, currentConfig.canvasState[currentConfig.currentStateIndex+1].front)
+                recreateState(backCanvas, currentConfig.canvasState[currentConfig.currentStateIndex+1].back)
+
+                addedTexts = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].texts
+                maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].maxChars
+                addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].images;
+
+                fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].fixScale;
+                sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].sizeRatio;
+
+                currentConfig.redoStatus = false;
+                currentConfig.currentStateIndex += 1;
+                if(currentConfig.currentStateIndex != -1){
+                    // currentConfig.undoButton.removeAttribute('disabled');
+                }
+                currentConfig.redoFinishedStatus = 1;
+                if((currentConfig.currentStateIndex == currentConfig.canvasState.length-1) && currentConfig.currentStateIndex != -1){
+                //   currentConfig.redoButton.disabled= "disabled";
+                }
+            }
         }
-          });
-        }
-        }
+    }
+    FtextObjects = handleGetTextObjects1('aso-SignText')
+    BtextObjects = handleGetTextObjects2('aso-SignText')
+    frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+    backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+
+    return {
+        texts: addedTexts,
+        images: addedImages,
     }
 }
 
+function handleClearAll(){
+    currentConfig.undoStatus = true;
+    canvas.loadFromJSON(currentConfig.canvasState[0],function(){
+        var jsonData = JSON.parse(currentConfig.canvasState[0]);
+        canvas.renderAll();
+        currentConfig.undoStatus = false;
+        // currentConfig.undoButton.removeAttribute("disabled");
+        if(currentConfig.currentStateIndex !== currentConfig.canvasState.length-1){
+            // currentConfig.redoButton.removeAttribute('disabled');
+        }
+        currentConfig.undoFinishedStatus = 1;
+    });
+
+    currentConfig.canvasState = [];
+    currentConfig.currentStateIndex -= 1;
+    currentConfig.undoFinishedStatus = 1;
+
+    addedImages = [];
+    addedTexts = []
+}
+
+var readyToSave = false;
+var firstSave = false;
+function handleReadyToSaveState(statut, start) {
+    if(statut === true){
+        if(start){
+            updateModifications(true, "readyToSave");
+            // firstSave = true;
+        }
+        readyToSave = true;
+    }else{
+        readyToSave = false;
+    }
+}
 
 
 
@@ -812,9 +1006,8 @@ function handleChangeSize(width, height, name, maxChar) {
 
     var stop = false
     setMeasurmentValue(canvas)
+    setMeasurmentValue(backCanvas)
     if(firstLoad){
-        setMeasurmentValue(backCanvas)
-
         if(maxChar != -1){
             FtextObjects = handleGetTextObjects1('aso-SignText')
             BtextObjects = handleGetTextObjects2('aso-SignText')
@@ -914,7 +1107,9 @@ function handleChangeSize(width, height, name, maxChar) {
     // }
 
 
-
+    // if(!firstLoad){
+    //     updateModifications(true, "selection de la size");
+    // }
 
     firstLoad = true
     return {
@@ -922,7 +1117,8 @@ function handleChangeSize(width, height, name, maxChar) {
         height: currentHeight,
         top: currentTop,
         left: currentLeft,
-        texts: addedTexts
+        texts: addedTexts,
+        maxChars: maxChar
     }
 }
 
@@ -1109,9 +1305,13 @@ function removeBorder(canva){
     });
     canva.renderAll();
 }
+var restartBorderSet = false
+function handleGetBorderRestart(restart){
+    restartBorderSet = restart
+}
 function handleSelectBorder(border, color) {
-    // console.log("handleSelectBorder", border);
-    if(!firstLoad){
+    // console.log("handleSelectBorder", restartBorderSet);
+    if(!firstLoad || restartBorderSet){
         activeBorder = border
         activeBorder2 = border
         if(color){
@@ -1142,7 +1342,7 @@ function handleSelectBorder(border, color) {
     function setBorder(canva, currBorder, activeColor){
         // console.log(currBorder, activeColor, "setBorder")
         var Objects = canva.getObjects();
-        Objects.forEach(function(object){
+        Objects.forEach(async function(object){
             if(object.type !== 'line'){
                 if(object.name === 'safeObject'){
                     if(currBorder === 'none'){
@@ -1160,8 +1360,7 @@ function handleSelectBorder(border, color) {
                             object.set('stroke', activeColor)
                         }else{
                             object.set('stroke', activeColor)
-                        }
-    
+                        }   
                     }
                     if(currBorder === 'old-world'){
                         // fabric.util.loadImage('../../old-world-border.png', function(img) {
@@ -1181,7 +1380,6 @@ function handleSelectBorder(border, color) {
                         // });
     
                         removeBorder(canva)
-    
                         if(selectedShape === 'square' || selectedShape === 'rounded-square'){
                             if(sizeRatio === 'small'){
                                 // fabric.util.loadImage( borderUrl+'/im_old-world.svg', function(img) {
@@ -1200,7 +1398,7 @@ function handleSelectBorder(border, color) {
                                 //     imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
                                 //     canva.renderAll();
                                 // });
-                                fabric.loadSVGFromURL(borderUrl+'/im_old-world.svg', (objects, options) => {
+                                await fabric.loadSVGFromURL(borderUrl+'/im_old-world.svg', (objects, options) => {
                                     var scaleX = object.width / objects[0].width                                 ;
                                     var scaleY = object.height / objects[0].height;
 
@@ -1215,8 +1413,9 @@ function handleSelectBorder(border, color) {
 
                                     // console.log("svg", svgGroup);
                                     canva.add(svgGroup);
-                                    canva.renderAll();
+                                    // canva.renderAll();
                                 });
+                                // console.log(canva.getObjects())
                             }
                             if(sizeRatio === 'big'){
                                 fabric.loadSVGFromURL(borderUrl+'/im_old-world.svg', (objects, options) => {
@@ -1293,13 +1492,19 @@ function handleSelectBorder(border, color) {
                 }
             }
         });
-        canva.renderAll();
+        // console.log(canva.getObjects())
+        canva.requestRenderAll();
     }
     firstBorderCheck = false
 
+    // if(readyToSave){
+    //     updateModifications(true, 'selection de border')
+    // }
+
     return {type: border, color: color}
 }
-function handlechangeBorderColor(color){
+function handlechangeBorderColor(color, position){
+    // console.log(color, position)
     if(!firstLoad){
         activeBorderColor = color;
         activeBorderColor2 = color;
@@ -1352,6 +1557,10 @@ function handlechangeBorderColor(color){
             canva.renderAll()
         }
     }
+
+    if(readyToSave){
+        updateModifications(true, 'selection de border color')
+    }
 }
 
 var currentSignColor = ''
@@ -1359,8 +1568,9 @@ var currentSignTextColor = 'black'
 var firstColorSet = true;
 var signBackground = 'color'
 var patternUrl = ''
-function handleChangeSignColor(name, pattern, textColor, defTextColor) {
+function handleChangeSignColor(name, pattern, textColor, defTextColor, restart) {
     currentSignColor = name;
+    var stop = true
     function setSignColor(canva){
         var Objects = canva.getObjects();
         Objects.forEach(function(object){
@@ -1381,9 +1591,10 @@ function handleChangeSignColor(name, pattern, textColor, defTextColor) {
                     if(object.name == "aso-SignText"){
                         object.set('fill', textColor.codeHex)
                     }
-                    if(textColor.sameForBorder){
-                        handlechangeBorderColor(textColor.codeHex)
+                    if(textColor.sameForBorder && stop){
+                        handlechangeBorderColor(textColor.codeHex, "white")
                         // console.log("change")
+                        stop = false
                     }
                 }else{
                     if(object.name == "aso-SignText"){
@@ -1397,14 +1608,16 @@ function handleChangeSignColor(name, pattern, textColor, defTextColor) {
         canva.renderAll();
     }
 
-    if(firstColorSet){
+    if(firstColorSet || restart){
         setSignColor(canvas)
         setSignColor(backCanvas)
     }else{
         setSignColor(activeCanvas)
     }
 
-    updateModifications(true, 'changer sign color')
+    if(readyToSave){
+        // updateModifications(true, 'changer sign color')
+    }
     firstColorSet = false
 
     return name
@@ -1432,8 +1645,10 @@ function setPattern(canva, image){
     })
 }
 function handleSetImageToSignBackground(image){
+    // console.log("setImageToSignBackground", image)
     setPattern(canvas, image)
     setPattern(backCanvas, image)
+    // updateModifications(true, 'changer sign color')
 }
 
 
@@ -1729,12 +1944,12 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
     if(signBackground === 'pattern'){
         setPattern(canvas, patternUrl);
     }
-    if(firstLoad){
-        setShape(backCanvas)
-        if(signBackground === 'pattern'){
-            setPattern(canvas, patternUrl);
-        }
-    }
+    setShape(backCanvas)
+    // if(firstLoad){
+    //     if(signBackground === 'pattern'){
+    //         setPattern(canvas, patternUrl);
+    //     }
+    // }
 
     if(!firstLoad){
         removeBorder(canvas)
@@ -1750,7 +1965,6 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
             handleSelectBorder(activeBorder2, activeBorderColor2)
         }
     }
-
     handleSelectFixingMethode(activeFixingMethode)
 }
 
@@ -1791,6 +2005,7 @@ function handleGetActiveFixing(type){
 }
 var activeFixingMethode = ''
 function handleSelectFixingMethode(methode){
+    // console.logf("qsqs")
     // console.log(methode, "Fixing methode")
     activeFixingMethode = methode
 
@@ -3858,17 +4073,19 @@ function handleSelectFixingMethode(methode){
     }
 
     setFixing(canvas)
-    if(firstLoad){
-        setFixing(backCanvas)
-    }
+    setFixing(backCanvas)
+    // if(firstLoad){
+    // }
 
-    setTimeout(function() {
-        // Comptez le nombre d'objets sur le canvas
-        var nombreObjets = canvas.getObjects().filter(objet => objet.name === 'standoff1');
+    // setTimeout(function() {
+    //     // Comptez le nombre d'objets sur le canvas
+    //     var nombreObjets = canvas.getObjects().filter(objet => objet.name === 'standoff1');
+        
+    //     // console.log("Nombre d'objets après ajout :", nombreObjets);
+    // }, 100);
+    if(readyToSave){
         updateModifications(true, 'selection de fixing')
-
-        // console.log("Nombre d'objets après ajout :", nombreObjets);
-    }, 100);
+    }
 
 }
 
@@ -4170,6 +4387,40 @@ let newId = 49
 var addedTexts = []
 var faceTextCharCount = 0
 var backTextCharCount = 0
+function resizeText(textObject) {
+    frontTextCharLength = sumOptionsPrice(FtextObjects, 'text').length
+    backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
+
+    var totalCharacters = 0
+
+    if(maxTextCharForSize !== -1 && ((activeSignFace === 'back' && backTextCharLength > maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize < frontTextCharLength)) ){
+        if(activeSignFace === 'front'){
+            totalCharacters = frontTextCharLength
+        }
+        if(activeSignFace === 'back'){
+            totalCharacters = backTextCharLength
+        }
+        
+        let charsToRemove = totalCharacters - maxTextCharForSize;
+        
+        activeCanvas.discardActiveObject();
+        activeCanvas.remove(textObject);
+
+        // Supprimer les caractères en trop de cet objet
+        textObject.text = textObject.text.slice(0, textObject.text.length - charsToRemove);
+        textObject.set('text', textObject.text)
+        
+        activeCanvas.add(textObject);
+        
+        charsToRemove = 0;
+        activeCanvas.renderAll();
+        textObject.set('scaleX', textObject.scaleX + 0.001)
+        textObject.set('scaleY', textObject.scaleY + 0.001)
+        activeCanvas.renderAll();
+        handleGetAddedTextValues(textObject);        
+        // break;
+    }
+}
 function handleAddTextToSign(clone){
 
     if(maxTextCharForSize === -1 || ((activeSignFace === 'back' && backTextCharLength < maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize > frontTextCharLength))){
@@ -4212,18 +4463,19 @@ function handleAddTextToSign(clone){
                 handleGetAddedTextValues(text2);  
             });
             text2.on('editing:exited', () => {
-                handleGetAddedTextValues(text2);              
+                handleGetAddedTextValues(text2);
+                resizeText(text2);
             });
             text2.on('selected', () => {   
                 handleGetAddedTextValues(text2);         
             });
             text2.on('mousedown', function() {
                 handleGetAddedTextValues(text2); 
-                updateModifications(true, 'deposer le text')
+                // updateModifications(true, 'deposer le text')
             });
             text2.on('mouseup', function() {
                 handleGetAddedTextValues(text2); 
-                updateModifications(true, 'deposer le text')
+                // updateModifications(true, 'deposer le text')
             });
     
             activeCanvas.add(text2);
@@ -4260,21 +4512,6 @@ function handleAddTextToSign(clone){
                 // pathStartOffset: 0
                 // minScaleLimit: 0.3
             })
-            function onInput(e) {
-                const textObject = e.target;
-                const maxCharacters = 10;
-              
-                console.log('dqsdqsdqdqdqdqdqdqsd')
-                if (textObject.text.length > maxCharacters) {
-                //   textObject.text = textObject.text.slice(0, maxCharacters);
-                }
-              
-                textObject.set('width', textObject.width);
-                textObject.set('height', textObject.height);
-                canvas.renderAll();
-            }
-            newText.on('before:render', onInput);
-            console.log(newText.onInput());
     
     
             newText.on('editing:entered', () => {
@@ -4282,18 +4519,19 @@ function handleAddTextToSign(clone){
             });
             
             newText.on('editing:exited', () => {   
-                handleGetAddedTextValues(newText);              
+                handleGetAddedTextValues(newText);        
+                resizeText(newText)         
             });
             newText.on('selected', () => {   
                 handleGetAddedTextValues(newText);         
             });
             newText.on('mousedown', function() {
                 handleGetAddedTextValues(newText); 
-                updateModifications(true, 'deposer le text')
+                // updateModifications(true, 'deposer le text')
             });
             newText.on('mouseup', function() {
                 handleGetAddedTextValues(newText); 
-                updateModifications(true, 'prendre le text')
+                // updateModifications(true, 'prendre le text')
             });
     
             activeCanvas.add(newText)
@@ -4333,6 +4571,7 @@ function sumOptionsPrice(arr, key) {
 }
 function handleChangeTextValue(event){
     var editor = document.getElementById('aso-text-editor')
+    console.log(maxTextCharForSize, "current max character", frontTextCharLength)
         
     var currentText = activeCanvas.getActiveObject();
     if(maxTextCharForSize === -1 || ((activeSignFace === 'back' && backTextCharLength < maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize > frontTextCharLength))){
@@ -4534,11 +4773,11 @@ function handleAddImageToSign(image, imageId){
 
             img.on('mousedown', function() {
                 handleGetAddedImageValues(img); 
-                updateModifications(true, "deposer l'image ")
+                // updateModifications(true, "deposer l'image ")
             });
             img.on('mouseup', function() {
                 handleGetAddedImageValues(img); 
-                updateModifications(true, "deposer l'image ")
+                // updateModifications(true, "deposer l'image ")
             });
 
             activeCanvas.add(img)
@@ -4808,6 +5047,7 @@ function handleFinishConfiguration(textsTable, imagesTable){
 
 
 export {
+    handleReadyToSaveState,
     handleGetCanvas,
     handleGetCurrentUnit,
     handleUndo,
@@ -4821,6 +5061,7 @@ export {
     handleCenterHorizontally,
     handlechangeBorderColor,
     handleSelectBorder,
+    handleGetBorderRestart,
     handleChangeSignColor,
     handleGetShape,
     handleSelectShape,
@@ -4848,6 +5089,7 @@ export {
     handleFlipImage,
     handleCheckActiveSignFace,
     handleCloneCanvas,
+    setPattern,
     handleSetImageToSignBackground,
     handleFinishConfiguration,
     handleGetCharPrice,

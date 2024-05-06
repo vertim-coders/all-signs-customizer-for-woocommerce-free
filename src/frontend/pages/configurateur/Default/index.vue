@@ -504,7 +504,7 @@
                         <div v-show="step == 'color'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-colors-section">
                             <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>    
         
-                            <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
+                            <div v-if="materialType === 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
                                 <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                     <div v-for="(colorr, id) in colorrs.allColors" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
                                         <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-16 aso-h-16 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
@@ -542,14 +542,13 @@
                                 </div>
                             </div>
         
-                            <div v-if="materialType == 'advance'" class="aso-w-full aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
-                                <p class="aso-font-medium" >List of colors</p>
+                            <div v-if="materialType === 'advance'" class="aso-w-full aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
                                 <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                    <div v-for="(colorr, id) in colorrs" class="aso-space-y-2 aso-full-center">
+                                    <div v-for="(colorr, id) in colorrs" class="aso-flex aso-flex-col aso-space-y-2 aso-full-center">
                                         <div class="aso-w-16 aso-h-16 aso-rounded-full aso-overflow-hidden">
                                             <img :src="colorr.image" class="aso-w-full aso-h-full" />
                                         </div>
-                                        <p class="aso-text-sm">{{colorr.name }}</p>
+                                        <p class="aso-text-sm">{{colorr.color.name}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -657,7 +656,7 @@
                                     <div class="aso-p-2 aso-space-y-2">
                                         <div v-for="(textObject, index) in addedTexts">
                                             <div :class="`${activeFace == textObject.canvasName ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-bg-zinc-100 aso-p-2`" @click="getTextObject(textObject)">
-                                                <p class="aso-text-sm">Text object {{ index }}</p>
+                                                <p class="aso-text-sm">Text object {{ index }} -- {{textObject.id}}</p>
                                                 <p class="aso-text-xs">{{textObject.text}}</p>
                                             </div>
                                         </div>
@@ -1277,7 +1276,8 @@
 
 <script setup>
     import { ref, onMounted, defineProps } from 'vue';
-    import {handleGetCanvas, handleGetCurrentUnit, handleUndo,
+    import {handleReadyToSaveState, 
+        handleGetCanvas, handleGetCurrentUnit, handleUndo,
         handleRedo,
         handleClearAll,
         handleGetObjectByName,
@@ -1288,6 +1288,7 @@
         handleCenterHorizontally,
         handlechangeBorderColor,
         handleSelectBorder,
+        handleGetBorderRestart,
         handleChangeSignColor,
         handleGetShape,
         handleSelectShape,
@@ -1315,6 +1316,7 @@
         handleFlipImage,
         handleCheckActiveSignFace,
         handleCloneCanvas,
+        setPattern,
         handleSetImageToSignBackground,
         handleFinishConfiguration,
         handleGetCharPrice,
@@ -1340,7 +1342,7 @@
     var configSectionIcons = ref({})
     var configOutputSettings = ref({})
 
-    console.log(props.config.data.settings.generals.output)
+    // console.log(props.config.data.settings.generals.output)
 
     var isLoaded = ref(true)
     function setIsLoadedToFalse() {
@@ -1353,7 +1355,7 @@
 
 
     var showOption = ref(false);
-    var step = ref('text');
+    var step = ref('');
     function closeOption(){
         showOption.value = false;
         step.value = '';
@@ -1375,8 +1377,10 @@
     var editImage = ref(false);
 
     var advancedComponent = ref({})
+    var advancedComponentId = ref(0)
     var addOptionsValue = ref({})
-    function showOptions(option, stepValue){
+    var addOptionId = ref(0)
+    function showOptions(option, stepValue, id){
         switch (option) {
             case 'fixing-methode':
                 if(fixinggs.value.length > 0){
@@ -1415,10 +1419,10 @@
             break;
 
             case "color":
-                if(colorrs.value.allColors.length > 0){
-                    step.value = option;
-                    showOption.value = true;
-                }
+                // if(colorrs.value.allColors.length >= 0){
+                // }
+                step.value = option;
+                showOption.value = true;
             break;
 
             case "text":
@@ -1440,6 +1444,7 @@
             case "add-options":
                 // if(currentMaterialTextImages.value.enableImage){
                 // }
+                addOptionId.value = id
                 addOptionsValue.value = stepValue;
                 step.value = option;
                 showOption.value = true;
@@ -1447,6 +1452,7 @@
 
             case "component":
                 if(stepValue && materialType.value == 'advance'){
+                    advancedComponentId.value = id
                     advancedComponent.value = stepValue;
                     step.value = option;
                     showOption.value = true;
@@ -1483,7 +1489,7 @@
     var canvasFace2Ref = ref(null);
     var canvas = null
     var canvasBack = null
-    var activeCanvas = canvas
+    var activeCanvas = null
 
     var defaultShadow = ref(new fabric.Shadow({
         color: 'black',
@@ -1517,7 +1523,7 @@
         configSectionIcons.value = props.config.data.settings.languageImages.images
         configOutputSettings.value = props.config.data.settings.generals.output
         
-        console.log(configSectionIcons.value)
+        // console.log(configSectionIcons.value)
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
@@ -1544,7 +1550,7 @@
             var canvasHeight = canvasContainer.clientHeight;
 
             canvas = new fabric.Canvas(canvasElementFace1,{
-                backgroundColor : "#f5f5f5",
+                // backgroundColor : "#f5f5f5",
                 width: canvasWidth, 
                 height: canvasHeight, 
                 // selectable: true,
@@ -1553,7 +1559,7 @@
                 name: 'front-face'
             });
             canvasBack = new fabric.Canvas(canvasElementFace2,{
-                backgroundColor : "#f5f5f5",
+                // backgroundColor : "#f5f5f5",
                 width: canvasElementFace2.clientWidth, 
                 height: canvasElementFace2.clientHeight, 
                 // selectable: true,
@@ -1658,6 +1664,7 @@
             }else{
                 getCanvas(canvas, canvasBack, 'simple')
             }
+            handleCloneCanvas(canvas, canvasBack)
         
             checkScreenSize();
             canvas.selection = false;
@@ -1696,32 +1703,44 @@
             canvasBack.on('selection:created', showObjectValues);
             canvasBack.on('selection:cleared', closeObjectValues);
             
-            handleCloneCanvas(canvas, canvasBack)
             activeCanvas = canvas
 
             window.addEventListener('resize', checkScreenSize);
-    
             // updateBarreSize()
         });
-
+        
         if(window.innerWidth < 688){
             showOption.value = true
         }
-
+        
         // selectMaterial(props.config.data.materials[0])
-
+        
         setScrollColor(configColors.value.backgroundColorHeader)
         setIsLoadedToFalse()
-
+        activeCanvas = canvas
+        
         return {
             canvas
         }
-
+        
     });
 
     var matchingFixings = ref([])
     var matchingBorders = ref([])
+    var firstSetLoad = ref(false)
     function selectSimpleFirstValue() {
+        handleReadyToSaveState(false);
+        firstSetLoad.value = false;
+        finalPrices.value = 0
+        optionsPrices.value = []
+
+        firstBorderCheck.value = true;
+        firstBorderColorCheck.value = true;
+        firstColorCheck.value = true;
+
+
+
+
         var stopSize = false
         if(sizees.value.length >0){
             sizees.value.forEach((sizee, id) => {
@@ -1744,11 +1763,14 @@
         }
 
         var stopBorder = false
+        matchingBorders.value = []
         if(borderrs.value.allBorders.length > 0){
             borderrs.value.allBorders.forEach((borderr, id) => {
                 allBorders.value.forEach((border, index) => {
                     if(borderr.manageBorderId == index){
                         matchingBorders.value.push({border, borderr})
+            // console.log(matchingBorders.value)
+
                     }
                 })
             })
@@ -1757,7 +1779,7 @@
             while (index < matchingBorders.value.length && !haveDefault) {
                 if(matchingBorders.value[index].borderr.isDefault){
                     // console.log(matchingBorders[index].borderr, "Default")
-                    selectBorder(matchingBorders.value[index].border.value, matchingBorders.value[index].borderr.settings, matchingBorders.value[index].borderr.additionalPrice, matchingBorders.value[index].borderr.excludeShapes, matchingBorders.value[index].borderr.excludeSizes)
+                    selectBorder(matchingBorders.value[index].border.value, matchingBorders.value[index].borderr.settings, matchingBorders.value[index].borderr.additionalPrice, matchingBorders.value[index].borderr.excludeShapes, matchingBorders.value[index].borderr.excludeSizes, index, true)
                     haveDefault = true
                     break;
                 }
@@ -1765,7 +1787,7 @@
             }
             if(!haveDefault){
                 console.log("first")
-                selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes)
+                selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0, true)
             }
         }else{
         }
@@ -1777,14 +1799,14 @@
             while (index < colorrs.value.allColors.length && !haveDefault) {
                 if(colorrs.value.allColors[index].isDefault){
                     // console.log(colorrs.value.allColors[index], "default")
-                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice )
+                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice, true )
                     haveDefault = true
                     break;
                 }
                 index++;
             }
             if(!haveDefault){
-                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice )
+                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice, true )
             }
         }else{
             // changeSignColor(color, colorr)
@@ -1837,12 +1859,12 @@
         }
 
         var stopFixing = false
+        matchingFixings.value = []
         if(fixinggs.value.length > 0){
             fixinggs.value.forEach((fixingg, id) => {
                 allFixings.value.forEach((fixing, index) => {
                     if(fixingg.fixingMethodId == index && !fixingg.excludeSizes.includes(currentSizeId) && !fixingg.excludeShapes.includes(currentShapeId)){
                         matchingFixings.value.push({fixing, fixingg})
-                        // console.log(matchingFixings)
                     }
                 })
             })
@@ -1956,10 +1978,20 @@
             })
         }
 
+        if(!firstSetLoad.value){
+            saveStep("select of first values")
+        }
+        handleReadyToSaveState(true, true)
+        firstSetLoad.value = true
     }
     function selectAdvanceFirstValue(){
+        handleReadyToSaveState(false);
+        finalPrices.value = 0
+
+        var stop = false
         var stopDefOption = false
         var stopOption = false
+
         currentMaterial.value.data.forEach(component => {
             if(!stop){
                 showOptions('component', component)
@@ -1969,11 +2001,12 @@
         advancedComponent.value.options.forEach( option => {
             if(!stopDefOption){
                 if(option.isDefault){
-                    console.log("option")
+                    // console.log('default')
                     selectSignModel(option)
                     stopDefOption = true
                 }
                 if(!option.isDefault && stopDefOption && !stopOption){
+                    // console.log('first')
                     selectSignModel(option)
                     stopDefOption = true
                     stopOption = true
@@ -1984,26 +2017,423 @@
 
 
     function undo() {
-        var options = handleUndo()
-        // currentSizeName.value = options.sizeName
-        // selectedShape.value = options.shape
-        // activeFace1Border.value = options.border
-        // activeFixingMethode.value = options.fixing
-        // activeSignColor.value = options.signColor
-        // console.log(options)
+        // console.log(stepArray.value.currentStateIndex , "Undo")
+        if(stepArray.value.currentStateIndex > 0){
+            previousStep()
+            var options = handleUndo()
+            addedTexts.value = options.texts
+            usedImages.value = options.images
+
+        }
         
     }
     function redo() {
         var options = handleRedo()
-        // currentSizeName.value = options.sizeName
-        // selectedShape.value = options.shape
-        // activeFace1Border.value = options.border
-        // activeFixingMethode.value = options.fixing
-        // activeSignColor.value = options.signColor
-        // console.log(options)
+        nextStep()
+        addedTexts.value = options.texts
+        usedImages.value = options.images
     }
     function clearAll() {
         handleClearAll()
+        clearStep()
+    }
+
+    var stepArray = ref({
+        states: [],
+        currentStateIndex: -1,
+        undoStatus: false,
+        redoStatus: false,
+        undoFinishedStatus: 1,
+        redoFinishedStatus: 1,
+    })
+    function saveStep(position){
+        // console.log(position)
+        var step = {
+            material: {
+                name: currentMaterial.value,
+                type: materialType.value,
+                values: selectedMaterial.value,
+                textImage: currentMaterialTextImages.value,
+            },
+            size: {
+                name: currentSizeName.value,
+                data: currentSizeData.value,
+                values: currentSizeValues.value,
+                settings: currentSizeSetting.value,
+            },
+            shape: selectedShape.value,
+            fixingMethod: {
+                value: activeFixingMethode.value,
+                excludeShapes: fixingExcludeShapes.value,
+                excludeSizes: fixingExcludeSizes.value,
+            },
+            color: {
+                textColor: signTextColor.value,
+                colorsObject: colorrs.value,
+
+                face1: {
+                    name: activeSignColor.value,
+                    codeHex: activeSignColorCode1.value,
+                    pattern: patternActive1.value
+                },
+                face2: {
+                    name: activeSignFace2Color.value,
+                    codeHex : activeSignColorCode2.value,
+                    pattern: patternActive2.value
+                },
+
+                firstColorCheck: firstColorCheck.value,
+            },
+            border: {
+                face1: {
+                    type: activeFace1Border.value,
+                    colorForBorder: colorForBorder1.value,
+                    color: activeFace1BorderColor.value,
+
+                    excludeShapes: border1ExcludeShapes.value,
+                    excludeSizes: border1ExcludeSizes.value
+                },
+                face2: {
+                    type: activeFace2Border.value,
+                    colorForBorder: colorForBorder2.value,
+                    color: activeFace2BorderColor.value,
+
+                    excludeShapes: border2ExcludeShapes.value,
+                    excludeSizes: border2ExcludeSizes.value
+                },
+            },
+            texts: [...addedTexts.value],
+            images: [...usedImages.value],
+            price: finalPrices.value,
+        }
+        // console.log(usedImages.value, "usedImages")
+        if(stepArray.value.currentStateIndex < stepArray.value.states.length-1){
+            var indexToBeInserted = stepArray.value.currentStateIndex+1;
+            stepArray.value.states[indexToBeInserted] = step;
+            var numberOfElementsToRetain = indexToBeInserted+1;
+            stepArray.value.states = stepArray.value.states.splice(0,numberOfElementsToRetain);
+        }else{
+            stepArray.value.states.push(step);
+        }
+        stepArray.value.currentStateIndex = stepArray.value.states.length-1;
+        if((stepArray.value.currentStateIndex == stepArray.value.states.length-1) && stepArray.value.currentStateIndex != -1){
+            // stepArray.value.redoButton.disabled= "disabled";
+        }
+
+        console.log(stepArray.value.states, "states INDEX")
+        // console.log(stepArray.value.currentStateIndex, "state index")
+    }
+    function previousStep(){
+        handleReadyToSaveState(false);
+
+        if(stepArray.value.undoFinishedStatus){
+            if(stepArray.value.currentStateIndex == -1){
+                stepArray.value.undoStatus = false;
+            }
+            else{
+                if (stepArray.value.states.length >= 1) {
+                    stepArray.value.undoFinishedStatus = 0;
+                    if(stepArray.value.currentStateIndex != 0){
+                        stepArray.value.undoStatus = true;
+    
+                        var currentStep = stepArray.value.states[stepArray.value.currentStateIndex-1]
+                        // console.log(stepArray.value.states[stepArray.value.currentStateIndex-1].images, "all states")
+                        currentMaterial.value = currentStep.material.name
+                        materialType.value = currentStep.material.type
+                        selectedMaterial.value = currentStep.material.values
+                        currentMaterialTextImages.value = currentStep.material.textImage
+
+                        selectedShape.value = currentStep.shape
+                        handleGetShape(selectedShape.value)
+
+                        activeFixingMethode.value = currentStep.fixingMethod.value
+                        fixingExcludeShapes.value = currentStep.fixingMethod.excludeShapes
+                        fixingExcludeSizes.value = currentStep.fixingMethod.excludeSizes
+                        handleGetActiveFixing(activeFixingMethode.value)
+
+                        currentSizeName.value = currentStep.size.name
+                        currentSizeData.value = currentStep.size.data
+                        currentSizeValues.value = currentStep.size.values
+                        handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
+                        
+                        signTextColor.value = currentStep.color.textColor
+                        colorrs.value = currentStep.color.colorsObject
+                        activeSignColor.value = currentStep.color.face1.name
+                        activeSignColorCode1.value = currentStep.color.face1.codeHex
+                        patternActive1.value = currentStep.color.face1.pattern
+                        activeSignFace2Color.value = currentStep.color.face2.name
+                        activeSignColorCode2.value = currentStep.color.face2.codeHex
+                        patternActive2.value = currentStep.color.face2.pattern
+
+                        firstColorCheck.value = currentStep.color.firstColorCheck
+
+                        if(materialType.value === 'advance'){
+                            setImageToSignBackground(activeSignColorCode1.value, activeSignColor.value)
+                        }else{
+                            if(activeFace.value === 'front-face' && patternActive1.value){
+                                setPattern(canvas, activeSignColorCode1.value)
+                            }
+                            if(activeFace.value === 'back-face' && patternActive2.value){
+                                setPattern(canvasBack, activeSignColorCode2.value)
+                            }
+                        }
+    
+                        activeFace1Border.value = currentStep.border.face1.type
+                        activeFace1BorderColor.value = currentStep.border.face1.color
+                        border1ExcludeShapes.value = currentStep.border.face1.excludeShapes
+                        border1ExcludeSizes.value = currentStep.border.face1.excludeSizes
+    
+                        activeFace2Border.value = currentStep.border.face2.type
+                        activeFace2BorderColor.value = currentStep.border.face2.color
+                        border2ExcludeShapes.value = currentStep.border.face2.excludeShapes
+                        border2ExcludeSizes.value = currentStep.border.face2.excludeSizes
+    
+                        if(materialType.value === 'simple'){
+                            if(activeFace.value === 'front-face'){
+                                handleSelectBorder(activeFace1Border.value)
+                                if(activeFace1Border.value !== 'none'){
+                                    // console.log(activeFace1BorderColor.value, "front-face")
+                                }
+                                // handlechangeBorderColor(activeFace1BorderColor.value)
+                            }else{
+                                handleSelectBorder(activeFace2Border.value)
+                                if(activeFace2Border.value !== 'none'){
+                                    // handlechangeBorderColor(activeFace2BorderColor.value)
+                                }
+                            }
+                        }
+                        // addedTexts.value = currentStep.texts
+                        // usedImages.value = currentStep.images
+    
+                        // console.log(currentStep.images, "added")
+    
+                        finalPrices.value = currentStep.price
+    
+                        stepArray.value.undoStatus = false;
+                        stepArray.value.currentStateIndex -= 1;
+                        // stepArray.value.undoButton.removeAttribute("disabled");
+                        if(stepArray.value.currentStateIndex !== stepArray.value.states.length-1){
+                            // stepArray.value.redoButton.removeAttribute('disabled');
+                        }
+                        stepArray.value.undoFinishedStatus = 1;
+                    }
+                    else if(stepArray.value.currentStateIndex == 0){
+                        var currentStep = stepArray.value.states[0]
+
+                        currentMaterial.value = currentStep.material.name
+                        materialType.value = currentStep.material.type
+                        selectedMaterial.value = currentStep.material.values
+                        currentMaterialTextImages.value = currentStep.material.textImage
+
+                        selectedShape.value = currentStep.shape
+                        handleGetShape(selectedShape.value)
+
+                        activeFixingMethode.value = currentStep.fixingMethod.value
+                        fixingExcludeShapes.value = currentStep.fixingMethod.excludeShapes
+                        fixingExcludeSizes.value = currentStep.fixingMethod.excludeSizes
+                        handleGetActiveFixing(activeFixingMethode.value)
+
+                        currentSizeName.value = currentStep.size.name
+                        currentSizeData.value = currentStep.size.data
+                        currentSizeValues.value = currentStep.size.values
+                        handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
+                        
+                        signTextColor.value = currentStep.color.textColor
+                        colorrs.value = currentStep.color.colorsObject
+                        activeSignColor.value = currentStep.color.face1.name
+                        activeSignColorCode1.value = currentStep.color.face1.codeHex
+                        patternActive1.value = currentStep.color.face1.pattern
+                        activeSignFace2Color.value = currentStep.color.face2.name
+                        activeSignColorCode2.value = currentStep.color.face2.codeHex
+                        patternActive2.value = currentStep.color.face2.pattern
+
+                        firstColorCheck.value = currentStep.color.firstColorCheck
+
+                        if(materialType.value === 'advance'){
+                            setImageToSignBackground(activeSignColorCode1.value, activeSignColor.value)
+                        }else{
+                            if(activeFace.value === 'front-face' && patternActive1.value){
+                                setPattern(canvas, activeSignColorCode1.value)
+                            }
+                            if(activeFace.value === 'back-face' && patternActive2.value){
+                                setPattern(canvasBack, activeSignColorCode2.value)
+                            }
+                        }
+    
+                        activeFace1Border.value = currentStep.border.face1.type
+                        activeFace1BorderColor.value = currentStep.border.face1.color
+                        border1ExcludeShapes.value = currentStep.border.face1.excludeShapes
+                        border1ExcludeSizes.value = currentStep.border.face1.excludeSizes
+    
+                        activeFace2Border.value = currentStep.border.face2.type
+                        activeFace2BorderColor.value = currentStep.border.face2.color
+                        border2ExcludeShapes.value = currentStep.border.face2.excludeShapes
+                        border2ExcludeSizes.value = currentStep.border.face2.excludeSizes
+    
+                        if(materialType.value === 'simple'){
+                            if(activeFace.value === 'front-face'){
+                                handleSelectBorder(activeFace1Border.value)
+                                if(activeFace1Border.value !== 'none'){
+                                    // console.log(activeFace1BorderColor.value, "front-face")
+                                }
+                                // handlechangeBorderColor(activeFace1BorderColor.value)
+                            }else{
+                                handleSelectBorder(activeFace2Border.value)
+                                if(activeFace2Border.value !== 'none'){
+                                    // handlechangeBorderColor(activeFace2BorderColor.value)
+                                }
+                            }
+                        }
+                        // addedTexts.value = currentStep.texts
+                        // usedImages.value = currentStep.images
+    
+                        // console.log(currentStep.images, "added")
+    
+                        finalPrices.value = currentStep.price
+    
+                        stepArray.value.undoFinishedStatus = 1;
+                        // stepArray.value.undoButton.disabled= "disabled";
+                        // stepArray.value.redoButton.removeAttribute('disabled');
+                        stepArray.value.currentStateIndex -= 1;
+                    }
+                }
+            }
+            handleReadyToSaveState(true);
+        }
+        
+    }
+    function nextStep(){
+        handleReadyToSaveState(false);
+
+        if(stepArray.value.redoFinishedStatus){
+            if((stepArray.value.currentStateIndex == stepArray.value.states.length-1) && stepArray.value.currentStateIndex != -1){
+                // stepArray.value.redoButton.disabled= "disabled";
+            }else{
+                if (stepArray.value.states.length > stepArray.value.currentStateIndex && stepArray.value.states.length != 0){
+                    // console.log("stepArray.value")
+                    stepArray.value.redoFinishedStatus = 0;
+                    stepArray.value.redoStatus = true;
+
+                    var currentStep = stepArray.value.states[stepArray.value.currentStateIndex+1]
+
+                    currentMaterial.value = currentStep.material.name
+                    materialType.value = currentStep.material.type
+                    selectedMaterial.value = currentStep.material.values
+                    currentMaterialTextImages.value = currentStep.material.textImage
+
+                    selectedShape.value = currentStep.shape
+                    handleGetShape(selectedShape.value)
+
+                    activeFixingMethode.value = currentStep.fixingMethod.value
+                    fixingExcludeShapes.value = currentStep.fixingMethod.excludeShapes
+                    fixingExcludeSizes.value = currentStep.fixingMethod.excludeSizes
+                    handleGetActiveFixing(activeFixingMethode.value)
+
+                    currentSizeName.value = currentStep.size.name
+                    currentSizeData.value = currentStep.size.data
+                    currentSizeValues.value = currentStep.size.values
+                    handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
+                    
+                    signTextColor.value = currentStep.color.textColor
+                    colorrs.value = currentStep.color.colorsObject
+                    activeSignColor.value = currentStep.color.face1.name
+                    activeSignColorCode1.value = currentStep.color.face1.codeHex
+                    patternActive1.value = currentStep.color.face1.pattern
+                    activeSignFace2Color.value = currentStep.color.face2.name
+                    activeSignColorCode2.value = currentStep.color.face2.codeHex
+                    patternActive2.value = currentStep.color.face2.pattern
+
+                    firstColorCheck.value = currentStep.color.firstColorCheck
+
+                    if(materialType.value === 'advance'){
+                        setImageToSignBackground(activeSignColorCode1.value, activeSignColor.value)
+                    }else{
+                        if(activeFace.value === 'front-face' && patternActive1.value){
+                            setPattern(canvas, activeSignColorCode1.value)
+                        }
+                        if(activeFace.value === 'back-face' && patternActive2.value){
+                            setPattern(canvasBack, activeSignColorCode2.value)
+                        }
+                    }
+
+                    activeFace1Border.value = currentStep.border.face1.type
+                    activeFace1BorderColor.value = currentStep.border.face1.color
+                    border1ExcludeShapes.value = currentStep.border.face1.excludeShapes
+                    border1ExcludeSizes.value = currentStep.border.face1.excludeSizes
+
+                    activeFace2Border.value = currentStep.border.face2.type
+                    activeFace2BorderColor.value = currentStep.border.face2.color
+                    border2ExcludeShapes.value = currentStep.border.face2.excludeShapes
+                    border2ExcludeSizes.value = currentStep.border.face2.excludeSizes
+
+                    if(activeFace.value === 'front-face'){
+                        handleSelectBorder(activeFace1Border.value)
+                        if(activeFace1Border.value !== 'none'){
+                            // console.log(activeFace1BorderColor.value, "front-face")
+                        }
+                        // handlechangeBorderColor(activeFace1BorderColor.value)
+                    }else{
+                        handleSelectBorder(activeFace2Border.value)
+                        if(activeFace2Border.value !== 'none'){
+                            // handlechangeBorderColor(activeFace2BorderColor.value)
+                        }
+                    }
+                    // addedTexts.value = currentStep.texts
+                    // usedImages.value = currentStep.images
+
+                    // console.log(currentStep.images, "added")
+
+                    finalPrices.value = currentStep.price
+
+                    stepArray.value.redoStatus = false;
+                    stepArray.value.currentStateIndex += 1;
+                    if(stepArray.value.currentStateIndex != -1){
+                        // stepArray.value.undoButton.removeAttribute('disabled');
+                    }
+                    stepArray.value.redoFinishedStatus = 1;
+                    if((stepArray.value.currentStateIndex == stepArray.value.states.length-1) && stepArray.value.currentStateIndex != -1){
+                    //   stepArray.value.redoButton.disabled= "disabled";
+                    }
+                }
+            }
+            handleReadyToSaveState(true);
+        }
+    }
+    function clearStep(){
+        currentSizeName.value = stepArray.value.states[0].size.name
+        currentSizeValues.value = stepArray.value.states[0].size.values
+
+        selectedShape.value = stepArray.value.states[0].shape
+        activeFixingMethode.value = stepArray.value.states[0].fixingMethod.value
+        fixingExcludeShapes.value = stepArray.value.states[0].fixingMethod.excludeShapes
+        fixingExcludeSizes.value = stepArray.value.states[0].fixingMethod.excludeSizes
+        
+        signTextColor.value = stepArray.value.states[0].color.textColor
+        activeSignColor.value = stepArray.value.states[0].color.face1.name
+        activeSignColorCode1.value = stepArray.value.states[0].color.face1.codeHex
+        patternActive1.value = stepArray.value.states[0].color.face1.pattern
+        activeSignFace2Color.value = stepArray.value.states[0].color.face2.name
+        activeSignColorCode2.value = stepArray.value.states[0].color.face2.codeHex
+        patternActive2.value = stepArray.value.states[0].color.face2.pattern
+
+        activeFace1Border.value = stepArray.value.states[0].border.face1.type
+        activeFace1BorderColor.value = stepArray.value.states[0].border.face1.color
+        border1ExcludeShapes.value = stepArray.value.states[0].border.face1.excludeShapes
+        border1ExcludeSizes.value = stepArray.value.states[0].border.face1.excludeSizes
+
+        activeFace2Border.value = stepArray.value.states[0].border.face2.type
+        activeFace2BorderColor.value = stepArray.value.states[0].border.face2.color
+        border2ExcludeShapes.value = stepArray.value.states[0].border.face2.excludeShapes
+        border2ExcludeSizes.value = stepArray.value.states[0].border.face2.excludeSizes
+
+        addedTexts.value = []
+        usedImages.value = []
+
+        finalPrices.value = stepArray.value.states[0].price
+
+        stepArray.value.states = []
+        stepArray.value.currentStateIndex = -1
+        stepArray.value.undoFinishedStatus = 1;
     }
 
 
@@ -2078,7 +2508,7 @@
             canva.getObjects().forEach((obj) => {
                 obj.setCoords()
                 if(obj.name === 'safeObject'){
-                    console.log(obj.left, obj.top, "safeObject is safe")
+                    // console.log(obj.left, obj.top, "safeObject is safe")
                     if(firstLoad){
                         currentSizeValues.value.left = obj.left 
                         currentSizeValues.value.top = obj.top
@@ -2186,27 +2616,30 @@
         var stopDefOption = false
         var stopOption = false
         if(material.type == 'advance'){
-            currentMaterial.value.data.forEach(component => {
-                if(!stop){
-                    showOptions('component', component)
-                    stop = true
-                }
-            })
-            advancedComponent.value.options.forEach( option => {
-                if(!stopDefOption){
-                    if(option.isDefault){
-                        console.log('default')
-                        selectSignModel(option)
-                        stopDefOption = true
-                    }
-                    if(!option.isDefault && stopDefOption && !stopOption){
-                        console.log('first')
-                        selectSignModel(option)
-                        stopDefOption = true
-                        stopOption = true
-                    }
-                }
-            })
+            // currentMaterial.value.data.forEach(component => {
+            //     if(!stop){
+            //         showOptions('component', component)
+            //         stop = true
+            //     }
+            // })
+            // advancedComponent.value.options.forEach( option => {
+            //     if(!stopDefOption){
+            //         if(option.isDefault){
+            //             console.log('default')
+            //             selectSignModel(option)
+            //             stopDefOption = true
+            //         }
+            //         if(!option.isDefault && stopDefOption && !stopOption){
+            //             console.log('first')
+            //             selectSignModel(option)
+            //             stopDefOption = true
+            //             stopOption = true
+            //         }
+            //     }
+            // })
+            if(firstLoad.value){
+                selectAdvanceFirstValue()
+            }
         }
 
         firstLoad.value = true
@@ -2214,9 +2647,13 @@
 
     var activeSignModelName = ref('')
     function selectSignModel(model){
+        handleReadyToSaveState(false);
+
+        firstSetLoad.value = false
+
         activeSignModelName.value = model.name
 
-        selectBorder('none')
+        handleSelectBorder('none')
         var borderPrice1Object = {
             name: "border1",
             price: 0
@@ -2289,11 +2726,24 @@
             price: modelPrice
         }
         getOptionPrice(modelPriceObject)
+
+        // if(firstSetLoad.value){
+        // }
+        saveStep('select model')
+        handleReadyToSaveState(true, true);
     }
 
 
-    function setImageToSignBackground(image, coolrName){
+    function setImageToSignBackground(image, colorName){
+        activeSignColor.value = colorName
+        activeSignColorCode1.value = image
+        patternActive1.value = true
+
+        activeSignFace2Color.value = colorName
+        activeSignColorCode2.value = image
+        patternActive2.value = true
         handleSetImageToSignBackground(image);
+        // console.log("setImageToSign")
     }
 
 
@@ -2506,84 +2956,102 @@
 
 
     function deleteObject(){
-        var object = activeCanvas.getActiveObject();
-        // addedTexts.value = handleDeleteObject(object)
-        if(object.type == 'i-text'){
-            addedTexts.value = handleDeleteObject(object)
-            selectText.value = false
-            console.log(addedTexts.value)
-
-            textsPrices.value = handleSetPrice()
-            var priceObject = {
-                name: 'none',
-                price: 0
-            }
-            getOptionPrice(priceObject)
-        }
-        if(object.type == 'image'){
-            usedImages.value = handleDeleteObject(object)
-            // selectText.value = false
-            console.log(usedImages.value, 'image')
-            // console.log(optionsPrices.value, "before")
-
-            var index = 0
-            while(index < optionsPrices.value.length){
-                if(optionsPrices.value[index].type === 'image'){
-                    const exists = usedImages.value.some(image => image.object.priceId === optionsPrices.value[index].id);
-                    if(!exists){
-                        optionsPrices.value.splice(index, 1)
+        console.log(activeCanvas.getActiveObject())
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                // addedTexts.value = handleDeleteObject(object)
+                if(object.type == 'i-text'){
+                    addedTexts.value = handleDeleteObject(object)
+                    selectText.value = false
+                    console.log(addedTexts.value)
+        
+                    textsPrices.value = handleSetPrice()
+                    var priceObject = {
+                        name: 'none',
+                        price: 0
                     }
+                    getOptionPrice(priceObject)
                 }
-                index ++
+                if(object.type == 'image'){
+                    usedImages.value = handleDeleteObject(object)
+                    // selectText.value = false
+                    console.log(usedImages.value, 'image')
+                    // console.log(optionsPrices.value, "before")
+        
+                    var index = 0
+                    while(index < optionsPrices.value.length){
+                        if(optionsPrices.value[index].type === 'image'){
+                            const exists = usedImages.value.some(image => image.object.priceId === optionsPrices.value[index].id);
+                            if(!exists){
+                                optionsPrices.value.splice(index, 1)
+                            }
+                        }
+                        index ++
+                    }
+                    var priceObject = {
+                        name: 'none',
+                        price: 0
+                    }
+                    getOptionPrice(priceObject)
+                }
             }
-            var priceObject = {
-                name: 'none',
-                price: 0
-            }
-            getOptionPrice(priceObject)
         }
     }
     function cloneObject(){
-        newImagePriceId.value = newImagePriceId.value + 1
-        var object = activeCanvas.getActiveObject();
-        if(object.type === 'i-text'){
-            handleCloneObject(object)
-        }
-        textsPrices.value = handleSetPrice()
-
-        var stop = false
-        if(object.type === 'image'){
-            optionsPrices.value.forEach(element => {
-                if(element.type){
-                    if(object.getSrc() === element.name && !stop){
-                        console.log(element, "qsdqsdqsdqsd")
-                        var imagePriceObject = {
-                            id: newImagePriceId.value,
-                            name: element.name,
-                            type: 'image',
-                            price: element.price
-                        }
-                        getOptionPrice(imagePriceObject) 
-                        stop = true
-                    }
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                newImagePriceId.value = newImagePriceId.value + 1
+                var object = activeCanvas.getActiveObject();
+                if(object.type === 'i-text'){
+                    handleCloneObject(object)
+                    saveStep('clonage du text');
                 }
-            });
-
-            usedImages.value = handleCloneObject(object, newImagePriceId.value)
+                textsPrices.value = handleSetPrice()
+        
+                var stop = false
+                if(object.type === 'image'){
+                    optionsPrices.value.forEach(element => {
+                        if(element.type){
+                            if(object.getSrc() === element.name && !stop){
+                                console.log(element, "qsdqsdqsdqsd")
+                                var imagePriceObject = {
+                                    id: newImagePriceId.value,
+                                    name: element.name,
+                                    type: 'image',
+                                    price: element.price
+                                }
+                                getOptionPrice(imagePriceObject) 
+                                stop = true
+                            }
+                        }
+                    });
+        
+                    usedImages.value = handleCloneObject(object, newImagePriceId.value)
+                }
+                var priceObject = {
+                    name: 'none',
+                    price: 0
+                }
+                getOptionPrice(priceObject)
+            }
         }
-        var priceObject = {
-            name: 'none',
-            price: 0
-        }
-        getOptionPrice(priceObject)
     }
     function centerHorizontally(){
-        var object = activeCanvas.getActiveObject();
-        handleCenterHorizontally(object)
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                handleCenterHorizontally(object)
+            }
+        }
     }
     function centerVertically(){
-        var object = activeCanvas.getActiveObject();
-        handleCenterVertically(object)
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                handleCenterVertically(object)
+            }
+        }
     }
 
 
@@ -2594,20 +3062,25 @@
     var customSizes = ref({})
     var allSizes = ref({})
     var currentSizeName = ref('')
+    var currentSizeData = ref({})
     var currentSize = ref('')
     var currentSizeId = ref(0)
     var currentSizeValues = ref({})
+    var currentSizeSetting = ref({})
     var currentSizeThickness = ref(false)
     function changeSize(sizeData, sizeSetting, sizeId) {
+        currentSizeData.value = sizeData
         // console.log(sizeData, sizeSetting, sizeId, "change size")
         if(sizeId != undefined){
             currentSizeId.value = sizeId
         }
 
         if(sizeSetting){
+            currentSizeSetting.value = sizeSetting
             textNumberForSize.value = sizeSetting.textNumber
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
         }else{
+            currentSizeSetting.value = {}
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, null)
         }
 
@@ -2675,6 +3148,10 @@
                 }
             }
         }
+
+        if(firstSetLoad.value){
+            saveStep('select size')
+        }
     }
     var currentThickValue = ref(0)
     function selectSizeThickness(thick){
@@ -2739,6 +3216,10 @@
             price: shapePrice
         }
         getOptionPrice(shapePriceObject)
+
+        if(firstSetLoad.value){
+            saveStep('select shape')
+        }
     }
 
     var firstBorderCheck = ref(true)
@@ -2759,9 +3240,11 @@
     var border2ExcludeShapes = ref([])
     var border1ExcludeSizes = ref([])
     var border2ExcludeSizes = ref([])
-    function selectBorder(border, settings, price, excludeShapes, excludeSizes, id) {
+    function selectBorder(border, settings, price, excludeShapes, excludeSizes, id, restart) {
         var border1Price = 0
         var border2Price = 0
+        
+        handleGetBorderRestart(restart)
 
         if(firstBorderCheck.value){
             var currentId = id
@@ -2803,19 +3286,21 @@
                 }
                 getOptionPrice(borderPrice2Object)
 
-                if(colorForBorder1.value){
+                var stop = false
+                if(colorForBorder1.value || colorForBorder2.value){
                     if(colors.length > 0){
                         changeBorderColor(colors[0].codeHex, colors[0].additionalPrice, colors[0].name)
                     }
                 }else{
-                    changeBorderColor(colorTextColor.value, 0)
+                    // console.log("WARNING")
+                    // changeBorderColor(colorTextColor.value, 0)
                 }
                 if(colorForBorder2.value){
                     if(colors.length > 0){
-                        changeBorderColor(colors[0].codeHex, colors[0].additionalPrice, colors[0].name)
+                        // changeBorderColor(colors[0].codeHex, colors[0].additionalPrice, colors[0].name)
                     }
                 }else{
-                    changeBorderColor(colorTextColor.value, 0)
+                    // changeBorderColor(colorTextColor.value, 0)
                 }
             }else{
                 face1BorderId.value = currentId
@@ -2911,10 +3396,11 @@
     var colorForBorder1 = ref(false)
     var colorForBorder2 = ref(false)
     function changeBorderColor(colorHex, price, name){
+        // console.log(name, "changeBorderColor")
         if(firstBorderColorCheck.value){
             borderColorName1.value = name
             activeFace1BorderColor.value = colorHex
-            handlechangeBorderColor(colorHex)
+            handlechangeBorderColor(colorHex, "first load fornt face")
             var borderColor1Price = price
             var borderColorPrice1Object = {
                 name: "border-color1",
@@ -2924,7 +3410,7 @@
 
             borderColorName2.value = name
             activeFace2BorderColor.value = colorHex
-            handlechangeBorderColor(colorHex)
+            handlechangeBorderColor(colorHex, "first load back face")
             var borderColor2Price = price
             var borderColorPrice2Object = {
                 name: "border-color2",
@@ -2935,7 +3421,7 @@
             if(activeFace.value === "front-face"){
                 borderColorName1.value = name
                 activeFace1BorderColor.value = colorHex
-                handlechangeBorderColor(colorHex)
+                handlechangeBorderColor(colorHex,"front face border color")
                 var borderColor1Price = price
     
                 var borderColorPrice1Object = {
@@ -2947,7 +3433,7 @@
             if(configDoublePart.value.active && activeFace.value === "back-face"){
                 borderColorName2.value = name
                 activeFace2BorderColor.value = colorHex
-                handlechangeBorderColor(colorHex)
+                handlechangeBorderColor(colorHex, "back face border color")
                 var borderColor2Price = price
     
                 var borderColorPrice2Object = {
@@ -2958,6 +3444,9 @@
             }
         }
 
+        if(firstSetLoad.value){
+            saveStep('select borderColor')
+        }
         firstBorderColorCheck.value = false
     }
 
@@ -2976,7 +3465,7 @@
     var colorTextColorName2 = ref("")
     var colorTextCodeHex1 = ref("")
     var colorTextCodeHex2 = ref("")
-    function changeSignColor(name, pattern, textColor, price) {
+    function changeSignColor(name, pattern, textColor, price, restart) {
         // console.log(color.name, "changeSignColor")
         var color1Price = 0
         var color2Price = 0
@@ -3140,23 +3629,27 @@
         var defTextColor = (configTextSettings.value.colors.length > 0 ? configTextSettings.value.colors[0].codeHex : "#000000")
         // console.log("change", textColor)
         if(textColor.active){
-            handleChangeSignColor(name, pattern, textColor)
+            handleChangeSignColor(name, pattern, textColor, defTextColor, restart)
             if(textColor.sameForBorder){
-                changeBorderColor(textColor.codeHex, 0)
+                changeBorderColor(textColor.codeHex, 0, textColor.name)
                 colorTextColor.value = textColor.codeHex
                 // colorForBorder.value = false
             }
             if(!textColor.sameForBorder){
+                // console.log("qsqdqsdqdsqs")
                 // colorForBorder.value = true
                 changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
             }
         }else{
             // colorForBorder.value = true
-            handleChangeSignColor(name, pattern, textColor, defTextColor)
+            handleChangeSignColor(name, pattern, textColor, defTextColor, restart)
             changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
         }
 
         firstColorCheck.value = false
+        // if(firstSetLoad.value){
+        //     saveStep('select signColor')
+        // }
     }
 
     var allFixings = ref({})
@@ -3182,6 +3675,9 @@
             getOptionPrice(fixingPriceObject)
         }
 
+        if(firstSetLoad.value){
+            saveStep('slect fixingMethode')
+        }
     }
 
     var additionalOptions = ref({})
@@ -3228,6 +3724,9 @@
             price: 0
         }
         getOptionPrice(priceObject)
+        if(firstSetLoad.value){
+            saveStep('add text to sign')
+        }
     }
     function getTextObject(object) {
         if(activeFace.value == object.canvasName){
@@ -3235,9 +3734,13 @@
             object.selected = true;
     
             selectedText.value.value = object.text
-    
-            activeCanvas.setActiveObject(object);
-            handleGetAddedTextValues(object)
+            
+            activeCanvas.getObjects().forEach(function(obj){
+                if(object.id === obj.id){
+                    activeCanvas.setActiveObject(obj);
+                    handleGetAddedTextValues(obj)
+                }
+            })
             activeCanvas.requestRenderAll();
         }
     }
@@ -3254,7 +3757,7 @@
         currentClipart.value = cliparts
         clipartId.value = id
     }
-    var usedImages = ref({})
+    var usedImages = ref([])
     var imageError = ref("")
     var newImagePriceId = ref(0)
     async function addImageToSign(image, title, price, id){
@@ -3286,13 +3789,20 @@
             console.log(imageError.value, "lsdfsdf", usedImages.value);
         }
 
+        if(firstSetLoad.value){
+            saveStep('add image to sign')
+        }
         // console.log(usedImages.value, "currznt images")
     }
     function editAddedImage(image){
         if(activeFace.value === image.canvasName){
             editImage.value = true
-            activeCanvas.setActiveObject(image);
-            handleGetAddedImageValues(image)
+            activeCanvas.getObjects().forEach(function(obj){
+                if(image.id === obj.id){
+                    activeCanvas.setActiveObject(obj);
+                    handleGetAddedImageValues(obj)
+                }
+            })
         }
     }
     function changeImageWidth(e){
@@ -3642,8 +4152,62 @@
             top: 20
         });
 
-        // Ajouter le filigrane au canvas
-        canva.add(watermark);
+        function applyWatermarkPattern(_canva_, imageUrl) {
+            // const img = new Image();
+            // img.src = imageUrl;
+
+            // img.onload = function() {
+            //     const patternCanvas = document.createElement("canvas");
+            //     const patternContext = patternCanvas.getContext("2d");
+            //     const patternZoom = 0.5;
+
+            //     const width = img.width * patternZoom;
+            //     const height = img.height * patternZoom;
+            //     patternCanvas.width = width;
+            //     patternCanvas.height = height;
+            //     patternContext.drawImage(img, 0, 0, width, height);
+
+            //     const pattern = _canva_.getContext("2d").createPattern(patternCanvas, "repeat");
+            //     _canva_.getContext("2d").save();
+            //     _canva_.getContext("2d").transform.apply(_canva_.getContext("2d"), Array.from(_canva_.viewportTransform));
+            //     _canva_.getContext("2d").globalAlpha = 0.07;
+            //     _canva_.getContext("2d").fillStyle = pattern;
+            //     _canva_.getContext("2d").fillRect(0, 0, _canva_.width, _canva_.height);
+            //     _canva_.getContext("2d").restore();
+            // }
+            var image
+            var objectLeft = 0
+            var objectTop = 0
+            var index = 0
+            while(index < 6){
+                image = fabric.Image.fromURL(configOutputSettings.value.waterMark, async function(img) {
+                    img.scale(0.4)
+                    
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
+
+                    objectLeft = objectLeft + newWidth
+                    objectTop = objectTop + newHeight
+
+                    img.top = objectTop
+                    img.left = objectLeft
+                    img.selectable = false
+                    // img.uniScaleTransform = true
+                    // img.centeredScaling = true
+                    // img.lockScalingFlip = true,
+                    // img.originX = 'center'
+                    // img.originY = 'center'
+                    img.name = "aso-waterMark"
+                    // image = img
+
+                    // await canva.add(image)
+                    
+                });
+                console.log(image)
+                index++
+            }
+        }
 
         canva.getObjects().forEach(object => {
             if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
@@ -3672,6 +4236,8 @@
                     quality: 0.8
                 });
             }
+
+            applyWatermarkPattern(canva, configOutputSettings.value.waterMark);
         }else{
             const svgData = canvas.toSVG(); 
             // Créer un objet Blob avec les données SVG
@@ -3681,12 +4247,16 @@
         }
 
         canva.getObjects().forEach(object => {
+            // console.log(object)
             if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
                 object.set('visible', true);
             }
+            if(object.name === 'aso-waterMark'){
+                console.log(object)
+            }
         });
         canva.backgroundColor = background;
-        canva.remove(watermark);
+        // canva.remove(watermark);
 
         // Créer un lien de téléchargement
 
