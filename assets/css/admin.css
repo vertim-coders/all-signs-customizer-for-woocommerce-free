@@ -45,6 +45,11 @@ input[type=radio] {
   margin: 0 !important;
 }
 
+.aso-field-required {
+  border: solid 2px #ff0000 !important;
+  color: #ff0000 !important;
+}
+
 .hiddenInput {
   display: none !important;
 }

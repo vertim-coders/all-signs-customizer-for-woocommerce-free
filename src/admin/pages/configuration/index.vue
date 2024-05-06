@@ -550,7 +550,8 @@ const defaultSettings = ref({
         }
     },
     sortOptions: []
-  }
+  },
+  additionalOptions:[]
 });
 const metaConfigs = ref({
     "acrylic":{

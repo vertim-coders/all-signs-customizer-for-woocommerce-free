@@ -522,7 +522,7 @@
             </div>
         </div>
 
-        <!-- Delete Modal-->
+        <!-- Alert Modal-->
         <div v-if="openAlert" @click.self="closeAlert" :key="key" v-for="(color,key) in addColors" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
