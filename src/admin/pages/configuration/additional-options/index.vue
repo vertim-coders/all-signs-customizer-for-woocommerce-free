@@ -77,8 +77,8 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="aso-flex aso-items-center aso-justify-end aso-p-2 aso-text-black" v-if="additionals.length>1">
-                    <button @click="updateSortOptions" :disabled="isLoading" :class="`aso-bg-[#016464] aso-flex aso-items-center aso-justify-center aso-space-x-2 aso-p-2 aso-rounded-md aso-shadow-xl aso-text-white aso-font-medium aso-transition-all aso-ease-in-out aso-duration-1000 aso-border-none`">
+                <div class=" aso-flex aso-items-center aso-justify-end aso-p-2 aso-text-black" v-if="additionals.length>1">
+                    <button @click="updateSortOptions" :disabled="isLoading" :class="`aso-bg-[#016464] aso-flex aso-items-center aso-justify-center aso-space-x-2 aso-p-2 aso-rounded-md aso-shadow-xl aso-text-white aso-font-medium aso-transition-all aso-ease-in-out aso-duration-1000 aso-border-none aso-cursor-pointer`">
                         <div v-if="isLoading" class="p-0">
                             <img src="../../../../../assets/icons/ic_loading_gray.svg" alt="" class="aso-w-6 aso-h-6 "/>
                         </div>
@@ -185,9 +185,6 @@ const sortable =ref();
 const newIndexs = ref([]);
 const openModal=ref(false);
 
-const back = () =>{
-    news.value = false;
-}
 onMounted(async () => {
     isFetching.value = true;
     await fetchAdditionalOptions();
@@ -217,6 +214,11 @@ const fetchAdditionalOptions = async () =>{
         additionals.value = [];
     }else{
         additionals.value = data;
+        let tab = [];
+        for (let index = 0; index < data.length; index++) {
+            tab.push(index);
+        }
+        newIndexs.value = tab;
     }
 }
 const newAdditionalOptions = () =>{
@@ -241,6 +243,7 @@ const updateSortOptions = async () => {
     const  newOrderOfCustomAdditionals = sortArrayByIndices(additionals.value,newIndexs.value);
     const result = await api.updateCustomAdditionals(configId,newOrderOfCustomAdditionals);
     if(result.success){
+        additionals.value = newOrderOfCustomAdditionals;
         if (result.success == true) {
             toastMessage(result.message);
         }else{
@@ -254,13 +257,12 @@ const updateSortOptions = async () => {
 const sortArrayByIndices = (array, indices) => {
     return indices.map(index => array[index]);
 }
-const changeAdditionals = (action,value,message,index=null)=>{
+const changeAdditionals = async(action,message)=>{
+    await fetchAdditionalOptions();
+    edit.value = false;
   if(action=='add'){
-    additionals.value.push(value);
     toastMessage(message);
   }else if(action=='edit'){
-    edit.value = false;
-    additionals.value[index] =value;
     additionalOptionId.value = null;
     toastMessage(message);
   }
@@ -282,6 +284,7 @@ function newAdditionnal(){
 const changeAction = (value) => {
     edit.value = value;
     additionalOptionId.value = null;
+    type.value='yes/no';
 }
 
 </script>

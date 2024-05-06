@@ -213,7 +213,7 @@ const saveAdditional = async () => {
             emptyInputsNo.value = true;
             emptyInputsYes.value = true;
             props.changeOpen();
-            props.changeAdditionals('add',includedOption.value,op.message);
+            props.changeAdditionals('add',op.message);
         }else{
             toastMessage(op.message,'error')
         }
@@ -233,7 +233,7 @@ const updateAdditional = async () => {
             emptyInputsYes.value = true;
             props.changeOpen();
             props.changeAction(false);
-            props.changeAdditionals('edit',includedOption.value,props.id);
+            props.changeAdditionals('edit',op.message);
         }else{
             toastMessage(op.message,'error');
         }

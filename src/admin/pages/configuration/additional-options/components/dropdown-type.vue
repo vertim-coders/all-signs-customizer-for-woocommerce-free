@@ -25,11 +25,11 @@
                     <div class="aso-flex aso-justify-between aso-space-x-12">
                         <div class="aso-w-2/5 aso-space-y-2">
                             <label>Label</label>
-                            <input v-model="dropdownType.options.label" type="text" class="aso-w-full" value="Remote control (Dimmer)"/>
+                            <input v-model="dropdownType.options[key].label" type="text" class="aso-w-full" value="Remote control (Dimmer)"/>
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2">
                             <label>Value(Required)</label>
-                            <input v-model="dropdownType.options.value" type="text" :class="`aso-w-full ${emptyValueArray[key]?'aso-field-required':''}`" value="A remote control is included free with every sign"/>
+                            <input v-model="dropdownType.options[key].value" type="text" :class="`aso-w-full ${emptyValueArray[key]?'aso-field-required':''}`" value="A remote control is included free with every sign"/>
                         </div>
                     </div>
                     <div>
@@ -272,7 +272,7 @@ const saveAdditional = async () => {
         if(op.success){
             emptyLabel.value = false;
             props.changeOpen();
-            props.changeAdditionals('add',dropdownType.value,op.message);
+            props.changeAdditionals('add',op.message);
         }else{
             toastMessage(op.message,'error');
         }
@@ -294,7 +294,7 @@ const updateAdditional = async () => {
             emptyLabel.value = false;
             props.changeAction(false);
             props.changeOpen();
-            props.changeAdditionals('edit',dropdownType.value,op.message,props.id);
+            props.changeAdditionals('edit',op.message);
         }else{
             toastMessage(op.message,'error');
         }

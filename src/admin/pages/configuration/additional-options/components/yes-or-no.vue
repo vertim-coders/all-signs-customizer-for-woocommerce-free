@@ -198,35 +198,6 @@ onMounted(()=>{
     }
 });
 
-
-
-const uploadPopupImage = () => { 
-    var uploader = wp.media(
-        {
-            title: 'Please set the picture',
-            button: {
-                text: "Select picture(s)"
-            },
-            multiple: false
-        }
-    )
-    .on(
-        'select',
-        function () {
-            var selection = uploader.state().get( 'selection' );
-            selection.map(
-                function (attachment) {
-                    attachment = attachment.toJSON();
-                    if(attachment.type == 'image'){
-                        yesOrNo.value.popImg=attachment.url;
-                    }
-                }
-            );
-        }
-    )
-    .open();
-}
-
 const setBack = () => {
     yesOrNo.value = {
         type: "yes/no",
@@ -265,7 +236,7 @@ const saveAdditional = async () => {
             emptyInputsNo.value = true;
             emptyInputsYes.value = true;
             props.changeOpen();
-            props.changeAdditionals('add',yesOrNo.value,op.message);
+            props.changeAdditionals('add',op.message);
         }else{
             toastMessage(op.message,'error')
         }
@@ -292,7 +263,7 @@ const updateAdditional = async () => {
             emptyInputsYes.value = true;
             props.changeOpen();
             props.changeAction(false);
-            props.changeAdditionals('edit',yesOrNo.value,op.message,props.id);
+            props.changeAdditionals('edit',op.message);
         }else{
             toastMessage(op.message,'error')
         }

@@ -107,7 +107,7 @@ const saveAdditional = async () => {
         if(op.success){
             emptyLabel.value = true;
             props.changeOpen();
-            props.changeAdditionals('add',noteType.value,op.message);
+            props.changeAdditionals('add',op.message);
         }else{
             toastMessage(op.message,'error');
         }
@@ -125,7 +125,7 @@ const updateAdditional = async () => {
             emptyLabel.value = true;
             props.changeAction(false);
             props.changeOpen();
-            props.changeAdditionals('edit',noteType.value,op.message,props.id);
+            props.changeAdditionals('edit',op.message);
         }else{
             toastMessage(op.message,'error');
         }

@@ -364,15 +364,17 @@ const setBack = () => {
 const saveAdditional = async () => {
     if(inputTypeImage.value.label.trim() == ''){
         emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
     }else if(haveEmptyValue()!=-1){
         emptyValueArray.value[haveEmptyValue()] = true;
+        toastMessage("The value field must not be empty","warning");
     }else{
         isLoading.value = true;
         const op = await api.addCustomAdditional(route.params.configId,inputTypeImage.value);
         if(op.success){
             emptyLabel.value = false;
             props.changeOpen();
-            props.changeAdditionals('add',inputTypeImage.value);
+            props.changeAdditionals('add',op.message);
         }
         isLoading.value = false;
     }
@@ -392,7 +394,7 @@ const updateAdditional = async () => {
             emptyLabel.value = false;
             props.changeAction(false);
             props.changeOpen();
-            props.changeAdditionals('edit',inputTypeImage.value,props.id);
+            props.changeAdditionals('edit',op.message);
         }
         isLoading.value = false;
     }
