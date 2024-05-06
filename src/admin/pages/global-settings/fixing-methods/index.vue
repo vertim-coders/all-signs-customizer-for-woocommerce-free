@@ -183,7 +183,7 @@ onMounted(async ()=>{
         relative_urls: false,
         remove_script_host: false,
         convert_urls: true,
-        height: 400,
+        height: 200,
         width: '100%',
         branding: false
     });

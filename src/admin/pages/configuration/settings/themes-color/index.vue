@@ -105,13 +105,13 @@
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.backgroundColorContentSide"
-                                @input="updatebackgroundColorContentSideCodeHex"
+                                @input="updateBackgroundColorContentSideCodeHex"
                                 class="aso-w-9 aso-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.backgroundColorContentSide"
-                                @input="updatebackgroundColorContentSideCodeHex"
+                                @input="updateBackgroundColorContentSideCodeHex"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -653,7 +653,7 @@ const updateTextColorContentSideMenuCodeHex = (event) => {
     }
     themes.value.colors.textColorContentSideMenu = event.target.value;
 }
-const updatebackgroundColorContentSideCodeHex = (event) => {
+const updateBackgroundColorContentSideCodeHex = (event) => {
     if(event.target.value[0]!=='#'){
         event.target.value = '#'+ event.target.value;
     }

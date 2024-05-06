@@ -9,7 +9,7 @@
                         </g>
                     </svg>
                     <div class="aso-text-[14px]">
-                        Add new colors palettes
+                        Add material Color
                     </div>
                 </button>
             </div>
@@ -297,10 +297,15 @@
                 </div>
             </div>
             <div class="aso-space-y-2" v-if="!isEdit">
-                <div class="aso-relative aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-2" v-for="(color,key) in addColors">
-                    <div v-if="!dropdownColors[key]">
+                <div class="aso-relative aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-2" :key="key" v-for="(color,key) in addColors">
+                    <div v-if="!dropdownColors[key]" class="aso-flex aso-space-x-4">
                         <h2 class="aso-text-[15px] aso-font-bold">{{ key+1 }}.</h2>
+                        <div class="aso-translate-y-3.5">
+                            <span class="aso-text-[15px] aso-font-bold">{{ addColors[key].name }}</span>
+                            <span v-if="addColors[key].name" class="aso-text-[15px] aso-font-bold"> - {{ addColors[key].additionalPrice }}</span>
+                        </div>
                     </div>
+
                     <div class="aso-flex aso-justify-between" v-show="dropdownColors[key]">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Color Name</label>
@@ -433,7 +438,7 @@
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
                         <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]"  @blur="addColors[key].additionalPrice.trim()==''?addColors[key].additionalPrice=0:''">
                     </div>
-                    <div @click="handleDeleteNewMaterialColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-my-0  aso-top-0 aso-shadow-md aso-rounded-full">
+                    <div @click="handleDeleteColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-my-0  aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
@@ -516,6 +521,32 @@
                 </div>
             </div>
         </div>
+
+        <!-- Alert Modal-->
+        <div v-if="openAlert" @click.self="closeAlert" :key="key" v-for="(color,key) in addColors" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="closeAlert" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-alert-hide="popup-alert">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close alert</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this color?</h3>
+                        <input v-model="addColors[key].name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
+                        <button @click="handleDeleteNewMaterialColor(key)" data-alert-hide="popup-alert" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            Yes, I'm sure
+                        </button>
+                        <button @click.stop="closeAlert" data-alert-hide="popup-alert" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
@@ -543,6 +574,7 @@ const colors = ref ({
 
 const isEdit = ref(false);
 const openModal = ref(false);
+const openAlert = ref(false);
 const noColorsFound = ref('');
 const color = ref({
     isDefault:false,
@@ -756,6 +788,9 @@ const deleteMaterialColor = async () => {
 const closeModal = () => {
     openModal.value = !openModal.value;
 }
+const closeAlert = () => {
+    openAlert.value = !openAlert.value;
+}
 
 
 const newColor = () => {
@@ -914,6 +949,12 @@ const handleAddNewMaterialColor = () => {
     }
     dropdownColors.value.push(true);
 }
+ 
+const handleDeleteColor = () => {
+    openAlert.value = true;
+    
+} 
+
 const handleDeleteNewMaterialColor = (key) => {
     var tab = [];
     for (let index = 0; index < addColors.value.length; index++) {
@@ -924,6 +965,7 @@ const handleDeleteNewMaterialColor = (key) => {
         addColors.value=tab;
         dropdownColors.value.splice(key,1);
     }
+    closeAlert()
 }
 
 const selectDefault = async(key) =>{
@@ -934,5 +976,37 @@ const selectDefault = async(key) =>{
         }
     }
     await updateColorInMaterialColor();
+}
+
+const selectMaterialPrevImage = async(e,key=-1) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            if(isEdit.value){
+                                addColors.value.prevImg = (attachment.url);
+                            }else{
+                                addColors.value[key].prevImg = (attachment.url);
+                            }
+                        }
+                    }
+                );
+            }
+        )
+        .open();
 }
 </script>

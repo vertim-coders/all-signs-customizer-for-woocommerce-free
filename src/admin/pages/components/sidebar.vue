@@ -60,6 +60,9 @@
                 </div>
             </button>
             
+        </div>
+        <div>
+            <img class="aso-w-full aso-h-1" src="../../../../assets/icons/ic_separator.svg" alt="">
         </div>      
         <div class="aso-flex aso-relative aso-justify-center aso-items-center">
             <button :class="`aso-w-fit aso-h-fit aso-bg-transparent aso-border-none aso-text-white hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer ${$route.path == '/global-settings/license' || $route.path == '/global-settings/configuration-page' || $route.path == '/global-settings/output' || $route.path == '/global-settings/shapes' || $route.path == '/global-settings/fixing-methods' || $route.path == '/global-settings/border' ? 'aso-opacity-100' :'aso-opacity-50'}`" @click="()=>this.$router.push('/global-settings/license')">
@@ -74,7 +77,7 @@
 
 
                 <div class="aso-text-[12px]">
-                    Settings general
+                    Global Settings
                 </div>
             </button>
             

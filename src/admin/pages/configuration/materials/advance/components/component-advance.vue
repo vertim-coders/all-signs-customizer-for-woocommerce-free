@@ -6,8 +6,8 @@
                     {{config}}
                 </div>
                 <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="()=>$router.push('/configs/'+configId+'/materials')">
-                    Material
+                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="()=>$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials')">
+                    Materials
                 </div>
                 <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
                 <div v-if="material.trim() != ''" class="aso-text-[16px] ">
@@ -91,7 +91,7 @@
                                 </span>
                             </td>
                             <td class="aso-px-6 aso-py-2 aso-flex aso-justify-center aso-space-x-2">
-                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="$router.push('/configs/'+configId+'/materials/'+materialId+'/advance/'+key+'/options')">
+                                <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/advance/'+componentAdvance.name+'/'+key+'/options')">
                                     <img class="aso-w-4 aso-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
                                     <span class="aso-text-[12px]">
                                         add options
@@ -111,7 +111,7 @@
         </div>
         <div class="aso-space-y-1" v-if="isNewComponentAdvance">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 ">
-                            Add sub component
+                Add component
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-20">
                 <div class="aso-flex aso-justify-between aso-px-4 aso-py-4">
@@ -209,9 +209,9 @@
 
     const route = useRoute()
     const configId = ref(route.params.configId);
+    const config = route.params.config.replace(/-/,' ');
+    const material = route.params.material.replace(/-/,' ');
     const materialId = ref(route.params.materialId);
-    const config =ref("");
-    const material = ref("")
     const isFetching = ref(false);
     const isNewComponentAdvance = ref(false);
     const isLoading = ref(false);
@@ -230,10 +230,6 @@
 
     onMounted(async ()=>{
         isFetching.value = true;
-        const res = await api.getConfig(configId.value);
-        config.value = res.name;
-        const resp = await api.getMaterial(configId.value,materialId.value);
-        material.value = resp.name;
         await fetchMaterialComponentAdvances();
         isFetching.value = false;
     });

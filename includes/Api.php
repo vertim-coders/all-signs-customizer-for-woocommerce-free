@@ -1,6 +1,7 @@
 <?php
 namespace ASO;
 
+use ASO\Api\Admin\Additionals_Options\ASO_Api_Customs_Additionals;
 use ASO\Api\Admin\ASO_Api_Configs;
 use ASO\Api\Admin\ASO_Api_GoogleFonts;
 use ASO\Api\Admin\ASO_Api_Manage_colors;
@@ -70,6 +71,9 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Globals_Settings'  ) ) {
             require_once __DIR__ . '/Api/Admin/Globals-Settings/Globals-Settings.php';
         }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Additionals_Options\ASO_Api_Customs_Additionals'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Additionals-Options/Custom-additionals.php';
+        }
         if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\Settings\ASO_Api_Customizer_Sign_Settings')){
             require_once __DIR__ . '/Api/Admin/Settings/Customizer-sign.php';
         }
@@ -100,6 +104,7 @@ class Api extends WP_REST_Controller {
         (new ASO_Materials_Simple())->register_routes();
         (new ASO_Materials_Advance())->register_routes();
         (new ASO_Api_GoogleFonts())->register_routes();
+        (new ASO_Api_Customs_Additionals())->register_routes();
         (new ASO_Api_Globals_Settings())->register_route();
         (new ASO_Api_General_Settings())->register_routes();
         (new ASO_Api_Customizer_Sign_Settings())->register_routes();

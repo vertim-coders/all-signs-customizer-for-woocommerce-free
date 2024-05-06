@@ -3,7 +3,7 @@
         <div class="aso-space-y-1" v-if="!createFont">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <span class="aso-font-bold">
-                    Fonts
+                    Manage Font
                 </span>
             </div>
             <div v-if="!isFetching" class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
@@ -48,7 +48,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="!isFetching" v-for="(font,key) in fonts" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-if="!isFetching" v-for="(font,key) in fonts" :key="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td class="aso-px-6 aso-text-[14px] aso-py-2 aso-text-center aso-space-x-2">
                                {{font.label}}
                             </td>
@@ -69,8 +69,10 @@
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 ">
                 Add new font
             </div>
-            
-            <div class="aso-flex aso-space-x-2 aso-w-full aso-p-8 aso-px-6">
+            <div class="aso-px-6 aso-translate-y-4 aso-text-[14px]">
+                Add a font from Google Font or upload your own
+            </div>
+            <div class="aso-flex aso-space-x-4 aso-w-full aso-p-8 aso-px-6">
                 <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                     <p class="aso-text-md aso-font-medium aso-text-black">Google Font</p>
                     <label for="uploadFont" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer">
@@ -87,58 +89,64 @@
                     </label>
                 </div>
             </div>
-            <div v-if="font.isGoogleFont" class="aso-px-20">
-                <div class="aso-py-3 aso-space-y-3">
-                    <label class="aso-text-md aso-font-medium aso-text-black">Choose Google font</label>
-                    <Multiselect
-                        v-model="selectedGoogleFont"
-                        placeholder="Select your font"
-                        label="name"
-                        trackBy="name"
-                        :options="allGoogleFonts"
-                        :searchable="true"
-                        :loading="isFetching"
-                        @select="(option)=>{font.label = option[0].label}"
-                    >
-                        <template v-slot:option="{ option }">
-                            {{ option.name }}
-                        </template>
+            <div v-if="font.isGoogleFont" class="aso-px-6 aso-py-6 -aso-translate-y-8">
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-w-2/5 aso-py-3 aso-space-y-3">
+                        <label class="aso-text-md aso-font-medium aso-text-black">Choose Google font</label>
+                        <Multiselect
+                            v-model="selectedGoogleFont"
+                            placeholder="Select your font"
+                            label="name"
+                            trackBy="name"
+                            :options="allGoogleFonts"
+                            :searchable="true"
+                            :loading="isFetching"
+                            @select="(option)=>{font.label = option[0].label}"
+                        >
+                            <template v-slot:option="{ option }">
+                                {{ option.name }}
+                            </template>
 
-                    </Multiselect>
-                </div>
-                <div class="aso-py-3 aso-space-y-3">
-                    <label class="aso-text-md aso-font-medium aso-text-black">Choose Google font Variant</label>
-                    <Multiselect
-                        v-model="font.url"
-                        placeholder="Select your variant"
-                        label="name"
-                        trackBy="name"
-                        :options="selectedGoogleFont"
-                        :searchable="true"
-                    >
-                        <template v-slot:option="{ option }">
-                            {{ option.name }}
-                        </template>
-    
-                    </Multiselect>
+                        </Multiselect>
+                    </div>
+                    <div class="aso-w-2/5 aso-py-3 aso-space-y-3">
+                        <label class="aso-text-md aso-font-medium aso-text-black">Choose Google font Variant</label>
+                        <Multiselect
+                            v-model="font.url"
+                            placeholder="Select your variant"
+                            label="name"
+                            trackBy="name"
+                            :options="selectedGoogleFont"
+                            :searchable="true"
+                        >
+                            <template v-slot:option="{ option }">
+                                {{ option.name }}
+                            </template>
+        
+                        </Multiselect>
+                    </div>
                 </div>
                 <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-2':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-4`">
                     <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black`">Font Label</label>
-                    <input type="text" v-model="font.label" :class="`aso-w-full aso-h-[35px] ${emptyFontLabel ? 'aso-border-red-500 aso-text-red-500 aso-border-solid ':''} `"/>
+                    <input type="text" v-model="font.label" :class="`aso-w-[40%] aso-h-[35px] ${emptyFontLabel ? 'aso-border-red-500 aso-text-red-500 aso-border-solid ':''} `"/>
                 </div>
             </div>
-            <div class="aso-flex aso-flex-col aso-space-x-2 aso-w-10/12" v-if="!font.isGoogleFont">
-                <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500':''} aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-py-6 aso-px-6`">
-                    <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black ${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid ':''}`">Upload here your own font</label>
-                    <div class="aso-flex space-x-2 aso-flex-row aso-w-full">
-                        <button @click="uploadFontFile" :class="`aso-flex aso-items-center aso-justify-center aso-space-x-2 aso-text-white aso-px-2 aso-rounded-md aso-shadow-zinc-400 aso-shadow-lg aso-text-white aso-font-medium aso-transition-all aso-ease-in-out aso-duration-1000 aso-border-solid aso-border-[#016464] aso-bg-[#016464] aso-text-white`">
-                            <p class="text-base">Choose a font</p>
-                        </button>
-                        <input type="text" name="" id="" class="aso-w-8/12 aso-text-white" readonly v-model="font.url">
+            <div class="aso-space-x-2 -aso-translate-y-6 aso-py-12" v-if="!font.isGoogleFont">
+                <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500':''} aso-flex aso-justify-between aso-px-6`">
+                    <div class="aso-space-y-3 aso-w-2/5">
+                        <label class="aso-text-md aso-font-medium aso-text-black aso-flex aso-flex-col">Label Font</label>
+                        <input type="text" v-model="font.label" :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid':''} aso-w-full aso-h-[39px]`"/>
                     </div>
-                    <div class="aso-py-[10px]">
-                        <input type="text" v-model="font.label" :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid':''} aso-w-10/12 aso-h-[35px]`"/>
+                    <div class="aso-w-2/5 aso-space-y-3">
+                        <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black ${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid ':''}`">Upload here your own font</label>
+                        <div class="aso-flex aso-space-x-2">
+                            <button @click="uploadFontFile" :class="`aso-w-1/3 aso-h-fit aso-p-2.5 aso-px-2 aso-rounded-md aso-shadow-zinc-400 aso-shadow-lg aso-font-medium aso-transition-all aso-ease-in-out aso-duration-1000 aso-border-solid aso-border-[#016464] aso-bg-[#016464] aso-text-white aso-cursor-pointer`">
+                                Choose a font
+                            </button>
+                            <input type="text" name="" id="" class="aso-text-white aso-w-full aso-h-[39px]" readonly v-model="font.url">
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">

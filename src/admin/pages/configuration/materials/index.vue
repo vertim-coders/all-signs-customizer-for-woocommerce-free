@@ -29,7 +29,7 @@
             <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full">
                     <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
-                        <div class="aso-flex aso-items-center aso-justify-center">Component Name</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Material Name</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Description</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Behavior (type)</div>
@@ -60,7 +60,7 @@
                             </span>
                         </div>
                         <div class="aso-flex aso-space-x-[1.5px] aso-justify-center aso-items-center aso-text-gray-500 dark:aso-text-gray-400">
-                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="redirectToMaterail(key,material.type)">
+                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="redirectToMaterail(key,material.name,material.type)">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../assets/icons/ic_manage.svg" alt="">
                                 <span class="aso-text-[12px]">
                                     Manage
@@ -69,9 +69,24 @@
                             <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectMaterialEdit(material,key)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
-                                <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
-                            </button>
+                            
+                            <div class="aso-bg-white aso-relative">
+                                <button class="aso-bg-transparent aso-border-none aso-cursor-pointer" @click="handleOpenMaterialParams(key)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-rotate-90 aso-h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                    </svg>
+                                </button>
+                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showPrams[key]=false;">
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectCloneMaterial(material)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                        </svg>
+                                    </button>
+                                    <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
+                                        <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,8 +94,8 @@
         </div>
         <div class="aso-space-y-0.5" v-if="isNewComponent">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div class="aso-font-bold aso-text-[16px]">
-                    Name config
+                <div  v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
+                    {{config}}
                 </div>
                 <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
                 <div class="aso-text-[16px]">
@@ -88,7 +103,7 @@
                 </div>
             </div>
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
-                Add component
+                Add material
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-6">
                 <div class="aso-flex aso-justify-between">
@@ -136,7 +151,7 @@
                     </div>
                 </div>
                 <div class="aso-space-y-2 aso-pt-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-font-bold">Behevior (type)</label>
+                    <label for="" class="aso-font-bold">Type</label>
                     <select name="" id="" class="aso-w-full aso-h-[30px] aso-font-normal" v-model="newMaterial.type" :disabled="isEdit">
                         <option value="simple">Simple</option>
                         <option value="advance">Advance</option>
@@ -192,6 +207,34 @@
                 </div>
             </div>
         </div>
+        <!-- Clone Modal-->
+        <div v-if="openCloneModal" @click.self="closeCloneModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
+                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                    <button @click.stop="closeCloneModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="aso-sr-only">Close modal</span>
+                    </button>
+                    <div class="aso-p-4 md:p-5 aso-text-center">
+                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Give the name of the new material, which will be an imitation of the current one.</h3>
+                        <input v-model="newMaterial.name" class="aso-rounded aso-w-full aso-h-[35px] aso-text-start aso-p-4 aso-my-2 aso-border-solid aso-border-gray-400" />
+                        <button @click="addNewMaterial" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-w-5" v-if="!isLoading">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                            Clone
+                        </button>
+                        <button @click.stop="closeCloneModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </div>
     <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-full">
         <div class="aso-relative aso-top-[50px] aso-p-4 aso-w-full aso-max-w-[60%] aso-max-h-fit">
@@ -220,7 +263,7 @@ import router from '@/admin/router';
 
 const route = useRoute()
 const configID = ref(route.params.configId)
-const config =ref("");
+const config =route.params.config.replace(/-/,' ');
 const materials = ref([]);
 const newMaterial = ref({
     name:"",
@@ -235,22 +278,38 @@ const isFetching = ref(false);
 const isNewComponent = ref(false);
 const isEdit = ref(false);
 const openModal = ref(false);
+const openCloneModal = ref(false);
 const openTnyMce = ref(false)
 const deleteMaterial = ref({
     id:null,
     name:""
 })
 const notFoundMessage = ref('');
-
+const showParams = ref([]);
 const fetchMaterials = async () => {
-const result = await api.getMaterials(configID.value);
-if(!result.message){
-    materials.value = result;
-}else{
-    materials.value = [];
-    notFoundMessage.value = result.message;
+    const result = await api.getMaterials(configID.value);
+    if(!result.message){
+        let tab=[];
+        materials.value = result;
+        for (let index = 0; index < result.length; index++) {
+            tab.push(false);
+            
+        }
+        showParams.value = tab;
+    }else{
+        materials.value = [];
+        notFoundMessage.value = result.message;
+    }
+    isFetching.value = false;
 }
-isFetching.value = false;
+const handleOpenMaterialParams  = (key)=>{
+    for (let index = 0; index < showParams.value.length; index++) {
+       if(key!=index){
+        showParams.value[index]=false;
+       }else{
+        showParams.value[key]=!showParams.value[key];
+       }
+    }
 }
 const getInitials = (str) => {
     const words = str.split(' ');
@@ -260,10 +319,6 @@ const getInitials = (str) => {
 }
 
 onMounted(async() => {
-    isFetching.value = true;
-    const res = await api.getConfig(configID.value);
-    config.value = res.name;
-    await fetchMaterials();
     tinymce.init({
         selector: '#aso-admin-tinymce',
         plugins: [
@@ -275,42 +330,46 @@ onMounted(async() => {
         relative_urls: false,
         remove_script_host: false,
         convert_urls: true,
-        height: 400,
+        height: 200,
         width: '100%',
         branding: false
     });
+    isFetching.value = true;
+    await fetchMaterials();
 
 });
 
 /**Function for adding */
 
 const addNewMaterial = async () => {
-isLoading.value = true;
-const result = await api.addMaterial(configID.value,newMaterial.value);
-if(result.success){
-    await fetchMaterials();
-    isLoading.value = false;
-    isNewComponent.value = false;
-    newMaterial.value = {
-        name:"",
-        description:"",
-        icon:"",
-        popImg:"",
-        type:"simple",
+    isLoading.value = true;
+    const result = await api.addMaterial(configID.value,newMaterial.value);
+    if(result.success){
+        await fetchMaterials();
+        isLoading.value = false;
+        isNewComponent.value = false;
+        newMaterial.value = {
+            name:"",
+            description:"",
+            icon:"",
+            popImg:"",
+            type:"simple",
+        }
+        openCloneModal.value=false;
+        toastMessage(result.message)
+    }else{
+        isLoading.value = false;
+        isNewComponent.value = false;
+        newMaterial.value = {
+            name:"",
+            description:"",
+            icon:"",
+            popImg:"",
+            type:"simple",
+        }
+        openCloneModal.value=false;
+        toastMessage(result.message,"error");
     }
-    toastMessage(result.message)
-}else{
-    isLoading.value = false;
-    isNewComponent.value = false;
-    newMaterial.value = {
-        name:"",
-        description:"",
-        icon:"",
-        popImg:"",
-        type:"simple",
-    }
-    toastMessage(result.message,"error");
-}
 }
 
 /** Fonction for image selection */
@@ -374,16 +433,20 @@ const selectMaterialIcon = async(e) => {
 const selectMaterialEdit = (material, id) => {
     materialId.value = id;
     newMaterial.value = material;
-    tinyMCE.activeEditor.setContent(material.popImg);
+    tinymce.activeEditor.setContent(material.popImg);
     isEdit.value = true;
     isNewComponent.value = true;
+}
+const selectCloneMaterial = (material)=> {
+    newMaterial.value = material;
+    openCloneModal.value = true;
 }
 
 const closeTnymceModal = ()=>{
     openTnyMce.value = !openTnyMce.value;
 }
 const savePopImg = ()=>{
-    newMaterial.value.popImg = tinyMCE.activeEditor.getContent();
+    newMaterial.value.popImg = tinymce.activeEditor.getContent();
     openTnyMce.value = false;
 }
 
@@ -462,6 +525,18 @@ const closeModal = ()=>{
         openModal.value = !openModal.value;
     }
 }
+const closeCloneModal = ()=>{
+    if(!isLoading.value){        
+        openCloneModal.value = false;
+        newMaterial.value = {
+            name:"",
+            description:"",
+            icon:"",
+            popImg:"",
+            type:"simple",
+        }
+    }
+}
 
 const addComponent = () => {
     isNewComponent.value = true;
@@ -478,11 +553,11 @@ const back = () => {
     }
 }
 
-const redirectToMaterail = (materialId,type) => {
+const redirectToMaterail = (materialId,materiral,type) => {
     if(type == 'simple'){
-        router.push('/configs/'+configID.value+'/materials/'+materialId+'/simple/sizes');
+        router.push('/configs/'+config+'/'+configID.value+'/materials/'+materiral+'/'+materialId+'/simple/sizes');
     }else{
-        router.push('/configs/'+configID.value+'/materials/'+materialId+'/advance');
+        router.push('/configs/'+config+'/'+configID.value+'/materials/'+materiral+'/'+materialId+'/advance');
     }
 }
   </script>

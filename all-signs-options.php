@@ -579,8 +579,8 @@ final class ASO_All_Signs_Options {
                         <img src="<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>" alt="" width="250"/>
                     </span>
                     <div>
-                        <h2><?php esc_html_e( "Welcome to All Signs Options. Let's get you started !!!", 'ASO' ) ?></h2>
-                        <p><?php _e( 'Configuration page is not defined for NCPC plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO' ); ?></p>
+                        <h2><?php esc_html_e( "Customization Page not found", 'ASO' ) ?></h2>
+                        <p><?php _e( 'To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO' ); ?></p>
                     </div>
                 </div>
                 <?php
@@ -593,8 +593,8 @@ final class ASO_All_Signs_Options {
                             <img src="<?php echo esc_url(ASO_ASSETS.'/images/im_aso-icon2.png')?>" alt="" width="250"/>
                         </span>
                         <div>
-                            <h2><?php esc_html_e( "Welcome to All Signs Options. Let's get you started !!!", 'ASO' ) ?></h2>
-                            <p><?php _e( 'Configuration page is not defined for NCPC plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO' ); ?></p>
+                            <h2><?php esc_html_e( "Customization Page not found", 'ASO' ) ?></h2>
+                            <p><?php _e( 'Configuration page is not defined for ASO plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO' ); ?></p>
                         </div>
                     </div>
                     <?php
@@ -733,7 +733,7 @@ final class ASO_All_Signs_Options {
                 </span>
                 <div>
                     <h2><?php esc_html_e( 'We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', 'ASO' ) ?></h2>
-                    <p><?php esc_html_e( 'To do this, go to',"NCPC")?> <a href="<?php echo admin_url('options-permalink.php')?>"><?php echo esc_html_e("Settings > Permanent links","NCPC")?></a></p>
+                    <p><?php esc_html_e( 'To do this, go to',"ASO")?> <a href="<?php echo admin_url('options-permalink.php')?>"><?php echo esc_html_e("Settings > Permanent links","ASO")?></a></p>
                 </div>
             </div>
       <?php  }
@@ -748,20 +748,20 @@ final class ASO_All_Signs_Options {
     public function get_license_activation_notice() {
 
         if ( class_exists( 'WooCommerce' ) ) {
-            $ncpc_settings = get_option("aso_pro_license");
+            $aso_settings = get_option("aso_pro_license");
             
 
-            if ( empty( $ncpc_settings ) ) {
+            if ( empty( $aso_settings ) ) {
                 ?>
                     <div class="notice notice-warning aso-licence-warning">
                         <p><b>All Signs Options Pro: </b><?php _e( "No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", 'ASO' ); ?></p>
                     </div>
                 <?php
             } else {
-                if(empty(get_option( 'ncpc_pro_activate_license')) || get_option( 'ncpc_pro_activate_license') == false){ ?>
+                if(empty(get_option( 'aso_pro_activate_license')) || get_option( 'aso_pro_activate_license') == false){ ?>
                     <div class="notice notice-error aso-licence-warning" style="display:none!important">
                         <p><b>All Signs Options Pro: </b><?php _e( 'You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', 'ASO' ); ?></p>
-                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate","NCPC")?></a>
+                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate","ASO")?></a>
                         <div id="aso-license-message"></div>
                     </div>
             <?php }

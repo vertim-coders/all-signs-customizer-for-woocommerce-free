@@ -5,28 +5,25 @@
         </div>
         <div class="aso-space-y-4" v-if="!isFetching">
             <div>
-                <div class="aso-bg-[#F8F9FB] aso-flex aso-flex-col aso-space-x-6 aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
-                    <div class=" aso-font-semibold">
-                        <div class="aso-flex aso-font-semibold">
-                            <label>Use ider id as zip name</label>
-                            <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                                <label for="aso-toggle" @click="handleZipName" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                    <div :class="{'aso-translate-x-[100%]': output.zipName, 'aso-bg-active': output.zipName }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
-                                </label>
-                            </div>
+                <div class="aso-bg-[#F8F9FB] aso-flex aso-flex-col aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
+                    <div class="aso-flex">
+                        <label>Use ider id as zip name</label>
+                        <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
+                            <label for="aso-toggle" @click="handleZipName" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                                <div :class="{'aso-translate-x-[100%]': output.zipName, 'aso-bg-active': output.zipName }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            </label>
                         </div>
-                        <p>Use the command id as the name of the zip file that will contain the uploaded files during customization.</p>
                     </div>
-                    <div class="aso-font-semibold">
-                        <div class="aso-flex aso-font-semibold">
-                            <label>Calculate retina output</label>
-                            <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                                <label for="aso-toggle" @click="handleCalculateOutput" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
+                    <div class="aso-font-semibold aso-text-[14px] aso-py-6">
+                        Use the command id as the name of the zip file that will contain the uploaded files during customization
+                    </div>
+                    <div class="aso-flex">
+                        <label>Calculate retina output</label>
+                        <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
+                            <label for="aso-toggle" @click="handleCalculateOutput" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
                                     <div :class="{'aso-translate-x-[100%]': output.calculateOutput, 'aso-bg-active': output.calculateOutput }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
-                                </label>
-                            </div>
+                            </label>
                         </div>
-                        <p></p>
                     </div>
                 </div>
 
