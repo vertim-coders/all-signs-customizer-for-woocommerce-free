@@ -134,9 +134,11 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             $meta_value = get_post_meta($id, 'aso-configs-meta', true);
             
             if (!empty($meta_value)) {
+                //$meta_value["data"]["additionalOptions"] = [];
+                //update_post_meta($id,'aso-configs-meta',$meta_value);
 
-                if(isset($meta_value["data"]["additionalOptions"]["customAdditionalsOptions"])){
-                    $custom_additionals_options = $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"];
+                if(isset($meta_value["data"]["additionalOptions"]) && count($meta_value["data"]["additionalOptions"])>0){
+                    $custom_additionals_options = $meta_value["data"]["additionalOptions"];
                     return rest_ensure_response( $custom_additionals_options );
                 }
                 return rest_ensure_response(["message" => __("No Additonal Options found","ASO")]);
@@ -163,8 +165,8 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             
             if (!empty($meta_value)) {
 
-                if (isset($meta_value["data"]["additionalOptions"]["customAdditionalsOptions"])) {
-                    $custom_additionals= $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"];
+                if (isset($meta_value["data"]["additionalOptions"])) {
+                    $custom_additionals= $meta_value["data"]["additionalOptions"];
 
                     if(isset($custom_additionals[$custom_additional_id])){
                         return rest_ensure_response( $custom_additionals[$custom_additional_id] );
@@ -199,25 +201,25 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 if(empty($meta_value)){
-                    $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"][0]=$custom_additional; 
+                    $meta_value["data"]["additionalOptions"][0]=$custom_additional; 
                 }else{
-                    if(isset($meta_value["data"]["additionalOptions"]["customAdditionalsOptions"])){
-                        $custom_additionals = $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"];
+                    if(isset($meta_value["data"]["additionalOptions"])){
+                        $custom_additionals = $meta_value["data"]["additionalOptions"];
 
                         array_push($custom_additionals,$custom_additional);
     
-                        $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"] = $custom_additionals;
+                        $meta_value["data"]["additionalOptions"] = $custom_additionals;
                     }else{
-                        $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"][0]=$custom_additional;
+                        $meta_value["data"]["additionalOptions"][0]=$custom_additional;
                     }
                 }
 
                 $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["success" => true]);
+                    return rest_ensure_response(["success" => true,"message"=>__("Option added successfuly","ASo")]);
                 }else{
-                    return rest_ensure_response(["message" => __("add custom failed","ASO")]);
+                    return rest_ensure_response(["message" => __("Add option failed","ASO")]);
                 }
             }
             else{
@@ -236,10 +238,10 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             $post = get_post($id);
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if($meta_value["data"]["additionalOptions"]["customAdditionalsOptions"] == $custom_additionals){
-                    return rest_ensure_response(["success" => "same","message"=>__("NO change observe on additionnals options","ASO")]);
+                if($meta_value["data"]["additionalOptions"] == $custom_additionals){
+                    return rest_ensure_response(["success" => "same","message"=>__("No change observe on additionnals options","ASO")]);
                 }else{
-                    $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"]=$custom_additionals;
+                    $meta_value["data"]["additionalOptions"]=$custom_additionals;
                     
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
     
@@ -273,18 +275,21 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             if ($post) {
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 if(!empty($meta_value)) {
-                    $custom_additionals = $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"];
+                    $custom_additionals = $meta_value["data"]["additionalOptions"];
                     
                     if(isset($custom_additionals[$custom_additional_id])){
-
-                        $custom_additionals[$custom_additional_id] = $custom_additional;
-                        $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"] = $custom_additionals;
-                        $response = update_post_meta($id,'aso-configs-meta',$meta_value);
-    
-                        if($response){
-                            return rest_ensure_response(["success" => true]);
+                        if($custom_additionals[$custom_additional_id] == $custom_additional){
+                            return rest_ensure_response(["success" => true,"message"=>__("No change observed in option","ASO")]);
                         }else{
-                            return rest_ensure_response(["message" => __("update custom additional failed","ASO")]);
+                            $custom_additionals[$custom_additional_id] = $custom_additional;
+                            $meta_value["data"]["additionalOptions"] = $custom_additionals;
+                            $response = update_post_meta($id,'aso-configs-meta',$meta_value);
+        
+                            if($response){
+                                return rest_ensure_response(["success" => true,"message"=>__("Option updated successfully","ASO")]);
+                            }else{
+                                return rest_ensure_response(["message" => __("update custom additional failed","ASO")]);
+                            }
                         }
                     }else {
                         return rest_ensure_response(["message" => __("update custom additional failed","ASO")]);
@@ -315,17 +320,17 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
-                if(!empty($meta_value["data"]["additionalOptions"]["customAdditionalsOptions"])){
-                    $custom_additionals = $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"];
+                if(!empty($meta_value["data"]["additionalOptions"])){
+                    $custom_additionals = $meta_value["data"]["additionalOptions"];
                     
                     array_splice($custom_additionals,$custom_additional_id,1);
 
-                    $meta_value["data"]["additionalOptions"]["customAdditionalsOptions"] = $custom_additionals;
+                    $meta_value["data"]["additionalOptions"] = $custom_additionals;
 
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" => true]);
+                        return rest_ensure_response(["success" => true,"message"=>__("Option deleted successfully","ASO")]);
                     }else{
                         return rest_ensure_response(["message" => __("delete custom additional failed","ASO")]);
                     }
