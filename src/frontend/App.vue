@@ -1,5 +1,5 @@
 <template>
-  <div id="aso-frontend-app">
+  <div>
     <router-view />
   </div>
 </template>

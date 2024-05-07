@@ -8,6 +8,7 @@ import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
 import Settings from "@/admin/pages/configuration/settings/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
+import Preview from "@/admin/pages/preview/index.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
@@ -142,6 +143,11 @@ const router = createRouter({
       path: "/global-settings/shapes",
       name: "global-settings-shapes",
       component: GlobalSettings,
+    },
+    {
+      path: "/configs/:config/preview/:configId",
+      name: "preview-back",
+      component: Preview,
     },
   ],
 });

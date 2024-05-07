@@ -13,6 +13,10 @@ input[type="checkbox"],
 input[type="radio"] {
   margin: 0 !important;
 }
+#aso-frontend-app input[type="checkbox"],
+#aso-frontend-app input[type="radio"] {
+  display: none !important;
+}
 
 .aso-field-required {
   border: solid 2px #ff0000 !important;

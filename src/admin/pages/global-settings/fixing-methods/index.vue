@@ -202,7 +202,7 @@ const isNewFixingMethod = ref(false);
 
 const selectFixingMethod = (id,fx) =>{
     fixingMethodId.value = id;
-    tinyMCE.activeEditor.setContent(fx.popImg);
+    tinymce.activeEditor.setContent(fx.popImg);
     fixingMethod.value = fx;
     addNewFixingMethod();
 }
@@ -294,7 +294,7 @@ const closeTnymceModal = ()=>{
 }
 
 const savePopImg = ()=>{
-    fixingMethod.value.popImg = tinyMCE.activeEditor.getContent();
+    fixingMethod.value.popImg = tinymce.activeEditor.getContent();
     openTnyMce.value = false;
 }
 const back = () => {
