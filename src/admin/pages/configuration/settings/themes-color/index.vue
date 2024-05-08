@@ -1,9 +1,13 @@
 <template>
+    <div v-if="!isFetching" class="aso-sticky aso-bg-white aso-top-[50px] aso-shadow aso-h-[50px] aso-flex aso-justify-center aso-items-center aso-z-[999]">
+        <button @click="state='skins'" :class="`aso-flex aso-w-fit aso-h-fit aso-p-3.5 aso-bg-transparent aso-space-x-2 aso-px-6 aso-text-black ${state == 'skins' ? 'aso-border-b-[2px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">Choose Skin</button>
+        <button @click="state='custom'" :class="`aso-flex aso-w-fit aso-h-fit aso-p-3.5 aso-bg-transparent aso-space-x-2 aso-px-6 aso-text-black ${state == 'custom' ? 'aso-border-b-[2px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">Custom CSS</button>
+    </div>
     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
     </div>
     <div v-if="!isFetching">
-        <div class="aso-space-y-1">
+        <div class="aso-space-y-1" v-show="state=='skins'">
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <h3 class="aso-text-[16px]">Choose your customizer appearance</h3>
                 <div class="aso-p-6">
@@ -16,7 +20,7 @@
                                 </div>
                                 <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
                                    <label for="default" class="aso-text-base aso-font-semibold aso-text-black">Default skin</label>
-                                    <input type="radio" id="default" name="skin" value="default" v-model="themes.skin" :checked="themes.skin == 'default'">
+                                    <input type="radio" id="default" name="skin-1" value="default" v-model="themes.skin" :checked="themes.skin == 'default'">
                                 </div>
                             </label>
                         </div>
@@ -28,7 +32,7 @@
                                 </div>
                                 <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
                                     <label for="couffo" class="aso-text-base aso-font-semibold aso-text-black">Couffo Skin</label>
-                                    <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" :checked="themes.skin == 'couffo'">
+                                    <input type="radio" id="couffo" name="skin-2" value="couffo" v-model="themes.skin" :checked="themes.skin == 'couffo'">
                                 </div>
                             </label>
                         </div>
@@ -556,7 +560,10 @@
             </div>
             
         </div>
-        <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
+        <div v-show="state=='custom'" class="aso-w-full aso-h-full"> 
+            <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:aso-italic placeholder:aso-text-slate-400 aso-w-full aso-h-full"></textarea>
+        </div>
+        <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
             <div class="aso-bg-[#016464] aso-rounded">
                 <button :disabled="isLoading" @click="updateThemesSettings" class="aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointeraso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
@@ -577,6 +584,7 @@ const route = useRoute();
 const configId = ref(route.params.configId);
 const isFetching = ref(false);
 const isLoading =ref(false);
+const state = ref('skins');
 const themes = ref({
     skin:"default",
     colors: {
@@ -606,7 +614,8 @@ const themes = ref({
         backgroundColorButtonFinish:'#000000',
         textColorHoverButtonFinish:'#000000',
         backgroundColorHoverButtonFinish:'#000000',
-    }
+    },
+    customCSS:""
 });
 onMounted(async() => {
     isFetching.value = true;
@@ -616,7 +625,7 @@ onMounted(async() => {
 const fetchThemesSettings = async () => {
     const result = await api.getThemesSettings(configId.value);
     if(!result.message){
-        themes.value = result;
+        themes.value = {...themes.value,...result};
     }
 }
 const updateThemesSettings = async () => {

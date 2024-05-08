@@ -47,11 +47,16 @@ class ASO_Admin {
      */
     public function enqueue_scripts() {
         wp_enqueue_style( 'aso-admin' );
+        wp_enqueue_style( 'aso-frontend' );
         wp_enqueue_script( 'aso-admin' );
+        wp_enqueue_script( 'aso-frontend' );
+        wp_enqueue_script( 'aso-fabric' );
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
         wp_enqueue_script( 'aso-sortable' );
         wp_enqueue_media();
+    
+    
     }
 
     /**
@@ -69,7 +74,9 @@ class ASO_Admin {
                 "version"=> ASO_VERSION,
                 'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
                 'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
-            ]);?>
+            ]);
+            wp_localize_script("aso-admin","aso_confiurator_data",array());
+            ?>
         </div>
         <?php
     }

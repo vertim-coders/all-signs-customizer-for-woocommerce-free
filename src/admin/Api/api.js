@@ -10,6 +10,10 @@ const api = {
     const config = await axios.get(aso_api_url + "/configs/" + id);
     return config.data;
   },
+  getPreviewConfig: async (id) => {
+    const config = await axios.get(aso_api_url + "/configs/" + id + "/preview");
+    return config.data;
+  },
   updateConfig: async (config) => {
     const edit = await axios.put(aso_api_url + "/configs/" + config.id, config);
     return edit.data;

@@ -53,11 +53,11 @@
         backface-visibility: hidden;
 }
 #aso-sign-recto[data-v-77962a27] {
-        background-color: #bbb;
+        /* background-color: #bbb; */
         color: black;
 }
 #aso-sign-verso[data-v-77962a27] {
-        background-color: dodgerblue;
+        /* background-color: dodgerblue; */
         color: white;
         transform: rotateY(180deg);
 }
@@ -87,8 +87,7 @@
 
 #aso-frontend-app .aso-base-animation {
   transition-property: all;
-  transition-duration: 500ms;
-  cursor: pointer; }
+  transition-duration: 500ms; }
 
 #aso-frontend-app .aso-full-center {
   justify-content: center !important;

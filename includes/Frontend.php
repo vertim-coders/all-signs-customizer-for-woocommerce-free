@@ -19,8 +19,8 @@ class ASO_Frontend {
      * @return string
      */
     public function render_aso_frontend( $atts, $content = '' ) {
-        wp_enqueue_style( 'aso-frontend' );
-        wp_enqueue_style( 'aso-style' );
+        wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
+        wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
         wp_enqueue_script( 'aso-frontend' );
         // wp_enqueue_script( 'aso-editor-script' );
         wp_enqueue_script( 'aso-fabric' );
@@ -112,8 +112,10 @@ class ASO_Frontend {
                         <div id='aso-frontend-app'></div>
                         <?php 
                         $this->includes_config_fonts($visibleFonts);
-                        wp_localize_script("aso-frontend","aso_confiurator_data",$ASO);
-                        wp_enqueue_script( 'aso-product-pricing');
+                        wp_localize_script("aso-product-min","aso_confiurator_data",$ASO);
+                        wp_localize_script("aso-product-min","aso_data",[
+                            "rest_url"=>$api_url."aso/v1"
+                        ]);
                     }
                 }
             }
@@ -140,6 +142,7 @@ class ASO_Frontend {
             src: url('".esc_url($url)."') format('truetype');
         }";
         wp_add_inline_style( 'aso-frontend', $inline_style );
+        wp_add_inline_style( 'aso-style', $inline_style );
         ?>
         <?php
     }
