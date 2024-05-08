@@ -8,6 +8,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^5.1.1",
     "@vueform/multiselect": "^2.6.6",
     "axios": "^1.6.7",
     "vue": "^3.2.36",

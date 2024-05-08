@@ -15,8 +15,15 @@
 <script setup>
 import {ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js'
+//import '@/admin/utils/aso-tinymce.js'
 import Sidebar from './pages/components/sidebar.vue'
 import Headerbar from './pages/components/headerbar.vue';
+
+/* tinymce.init({
+    selector: '#aso-admin-tinymce',
+    width: '100%',
+    height: 200,
+}); */
 
 tailwind.config ={
     prefix: 'aso-',

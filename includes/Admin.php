@@ -53,8 +53,6 @@ class ASO_Admin {
         wp_enqueue_script( 'aso-fabric' );
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
-        wp_enqueue_script('aso-tinymce-script',includes_url('/js/tinymce/') . 'tinymce.min.js',array('jquery'),$GLOBALS['wp_version'], true);
-        wp_enqueue_script( 'aso_plugin_tinymce_init', ASO_ASSETS . '/utilities/aso-tinymce-init.js', array( 'aso-tinymce-script' ), ASO_VERSION, true );
         wp_enqueue_script( 'aso-sortable' );
         wp_enqueue_media();
     
