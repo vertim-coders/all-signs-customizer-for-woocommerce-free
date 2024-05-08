@@ -1053,13 +1053,13 @@ function handleChangeSize(width, height, name, maxChar) {
                                 function syncTextObjectsByFace(bigArray, textObjects, targetFace) {
                                     // Parcourir les objets du grand tableau qui ont la face cible
                                     bigArray.forEach((bigObj, index) => {
-                                        console.log(bigObj.canvas.name,"can")
-                                        if (bigObj.canvas.name === targetFace) {
+                                        // console.log(bigObj.canvasName,"can")
+                                        if (bigObj.canvasName === targetFace) {
                                             // Trouver l'objet correspondant dans le petit tableau
                                             const smallObj = textObjects.find(obj => obj.id === bigObj.id);
                                             
                                             if (smallObj) {
-                                                console.log(bigObj.canvas.name, "array", index)
+                                                console.log(bigObj.canvasName, "array", index)
                                                 // L'objet existe dans le petit tableau, on le remplace
                                                 bigArray[index] = smallObj;
                                             } else {
@@ -1073,7 +1073,7 @@ function handleChangeSize(width, height, name, maxChar) {
                                     return bigArray;
                                 }
                                 addedTexts = syncTextObjectsByFace(addedTexts, textObjects, canva.name)
-                                console.log(addedTexts, "1969089151")
+                                // console.log(addedTexts, "1969089151")
 
                             }
                         })
@@ -1623,6 +1623,7 @@ function handleChangeSignColor(name, pattern, textColor, defTextColor, restart) 
     return name
 }
 function setPattern(canva, image){
+    // console.log(image, "setPattern")
     // var object = handleGetObjectByName('safeObject', canvas)
     canva.getObjects().forEach((object, index) =>{
         if(object.name === 'safeObject'){

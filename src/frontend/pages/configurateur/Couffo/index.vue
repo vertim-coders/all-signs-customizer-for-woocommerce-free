@@ -376,8 +376,8 @@
                         </div>
                     </div>
     
-                    <div v-if="(materialType == 'simple' && additionalOptions.length > 0 )" v-for="(option, id) in additionalOptions" class="aso-w-[80%]" >
-                        <div @click="showOptions('add-options', option, id)" :class="`${step === 'add-options' && addOptionId === id ? `aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorHoverButton}]` : ``} aso-w-full aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
+                    <div v-if="(materialType == 'simple' && additionalComponents.length > 0 )" v-for="(option, id) in additionalComponents" class="aso-w-[80%]" >
+                        <div @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id ? `aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorHoverButton}]` : ``} aso-w-full aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
                             <svg v-if="option.icon === '' " class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <g id="fluent-mdl2:product-release">
                                 <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
@@ -386,6 +386,19 @@
                             <img v-if="option.icon !== '' " :src="option.icon" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
                                 {{option.title}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="configAdditionnalOptions.length >= 0" class="aso-w-[80%]" >
+                        <div @click="showOptions('add-options')" :class="`${step === 'add-options' ? `aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorHoverButton}]` : ``} aso-w-full aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
+                            <svg class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <g id="fluent-mdl2:product-release">
+                                <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
+                                </g>
+                            </svg>
+                            <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
+                                Add options
                             </div>
                         </div>
                     </div>
@@ -1015,14 +1028,14 @@
                         </div>
                     </div>
     
-                    <div v-show="step == 'add-options'" class="aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>    
+                    <div v-show="step == 'add-components'" class="aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{addComponentValue.title}}</p>    
     
                         <div v-if="materialType == 'simple'" class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                            <div v-for="(option, index) in addOptionsValue.options">
+                            <div v-for="(option, index) in addComponentValue.options">
                                 <div class="aso-space-y-3 aso-w-full aso-h-full">
-                                    <input type="radio" :id="'aso-addOptions' + addOptionsValue.title + option.title + index" name="aso-fixings" class=" peer aso-hidden" @change="selectAddOption(addOptionsValue.title, option.title, option.additionalPrice)">
-                                    <label :for="'aso-addOptions' + addOptionsValue.title + option.title + index" class="aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer">
+                                    <input type="radio" :id="'aso-addOptions' + addComponentValue.title + option.title + index" name="aso-fixings" class=" peer aso-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option.additionalPrice)">
+                                    <label :for="'aso-addOptions' + addComponentValue.title + option.title + index" class="aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer">
                                         <div :class="`${option.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
                                             <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-full" />
                                         </div>
@@ -1030,8 +1043,8 @@
                                             <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ option.title }} <span class="aso-text-[11px]">({{option.additionalPrice}} {{props.currency}})</span></p>
                                             <p class="aso-text-xs">{{ option.description }}</p>
                                             <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
-                                                <span class="aso-invisible aso-text-transparent">example</span> {{console.log(addOptionSelected.some(item => item.option === addOptionsValue.title))}}
-                                                <span :class="`${ addOptionSelected.some(item => item.option === addOptionsValue.title && item.value === option.title)  ? `aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                                <span class="aso-invisible aso-text-transparent">example</span>
+                                                <span :class="`${ addComponentSelected.some(item => item.option === addComponentValue.title && item.value === option.title)  ? `aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                     </svg>
@@ -1040,6 +1053,198 @@
                                         </div>
                                     </label>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-show="step == 'add-options'" class="aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>    
+    
+                        <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
+                            <div v-for="(option, indexx) in configAdditionnalOptions">
+                                <div v-if="option.type == 'yes/no'" class="aso-w-full">
+                                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-relative">
+                                        <div class="aso-flex aso-justify-between aso-items-start aso-space-x-3">
+                                            <div>
+                                                <p :class="`aso-text-[${configColors.backgroundColorHeader}] aso-font-medium lowercase first-letter:uppercase aso-text-[16px]`">
+                                                    {{ option.label }}
+                                                    <span v-if="option.price.type == 'base'">(+{{ currentDevise }}{{ option.price.value }})</span>
+                                                    <span v-if="option.price.type == 'multiplier'">(+{{ option.price.value }}%)</span>
+                                                </p>
+                                                <p :class="` aso-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                            </div>
+                                            <div>
+                                                <span v-if="option.popImg != ''" @click="()=>showYesNoExample(option.popImg, indexx)" :class="`aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer aso-flex underline aso-text-base aso-font-medium p-1 aso-px-2 aso-transition-all aso-duration-500 aso-ease-in-out aso-rounded-lg`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="aso-flex aso-space-x-4 aso-w-full">
+                                            <div class="aso-flex aso-w-full">
+                                                <input type="radio" :id="option.label.replace(/\s+/g, '-') +0" :value="option.inputs.yes" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="aso-hidden peer" required @click="()=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, option.inputs.yes, option.price)" :price-type="option.price.type" :price-value="option.price.value">
+                                                <label :for="option.label.replace(/\s+/g, '-') +0" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === option.inputs.yes) )? `aso-text-[${configColors.backgroundColorHeader}] aso-ring-[${configColors.backgroundColorHeader}]`: `aso-text-[${configColors.textColorOptionsMenu}] aso-ring-[${configColors.textColorOptionsMenu}]`} hover:aso-text-[${configColors.backgroundColorHeader}] hover:aso-ring-[${configColors.backgroundColorHeader}]
+                                                    aso-relative aso-cursor-pointer w-auto aso-h-auto aso-px-2 aso-w-full aso-p-3 xl:aso-px-4 aso-rounded-md  xl:aso-space-y-3 aso-ring-2 aso-flex aso-flex-col aso-justify-center xl:aso-justify-start aso-transition-all aso-duration-500 aso-ease-in-out`"
+                                                >                           
+                                                    <div class="aso-text-base lg:aso-text-sm xl:aso-text-md aso-font-medium aso-flex aso-justify-center aso-items-center">
+                                                        <p class="lowercase first-letter:uppercase">{{option.inputs.yes}}</p>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="aso-flex aso-w-full">
+                                                <input type="radio" :id="option.label.replace(/\s+/g, '-') +1" :value="option.inputs.no" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="aso-hidden peer" required @click="()=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, option.inputs.no, {type: 'none', value: 0})" price-type="none" :price-value="0">
+                                                <label :for="option.label.replace(/\s+/g, '-') +1" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === option.inputs.no) )? `aso-text-[${configColors.backgroundColorHeader}] aso-ring-[${configColors.backgroundColorHeader}]`: `aso-text-[${configColors.textColorOptionsMenu}] aso-ring-[${configColors.textColorOptionsMenu}]`} hover:aso-text-[${configColors.backgroundColorHeader}] hover:aso-ring-[${configColors.backgroundColorHeader}]
+                                                    aso-relative aso-cursor-pointer w-auto aso-h-auto aso-px-2 aso-w-full aso-p-3 xl:aso-px-4 aso-rounded-md  xl:aso-space-y-3 aso-ring-2 aso-flex aso-flex-col aso-justify-center xl:aso-justify-start aso-transition-all aso-duration-500 aso-ease-in-out`"
+                                                >                           
+                                                    <div class="aso-text-base lg:aso-text-sm xl:aso-text-md aso-font-medium aso-flex aso-justify-center aso-items-center">
+                                                        <p class="lowercase first-letter:uppercase">{{option.inputs.no}}</p>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div v-if="showYesNo && yesNoIndex == indexx" :class="`aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
+                                            <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.backgroundColorHeader}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showYesNoExample()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </div>
+                                            <img :src="showYesNoImg" class="aso-w-full aso-h-full">
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div v-if="option.type == 'image-input'">
+                                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full">
+                                        <div>
+                                            <p :class="`aso-text-[${configColors.backgroundColorHeader}] aso-font-medium lowercase first-letter:uppercase aso-text-[16px]`">{{ option.label }}</p>
+                                            <p :class="` aso-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                        </div>
+                                        <div v-if="selectedId == indexx" :class="` aso-text-xs`">
+                                            {{selectedOption}}
+                                        </div>
+                                        <div class="aso-grid aso-grid-cols-4 lg:aso-grid-cols-2 xl:aso-grid-cols-4 aso-gap-4 aso-relative">
+                                            <div v-for="(element, index) in option.options" class="">
+                                                <input type="radio" :id="'aso-image-input'+element.label+index" :name="option.label.toLowerCase().replace(/\s+/g, '-') " class="aso-hidden peer" required @click="()=>{addToOrUpdateArray(customAdditionalValues, indexx, option.label, element.value, element.price); selectOption(element.value, element.price, indexx)}" :price-type="element.price.type" :price-value="element.price.value">
+    
+                                                <label :for="'aso-image-input'+element.label+index" :class="`${(customAdditionalValues.some(item => item.id === indexx) && customAdditionalValues.some(item => item.value === element.value) )? `aso-text-[${configColors.backgroundColorHeader}] aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]`: `aso-ring-[${configColors.textColorOptionsMenu}]`} aso-border
+                                                    aso-p-0.5 aso-cursor-pointer aso-w-[70px] aso-h-[70px] aso-flex aso-ring-2 aso-rounded-lg aso-overflow-hidden`" 
+                                                >
+                                                    <div v-if="element.prevImg !==''" class="aso-h-full aso-w-full aso-relative">
+                                                        <img class="aso-w-full aso-h-full aso-rounded-lg" :src="element.prevImg" />
+                                                        <span v-if="element.popImg !== ''" @click="showInputImageExample(element.popImg, index, element.label)" class="aso-cursor-pointer aso-z-1 aso-w-[34px] aso-h-[30px] aso-bottom-0 aso-right-0 aso-absolute aso-bg-white aso-rounded-tl-[20px] aso-rounded-br-[5px] aso-border border-neutral-400 text-cyan-700 aso-flex aso-justify-center aso-items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-8 aso-h-8 aso-p-1.5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div v-if="element.prevImg === ''" :class="`aso-p-4 aso-bg-[${element.color}] aso-w-full aso-h-full aso-relative aso-rounded-lg`">
+                                                        <span v-if="element.popImg !== ''" @click="showInputImageExample(element.popImg, index, element.label)" class="aso-cursor-pointer aso-z-1 aso-w-[34px] aso-h-[30px] aso-bottom-0 aso-right-0 aso-absolute aso-bg-white aso-rounded-tl-[20px] aso-rounded-br-[5px] aso-border border-neutral-400 text-cyan-700 aso-flex aso-justify-center aso-items-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-8 aso-h-8 aso-p-1.5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                </label>
+                                                <div v-if="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute -aso-bottom-1 aso-left-[10%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
+                                                    <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.backgroundColorHeader}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="showInputImageExample()">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </div>
+                                                    <img :src="inputImageImg" class="aso-w-full aso-h-full">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div v-if="option.type == 'dropdown'" class="aso-relative aso-space-y-4">
+                                    <div class="aso-space-y-2 aso-w-full aso-relative">
+                                        <div class="aso-flex aso-justify-between aso-items-start aso-space-x-3">
+                                            <div>
+                                                <p :class="`aso-text-[${configColors.backgroundColorHeader}] aso-font-medium lowercase first-letter:uppercase aso-text-[16px]`">{{ option.label }}</p>
+                                                <p :class="` aso-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                            </div>
+                                            <div>
+                                                <span v-show="dropdownExampleImg != ''" @click="()=>showDropdownExample()" :class="`aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer aso-flex underline aso-text-base aso-font-medium p-1 aso-px-2 aso-transition-all aso-duration-500 aso-ease-in-out aso-rounded-lg`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <select id="" class="aso-w-full aso-p-2 aso-border-[1.5px] border-zinc-400 aso-rounded-lg aso-text-base" :name="option.label.toLowerCase().replace(/\s+/g, '-') " @change="(e)=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, dropdownValue.value, dropdownValue.price)" v-model="dropdownValue">
+                                            <option v-for="(element, indx) in option.options" :value="element" :priceType="element.price.type" :priceValue="element.price.value" :popImg="element.popImg">
+                                                {{element.label}}
+                                                <span v-if="element.price.type == 'base'">(+{{ currentDevise }}{{ element.price.value }})</span>
+                                                <span v-if="element.price.type == 'multiplier'">(+{{ element.price.value }}%)</span> 
+                                            </option>
+                                        </select>
+    
+                                        <div v-if="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`aso-absolute aso-top-0 aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10 aso-text-[${configColors.backgroundColorHeader}] aso-bg-[${configColors.backgroundColorHeader}]`">
+                                            <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.backgroundColorHeader}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showDropdownExample()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </div>
+                                            <img :src="dropdownExampleImg" class="aso-w-full aso-h-full">
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div v-if="option.type == 'note'">
+                                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full">
+                                        <div class="aso-flex aso-flex-col aso-w-full">
+                                            <p :class="`aso-text-[${configColors.backgroundColorHeader}] aso-font-medium lowercase first-letter:uppercase aso-text-[16px]`">{{ option.label }}</p>
+                                            <p :class="` aso-text-xs lowercase first-letter:uppercase`">{{ option.description }}</p>
+                                        </div>                        
+                                        <div class="aso-w-full">
+                                            <textarea  @input="(e)=>addToOrUpdateArray(customAdditionalValues, indexx, option.label, e.target.value)"  :maxlength="option.noteLimitChar" :name="option.label.toLowerCase().replace(/\s+/g, '-') " id="" cols="20" rows="10" class="aso-w-full aso-h-[113px] aso-rounded-md aso-border aso-border-gray-400 aso-p-4" v-model="noteValue" ></textarea>
+                                        </div>
+                                        <div v-show="noteValue.length == option.noteLimitChar"  :class="`aso-text-xs lg:aso-text-sm aso-p-2 aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}]`"> La limite de caratcère est atteinte </div>
+                                    </div>
+                                </div>
+    
+                                <div v-if="option.type == 'include-type'" >
+                                    <div class="aso-relative aso-flex aso-flex aso-space-x-3 aso-justify-between aso-w-full">
+                                        <div>
+                                            <p :class="`aso-text-[${configColors.backgroundColorHeader}] aso-flex space-x-2 aso-font-medium aso-text-[16px]`">
+                                                <span class="aso-lowercase first-letter:aso-uppercase">
+                                                    {{ option.label }}
+                                                </span> 
+                                                <span v-if="option.price.type == 'base'">(+{{ currentDevise }}{{ option.price.value }})</span>
+                                                <span v-if="option.price.type == 'multiplier'">(+{{ option.price.value }}%)</span>
+                                                <span :class="`aso-text-[${configColors.backgroundColorHeader}] aso-flex aso-w-fit aso-items-center aso-justify-center aso-px-2 aso-p-0.5 aso-rounded-lg`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                                    </svg>
+                                                </span>
+                                            </p>
+                                            <p :class="` aso-text-xs aso-lowercase first-letter:aso-uppercase`">{{ option.description }}</p>
+                                        </div>
+                                        <div>
+                                            <span v-if="option.popImg != ''" @click="()=>showFreeExample(option.popImg, indexx)" :class="`aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer aso-flex underline aso-text-base aso-font-medium aso-p-1 aso-px-2 aso-transition-all aso-duration-500 aso-ease-in-out aso-rounded-lg`">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                            </span>
+                                        </div>                     
+                                        <div v-if="showFree && freeIndex == indexx" :class="`aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-bottom-[0%] aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
+                                            <span :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.backgroundColorHeader}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showFreeExample()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </span>
+                                            <img :src="showFreeImg" class="aso-w-full aso-h-full">
+                                        </div>
+                                    </div>
+                                </div>                               
                             </div>
                         </div>
                     </div>
@@ -1056,11 +1261,11 @@
             </div>
     
             <div v-if="showImg" class="aso-absolute aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] aso-h-[80%] aso-bg-white aso-border-solid aso-p-2">
-                <svg @click="closePreviewImg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0">
+                <svg @click="closeprevImg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>
     
-                <img id="showPreview" :src="previewImg" class="aso-w-fit aso-h-fit" />
+                <img id="showPreview" :src="prevImg" class="aso-w-fit aso-h-fit" />
             </div>
         </div>
 
@@ -1220,7 +1425,7 @@
                     </p>
                 </div>
 
-                <div v-if="materialType === 'simple' && addOptionSelected.length > 0" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2" v-for="(option, index) in addOptionSelected">
+                <div v-if="materialType === 'simple' && addComponentSelected.length > 0" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2" v-for="(option, index) in addComponentSelected">
                     <p :class="`aso-text-[#000000] aso-text-[16px] aso-font-semibold`">{{option.option}}</p>
                     <p :class="`aso-text-[#473e3e] aso-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
                 </div>
@@ -1234,7 +1439,7 @@
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div v-if="!configDoublePart.active && configData.texts.length > 0">
                             <div v-for="(text, id) in configData.texts">
-                                {{text}}
+                                {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                             </div>
                         </div>
 
@@ -1242,14 +1447,15 @@
                             <div v-if="configData.texts.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
                                 <div v-for="(text, id) in configData.texts.face1">
-                                    {{text}}
+                                    <!-- {{text}} -->
+                                    {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                                 </div>
                             </div>
 
                             <div v-if="configDoublePart.active && configData.texts.face2.length > 0">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
                                 <div v-for="(text, id) in configData.texts.face2">
-                                    {{text}}
+                                    {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                                 </div>
                             </div>
                         </div>
@@ -1264,41 +1470,52 @@
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div v-if="!configDoublePart.active && configData.images.length > 0">
-                            <div v-for="(image, id) in configData.images">
-                                {{image}}
+                            <div v-for="(image, id) in configData.images" class="aso-flex aso-space-x-1 aso-full-center">
+                                <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
+                                    <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
+                                </span>
+                                <span>
+                                    <p>{{image.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{image.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                </span>
                             </div>
                         </div>
 
                         <div v-if="configDoublePart.active">
                             <div v-if="configData.images.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(image, id) in configData.images.face1" class="aso-flex aso-space-x-1">                              
+                                <div v-for="(image, id) in configData.images.face1" class="aso-flex aso-space-x-1 aso-full-center">                              
                                     <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                        <img :src="image.url" :class="`aso-h-[35px] aso-w-[35px] aso-flex`" />
+                                        <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
                                     </span>
-
-                                    <!-- <span>
-                                        <p>width: {{image.width}}</p>
-                                        <p>heigh: {{image.heigh}}</p>
-                                        <p>top: {{image.top}}</p>
+                                    <span>
+                                        <p>{{image.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{image.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                        <!-- <p>top: {{image.top}}</p>
                                         <p>bottom: {{image.bottom}}</p>
                                         <p>left: {{image.left}}</p>
-                                        <p>right: {{image.right}}</p>
-                                    </span> -->
+                                        <p>right: {{image.right}}</p> -->
+                                    </span>
                                 </div>
                             </div>
 
                             <div v-if="configDoublePart.active && configData.images.face2.length > 0">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(image, id) in configData.images.face2">
-                                    {{image}}
+                                <div v-for="(image, id) in configData.images.face2" class="aso-flex aso-space-x-1 aso-full-center">
+                                    <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
+                                    </span>
+                                    <span>
+                                        <p>{{image.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{image.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
+                <div v-if="customAdditionalValues != [] " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2" v-for="(option, index) in customAdditionalValues">
+                    <p :class="`aso-text-[16px] aso-font-semibold`">{{option.label}}</p>
+                    <p :class="`aso-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
+                </div>
             </div>
 
             <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
@@ -1378,8 +1595,9 @@
     var configUnit = ref("")
     var configSectionIcons = ref({})
     var configOutputSettings = ref({})
+    var configAdditionnalOptions = ref([])
 
-    // console.log(props.config.data.settings.generals.output)
+    // console.log(props.config.data)
 
     var isLoaded = ref(true)
     function setIsLoadedToFalse() {
@@ -1415,8 +1633,8 @@
 
     var advancedComponent = ref({})
     var advancedComponentId = ref(0)
-    var addOptionsValue = ref({})
-    var addOptionId = ref(0)
+    var addComponentValue = ref({})
+    var addComponentId = ref(0)
     function showOptions(option, stepValue, id){
         switch (option) {
             case 'fixing-methode':
@@ -1478,11 +1696,16 @@
                 showOption.value = true;
             break;
 
-            case "add-options":
+            case "add-components":
                 // if(currentMaterialTextImages.value.enableImage){
                 // }
-                addOptionId.value = id
-                addOptionsValue.value = stepValue;
+                addComponentId.value = id
+                addComponentValue.value = stepValue;
+                step.value = option;
+                showOption.value = true;
+            break;
+
+            case "add-options":
                 step.value = option;
                 showOption.value = true;
             break;
@@ -1559,8 +1782,10 @@
         configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
         configSectionIcons.value = props.config.data.settings.languageImages.images
         configOutputSettings.value = props.config.data.settings.generals.output
+
+        configAdditionnalOptions.value = props.config.data.additionalOptions
         
-        // console.log(configSectionIcons.value)
+        console.log(configAdditionnalOptions.value)
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
@@ -1717,6 +1942,8 @@
             if(materialType.value === 'advance'){
                 selectAdvanceFirstValue()
             }
+
+
     
             //custom des boutons pour les objets ajouter au sign
             fabric.Object.prototype.transparentCorners = false;
@@ -1739,7 +1966,6 @@
             showOption.value = true
         }
         
-        // selectMaterial(props.config.data.materials[0])
         
         setScrollColor(configColors.value.backgroundColorHeader)
         setIsLoadedToFalse()
@@ -1985,24 +2211,25 @@
             changeSize(size)
         }
 
-        if(additionalOptions.value.length > 0){
-            additionalOptions.value.forEach(addOption => {
+        if(additionalComponents.value.length > 0){
+            additionalComponents.value.forEach(addOption => {
                 let index = 0
                 var haveDefault = false
 
                 while (index < addOption.options.length && !haveDefault) {
                     if(addOption.options[index].isDefault){
-                        selectAddOption(addOption.title, addOption.options[index].title, addOption.options[index].additionalPrice)
+                        selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index].additionalPrice)
                         haveDefault = true
                         break;
                     }
                     index++;
                 }
                 if(!haveDefault){
-                    selectAddOption(addOption.title, addOption.options[0].title, addOption.options[0].additionalPrice)
+                    selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0].additionalPrice)
                 }
             })
         }
+        selectAdditionnalsOption()
 
         if(!firstSetLoad.value){
             saveStep("select of first values")
@@ -2039,6 +2266,37 @@
                 }
             }
         })
+        selectAdditionnalsOption()
+    }
+    function selectAdditionnalsOption(){
+        //selection des premières custom AdditionnalOptions 
+        if(configAdditionnalOptions.value.length != 0){
+            var customOptions = configAdditionnalOptions.value
+            customOptions.forEach((option, indexx) => {
+                switch(option.type){
+                    case 'yes/no':
+                        if(option.default === 'yes'){
+                            addToOrUpdateArray(customAdditionalValues.value, indexx, option.label, option.inputs.yes, option.price)
+                        }else{
+                            addToOrUpdateArray(customAdditionalValues.value, indexx, option.label, option.inputs.no, {type: 'none', value: 0})
+                        }
+                    break;
+                    case 'image-input':
+                        addToOrUpdateArray(customAdditionalValues.value, indexx, option.label, option.options[0].value, option.options[0].price);
+                        selectOption(option.options[0].value, option.options[0].price, indexx)
+                    break;
+                    case 'dropdown':
+                        dropdownValue.value = option.options[0] 
+                        addToOrUpdateArray(customAdditionalValues.value, indexx, option.label, option.options[0].value, option.options[0].price);
+                        selectOption(option.options[0].value, option.options[0].price, indexx);
+                        // dropdownExampleImg.value = option.options[0].popupImg;
+                        dropdownIndex.value = indexx
+                        // console.log(dropdownExampleImg.value, "Dropdown example", dropdownIndex.value);
+                    break;
+                }
+            });
+
+        }
     }
 
 
@@ -2608,7 +2866,8 @@
             fixinggs.value = material.data.fixingMethods
             colorrs.value = material.data.colors
             borderrs.value = material.data.borders
-            additionalOptions.value = material.data.additionalOptions
+            additionalComponents.value = material.data.additionalOptions
+            addComponentSelected.value = []
 
             if(firstLoad.value){
                 selectSimpleFirstValue()
@@ -3683,10 +3942,10 @@
         }
     }
 
-    var additionalOptions = ref({})
-    var selectedAddOption = ref("")
-    var addOptionSelected = ref([])
-    function selectAddOption(addOption, option, price){
+    var additionalComponents = ref({})
+    var selectedAddComponent = ref("")
+    var addComponentSelected = ref([])
+    function selectAddComponent(addOption, option, price){
 
         function addUniqueObject(arr, obj, key) {
             const index = arr.findIndex(item => item[key] === obj[key]);
@@ -3697,21 +3956,106 @@
                 arr.push(obj);
             }
         }
-        addUniqueObject(addOptionSelected.value, {option: addOption, value: option}, 'option')
+        addUniqueObject(addComponentSelected.value, {option: addOption, value: option}, 'option')
 
-        selectedAddOption.value = option
+        selectedAddComponent.value = option
 
-        // console.log(addOptionSelected.value, "selected")
-        // console.log(addOptionsValue.value, "selected fsdfsdf")
+        // console.log(addComponentSelected.value, "selected")
+        // console.log(addComponentValue.value, "selected fsdfsdf")
 
         var addOptionPrice = price
         var addOptionPriceObject = {
-            type: 'add-Option',
+            type: 'add-component',
             name: addOption,
             price: addOptionPrice
         }
         getOptionPrice(addOptionPriceObject)
     }
+
+
+    var customAdditionalValues = ref([])
+    var noteValue = ref('')
+    var dropdownIndex = ref()
+    var dropdownValue = ref({})
+    function addToOrUpdateArray(arr, id, label, value, price) {
+        // if(img){
+        //     dropdownIndex.value = id
+        //     dropdownExampleImg.value = img
+        // }
+        // if(img == ''){
+        //     dropdownExampleImg.value = ""
+        // }
+        // Vérifier si l'id existe déjà dans le tableau
+        // console.log(dropdownValue.value, "id existe déjà dans le tableau")   
+        const existingIndex = arr.findIndex(item => item.id === id);
+
+        if (existingIndex !== -1) {
+            // Si l'id existe, mettez à jour les valeurs de l'objet existant
+            arr[existingIndex].label = label;
+            arr[existingIndex].value = value;
+            arr[existingIndex].price = price;
+        } else {
+            // Si l'index n'existe pas, ajoutez un nouvel objet au tableau
+            arr.push({
+                id: id,
+                label: label,
+                value: value,
+                price: price,
+            });
+        }
+
+        if(price){
+            customAdditionalValues.value.forEach((element, id) => {
+                if(element.price.type === 'base'){
+                    var addOptionPrice = element.price.value
+                    var addOptionPriceObject = {
+                        type: 'add-options',
+                        name: element.label,
+                        priceType: 'base',
+                        price: addOptionPrice,
+                    }
+                    getOptionPrice(addOptionPriceObject)
+                }
+                if(element.price.type === 'multiplier'){
+                    var addOptionPrice = element.price.value
+                    var addOptionPriceObject = {
+                        type: 'add-options',
+                        name: element.label,
+                        priceType: 'multiplier',
+                        price: addOptionPrice,
+                    }
+                    getOptionPrice(addOptionPriceObject)
+                }
+                if(element.price.type === 'none'){
+                    var addOptionPriceObject = {
+                        type: 'add-options',
+                        name: element.label,
+                        price: 0
+                    }
+                    getOptionPrice(addOptionPriceObject)
+                }
+            })
+        }
+    }
+
+    var selectedOption = ref('')
+    var selectedId = ref()
+    function selectOption(label, price, id){
+        selectedId.value = id
+        switch(price.type) {
+            case 'base':
+                selectedOption.value = label + ' (' + '+' + price.value + props.currency + ')';
+                break;
+            case 'multiplier':
+                selectedOption.value = label + ' (' + '+' + price.value + '%)';
+                break;
+            case 'none':
+                selectedOption.value = label;
+            break;
+
+        }
+    }
+
 
     var textNumberForSize = ref(0)
     var addedTexts = ref([])
@@ -3918,21 +4262,21 @@
     var textsPrices = ref(0)
     var finalPrices = ref(0)
     function getOptionPrice(priceObject){
-        // console.log(priceObject, "priceObject")
         function addUniqueObject(arr, obj, key) {
-            if(obj.type){
+            // if(obj.type){
+            //     arr.push(obj);
+            // }else{
+            // }
+            const index = arr.findIndex(item => item.name === obj.name);
+            if(index !== -1){
+                arr[index] = obj;
+            }
+            else{
                 arr.push(obj);
-            }else{
-                const index = arr.findIndex(item => item[key] === obj[key]);
-                if(index !== -1){
-                    arr[index] = obj;
-                }
-                else{
-                    arr.push(obj);
-                }
             }
         }
         addUniqueObject(optionsPrices.value, priceObject, 'name')
+        // console.log(optionsPrices.value, "priceObject")
 
         function removeObjectByName(arr, name) {
             const index = arr.findIndex(item => item.name === name);
@@ -3947,7 +4291,49 @@
             } 
         }
         function sumOptionsPrice(arr, key) {
-            return arr.reduce((sum, obj) => sum + obj[key], 0);
+            // var newPrice = 0
+            // var multiple = 0
+            // var index = 0
+            // while (index < arr.length){
+            //     if(arr[index].priceType === 'multiplier'){
+            //         multiple = multiple + arr[index].price
+            //         // newPrice = newPrice * multiple
+            //     }else { 
+            //         // newPrice = newPrice + arr[index].price
+            //         if(multiple === 0){
+            //             newPrice = (newPrice + arr[index].price) * 1
+            //         }else{
+            //             newPrice = (newPrice + arr[index].price) * multiple
+            //         }
+            //     }
+                
+            //     index++;
+            // }
+            // arr.forEach((object, id) => {
+            // })
+            // arr.reduce((sum, obj) => sum + obj[key], 0);
+
+            let baseSum = 0;
+            let multipliers = [];
+            let present = false;
+
+            for (const item of arr) {
+                if (item.priceType === 'multiplier') {
+                    multipliers.push(item.price);
+                    present = true;
+                }else{
+                    baseSum += item.price;
+                } 
+            }
+
+            let totalPrice = baseSum;
+            if(present){
+                totalPrice *= multipliers.reduce((sum, obj) => sum + obj, 0);
+            }else{
+                totalPrice *= multipliers.reduce((sum, obj) => sum + obj, 1);
+            }
+            
+            return totalPrice
         }
 
         if(materialType.value === 'advance'){
@@ -3958,7 +4344,7 @@
             removeObjectByName(optionsPrices.value, 'border1')
             removeObjectByName(optionsPrices.value, 'border2')
 
-            removeObjectByType(optionsPrices.value, 'add-Option')
+            removeObjectByType(optionsPrices.value, 'add-component')
 
             // console.log("options pricing advance", optionsPrices.value)
             // console.log("PRIX TOTAL",sumOptionsPrice(optionsPrices.value, 'price'))
@@ -3966,10 +4352,6 @@
         }else{
             removeObjectByName(optionsPrices.value, 'none')
             removeObjectByName(optionsPrices.value, 'model')
-            
-            // console.log("options pricing simple", optionsPrices.value)
-            // console.log("texts pricing simple", textsPrices.value)
-
         }
         finalPrices.value = sumOptionsPrice(optionsPrices.value, 'price') + textsPrices.value;
         // console.log("PRIX TOTAL options",sumOptionsPrice(optionsPrices.value, 'price'))
@@ -4142,8 +4524,8 @@
     }
 
     var showImg = ref(false)
-    var previewImg = ref("")
-    function closePreviewImg(){
+    var prevImg = ref("")
+    function closeprevImg(){
         showImg.value = false
     }
     function generateImage(canva, format){
@@ -4274,7 +4656,7 @@
         return url;
     }
     function showConfigRender(){
-        previewImg.value = generateImage(canvas, 'png');
+        prevImg.value = generateImage(canvas, 'png');
         showImg.value = true
 
         if(configDoublePart.value.active){
