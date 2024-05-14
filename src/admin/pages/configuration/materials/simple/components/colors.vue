@@ -85,7 +85,7 @@
                             <td class="aso-pl-10 aso-py-2">
                                 <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
                                     <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': color.isDefault, 'aso-bg-active': color.isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="color.isDefault ? 'aso-translate-x-[100%] aso-border-[#016464]':'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </span>
                             </td>
@@ -107,7 +107,7 @@
                     Enable Custom Color
                     <div @click="handleChangeCustomColorsActive" class="aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
                         <label for="aso-toggle"  class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[120%]': colors.customColors.active, 'aso-bg-active': colors.customColors.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="colors.customColors.active ? 'aso-translate-x-[120%] aso-border-[#016464]':'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
                                     <label for="aso-toggle" @click="handleChangePatterActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': color.pattern.active, 'aso-bg-active': color.pattern.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="color.pattern.active ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </div>
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -242,7 +242,7 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
                                     <label for="aso-toggle" @click="handleChangeTextColorActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': color.textColor.active, 'aso-bg-active': color.textColor.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="color.textColor.active ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </div>
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -256,7 +256,7 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
                                     <label for="aso-toggle" @click="handleChangeSameForBorderColorActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': color.textColor.sameForBorder, 'aso-bg-active': color.textColor.sameForBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="color.textColor.sameForBorder ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </div>
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -338,7 +338,7 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
                                     <label for="aso-toggle" @click="handleChangePatterActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': color.pattern.active, 'aso-bg-active': color.pattern.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="color.pattern.active ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </div>
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -386,7 +386,7 @@
                                 <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                 <div class="aso-flex aso-items-center">
                                     <label for="aso-toggle" @click="handleChangeTextColorActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': addColors[key].textColor.active, 'aso-bg-active': addColors[key].textColor.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="addColors[key].textColor.active ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </div>
                                 <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -399,7 +399,7 @@
                                     <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                                     <div class="aso-flex aso-items-center">
                                         <label for="aso-toggle" @click="handleChangeSameForBorderColorActive(key)" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                            <div :class="{'aso-translate-x-[100%]': color.textColor.sameForBorder, 'aso-bg-active': color.textColor.sameForBorder }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-white aso-rounded-full aso-shadow-md aso-transform"></div>
+                                            <div :class="color.textColor.sameForBorder ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                         </label>
                                     </div>
                                     <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>

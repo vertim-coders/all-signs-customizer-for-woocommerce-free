@@ -18,7 +18,7 @@ var currencySymbol = ref("");
 onMounted(async() => {
   if(route.name == 'preview-back'){
     const result = await api.getPreviewConfig(route.params.configId);
-    aso_confiurator_data = result;
+    aso_configurator_data = result;
     skin.value = result.skin;
     configData.value = result.currentConfig;
     manageData.value = result.managesData;
@@ -35,11 +35,11 @@ onMounted(async() => {
     document.head.appendChild(style);
     
   }else{
-    skin.value = aso_confiurator_data.skin;
-    // console.log(aso_confiurator_data, 'skin actif');
-    configData.value = aso_confiurator_data.currentConfig;
-    manageData.value = aso_confiurator_data.managesData;
-    currencySymbol.value = aso_confiurator_data.currencySymbol
+    skin.value = aso_configurator_data.skin;
+    // console.log(aso_configurator_data, 'skin actif');
+    configData.value = aso_configurator_data.currentConfig;
+    manageData.value = aso_configurator_data.managesData;
+    currencySymbol.value = aso_configurator_data.currencySymbol
   }
 });
 

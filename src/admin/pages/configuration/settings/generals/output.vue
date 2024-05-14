@@ -36,8 +36,9 @@
                 <div class="aso-flex aso-space-x-2">
                     <label class="aso-text-[16px] aso-font-semibold">Zip output files</label>
                     <div class="aso-flex aso-items-center">
-                        <label for="aso-toggle" @click="handleZipOutputFiles" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': Output.zipOutputFiles.active, 'aso-bg-active': Output.zipOutputFiles.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <label for="toggleZip" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                            <input id="toggleZip" type="checkbox" name="toggleZip" class="aso-sr-only aso-peer" value="toggleZip" v-model="Output.zipOutputFiles.active">
+                            <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                         </label>
                     </div>
                 </div>
@@ -51,10 +52,12 @@
                 <div class="aso-flex aso-space-x-3">
                     <label class="aso-text-[16px] aso-font-semibold">Design composition</label>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                        <label for="aso-toggle" @click="handleDesignComposition" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': Output.designComposition, 'aso-bg-active': Output.designComposition }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <label for="toggleDesign" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                            <input id="toggleDesign" type="checkbox" name="toggleDesign" class="aso-sr-only aso-peer" value="toggleDesign" v-model="Output.designComposition">
+                            <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                         </label>
                     </div>
+                    
                 </div>
                 <div class="aso-text-[11px] aso-text-[#444444]">
                     This option allows you to display or not design composition in the order
@@ -144,8 +147,5 @@ const selectWaterMarkImage = async(e) => {
 }
 const handleZipOutputFiles = () => {
     Output.value.zipOutputFiles.active = !Output.value.zipOutputFiles.active;
-};
-const handleDesignComposition = () => {
-    Output.value.designComposition = !Output.value.designComposition;
 };
 </script> 

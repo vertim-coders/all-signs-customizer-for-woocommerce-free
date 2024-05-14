@@ -24,30 +24,35 @@ async function addToCart(ajax_url, cart_data, nonce, redirect_to_cart) {
   }
 }
 function formatPrice(price) {
-  let formattedPrice = parseFloat(price + parseFloat(aso_confiurator_data.regularPrice)).toFixed(aso_confiurator_data.decimals);
+  let formattedPrice = parseFloat(
+    price + parseFloat(aso_configurator_data.regularPrice)
+  ).toFixed(aso_configurator_data.decimals);
 
-  switch (aso_confiurator_data.currency_pos) {
+  switch (aso_configurator_data.currency_pos) {
     case "left":
-      formattedPrice = aso_confiurator_data.currencySymbol + formattedPrice;
+      formattedPrice = aso_configurator_data.currencySymbol + formattedPrice;
       break;
     case "right":
-      formattedPrice = formattedPrice + aso_confiurator_data.currencySymbol;
+      formattedPrice = formattedPrice + aso_configurator_data.currencySymbol;
       break;
     case "left_space":
       formattedPrice =
-        aso_confiurator_data.currencySymbol + " " + formattedPrice;
+        aso_configurator_data.currencySymbol + " " + formattedPrice;
       break;
     case "right_space":
       formattedPrice =
-        formattedPrice + " " + aso_confiurator_data.currencySymbol;
+        formattedPrice + " " + aso_configurator_data.currencySymbol;
       break;
   }
 
   // Remplacez le séparateur décimal et des milliers
-  formattedPrice = formattedPrice.replace(".", aso_confiurator_data.decimalSep);
+  formattedPrice = formattedPrice.replace(
+    ".",
+    aso_configurator_data.decimalSep
+  );
   formattedPrice = formattedPrice.replace(
     /(\d)(?=(\d{3})+(?!\d))/g,
-    "$1" + aso_confiurator_data.thousandSep
+    "$1" + aso_configurator_data.thousandSep
   );
 
   return formattedPrice;

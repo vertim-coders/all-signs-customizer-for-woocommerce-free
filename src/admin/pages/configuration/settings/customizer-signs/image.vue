@@ -6,8 +6,9 @@
                 <div class="aso-flex aso-space-x-3">
                     <div class="aso-text-[16px]">Enable upload Image</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                        <label for="aso-toggle" @click="handleEnableUploadImage" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.enableUploadImage, 'aso-bg-active': image.enableUploadImage }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <label for="toggleEnableUpload" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                            <input id="toggleEnableUpload" type="checkbox" name="toggleEnableUpload" class="aso-sr-only aso-peer" value="toggleEnableUpload" v-model="image.enableUploadImage">
+                            <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                         </label>
                     </div>
                 </div>
@@ -18,8 +19,9 @@
                 <div class="aso-flex aso-space-x-3">
                     <span class="aso-text-[#444444] aso-text-[12px]">Normal</span>
                     <div class="aso-flex aso-items-center">
-                        <label for="aso-toggle" @click="handleFileUploadScript" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="{'aso-translate-x-[100%]': image.fileUploadScript.customWithGraphical, 'aso-bg-active': image.fileUploadScript.customWithGraphical }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                        <label for="toggleFile" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                            <input id="toggleFile" type="checkbox" name="toggleFile" class="aso-sr-only aso-peer" value="toggleFile" v-model="image.fileUploadScript.customWithGraphical">
+                            <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-1px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-[#016464] after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                         </label>
                     </div>
                     <span class="aso-text-[#444444] aso-text-[12px]">Custom with graphical enchacements</span>
@@ -51,8 +53,9 @@
                     <div class="aso-flex aso-space-x-3">
                         <div class="aso-text-[16px]">Enable clipart</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleEnableClipart" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.enableClipart.active, 'aso-bg-active': image.enableClipart }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableClipart" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableClipart" type="checkbox" name="toggleEnableClipart" class="aso-sr-only aso-peer" value="toggleEnableClipart" v-model="image.enableClipart">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
@@ -73,14 +76,15 @@
                     <div class="aso-flex aso-space-x-3">
                         <div class="aso-text-[16px]">Filter</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleFilter" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.active, 'aso-bg-active': image.filter }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableFilter" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableFilter" type="checkbox" name="toggleEnableFilter" class="aso-sr-only aso-peer" value="toggleEnableFilter" v-model="image.filter.active">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="aso-flex aso-space-x-6" v-if="image.filter.active">
-                    <div class="aso-text-center aso-space-y-1 aso-flex">
+                    <div class="aso-text-center aso-space-x-2 aso-space-y-1 aso-flex">
                         <div>
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-1 aso-py-0.5">
                                 <svg class="aso-w-4 aso-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,13 +94,14 @@
                             <div class="aso-text-[10px] aso-text-[#3D3D3D] -aso-translate-y-0.5 aso-px-0.5">Greyscale</div>
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
-                            <label for="aso-toggle" @click="handleEnableGreyscale" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.enableGreyscale, 'aso-bg-active': image.filter.enableGreyscale }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableGreyscale" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableGreyscale" type="checkbox" name="toggleEnableGreyscale" class="aso-sr-only aso-peer" value="toggleEnableGreyscale" v-model="image.filter.enableGreyscale">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
 
                     </div>
-                    <div class="aso-text-center aso-space-y-1 aso-space-x-1 aso-flex">
+                    <div class="aso-text-center aso-space-y-1 aso-space-x-3 aso-flex">
                         <div>
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-1 aso-py-0.5">
                                 <svg class="aso-w-4 aso-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,12 +111,13 @@
                             <div class="aso-text-[10px] aso-text-[#3D3D3D] -aso-translate-y-0.5 aso-px-0.5">Opacity</div>
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
-                            <label for="aso-toggle" @click="handleEnableOpacity" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.enableOpacity, 'aso-bg-active': image.filter.enableOpacity }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableOpacity" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableOpacity" type="checkbox" name="toggleEnableOpacity" class="aso-sr-only aso-peer" value="toggleEnableOpacity" v-model="image.filter.enableOpacity">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
-                    <div class="aso-text-center aso-space-y-1 aso-space-x-1 aso-flex">
+                    <div class="aso-text-center aso-space-y-1 aso-space-x-3 aso-flex">
                         <div>
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-1 aso-py-0.5">
                                 <svg class="aso-w-4 aso-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,12 +127,13 @@
                             <div class="aso-text-[10px] aso-text-[#3D3D3D] -aso-translate-y-0.5 aso-px-0.5">Blur</div>
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
-                            <label for="aso-toggle" @click="handleEnableBlur" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.enableBlur, 'aso-bg-active': image.filter.enableBlur }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableBlur" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableBlur" type="checkbox" name="toggleEnableBlur" class="aso-sr-only aso-peer" value="toggleEnableBlur" v-model="image.filter.enableBlur">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
-                    <div class="aso-text-center aso-space-y-1 aso-space-x-1 aso-flex">
+                    <div class="aso-text-center aso-space-y-1 aso-space-x-3 aso-flex">
                         <div>
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-1 aso-py-0.5">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
@@ -134,12 +141,13 @@
                             <div class="aso-text-[10px] aso-text-[#3D3D3D] -aso-translate-y-0.5 aso-px-0.5">Sepia</div>
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
-                            <label for="aso-toggle" @click="handleEnableSepia" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.enableSepia, 'aso-bg-active': image.filter.enableSepia }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableSepia" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableSepia" type="checkbox" name="toggleEnableSepia" class="aso-sr-only aso-peer" value="toggleEnableSepia" v-model="image.filter.enableSepia">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
-                    <div class="aso-text-center aso-space-y-1 aso-space-x-1 aso-flex">
+                    <div class="aso-text-center aso-space-y-1 aso-space-x-3 aso-flex">
                         <div>
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-1 aso-py-0.5">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
@@ -147,12 +155,13 @@
                             <div class="aso-text-[10px] aso-text-[#3D3D3D] -aso-translate-y-0.5 aso-px-0.5">sharpen</div>
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
-                            <label for="aso-toggle" @click="handleEnableSharpen" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.enableSharpen, 'aso-bg-active': image.filter.enableSharpen }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableSharpen" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableSharpen" type="checkbox" name="toggleEnableSharpen" class="aso-sr-only aso-peer" value="toggleEnableSharpen" v-model="image.filter.enableSharpen">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
-                    <div class="aso-text-center aso-space-y-1 aso-space-x-1 aso-flex">
+                    <div class="aso-text-center aso-space-y-1 aso-space-x-3 aso-flex">
                         <div>
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-1 aso-py-0.5">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
@@ -160,8 +169,9 @@
                             <div class="aso-text-[10px] aso-text-[#3D3D3D] -aso-translate-y-0.5 aso-px-0.5">Emboss</div>
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
-                            <label for="aso-toggle" @click="handleEnableEmbross" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': image.filter.enableEmbross, 'aso-bg-active': image.filter.enableEmbross }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableEmbross" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableEmbross" type="checkbox" name="toggleEnableEmbross" class="aso-sr-only aso-peer" value="toggleEnableEmbross" v-model="image.filter.enableEmbross">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
@@ -259,34 +269,5 @@ const updateImageSettings = async () => {
         toastMessage(result.message,"error");
     }
 };
-const handleEnableUploadImage = () => {
-    image.value.enableUploadImage = !image.value.enableUploadImage;
-};
-const handleFileUploadScript = () => {
-    image.value.fileUploadScript.customWithGraphical = !image.value.fileUploadScript.customWithGraphical;
-};
-const handleEnableClipart = () => {
-    image.value.enableClipart.active = !image.value.enableClipart.active;
-};
-const handleFilter = () => {
-    image.value.filter.active = !image.value.filter.active;
-};
-const handleEnableGreyscale = () => {
-    image.value.filter.enableGreyscale = !image.value.filter.enableGreyscale;
-};
-const handleEnableOpacity = () => {
-    image.value.filter.enableOpacity = !image.value.filter.enableOpacity;
-};
-const handleEnableBlur = () => {
-    image.value.filter.enableBlur = !image.value.filter.enableBlur;
-};
-const handleEnableSepia = () => {
-    image.value.filter.enableSepia = !image.value.filter.enableSepia;
-};
-const handleEnableSharpen = () => {
-    image.value.filter.enableSharpen = !image.value.filter.enableSharpen;
-};
-const handleEnableEmbross = () => {
-    image.value.filter.enableEmbross = !image.value.filter.enableEmbross;
-};
+
 </script>

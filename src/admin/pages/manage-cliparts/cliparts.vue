@@ -97,8 +97,9 @@
             <div class="aso-flex aso-bg-[#F8F9FB] aso-space-x-10 aso-font-semibold aso-px-4 aso-py-4" v-if="!isEdit">
                 <label>Upload Images</label>
                 <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                    <label for="aso-toggle" @click="handleUseApi" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[100%]': useApi, 'aso-bg-active': useApi }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                    <label for="toggleUploadImage" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                        <input id="toggleUploadImage" type="checkbox" name="toggleUploadImage" class="aso-sr-only aso-peer" value="toggleUploadImage" v-model="useApi">
+                        <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                     </label>
                 </div>
                 <label>Use Cliparts API</label>
@@ -378,9 +379,7 @@ onMounted(async () => {
     await fetchApiCliparts();
 });
 
-const handleUseApi = ()=>{
-    useApi.value = !useApi.value;
-}
+
 const changeMakeChoice = ()=> {
     makeChoice.value = !makeChoice.value;
 }
