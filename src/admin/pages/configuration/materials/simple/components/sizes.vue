@@ -78,7 +78,7 @@
                             <td class="aso-text-[12px] aso-px-6 aso-py-2">
                                 <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
                                     <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="{'aso-translate-x-[100%]': sz.isDefault, 'aso-bg-active': sz.isDefault }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                        <div :class="sz.isDefault ? 'aso-translate-x-[100%] aso-border-[#016464]':'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                                     </label>
                                 </span>
                             </td>
@@ -103,7 +103,7 @@
                     <div class="aso-flex aso-items-center">
                         <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
                             <label for="aso-toggle" @click="sizes.thickness.active = !sizes.thickness.active" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': sizes.thickness.active, 'aso-bg-active': sizes.thickness.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                                <div :class="sizes.thickness.active ? 'aso-translate-x-[100%] aso-border-[#016464]':'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                             </label>
                         </span>
                     </div>
@@ -133,7 +133,7 @@
                     Custom size
                     <div class="aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
                         <label for="aso-toggle" @click="changeCustomSizeActive" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="{'aso-translate-x-[120%]': sizes.customSize.active, 'aso-bg-active': sizes.customSize.active }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <div :class="sizes.customSize.active ? 'aso-translate-x-[120%] aso-border-[#016464]':'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
                 </div>

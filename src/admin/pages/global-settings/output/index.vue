@@ -6,22 +6,24 @@
         <div class="aso-space-y-4" v-if="!isFetching">
             <div>
                 <div class="aso-bg-[#F8F9FB] aso-flex aso-flex-col aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
-                    <div class="aso-flex">
+                    <div class="aso-flex aso-space-x-2">
                         <label>Use ider id as zip name</label>
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleZipName" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                <div :class="{'aso-translate-x-[100%]': output.zipName, 'aso-bg-active': output.zipName }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleZipName" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleZipName" type="checkbox" name="toggleZipName" class="aso-sr-only aso-peer" value="toggleZipName" v-model="output.zipName">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
                     <div class="aso-font-semibold aso-text-[14px] aso-py-6">
                         Use the command id as the name of the zip file that will contain the uploaded files during customization
                     </div>
-                    <div class="aso-flex">
+                    <div class="aso-flex aso-space-x-2">
                         <label>Calculate retina output</label>
                         <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                            <label for="aso-toggle" @click="handleCalculateOutput" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                    <div :class="{'aso-translate-x-[100%]': output.calculateOutput, 'aso-bg-active': output.calculateOutput }" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-border-[#008000] aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <label for="toggleEnableCalculateOutput" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleEnableCalculateOutput" type="checkbox" name="toggleEnableCalculateOutput" class="aso-sr-only aso-peer" value="toggleEnableCalculateOutput" v-model="output.calculateOutput">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
@@ -88,10 +90,4 @@ const updateGlobalOutput = async () => {
         toastMessage(result.message,"error");
     }
 }
-    const handleZipName = () => {
-        output.value.zipName = !output.value.zipName;
-    }
-    const handleCalculateOutput = () => {
-        output.value.calculateOutput = !output.value.calculateOutput;
-    }
 </script>
