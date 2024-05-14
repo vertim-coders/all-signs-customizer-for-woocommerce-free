@@ -1,8 +1,5 @@
-var fixingUrl =
-  window.aso_confiurator_data.fixing_methods_url ??
-  aso_confiurator_data.fixing_methods_url;
-var borderUrl =
-  window.aso_confiurator_data.borders_url ?? aso_confiurator_data.borders_url;
+var fixingUrl = aso_configurator_data.fixing_methods_url;
+var borderUrl = aso_configurator_data.borders_url;
 var canvas = null;
 var canvasBackground = "";
 var backCanvas = null;
