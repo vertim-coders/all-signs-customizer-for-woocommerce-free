@@ -112,9 +112,13 @@ class ASO_Frontend {
                         <div id='aso-frontend-app'></div>
                         <?php 
                         $this->includes_config_fonts($visibleFonts);
-                        wp_localize_script("aso-product-min","aso_confiurator_data",$ASO);
+                        wp_localize_script("aso-product-min","aso_configurator_data",$ASO);
+                        wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-product-min","aso_data",[
-                            "rest_url"=>$api_url."aso/v1"
+                            "rest_url"=>get_rest_url()."aso/v1"
+                        ]);
+                        wp_localize_script("aso-frontend","aso_data",[
+                            "rest_url"=>get_rest_url()."aso/v1"
                         ]);
                     }
                 }

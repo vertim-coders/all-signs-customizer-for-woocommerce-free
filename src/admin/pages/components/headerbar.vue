@@ -28,7 +28,7 @@
                             </svg>
                             additional Options
                         </button>
-                        <button @click="()=>$router.push('/configs/'+$router.currentRoute.value.params.config+'/'+$router.currentRoute.value.params.configId+'/materials')" v-if="($route.path.includes('configs') && ($route.path.includes('settings') ||$route.path.includes('additional-options'))) || $route.name == 'preview-back'" class="aso-p-2 aso-border-2 aso-border-solid aso-border-[#EF5A35] aso-text-[#EF5A35] aso-rounded aso-bg-[#F8E7E7] aso-cursor-pointer">
+                        <button @click="goToMaterials" v-if="($route.path.includes('configs') && ($route.path.includes('settings') ||$route.path.includes('additional-options'))) || $route.name == 'preview-back'" class="aso-p-2 aso-border-2 aso-border-solid aso-border-[#EF5A35] aso-text-[#EF5A35] aso-rounded aso-bg-[#F8E7E7] aso-cursor-pointer">
                             <svg width="21" height="19" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-3 aso-h-3">
                                 <path d="M1.6851 16.9L2.96826 17.46V8.43L0.641333 14.29C0.248724 15.31 0.698788 16.48 1.6851 16.9ZM20.3579 13.2L15.6083 1.25C15.468 0.887546 15.2291 0.575978 14.9211 0.353818C14.613 0.131658 14.2494 0.00864917 13.8751 0C13.6261 0 13.3676 0.0400001 13.1186 0.15L6.06125 3.2C5.72062 3.35096 5.42861 3.60077 5.21984 3.91982C5.01107 4.23886 4.89432 4.61375 4.88342 5C4.87384 5.25 4.92172 5.54 5.00791 5.8L9.79582 17.75C10.0735 18.53 10.7821 18.99 11.529 19C11.778 19 12.027 18.95 12.2664 18.85L19.3142 15.8C19.7827 15.5997 20.1558 15.2132 20.3515 14.7257C20.5472 14.2381 20.5496 13.6893 20.3579 13.2ZM6.80816 6C6.55419 6 6.31063 5.89464 6.13105 5.70711C5.95147 5.51957 5.85058 5.26522 5.85058 5C5.85058 4.73478 5.95147 4.48043 6.13105 4.29289C6.31063 4.10536 6.55419 4 6.80816 4C7.33483 4 7.76574 4.45 7.76574 5C7.76574 5.55 7.33483 6 6.80816 6ZM4.893 17C4.893 17.5304 5.09477 18.0391 5.45393 18.4142C5.8131 18.7893 6.30023 19 6.80816 19H8.19665L4.893 10.66V17Z" fill="currentColor"/>
                             </svg>
@@ -52,6 +52,13 @@ import {ref} from 'vue';
 const ASO_VERSION = ref(aso_data.version);
 const goToPreview = ()=>{
     router.push('/configs/'+router.currentRoute.value.params.config+'/preview/'+router.currentRoute.value.params.configId)
+    .then(() => {
+      // Recharger la page après la navigation
+      window.location.reload()
+    })
+}
+const goToMaterials = ()=>{
+    router.push('/configs/'+router.currentRoute.value.params.config+'/'+router.currentRoute.value.params.configId+'/materials')
     .then(() => {
       // Recharger la page après la navigation
       window.location.reload()

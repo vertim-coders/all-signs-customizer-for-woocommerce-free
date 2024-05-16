@@ -318,31 +318,31 @@
                         </div>
     
                         <div v-show="step == 'material'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-materials-section">
-                            <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textMaterial}} </p>    
-        
-                            <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
-                                <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
-                                    <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
-                                    <label :for="material.name + index" class="aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer">
-                                        <div :class="`${material.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-1/4 aso-h-20`">
-                                            <img v-if="material.icon != ''" :src="material.icon" class="aso-w-full aso-h-full" />
-                                        </div>                                
-                                        <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
-                                            <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
-                                            <p class="aso-text-xs">{{ material.description }}</p>
-                                            <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
-                                                <span v-if="material.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
-                                                <span v-if="material.popImg == ''" class="aso-invisible">example</span>                                        
-                                                <span :class="`${selectedMaterial == material.name ? `aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                                    </svg>
-                                                </span>                
-                                            </div>
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textMaterial}} </p>    
+    
+                        <div class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
+                            <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
+                                <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
+                                <label :for="material.name + index" class="aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer">
+                                    <div :class="`${material.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-1/4 aso-h-20`">
+                                        <img v-if="material.icon != ''" :src="material.icon" class="aso-w-full aso-h-full" />
+                                    </div>                                
+                                    <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
+                                        <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
+                                        <p class="aso-text-xs">{{ material.description }}</p>
+                                        <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
+                                            <span v-if="material.popImg != ''" class="aso-text-xs aso-text-red-500 aso-underline aso-cursor-pointer">example</span>
+                                            <span v-if="material.popImg == ''" class="aso-invisible">example</span>                                        
+                                            <span :class="`${selectedMaterial == material.name ? `aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]` : `aso-text-transparent`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-2 aso-rounded-full`">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                                </svg>
+                                            </span>                
                                         </div>
-                                    </label>
-                                </div>
+                                    </div>
+                                </label>
                             </div>
+                        </div>
                         </div>
         
                         <div v-show="step == 'component'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-products-section">
@@ -735,7 +735,7 @@
                                         </div>
                                     </div>
         
-                                    <div v-if="!signTextColor" class="aso-space-y-1">
+                                    <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="aso-space-y-1">
                                         <p class="aso-font-medium">Color</p>
                                         <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
@@ -897,11 +897,72 @@
                                             <p class="aso-flex aso-full-center aso-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
                                         </div>
                                     </div>
+
+                                    <div v-if="configImageSettingsFilters.active" class="aso-space-y-2">
+                                        <p class="aso-font-medium">Filters</p>
+                                        <div class="aso-w-full aso-flex aso-items-center">
+                                            <div class="aso-flex aso-space-x-6">
+                                                <span @click="selectImageFilter('Blur')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Blur</p>
+                                                </span>
+                                                <span @click="selectImageFilter('Greyscale')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Greyscale</p>
+                                                </span>
+                                                <span @click="selectImageFilter('Sepia')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Sepia</p>
+                                                </span>
+                                                <span @click="selectImageFilter('Emboss')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Emboss</p>
+                                                </span>
+                                                <span @click="selectImageFilter('Sharpen')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Sharpen</p>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
         
-                                    <div class="aso-space-y-4">
+                                    <div class="aso-space-y-3">
                                         <p class="aso-font-medium">Other custom</p>
                                         <div class="aso-w-full aso-flex aso-items-center">
                                             <div class="aso-flex aso-space-x-6">
+                                                <span @click="cloneObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
+                                                    <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
+                                                        <g clip-path="url(#clip0_65_739)">
+                                                            <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
+                                                            <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
+                                                            <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="clip0_65_739">
+                                                                <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Clone</p>
+                                                </span>
+        
+                                                <span @click="deleteObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    </svg>
+                                                    <p class="aso-text-xs aso-font-semibold">Delete</p>
+                                                </span>
+
                                                 <span @click="turnLeftImage()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
@@ -1519,6 +1580,7 @@
         handleChangeImageWidth,
         handleChangeImageHeight,
         handleFlipImage,
+        handleSelectFilter,
         handleCheckActiveSignFace,
         handleCloneCanvas,
         setPattern,
@@ -1543,6 +1605,7 @@
     var configImageSettings = ref({})
     var configImagesFormat = ref("")
     var configImageSettingsClipart = ref({})
+    var configImageSettingsFilters = ref({})
     var configUnit = ref("")
     var configSectionIcons = ref({})
     var configOutputSettings = ref({})
@@ -1731,12 +1794,13 @@
         configTextFontSettings.value = props.config.data.settings.customizerSign.text.enableFontSize
         configImageSettings.value = props.config.data.settings.customizerSign.images
         configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
+        configImageSettingsFilters.value = props.config.data.settings.customizerSign.images.filter
         configSectionIcons.value = props.config.data.settings.languageImages.images
         configOutputSettings.value = props.config.data.settings.generals.output
 
         configAdditionnalOptions.value = props.config.data.additionalOptions
         
-        console.log(configAdditionnalOptions.value)
+        console.log(configImageSettingsFilters.value, "configImageSettingss")
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
@@ -1974,6 +2038,90 @@
                 height: 0
             }
             changeSize(size)
+        }
+        var stopColor = false
+        if(colorrs.value.allColors.length > 0){
+            var index = 0
+            var haveDefault = false
+            while (index < colorrs.value.allColors.length && !haveDefault) {
+                if(colorrs.value.allColors[index].isDefault){
+                    if(colorrs.value.allColors[index].active){
+                        patternActive1.value = true
+                        patternActive2.value = true
+                        activeSignColorCode1.value = colorrs.value.allColors[index].url
+                        activeSignColorCode2.value = colorrs.value.allColors[index].url
+                    }else{
+                        patternActive1.value = false
+                        patternActive2.value = false
+                        activeSignColorCode1.value = colorrs.value.allColors[index].codeHex
+                        activeSignColorCode2.value = colorrs.value.allColors[index].codeHex
+                    }
+                    if(colorrs.value.allColors[index].active){
+                        colorTextColorName1.value = colorrs.value.allColors[index].name
+                        colorTextColorName2.value = colorrs.value.allColors[index].name
+                        
+                        colorTextCodeHex1.value = colorrs.value.allColors[index].codeHex
+                        colorTextCodeHex2.value = colorrs.value.allColors[index].codeHex
+                        if(colorrs.value.allColors[index].sameForBorder){
+                            colorForBorder1.value = false
+                            colorForBorder2.value = false
+                        }else{
+                            colorForBorder1.value = true
+                            colorForBorder2.value = true
+                        }
+                    }else{
+                        colorTextColorName1.value = ''
+                        colorTextColorName2.value = ''
+
+                        colorTextCodeHex1.value = ''
+                        colorTextCodeHex1.value = ''
+
+                        colorForBorder1.value = true
+                        colorForBorder2.value = true
+                    }
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                if(colorrs.value.allColors[0].active){
+                    patternActive1.value = true
+                    patternActive2.value = true
+                    activeSignColorCode1.value = colorrs.value.allColors[0].url
+                    activeSignColorCode2.value = colorrs.value.allColors[0].url
+                }else{
+                    patternActive1.value = false
+                    patternActive2.value = false
+                    activeSignColorCode1.value = colorrs.value.allColors[0].codeHex
+                    activeSignColorCode2.value = colorrs.value.allColors[0].codeHex
+                }
+                if(colorrs.value.allColors[index].active){
+                    colorTextColorName1.value = colorrs.value.allColors[0].name
+                    colorTextColorName2.value = colorrs.value.allColors[0].name
+                    
+                    colorTextCodeHex1.value = colorrs.value.allColors[0].codeHex
+                    colorTextCodeHex2.value = colorrs.value.allColors[0].codeHex
+                    if(colorrs.value.allColors[0].sameForBorder){
+                        colorForBorder1.value = false
+                        colorForBorder2.value = false
+                    }else{
+                        colorForBorder1.value = true
+                        colorForBorder2.value = true
+                    }
+                }else{
+                    colorTextColorName1.value = ''
+                    colorTextColorName2.value = ''
+
+                    colorTextCodeHex1.value = ''
+                    colorTextCodeHex1.value = ''
+
+                    colorForBorder1.value = true
+                    colorForBorder2.value = true
+                }
+            }
+        }else{
+            // changeSignColor(color, colorr)
         }
 
         var stopBorder = false
@@ -2265,8 +2413,8 @@
     function undo() {
         // console.log(stepArray.value.currentStateIndex , "Undo")
         if(stepArray.value.currentStateIndex > 0){
-            previousStep()
             var options = handleUndo()
+            previousStep()
             addedTexts.value = options.texts
             usedImages.value = options.images
 
@@ -2314,7 +2462,10 @@
                 excludeSizes: fixingExcludeSizes.value,
             },
             color: {
-                textColor: signTextColor.value,
+                textColor: {
+                    face1: signTextColor1.value,
+                    face2: signTextColor2.value
+                },
                 colorsObject: colorrs.value,
 
                 face1: {
@@ -2366,7 +2517,7 @@
             // stepArray.value.redoButton.disabled= "disabled";
         }
 
-        console.log(stepArray.value.states, "states INDEX")
+        console.log(stepArray.value.states.length, "states INDEX")
         // console.log(stepArray.value.currentStateIndex, "state index")
     }
     function previousStep(){
@@ -2395,14 +2546,15 @@
                         activeFixingMethode.value = currentStep.fixingMethod.value
                         fixingExcludeShapes.value = currentStep.fixingMethod.excludeShapes
                         fixingExcludeSizes.value = currentStep.fixingMethod.excludeSizes
-                        handleGetActiveFixing(activeFixingMethode.value)
+                        handleSelectFixingMethode(activeFixingMethode.value)
 
                         currentSizeName.value = currentStep.size.name
                         currentSizeData.value = currentStep.size.data
                         currentSizeValues.value = currentStep.size.values
-                        handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
+                        // handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
                         
-                        signTextColor.value = currentStep.color.textColor
+                        signTextColor1.value = currentStep.color.textColor.face1
+                        signTextColor2.value = currentStep.color.textColor.face2
                         colorrs.value = currentStep.color.colorsObject
                         activeSignColor.value = currentStep.color.face1.name
                         activeSignColorCode1.value = currentStep.color.face1.codeHex
@@ -2434,24 +2586,23 @@
                         border2ExcludeShapes.value = currentStep.border.face2.excludeShapes
                         border2ExcludeSizes.value = currentStep.border.face2.excludeSizes
     
-                        if(materialType.value === 'simple'){
-                            if(activeFace.value === 'front-face'){
-                                handleSelectBorder(activeFace1Border.value)
-                                if(activeFace1Border.value !== 'none'){
-                                    // console.log(activeFace1BorderColor.value, "front-face")
-                                }
-                                // handlechangeBorderColor(activeFace1BorderColor.value)
-                            }else{
-                                handleSelectBorder(activeFace2Border.value)
-                                if(activeFace2Border.value !== 'none'){
-                                    // handlechangeBorderColor(activeFace2BorderColor.value)
-                                }
-                            }
-                        }
-                        // addedTexts.value = currentStep.texts
-                        // usedImages.value = currentStep.images
-    
-                        // console.log(currentStep.images, "added")
+                        // if(materialType.value === 'simple'){
+                        //     if(signTextColor1.value.active && signTextColor1.value.sameForBorder){
+
+                        //     }else{
+                        //         if(activeFace.value === 'front-face'){
+                        //             handleSelectBorder(activeFace1Border.value)
+                        //             if(activeFace1Border.value !== 'none'){
+                        //                 handlechangeBorderColor(activeFace1BorderColor.value)
+                        //             }
+                        //         }else{
+                        //             handleSelectBorder(activeFace2Border.value)
+                        //             if(activeFace2Border.value !== 'none'){
+                        //                 handlechangeBorderColor(activeFace2BorderColor.value)
+                        //             }
+                        //         }
+                        //     }
+                        // }
     
                         finalPrices.value = currentStep.price
     
@@ -2477,14 +2628,15 @@
                         activeFixingMethode.value = currentStep.fixingMethod.value
                         fixingExcludeShapes.value = currentStep.fixingMethod.excludeShapes
                         fixingExcludeSizes.value = currentStep.fixingMethod.excludeSizes
-                        handleGetActiveFixing(activeFixingMethode.value)
+                        handleSelectFixingMethode(activeFixingMethode.value)
 
                         currentSizeName.value = currentStep.size.name
                         currentSizeData.value = currentStep.size.data
                         currentSizeValues.value = currentStep.size.values
-                        handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
+                        // handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
                         
-                        signTextColor.value = currentStep.color.textColor
+                        signTextColor1.value = currentStep.color.textColor.face1
+                        signTextColor2.value = currentStep.color.textColor.face2
                         colorrs.value = currentStep.color.colorsObject
                         activeSignColor.value = currentStep.color.face1.name
                         activeSignColorCode1.value = currentStep.color.face1.codeHex
@@ -2515,23 +2667,6 @@
                         activeFace2BorderColor.value = currentStep.border.face2.color
                         border2ExcludeShapes.value = currentStep.border.face2.excludeShapes
                         border2ExcludeSizes.value = currentStep.border.face2.excludeSizes
-    
-                        if(materialType.value === 'simple'){
-                            if(activeFace.value === 'front-face'){
-                                handleSelectBorder(activeFace1Border.value)
-                                if(activeFace1Border.value !== 'none'){
-                                    // console.log(activeFace1BorderColor.value, "front-face")
-                                }
-                                // handlechangeBorderColor(activeFace1BorderColor.value)
-                            }else{
-                                handleSelectBorder(activeFace2Border.value)
-                                if(activeFace2Border.value !== 'none'){
-                                    // handlechangeBorderColor(activeFace2BorderColor.value)
-                                }
-                            }
-                        }
-                        // addedTexts.value = currentStep.texts
-                        // usedImages.value = currentStep.images
     
                         // console.log(currentStep.images, "added")
     
@@ -2573,14 +2708,15 @@
                     activeFixingMethode.value = currentStep.fixingMethod.value
                     fixingExcludeShapes.value = currentStep.fixingMethod.excludeShapes
                     fixingExcludeSizes.value = currentStep.fixingMethod.excludeSizes
-                    handleGetActiveFixing(activeFixingMethode.value)
+                    handleSelectFixingMethode(activeFixingMethode.value)
 
                     currentSizeName.value = currentStep.size.name
                     currentSizeData.value = currentStep.size.data
                     currentSizeValues.value = currentStep.size.values
-                    handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
+                    // handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeName.value, currentSizeValues.value.maxTextChar)
                     
-                    signTextColor.value = currentStep.color.textColor
+                    signTextColor1.value = currentStep.color.textColor.face1
+                    signTextColor2.value = currentStep.color.textColor.face2
                     colorrs.value = currentStep.color.colorsObject
                     activeSignColor.value = currentStep.color.face1.name
                     activeSignColorCode1.value = currentStep.color.face1.codeHex
@@ -2612,22 +2748,35 @@
                     border2ExcludeShapes.value = currentStep.border.face2.excludeShapes
                     border2ExcludeSizes.value = currentStep.border.face2.excludeSizes
 
-                    if(activeFace.value === 'front-face'){
-                        handleSelectBorder(activeFace1Border.value)
-                        if(activeFace1Border.value !== 'none'){
-                            // console.log(activeFace1BorderColor.value, "front-face")
-                        }
-                        // handlechangeBorderColor(activeFace1BorderColor.value)
-                    }else{
-                        handleSelectBorder(activeFace2Border.value)
-                        if(activeFace2Border.value !== 'none'){
-                            // handlechangeBorderColor(activeFace2BorderColor.value)
-                        }
-                    }
-                    // addedTexts.value = currentStep.texts
-                    // usedImages.value = currentStep.images
+                    // if(materialType.value === 'simple'){
+                    //     if(activeFace.value === 'front-face'){
+                    //         if(signTextColor1.value.active && signTextColor1.value.sameForBorder){
+                    //             if(activeFace1Border.value !== 'none'){
+                    //                 handleSelectBorder(activeFace1Border.value)
+                    //                 handlechangeBorderColor(signTextColor1.value.codeHex)
+                    //             }
+                    //         }else{
+                    //             handleSelectBorder(activeFace1Border.value)
+                    //             if(activeFace1Border.value !== 'none'){
+                    //                 handlechangeBorderColor(activeFace1BorderColor.value)
+                    //             }
+                    //         }
 
-                    // console.log(currentStep.images, "added")
+                    //     }else{
+                    //         if(signTextColor2.value.active && signTextColor2.value.sameForBorder){
+                    //             if(activeFace2Border.value !== 'none'){
+                    //                 handleSelectBorder(activeFace2Border.value)
+                    //                 handlechangeBorderColor(signTextColor2.value.codeHex)
+                    //             }
+                    //         }else{
+                    //             handleSelectBorder(activeFace2Border.value)
+                    //             if(activeFace2Border.value !== 'none'){
+                    //                 handlechangeBorderColor(activeFace2BorderColor.value)
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    
 
                     finalPrices.value = currentStep.price
 
@@ -2646,40 +2795,20 @@
         }
     }
     function clearStep(){
-        currentSizeName.value = stepArray.value.states[0].size.name
-        currentSizeValues.value = stepArray.value.states[0].size.values
+        // currentSizeName.value = stepArray.value.states[0].size.name
+        // currentSizeValues.value = stepArray.value.states[0].size.values
 
-        selectedShape.value = stepArray.value.states[0].shape
-        activeFixingMethode.value = stepArray.value.states[0].fixingMethod.value
-        fixingExcludeShapes.value = stepArray.value.states[0].fixingMethod.excludeShapes
-        fixingExcludeSizes.value = stepArray.value.states[0].fixingMethod.excludeSizes
-        
-        signTextColor.value = stepArray.value.states[0].color.textColor
-        activeSignColor.value = stepArray.value.states[0].color.face1.name
-        activeSignColorCode1.value = stepArray.value.states[0].color.face1.codeHex
-        patternActive1.value = stepArray.value.states[0].color.face1.pattern
-        activeSignFace2Color.value = stepArray.value.states[0].color.face2.name
-        activeSignColorCode2.value = stepArray.value.states[0].color.face2.codeHex
-        patternActive2.value = stepArray.value.states[0].color.face2.pattern
-
-        activeFace1Border.value = stepArray.value.states[0].border.face1.type
-        activeFace1BorderColor.value = stepArray.value.states[0].border.face1.color
-        border1ExcludeShapes.value = stepArray.value.states[0].border.face1.excludeShapes
-        border1ExcludeSizes.value = stepArray.value.states[0].border.face1.excludeSizes
-
-        activeFace2Border.value = stepArray.value.states[0].border.face2.type
-        activeFace2BorderColor.value = stepArray.value.states[0].border.face2.color
-        border2ExcludeShapes.value = stepArray.value.states[0].border.face2.excludeShapes
-        border2ExcludeSizes.value = stepArray.value.states[0].border.face2.excludeSizes
 
         addedTexts.value = []
         usedImages.value = []
 
-        finalPrices.value = stepArray.value.states[0].price
+        // finalPrices.value = stepArray.value.states[0].price
 
         stepArray.value.states = []
         stepArray.value.currentStateIndex = -1
         stepArray.value.undoFinishedStatus = 1;
+        firstSetLoad.value = false
+        selectMaterial(props.config.data.materials[0])
     }
 
 
@@ -2794,6 +2923,8 @@
         var object = activeCanvas.getActiveObject();
         if(object.type == 'image'){
             angleActive.value = true
+            // showOptions('image')
+            // editAddedImage(object)
         }
         div.classList.remove("aso-invisible");
         textsPrices.value = handleSetPrice()
@@ -2802,6 +2933,12 @@
             price: 0
         }
         getOptionPrice(priceObject)
+
+        // if(object.type === 'i-text'){
+        //     showOptions('text')
+        //     getTextObject(object)
+        // }
+
     }
     function closeObjectValues(){
         var div = document.getElementById('activeObject-values');
@@ -3203,7 +3340,7 @@
 
 
     function deleteObject(){
-        console.log(activeCanvas.getActiveObject())
+        // console.log(activeCanvas.getActiveObject())
         if(activeCanvas.getActiveObject() !== undefined){
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
@@ -3223,7 +3360,7 @@
                 if(object.type == 'image'){
                     usedImages.value = handleDeleteObject(object)
                     // selectText.value = false
-                    console.log(usedImages.value, 'image')
+                    // console.log(usedImages.value, 'image')
                     // console.log(optionsPrices.value, "before")
         
                     var index = 0
@@ -3241,6 +3378,10 @@
                         price: 0
                     }
                     getOptionPrice(priceObject)
+                }
+
+                if(firstSetLoad.value){
+                    saveStep('clone object')
                 }
             }
         }
@@ -3261,7 +3402,7 @@
                     optionsPrices.value.forEach(element => {
                         if(element.type){
                             if(object.getSrc() === element.name && !stop){
-                                console.log(element, "qsdqsdqsdqsd")
+                                // console.log(element, "qsdqsdqsdqsd")
                                 var imagePriceObject = {
                                     id: newImagePriceId.value,
                                     name: element.name,
@@ -3281,6 +3422,10 @@
                     price: 0
                 }
                 getOptionPrice(priceObject)
+
+                // if(firstSetLoad.value){
+                //     saveStep('clone object')
+                // }
             }
         }
     }
@@ -3479,6 +3624,8 @@
     var activeFace2Border = ref('')
     var activeFace1BorderColor = ref('')
     var activeFace2BorderColor = ref('')
+    var activeFace1BorderColorPrice = ref(0)
+    var activeFace2BorderColorPrice = ref(0)
     var borderColors1 = ref({})
     var borderColors2 = ref({})
     var customBorderColor1 = ref(false)
@@ -3647,6 +3794,7 @@
         if(firstBorderColorCheck.value){
             borderColorName1.value = name
             activeFace1BorderColor.value = colorHex
+            activeFace1BorderColorPrice.value = price
             handlechangeBorderColor(colorHex, "first load fornt face")
             var borderColor1Price = price
             var borderColorPrice1Object = {
@@ -3657,6 +3805,7 @@
 
             borderColorName2.value = name
             activeFace2BorderColor.value = colorHex
+            activeFace2BorderColorPrice.value = price
             handlechangeBorderColor(colorHex, "first load back face")
             var borderColor2Price = price
             var borderColorPrice2Object = {
@@ -3668,6 +3817,7 @@
             if(activeFace.value === "front-face"){
                 borderColorName1.value = name
                 activeFace1BorderColor.value = colorHex
+                activeFace1BorderColorPrice.value = price
                 handlechangeBorderColor(colorHex,"front face border color")
                 var borderColor1Price = price
     
@@ -3680,6 +3830,7 @@
             if(configDoublePart.value.active && activeFace.value === "back-face"){
                 borderColorName2.value = name
                 activeFace2BorderColor.value = colorHex
+                activeFace2BorderColorPrice.value = price
                 handlechangeBorderColor(colorHex, "back face border color")
                 var borderColor2Price = price
     
@@ -3706,7 +3857,8 @@
     var activeSignColorCode2 = ref('')
     var patternActive1 = ref(false)
     var patternActive2 = ref(false)
-    var signTextColor = ref(false)
+    var signTextColor1 = ref(false)
+    var signTextColor2 = ref(false)
     var colorTextColor = ref("")
     var colorTextColorName1 = ref("")
     var colorTextColorName2 = ref("")
@@ -3716,13 +3868,14 @@
         // console.log(color.name, "changeSignColor")
         var color1Price = 0
         var color2Price = 0
-        signTextColor.value = textColor.active
-
+        
         if(firstColorCheck.value){
             if(configDoublePart.value.active){
+                signTextColor1.value = textColor
                 activeSignColor.value = name;
                 color1Price = price
     
+                signTextColor2.value = textColor
                 activeSignFace2Color.value = name;
                 color2Price = price
     
@@ -3773,6 +3926,7 @@
                     colorForBorder2.value = true
                 }
             }else{
+                signTextColor1.value = textColor
                 activeSignColor.value = name;
                 color1Price = price
                 var colorPrice1Object = {
@@ -3805,6 +3959,7 @@
             }
         }else{
             if(activeFace.value === "front-face"){
+                signTextColor1.value = textColor
                 activeSignColor.value = name;
                 color1Price = price
                 
@@ -3839,6 +3994,7 @@
             }
 
             if(configDoublePart.value.active && activeFace.value === "back-face"){
+                signTextColor2.value = textColor
                 activeSignFace2Color.value = name;
                 color2Price = price
 
@@ -3878,19 +4034,72 @@
         if(textColor.active){
             handleChangeSignColor(name, pattern, textColor, defTextColor, restart)
             if(textColor.sameForBorder){
-                changeBorderColor(textColor.codeHex, 0, textColor.name)
+                // changeBorderColor(textColor.codeHex, 0, textColor.name)
+                handlechangeBorderColor(textColor.codeHex, "back face border color")
+                if(firstBorderColorCheck.value){
+                    if(configDoublePart.value.active){
+                        borderColorName1.value = textColor.name 
+                        borderColorName2.value = textColor.name
+
+                        var borderColorPrice1Object = {
+                            name: "border-color1",
+                            price: 0
+                        }
+                        getOptionPrice(borderColorPrice1Object)
+                        var borderColorPrice2Object = {
+                            name: "border-color2",
+                            price: 0
+                        }
+                        getOptionPrice(borderColorPrice2Object)
+                    }else{
+                        borderColorName1.value = textColor.name
+                        var borderColorPrice1Object = {
+                            name: "border-color1",
+                            price: 0
+                        }
+                        getOptionPrice(borderColorPrice1Object)
+                    }
+                }else{
+                    if(activeFace.value === "front-face"){
+                        borderColorName1.value = textColor.name
+                        var borderColorPrice1Object = {
+                            name: "border-color1",
+                            price: 0
+                        }
+                        getOptionPrice(borderColorPrice1Object)
+                    }else{
+                        borderColorName2.value = textColor.name
+                        var borderColorPrice2Object = {
+                            name: "border-color2",
+                            price: 0
+                        }
+                        getOptionPrice(borderColorPrice2Object)
+                    }
+                }
                 colorTextColor.value = textColor.codeHex
                 // colorForBorder.value = false
+                if(firstSetLoad.value){
+                    saveStep('select borderColor')
+                }
             }
             if(!textColor.sameForBorder){
                 // console.log("qsqdqsdqdsqs")
                 // colorForBorder.value = true
-                changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
+                if(activeFace.value === "front-face"){
+                    changeBorderColor(activeFace1BorderColor.value, activeFace1BorderColorPrice.value)
+                }else if(activeFace.value === "back-face"){
+                    changeBorderColor(activeFace2BorderColor.value, activeFace2BorderColorPrice.value)
+                }
             }
         }else{
             // colorForBorder.value = true
             handleChangeSignColor(name, pattern, textColor, defTextColor, restart)
-            changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
+            // changeBorderColor(firstBorderColor.value.codeHex, firstBorderColor.value.additionalPrice)
+            if(activeFace.value === "front-face"){
+                changeBorderColor(activeFace1BorderColor.value, activeFace1BorderColorPrice.value)
+            }else if(activeFace.value === "back-face"){
+                changeBorderColor(activeFace2BorderColor.value, activeFace2BorderColorPrice.value)
+            }
         }
 
         firstColorCheck.value = false
@@ -4147,6 +4356,9 @@
     }
     function selectImageBorder(){
 
+    }
+    function selectImageFilter(filter){
+        handleSelectFilter(filter)
     }
 
 

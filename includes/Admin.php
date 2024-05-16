@@ -55,8 +55,6 @@ class ASO_Admin {
         wp_enqueue_script('aso-toast');
         wp_enqueue_script( 'aso-sortable' );
         wp_enqueue_media();
-    
-    
     }
 
     /**
@@ -75,7 +73,7 @@ class ASO_Admin {
                 'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
                 'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
             ]);
-            wp_localize_script("aso-admin","aso_confiurator_data",array());
+            wp_localize_script("aso-admin","aso_configurator_data",array());
             ?>
         </div>
         <?php
