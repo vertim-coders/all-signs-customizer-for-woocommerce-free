@@ -88,8 +88,8 @@
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Title</label>
-                        <input type="text" v-model="newGroup.title" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <label for="" class="aso-font-normal">Title <span class="aso-text-red-500">*</span></label>
+                        <input type="text" v-model="newGroup.title" :class="`${emptyLabel?'aso-field-required':''} aso-rounded aso-w-full aso-h-[30px]`">
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
@@ -173,6 +173,7 @@ import toastMessage from "@/admin/utils/functions";
         title:'',
         description:''
     });
+    const emptyLabel = ref(false);
     const isLoading = ref(false);
 
 
@@ -189,27 +190,33 @@ import toastMessage from "@/admin/utils/functions";
         isFetching.value = false;
     }
     const addNewGroup = async () => {
-        isLoading.value = true;
-        const result = await api.addManageClipart(newGroup.value);
-        if(result.success){
-            await fetchGroups();
-            
-            toastMessage(result.message);
-            newGroup.value = {
-                title:'',
-                description:''
+        if(newGroup.value.title.trim() !==''){
+            isLoading.value = true;
+            emptyLabel.value = false;
+            const result = await api.addManageClipart(newGroup.value);
+            if(result.success){
+                await fetchGroups();
+                
+                toastMessage(result.message);
+                newGroup.value = {
+                    title:'',
+                    description:''
+                }
+                isLoading.value = false;
+                createGroup.value = false;
+            }else{
+                
+                toastMessage(result.message,'error');
+                newGroup.value = {
+                    title:'',
+                    description:''
+                }
+                isLoading.value = false;
+                createGroup.value = false;
             }
-            isLoading.value = false;
-            createGroup.value = false;
         }else{
-            
-            toastMessage(result.message,'error');
-            newGroup.value = {
-                title:'',
-                description:''
-            }
-            isLoading.value = false;
-            createGroup.value = false;
+            emptyLabel.value = true;
+            toastMessage("Label must not be empty","warning");
         }
     }
 
@@ -224,33 +231,39 @@ import toastMessage from "@/admin/utils/functions";
         }
     }
     const updateGroup = async () => {
-        isLoading.value = true;
-        const result = await api.UpdateManageClipart(editId.value,newGroup.value);
-        if(result.success){
-            await fetchGroups();
-            isLoading.value = false;
-            if(result.success == true){
-                toastMessage(result.message);
+        if(newGroup.value.title.trim() !==''){
+            isLoading.value = true;
+            emptyLabel.value = false;
+            const result = await api.UpdateManageClipart(editId.value,newGroup.value);
+            if(result.success){
+                await fetchGroups();
+                isLoading.value = false;
+                if(result.success == true){
+                    toastMessage(result.message);
+                }else{
+                    toastMessage(result.message,"warning");
+                }
+                isEdit.value = false;
+                createGroup.value = false;
+                editId.value = null;
+                newGroup.value = {
+                    title:'',
+                    description:''
+                }
             }else{
-                toastMessage(result.message,"warning");
-            }
-            isEdit.value = false;
-            createGroup.value = false;
-            editId.value = null;
-            newGroup.value = {
-                title:'',
-                description:''
+                isLoading.value = false;
+                toastMessage(result.message,'error');
+                isEdit.value = false;
+                createGroup.value = false;
+                editId.value = null;
+                newGroup.value = {
+                    title:'',
+                    description:''
+                }
             }
         }else{
-            isLoading.value = false;
-            toastMessage(result.message,'error');
-            isEdit.value = false;
-            createGroup.value = false;
-            editId.value = null;
-            newGroup.value = {
-                title:'',
-                description:''
-            }
+            emptyLabel.value = true;
+            toastMessage("Label must not be empty","warning");
         }
     }
     const deleteGroup = async () => {
@@ -289,6 +302,7 @@ import toastMessage from "@/admin/utils/functions";
         createGroup.value = false;
         editId.value = null;
         isEdit.value = false;
+        emptyLabel.value = false;
         newGroup.value = {
             title:'',
             description:''

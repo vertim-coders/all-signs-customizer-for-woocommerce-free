@@ -112,6 +112,7 @@ class ASO_Frontend {
                         <div id='aso-frontend-app'></div>
                         <?php 
                         $this->includes_config_fonts($visibleFonts);
+                        $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
                         wp_localize_script("aso-product-min","aso_configurator_data",$ASO);
                         wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-product-min","aso_data",[
@@ -149,5 +150,10 @@ class ASO_Frontend {
         wp_add_inline_style( 'aso-style', $inline_style );
         ?>
         <?php
+    }
+
+    private function include_custom_css( $css){
+        wp_add_inline_style( 'aso-frontend', $css );
+        wp_add_inline_style( 'aso-style', $css );
     }
 }

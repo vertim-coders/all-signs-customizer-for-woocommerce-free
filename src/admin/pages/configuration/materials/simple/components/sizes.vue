@@ -200,8 +200,8 @@
                 <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8">
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                            <label for="" class="aso-text-[14px] aso-font-bold">Label</label>
-                            <input type="text" v-model="size.label"  class="aso-rounded aso-w-full aso-h-[30px]">
+                            <label for="" class="aso-text-[14px] aso-font-bold">Label <span class="aso-text-red-500">*</span></label>
+                            <input type="text" v-model="size.label"  :class="` ${emptyLabel?'aso-field-required':''} aso-rounded aso-w-full aso-h-[30px]`">
                         </div>
                     </div>
                     <div class="aso-flex aso-justify-between">
@@ -384,6 +384,7 @@ const size = ref({
     charPrice:0,
     basePrice:0
 });
+const emptyLabel = ref(false);
 onMounted(async ()=>{
     isFetching.value = true;
     await fetchMaterialSizes();
@@ -461,9 +462,16 @@ const updateMaterialSize = async () => {
 }
 
 const addMaterialSize = async () => {
-    isLoading.value = true;
-    sizes.value.allSizes.push(size.value);
-    await updateMaterialSize();
+    if(size.value.label.trim() !== ''){
+        isLoading.value = true;
+        emptyLabel.value = false;
+        isLoading.value = true;
+        sizes.value.allSizes.push(size.value);
+        await updateMaterialSize();
+    }else{
+        emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
+    }
 }
 const selectMaterialSize = (id,sz,isdeleting=false) => {
     if(isdeleting){
@@ -478,9 +486,15 @@ const selectMaterialSize = (id,sz,isdeleting=false) => {
 }
 
 const updateSizeInMaterialSize = async () => {
-    isLoading.value = true;
-    sizes.value.allSizes[sizeId.value] = size.value;
-    await updateMaterialSize();
+    if(size.value.label.trim() !== ''){
+        isLoading.value = true;
+        emptyLabel.value = false;
+        sizes.value.allSizes[sizeId.value] = size.value;
+        await updateMaterialSize();
+    }else{
+        emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
+    }
 }
 
 const deleteMaterialSize = async () => {
@@ -496,6 +510,7 @@ const back = () => {
     isNewSize.value = false;
     isEdit.value = false;
     sizeId.value  = null;
+    emptyLabel.value = false;
     size.value = {
         isDefault:false,
         label:"",

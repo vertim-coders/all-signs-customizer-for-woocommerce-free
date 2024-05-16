@@ -1,7 +1,7 @@
 <template>
-    <div class="aso-h-[85vh] aso-overflow-y-auto aso-overflow-x-hidden aso-relative">
-        <div class="aso-space-y-1 aso-sticky aso-z-[9999] aso-w-full aso-top-0 aso-shadow-md">
-            <div class="aso-bg-white aso-justify-center aso-items-center aso-flex aso-h-[50px]">
+    <div class="">
+        <div class="aso-sticky aso-top-[80px] aso-z-[9999] aso-shadow-md aso-h-[50px]">
+            <div class="aso-bg-white aso-justify-center aso-items-center aso-flex aso-h-full">
                 <div class="">
                     <button @click="$router.push('/configs/'+config.replace(/-/,' ')+'/'+configID+'/settings/generals')" :class="`aso-flex aso-w-fit aso-h-fit aso-p-3.5 aso-bg-transparent aso-space-x-2 aso-px-6 aso-text-black ${route.name == 'config-settings-generals' ? 'aso-border-b-[2px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">
                         <svg class="aso-w-5 aso-h-5 aso-translate-y-0.5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">

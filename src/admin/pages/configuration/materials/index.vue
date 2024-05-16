@@ -108,8 +108,8 @@
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-6">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
-                        <label for="" class="aso-font-normal">component name</label>
-                        <input type="text" v-model="newMaterial.name" class="aso-rounded aso-w-full aso-h-[35px]">
+                        <label for="" class="aso-font-normal">Material name <span class="aso-text-red-500">*</span></label>
+                        <input type="text" v-model="newMaterial.name" :class="`${emptyLabel?'aso-field-required':''} aso-rounded aso-w-full aso-h-[35px]`">
                     </div>
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
                         <label for="" class="aso-font-normal">Description</label>
@@ -270,7 +270,6 @@ import {onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions'
 import router from '@/admin/router';
-import Editor from '@tinymce/tinymce-vue';
 
 const route = useRoute()
 const configID = ref(route.params.configId)
@@ -294,7 +293,8 @@ const openTnyMce = ref(false)
 const deleteMaterial = ref({
     id:null,
     name:""
-})
+});
+const emptyLabel = ref(false);
 const notFoundMessage = ref('');
 const showParams = ref([]);
 const fetchMaterials = async () => {
@@ -354,33 +354,38 @@ onMounted(async() => {
 /**Function for adding */
 
 const addNewMaterial = async () => {
-    isLoading.value = true;
-    const result = await api.addMaterial(configID.value,newMaterial.value);
-    if(result.success){
-        await fetchMaterials();
-        isLoading.value = false;
-        isNewComponent.value = false;
-        newMaterial.value = {
-            name:"",
-            description:"",
-            icon:"",
-            popImg:"",
-            type:"simple",
+    if(newMaterial.value.name.trim() !== ''){
+        isLoading.value = true;
+        const result = await api.addMaterial(configID.value,newMaterial.value);
+        if(result.success){
+            await fetchMaterials();
+            isLoading.value = false;
+            isNewComponent.value = false;
+            newMaterial.value = {
+                name:"",
+                description:"",
+                icon:"",
+                popImg:"",
+                type:"simple",
+            }
+            openCloneModal.value=false;
+            toastMessage(result.message)
+        }else{
+            isLoading.value = false;
+            isNewComponent.value = false;
+            newMaterial.value = {
+                name:"",
+                description:"",
+                icon:"",
+                popImg:"",
+                type:"simple",
+            }
+            openCloneModal.value=false;
+            toastMessage(result.message,"error");
         }
-        openCloneModal.value=false;
-        toastMessage(result.message)
     }else{
-        isLoading.value = false;
-        isNewComponent.value = false;
-        newMaterial.value = {
-            name:"",
-            description:"",
-            icon:"",
-            popImg:"",
-            type:"simple",
-        }
-        openCloneModal.value=false;
-        toastMessage(result.message,"error");
+        emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
     }
 }
 
@@ -464,24 +469,39 @@ const savePopImg = ()=>{
 
 
 const updateMaterial = async () => {
-    isLoading.value = true;
-    const result = await api.updateMarerial(configID.value,materialId.value,newMaterial.value);
-    if(result.success){
-        await fetchMaterials();
-        if(result.sucess = true){
+    if(newMaterial.value.name.trim() !== ''){
+        isLoading.value = true;
+        emptyLabel.value = false;
+        const result = await api.updateMarerial(configID.value,materialId.value,newMaterial.value);
+        if(result.success){
             await fetchMaterials();
-            isLoading.value = false;
-            isNewComponent.value = false;
-            newMaterial.value = {
-                name:"",
-                description:"",
-                icon:"",
-                popImg:"",
-                type:"simple",
+            if(result.sucess = true){
+                await fetchMaterials();
+                isLoading.value = false;
+                isNewComponent.value = false;
+                newMaterial.value = {
+                    name:"",
+                    description:"",
+                    icon:"",
+                    popImg:"",
+                    type:"simple",
+                }
+                
+                isEdit.value = false;
+                toastMessage(result.message);
+            }else{
+                isLoading.value = false;
+                isNewComponent.value = false;
+                newMaterial.value = {
+                    name:"",
+                    description:"",
+                    icon:"",
+                    popImg:"",
+                    type:"simple",
+                }
+                isEdit.value = false;
+                toastMessage(result.message,"warning");
             }
-            
-            isEdit.value = false;
-            toastMessage(result.message);
         }else{
             isLoading.value = false;
             isNewComponent.value = false;
@@ -492,20 +512,11 @@ const updateMaterial = async () => {
                 popImg:"",
                 type:"simple",
             }
-            isEdit.value = false;
-            toastMessage(result.message,"warning");
+            toastMessage(result.message,"error");
         }
     }else{
-        isLoading.value = false;
-        isNewComponent.value = false;
-        newMaterial.value = {
-            name:"",
-            description:"",
-            icon:"",
-            popImg:"",
-            type:"simple",
-        }
-        toastMessage(result.message,"error");
+        emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
     }
     
 }
@@ -556,6 +567,7 @@ const addComponent = () => {
 const back = () => {
     isNewComponent.value = false;
     isEdit.value = false;
+    emptyLabel.value = false;
     newMaterial.value = {
         name:"",
         description:"",
