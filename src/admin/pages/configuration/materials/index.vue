@@ -47,13 +47,13 @@
                         </div>
                     </div>
                     <div v-for="(material,key) in materials" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b-1 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-gray-200 aso-gap-x-16">
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4">
-                            <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
+                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-flex aso-pl-4 aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4">
+                            <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                 <span class="aso-text-[12px]">{{getInitials(material.name)}}</span> 
                             </span>
-                            <span>{{ material.name }}</span>
+                            <span class="aso-flex aso-justify-center aso-items-center">{{ material.name }}</span>
                         </div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis">{{material.description}}</div>
+                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis">{{material.description}}</div>
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="material.icon" alt="" v-if="material.icon!=''">
                         </div>
