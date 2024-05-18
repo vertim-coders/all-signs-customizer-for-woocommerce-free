@@ -90,7 +90,7 @@
                         <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
     
                         <div id="aso-sign-recto" class="aso-relative aso-w-full aso-h-full">
-                            <canvas  ref="canvasFace1Ref" id="canaas" class="aso-relative aso-w-full aso-h-full"></canvas>
+                            <canvas  ref="canvasFace1Ref" id="canvaas" class="aso-relative aso-w-full aso-h-full"></canvas>
                         </div>
     
                         <div id="aso-sign-verso" class="aso-absolute aso-left-0 aso-top-0">
@@ -718,7 +718,7 @@
                                 <div v-show="selectText">
                                     <textarea name="" id="aso-text-editor" class="aso-h-12 aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" v-model="selectedText.value" @input="changeTextValue"></textarea>
         
-                                    <div class="aso-space-y-1">
+                                    <div v-if="allFonts.length > 0" class="aso-space-y-1">
                                         <p class="aso-font-medium">Font</p>
                                         <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                             <div class="aso-flex aso-items-center aso-justify-center aso-w-fit aso-h-10" v-for="(font, index) in allFonts">
@@ -1865,7 +1865,7 @@
         handleGetImageSettings(configImageSettings.value)
         // console.log(configImageSettings.value)
 
-        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length >= 0 ? allFonts.value[0].label : 'Arial'))
+        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
         configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
         
 
@@ -2069,6 +2069,22 @@
             });
             canvas.on('selection:cleared', closeInfoDiv);
 
+            canvas.on('mouse:wheel', function(opt) {
+                var delta = opt.e.deltaY;
+                var zoom = canvas.getZoom();
+                zoom *= 0.999 ** delta;
+                if (zoom > 20) zoom = 20;
+                if (zoom < 0.01) zoom = 0.01;
+
+                // console.log(zoom, "delta");
+
+                canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+                opt.e.preventDefault();
+                opt.e.stopPropagation();
+            });
+
+
+
             canvasBack.on('selection:created', showObjectValues);
             canvasBack.on('selection:cleared', closeObjectValues);
             canvasBack.on('mouse:down', function(options) {
@@ -2109,7 +2125,24 @@
             
             activeCanvas = canvas
 
+            // resizeCanvas();
             checkScreenSize();
+
+            // let resizeTimer;
+
+            // window.addEventListener('resize', () => {
+            //     clearTimeout(resizeTimer);
+            //     resizeTimer = setTimeout(() => {
+            //         // Code à exécuter après le redimensionnement
+            //         const newWidth = window.innerWidth;
+            //         const newHeight = window.innerHeight;
+            //         console.log('Nouvelles dimensions :', newWidth, newHeight);
+            //         resizeCanvas('up')
+            //         // Ajoutez ici votre code de redimensionnement
+            //     }, 250); // Délai de 250 millisecondes
+            // });
+
+            window.addEventListener('load', resizeCanvas);
             window.addEventListener('resize', checkScreenSize);
             
         // });
@@ -2128,6 +2161,27 @@
         }
         
     });
+    let largeurPrecedente = window.innerWidth;
+    let hauteurPrecedente = window.innerHeight;
+
+    function resizeCanvas(statut) {
+        var canvasContainer = document.getElementById("aso-canvas-containers")
+        var canvasWidth = canvasContainer.clientWidth;
+        var canvasHeight = canvasContainer.clientHeight;
+
+        const targetRatio = canvasWidth / canvasHeight;
+        const currentRatio = canvas.getWidth() / canvas.getHeight();
+        
+        const scale = canvasWidth / canvas.getWidth();
+        const zoom  = canvas.getZoom() * scale;
+
+        // canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0])
+        canvas.zoomToPoint({ x: canvas.getWidth() / 2, y: canvas.getHeight() / 2 }, zoom);        
+
+        canvas.setWidth(canvasWidth);
+        canvas.setHeight(canvasHeight);
+
+    }
 
     var matchingFixings = ref([])
     var matchingBorders = ref([])
@@ -4852,7 +4906,7 @@
 
 <style scoped>
     #canvaas {
-        border: 3px solid green
+        /* border: 3px solid green */
     }
 
     .flipper {

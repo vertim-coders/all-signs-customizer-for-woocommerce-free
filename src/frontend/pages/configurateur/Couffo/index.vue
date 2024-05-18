@@ -124,7 +124,7 @@
                         <div v-if="isLoaded" class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[50%] aso-h-[50%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse"></div>
     
                         <div id="aso-sign-recto" class="aso-relative aso-w-full aso-h-full">
-                            <canvas  ref="canvasFace1Ref" id="canaas" class="aso-relative aso-w-full aso-h-full"></canvas>
+                            <canvas  ref="canvasFace1Ref" id="canvaas" class="aso-relative aso-w-full aso-h-full"></canvas>
                         </div>
     
                         <div id="aso-sign-verso" class="aso-absolute aso-left-0 aso-top-0">
@@ -1937,7 +1937,7 @@
         handleGetImageSettings(configImageSettings.value)
         // console.log(configImageSettings.value)
 
-        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length >= 0 ? allFonts.value[0].label : 'Arial'))
+        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
         configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
         
 
@@ -1948,7 +1948,7 @@
         const canvasElementFace1 = canvasFace1Ref.value
         const canvasElementFace2 = canvasFace2Ref.value
 
-        // document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
 
             var canvasContainer = document.getElementById("aso-canvas-containers")
             var canvasWidth = canvasContainer.clientWidth;
@@ -2144,9 +2144,23 @@
             activeCanvas = canvas
 
             checkScreenSize();
-            window.addEventListener('resize', checkScreenSize);
+            // window.addEventListener('resize', checkScreenSize);
+
+            let resizeTimer;
+
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    // Code à exécuter après le redimensionnement
+                    // const newWidth = window.innerWidth;
+                    // const newHeight = window.innerHeight;
+                    // console.log('Nouvelles dimensions :', newWidth, newHeight);
+                    checkScreenSize()
+
+                }, 250); // Délai de 250 millisecondes
+            });
             
-        // });
+        });
         
         if(window.innerWidth < 688){
             showOption.value = true
@@ -3010,6 +3024,12 @@
         let windowRatio = canvasWidth / canvasHeight;
         let targetRatio = 16/9;
 
+        canvas.setWidth(canvasWidth);
+        canvas.setHeight(canvasHeight);
+
+        canvasBack.setWidth(canvasWidth);
+        canvasBack.setHeight(canvasHeight);
+
         let scaleRatio;
         if (windowRatio > targetRatio) {
             scaleRatio = canvasHeight / (canvasWidth / targetRatio);
@@ -3032,18 +3052,16 @@
             tValue.fontSize = fontSize
             // console.log("==2==", scaleRatio, "==2==")
         }
+            console.log("====", scaleRatio, "====")
 
         canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
         canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
 
+        
+
+
         ajustCanvasContent(canvas)
         ajustCanvasContent(canvasBack)
-        
-        canvas.setWidth(canvasWidth);
-        canvas.setHeight(canvasHeight);
-
-        canvasBack.setWidth(canvasWidth);
-        canvasBack.setHeight(canvasHeight);
 
         function ajustCanvasContent(canva){
             var group = new fabric.Group(canva.getObjects())
@@ -5048,7 +5066,7 @@
 
 <style scoped>
     #canvaas {
-        border: 3px solid green
+        /* border: 3px solid green */
     }
 
     .flipper {

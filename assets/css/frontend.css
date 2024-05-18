@@ -3,7 +3,7 @@
   \************************************************************************************************************************************************************************************************************************************************************************************/
 
 #canvaas[data-v-5ab70054] {
-        border: 3px solid green
+        /* border: 3px solid green */
 }
 .flipper[data-v-5ab70054] {
         position: relative;
@@ -35,7 +35,7 @@
   \***********************************************************************************************************************************************************************************************************************************************************************************/
 
 #canvaas[data-v-77962a27] {
-        border: 3px solid green
+        /* border: 3px solid green */
 }
 .flipper[data-v-77962a27] {
         position: relative;
@@ -113,4 +113,9 @@
 #aso-frontend-app .aso-inputImage svg, #aso-frontend-app .aso-inputImage p {
   margin-left: 5px !important;
   margin-right: 5px !important;
+}
+
+.aso-inputColor-hide {
+  width: 0px !important;
+  height: 0px !important;
 }
