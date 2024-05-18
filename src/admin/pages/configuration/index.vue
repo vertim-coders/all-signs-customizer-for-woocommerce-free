@@ -1,47 +1,51 @@
 <template>
     <div class="aso-h-[100vh] aso-w-full">
         <div v-if="step==0">
-            <div  class="aso-pb-4 aso-bg-[#F8F9FB] aso-px-4 aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
-               <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
-                    List of configurations
-               </div>
-               <div class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-w-4/4" v-if="canAddNew">
-                    <form class="aso-flex aso-items-center aso-h-[35px]" @submit="handleSearchChange">
-                        <label for="simple-search" class="aso-sr-only">Search</label>
-                        <div class="aso-relative aso-w-full">
-                            <input type="search" v-model="search" @input="searchInputEmpty" id="aso-search" class="aso-h-[40px] aso-w-[300px] aso-bg-gray-50 aso-border aso-border-gray-300 aso-text-gray-900 aso-text-sm aso-rounded-lg focus:ring-blue-500 focus:border-blue-500 aso-block aso-w-full aso-ps-10 aso-p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 aso-m-0" placeholder="Search configuration name..." />
-                            <button type="submit" class="aso-absolute aso-inset-y-0 aso-end-1 aso-bg-transparent aso-flex aso-items-center ps-0 aso-cursor-pointer aso-border-none">
-                                <svg class="aso-w-4 aso-h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            <div  class="aso-sticky aso-top-[70px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
+                <div class="aso-px-4 aso-pb-4">
+                    <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
+                        List of configurations
+                    </div>
+                    <div class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-w-4/4" v-if="canAddNew">
+                        <form class="aso-flex aso-items-center aso-h-[35px]" @submit="handleSearchChange">
+                            <label for="simple-search" class="aso-sr-only">Search</label>
+                            <div class="aso-relative aso-w-full">
+                                <input type="search" v-model="search" @input="searchInputEmpty" id="aso-search" class="aso-h-[40px] aso-w-[300px] aso-bg-gray-50 aso-border aso-border-gray-300 aso-text-gray-900 aso-text-sm aso-rounded-lg focus:ring-blue-500 focus:border-blue-500 aso-block aso-w-full aso-ps-10 aso-p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 aso-m-0" placeholder="Search configuration name..." />
+                                <button type="submit" class="aso-absolute aso-inset-y-0 aso-end-1 aso-bg-transparent aso-flex aso-items-center ps-0 aso-cursor-pointer aso-border-none">
+                                    <svg class="aso-w-4 aso-h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                    </svg>
+                                    <span class="aso-sr-only">Search</span>
+                                </button>
+                            </div>
+                        </form>
+                        <div class="aso-w-1/4">
+                            <button class="aso-flex aso-w-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer aso-h-[40px] aso-flex aso-items-center aso-justify-center" @click="addConfig">
+                                <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="plus-lg">
+                                    <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                                    </g>
                                 </svg>
-                                <span class="aso-sr-only">Search</span>
+                                <div class="aso-text-[14px]">
+                                    Add new configuration
+                                </div>
                             </button>
                         </div>
-                    </form>
-                    <div class="aso-w-1/4">
-                        <button class="aso-flex aso-w-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer aso-h-[40px] aso-flex aso-items-center aso-justify-center" @click="addConfig">
-                            <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="plus-lg">
-                                <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                                </g>
-                            </svg>
-                            <div class="aso-text-[14px]">
-                                Add new configuration
-                            </div>
-                        </button>
                     </div>
-               </div>
+
+                </div>
+                <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
+                    <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
+                    <div class="aso-flex aso-items-center aso-justify-center">Description</div>
+                    <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
+                    <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
+                    <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
+                </div>
             </div>
             <!-- Table which display all configurations -->
             <div class="aso-w-full aso-overflow-x-auto">
-                <div class="aso-overflow-hidden aso-w-full">
-                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16 dark:aso-bg-gray-800 dark:aso-border-gray-700 dark:aso-text-white">
-                        <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Description</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
-                    </div>
+                <div class="aso-overflow-hidden aso-w-full ">
+                    
                     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
                         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
                     </div>
@@ -50,14 +54,16 @@
                             <p class="aso-text-2xl aso-font-bold">NO CONFIGURATION FOUND</p>
                         </div>
                     </div>
-                    <div v-if="!isFetching" v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b aso-border-solid aso-border-gray-200 aso-gap-x-16 dark:aso-border-gray-700">
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
-                            <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
+                    <div v-if="!isFetching" v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b-1 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-gray-200 aso-gap-x-16">
+                        <div class="aso-text-gray-500 aso-flex dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                            <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                 <span class="aso-text-[12px]">{{getInitials(config.name)}}</span> 
                             </span>
-                            <span>{{ config.name }}</span>
+                            <span class="aso-flex aso-justify-center aso-items-center">{{ config.name }}</span>
                         </div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">{{config.description}}</div>
+                        <div class="aso-text-gray-500 aso-justify-center aso-items-center aso-flex dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                            <span>{{config.description}}</span>
+                        </div>
                         <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
                         </div> 
@@ -106,7 +112,7 @@
 
                     <div v-for="pg in pages" :key="pg">
                         <button @click="()=>changePage(pg)" v-if="pg != page" :class="`aso-text-[#016464] aso-bg-white aso-h-10 aso-w-10 aso-p-2 aso-text-base aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border`">{{ pg }}</button>    
-                        <button @click="()=>changePage(pg)" :diseabled="pg == page" v-if="pg == page" :class="`aso-bg-[#016464] aso-h-10 w-10 aso-p-2 aso-text-base aso-text-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border aso-cursor-not-allowed`">{{ page }}</button>
+                        <button @click="()=>changePage(pg)" :diseabled="pg == page" v-if="pg == page" :class="`aso-bg-[#016464] aso-h-10 w-10 aso-p-3.5 aso-text-base aso-text-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border aso-cursor-not-allowed`">{{ page }}</button>
                     </div>
                     <button @click="handleNextPage" :diseabled="page < pages" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg flex aso-items-center aso-justify-center aso-border ${page == pages ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :``}`">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
@@ -518,36 +524,36 @@ const defaultSettings = ref({
         }
     },
     themeColors: {
-        skin: "default",
+        skin:"default",
         colors: {
-            textColorContentHeader: "#000000",
-            backgroundColorHeader: "#ffffff",
-            textColorContentSideMenu: "#000000",
-            backgroundColorHeaderContentSide: "#000000",
-            textColorOptionsMenu: "#ffffff",
-            backgroundColorOptionsMenu: "#016464",
-            textColorButtonSave: "#000000",
-            backgroundColorTextButtonSave: "#ffffff",
-            textColorHoverButtonSave: "#000000",
-            backgroundColorHoverButtonSave: "#ffffff",
-            textColorButton: "#ffffff",
-            backgroundButton: "#016464",
-            textColorHoverButton: "#ffffff",
-            backgroundColorHoverButton: "#016464",
-            textColorButtonHelp: "#ffffff",
-            backgroundColorButtonHelp: "#016464",
-            textColorHoverButtonHelp: "#ffffff",
-            backgroundColorHoverButtonHelp: "#016464",
-            textColorHoverButtonRestartAll: "#ffffff",
-            backgroundColorHoverButtonRestartAll: "#000000",
-            textColorButtonRestartAll: "#ffffff",
-            backgroundColorButtonRestartAll: "#000000",
-            textColorButtonFinish: "#ffffff",
-            textColorHoverButtonFinish: "#f0f0f0",
-            backgroundColorButtonFinish: "#FFBC3C",
-            backgroundColorHoverButtonFinish: "#edad35",
-            backgroundColorContentSide: "#ffffff"
-        }
+            textColorContentHeader:'#000000',
+            backgroundColorHeader:'#000000',
+            textColorContentSideMenu:'#000000',
+            backgroundColorContentSide:'#000000',
+            textColorOptionsMenu:'#000000',
+            backgroundColorOptionsMenu:'#000000',
+            textColorButtonSave:'#000000',
+            backgroundColorTextButtonSave:'#000000',
+            textColorHoverButtonSave:'#000000',
+            backgroundColorHoverButtonSave:'#000000',
+            textColorButton:'#000000',
+            backgroundButton:'#000000',
+            textColorHoverButton:'#000000',
+            backgroundColorHoverButton:'#000000',
+            textColorButtonHelp:'#000000',
+            backgroundColorButtonHelp:'#000000',
+            textColorHoverButtonHelp:'#000000',
+            backgroundColorHoverButtonHelp:'#000000',
+            textColorHoverButtonRestartAll:'#000000',
+            backgroundColorHoverButtonRestartAll:'#000000',
+            textColorButtonRestartAll:'#000000',
+            backgroundColorButtonRestartAll:'#000000',
+            textColorButtonFinish:'#000000',
+            backgroundColorButtonFinish:'#000000',
+            textColorHoverButtonFinish:'#000000',
+            backgroundColorHoverButtonFinish:'#000000',
+        },
+        customCSS:""
     },
     sortOptions: []
   },

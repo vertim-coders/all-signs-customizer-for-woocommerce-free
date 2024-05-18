@@ -487,8 +487,11 @@ const closeModal = () => {
 };
 
 const newBorder = () => {
-    isNewBorder.value = true;
     notSelectedManageBorders.value = checkNotSelectedManageBorders();
+    if(notSelectedManageBorders.value.length>0)
+        isNewBorder.value = true;
+    else
+        toastMessage("No more choice of border","warning");
 }
 const back = () => {
     isNewBorder.value = false;

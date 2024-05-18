@@ -1,7 +1,9 @@
 <template>
-    <div v-if="!isFetching" class="aso-sticky aso-bg-white aso-top-[50px] aso-shadow aso-h-[50px] aso-flex aso-justify-center aso-items-center aso-z-[999]">
-        <button @click="state='skins'" :class="`aso-flex aso-w-fit aso-h-fit aso-p-3.5 aso-bg-transparent aso-space-x-2 aso-px-6 aso-text-black ${state == 'skins' ? 'aso-border-b-[2px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">Choose Skin</button>
-        <button @click="state='custom'" :class="`aso-flex aso-w-fit aso-h-fit aso-p-3.5 aso-bg-transparent aso-space-x-2 aso-px-6 aso-text-black ${state == 'custom' ? 'aso-border-b-[2px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[2px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">Custom CSS</button>
+    <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[130px] aso-z-[9999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4]">
+        <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex">
+            <button @click="state='skins'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'skins' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Choose Skin</button>
+            <button @click="state='custom'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'custom' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Custom CSS</button>
+        </div>
     </div>
     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
@@ -560,8 +562,10 @@
             </div>
             
         </div>
-        <div v-show="state=='custom'" class="aso-w-full aso-h-full"> 
-            <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:aso-italic placeholder:aso-text-slate-400 aso-w-full aso-h-full"></textarea>
+        <div v-show="state=='custom'" class="aso-w-full aso-h-full">
+            <div class="aso-p-4">
+                <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:aso-italic placeholder:aso-text-slate-400 aso-w-full aso-h-full aso-rounded-none"></textarea>
+            </div> 
         </div>
         <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
             <div class="aso-bg-[#016464] aso-rounded">

@@ -56,7 +56,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-for="(adn , key) in additionals" :key="key" :data-id="key" class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
+                        <tr v-for="(adn , key) in additionals" :key="key" :data-id="key" class="aso-cursor-grab aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
                             <td>
                                 <img src="../../../../../assets/images/additional-options/img_drag-and-drop.png" class="aso-w-6 aso-h-6"/>
                             </td>

@@ -94,8 +94,8 @@
                 
                 <div class="aso-flex aso-justify-between aso-px-4 aso-py-4">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Title</label>
-                        <input type="text" v-model="additionalOption.title" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <label for="" class="aso-font-normal">Title <span class="aso-text-red-500">*</span></label>
+                        <input type="text" v-model="additionalOption.title" :class="`${emptyLabel?'aso-field-required':''} aso-rounded aso-w-full aso-h-[30px]`">
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
@@ -206,6 +206,7 @@
         icon:"",
         options: [],
     });
+    const emptyLabel = ref(false);
 
     onMounted(async ()=>{
         isFetching.value = true;
@@ -223,35 +224,41 @@
     };
 
     const updateMaterialAdditionalOption = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value,additionalOption.value);
-        if(result.success){
-            await fetchMaterialAdditionalOptions();
-            if(result.success == true ) {
-                toastMessage(result.message);
+        if(additionalOption.value.title.trim() !==""){
+            isLoading.value = true;
+            emptyLabel.value = false;
+            const result = await api.updateMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOptionId.value,additionalOption.value);
+            if(result.success){
+                await fetchMaterialAdditionalOptions();
+                if(result.success == true ) {
+                    toastMessage(result.message);
+                }else{
+                    toastMessage(result.message,"warning");
+                }
+                isLoading.value = false;
+                isNewAdditionalOptions.value = false;
+                openModal.value = false;
+                additionalOption.value = {
+                    title:"",
+                    description:"",
+                    icon:"",
+                    options: [],
+                };
             }else{
-                toastMessage(result.message,"warning");
+                isLoading.value = false;
+                toastMessage(result.message,"error");
+                isNewAdditionalOptions.value = false;
+                openModal.value = false;
+                additionalOption.value = {
+                    title:"",
+                    description:"",
+                    icon:"",
+                    options: [],
+                };
             }
-            isLoading.value = false;
-            isNewAdditionalOptions.value = false;
-            openModal.value = false;
-            additionalOption.value = {
-                title:"",
-                description:"",
-                icon:"",
-                options: [],
-            };
         }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewAdditionalOptions.value = false;
-            openModal.value = false;
-            additionalOption.value = {
-                title:"",
-                description:"",
-                icon:"",
-                options: [],
-            };
+            emptyLabel.value = true;
+            toastMessage("Label must not be empty","warning");
         }
     };
 
@@ -269,31 +276,37 @@
     };
 
     const addMaterialAdditionalOption = async () => {
-        isLoading.value = true;
-        const result = await api.addMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOption.value);
-        if(result.success){
-            await fetchMaterialAdditionalOptions();
-            isLoading.value = false;
-            toastMessage(result.message);
-            isNewAdditionalOptions.value = false;
-            openModal.value = false;
-            additionalOption.value = {
-                title:"",
-                description:"",
-                icon:"",
-                options: [],
-            };
+        if(additionalOption.value.title.trim() !==""){
+            isLoading.value = true;
+            emptyLabel.value = false;
+            const result = await api.addMaterialSimpleAdditionalOption(configID.value,materialId.value,additionalOption.value);
+            if(result.success){
+                await fetchMaterialAdditionalOptions();
+                isLoading.value = false;
+                toastMessage(result.message);
+                isNewAdditionalOptions.value = false;
+                openModal.value = false;
+                additionalOption.value = {
+                    title:"",
+                    description:"",
+                    icon:"",
+                    options: [],
+                };
+            }else{
+                isLoading.value = false;
+                toastMessage(result.message,"error");
+                isNewAdditionalOptions.value = false;
+                openModal.value = false;
+                additionalOption.value = {
+                    title:"",
+                    description:"",
+                    icon:"",
+                    options: [],
+                };
+            }
         }else{
-            isLoading.value = false;
-            toastMessage(result.message,"error");
-            isNewAdditionalOptions.value = false;
-            openModal.value = false;
-            additionalOption.value = {
-                title:"",
-                description:"",
-                icon:"",
-                options: [],
-            };
+            emptyLabel.value = true;
+            toastMessage("Label must not be empty","warning");
         }
     };
     
@@ -343,7 +356,15 @@
     }
     const back = () => {
         isNewAdditionalOptions.value = false;
-        
+        openModal.value = false;
+        additionalOptionId.value = null;
+        additionalOption.value = {
+            title:"",
+            description:"",
+            icon:"",
+            options: [],
+        };
+        emptyLabel.value = false;
     }
 
     const selectAdditionalOptionsIcon = async(e) => { 

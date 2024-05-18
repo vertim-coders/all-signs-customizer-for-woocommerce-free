@@ -425,7 +425,11 @@ const closeAlert = () => {
 
 const newShape = () => {
     notSelectedManageShapes.value = checkNotSelectedManageShapes();
-    isNewShape.value = true;
+    if(notSelectedManageShapes.value.length > 0){
+        isNewShape.value = true;
+    }else{
+        toastMessage("No more choice of shape",'warning');
+    }
 };
 const back = () => {
     isNewShape.value = false;

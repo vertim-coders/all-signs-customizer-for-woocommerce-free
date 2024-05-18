@@ -546,7 +546,7 @@ const newFixing = () => {
     if(notSelectedManageFixingMethods.value.length>0){
         isNewFixing.value = true;
     }else{
-        toastMessage('No Shapes to choose','warning');
+        toastMessage('No more choice of fixing method','warning');
     }
 }
 const back = () => {

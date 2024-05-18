@@ -111,8 +111,8 @@
             <div class="aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-space-y-6">
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Title</label>
-                        <input type="text" v-model="option.title" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <label for="" class="aso-font-normal">Title <span class="aso-text-red-500">*</span></label>
+                        <input type="text" v-model="option.title" :class="`${emptyLabel?'aso-field-required':''} aso-rounded aso-w-full aso-h-[30px]`">
                     </div>
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Description</label>
@@ -271,6 +271,7 @@ const option = ref({
     isDefault:false,
     additionalPrice:0,
 });
+const emptyLabel = ref(false);
 const MaterialColors = ref([]);
 
 onMounted(async ()=>{
@@ -315,78 +316,90 @@ const selectOption = (id,sz,isDeleting=false) => {
 };
 
 const addMaterialOption = async () => {
-    isLoading.value = true;
-    const result = await api.addMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,option.value);
-    if(result.success){
-        await fetchMaterialOptions();
-        isLoading.value = false;
-        toastMessage(result.message);
-        isNewOptions.value = false;
-        openModal.value = false;
-        option.value = {
-            title:"",
-            description:"",
-            icon:"",
-            image:"",
-            excludeColors:[],
-            isDefault:false,
-            additionalPrice:0,
-        };
+    if(option.value.title.trim() !== ''){
+        isLoading.value = true;
+        emptyLabel.value = false;
+        const result = await api.addMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,option.value);
+        if(result.success){
+            await fetchMaterialOptions();
+            isLoading.value = false;
+            toastMessage(result.message);
+            isNewOptions.value = false;
+            openModal.value = false;
+            option.value = {
+                title:"",
+                description:"",
+                icon:"",
+                image:"",
+                excludeColors:[],
+                isDefault:false,
+                additionalPrice:0,
+            };
+        }else{
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            isNewOptions.value = false;
+            openModal.value = false;
+            option.value = {
+                title:"",
+                description:"",
+                icon:"",
+                image:"",
+                excludeColors:[],
+                isDefault:false,
+                additionalPrice:0,
+            };
+        }
     }else{
-        isLoading.value = false;
-        toastMessage(result.message,"error");
-        isNewOptions.value = false;
-        openModal.value = false;
-        option.value = {
-            title:"",
-            description:"",
-            icon:"",
-            image:"",
-            excludeColors:[],
-            isDefault:false,
-            additionalPrice:0,
-        };
+        emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
     }
 };
 
 const updateMaterialOption = async () => {
-    isLoading.value = true;
-    const result = await api.updateMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value,option.value);
-    if(result.success){
-        await fetchMaterialOptions();
-        if(result.success == true ) {
-            toastMessage(result.message);
+    if(option.value.title.trim() !== ''){
+        isLoading.value = true;
+        emptyLabel.value = false;
+        const result = await api.updateMaterialSimpleAdditionalOptionsItem(configID.value,materialId.value,additionalOptionId.value,optionId.value,option.value);
+        if(result.success){
+            await fetchMaterialOptions();
+            if(result.success == true ) {
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning");
+            }
+            isLoading.value = false;
+            isNewOptions.value = false;
+            openModal.value = false;
+            optionId.value = null;
+            option.value = {
+                title:"",
+                description:"",
+                icon:"",
+                image:"",
+                excludeColors:[],
+                isDefault:false,
+                additionalPrice:0,
+            };
         }else{
-            toastMessage(result.message,"warning");
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            isNewOptions.value = false;
+            optionId.value = null;
+            openModal.value = false;
+            option.value = {
+                title:"",
+                description:"",
+                icon:"",
+                image:"",
+                excludeColors:[],
+                isDefault:false,
+                additionalPrice:0,
+            };
         }
-        isLoading.value = false;
-        isNewOptions.value = false;
-        openModal.value = false;
-        optionId.value = null;
-        option.value = {
-            title:"",
-            description:"",
-            icon:"",
-            image:"",
-            excludeColors:[],
-            isDefault:false,
-            additionalPrice:0,
-        };
     }else{
-        isLoading.value = false;
-        toastMessage(result.message,"error");
-        isNewOptions.value = false;
-        optionId.value = null;
-        openModal.value = false;
-        option.value = {
-            title:"",
-            description:"",
-            icon:"",
-            image:"",
-            excludeColors:[],
-            isDefault:false,
-            additionalPrice:0,
-        };
+        emptyLabel.value = true;
+        toastMessage("Label must not be empty","warning");
     }
 };
 const deleteOption = async () => {
@@ -432,6 +445,7 @@ const back = () => {
     isNewOptions.value = false;
     isLoading.value = false;
     optionId.value = null;
+    emptyLabel.value=false;
     isNewOptions.value = false;
     openModal.value = false;
     option.value = {
