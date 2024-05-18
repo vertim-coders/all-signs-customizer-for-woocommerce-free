@@ -1,5 +1,5 @@
-var fixingUrl = aso_confiurator_data.fixing_methods_url;
-var borderUrl = aso_confiurator_data.borders_url;
+var fixingUrl = aso_configurator_data.fixing_methods_url;
+var borderUrl = aso_configurator_data.borders_url;
 var canvas = null;
 var canvasBackground = ''
 var backCanvas = null;
@@ -86,9 +86,14 @@ function handleCloneCanvas(){
 
 var currentUnit = ''
 var defaultFontSize = 0
-function handleGetCurrentUnit(unit, fontSize){
+function handleGetCurrentUnit(unit, fontSize, minFontSize, maxFontSize, textFontFam){
     currentUnit = unit;
     defaultFontSize = fontSize;
+
+    minTextSize = minFontSize
+    maxTextSize = maxFontSize
+
+    currenTextFontFam = textFontFam
 }
 
 
@@ -441,8 +446,8 @@ function updateModifications(good, position) {
                 }
             }
         }
-        var frontJsonData = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip']);
-        var backJsonData = backCanvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip']);
+        var frontJsonData = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'price', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip']);
+        var backJsonData = backCanvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'price', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip']);
         
         // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
         // console.log(frontJsonData.objects, "qsdqsd");
@@ -510,10 +515,12 @@ function handleUndo() {
                                         handleGetAddedTextValues(prevObject[0]);         
                                     });
                                     prevObject[0].on('mousedown', function() {
-                                        handleGetAddedTextValues(prevObject[0]); 
+                                        handleGetAddedTextValues(prevObject[0]);
+                                        reScaleText(prevObject[0]) 
                                     });
                                     prevObject[0].on('mouseup', function() {
-                                        handleGetAddedTextValues(prevObject[0]); 
+                                        handleGetAddedTextValues(prevObject[0]);
+                                        reScaleText(prevObject[0]) 
                                     });
                                 }
                                 if(prevObject[0].name === 'aso-SignImage'){
@@ -646,10 +653,12 @@ function handleRedo() {
                                     handleGetAddedTextValues(prevObject[0]);         
                                 });
                                 prevObject[0].on('mousedown', function() {
-                                    handleGetAddedTextValues(prevObject[0]); 
+                                    handleGetAddedTextValues(prevObject[0]);
+                                    reScaleText(prevObject[0]) 
                                 });
                                 prevObject[0].on('mouseup', function() {
-                                    handleGetAddedTextValues(prevObject[0]); 
+                                    handleGetAddedTextValues(prevObject[0]);
+                                    reScaleText(prevObject[0]) 
                                 });
 
                                 console.log(prevObject[0])
@@ -1095,14 +1104,19 @@ function handleChangeSize(width, height, name, maxChar) {
                 })
             }
             if(object.name == 'height-value'){
+                object.text = String(height + ' ' + currentUnit)
                 object.top = newRectTop + (newSignHeight/2)
                 object.left = newRectLeft + newSignWidth + 35
-                object.text = String(height + ' ' + currentUnit)
             }
             if(object.name == 'width-value'){
-                object.left = newRectLeft + (newSignWidth/2)
-                object.top = newRectTop + (newSignHeight + 35)
                 object.text = String(width + ' ' + currentUnit)
+                object.left = newRectLeft + (newSignWidth/2) - (object.width/2)
+                object.top = newRectTop + (newSignHeight + 35)
+            }
+            if(object.name == 'thickness-value'){
+                object.left = newRectLeft + (newSignWidth/2) - (object.width/2)
+                object.top = newRectTop + (newSignHeight + 75)
+                object.text = String("Thickness" + ': ' + currentThickness + ' ' + currentUnit)
             }
             if(selectedShape == 'square'){
                 if(object.name == 'old-world-border'){
@@ -1235,7 +1249,24 @@ function handleChangeSize(width, height, name, maxChar) {
         maxChars: maxChar
     }
 }
+var currentThickness = 0
+function handleChangeThickness(active, thick){
+    currentThickness = thick
+    
+    function showThicknessObject(canva, active){
+        canva.getObjects().forEach(function(obj){
+            if(obj.name === 'thickness-value'){
+                obj.set('visible', (active === true ? true : false))
+                obj.text = String("Thickness" + ': ' + currentThickness + ' ' + currentUnit)
+            }
+        })
 
+        canva.renderAll()
+    }
+
+    showThicknessObject(canvas, active)
+    showThicknessObject(backCanvas, active)
+}
 
 
 // function lockToCanvas(activeObj){
@@ -4441,7 +4472,7 @@ function handleGetAddedTextValues(transform) {
         selectedText.value = obj.text
         selectedText.align = obj.textAlign
         selectedText.font = obj.fontFamily
-        selectedText.size = obj.fontSize
+        selectedText.size = obj.scaleX
         selectedText.weight = obj.fontWeight
         selectedText.style = obj.fontStyle
         selectedText.underline = obj.underline
@@ -4451,7 +4482,7 @@ function handleGetAddedTextValues(transform) {
         var textEditor = document.getElementById('aso-text-editor')
         textEditor.value = selectedText.value
         var sizeEditor = document.getElementById('aso-text-size')
-        sizeEditor.value = selectedText.size
+        sizeEditor.value = parseInt(selectedText.size*12)
 
 
         // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
@@ -4486,7 +4517,7 @@ function handleGetAddedTextValues(transform) {
             selectedText.value = obj.text
             selectedText.align = obj.textAlign
             selectedText.font = obj.fontFamily
-            selectedText.size = obj.fontSize
+            selectedText.size = obj.scaleX
             selectedText.weight = obj.fontWeight
             selectedText.style = obj.fontStyle
             selectedText.underline = obj.underline
@@ -4501,7 +4532,7 @@ function handleGetAddedTextValues(transform) {
         var textEditor = document.getElementById('aso-text-editor')
         textEditor.value = selectedText.value
         var sizeEditor = document.getElementById('aso-text-size')
-        sizeEditor.value = selectedText.size
+        sizeEditor.value = parseInt(selectedText.size+12)
         
     }
     // console.log('container-left',parseInt(container.left), 'object-left',parseInt((obj.left-(objWidht/2))), 'object-left in sign', parseInt(((obj.left-(objWidht/2))) - (container.left)), 'object-right in sign', parseInt((container.left + container.width)-((obj.left-(objWidht/2))+objWidht)))
@@ -4550,6 +4581,17 @@ function resizeText(textObject) {
         // break;
     }
 }
+function reScaleText(textObject){
+    if((textObject.scaleX*12 > maxTextSize) || (textObject.scaleY*12 > maxTextSize)){
+        textObject.scaleX = maxTextSize/12;
+        textObject.scaleY = maxTextSize/12;
+    }
+    if((textObject.scaleX*12 < minTextSize) || (textObject.scaleX*12 < minTextSize)){
+        textObject.scaleX = minTextSize/12;
+        textObject.scaleY = minTextSize/12;
+    }
+    activeCanvas.renderAll()
+}
 function handleAddTextToSign(clone){
 
     if(maxTextCharForSize === -1 || ((activeSignFace === 'back' && backTextCharLength < maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize > frontTextCharLength))){
@@ -4570,7 +4612,7 @@ function handleAddTextToSign(clone){
                 scaleY: text1JSON.scaleY,
                 top: text1JSON.top,
                 left: text1JSON.left,
-                fontSize: text1JSON.fontSize,
+                // fontSize: text1JSON.fontSize,
                 underline: text1JSON.underline,
                 linethrough: text1JSON.linethrough,
                 overline: text1JSON.overline,
@@ -4584,6 +4626,7 @@ function handleAddTextToSign(clone){
                 lockScalingFlip: true,
                 originX: 'center',
                 originY: 'center',
+                clipPath: handleClipAddedObject(activeCanvas),
                 // mouseUpHandler: handleGetAddedTextValues,
             })
             text2.set('canvas', cloneCanvas)
@@ -4600,20 +4643,20 @@ function handleAddTextToSign(clone){
             });
             text2.on('mousedown', function() {
                 handleGetAddedTextValues(text2); 
-                // updateModifications(true, 'deposer le text')
+                reScaleText(text2)
             });
             text2.on('mouseup', function() {
                 handleGetAddedTextValues(text2); 
-                // updateModifications(true, 'deposer le text')
+                reScaleText(text2);
             });
     
             activeCanvas.add(text2);
             addedTexts.push(text2);
             activeCanvas.setActiveObject(text2);
-            lockToCanvas(text2)
+            // lockToCanvas(text2)
         }else{
             var sign = handleGetObjectByName('safeObject')
-            var newText = new fabric.IText('Text',{
+            var newText = new fabric.IText('',{
                 id: newId += 1,
                 name: 'aso-SignText',
                 canvasName: activeCanvas.name,
@@ -4622,12 +4665,16 @@ function handleAddTextToSign(clone){
                 top: sign.top + (sign.height /3),
                 left: sign.left + sign.width/3,
                 fill: currentSignTextColor,
-                fontSize: defaultFontSize,
+                fontFamily: currenTextFontFam,
+                // fontSize: defaultFontSize,
+                scaleX: defaultFontSize / 12,
+                scaleY: defaultFontSize / 12,
                 uniScaleTransform: true,
                 centeredScaling: true,
                 lockScalingFlip: true,
                 evented: true,
                 showITextBorder: true,
+                clipPath: handleClipAddedObject(activeCanvas),
     
                 originX: 'center',
                 originY: 'center',
@@ -4656,22 +4703,22 @@ function handleAddTextToSign(clone){
             });
             newText.on('mousedown', function() {
                 handleGetAddedTextValues(newText); 
-                // updateModifications(true, 'deposer le text')
+                reScaleText(newText);
             });
             newText.on('mouseup', function() {
                 handleGetAddedTextValues(newText); 
-                // updateModifications(true, 'prendre le text')
+                reScaleText(newText);
             });
     
             activeCanvas.add(newText)
+            newText.enterEditing();
+
     
             handleCenterHorizontally(newText)
             handleCenterVertically(newText)
-    
-    
+            
             addedTexts.push(newText);
-            activeCanvas.setActiveObject(newText);
-            lockToCanvas(newText)
+            // lockToCanvas(newText)
     
     
         }
@@ -4702,12 +4749,14 @@ function handleChangeTextValue(event){
     var editor = document.getElementById('aso-text-editor')
     console.log(maxTextCharForSize, "current max character", frontTextCharLength)
         
-    var currentText = activeCanvas.getActiveObject();
+    var currentText = selectedText.object
     if(maxTextCharForSize === -1 || ((activeSignFace === 'back' && backTextCharLength < maxTextCharForSize) || (activeSignFace === 'front' && maxTextCharForSize > frontTextCharLength))){
         selectedText.value = event.target.value
         currentText.set('text', String(selectedText.value))
         activeCanvas.requestRenderAll()
         handleGetAddedTextValues(currentText)
+            
+        // currentText.exitEditing();
     }else {
         if (event.inputType === 'insertText') {
             event.target.value = selectedText.value
@@ -4718,6 +4767,8 @@ function handleChangeTextValue(event){
             currentText.set('text', String(selectedText.value));
             activeCanvas.requestRenderAll();
             handleGetAddedTextValues(currentText);
+            
+            // currentText.exitEditing();
         }
     }
     // FtextObjects = handleGetTextObjects1('aso-SignText')
@@ -4741,7 +4792,7 @@ function handleChangeTextAlign(align){
     return selectedText.align
 }
 function handleChangeTextWeight(){
-    var currentText = activeCanvas.getActiveObject();
+    var currentText = selectedText.object;
     if(selectedText.weight == 'normal'){
         currentText.set('fontWeight', 'bold')
     }else if(selectedText.weight == 'bold'){
@@ -4763,20 +4814,20 @@ function handleChangeTextStyle(){
     activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
 }
-function handleChangeTextSize(minSize, maxSize){
-    var sizeEditor = document.getElementById('aso-text-size')
+var minTextSize = 0
+var maxTextSize = 0
+function handleChangeTextSize(size, minSize, maxSize){
+    if(size < maxSize || size > minSize){
+        selectedText.size = size
 
-    sizeEditor.addEventListener("input", (event) => {
-        if(event.target.value < maxSize || event.target.value > minSize){
-            selectedText.size = event.target.value
-    
-            var currentText = activeCanvas.getActiveObject();
-            currentText.set('fontSize', selectedText.size)
-            activeCanvas.renderAll()
-            handleGetAddedTextValues(currentText)
-        }
-    })
+        var currentText = selectedText.object;
+        currentText.set('scaleX', selectedText.size/12)
+        currentText.set('scaleY', selectedText.size/12)
+        activeCanvas.renderAll()
+        handleGetAddedTextValues(currentText)
+    }
 }
+var currenTextFontFam = ''
 function handleChangeTextFontFam(font){
     var currentText = selectedText.object;
     currentText.set('fontFamily', font)
@@ -4876,8 +4927,8 @@ function handleGetAddedImageValues(object){
     return getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer, object.angle)
 }
 var addedImages = []
-function handleAddImageToSign(image, imageId){
-    function useImage(imgUrl, imgId) {
+function handleAddImageToSign(image, imageId, price){
+    function useImage(imgUrl, imgId, price) {
         fabric.Image.fromURL(imgUrl, function(img) {
             img.scale(0.4)
 
@@ -4899,6 +4950,8 @@ function handleAddImageToSign(image, imageId){
             img.name = "aso-SignImage"
             img.canvasName = activeCanvas.name
             img.priceId = (imgId ? imgId : 0)
+            img.price = (price ? price : null)
+            img.clipPath = handleClipAddedObject(activeCanvas)
 
             img.on('mousedown', function() {
                 handleGetAddedImageValues(img); 
@@ -4912,7 +4965,7 @@ function handleAddImageToSign(image, imageId){
             activeCanvas.add(img)
             img.bringToFront()
             activeCanvas.setActiveObject(img)
-            lockToCanvas(img)
+            // lockToCanvas(img)
 
             handleCenterHorizontally(img)
             handleCenterVertically(img)
@@ -4961,7 +5014,7 @@ function handleAddImageToSign(image, imageId){
 
     return new Promise((resolve, reject) => {
         if (image) {
-            useImage(image, imageId);
+            useImage(image, imageId, price);
             resolve({ images: addedImages, error: "" });
         } else {
             imageInput.addEventListener('change', function(e) {
@@ -5008,10 +5061,11 @@ function handleAddImageToSign(image, imageId){
         }
     });
 }
-function handleChangeImageWidth(scaleX) {
+function handleChangeImageWidth(scale) {
     var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
-        currentImage.scaleX = scaleX
+        currentImage.scaleX = scale
+        currentImage.scaleY = scale
         activeCanvas.requestRenderAll()
         handleGetAddedImageValues(currentImage)
     }
@@ -5202,6 +5256,203 @@ function handleSetPrice(){
     return textsPrice
 }
 
+function handleClipAddedObject(canva){
+    var sign
+    var clipPath
+    canva.getObjects().forEach(function(object){
+        if(object.name === 'safeObject'){
+            sign = object
+        }
+    })
+
+    switch (selectedShape){
+        case 'square':
+            clipPath = new fabric.Rect({
+                height: sign.height,
+                width: sign.width,
+                top: sign.top,
+                left: sign.left,
+                absolutePositioned: true,
+                selectable: false,
+            });
+        break;
+        
+        case 'rounded-square':
+            clipPath = new fabric.Rect({
+                height: sign.height,
+                width: sign.width,
+                top: sign.top,
+                left: sign.left,
+                absolutePositioned: true,
+                rx: 15,
+                ry: 15,
+                selectable: false,                                
+            })
+        break;
+
+        case 'oval':
+            clipPath = new fabric.Ellipse({
+                ry: sign.height / 2,
+                rx: sign.width / 2,
+                top: sign.top,
+                left: sign.left,
+                absolutePositioned: true,
+                selectable: false,
+            });
+            canvas.remove(object)
+            canvas.add(ellipseShape)
+            ellipseShape.sendToBack()
+        break;
+
+        case 'triangle':
+            clipPath = new fabric.Triangle({
+                height: sign.height,
+                width: sign.width,
+                top: sign.top,
+                left: sign.left,
+                absolutePositioned: true,
+                selectable: false,                                
+            })
+        break;
+        
+        case 'rotated-square':
+            clipPath = new fabric.Polygon([
+                    { x: sign.width / 2, y: 0 },
+                    { x: sign.width, y: sign.height / 2 },
+                    { x: sign.width / 2, y: sign.height },
+                    { x: 0, y: sign.height / 2 }
+                ], 
+                {
+                    top: sign.top,
+                    left: sign.left,
+                    absolutePositioned: true,
+                    selectable: false,
+                }
+            )
+        break;
+
+        case 'turn-left':
+            clipPath = new fabric.Polygon([
+                    {x: 0, y: sign.height / 2},
+                    {x: sign.width / 2, y: 0}, 
+                    {x: sign.width, y: 0},
+                    {x: sign.width, y: sign.height},
+                    {x: sign.width / 2, y: sign.height},
+                ], 
+                {
+                    top: sign.top,
+                    left: sign.left,
+                    absolutePositioned: true,
+                    selectable: false,
+                }
+            )
+        break;
+
+        case 'turn-right':
+            clipPath = new fabric.Polygon([
+                    {x: 0, y: 0},
+                    {x: sign.width / 2, y: 0}, 
+                    {x: sign.width, y: sign.height/2},
+                    {x: sign.width / 2, y: sign.height},
+                    {x: 0, y: sign.height},
+                ], 
+                {
+                    top: sign.top,
+                    left: sign.left,
+                    absolutePositioned: true,
+                    selectable: false,
+                }
+            )
+        break;
+        
+        case 'arrow-right':
+            clipPath = new fabric.Polyline([
+                    {x: 0, y: (sign.height/5)*4 },
+                    {x: sign.width / 2, y: (sign.height/5)*4 },
+                    {x: sign.width / 2, y: sign.height },
+                    {x: sign.width, y: sign.height / 2 },
+                    {x: sign.width / 2, y: 0}, 
+                    {x: sign.width / 2, y: (sign.height/5) },
+                    {x: 0, y: (sign.height/5)},
+                ], 
+                {
+                    top: sign.top,
+                    left: sign.left,
+                    absolutePositioned: true,
+                    selectable: false,
+                }
+            )
+        break;
+
+        case 'arrow-left':
+            clipPath = new fabric.Polygon([
+                    {x: 0, y: sign.height / 2},
+                    {x: sign.width / 2, y: 0}, 
+                    {x: sign.width / 2, y: (sign.height/5) },
+                    {x: sign.width, y: (sign.height/5) },
+                    {x: sign.width, y: (sign.height/5)*4 },
+                    {x: sign.width / 2, y: (sign.height/5)*4 },
+                    {x: sign.width / 2, y: sign.height},
+                ], 
+                {
+                    top: sign.top,
+                    left: sign.left,
+                    absolutePositioned: true,
+                    selectable: false,
+                }
+            )
+        break;
+
+        case 'stop':
+            clipPath = new fabric.Polygon([
+                    {x: 0, y: (sign.height / 3)*2},
+                    {x: sign.width / 3, y: sign.height}, 
+                    {x: (sign.width / 3)*2, y: sign.height}, 
+                    {x: sign.width, y: (sign.height/3)*2 },
+                    {x: sign.width, y: sign.height/3 },
+                    {x: (sign.width/3)*2, y: 0 },
+                    {x: sign.width / 3, y: 0 },
+                    {x: 0, y: sign.height/3},
+                ], 
+                {
+                    top: sign.top,
+                    left: sign.left,
+                    absolutePositioned: true,
+                    selectable: false,
+                }
+            )
+        break;
+
+        case 'rounded-top':
+            clipPath = new fabric.Rect({
+                height: sign.height,
+                width: sign.width,
+                top: sign.top,
+                left: sign.left,
+                absolutePositioned: true,
+                rx: sign.width,
+                ry: 10,
+                selectable: false,                                
+            })
+        break;
+
+        case 'rounded-sides':
+            clipPath = new fabric.Rect({
+                height: sign.height,
+                width: sign.width,
+                top: sign.top,
+                left: sign.left,
+                absolutePositioned: true,
+                rx: 10,
+                ry: sign.height,
+                selectable: false,                                
+            })
+        break;
+    }
+
+    return clipPath
+}
+
 
 function handleFinishConfiguration(textsTable, imagesTable){
     var textsValues = []
@@ -5244,6 +5495,7 @@ export {
     handleClearAll,
     handleGetObjectByName,
     handleChangeSize,
+    handleChangeThickness,
     handleDeleteObject,
     handleCloneObject,
     handleCenterVertically,
@@ -5284,4 +5536,5 @@ export {
     handleFinishConfiguration,
     handleGetCharPrice,
     handleSetPrice,
+    handleClipAddedObject,
 }

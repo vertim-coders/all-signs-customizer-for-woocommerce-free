@@ -73,7 +73,10 @@ class ASO_Admin {
                 'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
                 'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
             ]);
-            wp_localize_script("aso-admin","aso_configurator_data",array());
+            wp_localize_script("aso-admin","aso_configurator_data",array(
+                "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
+                "borders_url"  => ASO_ASSETS.'/images/borders',
+            ));
             ?>
         </div>
         <?php
