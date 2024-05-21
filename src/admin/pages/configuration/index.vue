@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh] aso-w-full">
-        <div v-if="step==0">
+        <div v-if="step==0 && !openModal">
             <div  class="aso-sticky aso-top-[80px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                 <div class="aso-px-4 aso-pb-4">
                     <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
@@ -295,7 +295,7 @@
         </div>
 
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[9999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -527,32 +527,33 @@ const defaultSettings = ref({
     themeColors: {
         skin:"default",
         colors: {
-            textColorContentHeader:'#000000',
-            backgroundColorHeader:'#000000',
-            textColorContentSideMenu:'#000000',
-            backgroundColorContentSide:'#000000',
-            textColorOptionsMenu:'#000000',
-            backgroundColorOptionsMenu:'#000000',
-            textColorButtonSave:'#000000',
-            backgroundColorTextButtonSave:'#000000',
-            textColorHoverButtonSave:'#000000',
-            backgroundColorHoverButtonSave:'#000000',
-            textColorButton:'#000000',
-            backgroundButton:'#000000',
-            textColorHoverButton:'#000000',
-            backgroundColorHoverButton:'#000000',
-            textColorButtonHelp:'#000000',
-            backgroundColorButtonHelp:'#000000',
-            textColorHoverButtonHelp:'#000000',
-            backgroundColorHoverButtonHelp:'#000000',
-            textColorHoverButtonRestartAll:'#000000',
-            backgroundColorHoverButtonRestartAll:'#000000',
-            textColorButtonRestartAll:'#000000',
-            backgroundColorButtonRestartAll:'#000000',
-            textColorButtonFinish:'#000000',
-            backgroundColorButtonFinish:'#000000',
-            textColorHoverButtonFinish:'#000000',
-            backgroundColorHoverButtonFinish:'#000000',
+            textColorContentHeader: "#000000",
+            backgroundColorHeader: "#ffffff",
+            textColorContentSideMenu: "#000000",
+            backgroundColorHeaderContentSide: "#000000",
+            textColorOptionsMenu: "#ffffff",
+            backgroundColorOptionsMenu: "#016464",
+            textColorButtonSave: "#000000",
+            backgroundColorTextButtonSave: "#ffffff",
+            textColorHoverButtonSave: "#000000",
+            backgroundColorHoverButtonSave: "#ffffff",
+            textColorButton: "#ffffff",
+            backgroundButton: "#016464",
+            textColorHoverButton: "#ffffff",
+            backgroundColorHoverButton: "#016464",
+            textColorButtonHelp: "#ffffff",
+            backgroundColorButtonHelp: "#016464",
+            textColorHoverButtonHelp: "#ffffff",
+            backgroundColorHoverButtonHelp: "#016464",
+            textColorHoverButtonRestartAll: "#ffffff",
+            backgroundColorHoverButtonRestartAll: "#000000",
+            textColorButtonRestartAll: "#ffffff",
+            backgroundColorButtonRestartAll: "#000000",
+            textColorButtonFinish: "#ffffff",
+            textColorHoverButtonFinish: "#f0f0f0",
+            backgroundColorButtonFinish: "#FFBC3C",
+            backgroundColorHoverButtonFinish: "#edad35",
+            backgroundColorContentSide: "#ffffff"
         },
         customCSS:""
     },
@@ -8225,11 +8226,12 @@ const search = ref('')
 const step = ref(0);
 const isEdit = ref(false);
 const openModal = ref(false);
-
+const manageFonts = ref([]);
 onMounted(async () => {
     isFetching.value = true;
     await fetchConfigs();
     canAddNew.value = true;
+    await fetchFonts();
 });
 
 const closeCloneModal = ()=> {
@@ -8239,6 +8241,20 @@ const closeCloneModal = ()=> {
         description:"",
         icon:"",
         popImg:"",
+    }
+}
+
+const fetchFonts = async () =>{
+    const result = await api.getManagefonts();
+    if(!result.message){
+        let tab=[]
+        manageFonts.value = result.map((font,id)=>{
+            tab.push(id);
+
+        });
+        manageFonts.value = tab;
+    }else{
+        manageFonts.value = [];
     }
 }
 
@@ -8732,6 +8748,41 @@ const includeMetaData = async (state) => {
                 ...defaultSettings.value,
                 materials:metaConfigs.value[selectedDemo.value].materials,
             }
+        }
+        if(manageFonts.value.length>0){
+            let tab=[]
+            for (let index = 0; index < manageFonts.value.length; index++) {
+                configuration.data.settings.customizerSign.text.selectedFonts.push(manageFonts.value[index]);
+            }
+        }else{
+            configuration.data.settings.customizerSign.text.selectedFonts = [0,1,2,3,4];
+            await api.addManagefont({many:false,fonts:[
+                {
+                    "label": "Abhaya Libre",
+                    "url": "http://fonts.gstatic.com/s/abhayalibre/v14/e3t5euGtX-Co5MNzeAOqinEYo23yr9xI6oYtBA.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Abril Fatface",
+                    "url": "http://fonts.gstatic.com/s/abrilfatface/v23/zOL64pLDlL1D99S8g8PtiKchm-VsjOLhZBY.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Advent Pro",
+                    "url": "http://fonts.gstatic.com/s/adventpro/v23/V8mqoQfxVT4Dvddr_yOwrzaFxV7JtdQgFqXdUAQrGp_zgX5sWCpLHSNPSZoonw1aBA.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Akron",
+                    "url": "http://fonts.gstatic.com/s/akronim/v23/fdN-9sqWtWZZlHRp-gVxkFYN-a8.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Bellefair",
+                    "url": "http://fonts.gstatic.com/s/bellefair/v14/kJExBuYY6AAuhiXUxG19-vA2pOdvDA.woff2",
+                    "isGoogleFont": true
+                },
+            ]});
         }
         if(selectedDemo.value == 'double-side'){
             configuration.data.settings.customizerSign.signPart.doublePart.active=true; 

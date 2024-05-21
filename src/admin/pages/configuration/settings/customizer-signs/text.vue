@@ -3,7 +3,7 @@
         <div>
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <div class="aso-flex aso-flex-col aso-w-full">
-                    <label class="aso-text-[12px]">Select Font</label>
+                    <label class="aso-text-[12px]">Select Fonts</label>
                     <Multiselect
                         v-model="text.selectedFonts"
                         placeholder=""
@@ -320,12 +320,10 @@ const text = ref({
     enableCurvedDown:true,
 });
 const manageFonts = ref([]);
-const manageColors = ref([]);
 
 onMounted(async ()=>{
     isFetching.value = true;
     await fetchManageFonts();
-    await fetchManageColors();
     if(props.data){
         text.value = {...text.value,...props.data}
     }
@@ -340,16 +338,6 @@ const fetchManageFonts = async () => {
         });
     }else{
         manageFonts.value = [];
-    }
-}
-const fetchManageColors = async () => {
-    const result = await api.getManageColorsPalettes();
-    if(!result.message){
-        manageColors.value = result.map((col,key)=>{
-            return {name:col.name,value:key,codeHex:col.backgroundColor};
-        });
-    }else{
-        manageColors.value = [];
     }
 }
 const updateTextSettings = async () => {

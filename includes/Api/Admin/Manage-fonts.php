@@ -86,9 +86,16 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
     public function add_font_to_manages_fonts ( $request ) {
-        $font=json_decode($request->get_body(),true);
+        $data=json_decode($request->get_body(),true);
         $all_fonts = get_option("aso-manages-fonts",[]);
-        array_push($all_fonts,$font);
+        if($data["many"] == true){
+            foreach ($data["fonts"] as $font) {
+                array_push($all_fonts,$font);
+            }
+        }else{
+            array_push($all_fonts,$data["font"]);
+        }
+        
         $update = update_option("aso-manages-fonts",$all_fonts);
         if($update){
             return rest_ensure_response( ["success"=>true,"message"=>__("Font created with success","ASO")] );

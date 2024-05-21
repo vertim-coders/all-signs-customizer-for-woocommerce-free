@@ -298,7 +298,7 @@
             toastMessage("Label must not be empty","warning");
         }else{
             emptyFontLabel.value = false;
-            const result = await api.addManagefont(font.value);
+            const result = await api.addManagefont({many:false,font:font.value});
             if(result.success){
                 await fetchFonts();
                 isLoading.value = false;
