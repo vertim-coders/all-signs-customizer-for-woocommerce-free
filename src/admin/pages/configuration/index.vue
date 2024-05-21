@@ -77,7 +77,7 @@
                             <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectEditConfig(config)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
-                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="goToMaterial(config)">
                                 <img class="aso-w-4 aso-h-4" src="../../../../assets/icons/ic_manage.svg" alt="">
                                 <span class="aso-text-[12px]">
                                     Manage
@@ -354,8 +354,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import api from "@/admin/Api/api";
-import toastMessage from '@/admin/utils/functions'
-import Multiselect from '@vueform/multiselect'
+import toastMessage from '@/admin/utils/functions';
+import Multiselect from '@vueform/multiselect';
+import router from '@/admin/router';
 
 const isNewConfig = ref(false);
 const showParams = ref([]);
@@ -8807,6 +8808,13 @@ const delConfig = async () => {
         toastMessage(result.message,"error");
     }
     closeModal();
+}
+const goToMaterial = (c)=>{
+    router.push('/configs/'+c.name.replace(/ /,'-')+'/'+c.id+'/materials')
+    .then(() => {
+      // Recharger la page après la navigation
+      window.location.reload()
+    })
 }
 
 

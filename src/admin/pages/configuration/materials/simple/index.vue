@@ -6,7 +6,7 @@
                     {{config}}
                 </div>
                 <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="()=>router.push('/configs/'+config.replace(/ /,'-')+'/'+configID+'/materials')">
+                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="goToMaterial">
                     Material
                 </div>
                 <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -134,10 +134,17 @@ import { useRoute } from 'vue-router';
 import router from '@/admin/router';
 
 const route = useRoute()
-const configID = ref(route.params.configId);
+const configID = route.params.configId;
 const config = route.params.config.replace(/-/,' ');
-const materialId = ref(route.params.materialId);
+const materialId = route.params.materialId;
 const material = route.params.material.replace(/-/,' ')
+
+const goToMaterial = ()=>{
+    router.push('/configs/'+config.replace(/ /,'-')+'/'+configID+'/materials').then(() => {
+      // Recharger la page après la navigation
+      window.location.reload()
+    })
+}
 </script>
 <style>
     

@@ -6,7 +6,7 @@
                     {{config}}
                 </div>
                 <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="()=>$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials')">
+                <div v-if="config.trim() != ''" class="aso-text-[16px] aso-cursor-pointer" @click="goToMaterials">
                     Materials
                 </div>
                 <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -206,6 +206,7 @@
     import { ref,onMounted } from "vue";
     import { useRoute } from 'vue-router';
     import toastMessage from "@/admin/utils/functions";
+    import router from '@/admin/router'
 
     const route = useRoute()
     const configId = ref(route.params.configId);
@@ -233,6 +234,13 @@
         await fetchMaterialComponentAdvances();
         isFetching.value = false;
     });
+
+    const goToMaterials = ()=>{
+        router.push('/configs/'+config.replace(/ /,'-')+'/'+configId.value+'/materials').then(() => {
+        // Recharger la page après la navigation
+        window.location.reload()
+        })
+    }
 
     const fetchMaterialComponentAdvances = async () => {
         const result = await api.getMaterialAdvanceComponent(configId.value,materialId.value);
