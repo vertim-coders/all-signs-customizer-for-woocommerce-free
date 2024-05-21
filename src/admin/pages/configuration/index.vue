@@ -1,7 +1,7 @@
 <template>
     <div class="aso-h-[100vh] aso-w-full">
         <div v-if="step==0">
-            <div  class="aso-sticky aso-top-[70px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
+            <div  class="aso-sticky aso-top-[80px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                 <div class="aso-px-4 aso-pb-4">
                     <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
                         List of configurations
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <!-- Table which display all configurations -->
-            <div class="aso-w-full aso-overflow-x-auto">
+            <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
                 <div class="aso-overflow-hidden aso-w-full ">
                     
                     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="aso-flex aso-items-center aso-justify-center aso-py-7 aso-w-full" v-if="pages>1">
+            <div class="aso-flex aso-items-center aso-justify-center aso-translate-y-12 aso-py-7 aso-w-full" v-if="pages>1">
                 <div class="aso-grid aso-grid-cols-5 aso-gap-4">
                     <button @click="handlePrevPage" :diseabled="page == 1" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border ${page == 1 ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :``}`">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">

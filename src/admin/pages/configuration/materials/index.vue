@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="!isNewComponent">
-            <div class="aso-sticky aso-top-[70px] aso-z-[999]">
+            <div class="aso-sticky aso-top-[85px] aso-z-[999]">
                 <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                     <div  v-if="config.trim() != ''" class="aso-font-bold">
                         {{config}}
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <!-- Table which display all materials -->
-            <div class="aso-w-full aso-overflow-x-auto">
+            <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
                 <div class="aso-overflow-hidden aso-w-full">
                     
                     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
