@@ -9,7 +9,7 @@
         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
     </div>
     <div v-if="!isFetching">
-        <div class="aso-space-y-1" v-show="state=='skins'">
+        <div class="aso-space-y-1 aso-translate-y-3" v-show="state=='skins'">
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <h3 class="aso-text-[16px]">Choose your customizer appearance</h3>
                 <div class="aso-p-6">
@@ -562,12 +562,12 @@
             </div>
             
         </div>
-        <div v-show="state=='custom'" class="aso-w-full aso-h-full">
+        <div v-show="state=='custom'" class="aso-w-full aso-h-full aso-translate-y-9">
             <div class="aso-p-4">
                 <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:aso-italic placeholder:aso-text-slate-400 aso-w-full aso-h-full aso-rounded-none"></textarea>
             </div> 
         </div>
-        <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
+        <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end aso-translate-y-12">
             <div class="aso-bg-[#016464] aso-rounded">
                 <button :disabled="isLoading" @click="updateThemesSettings" class="aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointeraso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
