@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-show="!isNew">
+        <div class="aso-space-y-2 aso-translate-y-1" v-show="!isNew">
             <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2 aso-sticky aso-top-[80px] aso-z-[999]">
                 <div class="aso-text-[16px] aso-font-bold aso-cursor-pointer" @click="$router.push('/manage-cliparts')" >
                     Clipart groups
@@ -22,7 +22,7 @@
                     </div>
                 </button>
             </div>
-            <div id="monTableau" class="aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden">
+            <div id="monTableau" class="aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden aso-translate-y-4">
                 <table class="aso-text-center aso-border aso-border-collapse aso-border-0 aso-w-full">
                     <thead class="aso-text-[14px] aso-bg-[#f0f0f1] aso-sticky aso-top-[0px] aso-z-[99]">
                         <tr class="">
@@ -88,7 +88,7 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-1" v-if="isNew">
+        <div class="aso-space-y-1 aso-translate-y-9" v-if="isNew">
             <div class="aso-bg-[#F8F9FB] aso-flex aso-px-4 aso-py-4 aso-space-x-2">
                 <div class="aso-text-[16px] aso-font-bold">
                     {{isEdit ? 'Edit clipart' :'Add cliparts'}}

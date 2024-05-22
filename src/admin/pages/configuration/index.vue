@@ -34,17 +34,17 @@
                     </div>
 
                 </div>
-                <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
-                    <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Description</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
-                </div>
             </div>
             <!-- Table which display all configurations -->
             <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
                 <div class="aso-overflow-hidden aso-w-full ">
+                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
+                        <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Description</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
+                    </div>
                     
                     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
                         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
@@ -123,7 +123,7 @@
             </div>
         </div>
         <!-- create a new configuration -->
-        <div class="aso-space-y-1" v-if="step == 1 && !includeDemo">
+        <div class="aso-space-y-1 aso-translate-y-9" v-if="step == 1 && !includeDemo">
             <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4 aso-text-[16px]">
                 {{ isEdit ? 'Edit Configuration inforamtions' : 'Create new configuration'}}
             </div>
@@ -248,7 +248,7 @@
         </div>
 
         <div v-if="includeDemo">
-            <div class="aso-bg-[#F8F9FB] aso-p-20 aso-space-y-20">
+            <div class="aso-bg-[#F8F9FB] aso-p-20 aso-space-y-20 aso-translate-y-8">
                 <Multiselect
                     v-model="selectedDemo"
                     placeholder="Select ASO Configuration"
@@ -267,7 +267,7 @@
                     </template>
                 </Multiselect>
             </div>
-            <div class="aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB]">
+            <div class="aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB] aso-translate-y-10">
                 <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                     <div class="aso-bg-[#016464] aso-rounded">
                         <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">

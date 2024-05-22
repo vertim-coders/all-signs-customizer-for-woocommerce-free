@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-4">
+        <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-4 aso-translate-y-10">
             <div class="aso-flex aso-flex-col aso-space-y-3">
                 <label class="aso-text-[14px] aso-font-bold">Output files format</label>
                 <span class="aso-pt-4 aso-text-[11px]">What is your desired output files format ?</span>

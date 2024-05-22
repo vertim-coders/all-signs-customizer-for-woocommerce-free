@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aso-grid aso-grid-cols-3 aso-gap-x-3 aso-gap-y-7 aso-bg-[#F8F9FB] aso-p-8 aso-pb-12">
+        <div class="aso-grid aso-grid-cols-3 aso-gap-x-3 aso-gap-y-7 aso-bg-[#F8F9FB] aso-p-8 aso-pb-12 aso-translate-y-9">
             <div class="">
                 <div class="aso-flex aso-bg-transparent aso-border-solid aso-border-[1px] aso-border-[#E0E0E0] aso-rounded-t aso-p-3 aso-py-4">
                     <div class="aso-font-bold aso-text-[14px] aso-w-2/4">

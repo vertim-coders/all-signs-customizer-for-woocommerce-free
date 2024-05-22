@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-h-[85vh] aso-overflow-y-auto aso-overflow-x-auto aso-relative">
+    <div class="aso-h-[85vh] aso-overflow-y-auto aso-overflow-x-auto aso-relative aso-translate-y-9">
         <div class="aso-sticky aso-z-[9999] aso-w-full aso-top-0 aso-shadow-md">
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
                 <div class="aso-text-[16px] aso-font-bold">

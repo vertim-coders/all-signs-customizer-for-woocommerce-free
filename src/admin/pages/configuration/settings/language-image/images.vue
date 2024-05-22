@@ -1,6 +1,6 @@
 <template>
-    <div class="aso-space-y-2">
-        <div>
+    <div class="aso-space-y-2 aso-translate-y-10">
+        <div class="">
             <div class="aso-bg-[#F8F9FB] aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#DDDDDD]">
                 <div class=" aso-px-8 aso-pt-4 aso-text-[16px] aso-font-semibold">
                     Content Header
