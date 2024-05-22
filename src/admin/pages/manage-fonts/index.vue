@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="aso-space-y-1" v-if="!createFont">
+        <div class="aso-space-y-1 aso-translate-y-9" v-if="!createFont">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <span class="aso-font-bold">
                     Manage Font
@@ -65,7 +65,7 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-1" v-if="createFont">
+        <div class="aso-space-y-1 aso-translate-y-9" v-if="createFont">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 ">
                 Add new font
             </div>

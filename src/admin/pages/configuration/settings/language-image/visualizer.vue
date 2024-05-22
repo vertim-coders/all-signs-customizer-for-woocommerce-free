@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-space-y-1">
+    <div class="aso-space-y-1 aso-translate-y-8">
         <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
             <h3 class="aso-text-[16px]">Content Header</h3>
             <div class="aso-flex aso-justify-between">

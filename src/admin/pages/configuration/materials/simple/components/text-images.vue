@@ -1,5 +1,5 @@
 <template>
-    <div class=" aso-h-[100vh]">
+    <div class=" aso-h-[100vh] aso-translate-y-7">
         <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
             <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
         </div>

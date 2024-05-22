@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-if="!isNewShape">
+        <div class="aso-space-y-1 aso-translate-y-7" v-if="!isNewShape">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageShapes.length > 0">
                 <button :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newShape">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +84,7 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-2" v-if="isNewShape">
+        <div class="aso-space-y-2 aso-translate-y-7" v-if="isNewShape">
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
                 {{isEdit ? 'Edit Shape' : 'Add new shapes'}}
             </div>
