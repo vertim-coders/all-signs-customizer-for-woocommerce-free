@@ -1605,8 +1605,11 @@
             </div>
 
             <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
-                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</div>
-                <div @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
+                <button @click="() => finish = false" :disabled="isAddindToCart"  :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center ${!isAddindToCart ? 'aso-cursor-pointer' :'aso-cursor-not-allowed'}`" >Edit</button>
+                <button :disabled="isAddindToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center ${!isAddindToCart ? 'aso-cursor-pointer' :'aso-cursor-not-allowed'}`" >
+                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddindToCart"/>
+                    Add to cart
+                </button>
             </div>
         </div>
 
@@ -1678,6 +1681,7 @@
         handleClipAddedObject,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
+import toastMessage from '@/admin/utils/functions';
 
     const props = defineProps({
         config:Object,
@@ -4961,18 +4965,20 @@
         }
     }
 
+    const isAddindToCart = ref(false)
     const addToCart = async ()=>{
-        isLoading.value = true;
+        isAddindToCart.value = true;
         const cart_data = {
-            recaps:{...configData.value},
+            recaps:{...configData.value,aso_additional_options:customAdditionalValues.value ,custom_price:formatPrice(finalPrices)},
             prevImg:"",
-            variation_id:aso_configurator_data.productID
+            variation_id:aso_configurator_data.productID,
+            quantity:1
         }
-        var add = await add_to_cart(aso_ajax_object.ajax_url, cart_data.value,aso_configurator_data.frontend_nonce, props.config.settings.generals.product.redirectToCheckOutPage??false);
+        var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage??false,props.config.data.settings.generals.product.displayRecapsOnCheckout??false);
 
         if(!add.success){
             toastMessage(add.message,"error");
-            isLoading.value = false
+            isAddindToCart.value = false
         }
     }
 

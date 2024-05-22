@@ -1,11 +1,20 @@
-async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
+import axios from "axios";
+
+async function add_to_cart(
+  ajax_url,
+  cart_data,
+  nonce,
+  redirectToCheckOut,
+  displayRecapsOnCheckout
+) {
   try {
     const response = await axios.post(
       ajax_url,
       {
-        action: "ncpc_add_custom_design_to_cart",
+        action: "aso_add_custom_design_to_cart",
         data: cart_data,
         redirectToCheckOut: redirectToCheckOut,
+        displayRecapsOnCheckout: displayRecapsOnCheckout,
         nonce: nonce,
       },
       {
