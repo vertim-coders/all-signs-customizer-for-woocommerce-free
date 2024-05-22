@@ -1606,7 +1606,7 @@
 
             <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
                 <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</div>
-                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
+                <div @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
             </div>
         </div>
 
@@ -1677,7 +1677,7 @@
         handleSetPrice,
         handleClipAddedObject,
     } from '@/frontend/utils/aso-editor-script.js';
-    import { formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
+    import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
 
     const props = defineProps({
         config:Object,
@@ -2196,6 +2196,7 @@
         }
         
     });
+
     let largeurPrecedente = window.innerWidth;
     let hauteurPrecedente = window.innerHeight;
 
@@ -3055,7 +3056,6 @@
         flipped.value = !flipped.value
     }
 
-
     function checkScreenSize(){
         var canvasContainer = document.getElementById("aso-canvas-containers")
         var canvasWidth = canvasContainer.clientWidth;
@@ -3119,6 +3119,7 @@
             canva.renderAll();
         }
     }
+
     function updateInfoDiv(obj) {
         var infoDiv = document.getElementById('aso-editButtons');
         if (obj) {
@@ -3132,12 +3133,13 @@
             infoDiv.style.display = 'none';
         }
     }
+
     function closeInfoDiv(){
         var infoDiv = document.getElementById('aso-editButtons');
         infoDiv.classList.add("aso-invisible");
     }
 
-    var angleActive = ref(false)
+    var angleActive = ref(false);
     function showObjectValues(){
         var div = document.getElementById('activeObject-values');
         var object = activeCanvas.getActiveObject();
@@ -3160,6 +3162,7 @@
         // }
 
     }
+
     function closeObjectValues(){
         var div = document.getElementById('activeObject-values');
         div.classList.add("aso-invisible");
@@ -3177,7 +3180,8 @@
     var currentMaterialTextImages = ref({})
     var selectedMaterial = ref('')
     var materialType = ref('')
-    var firstLoad = ref(false)
+    var firstLoad = ref(false);
+
     function selectMaterial(material){
         currentMaterial.value = material
         currentMaterialTextImages.value = material.data.textImages
@@ -3339,7 +3343,6 @@
         handleReadyToSaveState(true, true);
     }
 
-
     function setImageToSignBackground(image, colorName){
         activeSignColor.value = colorName
         activeSignColorCode1.value = image
@@ -3351,8 +3354,6 @@
         handleSetImageToSignBackground(image);
         // console.log("setImageToSign")
     }
-
-
 
     var customSizeValues = ref({
         label: props.config.data.settings.languageImages.visualizer.customSize,
@@ -3382,6 +3383,7 @@
             }
         }
     }
+
     function deleteObject(){
         // console.log(activeCanvas.getActiveObject())
         if(activeCanvas.getActiveObject() !== undefined){
@@ -3429,6 +3431,7 @@
             }
         }
     }
+
     function cloneObject(){
         if(activeCanvas.getActiveObject() !== undefined){
             if(activeCanvas.getActiveObject() !== null){
@@ -3472,6 +3475,7 @@
             }
         }
     }
+
     function centerHorizontally(){
         if(activeCanvas.getActiveObject() !== undefined){
             if(activeCanvas.getActiveObject() !== null){
@@ -3480,6 +3484,7 @@
             }
         }
     }
+
     function centerVertically(){
         if(activeCanvas.getActiveObject() !== undefined){
             if(activeCanvas.getActiveObject() !== null){
@@ -3488,9 +3493,6 @@
             }
         }
     }
-
-
-
 
     var sizees = ref([])
     var thicknesss = ref([])
@@ -3503,6 +3505,7 @@
     var currentSizeValues = ref({})
     var currentSizeSetting = ref({})
     var currentSizeThickness = ref(false)
+
     function changeSize(sizeData, sizeSetting, sizeId) {
         currentSizeData.value = sizeData
         // console.log(sizeData, sizeSetting, sizeId, "change size")
@@ -3591,6 +3594,7 @@
             saveStep('select size')
         }
     }
+
     var currentThickValue = ref(0)
     function selectSizeThickness(thick){
         currentThickValue.value = thick
@@ -4316,6 +4320,7 @@
             saveStep('add text to sign')
         }
     }
+
     function getTextObject(object, setActive) {
         if(activeFace.value == object.canvasName){
             selectText.value = true
@@ -4334,6 +4339,7 @@
             activeCanvas.requestRenderAll();
         }
     }
+
     function changeText(){
         selectText.value = false
     }
@@ -4347,10 +4353,12 @@
         currentClipart.value = cliparts
         clipartId.value = id
     }
+
     var clipartSection = ref(false)
     function showClipartsSection(statut){
         clipartSection.value = statut
     }
+
     var recentlyUsedImages = ref([])
     var usedImages = ref([])
     var imageError = ref("")
@@ -4403,9 +4411,11 @@
         }
         // console.log(usedImages.value, "currznt images")
     }
+
     function deleteFromRecentlyUsed(index, tab){
         tab.splice(index, 1);
     }
+
     function editAddedImage(image){
         if(activeFace.value === image.canvasName){
             editImage.value = true
@@ -4417,23 +4427,24 @@
             })
         }
     }
+
     function changeImageWidth(e){
         var newScaleX = e.target.value
         handleChangeImageWidth(newScaleX)
     }
+
     function changeImageHeight(e){
         var newScaleY = e.target.value
         handleChangeImageHeight(newScaleY)
     }
+
     function selectImageBorder(){
 
     }
+
     function selectImageFilter(filter){
         handleSelectFilter(filter)
     }
-
-
-
 
     var editAction = ref(false)
     var selectedText = ref({
@@ -4478,39 +4489,47 @@
         }
         getOptionPrice(priceObject)
     }
+
     function changeTextWeight(){
         var weight = handleChangeTextWeight()
         selectedText.weight = weight
     }
+
     function changeTextAlign(align){
         selectedText.align = handleChangeTextAlign(align)
     }
+
     function changeTextStyle(){
         handleChangeTextStyle()
     }
+
     function changeTextSize(size, min, max){
         handleChangeTextSize(parseInt(size), min, max)
     }
+
     var fontFamSelected = ref("Arial")
     var allFonts = ref([])
     function changeTextFontFam(font){
         fontFamSelected.value = font
         handleChangeTextFontFam(font)
     }
+
     var customTextColor = ref("#000000")
     function changeTextColor(color){
         handleChangeTextColor(color)
     }
+
     function underlineText(){
         handleUnderlineText()
     }
+
     function crossText(){
         handleCrossText()
     }
+
     function overlineText(){
         handleOverlineText()
     }
-
 
     function changeTextBackground(textObject){
 
@@ -4519,9 +4538,11 @@
     function turnLeftImage(){
         handleTurnImageLeft()
     }
+
     function turnRightImage(){
         handleTurnRightImage()
     }
+
     function flipImage(){
         handleFlipImage()
     }
@@ -4802,6 +4823,7 @@
     function closeprevImg(){
         showImg.value = false
     }
+
     function generateImage(canva, format){
         var background = canva.backgroundColor
         const watermark = new fabric.Text('Filigrane', {
@@ -4929,12 +4951,28 @@
         
         return url;
     }
+
     function showConfigRender(){
         prevImg.value = generateImage(canvas, 'png');
         showImg.value = true
 
         if(configDoublePart.value.active){
 
+        }
+    }
+
+    const addToCart = async ()=>{
+        isLoading.value = true;
+        const cart_data = {
+            recaps:{...configData.value},
+            prevImg:"",
+            variation_id:aso_configurator_data.productID
+        }
+        var add = await add_to_cart(aso_ajax_object.ajax_url, cart_data.value,aso_configurator_data.frontend_nonce, props.config.settings.generals.product.redirectToCheckOutPage??false);
+
+        if(!add.success){
+            toastMessage(add.message,"error");
+            isLoading.value = false
         }
     }
 

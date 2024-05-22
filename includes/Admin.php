@@ -21,7 +21,7 @@ class ASO_Admin {
         $capability = 'manage_options';
         $slug       = 'aso';
 
-        $hook = add_menu_page( __( 'ASO', 'ASO' ), __( 'ASO', 'ASO' ), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_aso-icon2.png' );
+        $hook = add_menu_page( __( 'ASO', 'ASO' ), __( 'ASO', 'ASO' ), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_icon_aso.png' );
 
         if ( current_user_can( $capability ) ) {
             $submenu[ $slug ][] = array( __( 'Configurations', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/' );
