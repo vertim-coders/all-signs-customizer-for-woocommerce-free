@@ -512,6 +512,14 @@ const defaultSettings = ref({
             textHelp:"Help",
             textMaterial:"Material",
             textSize:"Size",
+            textPosition:"Position",
+            textAngle:"Angle",
+            textWidth:"Width",
+            textHeight:"Height",
+            textRight:"Right",
+            textLeft:"Left",
+            textTop:"Top",
+            textBottom:"Bottom",
             customSize:"Custom Size",
             customSizeButtonDone:"Done",
             thickness:"Thickness",
@@ -527,6 +535,8 @@ const defaultSettings = ref({
     themeColors: {
         skin:"default",
         colors: {
+            canvasBackgroundColor:"#ffffff",
+            canvasBorderColor:"#ffffff",
             textColorContentHeader: "#000000",
             backgroundColorHeader: "#ffffff",
             textColorContentSideMenu: "#000000",
