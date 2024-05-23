@@ -14,6 +14,16 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Additonals Options Header</label>
+                    <input type="text" v-model="visualizer.textAdditonnalOptionsHeader" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Additonals Options Button Text</label>
+                    <input type="text" v-model="visualizer.textButtonAdditonnalOptions" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text button back</label>
                     <input type="text" v-model="visualizer.textButtonBack" class="aso-w-full"/>
                 </div>
@@ -208,6 +218,8 @@ const configId = ref(route.params.configId);
 const visualizer = ref({
     titleHeader:"Plastic Signs",
     textButtonRefresh:"Restart all",
+    textButtonAdditonnalOptions:"Additionals",
+    textAdditonnalOptionsHeader:"Additionals Options",
     textButtonBack:"Undo",
     textButtonNext:"Redo",
     textBeforePrice:"",
