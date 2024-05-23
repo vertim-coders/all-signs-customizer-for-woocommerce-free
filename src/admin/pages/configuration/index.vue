@@ -613,6 +613,7 @@ const defaultSettings = ref({
             textBorder:"Border",
             textProduct:"Product",
             textImage:"Image",
+            textExample:"example",
         }
     },
     themeColors: {

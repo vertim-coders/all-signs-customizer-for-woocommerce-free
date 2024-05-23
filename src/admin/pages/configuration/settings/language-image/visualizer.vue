@@ -192,6 +192,12 @@
                     <input type="text" v-model="visualizer.textImage" class="aso-w-full"/>
                 </div>
             </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Example</label>
+                    <input type="text" v-model="visualizer.textExample" class="aso-w-full"/>
+                </div>
+            </div>
         </div>
         <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
             <div class="aso-bg-[#016464] aso-rounded">
@@ -252,6 +258,7 @@ const visualizer = ref({
     textBorder:"Border",
     textProduct:"Product",
     textImage:"Image",
+    textExample:"example",
 });
 
 
