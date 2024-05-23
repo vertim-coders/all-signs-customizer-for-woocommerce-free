@@ -1355,28 +1355,28 @@
             </div>
         </div>
 
-        <div v-if="finish" :class="`aso-absolute aso-top-0 aso-w-full aso-h-full aso-flex aso-flex-col aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.textColorOptionsMenu}]`">
+        <div v-if="finish" :class="`aso-absolute aso-top-0 aso-z-30 aso-w-full aso-h-full aso-flex aso-flex-col aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.textColorOptionsMenu}]`">
             <div :class="`aso-w-full aso-p-4 aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]`">
                 <p class="aso-text-xl aso-font-bold aso-text-center">Summary</p>
             </div>
 
-            <div class="aso-flex aso-flex-col aso-overflow-auto aso-scrollBar">
+            <div class="aso-flex aso-flex-col aso-flex-1 aso-overflow-auto aso-scrollBar">
                 <div v-if=" selectedMaterial != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <p :class="`aso-text-[#000000] aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textMaterial ?? 'Material' }}</p>
-                    <p :class="`aso-text-[#473e3e] aso-text-[14px]`">{{ selectedMaterial}}</p>
+                    <p :class="`aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textMaterial ?? 'Material' }}</p>
+                    <p :class="`aso-text-[14px]`">{{ selectedMaterial}}</p>
                 </div>
 
                 <div v-if="selectedShape != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <p :class="`aso-text-[#000000] aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textShape ?? 'Shape' }}</p>
-                    <p :class="`aso-text-[#473e3e] aso-text-[14px] lowercase first-letter:uppercase`">{{selectedShape}}</p>
+                    <p :class="`aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textShape ?? 'Shape' }}</p>
+                    <p :class="`aso-text-[14px] lowercase first-letter:uppercase`">{{selectedShape}}</p>
                 </div>
 
                 <div v-if="currentSizeName != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <div :class="`aso-text-[#000000]`">
+                    <div :class="``">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textSize" class="aso-text-[16px] aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textSize}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textSize" class="aso-text-[16px] aso-font-semibold">Sizes</p>
                     </div>
-                    <div :class="`aso-flex aso-flex-col aso-text-[#473e3e]`"> 
+                    <div :class="`aso-flex aso-flex-col`"> 
                         <p class="aso-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height'"><span class="aso-font-semibold">heigh: </span> 
                             <span>
                                 {{configData.sign.height}}
@@ -1389,14 +1389,14 @@
                         </p>
                         <p class="aso-text-[13px]" v-if="materialType === 'simple' && thicknesss.active"><span class="aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}: </span> 
                             <span>
-                                {{currentThickValue}}
+                                {{currentThickValue}} {{configUnit}}
                             </span>
                         </p>
                     </div>
                 </div>
 
                 <div v-if="activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <div :class="`aso-w-1/3 aso-text-[#000000]`">
+                    <div :class="`aso-w-1/3`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
                     </div>
@@ -1456,15 +1456,15 @@
                 </div> -->
 
                 <div v-if="activeFixingMethode != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <div :class="`aso-text-[#000000]`">
+                    <div :class="``">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textFixingMethods" class="aso-text-[16px] aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textFixingMethods" class="aso-text-[16px] aso-font-semibold">Fixing methode</p>
                     </div>
-                    <p :class="`aso-text-[#473e3e] aso-text-[15px] lowercase first-letter:uppercase`">{{activeFixingMethode}}</p>
+                    <p :class="`aso-text-[15px] lowercase first-letter:uppercase`">{{activeFixingMethode}}</p>
                 </div>
 
-                <div v-if="materialType === 'simple' && activeFace1Border != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <div :class="`aso-w-1/3 aso-text-[#000000]`">
+                <div v-if="materialType === 'simple' && (activeFace1Border != '' || activeFace2Border != '') " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                    <div :class="`aso-w-1/3`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textBorder" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textBorder}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textBorder" class="aso-text-[16px] text-black aso-font-semibold">Border</p>
                     </div>
@@ -1473,7 +1473,7 @@
                             <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeFace1Border}}</span>
 
-                            <div v-if="activeFace1Border !== 'none' && (signTextColor && !colorForBorder1)" class="aso-flex aso-space-x-1 aso-full-center">
+                            <div v-if="activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
@@ -1494,8 +1494,8 @@
                             <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeFace2Border}}</span>
                         
-                            <div v-if="activeFace2Border !== 'none' && (signTextColor && !colorForBorder2)" class="aso-flex aso-space-x-1 aso-full-center">
-                                <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>
+                            <div v-if="activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="aso-flex aso-space-x-1 aso-full-center">
+                                <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>    
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face2.codeHex}] aso-flex`"></span>
                                 </span>
@@ -1512,12 +1512,12 @@
                 </div>
 
                 <div v-if="materialType === 'simple' && addComponentSelected.length > 0" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2" v-for="(option, index) in addComponentSelected">
-                    <p :class="`aso-text-[#000000] aso-text-[16px] aso-font-semibold`">{{option.option}}</p>
-                    <p :class="`aso-text-[#473e3e] aso-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
+                    <p :class="`aso-text-[16px] aso-font-semibold`">{{option.option}}</p>
+                    <p :class="`aso-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
                 </div>
 
                 <div v-if="(!configDoublePart.active && configData.texts.length > 0) || (configDoublePart.active && (configData.texts.face1.length > 0 || configData.texts.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <div :class="`aso-w-1/3 aso-text-[#000000]`">
+                    <div :class="`aso-w-1/3`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textOptionText}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
                     </div>
@@ -1605,11 +1605,8 @@
             </div>
 
             <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
-                <button @click="() => finish = false" :disabled="isAddindToCart"  :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center ${!isAddindToCart ? 'aso-cursor-pointer' :'aso-cursor-not-allowed'}`" >Edit</button>
-                <button :disabled="isAddindToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center ${!isAddindToCart ? 'aso-cursor-pointer' :'aso-cursor-not-allowed'}`" >
-                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddindToCart"/>
-                    Add to cart
-                </button>
+                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</div>
+                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
             </div>
         </div>
 
@@ -1681,7 +1678,7 @@
         handleClipAddedObject,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
-import toastMessage from '@/admin/utils/functions';
+    import toastMessage from '@/admin/utils/functions';
 
     const props = defineProps({
         config:Object,
@@ -4781,7 +4778,7 @@ import toastMessage from '@/admin/utils/functions';
                 thicknessValue = 'none'
             break;
             case true:
-                thicknessValue = String(currentSize.value.thickness + " " + configSettings.value.customizerSign.customizerOptions.measurementUnit)
+                thicknessValue = String(currentThickValue.value + " " + configSettings.value.customizerSign.customizerOptions.measurementUnit)
             break;
         }
 
@@ -4840,22 +4837,29 @@ import toastMessage from '@/admin/utils/functions';
             sign: {
                 width: widthValue.text,
                 height: heightValue.text,
-                thickness: (currentThickValue.value !== -99 ? currentThickValue.value : 'none'),
+                thickness: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
                 shape: selectedShape.value,
                 color: {
                     name: activeSignColor.value,
                     codeHex: activeSignColorCode1.value,
+                    textColor: {
+                        active: signTextColor1.value.active,
+                        name: (signTextColor1.value.active ? colorTextColorName1.value : null),
+                        codeHex: (signTextColor1.value.active ? colorTextCodeHex1.value : null),
+                    }
                 },
                 border: {
                     type: activeFace1Border.value,
-                    color: activeFace1BorderColor.value,
-                    codeHex: getBorderColor(activeFace1Border.value, canvas),
+                    color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
+                    codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
                 },
                 fixingMethod: activeFixingMethode.value,
             },
             texts: addedObject.texts,
             images: addedObject.images,
-            // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
+            additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
+            additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : null),
+            designImages: generateImage(canvas, 'png'),
 
         }
 
@@ -4886,31 +4890,45 @@ import toastMessage from '@/admin/utils/functions';
             }
             var face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects)
             configData.value = {
+                faces: {
+                    face1: configDoublePart.value.part1,
+                    face2: configDoublePart.value.part2,
+                },
                 sign: {
                     width: widthValue.text,
                     height: heightValue.text,
-                    thickness: (currentThickValue.value !== -99 ? currentThickValue.value : 'none'),
+                    thickness: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
                     shape: selectedShape.value,
                     color: {
                         face1: {
                             name: activeSignColor.value,
-                            codeHex: activeSignColorCode1.value
+                            codeHex: activeSignColorCode1.value,
+                            textColor: {
+                                active: signTextColor1.value.active,
+                                name: (signTextColor1.value.active ? colorTextColorName1.value : null),
+                                codeHex: (signTextColor1.value.active ? colorTextCodeHex1.value : null),
+                            }
                         },
                         face2: {
                             name: activeSignFace2Color.value,
-                            codeHex : activeSignColorCode2.value
+                            codeHex : activeSignColorCode2.value,
+                            textColor: {
+                                active: signTextColor2.value.active,
+                                name: (signTextColor2.value.active ? colorTextColorName2.value : null),
+                                codeHex: (signTextColor2.value.active ? colorTextCodeHex2.value : null),
+                            }
                         },
                     },
                     border: {
                         face1: {
                             type: activeFace1Border.value,
-                            color: activeFace1BorderColor.value,
-                            codeHex: getBorderColor(activeFace1Border.value, canvas),
+                            color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
+                            codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
                         },
                         face2: {
                             type: activeFace2Border.value,
-                            color: activeFace2BorderColor.value,
-                            codeHex: getBorderColor(activeFace2Border.value, canvasBack),
+                            color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
+                            codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
                         },
                     },
                     fixingMethod: activeFixingMethode.value,
@@ -4923,10 +4941,12 @@ import toastMessage from '@/admin/utils/functions';
                     face1 :addedObject.images,
                     face2 :face2AddedObject.images
                 },
-                // designImages: {
-                //     face1: generateImage(canvas, configOutputSettings.value.filesFormat),
-                //     face2: generateImage(canvasBack, configOutputSettings.value.filesFormat),
-                // }
+                additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
+                additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : null),
+                designImages: {
+                    face1: generateImage(canvas, 'png'),
+                    face2: generateImage(canvasBack, 'png'),
+                }
             }
 
         }

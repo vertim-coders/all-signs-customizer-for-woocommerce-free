@@ -1101,7 +1101,7 @@ function getCanvasCenter() {
 var signLeft = 0
 var signTop = 0
 function handleGetNewPosition(left, top){
-    console.log(left + " cwxcwxcwxc " + top )
+    // console.log(left + " cwxcwxcwxc " + top )
     signLeft = left
     signTop = top
 }
