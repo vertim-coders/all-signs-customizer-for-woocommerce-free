@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[130px] aso-z-[9999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4]">
+    <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[130px] aso-z-[9999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4] aso-translate-y-2">
         <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex">
             <button @click="state='skins'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'skins' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Choose Skin</button>
             <button @click="state='custom'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'custom' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Custom CSS</button>
@@ -9,7 +9,7 @@
         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
     </div>
     <div v-if="!isFetching">
-        <div class="aso-space-y-1" v-show="state=='skins'">
+        <div class="aso-space-y-1 aso-translate-y-3" v-show="state=='skins'">
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <h3 class="aso-text-[16px]">Choose your customizer appearance</h3>
                 <div class="aso-p-6">
@@ -562,12 +562,12 @@
             </div>
             
         </div>
-        <div v-show="state=='custom'" class="aso-w-full aso-h-full">
+        <div v-show="state=='custom'" class="aso-w-full aso-h-full aso-translate-y-9">
             <div class="aso-p-4">
                 <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:aso-italic placeholder:aso-text-slate-400 aso-w-full aso-h-full aso-rounded-none"></textarea>
             </div> 
         </div>
-        <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
+        <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end aso-translate-y-12">
             <div class="aso-bg-[#016464] aso-rounded">
                 <button :disabled="isLoading" @click="updateThemesSettings" class="aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointeraso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
@@ -592,32 +592,33 @@ const state = ref('skins');
 const themes = ref({
     skin:"default",
     colors: {
-        textColorContentHeader:'#000000',
-        backgroundColorHeader:'#000000',
-        textColorContentSideMenu:'#000000',
-        backgroundColorContentSide:'#000000',
-        textColorOptionsMenu:'#000000',
-        backgroundColorOptionsMenu:'#000000',
-        textColorButtonSave:'#000000',
-        backgroundColorTextButtonSave:'#000000',
-        textColorHoverButtonSave:'#000000',
-        backgroundColorHoverButtonSave:'#000000',
-        textColorButton:'#000000',
-        backgroundButton:'#000000',
-        textColorHoverButton:'#000000',
-        backgroundColorHoverButton:'#000000',
-        textColorButtonHelp:'#000000',
-        backgroundColorButtonHelp:'#000000',
-        textColorHoverButtonHelp:'#000000',
-        backgroundColorHoverButtonHelp:'#000000',
-        textColorHoverButtonRestartAll:'#000000',
-        backgroundColorHoverButtonRestartAll:'#000000',
-        textColorButtonRestartAll:'#000000',
-        backgroundColorButtonRestartAll:'#000000',
-        textColorButtonFinish:'#000000',
-        backgroundColorButtonFinish:'#000000',
-        textColorHoverButtonFinish:'#000000',
-        backgroundColorHoverButtonFinish:'#000000',
+        textColorContentHeader: "#000000",
+        backgroundColorHeader: "#ffffff",
+        textColorContentSideMenu: "#000000",
+        backgroundColorHeaderContentSide: "#000000",
+        textColorOptionsMenu: "#ffffff",
+        backgroundColorOptionsMenu: "#016464",
+        textColorButtonSave: "#000000",
+        backgroundColorTextButtonSave: "#ffffff",
+        textColorHoverButtonSave: "#000000",
+        backgroundColorHoverButtonSave: "#ffffff",
+        textColorButton: "#ffffff",
+        backgroundButton: "#016464",
+        textColorHoverButton: "#ffffff",
+        backgroundColorHoverButton: "#016464",
+        textColorButtonHelp: "#ffffff",
+        backgroundColorButtonHelp: "#016464",
+        textColorHoverButtonHelp: "#ffffff",
+        backgroundColorHoverButtonHelp: "#016464",
+        textColorHoverButtonRestartAll: "#ffffff",
+        backgroundColorHoverButtonRestartAll: "#000000",
+        textColorButtonRestartAll: "#ffffff",
+        backgroundColorButtonRestartAll: "#000000",
+        textColorButtonFinish: "#ffffff",
+        textColorHoverButtonFinish: "#f0f0f0",
+        backgroundColorButtonFinish: "#FFBC3C",
+        backgroundColorHoverButtonFinish: "#edad35",
+        backgroundColorContentSide: "#ffffff"
     },
     customCSS:""
 });

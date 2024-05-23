@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aso-space-y-4">
+        <div class="aso-space-y-4 aso-translate-y-8">
             <div>
                 <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                     <div class="aso-flex aso-justify-between">

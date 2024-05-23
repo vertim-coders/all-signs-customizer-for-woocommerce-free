@@ -114,12 +114,14 @@ class ASO_Frontend {
                         $this->includes_config_fonts($visibleFonts);
                         $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
                         wp_localize_script("aso-product-min","aso_configurator_data",$ASO);
-                        wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-product-min","aso_data",[
-                            "rest_url"=>get_rest_url()."aso/v1"
+                            "rest_url"=>get_rest_url()."aso/v1",
                         ]);
+
+                        wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-frontend","aso_data",[
-                            "rest_url"=>get_rest_url()."aso/v1"
+                            "rest_url"=>get_rest_url()."aso/v1",
+                            'ajax_url' => esc_url(admin_url('admin-ajax.php'))
                         ]);
                     }
                 }

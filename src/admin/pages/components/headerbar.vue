@@ -3,7 +3,7 @@
         <div class="aso-relative aso-flex aso-justify-between aso-items-center aso-w-[86%]">
             <div>
                 <span>
-                    <img class="aso-w-[80px] aso-h-[50px]" src="../../../../assets/images/im_aso-icon2.png" alt="">
+                    <img class="aso-w-[110px]" src="../../../../assets/images/im_aso-icon2.png" alt="">
                 </span>
             </div>
             <div class=" aso-flex px-2 aso-justify-center aso-items-center aso-w-full">

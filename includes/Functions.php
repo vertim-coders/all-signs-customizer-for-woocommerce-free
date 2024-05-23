@@ -11,7 +11,7 @@
 		$img        = str_replace( ' ', '+', $img );
 		$data       = base64_decode( $img ); // phpcs:ignore
 		$file       = $upload_dir . $file_name . '.png';
-		$success1    = file_put_contents( $file, $data ); // phpcs:ignore
+		file_put_contents( $file, $data ); // phpcs:ignore
         $preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
 		return $preview_img;
 	}
@@ -22,45 +22,48 @@
 	function aso_add_custom_design_to_cart_ajax() {
         if (wp_verify_nonce(sanitize_text_field( wp_unslash ($_POST['nonce'])), 'aso_add_to_cart_after_custom')) {
             if (isset($_POST['data']['variation_id'])) {
+                $redirectToCheckOut = isset($_POST['redirectToCheckOut']) ? $_POST['redirectToCheckOut'] : false;
+                $displayRecapsOnCheckout = isset($_POST['displayRecapsOnCheckout']) ? $_POST['displayRecapsOnCheckout'] : false;
                 $main_variation_id = intval($_POST['data']['variation_id']);
                 $quantity = isset($_POST['data']['quantity']) ? intval($_POST['data']['quantity']) : 1; 
                 $cart_item_key = isset($_POST['data']['cart_item_key']) ? sanitize_key($_POST['data']['cart_item_key']): false;
-                $preview_img  = isset($_POST['data']['aso_preview_img']) ? sanitize_text_field($_POST['data']['aso_preview_img']) : '';
-                $recaps = isset($_POST['data']['aso_recaps']) ? map_deep( $_POST['data']['aso_recaps'], 'sanitize_text_field' ) : [];
+                $preview_img  = isset($_POST['data']['prevImg']) ? $_POST['data']['prevImg'] : '';
+                $recaps = isset($_POST['data']['recaps']) ? map_deep( $_POST['data']['recaps'], 'sanitize_text_field' ) : [];
                 $message = '';
                 
-                $cart_url = wc_get_cart_url();
-                if ( session_status() !== 2 ) {
+                /* if ( session_status() !== 2 ) {
                     session_start();
                 }
                 
-                $_SESSION['aso_calculated_totals'] = false;
+                $_SESSION['aso_calculated_totals'] = false; */
                 
                 $newly_added_cart_item_key = false;
-                $file_name                     = uniqid( 'aso-' );
-                $preview_img = aso_save_canvas_image( $preview_img, $file_name );
+                $file_name                     = uniqid( 'ncpc-' );
+                //aso_save_canvas_image( $preview_img, $file_name);
+                //$preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
                 if ( $cart_item_key ) {
                     WC()->cart->cart_contents[ $cart_item_key ]['aso_recaps'] = $recaps;
                     WC()->cart->cart_contents[ $cart_item_key ]['aso_preview_img']    = $preview_img;
+                    WC()->cart->cart_contents[ $cart_item_key ]['aso_svg_data']    = $svg;
                     WC()->cart->calculate_totals();
                     wp_send_json(array(
                         'success'     => true
                     ));
                 } else {
-                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps, $preview_img,$quantity);
-                    
+                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$displayRecapsOnCheckout, $preview_img,$quantity);
+
                     if ( $newly_added_cart_item_key ) {
-                        $message =  __( 'Product successfully added to cart.', 'neon-channel-product-customizer-free');
+                        $message =  __( 'Product successfully added to cart.', 'ASO' );
                         wp_send_json(array(
                             'success'     => true,
                             'cart_item_key'     => $newly_added_cart_item_key,
                             'message'     => $message,
-                            'url'         => $cart_url,
+                            'url'         => $redirectToCheckOut ? wc_get_checkout_url() : wc_get_cart_url(),
                             'form_fields' => $recaps,
             
                         ));
                     } else {
-                        $message = __( 'A problem occured while adding the product to the cart. Please try again.', 'neon-channel-product-customizer-free');
+                        $message = __( 'A problem occured while adding the product to the cart. Please try again.', 'ASO' );
                         wp_send_json(array(
                             'success'     => false,
                             'message'     => $message,
@@ -69,20 +72,18 @@
                     }
                 
                 }
-
-                /* ob_start();
-                woocommerce_mini_cart();
-                $mini_cart = ob_get_clean(); */
             } else {
-                wp_send_json(array('message' => 'ID produit manquant.'));
+                wp_send_json(array('message' => __("Missing product ID","ASO")));
             }
+        }else{
+            wp_send_json(array('message' => 'nonce invalid.'));
         }
 	}
 
 	/**
 	 *  add product to cart
 	 */
-	function aso_add_designs_to_cart( int $product_id,array $recaps, string $preview_img,int $quantity) {
+	function aso_add_designs_to_cart( int $product_id,array $recaps, bool $displayRecapsOnCheckout, string $preview_img,int $quantity) {
 		$newly_added_cart_item_key = false;
         $product = wc_get_product( $product_id );
         $parent_id = $product->get_parent_id();
@@ -93,8 +94,10 @@
                 0,
                 array(),
                 array(
-                    'aso_recaps' => $recaps,
-                    'aso_preview_img'    => $preview_img,
+                    'aso_meta_data' => ["recaps"=>$recaps,
+                        'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
+                        'aso_preview_img'    => $preview_img
+                    ]
                 )
             );
         }else{
@@ -105,8 +108,11 @@
                 0,
                 $variation,
                 array(
-                    'aso_recaps' => $recaps,
-                    'aso_preview_img'    => $preview_img,
+                    'aso_meta_data' => [
+                        "recaps"=>$recaps,
+                        'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
+                        'aso_preview_img'    => $preview_img
+                    ]
                 )
             );
         }

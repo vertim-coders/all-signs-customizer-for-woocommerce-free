@@ -1,10 +1,20 @@
-async function addToCart(ajax_url, cart_data, nonce, redirect_to_cart) {
+import axios from "axios";
+
+async function add_to_cart(
+  ajax_url,
+  cart_data,
+  nonce,
+  redirectToCheckOut,
+  displayRecapsOnCheckout
+) {
   try {
     const response = await axios.post(
       ajax_url,
       {
-        action: "ncpc_add_custom_design_to_cart",
+        action: "aso_add_custom_design_to_cart",
         data: cart_data,
+        redirectToCheckOut: redirectToCheckOut,
+        displayRecapsOnCheckout: displayRecapsOnCheckout,
         nonce: nonce,
       },
       {
@@ -14,9 +24,7 @@ async function addToCart(ajax_url, cart_data, nonce, redirect_to_cart) {
       }
     );
     if (response.data.cart_item_key) {
-      if (redirect_to_cart) {
-        window.location.href = response.data.url;
-      }
+      window.location.href = response.data.url;
     }
     return response.data;
   } catch (error) {
@@ -62,4 +70,4 @@ function setScrollColor(color) {
   document.documentElement.style.setProperty("--aso-scrollBar-color", color);
 }
 
-export { addToCart, formatPrice, setScrollColor };
+export { add_to_cart, formatPrice, setScrollColor };

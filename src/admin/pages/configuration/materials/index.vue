@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="!isNewComponent">
-            <div class="aso-sticky aso-top-[70px] aso-z-[999]">
+            <div class="aso-sticky aso-top-[80px] aso-z-[999]">
                 <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                     <div  v-if="config.trim() != ''" class="aso-font-bold">
                         {{config}}
@@ -26,17 +26,17 @@
                         </button>
                     </div>
                 </div>
-                <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
-                    <div class="aso-flex aso-items-center aso-justify-center">Material Name</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Description</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Behavior (type)</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
-                </div>
             </div>
             <!-- Table which display all materials -->
-            <div class="aso-w-full aso-overflow-x-auto">
+            <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
                 <div class="aso-overflow-hidden aso-w-full">
+                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
+                        <div class="aso-flex aso-items-center aso-justify-center">Material Name</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Description</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Behavior (type)</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
+                    </div>
                     
                     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
                         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
@@ -79,7 +79,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                     </svg>
                                 </button>
-                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showPrams[key]=false;">
+                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showParams[key]=false;">
                                     <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectCloneMaterial(material)">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />

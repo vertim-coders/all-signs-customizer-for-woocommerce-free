@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aso-grid aso-grid-cols-3 aso-gap-x-3 aso-gap-y-7 aso-bg-[#F8F9FB] aso-p-8 aso-pb-12">
+        <div class="aso-grid aso-grid-cols-3 aso-gap-x-3 aso-gap-y-7 aso-bg-[#F8F9FB] aso-p-8 aso-pb-12 aso-translate-y-9">
             <div class="">
                 <div class="aso-flex aso-bg-transparent aso-border-solid aso-border-[1px] aso-border-[#E0E0E0] aso-rounded-t aso-p-3 aso-py-4">
                     <div class="aso-font-bold aso-text-[14px] aso-w-2/4">
@@ -144,7 +144,7 @@
             </div>
         </div>
     </div>
-    <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
+    <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end aso-translate-y-12">
         <div class="aso-bg-[#016464] aso-rounded">
             <button :disabled="isLoading" @click="updateProductSettings" class=" aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
                 <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />

@@ -1,7 +1,7 @@
 <template>
     <div class="aso-h-[100vh] aso-w-full">
-        <div v-if="step==0">
-            <div  class="aso-sticky aso-top-[70px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
+        <div v-if="step==0 && !openModal">
+            <div  class="aso-sticky aso-top-[80px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                 <div class="aso-px-4 aso-pb-4">
                     <div class="aso-bg-[#F8F9FB] aso-font-bold aso-py-4">
                         List of configurations
@@ -34,17 +34,17 @@
                     </div>
 
                 </div>
-                <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
-                    <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Description</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
-                    <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
-                </div>
             </div>
             <!-- Table which display all configurations -->
-            <div class="aso-w-full aso-overflow-x-auto">
+            <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
                 <div class="aso-overflow-hidden aso-w-full ">
+                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
+                        <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Description</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
+                    </div>
                     
                     <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
                         <img class="aso-w-[200px] aso-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
@@ -77,7 +77,7 @@
                             <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectEditConfig(config)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
-                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="goToMaterial(config)">
                                 <img class="aso-w-4 aso-h-4" src="../../../../assets/icons/ic_manage.svg" alt="">
                                 <span class="aso-text-[12px]">
                                     Manage
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="aso-flex aso-items-center aso-justify-center aso-py-7 aso-w-full" v-if="pages>1">
+            <div class="aso-flex aso-items-center aso-justify-center aso-translate-y-12 aso-py-7 aso-w-full" v-if="pages>1">
                 <div class="aso-grid aso-grid-cols-5 aso-gap-4">
                     <button @click="handlePrevPage" :diseabled="page == 1" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border ${page == 1 ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :``}`">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
@@ -123,7 +123,7 @@
             </div>
         </div>
         <!-- create a new configuration -->
-        <div class="aso-space-y-1" v-if="step == 1 && !includeDemo">
+        <div class="aso-space-y-1 aso-translate-y-9" v-if="step == 1 && !includeDemo">
             <div class="aso-bg-[#F8F9FB] aso-font-bold aso-px-4 aso-py-4 aso-text-[16px]">
                 {{ isEdit ? 'Edit Configuration inforamtions' : 'Create new configuration'}}
             </div>
@@ -248,7 +248,7 @@
         </div>
 
         <div v-if="includeDemo">
-            <div class="aso-bg-[#F8F9FB] aso-p-20 aso-space-y-20">
+            <div class="aso-bg-[#F8F9FB] aso-p-20 aso-space-y-20 aso-translate-y-8">
                 <Multiselect
                     v-model="selectedDemo"
                     placeholder="Select ASO Configuration"
@@ -267,7 +267,7 @@
                     </template>
                 </Multiselect>
             </div>
-            <div class="aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB]">
+            <div class="aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB] aso-translate-y-10">
                 <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                     <div class="aso-bg-[#016464] aso-rounded">
                         <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
@@ -295,7 +295,7 @@
         </div>
 
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[9999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -310,11 +310,11 @@
                         </svg>
                         <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this configuration?</h3>
                         <input v-model="deleteConfig.name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
-                        <button @click="delConfig" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <button :disabled="isLoading" @click="delConfig" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
+                            <img src="../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading"/>
                             Yes, I'm sure
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                        <button :disabled="isLoading" @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
                     </div>
                 </div>
             </div>
@@ -354,8 +354,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import api from "@/admin/Api/api";
-import toastMessage from '@/admin/utils/functions'
-import Multiselect from '@vueform/multiselect'
+import toastMessage from '@/admin/utils/functions';
+import Multiselect from '@vueform/multiselect';
+import router from '@/admin/router';
 
 const isNewConfig = ref(false);
 const showParams = ref([]);
@@ -526,32 +527,33 @@ const defaultSettings = ref({
     themeColors: {
         skin:"default",
         colors: {
-            textColorContentHeader:'#000000',
-            backgroundColorHeader:'#000000',
-            textColorContentSideMenu:'#000000',
-            backgroundColorContentSide:'#000000',
-            textColorOptionsMenu:'#000000',
-            backgroundColorOptionsMenu:'#000000',
-            textColorButtonSave:'#000000',
-            backgroundColorTextButtonSave:'#000000',
-            textColorHoverButtonSave:'#000000',
-            backgroundColorHoverButtonSave:'#000000',
-            textColorButton:'#000000',
-            backgroundButton:'#000000',
-            textColorHoverButton:'#000000',
-            backgroundColorHoverButton:'#000000',
-            textColorButtonHelp:'#000000',
-            backgroundColorButtonHelp:'#000000',
-            textColorHoverButtonHelp:'#000000',
-            backgroundColorHoverButtonHelp:'#000000',
-            textColorHoverButtonRestartAll:'#000000',
-            backgroundColorHoverButtonRestartAll:'#000000',
-            textColorButtonRestartAll:'#000000',
-            backgroundColorButtonRestartAll:'#000000',
-            textColorButtonFinish:'#000000',
-            backgroundColorButtonFinish:'#000000',
-            textColorHoverButtonFinish:'#000000',
-            backgroundColorHoverButtonFinish:'#000000',
+            textColorContentHeader: "#000000",
+            backgroundColorHeader: "#ffffff",
+            textColorContentSideMenu: "#000000",
+            backgroundColorHeaderContentSide: "#000000",
+            textColorOptionsMenu: "#ffffff",
+            backgroundColorOptionsMenu: "#016464",
+            textColorButtonSave: "#000000",
+            backgroundColorTextButtonSave: "#ffffff",
+            textColorHoverButtonSave: "#000000",
+            backgroundColorHoverButtonSave: "#ffffff",
+            textColorButton: "#ffffff",
+            backgroundButton: "#016464",
+            textColorHoverButton: "#ffffff",
+            backgroundColorHoverButton: "#016464",
+            textColorButtonHelp: "#ffffff",
+            backgroundColorButtonHelp: "#016464",
+            textColorHoverButtonHelp: "#ffffff",
+            backgroundColorHoverButtonHelp: "#016464",
+            textColorHoverButtonRestartAll: "#ffffff",
+            backgroundColorHoverButtonRestartAll: "#000000",
+            textColorButtonRestartAll: "#ffffff",
+            backgroundColorButtonRestartAll: "#000000",
+            textColorButtonFinish: "#ffffff",
+            textColorHoverButtonFinish: "#f0f0f0",
+            backgroundColorButtonFinish: "#FFBC3C",
+            backgroundColorHoverButtonFinish: "#edad35",
+            backgroundColorContentSide: "#ffffff"
         },
         customCSS:""
     },
@@ -8224,11 +8226,12 @@ const search = ref('')
 const step = ref(0);
 const isEdit = ref(false);
 const openModal = ref(false);
-
+const manageFonts = ref([]);
 onMounted(async () => {
     isFetching.value = true;
     await fetchConfigs();
     canAddNew.value = true;
+    await fetchFonts();
 });
 
 const closeCloneModal = ()=> {
@@ -8238,6 +8241,20 @@ const closeCloneModal = ()=> {
         description:"",
         icon:"",
         popImg:"",
+    }
+}
+
+const fetchFonts = async () =>{
+    const result = await api.getManagefonts();
+    if(!result.message){
+        let tab=[]
+        manageFonts.value = result.map((font,id)=>{
+            tab.push(id);
+
+        });
+        manageFonts.value = tab;
+    }else{
+        manageFonts.value = [];
     }
 }
 
@@ -8732,6 +8749,41 @@ const includeMetaData = async (state) => {
                 materials:metaConfigs.value[selectedDemo.value].materials,
             }
         }
+        if(manageFonts.value.length>0){
+            let tab=[]
+            for (let index = 0; index < manageFonts.value.length; index++) {
+                configuration.data.settings.customizerSign.text.selectedFonts.push(manageFonts.value[index]);
+            }
+        }else{
+            configuration.data.settings.customizerSign.text.selectedFonts = [0,1,2,3,4];
+            await api.addManagefont({many:false,fonts:[
+                {
+                    "label": "Abhaya Libre",
+                    "url": "http://fonts.gstatic.com/s/abhayalibre/v14/e3t5euGtX-Co5MNzeAOqinEYo23yr9xI6oYtBA.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Abril Fatface",
+                    "url": "http://fonts.gstatic.com/s/abrilfatface/v23/zOL64pLDlL1D99S8g8PtiKchm-VsjOLhZBY.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Advent Pro",
+                    "url": "http://fonts.gstatic.com/s/adventpro/v23/V8mqoQfxVT4Dvddr_yOwrzaFxV7JtdQgFqXdUAQrGp_zgX5sWCpLHSNPSZoonw1aBA.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Akron",
+                    "url": "http://fonts.gstatic.com/s/akronim/v23/fdN-9sqWtWZZlHRp-gVxkFYN-a8.woff2",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Bellefair",
+                    "url": "http://fonts.gstatic.com/s/bellefair/v14/kJExBuYY6AAuhiXUxG19-vA2pOdvDA.woff2",
+                    "isGoogleFont": true
+                },
+            ]});
+        }
         if(selectedDemo.value == 'double-side'){
             configuration.data.settings.customizerSign.signPart.doublePart.active=true; 
             configuration.data.settings.customizerSign.signPart.doublePart.part1="Face A"; 
@@ -8807,6 +8859,13 @@ const delConfig = async () => {
         toastMessage(result.message,"error");
     }
     closeModal();
+}
+const goToMaterial = (c)=>{
+    router.push('/configs/'+c.name.replace(/ /,'-')+'/'+c.id+'/materials')
+    .then(() => {
+      // Recharger la page après la navigation
+      window.location.reload()
+    })
 }
 
 

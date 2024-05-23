@@ -5,7 +5,7 @@
                 {{config}}
             </div>
             <img v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div class="aso-text-[16px] aso-cursor-pointer" v-if="config.trim() != ''" @click="()=>$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials')">
+            <div class="aso-text-[16px] aso-cursor-pointer" v-if="config.trim() != ''" @click="goToMaterials">
                 Material
             </div>
             <img v-if="material.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -336,6 +336,7 @@ import toastMessage from "@/admin/utils/functions";
 import Multiselect from "@vueform/multiselect";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import router from '@/admin/router'
 const route = useRoute()
 const configId = ref(route.params.configId);
 const config = route.params.config.replace(/-/," ");
@@ -387,6 +388,13 @@ onMounted(async() => {
     await fetchAllShapes();
     await fetchMaterialAdvanceOptions();
 });
+
+const goToMaterials = ()=>{
+    router.push('/configs/'+config.replace(/ /,'-')+'/'+configId.value+'/materials').then(() => {
+    // Recharger la page après la navigation
+    window.location.reload()
+    })
+}
 const fetchAllFixingMethods = async () => {
     const result = await api.getGlobalFixingMethods();
     fixingMethods.value = result.map((fx,key)=>{

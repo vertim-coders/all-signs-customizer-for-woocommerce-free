@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="aso-space-y-1" v-show="!createGroup">
+        <div class="aso-space-y-1 aso-translate-y-9" v-show="!createGroup">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <span class="aso-font-bold">
                     List of clipart group
@@ -79,7 +79,7 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-1" v-show="createGroup">
+        <div class="aso-space-y-1 aso-translate-y-9" v-show="createGroup">
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
                 <span class="aso-text-[16px] aso-font-bold">
                     Create new clipart group

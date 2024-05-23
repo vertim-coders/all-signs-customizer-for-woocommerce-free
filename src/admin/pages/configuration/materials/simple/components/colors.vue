@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="aso-h-[70vh] aso-overflow-y-auto aso-overflow-x-hidden aso-space-y-1 py-2" v-if="!isNewColor">
+        <div class="aso-h-[70vh] aso-overflow-y-auto aso-overflow-x-hidden aso-space-y-1 aso-translate-y-7" v-if="!isNewColor">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
                 <button v-if="!isFetching" :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newColor">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,7 +152,7 @@
             </div>
         </div>
         </div>
-        <div class="aso-space-y-2 aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden" v-if="isNewColor">
+        <div class="aso-space-y-2 aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden aso-translate-y-7" v-if="isNewColor">
                 
             <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB] aso-sticky-top-0">
                 {{isEdit ? 'Edit Color':'Add news colors'}}

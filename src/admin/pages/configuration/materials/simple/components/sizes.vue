@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-if="!isNewSize">
+        <div class="aso-space-y-1 aso-translate-y-7" v-if="!isNewSize">
             <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
                 
                 <button v-if="!isFetching" :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newSize">
@@ -96,7 +96,7 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-2" v-if="!isFetching && !isNewSize">
+        <div class="aso-space-y-2 aso-translate-y-7" v-if="!isFetching && !isNewSize">
             <div class="aso-bg-[#F8F9FB] aso-py-4 aso-px-8">
                 <div class="aso-flex aso-w-1/2 aso-text-[16px]">
                     <label for="" class="aso-text-[14px] aso-font-bold">Thickness</label>
@@ -195,7 +195,7 @@
                 </div>
             </div>
         </div>
-        <div class="aso-space-y-2" v-if="isNewSize">
+        <div class="aso-space-y-2 aso-translate-y-8" v-if="isNewSize">
             <div class="aso-bg-[#F8F9FB] aso-space-y-6 aso-px-4 aso-py-8">
                 <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-8">
                     <div class="aso-flex aso-justify-between">
