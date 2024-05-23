@@ -1578,7 +1578,7 @@
                     <p :class="`aso-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
                 </div>
 
-                <div v-if="(!configDoublePart.active && configData.texts.length > 0) || (configDoublePart.active && (configData.texts.face1.length > 0 || configData.texts.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                <div v-if="(!configDoublePart.active && configData.texts.value.length > 0) || (configDoublePart.active && (configData.texts.value.face1.length > 0 || configData.texts.value.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textOptionText}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
@@ -1610,7 +1610,7 @@
                     </div>
                 </div>
 
-                <div v-if="(!configDoublePart.active && configData.images.length > 0) || (configDoublePart.active && (configData.images.face1.length > 0 || configData.images.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                <div v-if="(!configDoublePart.active && configData.images.value.length > 0) || (configDoublePart.active && (configData.images.value.face1.length > 0 || configData.images.value.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3 aso-text-[#000000]`">
                         <p v-if="props.config.data.settings.languageImages.visualizer.textImage" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textImage}}</p>
                         <p v-if="!props.config.data.settings.languageImages.visualizer.textImage" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
