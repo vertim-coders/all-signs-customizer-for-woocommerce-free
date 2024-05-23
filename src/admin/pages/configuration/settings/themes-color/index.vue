@@ -42,6 +42,47 @@
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
+                <h3 class="aso-text-[16px]">Content Canvas</h3>
+                <div class="aso-flex aso-justify-between">
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.canvasBackgroundColor"
+                                @input="updateCanvasBackgroundColorCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.canvasBackgroundColor"
+                                @input="updateCanvasBackgroundColorCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Border Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.canvasBorderColor"
+                                @input="updateCanvasBorderColorCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.canvasBorderColor"
+                                @input="updateCanvasBorderColorCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <h3 class="aso-text-[16px]">Content Header</h3>
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
@@ -592,6 +633,8 @@ const state = ref('skins');
 const themes = ref({
     skin:"default",
     colors: {
+        canvasBackgroundColor:"#ffffff",
+        canvasBorderColor:"#ffffff",
         textColorContentHeader: "#000000",
         backgroundColorHeader: "#ffffff",
         textColorContentSideMenu: "#000000",
@@ -649,6 +692,18 @@ const updateThemesSettings = async () => {
     }
 };
 
+const updateCanvasBackgroundColorCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.canvasBackgroundColor = event.target.value;
+}
+const updateCanvasBorderColorCodeHex = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.canvasBorderColor = event.target.value;
+}
 const updateTextColorContentHeaderCodeHex = (event) => {
     if(event.target.value[0]!=='#'){
         event.target.value = '#'+ event.target.value;

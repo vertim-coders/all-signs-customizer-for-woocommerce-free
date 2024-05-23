@@ -87,6 +87,10 @@
             <div v-show="!isFetching" class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-py-2 aso-px-4 aso-bg-[#F8F9FB]">
                 <label for="" class="aso-text-[16px] aso-font-semibold">Borders settings</label>
                 <span class="aso-text-[12px] aso-text-[#444444]">Borders colors</span>
+                <div class="aso-flex aso-space-x-2">
+                    <label for="" class="aso-text-[12px] aso-text-[#444444]">Label:</label>
+                    <input type="text" v-model="borders.settings.borderColorsLabel">
+                </div>
                 <div class="aso-grid aso-grid-cols-2 aso-gap-4">
                     <div class="aso-flex aso-justify-start aso-space-x-2" :key="key" v-for="(color,key) in borders.settings.colors">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
@@ -155,6 +159,24 @@
                         <div :class="borders.settings.enableBorderColor ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
                         </label>
                     </div>
+                </div>
+            </div>
+            <div v-show="!isFetching && borders.settings.enableBorderColor" class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-start aso-items-center">
+                <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-flex-col">
+                    <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Custom Color Preview Image</label>
+                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                        <div class="aso-flex aso-space-x-2">
+                            <button @click="selectCustomBorderColorPrevImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">Upload image</button>
+                            <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                <img v-if="borders.settings.customColorsPrevImg != ''" :src="borders.settings.customColorsPrevImg" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                <button v-if="borders.settings.customColorsPrevImg != ''" @click="()=>{borders.settings.customColorsPrevImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>             
                 </div>
             </div>
             <div v-show="!isFetching" class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
@@ -309,9 +331,11 @@ const isNewBorder = ref(false);
 const isLoading = ref(false);
 const borders = ref({
     settings:{
+        borderColorsLabel:"Borders Colors",
         colors:[],
         enableBorderWidth:true,
         enableBorderColor:true,
+        customColorsPrevImg:''
     },
     allBorders:[]
 });
@@ -451,6 +475,33 @@ const selectMaterialBorder = (id,bd,isDeleting=false) => {
         isNewBorder.value = true;
     }
 };
+const selectCustomBorderColorPrevImage = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Custom Border Color Preview Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            borders.value.settings.customColorsPrevImg = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
 
 const addNewColor = ()=> {
     borders.value.settings.colors.push({name:"",codeHex:"#000000",additionalPrice:0,prevImg:""});

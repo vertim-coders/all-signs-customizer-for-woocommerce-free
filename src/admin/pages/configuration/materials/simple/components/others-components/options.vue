@@ -94,7 +94,7 @@
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="router.push('/configs/'+configID+'/materials/'+materialId+'/simple/others-components')">
+                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="router.push('/configs/'+config+'/'+configID+'/materials/'+material+'/'+materialId+'/simple/others-components')">
                         <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
@@ -136,6 +136,20 @@
                         
                     </div>
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                        <label for="" class="aso-font-normal">Example Image</label>
+                        <div class="aso-flex aso-space-x-2">
+                            <button @click="selectOptionsPopImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload Image</button>
+                            <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                    <img v-if="option.popImg != ''" :src="option.popImg" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="option.popImg != ''" @click="()=>{option.popImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                    <!-- <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Background / image</label>
                         <div class="aso-flex aso-space-x-2">
                             <button @click="selectOptionsBackgroundImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload Image</button>
@@ -148,7 +162,7 @@
                                     </button>
                                 </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
                     <label for="" class="aso-text-[16px] aso-font-normal">Exclude Material Colors</label>
@@ -246,7 +260,9 @@ import toastMessage from "@/admin/utils/functions";
 
 const route = useRoute()
 const configID = ref(route.params.configId);
+const config = route.params.config;
 const materialId = ref(route.params.materialId);
+const material = route.params.material;
 const additionalOptionId = ref(route.params.additionalOptionID);
 
 const isFetching = ref(false);
@@ -267,6 +283,7 @@ const option = ref({
     description:"",
     icon:"",
     image:"",
+    popImg:"",
     excludeColors:[],
     isDefault:false,
     additionalPrice:0,
@@ -331,6 +348,7 @@ const addMaterialOption = async () => {
                 description:"",
                 icon:"",
                 image:"",
+                popImg:"",
                 excludeColors:[],
                 isDefault:false,
                 additionalPrice:0,
@@ -345,6 +363,7 @@ const addMaterialOption = async () => {
                 description:"",
                 icon:"",
                 image:"",
+                popImg:"",
                 excludeColors:[],
                 isDefault:false,
                 additionalPrice:0,
@@ -377,6 +396,7 @@ const updateMaterialOption = async () => {
                 description:"",
                 icon:"",
                 image:"",
+                popImg:"",
                 excludeColors:[],
                 isDefault:false,
                 additionalPrice:0,
@@ -392,6 +412,7 @@ const updateMaterialOption = async () => {
                 description:"",
                 icon:"",
                 image:"",
+                popImg:"",
                 excludeColors:[],
                 isDefault:false,
                 additionalPrice:0,
@@ -417,6 +438,7 @@ const deleteOption = async () => {
             description:"",
             icon:"",
             image:"",
+            popImg:"",
             excludeColors:[],
             isDefault:false,
             additionalPrice:0,
@@ -432,6 +454,7 @@ const deleteOption = async () => {
             description:"",
             icon:"",
             image:"",
+            popImg:"",
             excludeColors:[],
             isDefault:false,
             additionalPrice:0,
@@ -453,6 +476,7 @@ const back = () => {
         description:"",
         icon:"",
         image:"",
+        popImg:"",
         excludeColors:[],
         isDefault:false,
         additionalPrice:0,
@@ -483,6 +507,33 @@ const selectOptionsIcon = async(e) => {
                         attachment = attachment.toJSON();
                         if (attachment.type == "image") {
                             option.value.icon = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const selectOptionsPopImage = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Options Example image",
+            button: {
+                text: "Select Example image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            option.value.popImg = (attachment.url);
                         }
                     }
                 );

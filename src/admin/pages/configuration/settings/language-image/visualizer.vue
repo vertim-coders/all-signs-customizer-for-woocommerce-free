@@ -14,6 +14,16 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Additonals Options Header</label>
+                    <input type="text" v-model="visualizer.textAdditonnalOptionsHeader" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Additonals Options Button Text</label>
+                    <input type="text" v-model="visualizer.textButtonAdditonnalOptions" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Text button back</label>
                     <input type="text" v-model="visualizer.textButtonBack" class="aso-w-full"/>
                 </div>
@@ -91,6 +101,46 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Width</label>
+                    <input type="text" v-model="visualizer.textWidth" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Text Height</label>
+                    <input type="text" v-model="visualizer.textHeight" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Position</label>
+                    <input type="text" v-model="visualizer.textPosition" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Text Angle</label>
+                    <input type="text" v-model="visualizer.textAngle" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Top</label>
+                    <input type="text" v-model="visualizer.textTop" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Text Bottom</label>
+                    <input type="text" v-model="visualizer.textBottom" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Left</label>
+                    <input type="text" v-model="visualizer.textLeft" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Text Right</label>
+                    <input type="text" v-model="visualizer.textRight" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="aso-text-[12px] aso-text-[#444444]">Label of Custom Size</label>
                     <input type="text" v-model="visualizer.customSize" class="aso-w-full"/>
                 </div>
@@ -142,6 +192,12 @@
                     <input type="text" v-model="visualizer.textImage" class="aso-w-full"/>
                 </div>
             </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Text Example</label>
+                    <input type="text" v-model="visualizer.textExample" class="aso-w-full"/>
+                </div>
+            </div>
         </div>
         <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
             <div class="aso-bg-[#016464] aso-rounded">
@@ -168,6 +224,8 @@ const configId = ref(route.params.configId);
 const visualizer = ref({
     titleHeader:"Plastic Signs",
     textButtonRefresh:"Restart all",
+    textButtonAdditonnalOptions:"Additionals",
+    textAdditonnalOptionsHeader:"Additionals Options",
     textButtonBack:"Undo",
     textButtonNext:"Redo",
     textBeforePrice:"",
@@ -182,6 +240,14 @@ const visualizer = ref({
     textHelp:"Help",
     textMaterial:"Material",
     textSize:"Size",
+    textPosition:"Position",
+    textAngle:"Angle",
+    textWidth:"Width",
+    textHeight:"Height",
+    textRight:"Right",
+    textLeft:"Left",
+    textTop:"Top",
+    textBottom:"Bottom",
     customSize:"Custom Size",
     customSizeButtonDone:"Done",
     thickness:"Thickness",
@@ -192,6 +258,7 @@ const visualizer = ref({
     textBorder:"Border",
     textProduct:"Product",
     textImage:"Image",
+    textExample:"example",
 });
 
 
