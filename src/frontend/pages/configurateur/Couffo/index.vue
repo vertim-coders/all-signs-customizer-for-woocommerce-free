@@ -14,7 +14,7 @@
                         <div class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[65%] aso-animate-pulse"></div>
                     </div>
                     
-                    <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-text-base lg:aso-text-2xl aso-font-bold aso-text-center">
+                    <div @click="centerSign(canvas)" v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-justify-center aso-text-base lg:aso-text-2xl aso-font-bold aso-text-center">
                         {{props.config.name}}
                     </div>
     
@@ -173,7 +173,7 @@
                                     <path d="M8.25 20C8.25 20.1326 8.30268 20.2598 8.39645 20.3536C8.49021 20.4473 8.61739 20.5 8.75 20.5H15.25C15.3826 20.5 15.5098 20.4473 15.6036 20.3536C15.6973 20.2598 15.75 20.1326 15.75 20V15C15.75 14.9337 15.7237 14.8701 15.6768 14.8232C15.6299 14.7763 15.5663 14.75 15.5 14.75H8.5C8.4337 14.75 8.37011 14.7763 8.32322 14.8232C8.27634 14.8701 8.25 14.9337 8.25 15V20ZM15.25 4.5C15.25 4.36739 15.1973 4.24021 15.1036 4.14645C15.0098 4.05268 14.8826 4 14.75 4H9.25C9.11739 4 8.99021 4.05268 8.89645 4.14645C8.80268 4.24021 8.75 4.36739 8.75 4.5V7.6C8.75 7.738 8.862 7.85 9 7.85H15C15.0663 7.85 15.1299 7.82366 15.1768 7.77678C15.2237 7.72989 15.25 7.6663 15.25 7.6V4.5Z" fill="currentColor"/>
                                 </svg>
                             </span>
-                            <span class="aso-flex">
+                            <span @click="centerSign()" class="aso-flex">
                                 <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                     <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
@@ -838,17 +838,17 @@
                                     <div v-if="configTextSettings.enableTextAlignment" :class="`${!configTextFontSettings.active ? `aso-w-full` : `aso-w-[45%]`} aso-space-y-2`">
                                         <p class="aso-font-medium">Text alignment</p>
                                         <div class="aso-flex aso-w-full">
-                                            <span @click="changeTextAlign('left')" :class="`${selectedText.align == 'left' ? `aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}]` : 'aso-bg-white aso-text-black'} hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
+                                            <span @click="changeTextAlign('left')" :class="`${selectedText.align === 'left' ? `aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}]` : 'aso-bg-white aso-text-black'} hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
                                                 </svg>
                                             </span>
-                                            <span @click="changeTextAlign('center')" :class="`${selectedText.align == 'center' ? `aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}]` : 'aso-bg-white aso-text-black'} hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
+                                            <span @click="changeTextAlign('center')" :class="`${selectedText.align === 'center' ? `aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}]` : 'aso-bg-white aso-text-black'} hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                                 </svg>
                                             </span>
-                                            <span @click="changeTextAlign('right')" :class="`${selectedText.align == 'right' ? `aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}]` : 'aso-bg-white aso-text-black'} hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
+                                            <span @click="changeTextAlign('right')" :class="`${selectedText.align === 'right' ? `aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}]` : 'aso-bg-white aso-text-black'} hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-w-1/3 aso-flex aso-full-center aso-p-1 aso-border aso-base-animation`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
                                                 </svg>
@@ -868,7 +868,7 @@
                                     <p class="aso-font-medium">Color</p>
                                     <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
                                         <div v-for="(color, index) in configTextSettings.colors" class="">
-                                            <div @click="changeTextColor(color.codeHex)" :class="`aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
+                                            <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
                                         </div>
     
                                         <div :class="`aso-relative`">
@@ -932,14 +932,14 @@
                                                 <p class="aso-text-xs aso-font-semibold">Italic</p>
                                             </span>
     
-                                            <span v-if="configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
+                                            <span v-if="configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.underline == true ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M7 5V10C7 11.3261 7.52678 12.5979 8.46447 13.5355C9.40215 14.4732 10.6739 15 12 15C13.3261 15 14.5979 14.4732 15.5355 13.5355C16.4732 12.5979 17 11.3261 17 10V5M5 19H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
                                                 <p class="aso-text-xs aso-font-semibold">Underline</p>
                                             </span>
     
-                                            <span v-if="configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
+                                            <span v-if="configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.linethrough == true ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M7 8V13M7 13C7 14.3261 7.52678 15.5979 8.46447 16.5355C9.40215 17.4732 10.6739 18 12 18C13.3261 18 14.5979 17.4732 15.5355 16.5355C16.4732 15.5979 17 14.3261 17 13M7 13H17M17 13V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="currentColor"/>
@@ -947,7 +947,7 @@
                                                 <p class="aso-text-xs aso-font-semibold">Crossline</p>
                                             </span>
     
-                                            <span v-if="configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.style == 'italic' ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
+                                            <span v-if="configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.overline == true ? `aso-text-[${configColors.backgroundColorHeader}]` : ''} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.backgroundColorHeader}] aso-cursor-pointer`">
                                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
                                                     <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </svg>
@@ -1717,6 +1717,7 @@
         handleGetCharPrice,
         handleSetPrice,
         handleClipAddedObject,
+        handleGetNewPosition
     } from '@/frontend/utils/aso-editor-script.js';
     import { formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
 
@@ -1930,7 +1931,7 @@
 
         configAdditionnalOptions.value = props.config.data.additionalOptions
         
-        console.log(configTextFontSettings.value, "configTextFontSettings")
+        console.log(configColors.value, "configTextFontSettings")
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
@@ -1940,6 +1941,7 @@
         // console.log(configImageSettings.value)
 
         handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
+        fontFamSelected.value = (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial')
         configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
         
 
@@ -2146,19 +2148,22 @@
             activeCanvas = canvas
 
             checkScreenSize();
+            // centerSign(canvas)
+            // centerSign(canvasBack)
             // window.addEventListener('resize', checkScreenSize);
 
             let resizeTimer;
-
+            window.addEventListener('load', () => {
+                checkScreenSize()
+                // centerSign(canvas)
+                // centerSign(canvasBack)
+            });
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
-                    // Code à exécuter après le redimensionnement
-                    // const newWidth = window.innerWidth;
-                    // const newHeight = window.innerHeight;
-                    // console.log('Nouvelles dimensions :', newWidth, newHeight);
                     checkScreenSize()
-
+                    // centerSign(canvas)
+                    // centerSign(canvasBack)
                 }, 250); // Délai de 250 millisecondes
             });
             
@@ -2593,6 +2598,11 @@
             previousStep()
             addedTexts.value = options.texts
             usedImages.value = options.images
+        //     centerSign(canvas)
+        // centerSign(canvasBack)
+        //         handleReadyToSaveState(false);
+        // currentSizeValues.value = handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeData.value.name, currentSizeSetting.value.maxTextChar)
+        // handleReadyToSaveState(true);
 
         }
         
@@ -2602,6 +2612,11 @@
         nextStep()
         addedTexts.value = options.texts
         usedImages.value = options.images
+        // centerSign(canvas)
+        // centerSign(canvasBack)
+        //         handleReadyToSaveState(false);
+        // currentSizeValues.value = handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeData.value.name, currentSizeSetting.value.maxTextChar)
+        // handleReadyToSaveState(true);
     }
     var resetAllBool = ref(false)
     function confirmResetAll(value){
@@ -3026,11 +3041,6 @@
         let windowRatio = canvasWidth / canvasHeight;
         let targetRatio = 16/9;
 
-        canvas.setWidth(canvasWidth);
-        canvas.setHeight(canvasHeight);
-
-        canvasBack.setWidth(canvasWidth);
-        canvasBack.setHeight(canvasHeight);
 
         let scaleRatio;
         if (windowRatio > targetRatio) {
@@ -3039,9 +3049,9 @@
             var wValue = handleGetObjectByName('width-value')
             var tValue = handleGetObjectByName('thickness-value')
             var fontSize = (hValue.fontSize / targetRatio) + 10
-            hValue.fontSize = fontSize
-            wValue.fontSize = fontSize
-            tValue.fontSize = fontSize
+            // hValue.fontSize = fontSize
+            // wValue.fontSize = fontSize
+            // tValue.fontSize = fontSize
             // console.log("==1==", scaleRatio, "==1==")
         } else {
             scaleRatio = canvasWidth / (canvasHeight * targetRatio) - 0.15;
@@ -3049,41 +3059,117 @@
             var wValue = handleGetObjectByName('width-value')
             var tValue = handleGetObjectByName('thickness-value')
             var fontSize = (hValue.fontSize * targetRatio) + 10
-            hValue.fontSize = fontSize
-            wValue.fontSize = fontSize
-            tValue.fontSize = fontSize
+            // hValue.fontSize = fontSize
+            // wValue.fontSize = fontSize
+            // tValue.fontSize = fontSize
             // console.log("==2==", scaleRatio, "==2==")
         }
-            console.log("====", scaleRatio, "====")
+            // console.log("====", scaleRatio, "====")
 
-        canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
+        canvas.zoomToPoint({x: canvas.getWidth() /2, y: canvas.getHeight() /2}, scaleRatio)
         canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
 
+        // ajustCanvasContent(canvas)
+        // ajustCanvasContent(canvasBack)
         
+        canvas.setWidth(canvasWidth);
+        canvas.setHeight(canvasHeight);
+        
+        canvasBack.setWidth(canvasWidth);
+        canvasBack.setHeight(canvasHeight);
+        
+        centerSign(canvas)
+        centerSign(canvasBack)
+        // function ajustCanvasContent(canva){
+        //     var group = new fabric.Group(canva.getObjects())
+            
+        //     var canvasCenter = getCanvasCenter()
+        //     // canva.centerObject(group);
+        //     group.set('left', canvasCenter.x)
+        //     group.set('top', canvasCenter.y)
+            
+
+        //     var items = group._objects;
+        //     group._restoreObjectsState();
+        //     canva.remove(group);
+        //     canva.getObjects().forEach((obj) => {
+        //         obj.setCoords()
+        //         if(obj.name === 'safeObject'){
+        //             // console.log(obj.left, obj.top, "safeObject is safe")
+        //             if(firstLoad){
+        //                 currentSizeValues.value.left = obj.left 
+        //                 currentSizeValues.value.top = obj.top
+        //             }
+        //         }
+        //     })
+        //     canva.renderAll();
+        // }
 
 
-        ajustCanvasContent(canvas)
-        ajustCanvasContent(canvasBack)
+        handleReadyToSaveState(false);
+        currentSizeValues.value = handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeData.value.name, currentSizeSetting.value.maxTextChar)
+        handleReadyToSaveState(true);
+    }
+    function getCanvasCenter() {
+        const canvasWidth = canvas.getWidth();
+        const canvasHeight = canvas.getHeight();
+        const viewportTransform = canvas.viewportTransform;
 
-        function ajustCanvasContent(canva){
-            var group = new fabric.Group(canva.getObjects())
-            canva.centerObject(group);
-            var items = group._objects;
+        // Coordonnées du centre du canvas avant la transformation de viewport
+        const untransformedCenter = {
+            x: canvasWidth / 2,
+            y: canvasHeight / 2
+        };
+
+        // Appliquer la transformation de viewport inverse aux coordonnées du centre
+        const invertedTransform = fabric.util.invertTransform(viewportTransform);
+        const transformedCenter = fabric.util.transformPoint(untransformedCenter, invertedTransform);
+
+        return transformedCenter;
+    }
+    function centerSign(canva){
+        // console.log(canva, "center")
+        var sign = handleGetObjectByName('safeObject')
+        var canvasCenter = getCanvasCenter()
+
+        const allObjects = canvas.getObjects();
+
+        if (allObjects.length > 0) {
+            const group = new fabric.Group(allObjects);
+            canva.discardActiveObject();
+
+            // Centrer le groupe
+            group.set('left', canvasCenter.x - group.width/2)
+            group.set('top', canvasCenter.y - group.height/2)
+
+            group.setCoords();
+
+            currentSizeValues.value.left = canvasCenter.x - group.width/2
+            currentSizeValues.value.top = canvasCenter.y - group.height/2
+            handleGetNewPosition(canvasCenter.x - group.width/2, canvasCenter.y - group.height/2)
+
+
+            // Dégrouper les objets
             group._restoreObjectsState();
             canva.remove(group);
             canva.getObjects().forEach((obj) => {
-                obj.setCoords()
-                if(obj.name === 'safeObject'){
-                    // console.log(obj.left, obj.top, "safeObject is safe")
+                if(obj.name === 'aso-signText'){
                     if(firstLoad){
-                        currentSizeValues.value.left = obj.left 
-                        currentSizeValues.value.top = obj.top
+                        // obj.left = obj.left*obj.scaleX
+                        // obj.top = obj.top*obj.scaleY
                     }
                 }
+                obj.setCoords()
             })
-            canva.renderAll();
         }
+        // sign.set('left', canvasCenter.x - sign.width/2)
+        // sign.set('top', canvasCenter.y - sign.height/2)
+
+        // sign.setCoords();
+
+        canva.renderAll()
     }
+    
 
     var angleActive = ref(false)
     function showObjectValues(){
@@ -3717,6 +3803,13 @@
         if(firstSetLoad.value){
             saveStep('select size')
         }
+
+        // let timer;
+        // clearTimeout(timer);
+        // timer = setTimeout(() => {
+        //     centerSign(canvas)
+        //     centerSign(canvasBack)
+        // }, 50);
     }
     var currentThickValue = ref(0)
     function selectSizeThickness(thick){
@@ -3786,6 +3879,7 @@
         if(firstSetLoad.value){
             saveStep('select shape')
         }
+        
     }
 
     var firstBorderCheck = ref(true)
@@ -4308,6 +4402,13 @@
         if(firstSetLoad.value){
             saveStep('slect fixingMethode')
         }
+
+        // let timer;
+        // clearTimeout(timer);
+        // timer = setTimeout(() => {
+        //     centerSign(canvas)
+        //     centerSign(canvasBack)
+        // }, 150);
     }
 
     var additionalComponents = ref({})
@@ -4425,45 +4526,7 @@
     }
 
 
-    var textNumberForSize = ref(0)
-    var addedTexts = ref([])
-    function addTextToSign(){
-        addedTexts.value =  handleAddTextToSign()
-        if(addedTexts.value.length > 0){
-            var index = addedTexts.value.length - 1
-            getTextObject(addedTexts.value[index], false)
-        }
-        textsPrices.value = handleSetPrice()
-        var priceObject = {
-            name: 'none',
-            price: 0
-        }
-        getOptionPrice(priceObject)
-        if(firstSetLoad.value){
-            saveStep('add text to sign')
-        }
-    }
-    function getTextObject(object, setActive) {
-        if(activeFace.value == object.canvasName){
-            selectText.value = true
-            object.selected = true;
-    
-            selectedText.value.value = object.text
-            
-            activeCanvas.getObjects().forEach(function(obj){
-                if(object.id === obj.id){
-                    if(setActive){
-                        activeCanvas.setActiveObject(obj);
-                    }
-                    handleGetAddedTextValues(obj)
-                }
-            })
-            activeCanvas.requestRenderAll();
-        }
-    }
-    function changeText(){
-        selectText.value = false
-    }
+
 
     var allClipart = ref({})
     var currentClipart = ref({})
@@ -4567,6 +4630,7 @@
     var editAction = ref(false)
     var selectedText = ref({
         object: {},
+        color: '',
         width: '',
         height: '',
         left: '',
@@ -4579,22 +4643,63 @@
         size: '',
         weight: 'normal',
         style: '',
+        underline: false,
+        linethrough: false,
+        overline: false,
     })
-    var selectedImage = ref({
-        object: {},
-        width: '',
-        height: '',
-        left: '',
-        right: '',
-        top: '',
-        bottom: '',
-        angle: 0,
-    })
+    // function editText(eventData, transform){
+    //     editAction.value = true
+    //     var target = transform.target;
+	// 	var canvas = target.canvas;
+    // }
 
-    function editText(eventData, transform){
-        editAction.value = true
-        var target = transform.target;
-		var canvas = target.canvas;
+    var textNumberForSize = ref(0)
+    var addedTexts = ref([])
+    function addTextToSign(){
+        addedTexts.value =  handleAddTextToSign()
+        if(addedTexts.value.length > 0){
+            var index = addedTexts.value.length - 1
+            getTextObject(addedTexts.value[index], false)
+        }
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        getOptionPrice(priceObject)
+        if(firstSetLoad.value){
+            saveStep('add text to sign')
+        }
+    }
+    function getTextObject(object, setActive) {
+        if(activeFace.value == object.canvasName){
+            selectText.value = true
+            object.selected = true;
+    
+            selectedText.value.value = object.text
+            
+            activeCanvas.getObjects().forEach(function(obj){
+                if(object.id === obj.id){
+                    if(setActive){
+                        activeCanvas.setActiveObject(obj);
+                    }
+                    handleGetAddedTextValues(obj)
+                    selectedText.value.object = obj
+                    selectedText.value.color = obj.fill
+                    fontFamSelected.value = obj.fontFamily
+                    selectedText.value.weight = obj.fontWeight
+                    selectedText.value.align = obj.textAlign
+                    selectedText.value.style = obj.fontStyle
+                    selectedText.value.underline = obj.underline
+                    selectedText.value.linethrough = obj.linethrough
+                    selectedText.value.overline = obj.overline
+                }
+            })
+            activeCanvas.requestRenderAll();
+        }
+    }
+    function changeText(){
+        selectText.value = false
     }
 
     function changeTextValue(event){
@@ -4609,13 +4714,13 @@
     }
     function changeTextWeight(){
         var weight = handleChangeTextWeight()
-        selectedText.weight = weight
+        selectedText.value.weight = weight
     }
     function changeTextAlign(align){
-        selectedText.align = handleChangeTextAlign(align)
+        selectedText.value.align = handleChangeTextAlign(align)
     }
     function changeTextStyle(){
-        handleChangeTextStyle()
+        selectedText.value.style = handleChangeTextStyle()
     }
     function changeTextSize(size, min, max){
         handleChangeTextSize(parseInt(size), min, max)
@@ -4628,16 +4733,16 @@
     }
     var customTextColor = ref("#000000")
     function changeTextColor(color){
-        handleChangeTextColor(color)
+        selectedText.value.color = handleChangeTextColor(color)
     }
     function underlineText(){
-        handleUnderlineText()
+        selectedText.value.underline = handleUnderlineText()
     }
     function crossText(){
-        handleCrossText()
+        selectedText.value.linethrough = handleCrossText()
     }
     function overlineText(){
-        handleOverlineText()
+        selectedText.value.overline = handleOverlineText()
     }
 
 
@@ -4645,6 +4750,16 @@
 
     }
 
+    var selectedImage = ref({
+        object: {},
+        width: '',
+        height: '',
+        left: '',
+        right: '',
+        top: '',
+        bottom: '',
+        angle: 0,
+    })
     function turnLeftImage(){
         handleTurnImageLeft()
     }
@@ -5071,7 +5186,7 @@
 
 <style scoped>
     #canvaas {
-        /* border: 3px solid green */
+        border: 3px solid green
     }
 
     .flipper {

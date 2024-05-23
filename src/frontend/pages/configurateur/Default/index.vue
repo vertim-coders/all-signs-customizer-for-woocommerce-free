@@ -1627,7 +1627,7 @@
 </template>
 
 <script setup>
-    import { ref, onMounted, defineProps } from 'vue';
+    import { ref, onMounted, defineProps, onBeforeUnmount } from 'vue';
     import {handleReadyToSaveState, 
         handleGetCanvas, handleGetCurrentUnit, handleUndo,
         handleRedo,
@@ -1911,7 +1911,7 @@
         const canvasElementFace1 = canvasFace1Ref.value
         const canvasElementFace2 = canvasFace2Ref.value
 
-        // document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
 
             var canvasContainer = document.getElementById("aso-canvas-containers")
             var canvasWidth = canvasContainer.clientWidth;
@@ -2105,17 +2105,19 @@
             canvas.on('selection:cleared', closeInfoDiv);
 
             canvas.on('mouse:wheel', function(opt) {
-                var delta = opt.e.deltaY;
-                var zoom = canvas.getZoom();
-                zoom *= 0.999 ** delta;
-                if (zoom > 20) zoom = 20;
-                if (zoom < 0.01) zoom = 0.01;
+                if (opt.e.ctrlKey) { // Vérifier si la touche Ctrl est enfoncée
+                    var delta = opt.e.deltaY;
+                    var zoom = canvas.getZoom();
+                    zoom *= 0.999 ** delta;
+                    if (zoom > 20) zoom = 20;
+                    if (zoom < 0.01) zoom = 0.01;
 
-                // console.log(zoom, "delta");
+                    console.log("delta:", delta, "zoom:", zoom)
 
-                canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-                opt.e.preventDefault();
-                opt.e.stopPropagation();
+                    canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+                    opt.e.preventDefault();
+                    opt.e.stopPropagation();
+                }
             });
 
 
@@ -2163,24 +2165,34 @@
             // resizeCanvas();
             checkScreenSize();
 
-            // let resizeTimer;
-
-            // window.addEventListener('resize', () => {
-            //     clearTimeout(resizeTimer);
-            //     resizeTimer = setTimeout(() => {
-            //         // Code à exécuter après le redimensionnement
-            //         const newWidth = window.innerWidth;
-            //         const newHeight = window.innerHeight;
-            //         console.log('Nouvelles dimensions :', newWidth, newHeight);
-            //         resizeCanvas('up')
-            //         // Ajoutez ici votre code de redimensionnement
-            //     }, 250); // Délai de 250 millisecondes
-            // });
-
-            window.addEventListener('load', resizeCanvas);
-            window.addEventListener('resize', checkScreenSize);
+            window.addEventListener('load', onWindowResize());
+            // window.addEventListener('load', zoomIng());
+            // window.addEventListener('load', checkScreenSize);
+            let resizeTimer;
             
-        // });
+
+            var canvasContainer = document.getElementById("aso-canvas-containers")
+            previousWidth = canvasContainer.clientWidth;
+            previousHeight = canvasContainer.clientHeight;
+
+
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    // Code à exécuter après le redimensionnement
+                    // const newWidth = window.innerWidth;
+                    // const newHeight = window.innerHeight;
+                    // console.log('Nouvelles dimensions :', newWidth, newHeight);
+                    
+                    // checkScreenSize()
+                    // resizeCanvas()
+                    // zoomIng()
+
+                }, 250); // Délai de 250 millisecondes
+                onWindowResize()
+            });
+            
+        });
         
         if(window.innerWidth < 688){
             showOption.value = true
@@ -2196,25 +2208,55 @@
         }
         
     });
-    let largeurPrecedente = window.innerWidth;
-    let hauteurPrecedente = window.innerHeight;
+    onBeforeUnmount(() => {
+        window.removeEventListener('resize', onWindowResize);
+    });
+
+    let previousWidth = 0;
+    let previousHeight = 0;
+    
+    function onWindowResize() {
+        var canvasContainer = document.getElementById("aso-canvas-containers")
+        const currentWidth = canvasContainer.clientWidth;
+        const currentHeight = canvasContainer.clientHeight;
+
+        if (currentWidth > previousWidth || currentHeight > previousHeight) {
+            console.log('La fenêtre a augmenté de taille.');
+            resizeCanvas('up')
+        } else if (currentWidth < previousWidth || currentHeight < previousHeight) {
+            console.log('La fenêtre a diminué de taille.');
+            resizeCanvas('down')
+        }
+
+        previousWidth = currentWidth;
+        previousHeight = currentHeight;
+    };
 
     function resizeCanvas(statut) {
         var canvasContainer = document.getElementById("aso-canvas-containers")
-        var canvasWidth = canvasContainer.clientWidth;
-        var canvasHeight = canvasContainer.clientHeight;
+        var width = canvasContainer.clientWidth;
+        var height = canvasContainer.clientHeight;
 
-        const targetRatio = canvasWidth / canvasHeight;
-        const currentRatio = canvas.getWidth() / canvas.getHeight();
-        
-        const scale = canvasWidth / canvas.getWidth();
-        const zoom  = canvas.getZoom() * scale;
+        canvas.setWidth(width);
+        canvas.setHeight(height);
 
-        // canvas.setViewportTransform([zoom, 0, 0, zoom, 0, 0])
-        canvas.zoomToPoint({ x: canvas.getWidth() / 2, y: canvas.getHeight() / 2 }, zoom);        
+        var delta = 1
 
-        canvas.setWidth(canvasWidth);
-        canvas.setHeight(canvasHeight);
+        if(statut === 'up'){
+            delta = -1
+        }else{
+            delta = 1
+        }
+
+        var zoom = canvas.getZoom();
+        zoom *= 0.99 ** delta;
+        if (zoom > 20) zoom = 20;
+        if (zoom < 0.01) zoom = 0.01;
+        console.log("delta:", delta, "zoom:", zoom)
+
+
+        canvas.zoomToPoint({ x: canvas.getWidth() / 2, y: canvas.getHeight() /2 }, zoom);
+
 
     }
 
@@ -3065,6 +3107,7 @@
         let windowRatio = canvasWidth / canvasHeight;
         let targetRatio = 16/9;
 
+
         let scaleRatio;
         if (windowRatio > targetRatio) {
             scaleRatio = canvasHeight / (canvasWidth / targetRatio);
@@ -3072,9 +3115,9 @@
             var wValue = handleGetObjectByName('width-value')
             var tValue = handleGetObjectByName('thickness-value')
             var fontSize = (hValue.fontSize / targetRatio) + 10
-            hValue.fontSize = fontSize
-            wValue.fontSize = fontSize
-            tValue.fontSize = fontSize
+            // hValue.fontSize = fontSize
+            // wValue.fontSize = fontSize
+            // tValue.fontSize = fontSize
             // console.log("==1==", scaleRatio, "==1==")
         } else {
             scaleRatio = canvasWidth / (canvasHeight * targetRatio) - 0.15;
@@ -3082,43 +3125,114 @@
             var wValue = handleGetObjectByName('width-value')
             var tValue = handleGetObjectByName('thickness-value')
             var fontSize = (hValue.fontSize * targetRatio) + 10
-            hValue.fontSize = fontSize
-            wValue.fontSize = fontSize
-            tValue.fontSize = fontSize
+            // hValue.fontSize = fontSize
+            // wValue.fontSize = fontSize
+            // tValue.fontSize = fontSize
             // console.log("==2==", scaleRatio, "==2==")
         }
+            // console.log("====", scaleRatio, "====")
 
-        canvas.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
+        canvas.zoomToPoint({x: canvas.getWidth() /2, y: canvas.getHeight() /2}, scaleRatio)
         canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
 
-        ajustCanvasContent(canvas)
-        ajustCanvasContent(canvasBack)
-        
+        // ajustCanvasContent(canvas)
+        // ajustCanvasContent(canvasBack)
+
         canvas.setWidth(canvasWidth);
         canvas.setHeight(canvasHeight);
 
         canvasBack.setWidth(canvasWidth);
         canvasBack.setHeight(canvasHeight);
 
-        function ajustCanvasContent(canva){
-            var group = new fabric.Group(canva.getObjects())
-            canva.centerObject(group);
-            var items = group._objects;
+        // function ajustCanvasContent(canva){
+        //     var group = new fabric.Group(canva.getObjects())
+            
+        //     var canvasCenter = getCanvasCenter()
+        //     // canva.centerObject(group);
+        //     group.set('left', canvasCenter.x)
+        //     group.set('top', canvasCenter.y)
+            
+
+        //     var items = group._objects;
+        //     group._restoreObjectsState();
+        //     canva.remove(group);
+        //     canva.getObjects().forEach((obj) => {
+        //         obj.setCoords()
+        //         if(obj.name === 'safeObject'){
+        //             // console.log(obj.left, obj.top, "safeObject is safe")
+        //             if(firstLoad){
+        //                 currentSizeValues.value.left = obj.left 
+        //                 currentSizeValues.value.top = obj.top
+        //             }
+        //         }
+        //     })
+        //     canva.renderAll();
+        // }
+    }
+    function getCanvasCenter() {
+        const canvasWidth = canvas.getWidth();
+        const canvasHeight = canvas.getHeight();
+        const viewportTransform = canvas.viewportTransform;
+
+        // Coordonnées du centre du canvas avant la transformation de viewport
+        const untransformedCenter = {
+            x: canvasWidth / 2,
+            y: canvasHeight / 2
+        };
+
+        // Appliquer la transformation de viewport inverse aux coordonnées du centre
+        const invertedTransform = fabric.util.invertTransform(viewportTransform);
+        const transformedCenter = fabric.util.transformPoint(untransformedCenter, invertedTransform);
+
+        return transformedCenter;
+    }
+
+    function centerSign(canva){
+        // console.log(canva, "center")
+        var sign = handleGetObjectByName('safeObject')
+        var canvasCenter = getCanvasCenter()
+
+        const allObjects = canvas.getObjects();
+
+        if (allObjects.length > 0) {
+            const group = new fabric.Group(allObjects);
+            canva.discardActiveObject();
+            // canvas.setActiveObject(group);
+
+            // Centrer le groupe
+            group.set('left', canvasCenter.x - group.width/2)
+            group.set('top', canvasCenter.y - group.height/2)
+
+            group.setCoords();
+
+            currentSizeValues.value.left = canvasCenter.x - group.width/2
+            currentSizeValues.value.top = canvasCenter.y - group.height/2
+            handleGetNewPosition(canvasCenter.x - group.width/2, canvasCenter.y - group.height/2)
+
+
+            // Dégrouper les objets
             group._restoreObjectsState();
             canva.remove(group);
             canva.getObjects().forEach((obj) => {
-                obj.setCoords()
                 if(obj.name === 'safeObject'){
-                    // console.log(obj.left, obj.top, "safeObject is safe")
                     if(firstLoad){
+                        console.log(obj.left, obj.top, "safeObject is safe")
                         currentSizeValues.value.left = obj.left 
                         currentSizeValues.value.top = obj.top
+                        // handleGetNewPosition(obj.left,obj.top)
                     }
                 }
+                obj.setCoords()
             })
-            canva.renderAll();
         }
+        // sign.set('left', canvasCenter.x - sign.width/2)
+        // sign.set('top', canvasCenter.y - sign.height/2)
+
+        // sign.setCoords();
+
+        canva.renderAll()
     }
+    
     function updateInfoDiv(obj) {
         var infoDiv = document.getElementById('aso-editButtons');
         if (obj) {
@@ -4942,7 +5056,7 @@
 
 <style scoped>
     #canvaas {
-        /* border: 3px solid green */
+        border: 3px solid green
     }
 
     .flipper {

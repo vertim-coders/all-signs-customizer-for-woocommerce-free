@@ -611,6 +611,8 @@ function handleUndo() {
     backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
 
     console.log(currentConfig.canvasObjects, "UNdo")
+    centerSign(canvas)
+    centerSign(backCanvas)
 
     readyToSave = true
     return {
@@ -727,6 +729,8 @@ function handleRedo() {
     backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
 
     console.log(currentConfig.canvasObjects, "Redo")
+    centerSign(canvas)
+    centerSign(backCanvas)
 
     readyToSave = true
 
@@ -809,7 +813,48 @@ function handleReadyToSaveState(statut, start) {
 }
 
 
+function centerSign(canva){
+    // console.log(canva, "center")
+    var sign = handleGetObjectByName('safeObject')
+    var canvasCenter = getCanvasCenter()
 
+    const allObjects = canvas.getObjects();
+
+    if (allObjects.length > 0) {
+        const group = new fabric.Group(allObjects);
+        canva.discardActiveObject();
+
+        // Centrer le groupe
+        group.set('left', canvasCenter.x - group.width/2)
+        group.set('top', canvasCenter.y - group.height/2)
+
+        group.setCoords();
+
+        // currentSizeValues.value.left = canvasCenter.x - group.width/2
+        // currentSizeValues.value.top = canvasCenter.y - group.height/2
+        handleGetNewPosition(canvasCenter.x - group.width/2, canvasCenter.y - group.height/2)
+
+
+        // Dégrouper les objets
+        group._restoreObjectsState();
+        canva.remove(group);
+        canva.getObjects().forEach((obj) => {
+            if(obj.name === 'aso-signText'){
+                if(firstLoad){
+                    // obj.left = obj.left*obj.scaleX
+                    // obj.top = obj.top*obj.scaleY
+                }
+            }
+            obj.setCoords()
+        })
+    }
+    // sign.set('left', canvasCenter.x - sign.width/2)
+    // sign.set('top', canvasCenter.y - sign.height/2)
+
+    // sign.setCoords();
+
+    canva.renderAll()
+}
 
 
 
@@ -1036,6 +1081,30 @@ var firstLoad = false
 //     console.log(frontTextCharLength, backTextCharLength, "aso-SignText")
 
 // }
+function getCanvasCenter() {
+    const canvasWidth = canvas.getWidth();
+    const canvasHeight = canvas.getHeight();
+    const viewportTransform = canvas.viewportTransform;
+
+    // Coordonnées du centre du canvas avant la transformation de viewport
+    const untransformedCenter = {
+        x: canvasWidth / 2,
+        y: canvasHeight / 2
+    };
+
+    // Appliquer la transformation de viewport inverse aux coordonnées du centre
+    const invertedTransform = fabric.util.invertTransform(viewportTransform);
+    const transformedCenter = fabric.util.transformPoint(untransformedCenter, invertedTransform);
+
+    return transformedCenter;
+}
+var signLeft = 0
+var signTop = 0
+function handleGetNewPosition(left, top){
+    console.log(left + " cwxcwxcwxc " + top )
+    signLeft = left
+    signTop = top
+}
 function handleChangeSize(width, height, name, maxChar) {
     // console.log(maxChar, "aso-SignText")
     
@@ -1069,8 +1138,14 @@ function handleChangeSize(width, height, name, maxChar) {
 
     var newSignWidth = handleMiseAEchelle(width, height).width
     var newSignHeight = handleMiseAEchelle(width, height).height
-    var newRectLeft = (canvas.width /2) -(newSignWidth/2)
-    var newRectTop = (canvas.height/2) - (newSignHeight/2);
+
+    var canvasCenter = getCanvasCenter()
+    // var newRectLeft = signLeft
+    // var newRectTop = signTop;
+    // var newRectLeft = (canvas.width /2) -(newSignWidth/2)
+    // var newRectTop = (canvas.height/2) - (newSignHeight/2);
+    var newRectLeft = canvasCenter.x -(newSignWidth/2)
+    var newRectTop = canvasCenter.y - (newSignHeight/2);
 
     currentTop = newRectTop
     currentLeft = newRectLeft
@@ -1115,7 +1190,7 @@ function handleChangeSize(width, height, name, maxChar) {
             }
             if(object.name == 'thickness-value'){
                 object.left = newRectLeft + (newSignWidth/2) - (object.width/2)
-                object.top = newRectTop + (newSignHeight + 75)
+                object.top = newRectTop + (newSignHeight + 65)
                 object.text = String("Thickness" + ': ' + currentThickness + ' ' + currentUnit)
             }
             if(selectedShape == 'square'){
@@ -1821,6 +1896,8 @@ function handleGetShape(shape, fixing){
     }
 }
 function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
+    var canvasCenter = getCanvasCenter()
+
     selectedShape = shape
 
     function setShape(canvas){
@@ -1830,6 +1907,8 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft){
             if (object.type !== 'line') {
                 var top = nTop;
                 var left = nLeft;
+                // var top = canvasCenter.y - (nwidth/2);
+                // var left = canvasCenter.x - (nheight/2);
                 var width = nwidth;
                 var height = nheight;
                 var objectfill = object.fill;
@@ -4430,6 +4509,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
 //function for get added text value
 var selectedText = {
     object: {},
+    color: '',
     width: '',
     height: '',
     left: '',
@@ -4813,6 +4893,8 @@ function handleChangeTextStyle(){
     }
     activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
+
+    return selectedText.style
 }
 var minTextSize = 0
 var maxTextSize = 0
@@ -4838,9 +4920,12 @@ function handleChangeTextFontFam(font){
 }
 function handleChangeTextColor(color){
     var currentText = selectedText.object;
+    selectedText.color = color
     currentText.set('fill', color)
     activeCanvas.renderAll()
     handleGetAddedTextValues(currentText)
+
+    return selectedText.color
 }
 function handleUnderlineText(color){
     var currentText = selectedText.object;
@@ -4851,6 +4936,8 @@ function handleUnderlineText(color){
     }
     activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
+
+    return selectedText.underline
 }
 function handleCrossText(color){
     var currentText = selectedText.object;
@@ -4861,6 +4948,8 @@ function handleCrossText(color){
     }
     activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
+
+    return selectedText.linethrough 
 }
 function handleOverlineText(color){
     var currentText = selectedText.object;
@@ -4871,6 +4960,8 @@ function handleOverlineText(color){
     }
     activeCanvas.requestRenderAll()
     handleGetAddedTextValues(currentText)
+
+    return selectedText.overline
 }
 
 // fonctions concernant l'ajout d'image sur le canvas
@@ -5299,9 +5390,6 @@ function handleClipAddedObject(canva){
                 absolutePositioned: true,
                 selectable: false,
             });
-            canvas.remove(object)
-            canvas.add(ellipseShape)
-            ellipseShape.sendToBack()
         break;
 
         case 'triangle':
@@ -5537,4 +5625,5 @@ export {
     handleGetCharPrice,
     handleSetPrice,
     handleClipAddedObject,
+    handleGetNewPosition
 }
