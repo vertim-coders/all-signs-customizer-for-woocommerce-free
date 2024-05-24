@@ -1667,8 +1667,11 @@
             </div>
 
             <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
-                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</div>
-                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
+                <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</button>
+                <button :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >
+                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
+                    Add to cart
+                </button>
             </div>
         </div>
 
@@ -1740,7 +1743,7 @@
         handleClipAddedObject,
         handleGetNewPosition
     } from '@/frontend/utils/aso-editor-script.js';
-    import { formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
+    import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
 
     const props = defineProps({
         config:Object,
@@ -5328,6 +5331,23 @@
     var dropdownExample = ref(false);
     function showDropdownExample(){
         dropdownExample.value = !dropdownExample.value
+    }
+
+    const isAddingToCart = ref(false)
+    const addToCart = async ()=>{
+        isAddingToCart.value = true;
+        const cart_data = {
+            recaps:{...configData.value,aso_additional_options:customAdditionalValues.value ,custom_price:finalPrices.value},
+            prevImg:"",
+            variation_id:aso_configurator_data.productID,
+            quantity:1
+        }
+        var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage??false,props.config.data.settings.generals.product.displayRecapsOnCheckout??false);
+
+        if(!add.success){
+            toastMessage(add.message,"error");
+            isAddingToCart.value = false
+        }
     }
 
 </script>

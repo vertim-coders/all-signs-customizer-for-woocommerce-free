@@ -63,7 +63,7 @@ class ASO_Design {
 		} else {
 			$product_id = $values['product_id'];
 		}
-		if ( isset( $values["aso_meta_data"]['aso_preview_img'] ) && !empty( $values["aso_meta_data"]['aso_preview_img'] ) ) {
+		if ( isset( $values['aso_meta_data']["aso_preview_img"] ) && !empty( $values["aso_meta_data"]['aso_preview_img'] ) ) {
 			$product_image_code = "<img class='aso-cartitem-img' src='" . $values["aso_meta_data"]['aso_preview_img'] . "'>";
 		}
 

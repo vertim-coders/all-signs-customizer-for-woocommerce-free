@@ -385,6 +385,7 @@ const selectColorPrevImage = async(e) => {
 const fetchManageFonts = async () => {
     const result = await api.getManagefonts();
     if(!result.message){
+        console.log(result);
         manageFonts.value = result.map((font,id)=>{
             return {name:font.label,value:id};
         });
