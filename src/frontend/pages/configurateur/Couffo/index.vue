@@ -28,7 +28,7 @@
                             <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="aso-w-5 aso-h-5" />                            
                             
                             <div class="aso-hidden lg:aso-flex aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textButtonRefresh}} 
+                                {{configVisualiserTexts.textButtonRefresh}} 
                             </div>
                         </span>
                             
@@ -41,7 +41,7 @@
                                     <!-- <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                             -->
                                 </span>
                                 <div class="aso-hidden lg:aso-flex aso-text-sm">
-                                    {{props.config.data.settings.languageImages.visualizer.textButtonBack}} 
+                                    {{configVisualiserTexts.textButtonBack}} 
                                 </div>
                             </div>
     
@@ -52,7 +52,7 @@
                                     </svg>
                                 </span>
                                 <div class="aso-hidden lg:aso-flex aso-text-sm">
-                                    {{props.config.data.settings.languageImages.visualizer.textButtonNext}} 
+                                    {{configVisualiserTexts.textButtonNext}} 
                                 </div>
                             </div>
                         </div>
@@ -136,10 +136,10 @@
                         <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
                             <div class="aso-space-y-1 aso-text-sm">
                                 <div>
-                                    <span class="aso-font-semibold">Size of object:</span> width: <span id="text-width"></span> - height: <span id="text-height"></span>
+                                    <span class="aso-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span>{{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
                                 </div>
                                 <div>
-                                    <span class="aso-font-semibold">Position of object:</span> left: <span id="text-left"></span>, right: <span id="text-right"></span>, top: <span id="text-top"></span>, bottom: <span id="text-bottom"></span>
+                                    <span class="aso-font-semibold">{{ configVisualiserTexts.textPosition && configVisualiserTexts.textPosition.trim() !== '' ? configVisualiserTexts.textPosition : 'Position' }}:</span> {{ configVisualiserTexts.textLeft && configVisualiserTexts.textLeft.trim() !== '' ? configVisualiserTexts.textLeft : 'Left' }}: <span id="text-left"></span> {{configUnit}}, {{ configVisualiserTexts.textRight && configVisualiserTexts.textRight.trim() !== '' ? configVisualiserTexts.textRight : 'Right' }}: <span id="text-right"></span> {{configUnit}}, {{ configVisualiserTexts.textTop && configVisualiserTexts.textTop.trim() !== '' ? configVisualiserTexts.textTop : 'Top' }}: <span id="text-top"></span> {{configUnit}}, {{ configVisualiserTexts.textBottom && configVisualiserTexts.textBottom.trim() !== '' ? configVisualiserTexts.textBottom : 'Bottom' }}: <span id="text-bottom"></span> {{configUnit}}
                                 </div>
                                 <div v-show="angleActive">
                                     <span class="aso-font-semibold">Angle of object:</span> <span id="text-angle"></span>
@@ -184,19 +184,19 @@
                         <div class="aso-w-2/3 aso-h-full aso-flex aso-justify-end">
                             <div id="aso-price" class="aso-flex aso-full-center aso-space-x-2">
                                 <div class="aso-text-center aso-text-lg aso-font-semibold">
-                                    {{props.config.data.settings.languageImages.visualizer.textBeforePrice}}
+                                    {{configVisualiserTexts.textBeforePrice}}
                                 </div>
                                 <div class="aso-flex aso-text-[#FFBC3C] lg:aso-text-black aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
                                     {{formatPrice(finalPrices)}}
                                 </div>
                                 <div class="aso-text-center aso-text-lg aso-font-semibold">
-                                    {{props.config.data.settings.languageImages.visualizer.textAfterPrice}}
+                                    {{configVisualiserTexts.textAfterPrice}}
                                 </div>
                             </div>
         
                             <div class="aso-w-1/4 aso-h-full aso-flex aso-justify-end">
                                 <div v-show="!isLoaded" @click="finishConfig()" :class="`aso-hidden lg:aso-flex aso-full-center aso-w-[80%] aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-font-semibold aso-p-2 aso-px-3 aso-base-animation`">
-                                    {{props.config.data.settings.languageImages.visualizer.textButtonFinish}}
+                                    {{configVisualiserTexts.textButtonFinish}}
                                 </div>
                             </div>
                         </div>
@@ -275,7 +275,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconMaterial !== '' " :src="configSectionIcons.changeIconMaterial" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textMaterial}} 
+                                {{configVisualiserTexts.textMaterial}} 
                             </div>
                         </div>
                     </div>
@@ -303,7 +303,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconSize !== '' " :src="configSectionIcons.changeIconSize" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textSize}}
+                                {{configVisualiserTexts.textSize}}
                             </div>
                         </div>
                     </div>
@@ -317,7 +317,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconShape !== '' " :src="configSectionIcons.changeIconShape" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textShape}}
+                                {{configVisualiserTexts.textShape}}
                             </div>
                         </div>
                     </div>
@@ -331,7 +331,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconFixingMethod.trim() != '' " :src="configSectionIcons.changeIconFixingMethod" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textFixingMethods}}
+                                {{configVisualiserTexts.textFixingMethods}}
                             </div>
                         </div>
                     </div>
@@ -343,7 +343,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconBorder !== '' " :src="configSectionIcons.changeIconBorder" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textBorder}}
+                                {{configVisualiserTexts.textBorder}}
                             </div>
                         </div>
                     </div>
@@ -357,7 +357,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconColor !== '' " :src="configSectionIcons.changeIconColor" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textColor}}
+                                {{configVisualiserTexts.textColor}}
                             </div>
                         </div>
                     </div>
@@ -377,7 +377,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconText !== '' " :src="configSectionIcons.changeIconText" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textOptionText}}
+                                {{configVisualiserTexts.textOptionText}}
                             </div>
                         </div>
                     </div>
@@ -389,7 +389,7 @@
                             </svg>
                             <img v-if="configSectionIcons.changeIconImage !== '' " :src="configSectionIcons.changeIconImage" class="aso-w-6 aso-h-6" />
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                {{props.config.data.settings.languageImages.visualizer.textImage}}
+                                {{configVisualiserTexts.textImage}}
                             </div>
                         </div>
                     </div>
@@ -416,7 +416,7 @@
                                 </g>
                             </svg>
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center">
-                                Add options
+                                {{ configVisualiserTexts.textButtonAdditonnalOptions && configVisualiserTexts.textButtonAdditonnalOptions.trim() !== '' ? configVisualiserTexts.textButtonAdditonnalOptions : 'Add Option' }}
                             </div>
                         </div>
                     </div>
@@ -434,7 +434,7 @@
                     </div>
     
                     <div v-show="step == 'material'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-materials-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textMaterial}} </p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textMaterial}} </p>    
     
                         <div class="aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
@@ -502,7 +502,7 @@
                     </div>
     
                     <div v-show="step == 'size'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-2 aso-w-full aso-h-full" id="aso-sizes-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textSize}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textSize}}</p>    
                         <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
                             <div class="aso-space-y-2">
                                 <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}]  aso-px-2 aso-border border-gray-400 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
@@ -534,7 +534,7 @@
                             </div>
                             
                             <div v-if="currentSizeThickness" class="aso-space-y-2">
-                                <p class="aso-text-base aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}</p>
+                                <p class="aso-text-base aso-font-semibold">{{configVisualiserTexts.thickness}}</p>
                                 <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                     <div v-for="(thick, id) in thicknesss.values">
                                         <div class="aso-w-full aso-flex">
@@ -550,7 +550,7 @@
                             </div>
 
                             <div v-if="customSizeActive" class="aso-space-y-2 aso-w-full aso-pb-6">
-                                <p class="aso-text-base aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.customSize}}</p>
+                                <p class="aso-text-base aso-font-semibold">{{configVisualiserTexts.customSize}}</p>
                                 <div class="aso-flex aso-justify-between aso-items-center aso-space-x-2 ">
                                     <div class="aso-w-1/2 aso-flex aso-flex-col aso-space-y-2">
                                         <label :class="`aso-text-xs aso-text-[${configColors.textColorOptionsMenu}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
@@ -563,14 +563,14 @@
                                     </div>
                                 </div>
                                 <span @click="changeSize(customSizeValues)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
-                                    {{props.config.data.settings.languageImages.visualizer.customSizeButtonDone}}
+                                    {{configVisualiserTexts.customSizeButtonDone}}
                                 </span>
                             </div>
                         </div>
                     </div>
     
                     <div v-show="step == 'shape'" class="aso-flex aso-flex-col lg:aso-space-y-2 aso-w-full aso-h-full" id="aso-shapes">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textShape}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textShape}}</p>    
     
                         <div class="aso-w-full aso-h-full aso-overflow-auto aso-scrollBar">
                             <div class="aso-grid aso-grid-cols-3 lg:aso-grid-cols-3 aso-gap-2 aso-w-full aso-full-center">
@@ -596,7 +596,7 @@
                     </div>
     
                     <div v-show="step == 'fixing-methode'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textFixingMethods}}</p>    
     
                         <div v-if="materialType == 'simple'" class="aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div v-for="(fixingg, id) in fixinggs">
@@ -667,7 +667,7 @@
                     </div>
     
                     <div v-show="step == 'color'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-colors-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textColor}}</p>    
     
                         <div v-if="materialType === 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
@@ -723,7 +723,7 @@
                     </div>
     
                     <div v-show="step == 'border'" class="aso-flex aso-flex-col lg:aso-space-y-2 aso-w-full aso-h-full" id="aso-borders-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textBorder}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textBorder}}</p>    
     
                         <div class="aso-w-full aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
@@ -809,7 +809,7 @@
                     </div>
     
                     <div v-show="step == 'text'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-texts-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textOptionText}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textOptionText}}</p>    
     
                         <div class="aso-h-full aso-overflow-auto aso-scrollBar aso-space-y-2 aso-p-3">
                             
@@ -982,7 +982,7 @@
                     </div>
     
                     <div v-show="step == 'image'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-images-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textImage}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textImage}}</p>    
 
                         <div class="aso-h-full aso-space-y-2 aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div>
@@ -1206,7 +1206,7 @@
                     </div>
 
                     <div v-show="step == 'add-options'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{ props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader && props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader.trim() !== '' ? props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader : 'Additionnals Options' }}</p>    
     
                         <div class="aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
                             <div v-for="(option, indexx) in configAdditionnalOptions">
@@ -1403,7 +1403,7 @@
                         Cancel
                     </div>
                     <div @click="finishConfig()" class="`aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}]`">
-                        {{props.config.data.settings.languageImages.visualizer.textButtonFinish}}
+                        {{configVisualiserTexts.textButtonFinish}}
                     </div>
                 </div>
             </div>
@@ -1424,32 +1424,32 @@
 
             <div class="aso-flex aso-flex-col aso-flex-1 aso-overflow-auto aso-scrollBar">
                 <div v-if=" selectedMaterial != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <p :class="`aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textMaterial ?? 'Material' }}</p>
+                    <p :class="`aso-text-[16px] aso-font-semibold`">{{ configVisualiserTexts.textMaterial ?? 'Material' }}</p>
                     <p :class="`aso-text-[14px]`">{{ selectedMaterial}}</p>
                 </div>
 
                 <div v-if="selectedShape != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <p :class="`aso-text-[16px] aso-font-semibold`">{{ props.config.data.settings.languageImages.visualizer.textShape ?? 'Shape' }}</p>
+                    <p :class="`aso-text-[16px] aso-font-semibold`">{{ configVisualiserTexts.textShape ?? 'Shape' }}</p>
                     <p :class="`aso-text-[14px] lowercase first-letter:uppercase`">{{selectedShape}}</p>
                 </div>
 
                 <div v-if="currentSizeName != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="``">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textSize" class="aso-text-[16px] aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textSize}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textSize" class="aso-text-[16px] aso-font-semibold">Sizes</p>
+                        <p v-if="configVisualiserTexts.textSize" class="aso-text-[16px] aso-font-semibold">{{configVisualiserTexts.textSize}}</p>
+                        <p v-if="!configVisualiserTexts.textSize" class="aso-text-[16px] aso-font-semibold">Sizes</p>
                     </div>
                     <div :class="`aso-flex aso-flex-col`"> 
-                        <p class="aso-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height'"><span class="aso-font-semibold">heigh: </span> 
+                        <p class="aso-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height'"><span class="aso-font-semibold">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: </span> 
                             <span>
-                                {{configData.sign.height}}
+                                {{configData.sign.size.value.height.value}}
                             </span>
                         </p>
-                        <p class="aso-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width'"><span class="aso-font-semibold">width: </span> 
+                        <p class="aso-text-[13px]" v-show="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width'"><span class="aso-font-semibold">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: </span> 
                             <span>
-                                {{configData.sign.width}}
+                                {{configData.sign.size.value.width.value}}
                             </span>
                         </p>
-                        <p class="aso-text-[13px]" v-if="materialType === 'simple' && thicknesss.active"><span class="aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.thickness}}: </span> 
+                        <p class="aso-text-[13px]" v-if="materialType === 'simple' && thicknesss.active"><span class="aso-font-semibold">{{configVisualiserTexts.thickness}}: </span> 
                             <span>
                                 {{currentThickValue}} {{configUnit}}
                             </span>
@@ -1459,8 +1459,8 @@
 
                 <div v-if="activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3`">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
+                        <p v-if="configVisualiserTexts.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{configVisualiserTexts.textColor}}</p>
+                        <p v-if="!configVisualiserTexts.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
                     </div>
                     <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div class="aso-flex aso-space-x-2 aso-full-center">
@@ -1495,8 +1495,8 @@
 
                 <!-- <div v-if="materialType === 'advance' && activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3 aso-text-[#000000]`">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textColor}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
+                        <p v-if="configVisualiserTexts.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{configVisualiserTexts.textColor}}</p>
+                        <p v-if="!configVisualiserTexts.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
                     </div>
                     <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div class="aso-flex aso-space-x-2 aso-full-center">
@@ -1519,16 +1519,16 @@
 
                 <div v-if="activeFixingMethode != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="``">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textFixingMethods" class="aso-text-[16px] aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textFixingMethods}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textFixingMethods" class="aso-text-[16px] aso-font-semibold">Fixing methode</p>
+                        <p v-if="configVisualiserTexts.textFixingMethods" class="aso-text-[16px] aso-font-semibold">{{configVisualiserTexts.textFixingMethods}}</p>
+                        <p v-if="!configVisualiserTexts.textFixingMethods" class="aso-text-[16px] aso-font-semibold">Fixing methode</p>
                     </div>
                     <p :class="`aso-text-[15px] lowercase first-letter:uppercase`">{{activeFixingMethode}}</p>
                 </div>
 
                 <div v-if="materialType === 'simple' && (activeFace1Border != '' || activeFace2Border != '') " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3`">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textBorder" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textBorder}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textBorder" class="aso-text-[16px] text-black aso-font-semibold">Border</p>
+                        <p v-if="configVisualiserTexts.textBorder" class="aso-text-[16px] text-black aso-font-semibold">{{configVisualiserTexts.textBorder}}</p>
+                        <p v-if="!configVisualiserTexts.textBorder" class="aso-text-[16px] text-black aso-font-semibold">Border</p>
                     </div>
                     <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div class="aso-flex aso-space-x-2 aso-full-center">
@@ -1580,8 +1580,8 @@
 
                 <div v-if="(!configDoublePart.active && configData.texts.value.length > 0) || (configDoublePart.active && (configData.texts.value.face1.length > 0 || configData.texts.value.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3`">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textOptionText}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
+                        <p v-if="configVisualiserTexts.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">{{configVisualiserTexts.textOptionText}}</p>
+                        <p v-if="!configVisualiserTexts.textOptionText" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
@@ -1612,8 +1612,8 @@
 
                 <div v-if="(!configDoublePart.active && configData.images.value.length > 0) || (configDoublePart.active && (configData.images.value.face1.length > 0 || configData.images.value.face2.length > 0))" class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <div :class="`aso-w-1/3 aso-text-[#000000]`">
-                        <p v-if="props.config.data.settings.languageImages.visualizer.textImage" class="aso-text-[16px] text-black aso-font-semibold">{{props.config.data.settings.languageImages.visualizer.textImage}}</p>
-                        <p v-if="!props.config.data.settings.languageImages.visualizer.textImage" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
+                        <p v-if="configVisualiserTexts.textImage" class="aso-text-[16px] text-black aso-font-semibold">{{configVisualiserTexts.textImage}}</p>
+                        <p v-if="!configVisualiserTexts.textImage" class="aso-text-[16px] text-black aso-font-semibold">Text</p>
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
@@ -1761,6 +1761,7 @@
     var configSectionIcons = ref({})
     var configOutputSettings = ref({})
     var configAdditionnalOptions = ref([])
+    var configVisualiserTexts = ref({})
 
     // console.log(props.config.data)
 
@@ -1949,10 +1950,11 @@
         configImageSettingsFilters.value = props.config.data.settings.customizerSign.images.filter
         configSectionIcons.value = props.config.data.settings.languageImages.images
         configOutputSettings.value = props.config.data.settings.generals.output
+        configVisualiserTexts.value = props.config.data.settings.languageImages.visualizer
 
         configAdditionnalOptions.value = props.config.data.additionalOptions
         
-        console.log(configColors.value, "configTextFontSettings")
+        console.log(props.config.data.materials[0], "configTextFontSettings")
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
@@ -2089,7 +2091,7 @@
                 selectable: false,
                 visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false)
             })
-            var thickness = new fabric.IText(String(props.config.data.settings.languageImages.visualizer.thickness + ': 1cm'),{
+            var thickness = new fabric.IText(String(configVisualiserTexts.thickness + ': 1cm'),{
                 left: rectangle.left + (rectangle.width/2),
                 top: rectangle.top + (rectangle.height +20),
                 fontSize: 15,
@@ -3448,7 +3450,7 @@
         },
     ])
     var customSizeValues = ref({
-        label: props.config.data.settings.languageImages.visualizer.customSize,
+        label: configVisualiserTexts.customSize,
         width: 0,
         height: 0
     })
@@ -4968,22 +4970,28 @@
         configData.value = {
             sign: {
                 size: {
-                    label: (props.config.data.settings.languageImages.visualizer.textSize && props.config.data.settings.languageImages.visualizer.textSize.trim() != '' ? props.config.data.settings.languageImages.visualizer.textSize : 'Size'),
+                    label: (configVisualiserTexts.value.textSize && configVisualiserTexts.value.textSize.trim() != '' ? configVisualiserTexts.value.textSize : 'Size'),
                     value: {
-                        width: widthValue.text,
-                        height: heightValue.text,
+                        width: {
+                            label: (configVisualiserTexts.value.textWidth && configVisualiserTexts.value.textWidth.trim() != '' ? configVisualiserTexts.value.textWidth : 'Width'),
+                            value: widthValue.text
+                        },
+                        height: {
+                            label: (configVisualiserTexts.value.textHeight && configVisualiserTexts.value.textHeight.trim() != '' ? configVisualiserTexts.value.textHeight : 'Height'),
+                            value: heightValue.text
+                        },
                         thickness: {
-                            label: (props.config.data.settings.languageImages.visualizer.thickness && props.config.data.settings.languageImages.visualizer.thickness.trim() != '' ? props.config.data.settings.languageImages.visualizer.thickness : 'thickness'),
+                            label: (configVisualiserTexts.value.thickness && configVisualiserTexts.value.thickness.trim() != '' ? configVisualiserTexts.value.thickness : 'thickness'),
                             value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
                         }
                     }
                 },
                 shape: { 
-                    label: (props.config.data.settings.languageImages.visualizer.textShape && props.config.data.settings.languageImages.visualizer.textShape.trim() != '' ? props.config.data.settings.languageImages.visualizer.textShape : 'Shape'),
+                    label: (configVisualiserTexts.value.textShape && configVisualiserTexts.value.textShape.trim() != '' ? configVisualiserTexts.value.textShape : 'Shape'),
                     value: selectedShape.value,
                 },
                 color: {
-                    label: (props.config.data.settings.languageImages.visualizer.textColor && props.config.data.settings.languageImages.visualizer.textColor.trim() != '' ? props.config.data.settings.languageImages.visualizer.textColor : 'Colors'),
+                    label: (configVisualiserTexts.value.textColor && configVisualiserTexts.value.textColor.trim() != '' ? configVisualiserTexts.value.textColor : 'Colors'),
                     value: {
                         name: activeSignColor.value,
                         codeHex: activeSignColorCode1.value,
@@ -4995,7 +5003,7 @@
                     },
                 },
                 border: {
-                    label: (props.config.data.settings.languageImages.visualizer.textBorder && props.config.data.settings.languageImages.visualizer.textBorder.trim() != '' ? props.config.data.settings.languageImages.visualizer.textBorder : 'Borders'),
+                    label: (configVisualiserTexts.value.textBorder && configVisualiserTexts.value.textBorder.trim() != '' ? configVisualiserTexts.value.textBorder : 'Borders'),
                     value: {
                         type: activeFace1Border.value,
                         color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
@@ -5003,16 +5011,16 @@
                     },
                 },
                 fixingMethod: {
-                    label: (props.config.data.settings.languageImages.visualizer.textFixingMethods && props.config.data.settings.languageImages.visualizer.textFixingMethods.trim() != '' ? props.config.data.settings.languageImages.visualizer.textFixingMethods : 'Fixing method'),
+                    label: (configVisualiserTexts.value.textFixingMethods && configVisualiserTexts.value.textFixingMethods.trim() != '' ? configVisualiserTexts.value.textFixingMethods : 'Fixing method'),
                     value: activeFixingMethode.value
                 },
             },
             texts: {
-                label: (props.config.data.settings.languageImages.visualizer.textOptionText && props.config.data.settings.languageImages.visualizer.textOptionText.trim() != '' ? props.config.data.settings.languageImages.visualizer.textOptionText : 'Texts'),
+                label: (configVisualiserTexts.value.textOptionText && configVisualiserTexts.value.textOptionText.trim() != '' ? configVisualiserTexts.value.textOptionText : 'Texts'),
                 value: addedObject.texts,
             },
             images: {
-                label: (props.config.data.settings.languageImages.visualizer.textImage && props.config.data.settings.languageImages.visualizer.textImage.trim() != '' ? props.config.data.settings.languageImages.visualizer.textImage : 'Images'),
+                label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
                 value: addedObject.images,
             },
             additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
@@ -5054,22 +5062,28 @@
                 },
                 sign: {
                     size: {
-                        label: (props.config.data.settings.languageImages.visualizer.textSize && props.config.data.settings.languageImages.visualizer.textSize.trim() != '' ? props.config.data.settings.languageImages.visualizer.textSize : 'Size'),
+                        label: (configVisualiserTexts.value.textSize && configVisualiserTexts.value.textSize.trim() != '' ? configVisualiserTexts.value.textSize : 'Size'),
                         value: {
-                            width: widthValue.text,
-                            height: heightValue.text,
+                            width: {
+                                label: (configVisualiserTexts.value.textWidth && configVisualiserTexts.value.textWidth.trim() != '' ? configVisualiserTexts.value.textWidth : 'Width'),
+                                value: widthValue.text
+                            },
+                            height: {
+                                label: (configVisualiserTexts.value.textHeight && configVisualiserTexts.value.textHeight.trim() != '' ? configVisualiserTexts.value.textHeight : 'Height'),
+                                value: heightValue.text
+                            },
                             thickness: {
-                                label: (props.config.data.settings.languageImages.visualizer.thickness && props.config.data.settings.languageImages.visualizer.thickness.trim() != '' ? props.config.data.settings.languageImages.visualizer.thickness : 'thickness'),
+                                label: (configVisualiserTexts.value.thickness && configVisualiserTexts.value.thickness.trim() != '' ? configVisualiserTexts.value.thickness : 'thickness'),
                                 value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
                             }
                         }
                     },
                     shape: { 
-                        label: (props.config.data.settings.languageImages.visualizer.textShape && props.config.data.settings.languageImages.visualizer.textShape.trim() != '' ? props.config.data.settings.languageImages.visualizer.textShape : 'Shape'),
+                        label: (configVisualiserTexts.textShape && configVisualiserTexts.textShape.trim() != '' ? configVisualiserTexts.textShape : 'Shape'),
                         value: selectedShape.value,
                     },
                     color: {
-                        label: (props.config.data.settings.languageImages.visualizer.textColor && props.config.data.settings.languageImages.visualizer.textColor.trim() != '' ? props.config.data.settings.languageImages.visualizer.textColor : 'Colors'),
+                        label: (configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() != '' ? configVisualiserTexts.textColor : 'Colors'),
                         value: {
                             face1: {
                                 name: activeSignColor.value,
@@ -5092,7 +5106,7 @@
                         },
                     },
                     border: {
-                        label: (props.config.data.settings.languageImages.visualizer.textBorder && props.config.data.settings.languageImages.visualizer.textBorder.trim() != '' ? props.config.data.settings.languageImages.visualizer.textBorder : 'Borders'),
+                        label: (configVisualiserTexts.value.textBorder && configVisualiserTexts.value.textBorder.trim() != '' ? configVisualiserTexts.value.textBorder : 'Borders'),
                         value: {
                             face1: {
                                 type: activeFace1Border.value,
@@ -5107,19 +5121,19 @@
                         },
                     },
                     fixingMethod: {
-                        label: (props.config.data.settings.languageImages.visualizer.textFixingMethods && props.config.data.settings.languageImages.visualizer.textFixingMethods.trim() != '' ? props.config.data.settings.languageImages.visualizer.textFixingMethods : 'Fixing method'),
+                        label: (configVisualiserTexts.value.textFixingMethods && configVisualiserTexts.value.textFixingMethods.trim() != '' ? configVisualiserTexts.value.textFixingMethods : 'Fixing method'),
                         value: activeFixingMethode.value
                     },
                 },
                 texts: {
-                    label: (props.config.data.settings.languageImages.visualizer.textOptionText && props.config.data.settings.languageImages.visualizer.textOptionText.trim() != '' ? props.config.data.settings.languageImages.visualizer.textOptionText : 'Texts'),
+                    label: (configVisualiserTexts.value.textOptionText && configVisualiserTexts.value.textOptionText.trim() != '' ? configVisualiserTexts.value.textOptionText : 'Texts'),
                     value: {
                         face1 :addedObject.texts,
                         face2 :face2AddedObject.texts
                     }
                 },
                 images: {
-                    label: (props.config.data.settings.languageImages.visualizer.textImage && props.config.data.settings.languageImages.visualizer.textImage.trim() != '' ? props.config.data.settings.languageImages.visualizer.textImage : 'Images'),
+                    label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
                     value: {
                         face1 :addedObject.images,
                         face2 :face2AddedObject.images

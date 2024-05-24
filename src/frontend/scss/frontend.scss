@@ -62,3 +62,12 @@
   width: 0px !important;
   height: 0px !important;
 }
+
+.aso-scrollDiv {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.aso-cardDiv{
+  // display: inline-block;
+}
