@@ -1559,7 +1559,7 @@
                         </div>
 
                         <div v-if="configDoublePart.active">
-                            <div v-if="configData.texts.face1.length > 0">
+                            <div v-if="configData.texts.value.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
                                 <div v-for="(text, id) in configData.texts.value.face1">
                                     <!-- {{text}} -->
@@ -4513,17 +4513,19 @@
     var recentlyUsedImages = ref([])
     function addRecentImages(imageTab){
         // recentlyUsedImages.value = imageTab
-        imageTabe.forEach(image => {
-            
+        imageTab.forEach(image => {
+            addUniqueImage(image, recentlyUsedImages.value)
+            console.log(image, "recentlyUsedImages")
         });
         console.log("recently used images", recentlyUsedImages.value)
-        function addUniqueImage(image) {
-            const index = recentlyUsedImages.value.findIndex(item => item.name === obj.name);
+
+        function addUniqueImage(image, arr) {
+            const index = arr.findIndex(item => item.url === image.url);
             if(index !== -1){
-                arr[index] = obj;
+                arr[index] = image;
             }
             else{
-                arr.push(obj);
+                arr.push(image);
             }
         }
 

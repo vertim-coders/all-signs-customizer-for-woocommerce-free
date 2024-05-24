@@ -1592,7 +1592,7 @@
                         </div>
 
                         <div v-if="configDoublePart.active">
-                            <div v-if="configData.texts.face1.length > 0">
+                            <div v-if="configData.texts.value.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
                                 <div v-for="(text, id) in configData.texts.value.face1">
                                     <!-- {{text}} -->
