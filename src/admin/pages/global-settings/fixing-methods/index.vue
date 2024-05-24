@@ -192,7 +192,7 @@ onMounted(async ()=>{
         branding: false,
         setup: function(editor) {
             editor.on('init', function() {
-                console.log('TinyMCE initialized.');
+                //console.log('TinyMCE initialized.');
             });
         }
     });

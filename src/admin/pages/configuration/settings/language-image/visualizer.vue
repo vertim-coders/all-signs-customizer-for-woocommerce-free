@@ -52,6 +52,34 @@
                     <input type="text" v-model="visualizer.textAddToCart" class="aso-w-full"/>
                 </div>
             </div>
+
+            <h3 class="aso-text-[16px]">Action on selected object in canvas</h3>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Canvas selected object edit button</label>
+                    <input type="text" v-model="visualizer.textCanvasEdit" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Canvas selected object delete button</label>
+                    <input type="text" v-model="visualizer.textCanvasDelete" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Canvas selected object CenterH button</label>
+                    <input type="text" v-model="visualizer.textCanvasCenterH" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Canvas selected object centerV button</label>
+                    <input type="text" v-model="visualizer.textCanvasCenterV" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="aso-text-[12px] aso-text-[#444444]">Canvas selected object clone button</label>
+                    <input type="text" v-model="visualizer.textCanvasClone" class="aso-w-full"/>
+                </div>
+            </div>
             
         </div>
         <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
@@ -222,6 +250,11 @@ const route = useRoute();
 const isLoading =ref(false);
 const configId = ref(route.params.configId);
 const visualizer = ref({
+    textCanvasCenterH:"centerH",
+    textCanvasCenterV:"centerV",
+    textCanvasDelete:"delete",
+    textCanvasEdit:"Edit",
+    textCanvasClone:"Clone",
     titleHeader:"Plastic Signs",
     textButtonRefresh:"Restart all",
     textButtonAdditonnalOptions:"Additionals",

@@ -36,7 +36,7 @@
                 </div>
             </div>
             <!-- Table which display all configurations -->
-            <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
+            <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full ">
                     <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
                         <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
@@ -143,7 +143,7 @@
                         <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
-                                <button @click="selectConfigIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                <button @click="selectConfigIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload image</button>
                                 <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
                                     <img v-if="newConfig.icon != ''" :src="newConfig.icon" alt="" class="aso-absolute aso-w-full aso-h-full">
                                     <button v-if="newConfig.icon != ''" @click="()=>{newConfig.icon = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
@@ -159,7 +159,7 @@
                         <label for="" class="aso-font-normal">Upload PopupImg</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
-                                <button @click="selectConfigPopImg" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                <button @click="selectConfigPopImg" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload image</button>
                                 <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
                                     <img v-if="newConfig.popImg != ''" :src="newConfig.popImg" alt="" class="aso-absolute aso-w-full aso-h-full">
                                     <button v-if="newConfig.popImg != ''" @click="()=>{newConfig.popImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
@@ -577,6 +577,11 @@ const defaultSettings = ref({
             changeIconImage:'',
         },
         visualizer: {
+            textCanvasCenterH:"centerH",
+            textCanvasCenterV:"centerV",
+            textCanvasDelete:"delete",
+            textCanvasEdit:"Edit",
+            textCanvasClone:"Clone",
             titleHeader:"Make Your Own Sign",
             textButtonRefresh:"Restart all",
             textButtonAdditonnalOptions:"Additionals",
@@ -8864,6 +8869,7 @@ const addNewConfig = async (configuration) => {
 
 const includeMetaData = async (state) => {
     if(state){
+        isLoading.value = true;
         let configuration = {
             ...newConfig.value,
             data:{
@@ -8878,7 +8884,7 @@ const includeMetaData = async (state) => {
             }
         }else{
             configuration.data.settings.customizerSign.text.selectedFonts = [0,1,2,3,4];
-            await api.addManagefont({many:false,fonts:[
+            const result = await api.addManagefont({many:true,fonts:[
                 {
                     "label": "Abhaya Libre",
                     "url": "http://fonts.gstatic.com/s/abhayalibre/v14/e3t5euGtX-Co5MNzeAOqinEYo23yr9xI6oYtBA.woff2",

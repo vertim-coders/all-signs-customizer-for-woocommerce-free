@@ -94,8 +94,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
             }
         }else{
             array_push($all_fonts,$data["font"]);
-        }
-        
+        }        
         $update = update_option("aso-manages-fonts",$all_fonts);
         if($update){
             return rest_ensure_response( ["success"=>true,"message"=>__("Font created with success","ASO")] );

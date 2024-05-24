@@ -94,7 +94,8 @@
                 0,
                 array(),
                 array(
-                    'aso_meta_data' => ["recaps"=>$recaps,
+                    'aso_meta_data' => [
+                        "recaps"=>$recaps,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
                         'aso_preview_img'    => $preview_img
                     ]
