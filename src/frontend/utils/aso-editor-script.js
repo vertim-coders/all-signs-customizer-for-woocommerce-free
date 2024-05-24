@@ -96,6 +96,11 @@ function handleGetCurrentUnit(unit, fontSize, minFontSize, maxFontSize, textFont
     currenTextFontFam = textFontFam
 }
 
+var visualizerText = {}
+function handleGetDefaultText(object){
+    visualizerText = object
+}
+
 
 var defaultShadow = new fabric.Shadow({
     color: 'black',
@@ -4503,7 +4508,7 @@ function getTextValueToUnit(container, objWidht, objHeight, objLeft, objTop, ang
         right: parseInt(right),
         // right: parseInt(convertFromPx(right, currentUnit)),
         top: parseInt(convertFromPx(top, currentUnit)),
-        bottom: bottom
+        bottom: parseInt(bottom)
     }
 }
 //function for get added text value
@@ -5545,6 +5550,36 @@ function handleClipAddedObject(canva){
 function handleFinishConfiguration(textsTable, imagesTable){
     var textsValues = []
     var imagesValues = []
+    function formatValues(value){
+        var object = {
+            width: {
+                label: visualizerText.width,
+                value: value.width,
+            },
+            height: {
+                label: visualizerText.height,
+                value: value.height,
+            },
+            left: {
+                label: visualizerText.left,
+                value: value.left,
+            },
+            top: {
+                label: visualizerText.top,
+                value: value.top,
+            },
+            right: {
+                label: visualizerText.right,
+                value: value.right,
+            },
+            bottom: {
+                label: visualizerText.bottom,
+                value: value.bottom,
+            }
+        }
+
+        return object
+    }
     if(textsTable.length > 0){
         textsTable.forEach((text)=>{
             function addTextValues(arr, obj, key) {
@@ -5553,7 +5588,7 @@ function handleFinishConfiguration(textsTable, imagesTable){
                     arr.push(obj);
                 }
             }
-            addTextValues(textsValues, {id: text.id, values: handleGetAddedTextValues(text), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
+            addTextValues(textsValues, {id: text.id, values: formatValues(handleGetAddedTextValues(text)), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
         })
     }
     if(imagesTable.length > 0){
@@ -5564,7 +5599,7 @@ function handleFinishConfiguration(textsTable, imagesTable){
                     arr.push(obj);
                 }
             }
-            addTextValues(imagesValues, {id: image.id, url:image.getSrc(), values: handleGetAddedImageValues(image)}, 'id')
+            addTextValues(imagesValues, {id: image.id, url:image.getSrc(), values: formatValues(handleGetAddedImageValues(image))}, 'id')
         })
     }
     return{ 
@@ -5578,6 +5613,7 @@ export {
     handleReadyToSaveState,
     handleGetCanvas,
     handleGetCurrentUnit,
+    handleGetDefaultText,
     handleUndo,
     handleRedo,
     handleClearAll,
