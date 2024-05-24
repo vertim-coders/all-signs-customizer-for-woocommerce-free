@@ -1539,7 +1539,7 @@
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
-                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face1.codeHex}] aso-flex`"></span>
+                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face1.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
 
@@ -1547,7 +1547,7 @@
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
-                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face1.codeHex}] aso-flex`"></span>
+                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face1.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
                         </div>
@@ -1559,14 +1559,14 @@
                             <div v-if="activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>    
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face2.codeHex}] aso-flex`"></span>
+                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face2.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
 
                             <div v-if="activeFace2Border !== 'none' && colorForBorder2" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName2}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face2.codeHex}] aso-flex`"></span>
+                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face2.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
                         </div>
@@ -1585,8 +1585,8 @@
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
-                        <div v-if="!configDoublePart.active && configData.texts.length > 0">
-                            <div v-for="(text, id) in configData.texts">
+                        <div v-if="!configDoublePart.active && configData.texts.value.length > 0">
+                            <div v-for="(text, id) in configData.texts.value">
                                 {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                             </div>
                         </div>
@@ -1594,15 +1594,15 @@
                         <div v-if="configDoublePart.active">
                             <div v-if="configData.texts.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(text, id) in configData.texts.face1">
+                                <div v-for="(text, id) in configData.texts.value.face1">
                                     <!-- {{text}} -->
                                     {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                                 </div>
                             </div>
 
-                            <div v-if="configDoublePart.active && configData.texts.face2.length > 0">
+                            <div v-if="configDoublePart.active && configData.texts.value.face2.length > 0">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(text, id) in configData.texts.face2">
+                                <div v-for="(text, id) in configData.texts.value.face2">
                                     {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                                 </div>
                             </div>
@@ -1617,8 +1617,8 @@
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
-                        <div v-if="!configDoublePart.active && configData.images.length > 0">
-                            <div v-for="(image, id) in configData.images" class="aso-flex aso-space-x-1 aso-full-center">
+                        <div v-if="!configDoublePart.active && configData.images.value.length > 0">
+                            <div v-for="(image, id) in configData.images.value" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
                                 </span>
@@ -1629,7 +1629,7 @@
                         </div>
 
                         <div v-if="configDoublePart.active">
-                            <div v-if="configData.images.face1.length > 0">
+                            <div v-if="configData.images.value.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
                                 <div v-for="(image, id) in configData.images.face1" class="aso-flex aso-space-x-1 aso-full-center">                              
                                     <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
@@ -1645,9 +1645,9 @@
                                 </div>
                             </div>
 
-                            <div v-if="configDoublePart.active && configData.images.face2.length > 0">
+                            <div v-if="configDoublePart.active && configData.images.value.face2.length > 0">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(image, id) in configData.images.face2" class="aso-flex aso-space-x-1 aso-full-center">
+                                <div v-for="(image, id) in configData.images.value.face2" class="aso-flex aso-space-x-1 aso-full-center">
                                     <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                         <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
                                     </span>

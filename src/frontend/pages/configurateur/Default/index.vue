@@ -723,7 +723,7 @@
                                     <div class="aso-p-2 aso-space-y-2">
                                         <div v-for="(textObject, index) in addedTexts">
                                             <div :class="`${activeFace == textObject.canvasName ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-bg-[${configColors.backgroundColorHeader}]/10 aso-p-2`" @click="getTextObject(textObject, true)">
-                                                <p class="aso-text-sm">{{configVisualiserTexts.textOptionText}} {{ index }}</p>
+                                                <p class="aso-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p>
                                                 <p class="aso-text-xs">{{textObject.text}}</p>
                                             </div>
                                         </div>
@@ -1506,7 +1506,7 @@
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
-                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face1.codeHex}] aso-flex`"></span>
+                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face1.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
 
@@ -1514,7 +1514,7 @@
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
-                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face1.codeHex}] aso-flex`"></span>
+                                    <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face1.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
                         </div>
@@ -1526,14 +1526,14 @@
                             <div v-if="activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>    
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face2.codeHex}] aso-flex`"></span>
+                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face2.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
 
                             <div v-if="activeFace2Border !== 'none' && colorForBorder2" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName2}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.face2.codeHex}] aso-flex`"></span>
+                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face2.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
                         </div>
@@ -1552,8 +1552,8 @@
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
-                        <div v-if="!configDoublePart.active && configData.texts.length > 0">
-                            <div v-for="(text, id) in configData.texts">
+                        <div v-if="!configDoublePart.active && configData.texts.value.length > 0">
+                            <div v-for="(text, id) in configData.texts.value">
                                 {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                             </div>
                         </div>
@@ -1561,15 +1561,15 @@
                         <div v-if="configDoublePart.active">
                             <div v-if="configData.texts.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(text, id) in configData.texts.face1">
+                                <div v-for="(text, id) in configData.texts.value.face1">
                                     <!-- {{text}} -->
                                     {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                                 </div>
                             </div>
 
-                            <div v-if="configDoublePart.active && configData.texts.face2.length > 0">
+                            <div v-if="configDoublePart.active && configData.texts.value.face2.length > 0">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(text, id) in configData.texts.face2">
+                                <div v-for="(text, id) in configData.texts.value.face2">
                                     {{text.textContent}} : {{text.values.width}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}x{{text.values.height}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
                                 </div>
                             </div>
@@ -1584,8 +1584,8 @@
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
-                        <div v-if="!configDoublePart.active && configData.images.length > 0">
-                            <div v-for="(image, id) in configData.images" class="aso-flex aso-space-x-1 aso-full-center">
+                        <div v-if="!configDoublePart.active && configData.images.value.length > 0">
+                            <div v-for="(image, id) in configData.images.value" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                     <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
                                 </span>
@@ -1596,7 +1596,7 @@
                         </div>
 
                         <div v-if="configDoublePart.active">
-                            <div v-if="configData.images.face1.length > 0">
+                            <div v-if="configData.images.value.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
                                 <div v-for="(image, id) in configData.images.face1" class="aso-flex aso-space-x-1 aso-full-center">                              
                                     <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
@@ -1612,9 +1612,9 @@
                                 </div>
                             </div>
 
-                            <div v-if="configDoublePart.active && configData.images.face2.length > 0">
+                            <div v-if="configDoublePart.active && configData.images.value.face2.length > 0">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(image, id) in configData.images.face2" class="aso-flex aso-space-x-1 aso-full-center">
+                                <div v-for="(image, id) in configData.images.value.face2" class="aso-flex aso-space-x-1 aso-full-center">
                                     <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                         <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
                                     </span>
@@ -1634,8 +1634,11 @@
             </div>
 
             <div class="aso-w-full aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
-                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</div>
-                <div @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >Add to cart</div>
+                <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-full-center aso-cursor-pointer`" >Edit</button>
+                <button :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.backgroundColorButtonFinish}] aso-text-[${configColors.textColorButtonFinish}] hover:aso-bg-[${configColors.backgroundColorHoverButtonFinish}] hover:aso-text-[${configColors.textColorHoverButtonFinish}] aso-flex aso-full-center aso-cursor-pointer`" >
+                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
+                    Add to cart
+                </button>
             </div>
         </div>
 
@@ -4463,12 +4466,11 @@
     function showClipartsSection(statut){
         clipartSection.value = statut
     }
-    var recentlyUsedImages = ref([])
     var usedImages = ref([])
     var imageError = ref("")
     var newImagePriceId = ref(0)
     async function addImageToSign(image, price, id){
-        console.log(price, "Added")
+        // console.log(price, "Added")
         newImagePriceId.value ++
         var currentImages = {}
         try {
@@ -4483,13 +4485,11 @@
                 getOptionPrice(imagePriceObject) 
 
                 currentImages = await handleAddImageToSign(image, newImagePriceId.value, price)
-                editImage.value = true
             }else{
                 currentImages = await handleAddImageToSign()
             }
             imageError.value = ""
             usedImages.value = currentImages.images
-            recentlyUsedImages.value = addRecentImages(currentImages.images)
         } catch (error) {
             currentImages = error
             imageError.value = error.error;
@@ -4497,28 +4497,53 @@
             console.log(imageError.value, "lsdfsdf", usedImages.value);
         }
 
+        if(currentImages != {}){
+            console.log('currentImages', currentImages.images)
+            addRecentImages(currentImages.images)
+            // console.log('currentImages', currentImages.images{0})
+            // editAddedImage(currentImages.images[0].object)
+        }
+
         if(firstSetLoad.value){
             saveStep('add image to sign')
         }
-        function addRecentImages(imageTab){
-            var newTab = imageTab
-            if (newTab.length >= 5) {
-                newTab.shift();
-            }
-            // if(newTab.length> 0){
-            //     newTab.forEach(function(image){
-            //         if()
-            //     })
-            // }
-
-            return newTab
-        }
         // console.log(usedImages.value, "currznt images")
     }
+
+    var recentlyUsedImages = ref([])
+    function addRecentImages(imageTab){
+        // recentlyUsedImages.value = imageTab
+        imageTabe.forEach(image => {
+            
+        });
+        console.log("recently used images", recentlyUsedImages.value)
+        function addUniqueImage(image) {
+            const index = recentlyUsedImages.value.findIndex(item => item.name === obj.name);
+            if(index !== -1){
+                arr[index] = obj;
+            }
+            else{
+                arr.push(obj);
+            }
+        }
+
+        if (recentlyUsedImages.value.length >= 5) {
+            recentlyUsedImages.value.shift();
+        }
+        // if(newTab.length> 0){
+        //     newTab.forEach(function(image){
+        //         if()
+        //     })
+        // }
+
+        // return newTab
+    }
+
     function deleteFromRecentlyUsed(index, tab){
         tab.splice(index, 1);
     }
     function editAddedImage(image){
+        console.log(image, "added image")
         if(activeFace.value === image.canvasName){
             editImage.value = true
             activeCanvas.getObjects().forEach(function(obj){
