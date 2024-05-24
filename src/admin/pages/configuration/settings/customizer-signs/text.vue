@@ -72,7 +72,7 @@
                         <div class="aso-text-[16px]">Enable Custom color</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
                             <label for="toggleCustom" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleCustom" type="checkbox" name="toggleCustom" class="aso-sr-only aso-peer" value="toggleCustom" v-model="text.enableCustomColor">
+                                <input id="toggleCustom" type="checkbox" name="toggleCustom" class="aso-sr-only aso-peer" v-model="text.enableCustomColor">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -99,7 +99,7 @@
                         <div class="aso-text-[16px]">Enable font size</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
                             <label for="toggleEnableFont" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableFont" type="checkbox" name="toggleEnableFont" class="aso-sr-only aso-peer" value="toggleEnableFont" v-model="text.enableFontSize.active">
+                                <input id="toggleEnableFont" type="checkbox" name="toggleEnableFont" class="aso-sr-only aso-peer" v-model="text.enableFontSize.active">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableBold" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableBold" type="checkbox" name="toggleEnableBold" class="aso-sr-only aso-peer" value="toggleEnableBold" v-model="text.enableBold">
+                                <input id="toggleEnableBold" type="checkbox" name="toggleEnableBold" class="aso-sr-only aso-peer" v-model="text.enableBold">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -148,7 +148,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableUnderline" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableUnderline" type="checkbox" name="toggleEnableUnderline" class="aso-sr-only aso-peer" value="toggleEnableUnderline" v-model="text.enableUnderline">
+                                <input id="toggleEnableUnderline" type="checkbox" name="toggleEnableUnderline" class="aso-sr-only aso-peer" v-model="text.enableUnderline">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableOverline" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableOverline" type="checkbox" name="toggleEnableOverline" class="aso-sr-only aso-peer" value="toggleEnableOverline" v-model="text.enableOverline">
+                                <input id="toggleEnableOverline" type="checkbox" name="toggleEnableOverline" class="aso-sr-only aso-peer" v-model="text.enableOverline">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -181,7 +181,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableStrike" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableStrike" type="checkbox" name="toggleEnableStrike" class="aso-sr-only aso-peer" value="toggleEnableStrike" v-model="text.enableStrike">
+                                <input id="toggleEnableStrike" type="checkbox" name="toggleEnableStrike" class="aso-sr-only aso-peer" v-model="text.enableStrike">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -197,7 +197,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableItalic" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableItalic" type="checkbox" name="toggleEnableItalic" class="aso-sr-only aso-peer" value="toggleEnableItalic" v-model="text.enableItalic">
+                                <input id="toggleEnableItalic" type="checkbox" name="toggleEnableItalic" class="aso-sr-only aso-peer" v-model="text.enableItalic">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -213,7 +213,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableOpacity" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableOpacity" type="checkbox" name="toggleEnableOpacity" class="aso-sr-only aso-peer" value="toggleEnableOpacity" v-model="text.enableOpacity">
+                                <input id="toggleEnableOpacity" type="checkbox" name="toggleEnableOpacity" class="aso-sr-only aso-peer" v-model="text.enableOpacity">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -229,7 +229,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableBorder" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableBorder" type="checkbox" name="toggleEnableBorder" class="aso-sr-only aso-peer" value="toggleEnableBorder" v-model="text.enableBorder">
+                                <input id="toggleEnableBorder" type="checkbox" name="toggleEnableBorder" class="aso-sr-only aso-peer" v-model="text.enableBorder">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -258,7 +258,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-2">
                             <label for="toggleEnableTextAlignment" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableTextAlignment" type="checkbox" name="toggleEnableTextAlignment" class="aso-sr-only aso-peer" value="toggleEnableTextAlignment" v-model="text.enableTextAlignment">
+                                <input id="toggleEnableTextAlignment" type="checkbox" name="toggleEnableTextAlignment" class="aso-sr-only aso-peer" v-model="text.enableTextAlignment">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -272,7 +272,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableCurvedUp" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableCurvedUp" type="checkbox" name="toggleEnableCurvedUp" class="aso-sr-only aso-peer" value="toggleEnableCurvedUp" v-model="text.enableCurvedUp">
+                                <input id="toggleEnableCurvedUp" type="checkbox" name="toggleEnableCurvedUp" class="aso-sr-only aso-peer" v-model="text.enableCurvedUp">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
@@ -286,7 +286,7 @@
                         </div>
                         <div class="aso-flex aso-items-center -aso-translate-y-3">
                             <label for="toggleEnableCurvedDown" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleEnableCurvedDown" type="checkbox" name="toggleEnableCurvedDown" class="aso-sr-only aso-peer" value="toggleEnableCurvedDown" v-model="text.enableCurvedDown">
+                                <input id="toggleEnableCurvedDown" type="checkbox" name="toggleEnableCurvedDown" class="aso-sr-only aso-peer" v-model="text.enableCurvedDown">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>

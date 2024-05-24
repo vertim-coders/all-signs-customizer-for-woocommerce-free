@@ -1,5 +1,6 @@
 <?php
 namespace ASO;
+use ASO_Product_Config;
 /**
  * Contains all methods and hooks callbacks related to the design
  *
@@ -14,7 +15,8 @@ class ASO_Design {
 		//cart
 		add_action( 'woocommerce_before_calculate_totals', [$this, 'aso_change_product_price_in_cart'], 10,1 );
 		add_filter( 'woocommerce_cart_item_thumbnail', [$this, 'aso_change_product_image_in_cart'], 99, 3 );
-		add_action('woocommerce_after_cart_item_name', [$this,'display_previewBtn_editBtn_in_cart'], 10, 1);
+		add_action('woocommerce_after_cart_item_name', [$this,'display_previewBtn_editBtn_in_cart'], 10);
+		add_filter('woocommerce_get_item_data', [$this,'display_recaps_config_on_checkout_page'], 20, 2);
 		
 		//admin data
 		add_action( 'woocommerce_after_order_itemmeta',[$this, 'get_order_custom_admin_data'], 10, 3);
@@ -94,7 +96,7 @@ class ASO_Design {
 							<button type="button" class="close" data-dismiss="omodal" aria-hidden="true">&times;</button>
 						</div>
 						<div class="omodal-body">
-							<?php echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"]); ?>
+							<?php echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false); ?>
 						</div>
 					</div>
 				</div>
@@ -109,50 +111,119 @@ class ASO_Design {
 		echo $product_name;
 	}
 
-	private function display_custom_recaps($recaps){
-		ob_start();
-		foreach( $$recaps['aso_meta_data']["recaps"] as $key=> $value) {?>
-			<?php if($key !='custom_price' && $key != 'aso_additional_options') {?>
-
-				<div class="aso-custom-options-info">
-					<label for=""><?php echo esc_html__("Size","ASO")?>: </label>
-					<span><?php echo esc_html__("Width","ASO"). esc_html($value["sign"]["width"])?></span>
-					<span><?php echo esc_html__("Height","ASO") .esc_html($value["sign"]["height"])?></span>
-				</div>
-				<div class="aso-custom-options-info">
-					<label for=""><?php echo esc_html__("Thickness","ASO")?>: </label>
-					<span><?php echo esc_html($value["sign"]["thickness"])?></span>
-				</div>
-				<div class="aso-custom-options-info">
-					<label for=""><?php echo esc_html__("Shape","ASO")?>: </label>
-					<span><?php echo esc_html($value["sign"]["shape"])?></span>
-				</div>
-				<div class="aso-custom-options-info">
-					<label for=""><?php echo esc_html__("Shape","ASO")?>: </label>
-				<?php if(isset($value["sign"]["color"]["face1"])){ 
-						foreach ($value["sign"]["color"] as $key => $face) { ?>
-							<div class="aso-custom-options-info">
-								<label for=""><?php echo esc_html__("Face","ASO")?>: </label>
-								<span><?php echo esc_html($value["sign"]["shape"])?></span>
-							</div>
-							
-						<?php }
-					?>
-					
-				<?php }?>
-				</div>
-				<?php			
-				
-			}else if($key == 'aso_additional_option'){
-				foreach($value as $value2) { ?>
-					<div class="aso-custom-options-info">
-						<label for=""><?php echo esc_html($value2["label"])?>: </label>
-						<span><?php echo esc_html($value2["value"])?></span>
-					</div>
-		<?php 	}
+	public function display_recaps_config_on_checkout_page($item_data, $cart_item){
+		if (is_checkout()) {
+			if(isset($cart_item["aso_meta_data"]['aso_displayRecapsOnCheckout'] ) && $cart_item["aso_meta_data"]['aso_displayRecapsOnCheckout']){
+				echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false);
 			}
 		}
+	}
+
+	private function display_custom_recaps($recaps,$admin=true){
+		ob_start();?>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["sign"]["size"]["label"])?>: </label>
+			<span><?php echo esc_html($recaps["sign"]["size"]["value"]["width"]["label"])?>: <?php echo esc_html($recaps["sign"]["size"]["value"]["width"]["value"])?></span>
+			<span><?php echo esc_html($recaps["sign"]["size"]["value"]["height"]["label"])?>: <?php echo esc_html($recaps["sign"]["size"]["value"]["height"]["value"])?></span>
+		</div>
+		<?php if($recaps["sign"]["size"]["value"]["thickness"]["value"] !=='none') {?>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["sign"]["size"]["value"]["thickness"]["label"])?>: </label>
+			<span><?php echo esc_html($recaps["sign"]["size"]["value"]["thickness"]["value"])?></span>
+		</div>
+		<?php }?>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["sign"]["shape"]["label"])?>: </label>
+			<span><?php echo esc_html($recaps["sign"]["shape"]["value"])?></span>
+		</div>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["sign"]["fixingMethod"]["label"])?>: </label>
+			<span><?php echo esc_html($recaps["sign"]["fixingMethod"]["value"])?></span>
+		</div>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["sign"]["border"]["label"])?>: </label>
+			<?php if(isset($recaps["sign"]["border"]["value"]["face1"])) {?>
+			<?php foreach ($recaps["sign"]["border"]["value"] as $key => $face) {?>
+				<div style="display:flex; justify-content:center; align-items:center;">
+					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
+					<span for=""style="margin: 0 5px;"><?php echo esc_html($face["type"])?> </span>
+					<div class="aso-cart-color-option" style="background:<?php echo esc_attr($face["codeHex"])?>;"></div>
+				</div>
+			<?php }} else{?>
+				<div style="display:flex; justify-content:center; align-items:center;">
+					<span for=""style="margin: 0 5px;"><?php echo esc_html($recaps["sign"]["border"]["value"]["type"])?> </span>
+					<div class="aso-cart-color-option" style="background:<?php echo esc_attr($recaps["sign"]["border"]["value"]["codeHex"])?>;"></div>
+				</div>
+			<?php }?>
+		</div>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["sign"]["color"]["label"])?>: </label>
+			<?php if(isset($recaps["sign"]["color"]["value"]["face1"])) {?>
+			<?php foreach ($recaps["sign"]["color"]["value"] as $key => $color) {?>
+				<div style="display:flex; justify-content:center; align-items:center;">
+					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
+					<?php if($this->isColorCode($color["codeHex"])) {?>
+						<div class="aso-cart-color-option" style="background:<?php echo esc_attr($color["codeHex"])?>;"></div>
+					<?php }else{?>
+						<div class="aso-cart-color-option" style="position:relative;">
+							<img src="<?php echo esc_url($color["codeHex"])?>" style="position:absolute; width:100%,height:100%;"/>
+						</div>
+					<?php }?>
+				</div>
+			<?php }} else{?>
+				<?php if($this->isColorCode($recaps["sign"]["color"]["value"]["codeHex"])) {?>
+						<div class="aso-cart-color-option" style="background:<?php echo esc_attr($recaps["sign"]["color"]["value"]["codeHex"])?>;"></div>
+				<?php }else{?>
+					<div class="aso-cart-color-option" style="position:relative;">
+						<img src="<?php echo esc_url($recaps["sign"]["color"]["value"]["codeHex"])?>" style="position:absolute; width:100%; height:100%;"/>
+					</div>
+				<?php }?>
+			<?php }?>
+		</div>
+		<?php if(count($recaps["images"]["value"])>0) {?>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html($recaps["images"]["label"])?>: </label>
+			<?php if(isset($recaps["images"]["value"]["face1"])) {?>
+				<?php foreach ($recaps["images"]["value"] as $key => $face) { ?>
+					<div style="display:flex; justify-content:center; align-items:center;">
+						<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
+						<?php foreach ($face as $image) {?>
+							<div class="aso-cart-color-option" style="position:relative;">
+								<img src="<?php echo $image["url"]?>" style="position:absolute; width:100%;height:100%;"/>
+							</div>
+						<?php } ?>
+					</div>
+				<?php }
+				} else{?>
+				<div style="display:flex; justify-content:center; align-items:center;">
+					<?php foreach ($recaps["images"]["value"] as $key => $image) {?>
+						<div class="aso-cart-color-option" style="position:relative;">
+							<img src="<?php echo $image["url"]?>" style="position:absolute; width:100%;height:100%;"/>
+						</div>
+					<?php }?>
+				</div>
+		<?php } ?>
+		</div>
+		<?php } ?>
+		<div class="aso-custom-options-info">
+			<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
+			<div style="display:flex; justify-content:center; align-items:center;">
+				<?php foreach ($recaps["designImages"] as $key => $image) {?>
+					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
+					<div class="aso-cart-color-option" style="position:relative;">
+						<img src="<?php echo $image?>" style="position:absolute; width:auto;height:auto;"/>
+					</div>
+				<?php }?>
+			</div>
+		</div>
+		<?php
 		return ob_get_clean(); 
+	}
+
+	private function isColorCode($chaine) {
+		// Expression régulière pour vérifier les codes couleur hexadécimaux
+		$pattern = '/^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/';
+		return preg_match($pattern, $chaine);
 	}
 
     /**

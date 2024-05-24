@@ -8,7 +8,7 @@
                     <div class="aso-text-[11px]">Enable custom design link</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="toggleEnableCustom" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                            <input id="toggleEnableCustom" type="checkbox" name="toggleEnableCustom" class="aso-sr-only aso-peer" value="toggleEnableCustom" v-model="uploadDesign.activate">
+                            <input id="toggleEnableCustom" type="checkbox" name="toggleEnableCustom" class="aso-sr-only aso-peer" v-model="uploadDesign.activate">
                             <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                         </label>
                     </div>

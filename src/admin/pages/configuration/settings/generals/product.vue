@@ -10,7 +10,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <p class="aso-text-md aso-font-medium aso-text-black">No</p>
                             <label for="yesNo" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="yesNo" type="checkbox" name="yesNo" class="aso-sr-only aso-peer" value="yesNo" v-model="product.designFromScratch">
+                                <input id="yesNo" type="checkbox" name="yesNo" class="aso-sr-only aso-peer" v-model="product.designFromScratch">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <p class="aso-text-md aso-font-medium aso-text-black">Yes</p>
@@ -30,7 +30,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                             <label for="noYesDesign" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="noYesDesign" type="radio" name="noYesDesign" class="aso-sr-only aso-peer" value="noYesDesign" v-model="product.redirectAfterAddingToCart">
+                                <input id="noYesDesign" type="radio" name="noYesCheckOut" class="aso-sr-only aso-peer" :checked="product.redirectAfterAddingToCart" @change="handleRedirectAfterAddingToCart('cart')">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -51,7 +51,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <span class="aso-text-[#444444] aso-text-[11px]">No</span>
                             <label for="noYesCheckOut" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="noYesCheckOut" type="radio" name="noYesCheckOut" class="aso-sr-only aso-peer" value="noYesCheckOut" v-model="product.redirectAfterAddingToCart">
+                                <input id="noYesCheckOut" type="radio" name="noYesCheckOut" class="aso-sr-only aso-peer" :checked="product.redirectToCheckOutPage" @change="handleRedirectAfterAddingToCart('checkout')">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <span class="aso-text-[#444444] aso-text-[11px]">Yes</span>
@@ -71,7 +71,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <p class="aso-text-md aso-font-medium aso-text-black">No</p>
                             <label for="yesNoCheckout" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="yesNoCheckout" type="checkbox" name="yesNoCheckout" class="aso-sr-only aso-peer" value="yesNo" v-model="product.displayRecapsOnCheckout">
+                                <input id="yesNoCheckout" type="checkbox" name="yesNoCheckout" class="aso-sr-only aso-peer" v-model="product.displayRecapsOnCheckout">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <p class="aso-text-md aso-font-medium aso-text-black">Yes</p>
@@ -91,7 +91,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <p class="aso-text-md aso-font-medium aso-text-black">No</p>
                             <label for="yesNoDetail" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="yesNoDetail" type="checkbox" name="yesNoDetail" class="aso-sr-only aso-peer" value="yesNo" v-model="product.hideAddToCartButtonOnDetailPage">
+                                <input id="yesNoDetail" type="checkbox" name="yesNoDetail" class="aso-sr-only aso-peer" v-model="product.hideAddToCartButtonOnDetailPage">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <p class="aso-text-md aso-font-medium aso-text-black">Yes</p>
@@ -111,7 +111,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <p class="aso-text-md aso-font-medium aso-text-black">No</p>
                             <label for="yesNoShop" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="yesNoShop" type="checkbox" name="yesNoShop" class="aso-sr-only aso-peer" value="yesNo" v-model="product.hideDesignButtonsOnShopPage">
+                                <input id="yesNoShop" type="checkbox" name="yesNoShop" class="aso-sr-only aso-peer" v-model="product.hideDesignButtonsOnShopPage">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <p class="aso-text-md aso-font-medium aso-text-black">Yes</p>
@@ -131,7 +131,7 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <p class="aso-text-md aso-font-medium aso-text-black">No</p>
                             <label for="yesNoCustom" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="yesNoCustom" type="checkbox" name="yesNoCustom" class="aso-sr-only aso-peer" value="yesNo" v-model="product.hideAddToCartButtonOnShopPage">
+                                <input id="yesNoCustom" type="checkbox" name="yesNoCustom" class="aso-sr-only aso-peer" v-model="product.hideAddToCartButtonOnShopPage">
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[112%] after:aso-content-[''] after:aso-absolute after:aso-top-[-3px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-3 after:aso-w-3 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                             <p class="aso-text-md aso-font-medium aso-text-black">Yes</p>
@@ -198,13 +198,13 @@ const updateProductSettings = async () => {
     }
 }
 
-/*const handleRedirectAfterAddingToCart = () => {
-    if(product.value.redirectAfterAddingToCart){
-        product.value.redirectAfterAddingToCart = false;
-        product.value.redirectToCheckOutPage = true;
-    }else{
+const handleRedirectAfterAddingToCart = (state) => {
+    if(state='cart'){
         product.value.redirectAfterAddingToCart = true;
         product.value.redirectToCheckOutPage = false;
-    }
-};*/
+    }else{
+        product.value.redirectToCheckOutPage = true;
+        product.value.redirectAfterAddingToCart = false;
+    };
+};
 </script> 
