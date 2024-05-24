@@ -577,6 +577,11 @@ const defaultSettings = ref({
             changeIconImage:'',
         },
         visualizer: {
+            textCanvasCenterH:"centerH",
+            textCanvasCenterV:"centerV",
+            textCanvasDelete:"delete",
+            textCanvasEdit:"Edit",
+            textCanvasClone:"Clone",
             titleHeader:"Make Your Own Sign",
             textButtonRefresh:"Restart all",
             textButtonAdditonnalOptions:"Additionals",
