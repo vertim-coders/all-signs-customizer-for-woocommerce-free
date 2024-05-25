@@ -3,7 +3,7 @@
   \************************************************************************************************************************************************************************************************************************************************************************************/
 
 #canvaas[data-v-5ab70054] {
-        border: 3px solid green
+        /* border: 3px solid green */
 }
 .flipper[data-v-5ab70054] {
         position: relative;
@@ -35,7 +35,7 @@
   \***********************************************************************************************************************************************************************************************************************************************************************************/
 
 #canvaas[data-v-77962a27] {
-        border: 3px solid green
+        /* border: 3px solid green */
 }
 .flipper[data-v-77962a27] {
         position: relative;
@@ -66,60 +66,62 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/frontend/scss/frontend.scss ***!
   \**************************************************************************************************************************/
 :root {
-  --aso-scrollBar-color: #000000
-; }
+  --aso-scrollBar-color: #000000 ;
+}
 
 #aso-frontend-app p {
-  margin: 0 !important; }
-
+  margin: 0 !important;
+}
 #aso-frontend-app .no-scrollbar::-webkit-scrollbar {
   display: none;
-  overflow: auto; }
-
+  overflow: auto;
+}
 #aso-frontend-app .aso-scrollBar::-webkit-scrollbar {
   width: 6px;
   height: 4px;
-  overflow: scroll; }
-
+  overflow: scroll;
+}
 #aso-frontend-app .aso-scrollBar::-webkit-scrollbar-thumb {
   background-color: var(--aso-scrollBar-color);
-  border-radius: 20px; }
-
+  border-radius: 20px;
+}
 #aso-frontend-app .aso-base-animation {
   transition-property: all;
-  transition-duration: 500ms; }
-
+  transition-duration: 500ms;
+}
 #aso-frontend-app .aso-full-center {
   justify-content: center !important;
   align-items: center !important;
-  /* white-space: nowrap; */ }
-
+  /* white-space: nowrap; */
+}
 #aso-frontend-app .aso-option-buton {
   width: fit-content;
   height: 90%;
   display: flex;
-  flex-direction: column; }
-
+  flex-direction: column;
+}
 #aso-frontend-app .aso-new-border {
-  border: solid 1px !important; }
-
+  border: solid 1px !important;
+}
 #aso-frontend-app .aso-inputImage {
   /* aso-text-md  */
   display: flex !important;
   padding: 8px 14px 8px 14px !important;
   border-radius: 9999px !important;
-  cursor: pointer !important; }
-
+  cursor: pointer !important;
+}
 #aso-frontend-app .aso-inputImage svg, #aso-frontend-app .aso-inputImage p {
   margin-left: 5px !important;
-  margin-right: 5px !important; }
+  margin-right: 5px !important;
+}
 
 .aso-inputColor-hide {
   width: 0px !important;
-  height: 0px !important; }
+  height: 0px !important;
+}
 
 .aso-scrollDiv {
   overflow-x: scroll;
   overflow-y: hidden;
-  white-space: nowrap; }
-
+  white-space: nowrap;
+}
