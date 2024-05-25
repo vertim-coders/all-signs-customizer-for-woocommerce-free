@@ -27,7 +27,6 @@
                 $main_variation_id = intval($_POST['data']['variation_id']);
                 $quantity = isset($_POST['data']['quantity']) ? intval($_POST['data']['quantity']) : 1; 
                 $cart_item_key = isset($_POST['data']['cart_item_key']) ? sanitize_key($_POST['data']['cart_item_key']): false;
-                $preview_img  = isset($_POST['data']['prevImg']) ? $_POST['data']['prevImg'] : '';
                 $recaps = isset($_POST['data']['recaps']) ? map_deep( $_POST['data']['recaps'], 'sanitize_text_field' ) : [];
                 $message = '';
                 
@@ -43,14 +42,12 @@
                 //$preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
                 if ( $cart_item_key ) {
                     WC()->cart->cart_contents[ $cart_item_key ]['aso_recaps'] = $recaps;
-                    WC()->cart->cart_contents[ $cart_item_key ]['aso_preview_img']    = $preview_img;
-                    WC()->cart->cart_contents[ $cart_item_key ]['aso_svg_data']    = $svg;
                     WC()->cart->calculate_totals();
                     wp_send_json(array(
                         'success'     => true
                     ));
                 } else {
-                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$displayRecapsOnCheckout, $preview_img,$quantity);
+                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$displayRecapsOnCheckout,$quantity);
 
                     if ( $newly_added_cart_item_key ) {
                         $message =  __( 'Product successfully added to cart.', 'ASO' );
@@ -83,7 +80,7 @@
 	/**
 	 *  add product to cart
 	 */
-	function aso_add_designs_to_cart( int $product_id,array $recaps, bool $displayRecapsOnCheckout, string $preview_img,int $quantity) {
+	function aso_add_designs_to_cart( int $product_id,array $recaps, bool $displayRecapsOnCheckout,int $quantity) {
 		$newly_added_cart_item_key = false;
         $product = wc_get_product( $product_id );
         $parent_id = $product->get_parent_id();
@@ -97,7 +94,6 @@
                     'aso_meta_data' => [
                         "recaps"=>$recaps,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
-                        'aso_preview_img'    => $preview_img
                     ]
                 )
             );
@@ -112,7 +108,6 @@
                     'aso_meta_data' => [
                         "recaps"=>$recaps,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
-                        'aso_preview_img'    => $preview_img
                     ]
                 )
             );

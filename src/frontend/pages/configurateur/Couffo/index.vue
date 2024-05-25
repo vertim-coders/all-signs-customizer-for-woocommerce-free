@@ -5467,13 +5467,11 @@
     const addToCart = async ()=>{
         isAddingToCart.value = true;
         const cart_data = {
-            recaps:{...configData.value,aso_additional_options:customAdditionalValues.value ,custom_price:finalPrices.value},
-            prevImg:"",
+            recaps:{...configData.value,custom_price:finalPrices.value},
             variation_id:aso_configurator_data.productID,
             quantity:1
         }
         var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage??false,props.config.data.settings.generals.product.displayRecapsOnCheckout??false);
-
         if(!add.success){
             toastMessage(add.message,"error");
             isAddingToCart.value = false

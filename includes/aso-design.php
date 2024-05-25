@@ -114,7 +114,7 @@ class ASO_Design {
 	public function display_recaps_config_on_checkout_page($item_data, $cart_item){
 		if (is_checkout()) {
 			if(isset($cart_item["aso_meta_data"]['aso_displayRecapsOnCheckout'] ) && $cart_item["aso_meta_data"]['aso_displayRecapsOnCheckout']){
-				echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false);
+				echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],true);
 			}
 		}
 	}
@@ -142,7 +142,7 @@ class ASO_Design {
 		</div>
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html($recaps["sign"]["border"]["label"])?>: </label>
-			<?php if(isset($recaps["sign"]["border"]["value"]["face1"])) {?>
+			<?php if(isset($recaps["sign"]["border"]["value"]["face1"]) || isset($recaps["texts"]["value"]["face2"])) {?>
 			<?php foreach ($recaps["sign"]["border"]["value"] as $key => $face) {?>
 				<div style="display:flex; justify-content:center; align-items:center;">
 					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
@@ -158,7 +158,7 @@ class ASO_Design {
 		</div>
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html($recaps["sign"]["color"]["label"])?>: </label>
-			<?php if(isset($recaps["sign"]["color"]["value"]["face1"])) {?>
+			<?php if(isset($recaps["sign"]["color"]["value"]["face1"]) || isset($recaps["texts"]["value"]["face2"])) {?>
 			<?php foreach ($recaps["sign"]["color"]["value"] as $key => $color) {?>
 				<div style="display:flex; justify-content:center; align-items:center;">
 					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
@@ -180,30 +180,72 @@ class ASO_Design {
 				<?php }?>
 			<?php }?>
 		</div>
+		<?php if(count($recaps["texts"]["value"])>0) {?>
+			<div class="aso-custom-options-info">
+				<label for=""><?php echo esc_html($recaps["texts"]["label"])?>: </label>
+				<?php if(isset($recaps["texts"]["value"]["face1"]) || isset($recaps["texts"]["value"]["face2"])) {?>
+					<?php foreach ($recaps["texts"]["value"] as $key => $face) { ?>
+						<div >
+							<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
+							<?php foreach ($face as $text) {?>
+								<p><?php echo esc_html($text["textContent"])?></p>
+								<?php if($admin) { foreach ($text["values"] as $key => $position) {?>
+									<p><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></p>
+								<?php } } ?>
+							<?php } ?>
+						</div>
+					<?php }
+					} else{?>
+					<div >
+						<?php foreach ($recaps["texts"]["value"] as $key => $text) {?>
+							<span><?php echo esc_html($text["textContent"])?></span>
+						<?php }?>
+					</div>
+				<?php } ?>
+			</div>
+		<?php } ?>
 		<?php if(count($recaps["images"]["value"])>0) {?>
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html($recaps["images"]["label"])?>: </label>
 			<?php if(isset($recaps["images"]["value"]["face1"])) {?>
 				<?php foreach ($recaps["images"]["value"] as $key => $face) { ?>
-					<div style="display:flex; justify-content:center; align-items:center;">
+					<div>
 						<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
 						<?php foreach ($face as $image) {?>
-							<div class="aso-cart-color-option" style="position:relative;">
-								<img src="<?php echo $image["url"]?>" style="position:absolute; width:100%;height:100%;"/>
+							<div class="aso-cart-color-option" >
+								<img src="<?php echo $image["url"]?>"/>
 							</div>
+							<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
+								<p><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></p>
+							<?php } } ?>
 						<?php } ?>
 					</div>
 				<?php }
 				} else{?>
-				<div style="display:flex; justify-content:center; align-items:center;">
+				<div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
 					<?php foreach ($recaps["images"]["value"] as $key => $image) {?>
 						<div class="aso-cart-color-option" style="position:relative;">
-							<img src="<?php echo $image["url"]?>" style="position:absolute; width:100%;height:100%;"/>
+							<img src="<?php echo $image["url"]?>" />
 						</div>
+						<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
+							<p><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></p>
+						<?php } } ?>
 					<?php }?>
 				</div>
 		<?php } ?>
 		</div>
+		<?php } ?>
+		<?php foreach ($recaps["additionnalOptions"] as $key => $value) {?>
+			<div class="ncpc-custom-options-info">
+				<label for=""><?php echo  esc_html($value["label"])?>: </label>
+				<span><?php echo esc_html($value["value"])?></span>
+			</div>
+		<?php } ?>
+		<?php foreach ($recaps["additionnalComponents"] as $key => $value) {?>
+			<div class="ncpc-custom-options-info">
+				<label for=""><?php echo  esc_html($value["label"])?>: </label>
+				<span><?php echo esc_html($value["value"])?></span>
+			</div>
 		<?php } ?>
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
@@ -280,118 +322,18 @@ class ASO_Design {
 	 */
 	public function get_order_custom_admin_data( $item_id, $item, $_product ) {
 
-		$order_data   = wc_get_order_item_meta( $item_id, 'aso_recaps' );
+		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 		$order_id = $item->get_order_id();
 		if ( $order_id && isset( $order_data ) && !empty( $order_data ) ) {
 			ob_start();
 
-			foreach ( $order_data as $key => $value ) {
-				// $name     = explode( '_', $key );
-				// $name     = str_replace( 'aso_', '', $name );
-				?>
-				<div class="aso-cart-item-data-wrap">
-					
-				<?php
-				if($key !='aso_custom_price' && $key != 'aso_additional_option') {
-					$name = explode('_', $key);
-					if(in_array('color', $name) || in_array('face', $name) || in_array('trim', $name) || in_array('side', $name) || in_array('back', $name)) {
-						for ($i=0; $i < count($name); $i++) { 
-							$name[$i]=ucfirst($name[$i]);
-						}
-						unset($name[0]);
-						$name = implode(' ', $name);
-						if(isset($value['label'])){
-							$name = $value['label'];
-						}
-						if(isset($value['value'])){
-							$value = explode('/', $value['value']);
-						}else{
-							$value = explode('/', $value);
-						}
-						$resultat = preg_split("/\)|,|\(/", $value[1], -1, PREG_SPLIT_NO_EMPTY);
-						$resultat = implode(",", $resultat);
-						$elements = count(explode(",", $resultat));
-						$resultat=trim($resultat);
-						?>
-						<div class="aso-custom-options-info">
-							<label for=""><?php echo  esc_html($name)?>: </label>
-							<span><?php echo esc_html($value[0])?></span>
-							<?php if($elements > 1) { ?>
-								<div class="aso-cart-color-option" style="background:linear-gradient(to right bottom,<?php echo esc_attr($resultat)?>);"></div>
-							<?php }else{ ?>
-								<div class="aso-cart-color-option" style="background:<?php echo esc_attr($resultat)?>;"></div>
-							<?php } ?>
-						</div>
-			<?php	}else{
-						for ($i=0; $i < count($name); $i++) { 
-							$name[$i]=ucfirst($name[$i]);
-						}
-						unset($name[0]);
-						$name = implode(' ', $name);
-						if(isset($value['label'])){
-							$name = $value['label'];
-						}
-
-						if($key == "aso_text"){ ?>
-								<div class="aso-custom-options-info">
-									<label for=""><?php echo  esc_html($name)?>: </label>
-									<?php
-										foreach ($value['value'] as $v) {?>
-											<span><?php echo esc_html($v)?></span><br>
-									<?php } ?>
-								</div>											
-							<?php 
-						}else{
-							if($key != 'aso_preview_img' && $key != 'aso_svg_data'){?>
-								<div class="aso-custom-options-info">
-									<label for=""><?php echo  esc_html($name)?>: </label>
-									<span><?php echo esc_html($value['value'])?></span>
-								</div>
-								<?php 
-							}
-						}
-					}
-								
-				}else if($key == 'aso_additional_option'){
-					foreach($value as $value2) {
-						?>
-							<div class="aso-custom-options-info">
-								<label for=""><?php echo  esc_html($value2["label"])?>: </label>
-								<span><?php echo esc_html($value2["value"])?></span>
-							</div>
-				<?php }
-				}
-				?>
-				</div>
-				<?php 
-			}
-			$modal_id = uniqid() . $item_id;
-
-			if ( isset( $order_data['aso_preview_img'] ) ) {?>
+			$this->display_custom_recaps($order_data["recaps"],true);
+			/* if ( isset( $order_data['aso_preview_img'] ) ) {?>
 				<div style="margin:10px 0">
-					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data['aso_preview_img'])?>"><?php echo __( 'Download', 'aso' )?></button>
-
-					<span><a class="o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr( $modal_id )?>"><?php echo __( 'Preview', 'aso' )?></a></span>
-					<div class="omodal fade o-modal wpc_part" id="<?php echo esc_attr( $modal_id )?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="omodal-dialog">
-							<div class="omodal-content">
-								<div class="omodal-header">
-								<button type="button" class="close" data-dismiss="omodal" aria-hidden="true">&times;</button>
-								<h4 class="omodal-title" id="myModalLabel<?php echo esc_attr( $modal_id )?>">Preview</h4>
-								</div>
-								<div class="omodal-body">
-									<img src="<?php echo esc_url( $order_data['aso_preview_img'] )?>">
-								</div>
-							</div>
-						</div>
-					</div>
-			<?php }
-			if(isset( $order_data['aso_svg_data'] )){?>
-				<div style="margin:10px 0">
-					<button class="button alt aso_admin_download_svg" href='<?php echo esc_attr($order_data['aso_svg_data'])?>'><?php echo __( 'Download SVG', 'aso' )?></button>
+					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data['aso_preview_img'])?>"><?php echo __( 'Download', 'ASO' )?></button>
 				</div>
-			<?php } 
-			$product_id = $_product->get_id();
+			<?php } */
+			/* $product_id = $_product->get_id();
 			$meta = get_post_meta($product_id,'product-aso-metas',true);
 			if(!empty($meta) && isset($meta[$product_id]['config-id'])){
 				$configId = $meta[$product_id]['config-id'];
@@ -407,7 +349,7 @@ class ASO_Design {
 					<?php }
 					}
 				}
-			}
+			} */
 			
 
 			
@@ -423,13 +365,13 @@ class ASO_Design {
 	 * 
 	 */
 	function capture_product_metadata_to_order($item, $cart_item_key, $values, $order) {
-		$meta_key = 'aso_recaps';
+		/* $meta_key = 'aso_recaps';
 		if ( isset( $values[ $meta_key ] ) ) {
 			if ( isset( $values['aso_preview_img'] ) ) {
 				$values[ $meta_key ]['aso_preview_img'] = $values['aso_preview_img'];
 			}			
 			$item->update_meta_data( $meta_key, $values[ $meta_key ] );
-		}
+		} */
 	}
 
 	/**
@@ -437,15 +379,14 @@ class ASO_Design {
 	 */
 	function mail_template( $item_id, $item, $_product ) {
 
-		$order_data   = wc_get_order_item_meta( $item_id, 'aso_recaps' );
+		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 
 		if ( isset( $order_data ) && !empty( $order_data ) ) {
-			ob_start();
+			//ob_start();
 
-			foreach ( $order_data as $key => $value ) {
-			}
+			$details = $this->display_custom_recaps($order_data["recaps"],true);
 			
-			$details = ob_get_clean();
+			//$details = ob_get_clean();
 			echo wp_kses_post($details);
 		}
 

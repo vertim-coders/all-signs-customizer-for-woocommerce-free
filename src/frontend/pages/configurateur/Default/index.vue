@@ -5371,8 +5371,7 @@
     const addToCart = async ()=>{
         isAddingToCart.value = true;
         const cart_data = {
-            recaps:{...configData.value,aso_additional_options:customAdditionalValues.value ,custom_price:finalPrices.value},
-            prevImg:"",
+            recaps:{...configData.value,custom_price:finalPrices.value},
             variation_id:aso_configurator_data.productID,
             quantity:1
         }
