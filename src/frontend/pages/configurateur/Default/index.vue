@@ -1175,7 +1175,7 @@
                         </div>
 
                         <div v-show="step == 'add-options'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-1 aso-w-full aso-h-full" id="aso-fixings-section">
-                            <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{ props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader && props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader.trim() !== '' ? props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader : 'Additionnals Options' }}</p>    
+                            <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{ props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader && props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader.trim() !== '' ? props.config.data.settings.languageImages.visualizer.textAdditonnalOptionsHeader : 'Additionals Options' }}</p>    
         
                             <div class="aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
                                 <div v-for="(option, indexx) in configAdditionnalOptions">
@@ -5052,8 +5052,8 @@
                 label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
                 value: addedObject.images,
             },
-            additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
-            additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : null),
+            additionalComponents: addComponentSelected.value.length > 0 ? addComponentSelected.value : [],
+            additionalOptions: customAdditionalValues.value.length > 0 ? customAdditionalValues.value : [],
             designImages: generateImage(canvas, 'png'),
 
         }
@@ -5168,8 +5168,8 @@
                         face2 :face2AddedObject.images
                     }
                 },
-                additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
-                additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : null),
+                additionalComponents: addComponentSelected.value.length > 0 ? addComponentSelected.value : [],
+                additionalOptions: customAdditionalValues.value.length > 0 ? customAdditionalValues.value : [],
                 designImages: {
                     face1: generateImage(canvas, 'png'),
                     face2: generateImage(canvasBack, 'png'),

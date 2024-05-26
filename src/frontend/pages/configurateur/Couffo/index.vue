@@ -5172,8 +5172,8 @@
                 label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
                 value: addedObject.images,
             },
-            additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
-            additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : null),
+            additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
+            additionalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
             designImages: generateImage(canvas, 'png'),
 
         }
@@ -5288,8 +5288,8 @@
                         face2 :face2AddedObject.images
                     }
                 },
-                additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : null),
-                additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : null),
+                additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
+                additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
                 designImages: {
                     face1: generateImage(canvas, 'png'),
                     face2: generateImage(canvasBack, 'png'),
@@ -5497,7 +5497,9 @@
     const addToCart = async ()=>{
         isAddingToCart.value = true;
         const cart_data = {
-            recaps:{...configData.value,custom_price:finalPrices.value},
+            recaps:{...configData.value,
+                custom_price:finalPrices.value
+            },
             variation_id:aso_configurator_data.productID,
             quantity:1
         }

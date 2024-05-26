@@ -153,11 +153,11 @@ final class ASO_All_Signs_Options {
         $generation_path = $upload_dir['basedir'] . "/ASO/";
         $generation_url = $upload_dir['baseurl'] . "/ASO/";
 
-        define('ASO_IMAGE_PATH', $generation_path . "image");
-        define('ASO_IMAGE_URL', $generation_url . "image");
+        define('ASO_IMAGE_PATH', $generation_path . "images");
+        define('ASO_IMAGE_URL', $generation_url . "images");
 
-        define('ASO_ORDER_PATH', $generation_path . "ORDER");
-        define('ASO_ORDER_URL', $generation_url . "ORDER");
+        define('ASO_ORDER_PATH', $generation_path . "ORDERS");
+        define('ASO_ORDER_URL', $generation_url . "ORDERS");
     }
 
     private function aso_define_borders(){
