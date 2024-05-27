@@ -1379,17 +1379,11 @@ function lockToCanvas(activeObj) {
             if (object.name == 'safeObject') {
                 activeObj.on('moving', function() {
                     if (!object.containsPoint(activeObj.getCenterPoint())) {
-                        // Rendre l'objet invisible s'il sort de la zone
                         activeObj.set({
                             left: activeObj._originalLeft,
                             top: activeObj._originalTop,
-                            // visible: false
                         });
                     } else {
-                        // Rendre l'objet visible s'il est dans la zone
-                        activeObj.set({
-                            visible: true
-                        });
                         activeObj._originalLeft = activeObj.left;
                         activeObj._originalTop = activeObj.top;
                     }
