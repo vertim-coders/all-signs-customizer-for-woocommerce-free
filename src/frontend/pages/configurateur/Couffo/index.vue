@@ -880,7 +880,7 @@
                                 <div v-show="allFonts.length > 0" class="aso-space-y-1">
                                     <p class="aso-font-medium">Font</p>
                                     <div @click="dropFontToggle()" id="aso-fontSelected-dropdown" :class="`aso-cursor-pointer aso-items-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}]  aso-px-2 aso-border border-gray-400 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
-                                        <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
+                                        <div :class="`aso-w-fit aso-flex aso-items-center aso-justify-center aso-font-[${fontFamSelected.replaceAll(/\s+/g, '-')}] aso-p-2`">
                                             <p v-show="fontFamSelected != ''" :class="`lg:aso-text-sm `" >{{ fontFamSelected }}</p>
                                             <p v-show="fontFamSelected == ''" class="lg:aso-text-sm xl:aso-text-base" >Font</p>
                                         </div>
@@ -895,9 +895,9 @@
                                     </div>
                                     <div v-show="showFont" class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                         <div class="aso-flex aso-items-center aso-justify-center aso-w-fit aso-h-10" v-for="(font, index) in allFonts">
-                                            <input type="radio" :id="font.label + index + 1" name="aso-fonts" class=" peer aso-hidden " @click="changeTextFontFam(font.label, index)">
+                                            <input type="radio" :id="font.label + index + 1" name="aso-fonts" class=" peer aso-hidden " @click="changeTextFontFam((font.label.replaceAll(/\s+/g, '-')), index)">
                                             <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `aso-ring-2 aso-ring-[${configColors.backgroundButton}] aso-text-[${configColors.backgroundButton}]` : `aso-text-[${configColors.textColorOptionsMenu}]`} 
-                                                aso-font-[${font.label}] aso-w-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundButton}] hover:aso-border-[${configColors.backgroundButton}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
+                                                aso-font-[${font.label.replaceAll(/\s+/g, '-')}] aso-w-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.backgroundButton}] hover:aso-border-[${configColors.backgroundButton}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                                 >
                                                 {{font.label}}
                                             </label>
@@ -4178,7 +4178,8 @@
 
                 if(colorForBorder1.value){
                     if(borderColors1.value.length > 0){
-                        changeBorderColor(borderColors1.value[0].codeHex, borderColors1.value[0].additionalPrice, borderColors1.value[0].name)
+                        // changeBorderColor(borderColors1.value[0].codeHex, borderColors1.value[0].additionalPrice, borderColors1.value[0].name)
+                        changeBorderColor(activeFace1BorderColor.value, activeFace1BorderColorPrice.value, borderColorName1.value)
                     }
                 }else{
                     changeBorderColor(colorTextColor.value, 0)
@@ -4202,7 +4203,8 @@
 
                 if(colorForBorder2.value){
                     if(borderColors2.value.length > 0){
-                        changeBorderColor(borderColors2.value[0].codeHex, borderColors2.value[0].additionalPrice, borderColors2.value[0].name)
+                        // changeBorderColor(borderColors2.value[0].codeHex, borderColors2.value[0].additionalPrice, borderColors2.value[0].name)
+                        changeBorderColor(activeFace2BorderColor.value, activeFace2BorderColorPrice.value, borderColorName2.value)
                     }
                 }else{
                     changeBorderColor(colorTextColor.value, 0)
@@ -5476,7 +5478,7 @@
         canva.setWidth(originalWidth);
         canva.setHeight(originalHeight);
 
-        checkScreenSize()
+        // checkScreenSize()
         canva.renderAll();
 
         return dataURL;
