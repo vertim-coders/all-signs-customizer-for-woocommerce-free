@@ -80,6 +80,7 @@ final class ASO_All_Signs_Options {
     public function __construct() {
 
         $this->define_constants();
+        $this->aso_save_output_settings();
         $this->aso_define_borders();
         $this->aso_define_shapes();
         $this->aso_define_fixingMethods();
@@ -160,6 +161,16 @@ final class ASO_All_Signs_Options {
         define('ASO_ORDER_URL', $generation_url . "ORDERS");
     }
 
+    private function aso_save_output_settings(){
+        $output_settings = [
+            "zipName"=>true,
+            "calculateOutput"=>true
+        ];
+        $have_output_settings = get_option("aso_output_options");
+        if($have_output_settings == false){
+            update_option("aso_output_options",$output_settings);
+        }
+    }
     private function aso_define_borders(){
         $borders = [
             [
