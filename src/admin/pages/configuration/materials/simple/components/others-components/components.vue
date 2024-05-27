@@ -237,6 +237,7 @@
                 }else{
                     toastMessage(result.message,"warning");
                 }
+                isEdit.value = false;
                 isLoading.value = false;
                 isNewAdditionalOptions.value = false;
                 openModal.value = false;
@@ -359,6 +360,7 @@
     const back = () => {
         isNewAdditionalOptions.value = false;
         openModal.value = false;
+        isEdit.value = false;
         additionalOptionId.value = null;
         additionalOption.value = {
             title:"",
