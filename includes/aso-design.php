@@ -20,11 +20,11 @@ class ASO_Design {
 		
 		//admin data
 		add_action( 'woocommerce_after_order_itemmeta',[$this, 'get_order_custom_admin_data'], 10, 3);
-		add_action('woocommerce_checkout_create_order_line_item', [$this,'capture_product_metadata_to_order'], 10, 4);
+		//add_action('woocommerce_checkout_create_order_line_item', [$this,'capture_product_metadata_to_order'], 10, 4);
 		
 		// Emails.
-		add_action( 'woocommerce_order_item_meta_start', [$this, 'set_email_order_item_meta'],10, 3);
-		add_filter( 'woocommerce_email_attachments', [$this, 'add_order_design_to_mail'], 10, 3  );
+		add_action( 'woocommerce_order_item_meta_start', [$this, 'mail_template'],10, 3);
+		add_filter( 'woocommerce_email_attachments', [$this, 'custom_email_attachments'], 10, 4  );
 		add_action( 'woocommerce_order_item_meta_end', [$this, 'mail_template'], 11, 4  );
     }
 
@@ -65,8 +65,13 @@ class ASO_Design {
 		} else {
 			$product_id = $values['product_id'];
 		}
+		
 		if ( isset( $values['aso_meta_data']["aso_preview_img"] ) && !empty( $values["aso_meta_data"]['aso_preview_img'] ) ) {
-			$product_image_code = "<img class='aso-cartitem-img' src='" . $values["aso_meta_data"]['aso_preview_img'] . "'>";
+			if(!is_string($values["aso_meta_data"]["designImages"])){ 
+				$product_image_code = "<img class='aso-cartitem-img' src='" . $values["aso_meta_data"]['designImages']["face1"] . "'>";
+			}else{
+				$product_image_code = "<img class='aso-cartitem-img' src='" . $values["aso_meta_data"]['designImages'] . "'>";
+			}			
 		}
 
 		return $product_image_code;
@@ -103,7 +108,6 @@ class ASO_Design {
 			</div>
 			<div class="aso-product-links">
 				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo __("Sign Recaps","ASO")?></span>
-				<!-- <a href="<?php echo esc_url($edit_url)?>" target="_blank"><?php echo __("Back to custom page","ASO")?></a> -->
 			</div>
 			<?php
 			$product_name.=ob_get_clean();		
@@ -204,7 +208,7 @@ class ASO_Design {
 				<?php } ?>
 			</div>
 		<?php } ?>
-		<?php if(count($recaps["images"]["value"])>0) {?>
+		<?php if( isset($recaps["images"]["value"]) && count($recaps["images"]["value"])>0) {?>
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html($recaps["images"]["label"])?>: </label>
 			<?php if(isset($recaps["images"]["value"]["face1"])) {?>
@@ -235,20 +239,26 @@ class ASO_Design {
 		<?php } ?>
 		</div>
 		<?php } ?>
-		<?php foreach ($recaps["additionnalOptions"] as $key => $value) {?>
-			<div class="ncpc-custom-options-info">
-				<label for=""><?php echo  esc_html($value["label"])?>: </label>
-				<span><?php echo esc_html($value["value"])?></span>
-			</div>
+		<?php if( isset($recaps["additionalComponents"]) && count($recaps["additionalComponents"])>0) {?>
+			<?php foreach ($recaps["additionalComponents"] as $key => $value) {?>
+				<div class="aso-custom-options-info">
+					<label for=""><?php echo  esc_html($value["option"])?>: </label>
+					<span><?php echo esc_html($value["value"])?></span>
+				</div>
+			<?php } ?>
 		<?php } ?>
-		<?php foreach ($recaps["additionnalComponents"] as $key => $value) {?>
-			<div class="ncpc-custom-options-info">
-				<label for=""><?php echo  esc_html($value["label"])?>: </label>
-				<span><?php echo esc_html($value["value"])?></span>
-			</div>
+		<?php if( isset($recaps["additionalOptions"]) && count($recaps["additionalOptions"])>0) {?>
+			<?php foreach ($recaps["additionalOptions"] as $key => $value) {?>
+				<div class="aso-custom-options-info">
+					<label for=""><?php echo  esc_html($value["label"])?>: </label>
+					<span><?php echo esc_html($value["value"])?></span>
+				</div>
+			<?php } ?>
 		<?php } ?>
+		
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
+			<?php if(!is_string($recaps["designImages"])){ ?>
 			<div style="display:flex; justify-content:center; align-items:center;">
 				<?php foreach ($recaps["designImages"] as $key => $image) {?>
 					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
@@ -257,6 +267,11 @@ class ASO_Design {
 					</div>
 				<?php }?>
 			</div>
+			<?php }else { ?>
+				<div class="aso-cart-color-option" style="position:relative;">
+					<img src="<?php echo $recaps["designImages"]?>" style="position:absolute; width:auto;height:auto;"/>
+				</div>
+			<?php } ?>
 		</div>
 		<?php
 		return ob_get_clean(); 
@@ -276,11 +291,11 @@ class ASO_Design {
 	 * @param mixed $order The order data.
 	 * @return mixed
 	 */
-	public function set_email_order_item_meta( $item_id, $item, $order) {
+	/* public function set_email_order_item_meta( $item_id, $item, $order) {
 		if ( is_order_received_page() ) {
 			return;
 		}
-		$order_data   = wc_get_order_item_meta( $item_id, 'aso_recaps' );
+		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 
 		if ( isset( $order_data ) && !empty( $order_data ) ) {
 			ob_start();
@@ -289,7 +304,7 @@ class ASO_Design {
 			return $details;
 		}
 
-	}
+	} */
 
     /**
 	 * Add order design to mail.
@@ -299,22 +314,56 @@ class ASO_Design {
 	 * @param  object $order
 	 * @return array
 	 */
-	public function add_order_design_to_mail( $attachments, $status, $order ) {
-		$allowed_statuses = array( 'new_order', 'customer_invoice', 'customer_processing_order', 'customer_completed_order' );
-		if ( isset( $status ) && in_array( $status, $allowed_statuses ) ) {
+	function custom_email_attachments( $attachments, $email_id, $order, $email ) {
+		// Vérifier si l'e-mail est envoyé au client
+		if ( $email->id === 'customer_completed_order' ) {
 			$items = $order->get_items();
 			foreach ( $items as $item ) {
-				if ( isset( $item['aso_recaps'] ) ) {
-					if ( isset( $item['aso_recaps']['aso_preview_img'] ) ) {
-						array_push( $attachments, $item['aso_recaps']['aso_preview_img'] );
+				if ( isset( $item["aso_meta_data"]['recaps'] ) ) {
+					$dataUris = [];
+					if(isset($item["aso_meta_data"]['recaps']['images']['face1'])){
+						foreach ($item["aso_meta_data"]['recaps']['images'] as $key => $face) {
+							foreach ($face as $key => $image) {
+								array_push($dataUris,$image["url"]);
+							}
+						}
+					}else{
+						foreach ($item["aso_meta_data"]['recaps']['images'] as $key => $image) {							
+							array_push($dataUris,$image["url"]);
+						}
 					}
-					if ( isset( $item['aso_recaps']['aso_svg_data'] ) ) {
-						array_push( $attachments, $item['aso_recaps']['aso_svg_data'] );
+					if(count($dataUris)>0){
+						$aso_zip_file = $this->aso_zip_file($order->get_id(),$dataUris);
+						$attachments[] = $aso_zip_file;
 					}
+					
 				}
 			}
 		}
+	
 		return $attachments;
+	}
+
+	private function aso_zip_file($order_id,$dataUris){
+		require_once(ABSPATH . 'wp-admin/includes/class-pclzip.php');
+		$outputOptions = get_option("aso_output_options",[]);
+		$upload_dirs = ASO_IMAGE_PATH;
+		wp_mkdir_p( $upload_dirs );
+		if(isset($outputOptions["zipName"]) && $outputOptions["zipName"]==true){
+			$zip_file = $upload_dirs.$order_id.'zip';
+		}else{
+			$zip_file = $upload_dirs.uniqid( 'aso-' ).'zip';
+		}
+		// Créer une instance de ZipArchive
+		$zip = new PclZip($zip_file);
+
+		foreach ($dataUris as $index => $dataUri) {
+			$file_data = base64_decode(explode(',', $dataUri)[1]);
+			$file_extension = explode('/', mime_content_type($dataUri))[1];
+			$file_name = "file_{$index}.{$file_extension}";
+			$zip->add($file_data, PCLZIP_OPT_ADD_PATH, $file_name);
+		}
+		return $zip_file;
 	}
 
 	/**
@@ -350,9 +399,6 @@ class ASO_Design {
 					}
 				}
 			} */
-			
-
-			
 			$details = ob_get_clean();
 			echo wp_kses_post($details);
 		}
@@ -364,15 +410,15 @@ class ASO_Design {
 	/**
 	 * 
 	 */
-	function capture_product_metadata_to_order($item, $cart_item_key, $values, $order) {
-		/* $meta_key = 'aso_recaps';
+	/* function capture_product_metadata_to_order($item, $cart_item_key, $values, $order) {
+		$meta_key = 'aso_meta_data';
 		if ( isset( $values[ $meta_key ] ) ) {
 			if ( isset( $values['aso_preview_img'] ) ) {
 				$values[ $meta_key ]['aso_preview_img'] = $values['aso_preview_img'];
 			}			
 			$item->update_meta_data( $meta_key, $values[ $meta_key ] );
-		} */
-	}
+		}
+	} */
 
 	/**
 	 * 
@@ -382,11 +428,7 @@ class ASO_Design {
 		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 
 		if ( isset( $order_data ) && !empty( $order_data ) ) {
-			//ob_start();
-
 			$details = $this->display_custom_recaps($order_data["recaps"],true);
-			
-			//$details = ob_get_clean();
 			echo wp_kses_post($details);
 		}
 
