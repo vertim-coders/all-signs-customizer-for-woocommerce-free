@@ -9,22 +9,22 @@
 		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
         $file_name                     = uniqid( 'aso-' );
         $preview_img=[];
-        if(is_string($images)){
-            $img        = str_replace( 'data:image/png;base64,', '', $images );
-            $img        = str_replace( ' ', '+', $img );
-            $data       = base64_decode( $img ); // phpcs:ignore
-            $file       = $upload_dir . $file_name . '.png';
-            file_put_contents( $file, $data ); // phpcs:ignore
-            $preview_img[] = ASO_IMAGE_URL . '/preview-' . $file_name . '.png';
+        if(!isset($images["face1"])){
+            foreach ($images as $key => $image) {
+                $file        = base64_decode(explode(',', $image["url"])[1]);
+                $file_name       = $upload_dir . $file_name . ".".$image['format'];
+                file_put_contents( $file_name, $file ); // phpcs:ignore
+                $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/preview-' . $file_name . '.'. $image['format'];
+            }
             
         }else{
-            foreach ($images as $key => $image) {
-                $img        = str_replace( 'data:image/png;base64,', '', $image );
-                $img        = str_replace( ' ', '+', $img );
-                $data       = base64_decode( $img ); // phpcs:ignore
-                $file       = $upload_dir . $file_name . "$key.png";
-                file_put_contents( $file, $data ); // phpcs:ignore
-                $preview_img[] = ASO_IMAGE_URL . '/preview-' . $file_name . "$key.png";
+            foreach ($images as $face) {
+                foreach ($face as $key => $image) {
+                    $file        = base64_decode(explode(',', $image["url"])[1]);
+                    $file_name       = $upload_dir . $file_name . ".".$image['format'];
+                    file_put_contents( $file_name, $file ); // phpcs:ignore
+                    $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/preview-' . $file_name . '.'. $image['format'];
+                }
             }
         }
         return $preview_img;
@@ -97,6 +97,7 @@
 		$newly_added_cart_item_key = false;
         $product = wc_get_product( $product_id );
         $parent_id = $product->get_parent_id();
+        $recaps["previews"]= $images;
         if($parent_id == 0){
             $newly_added_cart_item_key = WC()->cart->add_to_cart(
                 $product_id,
@@ -106,7 +107,6 @@
                 array(
                     'aso_meta_data' => [
                         "recaps"=>$recaps,
-                        "previews"=>$images,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
                     ]
                 )
@@ -121,7 +121,6 @@
                 array(
                     'aso_meta_data' => [
                         "recaps"=>$recaps,
-                        "previews"=>$images,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
                     ]
                 )

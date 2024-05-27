@@ -258,19 +258,23 @@ class ASO_Design {
 		
 		<div class="aso-custom-options-info">
 			<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
-			<?php if(!is_string($recaps["designImages"])){ ?>
+			<?php if(isset($recaps["designImages"]["face1"])){ ?>
 			<div style="display:flex; justify-content:center; align-items:center;">
-				<?php foreach ($recaps["designImages"] as $key => $image) {?>
+				<?php foreach ($recaps["designImages"] as $key => $face) {?>
 					<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
+					<?php foreach ($face as $key => $image) { if($image["format"] != "pdf"){?>
 					<div class="aso-cart-color-option" style="position:relative;">
-						<img src="<?php echo $image?>" style="position:absolute; width:auto;height:auto;"/>
+						<img src="<?php echo $image["url"]?>" style="position:absolute; width:auto;height:auto;"/>
 					</div>
+					<?php }} ?>
 				<?php }?>
 			</div>
 			<?php }else { ?>
-				<div class="aso-cart-color-option" style="position:relative;">
-					<img src="<?php echo $recaps["designImages"]?>" style="position:absolute; width:auto;height:auto;"/>
-				</div>
+				<?php foreach ($recaps["designImages"] as $key => $image) { if($image["format"] != "pdf"){?>
+					<div class="aso-cart-color-option" style="position:relative;">
+						<img src="<?php echo $image["url"]?>" style="position:absolute; width:auto;height:auto;"/>
+					</div>
+					<?php }} ?>
 			<?php } ?>
 		</div>
 		<?php
@@ -333,7 +337,7 @@ class ASO_Design {
 						}
 					}
 					if(count($dataUris)>0){
-						$aso_zip_file = $this->aso_zip_file($order->get_id(),$dataUris);
+						$aso_zip_file = $this->aso_zip_file($order->get_id(),$item["aso_meta_data"]['recaps']["output"],$dataUris);
 						$attachments[] = $aso_zip_file;
 					}
 					
@@ -344,15 +348,24 @@ class ASO_Design {
 		return $attachments;
 	}
 
-	private function aso_zip_file($order_id,$dataUris){
+	private function aso_zip_file($order_id,$ouput_settings,$dataUris){
 		require_once(ABSPATH . 'wp-admin/includes/class-pclzip.php');
 		$outputOptions = get_option("aso_output_options",[]);
 		$upload_dirs = ASO_IMAGE_PATH;
 		wp_mkdir_p( $upload_dirs );
 		if(isset($outputOptions["zipName"]) && $outputOptions["zipName"]==true){
-			$zip_file = $upload_dirs.$order_id.'zip';
+			if(isset($ouput_settings["prefix"]) && !empty($ouput_settings["prefix"])){
+				$zip_file = $upload_dirs.$ouput_settings["prefix"].$order_id.'zip';
+			}else{
+				$zip_file = $upload_dirs.$order_id.'zip';
+			}
 		}else{
-			$zip_file = $upload_dirs.uniqid( 'aso-' ).'zip';
+			if(isset($ouput_settings["prefix"]) && !empty($ouput_settings["prefix"])){
+				$zip_file = $upload_dirs.$ouput_settings["prefix"].uniqid( 'aso-' ).'zip';
+			}else{
+				$zip_file = $upload_dirs.uniqid( 'aso-' ).'zip';
+			}
+			
 		}
 		// Créer une instance de ZipArchive
 		$zip = new PclZip($zip_file);
@@ -377,10 +390,10 @@ class ASO_Design {
 			ob_start();
 
 			$this->display_custom_recaps($order_data["recaps"],true);
-			if ( isset( $order_data['previews'] ) ) {?>
-			<?php foreach ($order_data['previews'] as $key => $value) { ?>
+			if ( isset( $order_data["recaps"]['previews'] ) ) {?>
+			<?php foreach ($order_data["recaps"]['previews'] as $key => $value) { ?>
 				<div style="margin:10px 0">
-					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($value)?>"><?php echo esc_html__( 'Download Image', 'ASO' )?></button>
+					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($value)?>"><?php echo esc_html__( 'Download File', 'ASO' )?></button>
 				</div>
 			<?php } }
 			/* $product_id = $_product->get_id();
