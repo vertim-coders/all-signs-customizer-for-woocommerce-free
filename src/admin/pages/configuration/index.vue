@@ -5459,7 +5459,7 @@ const metaConfigs = ref({
 								},
 								pattern: {
 									active: true,
-									codeHex: "",
+									codeHex: "#FF8C00",
 									url: "https://signsdesigner.us/app/demos/wood-signs/wood-birch.png"
 								},
 								prevImg: "https://signsdesigner.us/app/demos/wood-signs/wood-birch.png",
@@ -6009,8 +6009,8 @@ const metaConfigs = ref({
 									active: false
 								},
 								pattern: {
-									active: false,
-									codeHex: "",
+									active: true,
+									codeHex: "#FF6600",
 									url: "https://signsdesigner.us/app/demos/wood-signs/wood-oak.png"
 								},
 								prevImg: "https://signsdesigner.us/app/demos/wood-signs/wood-oak.png",

@@ -382,7 +382,7 @@ class ASO_Design {
 				<div style="margin:10px 0">
 					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($value)?>"><?php echo esc_html__( 'Download Image', 'ASO' )?></button>
 				</div>
-			<?php } 
+			<?php } }
 			/* $product_id = $_product->get_id();
 			$meta = get_post_meta($product_id,'product-aso-metas',true);
 			if(!empty($meta) && isset($meta[$product_id]['config-id'])){
