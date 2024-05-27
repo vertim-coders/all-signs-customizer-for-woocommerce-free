@@ -377,11 +377,12 @@ class ASO_Design {
 			ob_start();
 
 			$this->display_custom_recaps($order_data["recaps"],true);
-			/* if ( isset( $order_data['aso_preview_img'] ) ) {?>
+			if ( isset( $order_data['previews'] ) ) {?>
+			<?php foreach ($order_data['previews'] as $key => $value) { ?>
 				<div style="margin:10px 0">
-					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data['aso_preview_img'])?>"><?php echo __( 'Download', 'ASO' )?></button>
+					<button class="button alt aso_admin_download_image" href="<?php echo esc_attr($value)?>"><?php echo esc_html__( 'Download Image', 'ASO' )?></button>
 				</div>
-			<?php } */
+			<?php } 
 			/* $product_id = $_product->get_id();
 			$meta = get_post_meta($product_id,'product-aso-metas',true);
 			if(!empty($meta) && isset($meta[$product_id]['config-id'])){

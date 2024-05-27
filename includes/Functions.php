@@ -3,17 +3,31 @@
 	/**
 	 * save preview image
 	 */
-	function aso_save_canvas_image( $image, $file_name) {
+	function aso_save_canvas_image( $images) {
 		$upload_dirs = ASO_IMAGE_PATH;
 		wp_mkdir_p( $upload_dirs );
 		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
-		$img        = str_replace( 'data:image/png;base64,', '', $image );
-		$img        = str_replace( ' ', '+', $img );
-		$data       = base64_decode( $img ); // phpcs:ignore
-		$file       = $upload_dir . $file_name . '.png';
-		file_put_contents( $file, $data ); // phpcs:ignore
-        $preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
-		return $preview_img;
+        $file_name                     = uniqid( 'aso-' );
+        $preview_img=[];
+        if(is_string($images)){
+            $img        = str_replace( 'data:image/png;base64,', '', $images );
+            $img        = str_replace( ' ', '+', $img );
+            $data       = base64_decode( $img ); // phpcs:ignore
+            $file       = $upload_dir . $file_name . '.png';
+            file_put_contents( $file, $data ); // phpcs:ignore
+            $preview_img[] = ASO_IMAGE_URL . '/preview-' . $file_name . '.png';
+            
+        }else{
+            foreach ($images as $key => $image) {
+                $img        = str_replace( 'data:image/png;base64,', '', $image );
+                $img        = str_replace( ' ', '+', $img );
+                $data       = base64_decode( $img ); // phpcs:ignore
+                $file       = $upload_dir . $file_name . "$key.png";
+                file_put_contents( $file, $data ); // phpcs:ignore
+                $preview_img[] = ASO_IMAGE_URL . '/preview-' . $file_name . "$key.png";
+            }
+        }
+        return $preview_img;
 	}
 	
 	/**
@@ -37,8 +51,7 @@
                 $_SESSION['aso_calculated_totals'] = false; */
                 
                 $newly_added_cart_item_key = false;
-                $file_name                     = uniqid( 'ncpc-' );
-                //aso_save_canvas_image( $preview_img, $file_name);
+                $aso_previews = aso_save_canvas_image( $recaps["designImages"]);
                 //$preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
                 if ( $cart_item_key ) {
                     WC()->cart->cart_contents[ $cart_item_key ]['aso_recaps'] = $recaps;
@@ -47,7 +60,7 @@
                         'success'     => true
                     ));
                 } else {
-                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$displayRecapsOnCheckout,$quantity);
+                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$aso_previews,$displayRecapsOnCheckout,$quantity);
 
                     if ( $newly_added_cart_item_key ) {
                         $message =  __( 'Product successfully added to cart.', 'ASO' );
@@ -80,7 +93,7 @@
 	/**
 	 *  add product to cart
 	 */
-	function aso_add_designs_to_cart( int $product_id,array $recaps, bool $displayRecapsOnCheckout,int $quantity) {
+	function aso_add_designs_to_cart( int $product_id,array $recaps,$images, bool $displayRecapsOnCheckout,int $quantity) {
 		$newly_added_cart_item_key = false;
         $product = wc_get_product( $product_id );
         $parent_id = $product->get_parent_id();
@@ -93,6 +106,7 @@
                 array(
                     'aso_meta_data' => [
                         "recaps"=>$recaps,
+                        "previews"=>$images,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
                     ]
                 )
@@ -107,6 +121,7 @@
                 array(
                     'aso_meta_data' => [
                         "recaps"=>$recaps,
+                        "previews"=>$images,
                         'aso_displayRecapsOnCheckout'=>$displayRecapsOnCheckout,
                     ]
                 )
