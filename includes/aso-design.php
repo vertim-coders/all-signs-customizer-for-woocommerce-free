@@ -77,7 +77,7 @@ class ASO_Design {
 		return $product_image_code;
 	}
 
-	public function display_previewBtn_editBtn_in_cart($cart_item, $cart_item_key){
+	public function display_previewBtn_editBtn_in_cart($cart_item){
 		$product = $cart_item['data'];
 		
 		// Construisez les URL pour les aperçus et les éditions (ajustez selon vos besoins)
@@ -85,9 +85,7 @@ class ASO_Design {
 
 		//$preview_data = get_transient( 'preview_' . $product->get_id() );
 
-		$npd_product = new aso_Product_Config( $product->get_id() );
-
-		$edit_url = $npd_product->get_design_url() . '?edit=' . $cart_item_key;
+		//$npd_product = new aso_Product_Config( $product->get_id() );
 		$product_name = '';
 		if(isset($cart_item['aso_meta_data']["recaps"])){
 			$modal_id = uniqid();
