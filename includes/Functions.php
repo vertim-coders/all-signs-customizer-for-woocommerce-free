@@ -57,9 +57,9 @@
             foreach ($images as $face) {
                 foreach ($face as $key => $image) {
                     $file        = base64_decode(explode(',', $image["url"])[1]);
-                    $file_name       = $upload_dir . $name . "-face-$key.".$image['format'];
+                    $file_name       = $upload_dir. $name. "-face-".($key+1).".".$image['format'];
                     file_put_contents( $file_name, $file ); // phpcs:ignore
-                    $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/'.$name . "-face-$key.".$image['format'];
+                    $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/'.$name . "-face-".($key+1).".".$image['format'];
                 }
             }
         }
