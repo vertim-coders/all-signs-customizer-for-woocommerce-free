@@ -346,7 +346,7 @@
                                     <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
                                     <label :for="material.name + index" :class="`aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer hover:aso-bg-[${configColors.backgroundColorHeader}]/10 aso-p-2 aso-base-animation`">
                                         <div :class="`${material.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-1/4 aso-h-20 aso-flex aso-full-center`">
-                                            <img v-if="material.icon != ''" :src="material.icon" class="aso-w-full aso-h-auto" />
+                                            <img v-if="material.icon != ''" :src="material.icon" class="aso-w-auto aso-h-full" />
                                         </div>                                
                                         <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
                                             <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ material.name }}</p>
@@ -385,7 +385,7 @@
                                     <input type="radio" :id="'aso-model' + option.name + option.size.width + index" name="aso-advanceModel" class=" peer aso-hidden" @change="selectSignModel(option)">
                                     <label :for="'aso-model' + option.name + option.size.width + index" :class="`aso-flex aso-full-center aso-space-x-2 hover:aso-bg-[${configColors.backgroundColorHeader}]/10 aso-p-2 aso-base-animation`">
                                         <div :class="`${option.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20 aso-flex aso-full-center`">
-                                            <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-auto" />
+                                            <img v-if="option.icon != ''" :src="option.icon" class="aso-w-auto aso-h-full" />
                                         </div>                                
                                         <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
                                             <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ option.name }}</p>
@@ -408,9 +408,9 @@
         
                         <div v-show="step == 'size'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-2 aso-w-full aso-h-full" id="aso-sizes-section">
                             <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textSize}}</p>    
-                            <div class="aso-w-full aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
+                            <div class="aso-h-full aso-space-y-2 aso-p-4 aso-overflow-auto aso-scrollBar">
                                 <div class="aso-space-y-2">
-                                    <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}]  aso-px-2 aso-border border-gray-400 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
+                                    <div @click="dropSizeToggle()" id="aso-fontSelected-dropdown" :class="`aso-cursor-pointer aso-items-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}]  aso-px-2 aso-border border-gray-400 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
                                         <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
                                             <p v-show="currentSizeName != ''" :class="`lg:aso-text-sm `" >{{ currentSizeName }}</p>
                                             <p v-show="currentSizeName == ''" class="lg:aso-text-sm xl:aso-text-base" >Selected size</p>
@@ -441,7 +441,7 @@
                                 <div v-if="currentSizeThickness" class="aso-space-y-2">
                                     <p class="aso-text-base aso-font-semibold">{{configVisualiserTexts.thickness}}</p>
 
-                                    <div @click="dropThicknessToggle()" id="aso-fontSelected-dropdown" :class="`aso-w-full aso-cursor-pointer aso-items-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}]  aso-px-2 aso-border border-gray-400 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
+                                    <div @click="dropThicknessToggle()" id="aso-fontSelected-dropdown" :class="`aso-cursor-pointer aso-items-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}]  aso-px-2 aso-border border-gray-400 aso-rounded-md aso-flex aso-justify-between aso-text-base aso-base-animation`">
                                         <div class="aso-w-fit aso-flex aso-items-center aso-justify-center aso-p-2">
                                             <p v-show="currentSizeName != ''" :class="`lg:aso-text-sm `" >{{ currentThickValue }} {{configUnit}}</p>
                                             <p v-show="currentSizeName == ''" class="lg:aso-text-sm xl:aso-text-base" >{{configVisualiserTexts.thickness}}</p>
@@ -525,7 +525,7 @@
                                             <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg, id)">
                                             <label :for="fixing.name + index" :class="`aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer hover:aso-bg-[${configColors.backgroundColorHeader}]/10 aso-p-2 aso-base-animation`">
                                                 <div :class="`${fixing.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20 aso-flex aso-full-center`">
-                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-auto" />
+                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-auto aso-h-full" />
                                                 </div>
                                                 <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
                                                     <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ fixing.name }} <span v-if="fixingg.additionalPrice > 0" class="aso-text-[11px]">({{ fixingg.additionalPrice }} {{props.currency}})</span> </p>
@@ -557,14 +557,14 @@
                                 </div>
                             </div>
         
-                            <div v-if="materialType == 'advance'" class="aso-w-full aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
+                            <div v-if="materialType == 'advance'" class="aso-h-full aso-p-4 aso-overflow-auto aso-scrollBar">
                                 <div v-for="(fixingId) in fixinggs">
                                     <div v-for="(fixing, index) in allFixings">
                                         <div v-if="fixingId == index" class="aso-space-y-3">
                                             <input type="radio" :id="fixing.name + index" name="aso-fixings" class=" peer aso-hidden" @change="selectFixingMethode(fixing.type, fixingg)">
                                             <label :for="fixing.name + index" class="aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer">
                                                 <div :class="`${fixing.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20`">
-                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-full aso-h-full" />
+                                                    <img v-if="fixing.icon != ''" :src="fixing.icon" class="aso-w-auto aso-h-full" />
                                                 </div>
                                                 <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
                                                     <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ fixing.name }}</p>
@@ -1171,7 +1171,7 @@
                                         <input type="radio" :id="'aso-addOptions' + addComponentValue.title + option.title + index" name="aso-fixings" class=" peer aso-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option.additionalPrice)">
                                         <label :for="'aso-addOptions' + addComponentValue.title + option.title + index" :class="`aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer hover:aso-bg-[${configColors.backgroundColorHeader}]/10 aso-p-2 aso-base-animation`">
                                             <div :class="`${option.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20 aso-flex aso-full-center`">
-                                                <img v-if="option.icon != ''" :src="option.icon" class="aso-w-full aso-h-auto" />
+                                                <img v-if="option.icon != ''" :src="option.icon" class="aso-w-auto aso-h-full" />
                                             </div>
                                             <div :class="`aso-w-3/4 aso-flex aso-flex-col aso-space-y-1 aso-text-[${configColors.textColorOptionsMenu}]`">
                                                 <p class="aso-text-sm aso-font-medium first-letter:aso-uppercase">{{ option.title }} <span v-if="option.additionalPrice > 0" class="aso-text-[11px]">({{option.additionalPrice}} {{props.currency}})</span></p>
@@ -1191,7 +1191,7 @@
                                     </div>
 
                                     <div v-show="showAddComponentEx && addComponentExId === index" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.textColorOptionsMenu}] aso-p-2`">
-                                        <img :src="addComponentExample" class="aso-w-full aso-h-auto">
+                                        <img :src="addComponentExample" class="aso-w-auto aso-h-full">
                                         <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
                                             <span @click="showAddComponentExample(false)" :class="`aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] hover:aso-bg-aso-bg-[${configColors.backgroundColorHeader}]/30 aso-p-1 aso-base-animation`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -1258,7 +1258,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
                                                 </div>
-                                                <img :src="showYesNoImg" class="aso-w-full aso-h-auto">
+                                                <img :src="showYesNoImg" class="aso-w-auto aso-h-full">
                                             </div>
                                         </div>
                                     </div>
@@ -1435,7 +1435,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                         </span>
-                        <p class="aso-hidden lg:aso-flex aso-text-sm aso-font-medium">Preview</p>
+                        <p class="aso-hidden lg:aso-flex aso-text-sm aso-font-medium">
+                            {{ configVisualiserTexts.textPreview && configVisualiserTexts.textPreview.trim() !== '' ? configVisualiserTexts.textPreview : 'Preview' }}
+                        </p>
                     </div>
     
                     <!-- <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
@@ -1464,7 +1466,9 @@
                                 <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
                             </svg>
                         </span>
-                        <p class="aso-hidden lg:aso-flex aso-text-sm aso-font-medium">Help</p>
+                        <p class="aso-hidden lg:aso-flex aso-text-sm aso-font-medium">
+                            {{ configVisualiserTexts.textHelp && configVisualiserTexts.textHelp.trim() !== '' ? configVisualiserTexts.textHelp : 'Help' }}
+                        </p>
                     </div>
                 </div>       
             </div>
@@ -1484,6 +1488,24 @@
             </div>
 
             <div class="aso-flex aso-flex-col aso-flex-1 aso-overflow-auto aso-scrollBar">
+                <div  class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
+                    <p :class="`aso-text-[16px] aso-font-semibold`">
+                        {{ configVisualiserTexts.textPreview && configVisualiserTexts.textPreview.trim() !== '' ? configVisualiserTexts.textPreview : 'Preview' }}
+                    </p>
+
+                    <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
+                        <div class="aso-flex aso-space-x-2 aso-full-center">
+                            <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
+                            <img :src="configData.designImages.face1[0].url" class="aso-w-auto aso-h-[70px]" >
+                        </div>
+
+                        <div v-if="configDoublePart.active" class="aso-flex aso-space-x-2 aso-full-center">
+                            <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
+                            <img :src="configData.designImages.face2[0].url" class="aso-w-auto aso-h-[70px]" >
+                        </div>
+                    </p>
+                </div>
+                
                 <div v-if=" selectedMaterial != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
                     <p :class="`aso-text-[16px] aso-font-semibold`">{{ configVisualiserTexts.textMaterial ?? 'Material' }}</p>
                     <p :class="`aso-text-[14px]`">{{ selectedMaterial}}</p>
@@ -2069,7 +2091,7 @@
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
-        console.log(configOutputSettings.value)
+        // console.log(configVisualiserTexts.value)
 
         handleGetImageSettings(configImageSettings.value)
         // console.log(configColors.value)
@@ -5036,30 +5058,30 @@
         function generateOutputImage(tab, canva) {
             switch (configOutputSettings.value.filesFormat) {
                 case 'png':
-                    tab.push({format: 'png', url: genImage(canva, 'png', 1800, 900)})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
                 break;
 
                 case 'jpeg':
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg', 1800, 900)})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
                 break;
 
                 case 'svg':
-                    tab.push({format: 'svg', url: genImage(canva, 'svg', 1800, 900)})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
 
                 case 'png+jpeg':
-                    tab.push({format: 'png', url: genImage(canva, 'png', 1800, 900)})
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg', 1800, 900)})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
                 break;
 
                 case 'png+svg':
-                    tab.push({format: 'png', url: genImage(canva, 'png', 1800, 900)})
-                    tab.push({format: 'svg', url: genImage(canva, 'svg', 1800, 900)})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
 
                 case 'jpeg+svg':
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg', 1800, 900)})
-                    tab.push({format: 'svg', url: genImage(canva, 'svg', 1800, 900)})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
             }
             
@@ -5269,12 +5291,16 @@
     }
     function showConfigRender(){
             // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
-        prevImg.value = genImage(canvas, 'png');
-        showImg.value = true
-
         if(configDoublePart.value.active){
-
+            if(activeFace.value === "front-face"){
+                prevImg.value = genImage(canvas, 'png');
+            }else if(activeFace.value === "back-face"){
+                prevImg.value = genImage(canvasBack, 'png');
+            }
+        }else{
+            prevImg.value = genImage(canvas, 'png');
         }
+        showImg.value = true
     }
 
     function genImage(canva, format, width, height) {
@@ -5286,7 +5312,7 @@
         if (width && height) {
             canva.setWidth(width);
             canva.setHeight(height);
-            checkScreenSize()
+            // checkScreenSize()
         }
 
 
@@ -5358,7 +5384,7 @@
         canva.setWidth(originalWidth);
         canva.setHeight(originalHeight);
 
-        checkScreenSize()
+        // checkScreenSize()
         canva.renderAll();
 
         return dataURL;
