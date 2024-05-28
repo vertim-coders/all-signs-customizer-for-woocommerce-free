@@ -7,23 +7,23 @@
 		$upload_dirs = ASO_IMAGE_PATH;
 		wp_mkdir_p( $upload_dirs );
 		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
-        $file_name                     = uniqid( 'aso-' );
+        $name                     = uniqid( 'aso-' );
         $preview_img=[];
         if(!isset($images["face1"])){
             foreach ($images as $key => $image) {
                 $file        = base64_decode(explode(',', $image["url"])[1]);
-                $file_name       = $upload_dir . $file_name . ".".$image['format'];
+                $file_name       = $upload_dir . $name . ".".$image['format'];
                 file_put_contents( $file_name, $file ); // phpcs:ignore
-                $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/preview-' . $file_name . '.'. $image['format'];
+                $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/'.$name . '.'. $image['format'];
             }
             
         }else{
             foreach ($images as $face) {
                 foreach ($face as $key => $image) {
                     $file        = base64_decode(explode(',', $image["url"])[1]);
-                    $file_name       = $upload_dir . $file_name . ".".$image['format'];
+                    $file_name       = $upload_dir . $name . "-face-$key.".$image['format'];
                     file_put_contents( $file_name, $file ); // phpcs:ignore
-                    $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/preview-' . $file_name . '.'. $image['format'];
+                    $preview_img[$image['format'].$key] = ASO_IMAGE_URL . '/'.$name . "-face-$key.".$image['format'];
                 }
             }
         }

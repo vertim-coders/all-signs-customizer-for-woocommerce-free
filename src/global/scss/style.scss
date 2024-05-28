@@ -87,6 +87,17 @@ td.is_aso_customizable.column-is_aso_customizable {
   padding: 10px 0 10px 5px;
   gap: 10px;
 }
+.aso-custom-options-info-infos {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-right: solid 0px transparent;
+  border-left: solid 0px transparent;
+  border-bottom: solid rgb(175, 173, 173) 1px;
+  padding: 10px 0 10px 5px;
+  gap: 10px;
+}
+
 .aso-custom-options-info label {
   font-size: medium;
   font-weight: 600;
