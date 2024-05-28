@@ -1,5 +1,41 @@
 <?php
     if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+    function aso_zip_file($order_id,$ouput_settings,$dataUris){
+		$outputOptions = get_option("aso_output_options",[]);
+		$upload_dirs = ASO_IMAGE_PATH;
+		wp_mkdir_p( $upload_dirs );
+		if(isset($outputOptions["zipName"]) && $outputOptions["zipName"]==true){
+			if(isset($ouput_settings["prefix"]) && !empty($ouput_settings["prefix"])){
+				$zip_file = "/".$ouput_settings["prefix"].$order_id.'.zip';
+			}else{
+				$zip_file = "/".$order_id.'.zip';
+			}
+		}else{
+			if(isset($ouput_settings["prefix"]) && !empty($ouput_settings["prefix"])){
+				$zip_file = "/".$ouput_settings["prefix"].uniqid( 'aso-' ).'.zip';
+			}else{
+				$zip_file = "/".uniqid( 'aso-' ).'.zip';
+			}
+			
+		}
+
+		$zip = new ZipArchive();
+		$zip->open($upload_dirs.$zip_file, ZipArchive::CREATE);
+
+		// Ajouter les fichiers au ZIP à partir des dataURI
+		foreach ($dataUris as $index => $dataUri) {
+			$file_data = base64_decode(explode(',', $dataUri)[1]);
+			$file_extension = explode('/', mime_content_type($dataUri))[1];
+			$file_name = "file_{$index}.{$file_extension}";
+			$zip->addFromString($file_name, $file_data);
+		}
+
+		// Fermer le ZIP
+		$zip->close();
+		return ASO_IMAGE_URL.$zip_file;
+	}
+
 	/**
 	 * save preview image
 	 */
