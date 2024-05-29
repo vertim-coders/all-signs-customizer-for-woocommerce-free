@@ -478,7 +478,7 @@
                         
                         <div class="aso-w-full aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                             <div v-for="(option, index) in advancedComponent.options" class="aso-space-y-3">
-                                <input type="radio" :id="'aso-model' + option.name + option.size.width + index" name="aso-advanceModel" class=" peer aso-hidden" @change="selectSignModel(option)">
+                                <input type="radio" :id="'aso-model' + option.name + option.size.width + index" name="aso-advanceModel" class=" peer aso-hidden" @change="selectSignModel(option, index)">
                                 <label :for="'aso-model' + option.name + option.size.width + index" :class="`aso-flex aso-full-center aso-space-x-2 hover:aso-bg-[${configColors.backgroundColorHeader}]/10 aso-p-2 aso-base-animation`">
                                     <div :class="`${option.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : `` } aso-w-1/4 aso-h-20 aso-flex aso-full-center`">
                                         <img v-if="option.icon != ''" :src="option.icon" class="aso-w-auto aso-h-full" />
@@ -489,7 +489,7 @@
                                         <p class="aso-text-xs">{{ option.size.width }}x{{ option.size.height }}</p>
                                         <div class="aso-w-full aso-flex aso-items-center aso-justify-between">
                                             <span class="aso-invisible">example</span>
-                                            <span :class="`${activeSignModelName == option.name ? `aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]` : `aso-text-transparent aso-border-[${configColors.backgroundColorHeader}]`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-solid aso-border-2 aso-rounded-full`">
+                                            <span :class="`${activeSignModelName == option.name && activeSignModelId === index ? `aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}]` : `aso-text-transparent aso-border-[${configColors.backgroundColorHeader}]`} aso-flex aso-w-fit aso-h-fit aso-p-1 aso-border-solid aso-border-2 aso-rounded-full`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="aso-w-4 aso-h-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                                                 </svg>
@@ -1746,7 +1746,7 @@
                         <div v-if="configDoublePart.active">
                             <div v-if="configData.images.value.face1.length > 0">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(image, id) in configData.images.face1" class="aso-flex aso-space-x-1 aso-full-center">                              
+                                <div v-for="(image, id) in configData.images.value.face1" class="aso-flex aso-space-x-1 aso-full-center">                              
                                     <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
                                         <img :src="image.url" :class="`aso-h-[40px] aso-w-[40px] aso-flex`" />
                                     </span>
@@ -2354,7 +2354,9 @@
         setScrollColor(configColors.value.backgroundColorHeader)
         setIsLoadedToFalse()
         activeCanvas = canvas
-        
+
+        window.dispatchEvent(new Event('resize'));
+
         return {
             canvas
         }
@@ -2719,16 +2721,16 @@
                 stop = true
             }
         })
-        advancedComponent.value.options.forEach( option => {
+        advancedComponent.value.options.forEach( (option, index) => {
             if(!stopDefOption){
                 if(option.isDefault){
                     // console.log('default')
-                    selectSignModel(option)
+                    selectSignModel(option, index)
                     stopDefOption = true
                 }
                 if(!option.isDefault && stopDefOption && !stopOption){
                     // console.log('first')
-                    selectSignModel(option)
+                    selectSignModel(option, index)
                     stopDefOption = true
                     stopOption = true
                 }
@@ -3467,12 +3469,14 @@
     }
 
     var activeSignModelName = ref('')
-    function selectSignModel(model){
+    var activeSignModelId = ref(0)
+    function selectSignModel(model, id){
         handleReadyToSaveState(false);
 
         firstSetLoad.value = false
 
         activeSignModelName.value = model.name
+        activeSignModelId.value = id
 
         handleSelectBorder('none')
         var borderPrice1Object = {
@@ -3570,204 +3574,11 @@
 
 
 
-    var sizes = ref([
-        {
-            "name" : 'xLarge',
-            "width" : 600,
-            "height" : 400
-        },
-        {
-            "name" : 'small',
-            "width" : 400,
-            "height" : 400
-        },
-        {
-            "name" : 'xs',
-            "width" : 8,
-            "height" : 20
-        },
-        {
-            "name" : 'lil',
-            "width" : 25,
-            "height" : 10
-        },
-        {
-            "name" : 'large',
-            "width" : 700,
-            "height" : 400
-        },
-        {
-            "name" : 'XLarge',
-            "width" : 650,
-            "height" : 600
-        },
-        {
-            "name" : '2XLarge',
-            "width" : 1050,
-            "height" : 800
-        },
-    ])
     var customSizeValues = ref({
         label: configVisualiserTexts.customSize,
         width: 0,
         height: 0
     })
-
-    var shapes = ref([
-        {
-            'name' : 'square'
-        },
-        {
-            'name' : 'oval'
-        },
-        {
-            'name' : 'triangle'
-        },
-        {
-            'name' : 'rounded-square'
-        },
-        {
-            'name' : 'rotated-square'
-        },
-        {
-            'name' : 'turn-left'
-        },
-        {
-            'name' : 'turn-right'
-        },
-        {
-            'name' : 'arrow-left'
-        },
-        {
-            'name' : 'arrow-right'
-        },
-        {
-            'name' : 'stop'
-        },
-        {
-            'name' : 'rounded-top'
-        },
-        {
-            'name' : 'rounded-sides'
-        },
-    ])
-    var colors = ref([
-        {
-            'name' : 'pink',
-            'code' : '#ff0084'
-        },
-        {
-            'name' : 'green',
-            'code' : '#016464'
-        },
-        {
-            'name' : 'orange',
-            'code' : '#fcb603'
-        },
-        {
-            'name' : 'brown',
-            'code' : '#8a1e00'
-        },
-        {
-            'name' : 'cyan',
-            'code' : '#51d0fb'
-        },
-        {
-            'name' : 'black',
-            'code' : '#000'
-        },
-        {
-            'name' : 'purple',
-            'code' : '#a600ff'
-        },
-        {
-            'name' : 'gold',
-            'code' : '#dba11a'
-        },
-        {
-            'name' : 'silver',
-            'code' : '#8b877e'
-        },
-    ])
-    var fonts = ref([
-        {
-            'name' : 'Allura',
-            'code' : 'pink'
-        },
-        {
-            'name' : 'Avante',
-            'code' : 'brown'
-        },
-        {
-            'name' : 'Serif',
-            'code' : 'cyan'
-        },
-    ])
-    var borders = ref([
-        {
-            'name': 'none'
-        },
-        {
-            'name': 'normal'
-        },
-        {
-            'name': 'old-wold'
-        },
-    ])
-    var fixings = ref([
-        {
-            'name': 'none',
-            'type': 'none',
-        },
-        {
-            'name': 'screw',
-            'type': 'screw',
-        },
-        {
-            'name': 'screw-cap',
-            'type': 'screw-cap',
-        },
-        {
-            'name': 'standoff',
-            'type': 'standoff',
-        },
-        {
-            'name': 'hanging',
-            'type': 'hanging',
-        },
-        {
-            'name': 'flag',
-            'type': 'flag',
-        },
-        {
-            'name': 'suction-cup',
-            'type': 'suction-cup',
-        },
-        {
-            'name': 'table-stand',
-            'type': 'table-stand',
-        },
-        {
-            'name': 'ceiling',
-            'type': 'ceiling',
-        },
-        {
-            'name': 'pole-attachement',
-            'type': 'pole-attachement',
-        },
-        {
-            'name': 'cable-labeling',
-            'type': 'cable-labeling',
-        },
-        {
-            'name': 'table-clamp',
-            'type': 'table-clamp',
-        },
-        {
-            'name': 'base-support',
-            'type': 'base-support',
-        },
-    ])
 
 
     var sizeRatio = ref('big')
