@@ -1527,7 +1527,8 @@
                     <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div class="aso-flex aso-space-x-2 aso-full-center">
                             <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                            <img :src="configData.designImages.face1[0].url" class="aso-w-auto aso-h-[70px]" >
+                            <img v-if="configDoublePart.active" :src="configData.designImages.face1[0].url" class="aso-w-auto aso-h-[70px]" >
+                            <img v-if="!configDoublePart.active" :src="configData.designImages[0].url" class="aso-w-auto aso-h-[70px]" >
                         </div>
 
                         <div v-if="configDoublePart.active" class="aso-flex aso-space-x-2 aso-full-center">

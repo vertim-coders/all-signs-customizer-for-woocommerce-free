@@ -606,6 +606,7 @@ function handleUndo() {
                     // currentConfig.undoButton.disabled= "disabled";
                     // currentConfig.redoButton.removeAttribute('disabled');
                     currentConfig.currentStateIndex -= 1;
+                    
                 }
             }
         }
@@ -734,8 +735,8 @@ function handleRedo() {
     backTextCharLength = sumOptionsPrice(BtextObjects, 'text').length
 
     console.log(currentConfig.canvasObjects, "Redo")
-    centerSign(canvas)
-    centerSign(backCanvas)
+    // centerSign(canvas)
+    // centerSign(backCanvas)
 
     readyToSave = true
 
