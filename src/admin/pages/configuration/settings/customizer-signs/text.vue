@@ -329,7 +329,7 @@ const text = ref({
     enableFontSize:{
         active:true,
         minimumFontSize:12,
-        maximumFontSize:30,
+        maximumFontSize:50,
         defaultFontSize:16,
     },
     enableBold:true,

@@ -22,6 +22,8 @@ class ASO_Frontend {
         wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
         wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
         wp_enqueue_script( 'aso-frontend' );
+        wp_enqueue_style('aso-toast');
+        wp_enqueue_script('aso-toast');
         // wp_enqueue_script( 'aso-editor-script' );
         wp_enqueue_script( 'aso-fabric' );
         extract( // phpcs:ignore

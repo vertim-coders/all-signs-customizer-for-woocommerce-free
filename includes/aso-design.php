@@ -61,11 +61,9 @@ class ASO_Design {
 	 */
 	public function aso_change_product_image_in_cart( $product_image_code, $values) {
 		if ( isset( $values['aso_meta_data']["recaps"] ) ) {
-			$previews = $values['aso_meta_data']["recaps"]["previews"];
+			$previews = $values['aso_meta_data']["recaps"]["designImages"];
 			foreach ($previews as $key => $image) {
-				if(strpos($key, 'pdf') == false){
-					$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($image) . "'>";
-				}
+				$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($image) . "'>";
 			}		
 			return $product_image_code;
 		}
@@ -110,8 +108,21 @@ class ASO_Design {
 
 	public function display_recaps_config_on_checkout_page($item_data, $cart_item){
 		if (is_checkout()) {
-			if(isset($cart_item["aso_meta_data"]['aso_displayRecapsOnCheckout'] ) && $cart_item["aso_meta_data"]['aso_displayRecapsOnCheckout']){
-				echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false);
+			$product = $cart_item['data'];
+
+			if ( $product ) {
+				
+				$product_id = $product->get_id();
+				$product_meta_data = get_post_meta( $product_id, 'product-aso-metas', true );
+				if ( isset( $product_meta_data[ $product_id ]['config-id'] ) && get_post($product_meta_data[ $product_id ]['config-id'])){
+					if ( empty( !$product_meta_data[ $product_id ]['config-id'] ) ) {
+						$configId = $product_meta_data[ $product_id ]['config-id'];
+                    	$config = get_post_meta($configId,"aso-configs-meta",true);
+						if($config["data"]["settings"]["generals"]["product"]["displayRecapsOnCheckout"]){
+							echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -150,8 +161,10 @@ class ASO_Design {
 						<?php } ?>
 					</div>
 				<?php }} else{?>
-						<span for=""style="margin: 0 5px;"><?php echo esc_html($recaps["sign"]["border"]["value"]["type"])?> </span>
-						<div class="aso-cart-color-option" style="background:<?php echo esc_attr($recaps["sign"]["border"]["value"]["codeHex"])?>;"></div>
+					<span for=""style="margin: 0 5px;"><?php echo esc_html($recaps["sign"]["border"]["value"]["type"])?> </span>
+					<?php if(isset($recaps["sign"]["border"]["value"]["codeHex"])) { ?>
+					<div class="aso-cart-color-option" style="background:<?php echo esc_attr($recaps["sign"]["border"]["value"]["codeHex"])?>;"></div>
+					<?php }?>
 				<?php }?>
 			</div>
 			<div class="aso-custom-options-info">
@@ -180,7 +193,7 @@ class ASO_Design {
 					<?php }?>
 				<?php }?>
 			</div>
-			<?php if(count($recaps["texts"]["value"])>0) {?>
+			<?php if(isset($recaps["texts"]["value"]) && count($recaps["texts"]["value"])>0) {?>
 				<div class="aso-custom-options-info">
 					<label for=""><?php echo esc_html($recaps["texts"]["label"])?>: </label>
 					<?php if(isset($recaps["texts"]["value"]["face1"]) || isset($recaps["texts"]["value"]["face2"])) {?>
@@ -265,7 +278,7 @@ class ASO_Design {
 			<div class="aso-custom-options-info">
 				<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
 				<div style="display:flex; justify-content:center; align-items:center;">
-					<?php foreach ($recaps["previews"] as $key => $image) {?>
+					<?php foreach ($recaps["designImages"] as $key => $image) {?>
 						<div style="position:relative; width:fit-content">
 							<img src="<?php echo esc_url($image)?>" style="
 								width: auto;

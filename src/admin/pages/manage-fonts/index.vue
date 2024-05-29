@@ -338,7 +338,6 @@
         isLoading.value=true;
         const result = await api.deleteManagefont(fontId.value);
         if(result.success){
-            isLoading.value = false;
             await fetchFonts();
             isLoading.value = false;
             closeModal();

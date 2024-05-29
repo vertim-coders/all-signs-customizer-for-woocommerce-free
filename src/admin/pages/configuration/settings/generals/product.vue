@@ -199,7 +199,7 @@ const updateProductSettings = async () => {
 }
 
 const handleRedirectAfterAddingToCart = (state) => {
-    if(state='cart'){
+    if(state=='cart'){
         product.value.redirectAfterAddingToCart = true;
         product.value.redirectToCheckOutPage = false;
     }else{

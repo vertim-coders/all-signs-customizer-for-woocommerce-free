@@ -374,7 +374,7 @@ const deleteConfig = ref({
 })
 
 const demosList = ref([
-    //{name:'Acrylic Sign', value:'acrylic',icon:aso_data.assets_url+'/images/demos/im_acrylic_sign.webp'},
+    {name:'Acrylic Sign', value:'acrylic',icon:aso_data.assets_url+'/images/demos/im_acrylic_sign.webp'},
     {name:'Aluminium Sign', value:'aluminium',icon:aso_data.assets_url+'/images/demos/im_aluminium_sign.webp'},
     {name:'Brass Sign', value:'brass-sign',icon:aso_data.assets_url+'/images/demos/im_brass_sign.webp'},
     {name:'Double-Sided Sign', value:'double-side',icon:aso_data.assets_url+'/images/demos/im_double_side_sign.gif'},
@@ -383,7 +383,7 @@ const demosList = ref([
     {name:'Stainless Stell Sign', value:'stainlessStell',icon:aso_data.assets_url+'/images/demos/im_stainlessSteel_sign.webp'},
     {name:'Woods Sign', value:'woods-sign',icon:aso_data.assets_url+'/images/demos/im_wood_sign.webp'}
 ]);
-const selectedDemo= ref('aluminium');
+const selectedDemo= ref('acrylic');
 const defaultSettings = ref({
   settings: {
     generals: {
@@ -515,6 +515,8 @@ const defaultSettings = ref({
             enableFontSize:{
                 active:true,
                 defaultFontSize:16,
+                minimumFontSize:12,
+                maximumFontSize:50,
             },
             enableBold:true,
             enableUnderline:true,
@@ -624,35 +626,36 @@ const defaultSettings = ref({
     themeColors: {
         skin:"default",
         colors: {
-            canvasBackgroundColor:"#ffffff",
-            canvasBorderColor:"#ffffff",
-            textColorContentHeader: "#000000",
-            backgroundColorHeader: "#ffffff",
-            textColorContentSideMenu: "#000000",
+            backgroundButton: "#988b8b",
+            backgroundColorButtonFinish: "#ebda24",
+            backgroundColorButtonHelp: "#000000",
+            backgroundColorButtonRestartAll: "#4e4646",
+            backgroundColorContentSide: "#000000",
+            backgroundColorHeader: "#21c468",
             backgroundColorHeaderContentSide: "#000000",
-            textColorOptionsMenu: "#ffffff",
-            backgroundColorOptionsMenu: "#016464",
-            textColorButtonSave: "#000000",
-            backgroundColorTextButtonSave: "#ffffff",
-            textColorHoverButtonSave: "#000000",
-            backgroundColorHoverButtonSave: "#ffffff",
-            textColorButton: "#ffffff",
-            backgroundButton: "#016464",
-            textColorHoverButton: "#ffffff",
-            backgroundColorHoverButton: "#016464",
-            textColorButtonHelp: "#ffffff",
-            backgroundColorButtonHelp: "#016464",
-            textColorHoverButtonHelp: "#ffffff",
-            backgroundColorHoverButtonHelp: "#016464",
-            textColorHoverButtonRestartAll: "#ffffff",
+            backgroundColorHoverButton: "#b1a0a0",
+            backgroundColorHoverButtonFinish: "#feeb20",
+            backgroundColorHoverButtonHelp: "#000000",
             backgroundColorHoverButtonRestartAll: "#000000",
-            textColorButtonRestartAll: "#ffffff",
-            backgroundColorButtonRestartAll: "#000000",
+            backgroundColorHoverButtonSave: "#feeb20",
+            backgroundColorOptionsMenu: "#ebe6e6",
+            backgroundColorTextButtonSave: "#ebda24",
+            canvasBackgroundColor: "#f4fbda",
+            canvasBorderColor: "#c6ec3c",
+            textColorButton: "#ffffff",
             textColorButtonFinish: "#ffffff",
-            textColorHoverButtonFinish: "#f0f0f0",
-            backgroundColorButtonFinish: "#FFBC3C",
-            backgroundColorHoverButtonFinish: "#edad35",
-            backgroundColorContentSide: "#ffffff"
+            textColorButtonHelp: "#ffffff",
+            textColorButtonRestartAll: "#ffffff",
+            textColorButtonSave: "#ffffff",
+            textColorContentHeader: "#ffffff",
+            textColorContentSideMenu: "#ffffff",
+            textColorHoverButton: "#ffffff",
+            textColorHoverButtonFinish: "#ffffff",
+            textColorHoverButtonHelp: "#ffffff",
+            textColorHoverButtonRestartAll: "#ffffff",
+            textColorHoverButtonSave: "#ffffff",
+            textColorOptionsMenu: "#635a5a",
+
         },
         customCSS:""
     },
@@ -661,7 +664,7 @@ const defaultSettings = ref({
   additionalOptions:[]
 });
 const metaConfigs = ref({
-    /* "acrylic":{
+    "acrylic":{
         materials: [
 			{
 				icon: "",
@@ -1358,7 +1361,7 @@ const metaConfigs = ref({
 				}
 			}
 		]
-    }, */
+    },
     "aluminium":{
         materials: [
             {
@@ -8560,7 +8563,7 @@ const includeMetaData = async (state) => {
                     "isGoogleFont": true
                 },
             ]});
-            manageFonts.value =[0,1,2,3,4];
+            await fetchFonts();
         }
         if(selectedDemo.value == 'double-side'){
             configuration.data.settings.customizerSign.signPart.doublePart.active=true; 
