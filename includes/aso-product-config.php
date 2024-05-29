@@ -419,6 +419,7 @@
 			jQuery(\"[value='".esc_html($pid). "']\").parent().find('.single_add_to_cart_button').hide();
 		";
         wp_add_inline_script( 'aso-product-min', $inline_script );
+        wp_add_inline_script( 'aso-tinymce-script', $inline_script );
 		?>
 	<?php
 	}
@@ -461,6 +462,7 @@
 					jQuery(\"[data-product_id='" .esc_attr($productId). "']\").hide();
 				";
 				wp_add_inline_script( 'aso-product-min', $inline_script );
+				wp_add_inline_script( 'aso-tinymce-script', $inline_script );
 			}
 		}
 		return $html;		
