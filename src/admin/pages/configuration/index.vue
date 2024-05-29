@@ -914,12 +914,15 @@ const metaConfigs = ref({
 								isDefault: true,
 								name: "Transparent",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: true,
 									codeHex: "#f0f0f0",
-									url: "https://signsdesigner.us/app/demos/acrylic-signs/acrylic-sign.png"
+									url: aso_data.assets_url+'/images/im_transparent-acrylic-sign.png'
 								},
 								prevImg: "",
 								additionalPrice: 0
@@ -928,7 +931,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "White",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -942,7 +948,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Black",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -956,7 +965,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Blue",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -970,7 +982,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Red",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -984,7 +999,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Green",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -998,7 +1016,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Yellow",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -1012,7 +1033,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Gray",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -1026,7 +1050,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Pink",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -1040,7 +1067,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Purple",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -1054,7 +1084,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Orange",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -1068,7 +1101,10 @@ const metaConfigs = ref({
 								isDefault: false,
 								name: "Brown",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: false,
@@ -1330,6 +1366,7 @@ const metaConfigs = ref({
 									description: "",
 									icon: aso_data.assets_url+'/images/demos/ic_none.svg',
 									image: "",
+                                    popImg:"",
 									excludeColors: [],
 									isDefault: true,
 									additionalPrice: 0
@@ -1339,7 +1376,8 @@ const metaConfigs = ref({
 									description: "",
 									icon: "https://signsdesigner.us/app/demos/acrylic-signs/frosted.png",
 									image: "https://signsdesigner.us/app/demos/acrylic-signs/frosted.png",
-									excludeColors: [
+									popImg:"",
+                                    excludeColors: [
 										2,
 										3,
 										4,
@@ -2211,11 +2249,11 @@ const metaConfigs = ref({
                                 name: "London",
                                 description: "Chrome-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london1-prev.png",
+                                image: aso_data.assets_url+'/images/london1-prev.png',
                                 color: {
                                     name: "London",
                                     codeHex: "",
-                                    prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london1-prev.png"
+                                    prevImg: aso_data.assets_url+'/images/london1-prev.png'
                                 },
                                 fixingMethods: [2],
                                 shapeId: 0,
@@ -2235,11 +2273,11 @@ const metaConfigs = ref({
                                 name: "London",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london2-prev.png",
+                                image: aso_data.assets_url+'/images/london2-prev.png',
                                 color: {
                                     name: "London",
                                     codeHex: "",
-                                    prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london2-prev.png"
+                                    prevImg: aso_data.assets_url+'/images/london2-prev.png'
                                 },
                                 fixingMethods: [2],
                                 shapeId: 0,
@@ -2259,11 +2297,11 @@ const metaConfigs = ref({
                                 name: "London",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london3.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london3-prev.png",
+                                image: aso_data.assets_url+'/images/london3-prev.png',
                                 color: {
                                     name: "London",
                                     codeHex: "",
-                                    prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london3-prev.png"
+                                    prevImg: aso_data.assets_url+'/images/london3-prev.png'
                                 },
                                 fixingMethods: [
                                     2
@@ -2285,11 +2323,11 @@ const metaConfigs = ref({
                                 name: "Oslo",
                                 description: "Matte brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/oslo.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/oslo-prev.png",
+                                image: aso_data.assets_url+'/images/oslo-prev.png',
                                 color: {
                                     name: "Oslo",
                                     codeHex: "",
-                                    prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/oslo-prev.png"
+                                    prevImg: aso_data.assets_url+'/images/oslo-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2311,11 +2349,11 @@ const metaConfigs = ref({
                                 name: "Paris",
                                 description: "Matte brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris1-prev.png",
+                                image: aso_data.assets_url+'/images/paris1-prev.png',
                                 color: {
                                 name: "Paris",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris1-prev.png"
+                                prevImg: aso_data.assets_url+'/images/paris1-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2337,11 +2375,11 @@ const metaConfigs = ref({
                                 name: "Paris",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris2-prev.png",
+                                image: aso_data.assets_url+'/images/paris2-prev.png',
                                 color: {
                                     name: "Paris",
                                     codeHex: "",
-                                    prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris2-prev.png"
+                                    prevImg: aso_data.assets_url+'/images/paris2-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2363,11 +2401,11 @@ const metaConfigs = ref({
                                 name: "Paris",
                                 description: "Black/oxide brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris3.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris3-prev.png",
+                                image: aso_data.assets_url+'/images/paris3-prev.png',
                                 color: {
                                 name: "Paris",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris3-prev.png"
+                                prevImg: aso_data.assets_url+'/images/paris3-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2389,11 +2427,11 @@ const metaConfigs = ref({
                                 name: "Stockhlom",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm1-prev.png",
+                                image: aso_data.assets_url+'/images/stockholm1-prev.png',
                                 color: {
                                 name: "Stockhlom",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm1-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stockholm1-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2415,11 +2453,11 @@ const metaConfigs = ref({
                                 name: "Stockhlom",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm2-prev.png",
+                                image: aso_data.assets_url+'/images/stockholm2-prev.png',
                                 color: {
                                 name: "Stockhlom",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm2-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stockholm2-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2441,11 +2479,11 @@ const metaConfigs = ref({
                                 name: "Berlin",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1-png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1-prev.png",
+                                image: aso_data.assets_url+'/images/berlin1-prev.png',
                                 color: {
                                 name: "Berlin",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1-prev.png"
+                                prevImg: aso_data.assets_url+'/images/berlin1-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2467,11 +2505,11 @@ const metaConfigs = ref({
                                 name: "Berlin",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin2-prev.png",
+                                image: aso_data.assets_url+'/images/berlin2-prev.png',
                                 color: {
                                 name: "Berlin",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin2-prev.png"
+                                prevImg: aso_data.assets_url+'/images/berlin2-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2493,11 +2531,11 @@ const metaConfigs = ref({
                                 name: "Copenhagen",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/copenhagen.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/copenhagen-prev.png",
+                                image: aso_data.assets_url+"/images/copenhagen-prev.png",
                                 color: {
                                 name: "Copenhagen",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/copenhagen-prev.png"
+                                prevImg: aso_data.assets_url+"/images/copenhagen-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2519,11 +2557,11 @@ const metaConfigs = ref({
                                 name: "Athens",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/athens.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/athens-prev.png",
+                                image: aso_data.assets_url+"/images/athens-prev.png",
                                 color: {
                                 name: "Athens",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/athens-prev.png"
+                                prevImg: aso_data.assets_url+"/images/athens-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2545,11 +2583,11 @@ const metaConfigs = ref({
                                 name: "Amsterdam",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/amsterdam.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/amsterdam-prev.png",
+                                image: aso_data.assets_url+"/images/amsterdam-prev.png",
                                 color: {
                                 name: "Amsterdam",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/amsterdam-prev.png"
+                                prevImg: aso_data.assets_url+"/images/amsterdam-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2571,11 +2609,11 @@ const metaConfigs = ref({
                                 name: "Tallinn",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/tallinn.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/tallinn-prev.png",
+                                image: aso_data.assets_url+"/images/tallinn-prev.png",
                                 color: {
                                 name: "Tallinn",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/tallinn-prev.png"
+                                prevImg: aso_data.assets_url+"/images/tallinn-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2597,11 +2635,11 @@ const metaConfigs = ref({
                                 name: "Rome",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome1-prev.png",
+                                image: aso_data.assets_url+"/images/rome1-prev.png",
                                 color: {
                                 name: "Rome",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome1-prev.png"
+                                prevImg: aso_data.assets_url+"/images/rome1-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2623,11 +2661,11 @@ const metaConfigs = ref({
                                 name: "Rome",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome2-prev.png",
+                                image: aso_data.assets_url+"/images/rome2-prev.png",
                                 color: {
                                 name: "Rome",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome2-prev.png"
+                                prevImg: aso_data.assets_url+"/images/rome2-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2649,11 +2687,11 @@ const metaConfigs = ref({
                                 name: "Rome",
                                 description: "Brushed brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome3-prev.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome3-prev.png",
+                                image: aso_data.assets_url+"/images/rome3-prev.png",
                                 color: {
                                 name: "Rome",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome3-prev.png"
+                                prevImg: aso_data.assets_url+"/images/rome3-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2675,11 +2713,11 @@ const metaConfigs = ref({
                                 name: "Sydney",
                                 description: "Brushed brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney-prev.png",
+                                image: aso_data.assets_url+"/images/sydney-prev.png",
                                 color: {
                                 name: "Sydney",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney-prev.png"
+                                prevImg: aso_data.assets_url+"/images/sydney-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2701,11 +2739,11 @@ const metaConfigs = ref({
                                 name: "Prague",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/prague.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/prague-prev.png",
+                                image: aso_data.assets_url+"/images/prague-prev.png",
                                 color: {
                                 name: "Prague",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/prague-prev.png"
+                                prevImg: aso_data.assets_url+"/images/prague-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2728,11 +2766,11 @@ const metaConfigs = ref({
                                 name: "Dublin",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/dublin.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/dublin-prev.png",
+                                image: aso_data.assets_url+"/images/dublin-prev.png",
                                 color: {
                                 name: "Dublin",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/dublin-prev.png"
+                                prevImg: aso_data.assets_url+"/images/dublin-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2755,11 +2793,11 @@ const metaConfigs = ref({
                                 name: "Lisbon",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon1-prev.png",
+                                image: aso_data.assets_url+"/images/lisbon1-prev.png",
                                 color: {
                                 name: "Lisbon",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon1-prev.png"
+                                prevImg: aso_data.assets_url+"/images/lisbon1-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2782,11 +2820,11 @@ const metaConfigs = ref({
                                 name: "Lisbon",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon2-prev.png",
+                                image: aso_data.assets_url+"/images/lisbon2-prev.png",
                                 color: {
                                 name: "Lisbon",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon2-prev.png"
+                                prevImg: aso_data.assets_url+"/images/lisbon2-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2816,17 +2854,17 @@ const metaConfigs = ref({
                                 name: "Madrid",
                                 description: "Brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/madrid1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/label-tags/laiton-pattern.png",
+                                image: aso_data.assets_url+"/images/laiton-pattern.png",
                                 color: {
-                                name: "Madrid",
-                                codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/label-tags/laiton-pattern.png"
+                                    name: "Madrid",
+                                    codeHex: "",
+                                    prevImg: aso_data.assets_url+"/images/laiton-pattern.png"
                                 },
                                 fixingMethods: [
-                                0,
-                                1,
-                                2,
-                                3
+                                    0,
+                                    1,
+                                    2,
+                                    3
                                 ],
                                 shapeId: 3,
                                 size: {
@@ -2845,11 +2883,11 @@ const metaConfigs = ref({
                                 name: "Madrid",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/madrid2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/label-tags/nickel-pattern.png",
+                                image: aso_data.assets_url+"/images/nickel-pattern.png",
                                 color: {
                                 name: "Madrid",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/label-tags/nickel-pattern.png"
+                                prevImg: aso_data.assets_url+"/images/nickel-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2874,11 +2912,11 @@ const metaConfigs = ref({
                                 name: "Kiev",
                                 description: "Brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/kiev1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/label-tags/laiton-pattern.png",
+                                image: aso_data.assets_url+"/images/laiton-pattern.png",
                                 color: {
                                 name: "Kiev",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/label-tags/laiton-pattern.png"
+                                prevImg: aso_data.assets_url+"/images/laiton-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2902,11 +2940,11 @@ const metaConfigs = ref({
                                 name: "Kiev",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/kiev2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/label-tags/nickel-pattern.png",
+                                image: aso_data.assets_url+"/images/nickel-pattern.png",
                                 color: {
                                 name: "Kiev",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/label-tags/nickel-pattern.png"
+                                prevImg: aso_data.assets_url+"/images/nickel-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2930,11 +2968,11 @@ const metaConfigs = ref({
                                 name: "Budapest",
                                 description: "Brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/budapest1.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/label-tags/laiton-pattern.png",
+                                image: aso_data.assets_url+"/images/laiton-pattern.png",
                                 color: {
                                 name: "Budapest",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/label-tags/laiton-pattern.png"
+                                prevImg: aso_data.assets_url+"/images/laiton-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2958,11 +2996,11 @@ const metaConfigs = ref({
                                 name: "Budapest",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/budapest2.png",
-                                image: "https://signsdesigner.us/app/demos/brass_signs/label-tags/nickel-pattern.png",
+                                image: aso_data.assets_url+"/images/nickel-pattern.png",
                                 color: {
                                 name: "Budapest",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/brass_signs/label-tags/nickel-pattern.png"
+                                prevImg: aso_data.assets_url+"/images/nickel-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -3180,15 +3218,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "White",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "Red",
-                                codeHex: "#c4271d"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "Red",
+                                    codeHex: "#c4271d"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#ffffff",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#ffffff",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3197,15 +3235,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "White",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "Blue",
-                                codeHex: "#497eaa"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "Blue",
+                                    codeHex: "#497eaa"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#ffffff",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#ffffff",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3214,15 +3252,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Black",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#000000",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#000000",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3231,15 +3269,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Blue",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#004f86",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#004f86",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3248,15 +3286,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Red",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#c4271d",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#c4271d",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3265,15 +3303,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Pink",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#eb3f77",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#eb3f77",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3282,15 +3320,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Green",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#009251",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#009251",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3299,15 +3337,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Yellow",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "Black",
-                                codeHex: "#000000"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "Black",
+                                    codeHex: "#000000"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#fee900",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#fee900",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3316,15 +3354,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Gray",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#4f575b",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#4f575b",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3333,15 +3371,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Orange",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#e15616",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#e15616",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3350,15 +3388,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Purple",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#554585",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#554585",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3367,15 +3405,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Brown",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#ffffff"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#ffffff"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#523d2a",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#523d2a",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3384,15 +3422,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Gold",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "White",
-                                codeHex: "#000000"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "White",
+                                    codeHex: "#000000"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#daa520",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#daa520",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3401,15 +3439,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Silver",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "Black",
-                                codeHex: "#bbbbbb"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "Black",
+                                    codeHex: "#bbbbbb"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#daa520",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#daa520",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -3418,15 +3456,15 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Rose Gold",
                                 textColor: {
-                                active: true,
-                                sameForBorder: true,
-                                name: "Black",
-                                codeHex: "#000000"
+                                    active: true,
+                                    sameForBorder: true,
+                                    name: "Black",
+                                    codeHex: "#000000"
                                 },
                                 pattern: {
-                                active: false,
-                                codeHex: "#c27268",
-                                url: ""
+                                    active: false,
+                                    codeHex: "#c27268",
+                                    url: ""
                                 },
                                 prevImg: "",
                                 additionalPrice: 0
@@ -4194,6 +4232,7 @@ const metaConfigs = ref({
                 icon: "https://signsdesigner.us/app/demos/roll-up-signs/standard.svg",
                 name: "Standard",
                 type: "simple",
+                popImg:"",
                 description: "PET polyester film free from PVC Opaque with grey back 100% curl-free 220 µ thick",
                 data: {
                     sizes: {
@@ -4553,6 +4592,7 @@ const metaConfigs = ref({
                 icon: "https://signsdesigner.us/app/demos/roll-up-signs/eco.svg",
                 name: "ECO",
                 type: "simple",
+                popImg:"",
                 description: "Polyester weave (free from PVC). Fire classification as per B-s1,dO 100% opaque 300 µ thick",
                 data: {
                     sizes: {
@@ -4931,11 +4971,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel1.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel1-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel1-prev.png',
                                 color: {
-                                name: "Stainless steel",
-                                codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel1-prev.png"
+                                    name: "Stainless steel",
+                                    codeHex: "",
+                                    prevImg: aso_data.assets_url+'/images/stainless_steel1-prev.png'
                                 },
                                 fixingMethods: [
                                 5,
@@ -4960,11 +5000,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel2.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel2-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel2-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel2-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel2-prev.png'
                                 },
                                 fixingMethods: [
                                 5,
@@ -4989,11 +5029,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel3.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel3-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel3-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel3-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel3-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5017,11 +5057,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel4.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel4-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel4-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel4-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel4-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5045,11 +5085,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel5.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel5-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel5-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel5-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel5-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5073,11 +5113,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel6.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel6-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel6-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel6-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel6-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5101,11 +5141,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel7.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel7-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel7-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel7-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel7-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5129,11 +5169,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel8.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel8-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel8-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel8-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel8-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5157,11 +5197,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel9.png",
-                                image: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel9-prev.png",
+                                image: aso_data.assets_url+'/images/stainless_steel9-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel9-prev.png"
+                                prevImg: aso_data.assets_url+'/images/stainless_steel9-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5463,7 +5503,7 @@ const metaConfigs = ref({
 								pattern: {
 									active: true,
 									codeHex: "#FF8C00",
-									url: "https://signsdesigner.us/app/demos/wood-signs/wood-birch.png"
+									url: aso_data.assets_url+'/images/im_wood-birch.png'
 								},
 								prevImg: "https://signsdesigner.us/app/demos/wood-signs/wood-birch.png",
 								additionalPrice: 9.19
@@ -6009,12 +6049,15 @@ const metaConfigs = ref({
 								isDefault: true,
 								name: "Wood",
 								textColor: {
-									active: false
+									active: false,
+                                    sameForBorder:false,
+                                    name:"",
+                                    codeHex:'#000000',
 								},
 								pattern: {
 									active: true,
 									codeHex: "#FF6600",
-									url: "https://signsdesigner.us/app/demos/wood-signs/wood-oak.png"
+									url: aso_data.assets_url+'/images/im_wood-oak.png'
 								},
 								prevImg: "https://signsdesigner.us/app/demos/wood-signs/wood-oak.png",
 								additionalPrice: 9.19

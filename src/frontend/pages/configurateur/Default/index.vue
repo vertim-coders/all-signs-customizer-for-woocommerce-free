@@ -5464,7 +5464,6 @@
             quantity:1
         }
         var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
-
         if(!add.success){
             toastMessage(add.message,"error");
             isAddingToCart.value = false
