@@ -1857,6 +1857,8 @@ function handleChangeSignColor(name, pattern, textColor, defTextColor, restart) 
     return name
 }
 function setPattern(canva, image){
+    const imgElement = new Image();
+    imgElement.src = image;
     // console.log(image, "setPattern")
     // var object = handleGetObjectByName('safeObject', canvas)
     canva.getObjects().forEach((object, index) =>{
