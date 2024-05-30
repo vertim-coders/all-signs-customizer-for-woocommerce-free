@@ -1,6 +1,10 @@
 .wp-core-ui select {
   max-width: none !important;
 }
+#wpfooter {
+  position: relative !important;
+  visibility: hidden !important;
+}
 #wpcontent {
   height: 100%;
   padding-left: 0px !important;

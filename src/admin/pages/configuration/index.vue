@@ -247,9 +247,26 @@
 
         </div>
 
-        <div v-if="includeDemo">
-            <div class="aso-bg-[#F8F9FB] aso-p-20 aso-space-y-20">
-                <Multiselect
+        <div v-if="includeDemo" class="aso-space-y-2 aso-z-[9999]">
+            <div class="aso-bg-[#F8F9FB] aso-px-2 aso-py-4 aso-sticky aso-top-[75px] aso-z-[999] aso-shadow-sm">
+                <h2 class="aso-m-0">List of Demo data</h2>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-p-6">
+                <div class="aso-grid aso-gap-y-10 aso-grid-cols-4 aso-py-4 aso-px-4">
+                    <div class="aso-p-2 aso-border-solid aso-bg-white aso-border-gray-200 aso-rounded-md aso-cursor-pointer" :key="key" v-for="(demo,key) in demosList" :class="demo.value == selectedDemo  ? 'aso-ring-2 aso-ring-[#016464]' : ''">
+                        <input type="radio" :id="'demo'+key" :value="demo.value" v-model="selectedDemo"  class="hiddenInput">
+                        <label :for="'demo'+key">
+                            <div :class="`aso-cursor-pointer aso-relative aso-flex aso-justify-center aso-items-center aso-w-full aso-rounded-md aso-overflow-hidden aso-h-[150px]`">
+                                <img :src="demo.icon" alt="" class="aso-cursor-pointer aso-w-auto aso-h-full aso-rounded-md">
+                            </div>
+                            <div class="aso-cursor-pointer aso-px-2 aso-py-4">
+                                <label for="" :class="`aso-m-0 aso-text-[16px] aso-font-bold  ${demo.value == selectedDemo ?  'aso-text-[#016464]':''}`">{{demo.name}}</label>
+                                <p class="aso-m-0 aso-text-[12px] aso-font-normal aso-text-justify" :class="`${demo.value == selectedDemo ?  'aso-text-[#016464]':''}`">{{ demo.description }}</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <!-- <Multiselect
                     v-model="selectedDemo"
                     placeholder="Select ASO Configuration"
                     :options="demosList"
@@ -265,9 +282,9 @@
                     <template v-slot:option="{ option }">
                         <img class="aso-w-[100px] aso-h-auto aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
                     </template>
-                </Multiselect>
+                </Multiselect> -->
             </div>
-            <div class="aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB] aso-translate-y-10'">
+            <div class="aso-sticky aso-bottom-0 aso-flex aso-justify-end aso-items-center aso-bg-[#F8F9FB] aso-translate-y-10'">
                 <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                     <div class="aso-bg-[#016464] aso-rounded">
                         <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
@@ -374,14 +391,14 @@ const deleteConfig = ref({
 })
 
 const demosList = ref([
-    {name:'Acrylic Sign', value:'acrylic',icon:aso_data.assets_url+'/images/demos/im_acrylic_sign.webp'},
-    {name:'Aluminium Sign', value:'aluminium',icon:aso_data.assets_url+'/images/demos/im_aluminium_sign.webp'},
-    {name:'Brass Sign', value:'brass-sign',icon:aso_data.assets_url+'/images/demos/im_brass_sign.webp'},
-    {name:'Double-Sided Sign', value:'double-side',icon:aso_data.assets_url+'/images/demos/im_double_side_sign.gif'},
-    {name:'Plastic Sign', value:'plastic',icon:aso_data.assets_url+'/images/demos/im_plastic_sign.webp'},
-    {name:'Rollup Sign', value:'rollup',icon:aso_data.assets_url+'/images/demos/im_rollup_sign.webp'},
-    {name:'Stainless Stell Sign', value:'stainlessStell',icon:aso_data.assets_url+'/images/demos/im_stainlessSteel_sign.webp'},
-    {name:'Woods Sign', value:'woods-sign',icon:aso_data.assets_url+'/images/demos/im_wood_sign.webp'}
+    {name:'Acrylic Sign', value:'acrylic',icon:aso_data.assets_url+'/images/demos/im_acrylic_sign.webp',description:" An acrylic sign (perspex sign) is a popular choice for any office, professional setting or home due to it's professional and modern look."},
+    {name:'Aluminium Sign', value:'aluminium',icon:aso_data.assets_url+'/images/demos/im_aluminium_sign.webp',description:"Create and order aluminium signs, perfect for indoor and outdoor use."},
+    {name:'Brass Sign', value:'brass-sign',icon:aso_data.assets_url+'/images/demos/im_brass_sign.webp',description:"Create stylish brass signs for your home or business with our easy-to-use design tool."},
+    {name:'Double-Sided Sign', value:'double-side',icon:aso_data.assets_url+'/images/demos/im_double_side_sign.gif',description:"Double-sided signs are perfect for those want the information to be able to read from both sides. Examples of double-sided signs are ''we are open'' and ''we are closed''."},
+    {name:'Plastic Sign', value:'plastic',icon:aso_data.assets_url+'/images/demos/im_plastic_sign.webp',description:"Create bespoke plastic signs with high quality print or engra"},
+    {name:'Rollup Sign', value:'rollup',icon:aso_data.assets_url+'/images/demos/im_rollup_sign.webp',description:"If you’re looking for an easy-to-use, portable advertising stand or display stand, then we recommend our roll-ups."},
+    {name:'Stainless Stell Sign', value:'stainlessStell',icon:aso_data.assets_url+'/images/demos/im_stainlessSteel_sign.webp',description:"You can add numbers, letters, a certification or a logo to label plates. With us, you can order a complete number series with signs, or a single label plate."},
+    {name:'Woods Sign', value:'woods-sign',icon:aso_data.assets_url+'/images/demos/im_wood_sign.webp',description:"Create custom wooden signs for indoor use with our easy-to-use design page. Communicate a warm and old fashioned feeling with a bespoke wood sign in birch or oak made from MDF."}
 ]);
 const selectedDemo= ref('acrylic');
 const defaultSettings = ref({
