@@ -101,7 +101,7 @@
     
                     </div>
                     <div v-show="!isLoaded">
-                        <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
+                        <div id="activeObject-values" class="aso-w-[80%] lg:aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282]/60 aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
                             <div class="aso-space-y-1 aso-text-sm">
                                 <div>
                                     <span class="aso-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
@@ -955,7 +955,7 @@
                             <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textImage}}</p>    
 
                             <div :class="`aso-bg-[${configColors.backgroundColorHeader}]/10 aso-flex aso-flex-col aso-space-y-3 aso-full-center aso-p-4 aso-m-1`">
-                                <span v-show="configImageSettingsClipart.active && !clipartSection && !editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full`">
+                                <span v-show="configImageSettingsClipart.active && !clipartSection && !editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer`">
                                     <span @click="()=> {showClipartsSection(true); editImage = false}" :class="`aso-flex aso-full-center aso-space-x-3`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
@@ -964,7 +964,7 @@
                                     </span>
                                 </span>
 
-                                <span v-show="(clipartSection && !editImage) || editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full`">
+                                <span v-show="(clipartSection && !editImage) || editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer`">
                                     <span @click="()=> {showClipartsSection(false); editImage = false}" :class="`aso-flex aso-full-center aso-space-x-3`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -1473,10 +1473,12 @@
                 </div>       
             </div>
 
-            <div v-if="showImg" class="aso-absolute aso-top-[20%] lg:aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-white aso-border-solid aso-p-2">
-                <svg @click="closeprevImg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
+            <div v-if="showImg" :class="`aso-absolute aso-top-[20%] lg:aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvasBackgroundColor}] aso-border-solid aso-p-2`">
+                <span @click="closeprevImg" :class="`aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-center aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] hover:aso-bg-[${configColors.backgroundColorHeader}]/80 aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </span>
     
                 <img id="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
             </div>
@@ -5356,8 +5358,8 @@
                 });
             break;
 
-            case 'jpeg' || 'jpg':
-                canva.backgroundColor = '#ebebeb'
+            case 'jpeg':
+                canva.backgroundColor = configColors.value.canvasBackgroundColor
                 dataURL = canva.toDataURL({
                     format: 'jpeg',
                     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp

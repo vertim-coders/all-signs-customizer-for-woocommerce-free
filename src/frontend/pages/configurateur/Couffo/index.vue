@@ -134,7 +134,7 @@
                     </div>
     
                     <div v-show="!isLoaded">
-                        <div id="activeObject-values" class="aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282] aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
+                        <div id="activeObject-values" class="aso-w-[80%] lg:aso-w-fit aso-invisible aso-absolute aso-top-[2%] aso-left-[50%] aso-translate-x-[-50%] aso-bg-[#828282]/60 aso-text-white aso-text-lg aso-p-2 aso-px-3 aso-rounded-md aso-shadow-md aso-z-10">
                             <div class="aso-space-y-1 aso-text-sm">
                                 <div>
                                     <span class="aso-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
@@ -266,7 +266,7 @@
                     </div>
                 </div>        -->
     
-                <div v-show="!isLoaded" class="aso-w-full aso-h-full aso-flex lg:aso-flex-col aso-items-center lg:aso-space-y-4 aso-py-4 aso-overflow-auto no-scrollbar">
+                <div v-show="!isLoaded" id="aso-options-buttons" class="aso-w-full aso-h-full aso-flex lg:aso-flex-col aso-items-center lg:aso-space-y-4 aso-py-4 aso-px-4 lg:aso-px-0 aso-overflow-auto no-scrollbar">
                     <div v-if="allMaterials.length > 1" @click="showOptions('material')" :class="`aso-w-[80%]`">
                         <div :class="`${step === 'material' ? `aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorHoverButton}]` : ``} aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
                             <svg  v-if="configSectionIcons.changeIconMaterial === '' " class="aso-w-6 aso-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -419,6 +419,20 @@
                             <div class="aso-text-[10px] lg:aso-text-[13px] aso-leading-normal aso-font-medium aso-text-center aso-text-nowrap lg:aso-text-wrap">
                                 {{ configVisualiserTexts.textButtonAdditonnalOptions && configVisualiserTexts.textButtonAdditonnalOptions.trim() !== '' ? configVisualiserTexts.textButtonAdditonnalOptions : 'Add Option' }}
                             </div>
+                        </div>
+                    </div>
+
+                    <div >
+                        <div @click="ScrollLeft('aso-options-buttons')" :class="`aso-absolute aso-top-[0%] aso-left-0 aso-w-fit lg:aso-w-full aso-h-full lg:aso-h-fit aso-bg-[${configColors.backgroundColorHeader}]/60 aso-text-[${configColors.textColorContentHeader}] aso-flex aso-full-center aso-px-1 lg:aso-px-2 lg:aso-py-1 aso-cursor-pointer`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7 -aso-rotate-90 lg:aso-rotate-0">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                            </svg>                              
+                        </div>
+                        
+                        <div @click="ScrollRight('aso-options-buttons')" :class="`aso-absolute aso-top-0 lg:aso-top-[100%] lg:aso-translate-y-[-100%] aso-right-0 lg:aso-left-0 aso-w-fit lg:aso-w-full aso-h-full lg:aso-h-fit aso-bg-[${configColors.backgroundColorHeader}]/60 aso-text-[${configColors.textColorContentHeader}] aso-flex aso-full-center aso-px-1 lg:aso-px-2 lg:aso-py-1 aso-cursor-pointer`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7 -aso-rotate-90 lg:aso-rotate-0">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>                                 
                         </div>
                     </div>
                 </div>
@@ -1051,7 +1065,7 @@
                         <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textImage}}</p>    
 
                         <div :class="`aso-bg-[${configColors.backgroundColorHeader}]/10 aso-flex aso-flex-col aso-space-y-3 aso-full-center aso-p-4 aso-m-1`">
-                            <span v-show="configImageSettingsClipart.active && !clipartSection && !editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full`">
+                            <span v-show="configImageSettingsClipart.active && !clipartSection && !editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer`">
                                 <span @click="()=> {showClipartsSection(true); editImage = false}" :class="`aso-flex aso-full-center aso-space-x-3`">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
@@ -1060,7 +1074,7 @@
                                 </span>
                             </span>
 
-                            <span v-show="(clipartSection && !editImage) || editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full`">
+                            <span v-show="(clipartSection && !editImage) || editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer`">
                                 <span @click="()=> {showClipartsSection(false); editImage = false}" :class="`aso-flex aso-full-center aso-space-x-3`">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -1504,10 +1518,13 @@
                 </div>
             </div>
     
-            <div v-if="showImg" class="aso-absolute aso-top-[20%] lg:aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-white aso-border-solid aso-p-2">
-                <svg @click="closeprevImg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
+            <div v-if="showImg" :class="`aso-absolute aso-top-[20%] lg:aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvasBackgroundColor}] aso-border-solid aso-p-2`">
+
+                <span @click="closeprevImg" :class="`aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-center aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] hover:aso-bg-[${configColors.backgroundColorHeader}]/80 aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </span>
     
                 <img id="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
             </div>
@@ -2017,12 +2034,43 @@
 
     }
 
+    var showScrollButton = ref(false)
+    function verifierScrollabilite() {
+        const monDiv = document.getElementById('aso-options-buttons');
+        if (monDiv.scrollWidth > monDiv.clientWidth) {
+            showScrollButton.value = true;
+            // monDiv.classList.remove("aso-justify-center");
+            // monDiv.classList.add("aso-justify-start");
+        } else {
+            showScrollButton.value = false;
+            // monDiv.classList.remove("aso-justify-start");
+            // monDiv.classList.add("aso-justify-center");
+        }
+    }
+    function ScrollLeft(id){
+        var div = document.getElementById(id)
+        if(isBelowLimit.value === true){
+            div.scrollLeft -= 150 
+        }else{
+            div.scrollTop -= 150 
+        }
+    }
+    function ScrollRight(id){
+        var div = document.getElementById(id)
+        if(isBelowLimit.value === true){
+            div.scrollLeft += 150 
+        }else{
+            div.scrollTop += 150 
+        }
+    }
+    setInterval(verifierScrollabilite, 500);
+
     var isBelowLimit = ref(false)
     function checkScreenView() {
         if(window.innerWidth < 1024){
             // isBelowLimits.value = window.innerWidth < 1024;
-            isBelowLimit.value = true;
             if(window.innerWidth < 688){
+                isBelowLimit.value = true;
                 showOptions('material')
             }
         }else{
@@ -2331,6 +2379,7 @@
             let resizeTimer;
             window.addEventListener('load', () => {
                 checkScreenSize()
+                checkScreenView()
                 // centerSign(canvas)
                 // centerSign(canvasBack)
             });
@@ -5275,8 +5324,8 @@
                 });
             break;
 
-            case 'jpeg' || 'jpg':
-                canva.backgroundColor = '#ebebeb'
+            case 'jpeg':
+                canva.backgroundColor = configColors.value.canvasBackgroundColor
                 dataURL = canva.toDataURL({
                     format: 'jpeg',
                     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
