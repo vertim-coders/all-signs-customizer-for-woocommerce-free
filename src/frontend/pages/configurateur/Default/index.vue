@@ -329,7 +329,7 @@
                         </div>
                     </div>
     
-                    <div v-show="showOption" id="aso-options-container" :class="`aso-relative lg:aso-absolute lg:aso-left-4 lg:aso-top-[20%] lg:aso-translate-y-[-20%] aso-w-full lg:aso-w-[36%] aso-h-[32%] lg:aso-h-[70%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.textColorOptionsMenu}] aso-rounded-md lg:aso-shadow-xl`">
+                    <div v-show="showOption" id="aso-options-container" :class="`aso-relative lg:aso-absolute lg:aso-left-4 lg:aso-top-[20%] lg:aso-translate-y-[-20%] aso-w-full lg:aso-w-[36%] aso-h-[32%] lg:aso-h-[70%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.textColorOptionsMenu}] aso-rounded-md lg:aso-shadow-xl aso-z-20`">
                         <div class="aso-hidden lg:aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
                             <span @click="closeOption" :class="`aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] hover:aso-bg-aso-bg-[${configColors.backgroundColorHeader}]/30 aso-p-1 aso-rounded-md aso-base-animation`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -482,7 +482,7 @@
                                             <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height">
                                         </div>
                                     </div>
-                                    <span @click="changeSize(customSizeValues)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
+                                    <span @click="changeSize(customSizeValues, customSizeTextValues)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
                                         {{configVisualiserTexts.customSizeButtonDone}}
                                     </span>
                                 </div>
@@ -591,20 +591,20 @@
         
                             <div v-if="materialType === 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
                                 <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                    <div v-for="(colorr, id) in colorrs.allColors" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                                        <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-14 aso-h-14 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
-                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-w-full aso-h-full`" />
-                                            <span v-if="colorr.textColor.active">C</span>
+                                    <div v-for="(colorr, id) in colorrs.allColors" class="aso-flex aso-flex-col aso-items-center aso-justify-start aso-space-y-2">
+                                        <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-14 aso-h-14 aso-bg-[${colorr.pattern.codeHex}] aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden aso-relative`"> 
+                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-absolute aso-top-0 aso-left-0 aso-w-full aso-h-full`" />
+                                            <span v-if="colorr.textColor.active" class="aso-z-10">C</span>
                                         </div>
-                                        <div v-if="colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-relative aso-w-14 aso-h-14 aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden`"> 
-                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-w-full aso-h-full`" />
-                                            <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`aso-w-full aso-h-full`" />
-                                            <span v-if="colorr.textColor.active" :class="`aso-absolute aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%]`">C</span>
+                                        <div v-if="colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-relative aso-w-14 aso-h-14 aso-flex aso-full-center aso-font-bold aso-text-lg aso-text-[${colorr.textColor.codeHex}] aso-rounded-full aso-cursor-pointer aso-overflow-hidden aso-relative`"> 
+                                            <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`aso-absolute aso-top-0 aso-left-0 aso-w-full aso-h-full`"  />
+                                            <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`aso-absolute aso-top-0 aso-left-0 aso-w-full aso-h-full`"  />
+                                            <span v-if="colorr.textColor.active" class="aso-z-10">C</span>
                                         </div>
         
                                         <p class="aso-text-sm">{{colorr.name }}</p>
+                                        <p v-if="colorr.textColor.active" class="aso-text-sm aso-leading-4">{{colorr.textColor.name}}</p>
                                         <p v-if="colorr.additionalPrice > 0" class="aso-text-[11px] aso-leading-normal">({{colorr.additionalPrice}} {{props.currency}})</p>
-                                        <p v-if="!colorr.additionalPrice > 0" class="aso-text-[11px] aso-leading-normal aso-invisible">none</p>
                                     </div>
                                 </div>
                                 <div v-if="colorrs.customColors.active" :class="`aso-flex aso-flex-col aso-space-y-2`">
@@ -756,7 +756,7 @@
                                     <p class="aso-text-center aso-px-2">Change text</p>
                                 </span>
 
-                                <span @click="addTextToSign()" :class="`aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-border aso-text-white aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer aso-base-animation`">
+                                <span v-show="!selectText" @click="addTextToSign()" :class="`aso-w-3/4 aso-flex aso-full-center aso-space-x-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-border aso-text-white aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer aso-base-animation`">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="aso-w-5 aso-h-5">
                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
                                     </svg>
@@ -840,7 +840,7 @@
                                                     </svg>
                                                 </span>
 
-                                                <input type="number" name="" id="aso-text-size" class="aso-w-1/3 aso-h-full aso-border aso-border-red-600 aso-p-1 aso-text-center" :min="configTextFontSettings.minimumFontSize" :max="configTextFontSettings.maximumFontSize" @input="changeTextSize($event.target.value, configTextFontSettings.minimumFontSize, configTextFontSettings.maximumFontSize)" disabled>
+                                                <input type="number" name="" id="aso-text-size" class="aso-w-1/3 aso-h-full aso-border aso-border-red-600 aso-p-1 aso-text-center" :min="configTextFontSettings.minimumFontSize" :max="configTextFontSettings.maximumFontSize" @input="changeTextSize($event.target.value, configTextFontSettings.minimumFontSize, configTextFontSettings.maximumFontSize)" disabled style="margin: 0 !important; padding: 0 !important; text-align: center !important;">
                                                 
                                                 <span @click="changeTextSizeValue('up')" :class="`aso-w-1/3 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.backgroundButton}] aso-text-[${configColors.textColorButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-rounded-e-md aso-cursor-pointer aso-base-animation`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -852,7 +852,9 @@
                                     </div>
         
                                     <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="aso-space-y-1">
-                                        <p class="aso-font-medium">Color</p>
+                                        <p class="aso-font-medium">
+                                            {{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Colors' }}
+                                        </p>
                                         <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
                                                 <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.backgroundColorHeader}]` : `` } aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
@@ -966,14 +968,14 @@
 
                                 <span v-show="(clipartSection && !editImage) || editImage" :class="`aso-w-3/4 aso-text-[${configColors.backgroundButton}] aso-border aso-border-solid aso-border-[${configColors.backgroundButton}] aso-text-md aso-p-2 aso-px-4 aso-rounded-full aso-cursor-pointer`">
                                     <span @click="()=> {showClipartsSection(false); editImage = false}" :class="`aso-flex aso-full-center aso-space-x-3`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-5 aso-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                         </svg>
                                         <p class="aso-text-center">Edit image</p>
                                     </span>
                                 </span>
 
-                                <label v-if="configImageSettings.enableUploadImage  && !clipartSection" :class="`aso-w-3/4 aso-inputImage aso-full-center aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-text-md`">
+                                <label v-if="configImageSettings.enableUploadImage  && !clipartSection && !editImage" :class="`aso-w-3/4 aso-inputImage aso-full-center aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-text-md`">
                                     <input @click="addImageToSign()" class="aso-hidden" id="aso-iamge-input" type="file" name="aso-pickImages" :accept="configImagesFormat" style="display: none;"/>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -1000,8 +1002,8 @@
                                         <p class="aso-font-medium">Reccently used</p>
                                         <div class="aso-flex aso-items-center aso-flex-wrap aso-gap-2 aso-p-1">
                                             <div v-for="(image, index) in recentlyUsedImages">
-                                                <div :class="`aso-relative aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 hover:aso-bg-[${configColors.backgroundColorHeader}]/20 aso-border aso-cursor-pointer aso-base-animation`">
-                                                    <img :src="image.url" alt="" class="aso-w-20 aso-h-auto">
+                                                <div @click="addImageToSign(image.url, image.object.price)" :class="`aso-relative aso-flex aso-flex-col aso-space-y-2 aso-w-20 aso-h-20 aso-full-center aso-p-1 hover:aso-bg-[${configColors.backgroundColorHeader}]/20 aso-border aso-cursor-pointer aso-base-animation`">
+                                                    <img :src="image.url" alt="" class="aso-w-auto aso-h-full">
                                                     <!-- <img @click="addImageToSign(image.url, image.object.price)" :src="image.url" alt="" class="aso-w-20 aso-h-auto"> -->
                                                     <!-- <span @click="deleteFromRecentlyUsed(index, recentlyUsedImages)" :class="`aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] aso-translate-x-[20%] aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-flex aso-p-0.5 aso-rounded-md`">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-4 aso-h-4">
@@ -1069,31 +1071,31 @@
                                         <p class="aso-font-medium">Filters</p>
                                         <div class="aso-w-full aso-flex aso-items-center">
                                             <div class="aso-flex aso-space-x-6">
-                                                <span @click="selectImageFilter('Blur')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                <span @click="selectImageFilter('Blur')" :class="`${setFilter.blur ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation aso-cursor-pointer`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                                                     </svg>
                                                     <p class="aso-text-xs aso-font-semibold">Blur</p>
                                                 </span>
-                                                <span @click="selectImageFilter('Greyscale')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                <span @click="selectImageFilter('Greyscale')" :class="`${setFilter.greyscale ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation aso-cursor-pointer`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                                                     </svg>
                                                     <p class="aso-text-xs aso-font-semibold">Greyscale</p>
                                                 </span>
-                                                <span @click="selectImageFilter('Sepia')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                <span @click="selectImageFilter('Sepia')" :class="`${setFilter.sepia ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation aso-cursor-pointer`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                                                     </svg>
                                                     <p class="aso-text-xs aso-font-semibold">Sepia</p>
                                                 </span>
-                                                <span @click="selectImageFilter('Emboss')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                <span @click="selectImageFilter('Emboss')" :class="`${setFilter.embross ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation aso-cursor-pointer`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                                                     </svg>
                                                     <p class="aso-text-xs aso-font-semibold">Emboss</p>
                                                 </span>
-                                                <span @click="selectImageFilter('Sharpen')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation`">
+                                                <span @click="selectImageFilter('Sharpen')" :class="`${setFilter.sharpen ? `aso-text-[${configColors.backgroundColorHeader}]` : ``} aso-flex aso-flex-col aso-full-center aso-space-y-4 hover:aso-text-[${configColors.backgroundColorHeader}] aso-base-animation aso-cursor-pointer`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                                                     </svg>
@@ -1671,25 +1673,27 @@
                     </div>
                     
                     <div class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
-                        <div v-if="!configDoublePart.active && configData.texts.value.length > 0">
-                            <div v-for="(text, id) in configData.texts.value">
-                                {{text.textContent}} : {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
+                        <div v-if="!configDoublePart.active && configData.texts.value.length > 0" clss="aso-space-y-1">
+                            <div v-for="(text, id) in configData.texts.value" class="aso-flex aso-full-center">
+                                {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
+                                <span :class="`aso-h-[35px] aso-w-[35px] aso-flex aso-bg-[${text.color}] aso-mx-1`"></span>
                             </div>
                         </div>
 
                         <div v-if="configDoublePart.active">
-                            <div v-if="configData.texts.value.face1.length > 0">
+                            <div v-if="configData.texts.value.face1.length > 0" clss="aso-space-y-1">
                                 <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                                <div v-for="(text, id) in configData.texts.value.face1">
-                                    <!-- {{text}} -->
-                                    {{text.textContent}} : {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
+                                <div v-for="(text, id) in configData.texts.value.face1" class="aso-flex aso-full-center">
+                                    {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
+                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-flex aso-bg-[${text.color}] aso-mx-1`"></span>
                                 </div>
                             </div>
 
-                            <div v-if="configDoublePart.active && configData.texts.value.face2.length > 0">
+                            <div v-if="configDoublePart.active && configData.texts.value.face2.length > 0" clss="aso-space-y-1">
                                 <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                                <div v-for="(text, id) in configData.texts.value.face2">
-                                    {{text.textContent}} : {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
+                                <div v-for="(text, id) in configData.texts.value.face2" class="aso-flex aso-full-center">
+                                    {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
+                                    <span :class="`aso-h-[35px] aso-w-[35px] aso-flex aso-bg-[${text.color}] aso-mx-1`"></span>
                                 </div>
                             </div>
                         </div>
@@ -2092,10 +2096,10 @@
         configOutputSettings.value = props.config.data.settings.generals.output
         configVisualiserTexts.value = props.config.data.settings.languageImages.visualizer
 
+        customSizeValues.value.label = (configVisualiserTexts.value.customSize && configVisualiserTexts.value.customSize.trim() !== '' ? configVisualiserTexts.value.customSize : 'Custom size')
+        
         configAdditionnalOptions.value = props.config.data.additionalOptions
         
-        // console.log(props.config.data.materials[0]., "configTextFontSettings")
-
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
         // console.log(configVisualiserTexts.value)
@@ -3667,9 +3671,16 @@
     }
 
     var customSizeValues = ref({
-        label: configVisualiserTexts.customSize,
+        label: '',
         width: 0,
         height: 0
+    })
+    var customSizeTextValues = ref({
+        textNumber: 0, 
+        charPrice: 0, 
+        basePrice: 0, 
+        maxTextChar: -1, 
+        startPriceAtChar: 1
     })
 
 
@@ -4699,24 +4710,20 @@
                 recentlyUsedImages.value.shift()
             }
         }, 250); // Délai de 250 millisecondes
-        
-
-        console.log(recentlyUsedImages.value)
-
-
     }
 
     function deleteFromRecentlyUsed(index, tab){
         tab.splice(index, 1);
     }
     function editAddedImage(image){
-        console.log(image, "added image")
         if(activeFace.value === image.canvasName){
             editImage.value = true
             activeCanvas.getObjects().forEach(function(obj){
                 if(image.id === obj.id){
                     activeCanvas.setActiveObject(obj);
                     handleGetAddedImageValues(obj)
+                    selectedImage.value.filters = obj.filters
+                    checkFilter()
                 }
             })
         }
@@ -4732,8 +4739,47 @@
     function selectImageBorder(){
 
     }
+    var setFilter = ref({
+        blur : false,
+        greyscale : false,
+        sepia : false,
+        embross : false,
+        sharpen : false,
+    })
     function selectImageFilter(filter){
-        handleSelectFilter(filter)
+        selectedImage.value.filters = handleSelectFilter(filter)
+        checkFilter()
+    }
+    function checkFilter(){
+        if(selectedImage.value.filters.some(item => item['name'] === 'blur')){
+            setFilter.value.blur = true
+        }else{
+            setFilter.value.blur = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'greyscale')){
+            setFilter.value.greyscale = true
+        }else{
+            setFilter.value.greyscale = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'sepia')){
+            setFilter.value.sepia = true
+        }else{
+            setFilter.value.sepia = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'embross')){
+            setFilter.value.embross = true
+        }else{
+            setFilter.value.embross = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'sharpen')){
+            setFilter.value.sharpen = true
+        }else{
+            setFilter.value.sharpen = false
+        }
     }
 
 
@@ -4879,6 +4925,7 @@
         top: '',
         bottom: '',
         angle: 0,
+        filters: [],
     })
     function turnLeftImage(){
         handleTurnImageLeft()

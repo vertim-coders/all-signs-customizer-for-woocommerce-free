@@ -4976,6 +4976,7 @@ var selectedImage = {
     top: '',
     bottom: '',
     angle: 0,
+    filters: [],
 }
 var imageSettings = {}
 function handleGetImageSettings(settings){
@@ -5217,63 +5218,121 @@ function handleFlipImage(){
     activeCanvas.requestRenderAll()
     handleGetAddedImageValues(currentImage)
 }
-var filterTab = []
 function handleSelectFilter(filter){
-    var index = -1
-    if(index < 5){
-        filterTab.push({id: index++ ,filtre: filter})
-    }
-    console.log(filterTab, "filter")
     var currentImage = activeCanvas.getActiveObject();
     if(currentImage.type === 'image'){
-        switch (filter) {
-            // case value:
+        if(!currentImage.filters.length > 0){
+            switch (filter) {
+                case 'Sepia':
+                    /* Sepia effect */
+                    var sp = new fabric.Image.filters.Sepia({
+                        name: 'sepia',
+                    });
+                    currentImage.filters.push(sp);
+                break;
+        
+                case 'Emboss':
+                    /* Emboss */
+                    var emb = new fabric.Image.filters.Convolute({
+                        matrix: [1, 1, 1,
+                            1, 0.7, -1,
+                            -1, -1, -1
+                        ],
+                        name: 'embross',
+                    });
+                    currentImage.filters.push(emb);
+                break;
+        
+                case 'Greyscale':
+                    /* Greyscale */
+                    var gs = new fabric.Image.filters.Grayscale({
+                        name: 'greyscale',
+                    });
+                    currentImage.filters.push(gs);
+                break;
+        
+                case 'Sharpen':
+                    /* Sharpen */
+                    var sharpen = new fabric.Image.filters.Convolute({
+                        matrix: [0, -1, 0,
+                            -1, 5, -1,
+                            0, -1, 0
+                        ],
+                        name: 'sharpen'
+                    });
+                    currentImage.filters.push(sharpen);
+                break;
+        
+                case 'Blur':
+                    /* Blur */
+                    var blr = new fabric.Image.filters.Blur({
+                        name: 'blur',
+                    });
+                    currentImage.filters.push(blr);
+                break;
+            }
+        }else{
+            var filtersTab = currentImage.filters
+            function addUniqueFilter(array, object, key) {
+                const index = array.findIndex(item => item[key] === object[key]);
                 
-            // break;
-    
-            case 'Sepia':
-                /* Sepia effect */
-                var sp = new fabric.Image.filters.Sepia();
-                currentImage.filters.push(sp);
-            break;
-    
-            case 'Emboss':
-                /* Emboss */
-                var emb = new fabric.Image.filters.Convolute({
-                    matrix: [1, 1, 1,
-                        1, 0.7, -1,
-                        -1, -1, -1
-                    ]
-                });
-                currentImage.filters.push(emb);
-            break;
-    
-            case 'Greyscale':
-                /* Greyscale */
-                var gs = new fabric.Image.filters.Grayscale();
-                currentImage.filters.push(gs);
-            break;
-    
-            case 'Sharpen':
-                /* Sharpen */
-                var sharpen = new fabric.Image.filters.Convolute({
-                    matrix: [0, -1, 0,
-                        -1, 5, -1,
-                        0, -1, 0
-                    ]
-                });
-                currentImage.filters.push(sharpen);
-            break;
-    
-            case 'Blur':
-                /* Blur */
-                var blr = new fabric.Image.filters.Blur();
-                currentImage.filters.push(blr);
-            break;
+                if (index === -1) {
+                    array.push(object);
+                } else {
+                    array.splice(index, 1);
+                }
+            }
+            switch (filter) {
+                case 'Sepia':
+                    var sp = new fabric.Image.filters.Sepia({
+                        name: 'sepia',
+                    });
+                    addUniqueFilter(currentImage.filters, sp, 'name')
+                break;
+        
+                case 'Emboss':
+                    var emb = new fabric.Image.filters.Convolute({
+                        matrix: [1, 1, 1,
+                            1, 0.7, -1,
+                            -1, -1, -1
+                        ],
+                        name: 'embross',
+                    });
+                    addUniqueFilter(currentImage.filters, emb, 'name')
+                break;
+        
+                case 'Greyscale':
+                    var gs = new fabric.Image.filters.Grayscale({
+                        name: 'greyscale',
+                    });
+                    addUniqueFilter(currentImage.filters, gs, 'name')
+                break;
+        
+                case 'Sharpen':
+                    var sharpen = new fabric.Image.filters.Convolute({
+                        matrix: [0, -1, 0,
+                            -1, 5, -1,
+                            0, -1, 0
+                        ],
+                        name: 'sharpen'
+                    });
+                    addUniqueFilter(currentImage.filters, sharpen, 'name')
+                break;
+        
+                case 'Blur':
+                    var blr = new fabric.Image.filters.Blur({
+                        name: 'blur',
+                    });
+                    addUniqueFilter(currentImage.filters, blr, 'name')
+                break;
+            }
         }
         currentImage.applyFilters()
         activeCanvas.renderAll()
-        console.log(currentImage, 'blur')
+
+        selectedImage.filters = currentImage.filters
+
+        return selectedImage.filters
     }
 }
 

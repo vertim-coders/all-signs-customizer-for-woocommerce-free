@@ -115,6 +115,13 @@
   margin-right: 5px !important;
 }
 
+.aso-text-size {
+  padding: 0 !important;
+  height: 100% !important;
+  margin: 0 !important;
+  text-align: center;
+}
+
 .aso-inputColor-hide {
   width: 0px !important;
   height: 0px !important;
