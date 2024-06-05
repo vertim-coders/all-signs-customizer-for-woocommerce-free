@@ -1,7 +1,7 @@
 <template>
-    <div class="aso-fixed aso-z-[9999] aso-top-[32px] aso-w-full aso-h-[50px] aso-px-2 aso-bg-white aso-flex aso-justify-start aso-items-center aso-shadow">
-        <div class="aso-relative aso-flex aso-justify-between aso-items-center aso-w-[86%]">
-            <div>
+    <div class="aso-fixed aso-z-[9999] aso-top-[32px] aso-w-full aso-h-[50px] aso-px-2 aso-bg-white aso-flex aso-justify-start aso-items-center aso-shadow aso-header">
+        <div class="aso-relative aso-flex aso-justify-between aso-items-center aso-w-full">
+            <div class="pl-[40px]">
                 <span>
                     <img class="aso-w-[110px]" src="../../../../assets/images/im_aso-icon2.png" alt="">
                 </span>
@@ -38,7 +38,7 @@
                     
                 </div>
             </div>
-            <div class="">
+            <div class="aso-pr-[40px]">
                 <span class="aso-text-[20px] aso-font-bold">
                     V{{ ASO_VERSION }}
                 </span>

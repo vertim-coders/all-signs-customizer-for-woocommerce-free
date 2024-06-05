@@ -638,41 +638,128 @@ const defaultSettings = ref({
             textProduct:"Product",
             textImage:"Image",
             textExample:"example",
+            resetModalText:"Reset all for real ??",
+            resetModalYes:"Yes",
+            resetModalNo:"No",
         }
     },
     themeColors: {
         skin:"default",
         colors: {
-            backgroundButton: "#988b8b",
-            backgroundColorButtonFinish: "#ebda24",
-            backgroundColorButtonHelp: "#000000",
-            backgroundColorButtonRestartAll: "#4e4646",
-            backgroundColorContentSide: "#000000",
-            backgroundColorHeader: "#21c468",
-            backgroundColorHeaderContentSide: "#000000",
-            backgroundColorHoverButton: "#b1a0a0",
-            backgroundColorHoverButtonFinish: "#feeb20",
-            backgroundColorHoverButtonHelp: "#000000",
-            backgroundColorHoverButtonRestartAll: "#000000",
-            backgroundColorHoverButtonSave: "#feeb20",
-            backgroundColorOptionsMenu: "#ebe6e6",
-            backgroundColorTextButtonSave: "#ebda24",
-            canvasBackgroundColor: "#f4fbda",
-            canvasBorderColor: "#c6ec3c",
-            textColorButton: "#ffffff",
-            textColorButtonFinish: "#ffffff",
-            textColorButtonHelp: "#ffffff",
-            textColorButtonRestartAll: "#ffffff",
-            textColorButtonSave: "#ffffff",
-            textColorContentHeader: "#ffffff",
-            textColorContentSideMenu: "#ffffff",
-            textColorHoverButton: "#ffffff",
-            textColorHoverButtonFinish: "#ffffff",
-            textColorHoverButtonHelp: "#ffffff",
-            textColorHoverButtonRestartAll: "#ffffff",
-            textColorHoverButtonSave: "#ffffff",
-            textColorOptionsMenu: "#635a5a",
-
+            canvas:{
+                backgroundColor:"#ffffff",
+                borderColor:"#ffffff",
+            },
+            bars:{
+                titleColor:"#000000",
+                backgroundColor:"#ffffff",
+                reset:{
+                    textColor:"#000000",
+                    hoverTextColor:"#dd3232",
+                    backgroundColor:"#ffffff",
+                    hoverBackgroundColor:"#f4f8fa",
+                    borderColor:"#ffffff",
+                    hoverBorderColor:"#f4f8fa",
+                    modalBackgroundColor:"#000000",
+                    modalContainerBackground:"#ffffff",
+                    modalTextColor:"#000000",
+                    modalYesButtonBackgroundColor:"#f4f8fa",
+                    modalYesButtonTextColor:"#000000",
+                    modalNoButtonBackgroundColor:"#dc2626",
+                    modalNoButtonTextColor:"#ffffff"
+                },
+                undoRedo:{
+                    textColor:"#000000",
+                    hoverTextColor:"#0374e3",
+                    backgroundColor:"#ffffff",
+                    hoverBackgroundColor:"#f4f8fa",
+                    borderColor:"#ffffff",
+                    hoverBorderColor:"#f4f8fa",
+                    disabledBackgroundColor:"#ffffff",
+                    disabledTextColor:"#c3cfd6"
+                },
+                preview:{
+                    textColor:"#000000",
+                    hoverTextColor:"#0374e3",
+                    backgroundColor:"#ffffff",
+                    hoverBackgroundColor:"#f4f8fa",
+                    borderColor:"#ffffff",
+                    hoverBorderColor:"#f4f8fa",
+                },
+                help:{
+                    textColor:"#ffffff",
+                    hoverTextColor:"#ffffff",
+                    backgroundColor:"#0374e3",
+                    hoverBackgroundColor:"#025db7",
+                    borderColor:"#0374e3",
+                    hoverBorderColor:"#025db7",
+                },
+                price:{
+                    backgroundColor:"#ffffff",
+                    textColor:"#000000",
+                    textAfterColor:"#000000",
+                    textBeforeColor:"#000000",
+                },
+            },
+            optionsSideBar:{
+                backgroundColor:"#eef3f6",
+                scrollButtonsBackgroundColor:"#4a4a4a",
+                scrollButtonsHoverBackgroundColor:"#74848d",
+                scrollButtonsTextColor:"#ffffff",
+                scrollButtonsHoverTextColor:"#ffffff",
+                options:{
+                    buttons:{
+                        backgroundColor:"#ffffff",
+                        hoverBackgroundColor:"#ffffff",
+                        textColor:"#000000",
+                        hoverTextColor:"#000000"
+                    },
+                    modals:{
+                        headerBackgroundColor:"#0374e3",
+                        headerTextColor:"#ffffff",
+                        textColor:"#ffffff",
+                        option:{
+                            textColor:"#000000",
+                            hoverBackgroundColor:"#eef3f6",
+                            hoverTextColor:"#000000",
+                            activeTextColor:"#0374e3",
+                        },
+                        buttons:{
+                            backgroundColor:"#0374e3",
+                            hoverBackgroundColor:"#3590ea",
+                            textColor:"#ffffff",
+                            hoverTextColor:"#ffffff"
+                        }
+                    }
+                }
+            },
+            objectsOptions:{
+                backgroundColor:"#ffffff",
+                edit:{
+                    buttonColor:"#ffffff",
+                    hoverButtonColor:"#787878",
+                    textColor:"#000000",
+                    hoverTextColor:"#ffffff"
+                },
+                clone:{
+                    buttonColor:"#ffffff",
+                    hoverButtonColor:"#787878",
+                    textColor:"#000000",
+                    hoverTextColor:"#ffffff"
+                },
+                delete:{
+                    buttonColor:"#ffffff",
+                    hoverButtonColor:"#787878",
+                    textColor:"#dd3232",
+                    hoverTextColor:"#dd3232"
+                },
+                center:{
+                    buttonColor:"#ffffff",
+                    hoverButtonColor:"#787878",
+                    textColor:"#000000",
+                    hoverTextColor:"#ffffff"
+                }
+            }
         },
         customCSS:""
     },
