@@ -22,7 +22,7 @@
                         <span @click="confirmResetAll(true)" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-bg-[${configColors.backgroundColorButtonRestartAll}] aso-text-[${configColors.textColorButtonRestartAll}] hover:aso-bg-[${configColors.backgroundColorHoverButtonRestartAll}] hover:aso-text-[${configColors.textColorHoverButtonRestartAll}] aso-space-x-2 aso-p-2 aso-px-3 aso-rounded-full aso-base-animation aso-cursor-pointer`">
                             <svg v-if="configSectionIcons.resetAllIcon === '' " class="aso-h-5 aso-w-5" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="simple-line-icons:reload">
-                                <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="white"/>
+                                <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="currentColor"/>
                                 </g>
                             </svg>
                             <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="aso-w-5 aso-h-5" />                            
@@ -422,7 +422,7 @@
                         </div>
                     </div>
 
-                    <div >
+                    <div v-if="showScrollButton">
                         <div @click="ScrollLeft('aso-options-buttons')" :class="`aso-absolute aso-top-[0%] aso-left-0 aso-w-fit lg:aso-w-full aso-h-full lg:aso-h-fit aso-bg-[${configColors.backgroundColorHeader}]/60 aso-text-[${configColors.textColorContentHeader}] aso-flex aso-full-center aso-px-1 lg:aso-px-2 lg:aso-py-1 aso-cursor-pointer`">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-7 aso-h-7 -aso-rotate-90 lg:aso-rotate-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
@@ -1106,7 +1106,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div v-show="recentlyUsedImages.length > 0" class="aso-space-y-1"> {{console.log(recentlyUsedImages)}}
+                                <div v-show="recentlyUsedImages.length > 0" class="aso-space-y-1">
                                     <p class="aso-font-medium">Reccently used</p>
                                     <div class="aso-flex aso-items-center aso-flex-wrap aso-gap-2 aso-p-1">
                                         <div v-for="(image, index) in recentlyUsedImages">
@@ -2039,7 +2039,7 @@
     var showScrollButton = ref(false)
     function verifierScrollabilite() {
         const monDiv = document.getElementById('aso-options-buttons');
-        if (monDiv.scrollWidth > monDiv.clientWidth) {
+        if (monDiv.scrollHeight > monDiv.clientHeight) {
             showScrollButton.value = true;
             // monDiv.classList.remove("aso-justify-center");
             // monDiv.classList.add("aso-justify-start");
@@ -2071,8 +2071,8 @@
     function checkScreenView() {
         if(window.innerWidth < 1024){
             // isBelowLimits.value = window.innerWidth < 1024;
+            isBelowLimit.value = true;
             if(window.innerWidth < 688){
-                isBelowLimit.value = true;
                 showOptions('material')
             }
         }else{
@@ -2388,9 +2388,9 @@
                 // centerSign(canvasBack)
             });
             window.addEventListener('resize', () => {
-                checkScreenView()
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
+                    checkScreenView()
                     checkScreenSize()
                     // centerSign(canvas)
                     // centerSign(canvasBack)
