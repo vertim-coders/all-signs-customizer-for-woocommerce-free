@@ -759,6 +759,28 @@ const defaultSettings = ref({
                     textColor:"#000000",
                     hoverTextColor:"#ffffff"
                 }
+            },
+            recaps:{
+                headerBackgroundColor:"#3590ea",
+                headerTextColor:"#ffffff",
+                backgroundColor:"#fffff",
+                optionTextColor:"#000000",
+                optionHoverBackgroundColor:"#eef3f6",
+                optionHoverTextColor:"#000000",
+                optionBorderColor:"#eef3f6",
+                optionHoverBorderColor:"#eef3f6",
+                buttonFinishBackgroundColor:"#febd52",
+                buttonFinishTextColor:"#14213d",
+                buttonFinishHoverBackgroundColor:"#fcac29",
+                buttonFinishHoverTextColor:"#313e52",
+                buttonAddToCartBackgroundColor:"#febd52",
+                buttonAddToCartHoverBackgroundColor:"#fcac29",
+                buttonAddToCartTextColor:"#14213d",
+                buttonAddToCartHoverTextColor:"#313e52",
+                buttonEditBackgroundColor:"#0374e3",
+                buttonEditHoverBackgroundColor:"#025db7",
+                buttonEditTextColor:"#ffffff",
+                buttonEditHoverTextColor:"#f4f8fa",
             }
         },
         customCSS:""
@@ -1335,8 +1357,8 @@ const metaConfigs = ref({
 						]
 					},
 					textImages: {
-						enableText: true,
-						enableImage: true
+						enableText:true,
+                        enableImage:true
 					},
 					fixingMethods: [
 						{
@@ -8525,11 +8547,7 @@ const fetchFonts = async () =>{
     const result = await api.getManagefonts();
     if(!result.message){
         let tab=[]
-        manageFonts.value = result.map((font,id)=>{
-            tab.push(id);
-
-        });
-        manageFonts.value = tab;
+        manageFonts.value = result.map((font,id)=>id);
     }else{
         manageFonts.value = [];
     }
@@ -8541,7 +8559,6 @@ const fetchConfigs = async () => {
     configs.value = allConfigs.data;
     for (let index = 0; index < allConfigs.data.length; index++) {
         tab.push(false);
-        
     }
     showParams.value = tab;
     totalPages.value = allConfigs.totalPages;
@@ -8678,11 +8695,8 @@ const includeMetaData = async (state) => {
             }
         }
         if(manageFonts.value.length>0){
-            for (let index = 0; index < manageFonts.value.length; index++) {
-                configuration.data.settings.customizerSign.text.selectedFonts.push(manageFonts.value[index]);
-            }
+            configuration.data.settings.customizerSign.text.selectedFonts = manageFonts.value;
         }else{
-            configuration.data.settings.customizerSign.text.selectedFonts = [0,1,2,3,4];
             await api.addManagefont({many:true,fonts:[
                 {
                     "label": "Abhaya Libre",
@@ -8711,6 +8725,7 @@ const includeMetaData = async (state) => {
                 },
             ]});
             await fetchFonts();
+            configuration.data.settings.customizerSign.text.selectedFonts = manageFonts.value;
         }
         if(selectedDemo.value == 'double-side'){
             configuration.data.settings.customizerSign.signPart.doublePart.active=true; 

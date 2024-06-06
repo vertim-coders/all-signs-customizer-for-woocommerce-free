@@ -861,378 +861,167 @@
                 <div class="aso-flex aso-space-x-4">
                     <h2 class="aso-text-[15px] aso-font-bold">Options SideBar</h2>
                 </div>
-                
-                <div v-show="dropdownColorsSections['optionsSideBar']">
-                    <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center">
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.backgroundColor"
-                                    @input="updateOptionsSideBarBackgroundColorCodeHex"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.backgroundColor"
-                                    @input="updateOptionsSideBarBackgroundColorCodeHex"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsBackgroundColor"
-                                    @input="updateOptionsSideBarScrollButtonsBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsBackgroundColor"
-                                    @input="updateOptionsSideBarScrollButtonsBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsHoverBackgroundColor"
-                                    @input="updateOptionsSideBarScrollButtonsHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsHoverBackgroundColor"
-                                    @input="updateOptionsSideBarScrollButtonsHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsTextColor"
-                                    @input="updateOptionsSideBarScrollButtonsTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsTextColor"
-                                    @input="updateOptionsSideBarScrollButtonsTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsHoverTextColor"
-                                    @input="updateOptionsSideBarScrollButtonsHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.scrollButtonsHoverTextColor"
-                                    @input="updateOptionsSideBarScrollButtonsHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.backgroundColor"
-                                    @input="updateOptionsSideBarOptionsButtonsBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.backgroundColor"
-                                    @input="updateOptionsSideBarOptionsButtonsBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.hoverBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsButtonsHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.hoverBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsButtonsHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.textColor"
-                                    @input="updateOptionsSideBarOptionsButtonsTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.textColor"
-                                    @input="updateOptionsSideBarOptionsButtonsTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Hover Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.hoverTextColor"
-                                    @input="updateOptionsSideBarOptionsButtonsHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.buttons.hoverTextColor"
-                                    @input="updateOptionsSideBarOptionsButtonsHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
+                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['optionsSideBar']">
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.backgroundColor"
+                                @input="updateOptionsSideBarBackgroundColorCodeHex"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.backgroundColor"
+                                @input="updateOptionsSideBarBackgroundColorCodeHex"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
                         </div>
                     </div>
-                    <div class="aso-flex aso-space-x-4">
-                        <h2 class="aso-text-[15px] aso-font-bold">Modals</h2>
-                    </div>
-                    <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center">
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.headerBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsHeaderBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.headerBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsHeaderBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.TextColor"
-                                    @input="updateOptionsSideBarOptionsModalsTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.TextColor"
-                                    @input="updateOptionsSideBarOptionsModalsTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Buttons Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.backgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.backgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Buttons Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modals Buttons Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.textColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.textColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
-                        </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modals Buttons Hover Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsButtonsHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsBackgroundColor"
+                                @input="updateOptionsSideBarScrollButtonsBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsBackgroundColor"
+                                @input="updateOptionsSideBarScrollButtonsBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
                         </div>
                     </div>
-                    <div class="aso-flex aso-space-x-4">
-                        <h2 class="aso-text-[15px] aso-font-bold">Option</h2>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Hover Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsHoverBackgroundColor"
+                                @input="updateOptionsSideBarScrollButtonsHoverBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsHoverBackgroundColor"
+                                @input="updateOptionsSideBarScrollButtonsHoverBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
                     </div>
-                    <div class="aso-grid aso-grid-cols-2 w-full gap-4 aso-justify-between aso-items-center">
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Header Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.textColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.textColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsTextColor"
+                                @input="updateOptionsSideBarScrollButtonsTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsTextColor"
+                                @input="updateOptionsSideBarScrollButtonsTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.hoverBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.hoverBackgroundColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Text Hover Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsHoverTextColor"
+                                @input="updateOptionsSideBarScrollButtonsHoverTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.scrollButtonsHoverTextColor"
+                                @input="updateOptionsSideBarScrollButtonsHoverTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Hover Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.hoverTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.hoverTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.buttons.backgroundColor"
+                                @input="updateOptionsSideBarOptionsButtonsBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.buttons.backgroundColor"
+                                @input="updateOptionsSideBarOptionsButtonsBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Active Text Color</label>
-                            <div class="aso-relative aso-flex">
-                                <input
-                                    id="colorPicker"
-                                    type="color"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.activeTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionActiveTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
-                                />
-                                <input
-                                    type="text"
-                                    v-model="themes.colors.optionsSideBar.options.modals.option.activeTextColor"
-                                    @input="updateOptionsSideBarOptionsModalsOptionActiveTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                                />
-                            </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Hover Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.buttons.hoverBackgroundColor"
+                                @input="updateOptionsSideBarOptionsButtonsHoverBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.buttons.hoverBackgroundColor"
+                                @input="updateOptionsSideBarOptionsButtonsHoverBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.buttons.textColor"
+                                @input="updateOptionsSideBarOptionsButtonsTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.buttons.textColor"
+                                @input="updateOptionsSideBarOptionsButtonsTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Hover Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.buttons.hoverTextColor"
+                                @input="updateOptionsSideBarOptionsButtonsHoverTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.buttons.hoverTextColor"
+                                @input="updateOptionsSideBarOptionsButtonsHoverTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
                         </div>
                     </div>
                 </div>
@@ -1248,7 +1037,241 @@
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6 aso-relative" >
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
+                <div class="aso-flex aso-space-x-4">
+                    <h2 class="aso-text-[15px] aso-font-bold">Options Modals</h2>
+                </div>
+                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['optionsModals']">
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.headerBackgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsHeaderBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.headerBackgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsHeaderBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
+                                @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
+                                @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.TextColor"
+                                @input="updateOptionsSideBarOptionsModalsTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.TextColor"
+                                @input="updateOptionsSideBarOptionsModalsTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Buttons Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.backgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.backgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Buttons Hover Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsHoverBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsHoverBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modals Buttons Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.textColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.textColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modals Buttons Hover Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverTextColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsHoverTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverTextColor"
+                                @input="updateOptionsSideBarOptionsModalsButtonsHoverTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div v-if="dropdownColorsSections['optionsModals']" @click="dropdownColorsSections['optionsModals']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+                    </svg>
+                </div>
+                <div v-if="!dropdownColorsSections['optionsModals']" @click="dropdownColorsSections['optionsModals']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                    </svg>
+                </div>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
+                <div class="aso-flex aso-space-x-4">
+                    <h2 class="aso-text-[15px] aso-font-bold">Option in Modal</h2>
+                </div>
+                <div class="aso-grid aso-grid-cols-2 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['modalsOption']">
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.textColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.textColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Hover Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.hoverBackgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionHoverBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.hoverBackgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionHoverBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Hover Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.hoverTextColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionHoverTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.hoverTextColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionHoverTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Active Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.activeTextColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionActiveTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.option.activeTextColor"
+                                @input="updateOptionsSideBarOptionsModalsOptionActiveTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div v-if="dropdownColorsSections['modalsOption']" @click="dropdownColorsSections['modalsOption']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+                    </svg>
+                </div>
+                <div v-if="!dropdownColorsSections['modalsOption']" @click="dropdownColorsSections['modalsOption']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                    </svg>
+                </div>
+            </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
                 <div class="aso-flex aso-space-x-4">
                     <h2 class="aso-text-[15px] aso-font-bold">Objects Options</h2>
                 </div>
@@ -1574,6 +1597,386 @@
                     </svg>
                 </div>
             </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6 aso-relative" >
+                <div class="aso-flex aso-space-x-4">
+                    <h2 class="aso-text-[15px] aso-font-bold">Recaps Section</h2>
+                </div>
+                <div v-show="dropdownColorsSections['recaps']">
+                    <div class="aso-grid aso-grid-cols-4 w-full gap-4 aso-justify-between aso-items-center">
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.backgroundColor"
+                                    @input="updateRecapsBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.backgroundColor"
+                                    @input="updateRecapsBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Header Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.headerBackgroundColor"
+                                    @input="updateRecapsHeaderBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.headerBackgroundColor"
+                                    @input="updateRecapsHeaderBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Header Text Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.headerTextColor"
+                                    @input="updateRecapsHeaderTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.objectsOptions.edit.buttonColor"
+                                    @input="updateRecapsHeaderTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Hover Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.optionHoverBackgroundColor"
+                                    @input="updateRecapsOptionHoverBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.optionHoverBackgroundColor"
+                                    @input="updateRecapsOptionHoverBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Hover Text Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.optionHoverTextColor"
+                                    @input="updateRecapsOptionHoverTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.optionHoverTextColor"
+                                    @input="updateRecapsOptionHoverTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Text Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.optionTextColor"
+                                    @input="updateRecapsOptionTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.optionTextColor"
+                                    @input="updateRecapsOptionTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Border Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.optionBorderColor"
+                                    @input="updateRecapsOptionBorderColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.optionBorderColor"
+                                    @input="updateRecapsOptionBorderColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Border Hover Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.optionHoverBorderColor"
+                                    @input="updateRecapsOptionHoverBorderColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.optionBorderColor"
+                                    @input="updateRecapsOptionHoverBorderColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonFinishBackgroundColor"
+                                    @input="updateRecapsButtonFinishBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonFinishBackgroundColor"
+                                    @input="updateRecapsButtonFinishBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Hover Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonFinishHoverBackgroundColor"
+                                    @input="updateRecapsButtonFinishHoverBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonFinishHoverBackgroundColor"
+                                    @input="updateRecapsButtonFinishHoverBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Text Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonFinishTextColor"
+                                    @input="updateRecapsButtonFinishTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonFinishTextColor"
+                                    @input="updateRecapsButtonFinishTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Text Hover Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonFinishHoverTextColor"
+                                    @input="updateRecapsButtonFinishHoverTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonFinishHoverTextColor"
+                                    @input="updateRecapsButtonFinishHoverTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonAddToCartBackgroundColor"
+                                    @input="updateRecapsButtonAddToCartBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonAddToCartBackgroundColor"
+                                    @input="updateRecapsButtonAddToCartBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Hover Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonAddToCartHoverBackgroundColor"
+                                    @input="updateRecapsButtonAddToCartHoverBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonAddToCartHoverBackgroundColor"
+                                    @input="updateRecapsButtonAddToCartHoverBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Text Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonAddToCartTextColor"
+                                    @input="updateRecapsButtonAddToCartTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonAddToCartTextColor"
+                                    @input="updateRecapsButtonAddToCartTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Text Hover Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonAddToCartHoverTextColor"
+                                    @input="updateRecapsButtonAddToCartHoverTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonAddToCartHoverTextColor"
+                                    @input="updateRecapsButtonAddToCartHoverTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonEditBackgroundColor"
+                                    @input="updateRecapsButtonEditBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonEditBackgroundColor"
+                                    @input="updateRecapsButtonEditBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Hover Background Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonEditHoverBackgroundColor"
+                                    @input="updateRecapsButtonEditHoverBackgroundColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonEditHoverBackgroundColor"
+                                    @input="updateRecapsButtonEditHoverBackgroundColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Text Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonEditTextColor"
+                                    @input="updateRecapsButtonEditTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonEditTextColor"
+                                    @input="updateRecapsButtonEditTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Text Hover Color</label>
+                            <div class="aso-relative aso-flex">
+                                <input
+                                    id="colorPicker"
+                                    type="color"
+                                    v-model="themes.colors.recaps.buttonEditHoverTextColor"
+                                    @input="updateRecapsButtonEditHoverTextColor"
+                                    class="aso-w-9 aso-h-[30px]"
+                                />
+                                <input
+                                    type="text"
+                                    v-model="themes.colors.recaps.buttonEditHoverTextColor"
+                                    @input="updateRecapsButtonEditHoverTextColor"
+                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="dropdownColorsSections['recaps']" @click="dropdownColorsSections['recaps']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
+                    </svg>
+                </div>
+                <div v-if="!dropdownColorsSections['recaps']" @click="dropdownColorsSections['recaps']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                    </svg>
+                </div>
+            </div>
         </div>
         <div v-show="state=='custom'" class="aso-w-full aso-h-full aso-translate-y-9">
             <div class="aso-p-4">
@@ -1610,7 +2013,10 @@ const dropdownColorsSections = ref({
     resetButton:false,
     undoRedo:false,
     optionsSideBar:false,
-    objectOptions:false
+    optionsModals:false,
+    modalsOption:false,
+    objectOptions:false,
+    recaps:false,
 })
 const themes = ref({
     skin:"default",
@@ -1728,6 +2134,28 @@ const themes = ref({
                 textColor:"#000000",
                 hoverTextColor:"#ffffff"
             }
+        },
+        recaps:{
+            headerBackgroundColor:"#3590ea",
+            headerTextColor:"#ffffff",
+            backgroundColor:"#fffff",
+            optionTextColor:"#000000",
+            optionHoverBackgroundColor:"#eef3f6",
+            optionHoverTextColor:"#000000",
+            optionBorderColor:"#eef3f6",
+            optionHoverBorderColor:"#eef3f6",
+            buttonFinishBackgroundColor:"#febd52",
+            buttonFinishTextColor:"#14213d",
+            buttonFinishHoverBackgroundColor:"#fcac29",
+            buttonFinishHoverTextColor:"#313e52",
+            buttonAddToCartBackgroundColor:"#febd52",
+            buttonAddToCartHoverBackgroundColor:"#fcac29",
+            buttonAddToCartTextColor:"#14213d",
+            buttonAddToCartHoverTextColor:"#313e52",
+            buttonEditBackgroundColor:"#0374e3",
+            buttonEditHoverBackgroundColor:"#025db7",
+            buttonEditTextColor:"#ffffff",
+            buttonEditHoverTextColor:"#f4f8fa",
         }
     },
     customCSS:""
@@ -1740,8 +2168,14 @@ onMounted(async() => {
 const fetchThemesSettings = async () => {
     const result = await api.getThemesSettings(configId.value);
     if(!result.message){
-        if(result.colors.canvas)
-            themes.value = {...themes.value,...result};
+        const merge = {
+            ...result,
+            colors: {
+                ...themes.value.colors,
+                ...result.colors,
+            }
+        };
+        themes.value = merge;
     }
 }
 const updateThemesSettings = async () => {
@@ -2210,6 +2644,127 @@ const updateObjectsOptionsCenterHoverTextColor = (event) => {
     }
     themes.value.colors.objectsOptions.center.hoverTextColor= event.target.value;
 }
+const updateRecapsButtonEditTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonEditTextColor= event.target.value;
+}
+const updateRecapsButtonEditHoverTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonEditHoverTextColor= event.target.value;
+}
+const updateRecapsButtonEditHoverBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonEditHoverBackgroundColor= event.target.value;
+}
+const updateRecapsButtonEditBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonEditBackgroundColor= event.target.value;
+}
+const updateRecapsButtonAddToCartTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonAddToCartTextColor= event.target.value;
+}
+const updateRecapsButtonAddToCartHoverTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonAddToCartHoverTextColor= event.target.value;
+}
+const updateRecapsButtonAddToCartHoverBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonAddToCartHoverBackgroundColor= event.target.value;
+}
+const updateRecapsButtonAddToCartBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonAddToCartBackgroundColor= event.target.value;
+}
+const updateRecapsButtonFinishTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonFinishTextColor= event.target.value;
+}
+const updateRecapsButtonFinishHoverTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonFinishHoverTextColor= event.target.value;
+}
+const updateRecapsButtonFinishHoverBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonFinishHoverBackgroundColor= event.target.value;
+}
+const updateRecapsButtonFinishBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.buttonFinishBackgroundColor= event.target.value;
+}
+const updateRecapsOptionBorderColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.optionBorderColor= event.target.value;
+}
+const updateRecapsOptionHoverBorderColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.optionHoverBorderColor= event.target.value;
+}
+const updateRecapsOptionHoverBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.optionHoverBackgroundColor= event.target.value;
+}
+const updateRecapsOptionHoverTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.optionHoverTextColor= event.target.value;
+}
+const updateRecapsOptionTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.optionTextColor= event.target.value;
+}
+const updateRecapsHeaderBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.headerBackgroundColor= event.target.value;
+}
+const updateRecapsHeaderTextColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.headerTextColor= event.target.value;
+}
+const updateRecapsBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.recaps.backgroundColor= event.target.value;
+}
 
 
 </script>
+

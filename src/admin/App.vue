@@ -1,13 +1,9 @@
 <template>
-    <div id="aso-backend-app">
+    <div id="aso-backend-app" class="aso-h-[100vh]">
         <Headerbar v-if="$route.name!=='preview-back'"/>
-        <div :class="`aso-flex aso-justify-between aso-flex-row-reverse aso-w-full aso-pl-[10px] aso-pt-[10px]`">
-            <div v-if="$route.name!=='preview-back'" class="aso-relative aso-w-[80px]">
-                <Sidebar/>
-            </div>
-            <div class="aso-w-full aso-pr-[10px]">
-                <router-view />
-            </div>
+        <Sidebar/>
+        <div :class="`aso-container aso-pl-[10px] aso-pt-[10px]`">
+            <router-view />
         </div>
     </div>
 </template>

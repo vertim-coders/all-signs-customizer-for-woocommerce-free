@@ -1,6 +1,6 @@
 
 <template>
-    <div class="aso-h-[85vh] aso-overflow-y-auto aso-overflow-x-hidden aso-relative aso-translate-y-9">
+    <div class="aso-sticky aso-top-[80px] aso-z-[999] aso-overflow-y-auto aso-overflow-x-hidden aso-relative">
         <div class="" v-show="!news">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div  v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">

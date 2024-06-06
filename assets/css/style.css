@@ -16,9 +16,7 @@ td.is_aso_customizable.column-is_aso_customizable {
 
 #toplevel_page_aso .wp-menu-image img {
   position: absolute !important;
-  padding: 0 !important;
-  width: 100% !important;
-  height: 100% !important; }
+  padding: 0 0 0 2px !important; }
 
 .config-page-error {
   display: flex;

@@ -21,7 +21,7 @@ class ASO_Admin {
         $capability = 'manage_options';
         $slug       = 'aso';
 
-        $hook = add_menu_page( __( 'ASO', 'ASO' ), __( 'ASO', 'ASO' ), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_icon_aso.png' );
+        $hook = add_menu_page( __( 'All Signs Options', 'ASO' ), __( 'All Signs Options', 'ASO' ), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_icon_aso.png' );
 
         if ( current_user_can( $capability ) ) {
             $submenu[ $slug ][] = array( __( 'Configurations', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/' );
@@ -64,21 +64,17 @@ class ASO_Admin {
      */
     public function plugin_page() {
         $api_url = get_rest_url(); ?>
-        <div class="wrap">
-            <div id="aso-admin-app"></div>
-            <?php wp_localize_script("aso-admin","aso_data",[
-                "rest_url"=>$api_url."aso/v1",
-                "assets_url"=>ASO_ASSETS,
-                "version"=> ASO_VERSION,
-                'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
-                'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
-            ]);
-            wp_localize_script("aso-admin","aso_configurator_data",array(
-                "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
-                "borders_url"  => ASO_ASSETS.'/images/borders',
-            ));
-            ?>
-        </div>
-        <?php
+        <div id="aso-admin-app"></div>
+        <?php wp_localize_script("aso-admin","aso_data",[
+            "rest_url"=>$api_url."aso/v1",
+            "assets_url"=>ASO_ASSETS,
+            "version"=> ASO_VERSION,
+            'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
+            'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
+        ]);
+        wp_localize_script("aso-admin","aso_configurator_data",array(
+            "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
+            "borders_url"  => ASO_ASSETS.'/images/borders',
+        ));
     }
 }
