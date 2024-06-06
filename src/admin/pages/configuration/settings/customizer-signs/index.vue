@@ -1,5 +1,5 @@
 <template lang="">
-    <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[125px] aso-z-[9999] aso-w-full aso-shadow-md aso-translate-y-2">
+    <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[124px] aso-z-[9999] aso-w-full aso-shadow-md aso-translate-y-2">
         <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
             <div class="">
                 <button @click="()=>{showStep='customizer-options'}" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ showStep== 'customizer-options' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`">

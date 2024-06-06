@@ -1,6 +1,6 @@
 
 <template>
-    <div class="aso-sticky aso-top-[80px] aso-z-[999] aso-overflow-y-auto aso-overflow-x-hidden aso-relative">
+    <div class="">
         <div class="" v-show="!news">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div  v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div>
-        <div v-if="news" class="aso-space-y-1">
+        <div v-if="news" class="aso-sticky aso-top-[80px] aso-z-[999]">
             <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div class="aso-font-bold aso-text-[16px]">
                     Additional Options
@@ -100,7 +100,7 @@
                     {{edit ? 'Edit additional option' :'Add new additional option'}}
                 </div>
             </div>
-            <div class="aso-bg-white aso-sticky aso-z-[9999] aso-top-0 aso-shadow-md aso-px-4 aso-py-2">
+            <div class="aso-bg-white aso-sticky aso-shadow-md aso-px-4 aso-py-2">
                 <p class="aso-text-[14px] aso-font-bold aso-m-0">1- Choose an Input Type</p>
                 <p class="aso-text-[12px] aso-m-0">This text will display above the input options.</p>
                 <div class="aso-flex aso-justify-evenly aso-items-center">
@@ -126,6 +126,8 @@
                     </button>
                 </div>
             </div>
+        </div>
+        <div v-if="news" class="aso-space-y-1">
             <YesOrNo v-if="type=='yes/no' && news" :action="edit" :data="additionals[additionalOptionId]??null" :id="additionalOptionId" :change-action="changeAction" :change-open="newAdditionnal" :change-additionals="changeAdditionals"/>
             <IncludedType v-if="type=='include-type' && news" :action="edit" :data="additionals[additionalOptionId]??null" :id="additionalOptionId" :change-action="changeAction" :change-open="newAdditionnal" :change-additionals="changeAdditionals"/>
             <InputImage v-if="type=='image-input' && news" :action="edit" :data="additionals[additionalOptionId]??null" :id="additionalOptionId" :change-action="changeAction" :change-open="newAdditionnal" :change-additionals="changeAdditionals"/> 
