@@ -39,6 +39,9 @@
   width: calc(100% - 100px) !important;
 }
 
+.aso-preview-configurator {
+  height: calc(100vh - 50px) !important; }
+
 .folded .aso-header {
   width: calc(100% - 36px) !important;
 }

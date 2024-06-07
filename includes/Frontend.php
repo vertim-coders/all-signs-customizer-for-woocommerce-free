@@ -7,7 +7,8 @@ namespace ASO;
 class ASO_Frontend {
 
     public function __construct() {
-        add_shortcode( 'aso-configurator', [ $this, 'render_aso_frontend' ] );
+        add_shortcode( 'aso-configurator', [ $this, 'render_aso_configurator' ] );
+        add_shortcode( 'aso-templates', [ $this, 'render_aso_configurator' ] );
     }
 
     /**
@@ -18,7 +19,7 @@ class ASO_Frontend {
      *
      * @return string
      */
-    public function render_aso_frontend( $atts, $content = '' ) {
+    public function render_aso_configurator( $atts, $content = '' ) {
         wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
         wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
         wp_enqueue_script( 'aso-frontend' );
@@ -111,7 +112,7 @@ class ASO_Frontend {
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
                         ?>
-                        <div id='aso-frontend-app'></div>
+                        <div id='aso-frontend-app' class="aso-configurator-container"></div>
                         <?php 
                         $this->includes_config_fonts($visibleFonts);
                         $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
@@ -154,6 +155,31 @@ class ASO_Frontend {
         wp_add_inline_style( 'aso-style', $inline_style );
         ?>
         <?php
+    }
+
+    public function render_aso_templates ($atts, $content=''){
+        wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
+        wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
+        wp_enqueue_script( 'aso-frontend' );
+        extract( // phpcs:ignore
+			shortcode_atts(
+				array(
+					'productid' => '0'
+				),
+				$atts,
+                'aso-products'
+			)
+		);
+        $product =wc_get_product($productid);
+        if($product){
+            $meta = get_post_meta($productid,'product-aso-metas',true);
+                
+            if(!empty($meta) && isset($meta[$productid]['config-id'])){
+                $configId = $meta[$productid]['config-id'];
+                if($configId !=0){
+                }
+            }
+        }
     }
 
     private function include_custom_css( $css){

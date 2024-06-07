@@ -718,6 +718,7 @@ const defaultSettings = ref({
                         headerBackgroundColor:"#0374e3",
                         headerTextColor:"#ffffff",
                         textColor:"#ffffff",
+                        backgroundColor:"#ffffff",
                         option:{
                             textColor:"#000000",
                             hoverBackgroundColor:"#eef3f6",
@@ -763,7 +764,7 @@ const defaultSettings = ref({
             recaps:{
                 headerBackgroundColor:"#3590ea",
                 headerTextColor:"#ffffff",
-                backgroundColor:"#fffff",
+                backgroundColor:"#ffffff",
                 optionTextColor:"#000000",
                 optionHoverBackgroundColor:"#eef3f6",
                 optionHoverTextColor:"#000000",

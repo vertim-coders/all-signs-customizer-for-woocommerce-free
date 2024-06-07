@@ -217,30 +217,24 @@
     } 
     function aso_get_custom_products() {
         global $wpdb;
-        $query = "SELECT p.id 
-                  FROM {$wpdb->posts} p 
-                  JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id 
-                  WHERE p.post_type = 'product' AND pm.meta_key = %s";
-        $params = ['product-aso-metas'];
+        $query = "SELECT p.id FROM {$wpdb->posts} p JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id WHERE p.post_type = 'product' AND pm.meta_key = %s";
+        $params = ['product-asoc-metas'];
         $conditions = [];
-        $placeholders = [];
-    
         for ($i = 1; $i <= 9; $i++) {
             $conditions[] = "pm.meta_value LIKE %s";
-            $placeholders[] = '%config-id";s:' . $i . ':%';
+            $params[] = '%config-id";s:' . $i . ':%';
         }
-
         if (!empty($conditions)) {
-            $query .= " AND (" . join(' OR ', $conditions) . ")";
+            $query .= " AND (" . implode(' OR ', $conditions) . ")";
         }
-
-        $params = array_merge($params, $placeholders);
-
-        $products = $wpdb->get_results($wpdb->prepare(
-            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-            $query, 
-            $params
-        ));
-    
+        
+        $products = $wpdb->get_results(
+            $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $query, 
+                $params
+            )
+        );
+        
         return $products;
     }

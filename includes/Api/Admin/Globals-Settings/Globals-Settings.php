@@ -87,7 +87,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         ),
       )
     );
-    register_rest_route(
+    /* register_rest_route(
       $this->namespace,
       '/' . $this->rest_base."/template-page",
       array(
@@ -102,7 +102,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
       )
-    );
+    ); */
     register_rest_route(
       $this->namespace,
       '/' . $this->rest_base."/output",
