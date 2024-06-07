@@ -29,6 +29,10 @@
     transition-duration: 500ms;
     // cursor: pointer;
   }
+  .aso-buttons-rad-none{
+    border-radius: 0px !important;
+    border: 0px;
+  }
   .aso-full-center {
     justify-content: center !important;
     align-items: center !important;
