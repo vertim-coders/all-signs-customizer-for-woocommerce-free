@@ -116,14 +116,14 @@
                         </div>
     
                         <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-full-center aso-space-x-1 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
-                            <div @click="editObject()" id="aso-editObject" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.edit.buttonColor}] aso-text-[${configColors.objectsOptions.edit.textColor}] hover:aso-bg-[${configColors.objectsOptions.edit.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.edit.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md aso-base-animation`">
+                            <div @click="editObject()" id="aso-editObject" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.edit.buttonColor}] aso-text-[${configColors.objectsOptions.edit.textColor}] hover:aso-bg-[${configColors.objectsOptions.edit.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.edit.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
                                 <p class="aso-text-[10px] aso-font-semibold">{{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Edit' }}</p>
                             </div>
 
-                            <div @click="cloneObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.clone.buttonColor}] aso-text-[${configColors.objectsOptions.clone.textColor}] hover:aso-bg-[${configColors.objectsOptions.clone.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.clone.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md aso-base-animation`">
+                            <div @click="cloneObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.clone.buttonColor}] aso-text-[${configColors.objectsOptions.clone.textColor}] hover:aso-bg-[${configColors.objectsOptions.clone.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.clone.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
                                 <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-5 aso-h-5">
                                     <g clip-path="url(#clip0_65_739)">
                                         <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
@@ -139,21 +139,21 @@
                                 <p class="aso-text-[10px] aso-font-semibold">{{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}</p>
                             </div>
     
-                            <div @click="deleteObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.delete.buttonColor}] aso-text-[${configColors.objectsOptions.delete.textColor}] hover:aso-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.delete.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md aso-base-animation`">
+                            <div @click="deleteObject()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.delete.buttonColor}] aso-text-[${configColors.objectsOptions.delete.textColor}] hover:aso-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.delete.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                 </svg>
                                 <p class="aso-text-[10px] aso-font-semibold">{{ configVisualiserTexts.textCanvasDelete && configVisualiserTexts.textCanvasDelete.trim() !== '' ? configVisualiserTexts.textCanvasDelete : 'Delete' }}</p>
                             </div>
     
-                            <div @click="centerVertically()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md aso-base-animation`">
+                            <div @click="centerVertically()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
                                 <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
                                     <path d="M11 3a1 1 0 1 1 2 0v2.586l1.293-1.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414L11 5.586V3zM9.707 19.707a1 1 0 0 1-1.414-1.414l3-3a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1-1.414 1.414L13 18.414V21a1 1 0 1 1-2 0v-2.586l-1.293 1.293zM4 11a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2H4z" fill="currentColor"></path>
                                 </svg>
                                 <p class="aso-text-[10px] aso-font-semibold">{{ configVisualiserTexts.textCanvasCenterV && configVisualiserTexts.textCanvasCenterV.trim() !== '' ? configVisualiserTexts.textCanvasCenterV : 'CenterV' }}</p>
                             </div>
     
-                            <div @click="centerHorizontally()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md aso-base-animation`">
+                            <div @click="centerHorizontally()" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
                                 <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
                                     <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
                                 </svg>
@@ -329,7 +329,7 @@
                         </div>
                     </div>
     
-                    <div v-show="showOption" id="aso-options-container" :class="`aso-relative lg:aso-absolute lg:aso-left-4 lg:aso-top-[20%] lg:aso-translate-y-[-20%] aso-w-full lg:aso-w-[36%] aso-h-[32%] lg:aso-h-[70%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.textColorOptionsMenu}] aso-rounded-md lg:aso-shadow-xl aso-z-20`">
+                    <div v-show="showOption" id="aso-options-container" :class="`aso-relative lg:aso-absolute lg:aso-left-4 lg:aso-top-[20%] lg:aso-translate-y-[-20%] aso-w-full lg:aso-w-[36%] aso-h-[32%] lg:aso-h-[70%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-rounded-md lg:aso-shadow-xl aso-z-20`">
                         <div class="aso-hidden lg:aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
                             <span @click="closeOption" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-rounded-md aso-base-animation aso-cursor-pointer aso-z-10`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -365,7 +365,7 @@
                                 </div>
                             </div>
 
-                            <div v-show="showMaterialEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
+                            <div v-show="showMaterialEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
                                 <div v-html="materialExample"></div>
                                 <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
                                     <span @click="showMaterialExample(false)" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
@@ -546,7 +546,7 @@
                                 </div>
                             </div>
 
-                            <div v-show="showFixingEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
+                            <div v-show="showFixingEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
                                 <div v-html="fixingExample"></div>
                                 <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
                                     <span @click="showFixingExample(false)" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
@@ -1191,10 +1191,10 @@
                                         </label>
                                     </div>
 
-                                    <div v-show="showAddComponentEx && addComponentExId === index" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
+                                    <div v-show="showAddComponentEx && addComponentExId === index" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
                                         <img :src="addComponentExample" class="aso-w-auto aso-h-full">
                                         <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
-                                            <span @click="showAddComponentExample(false)" :class="`aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] hover:aso-bg-aso-bg-[${configColors.backgroundColorHeader}]/30 aso-p-1 aso-base-animation`">
+                                            <span @click="showAddComponentExample(false)" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                 </svg>
@@ -1253,7 +1253,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div v-show="showYesNo && yesNoIndex == indexx" :class="`aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
+                                            <div v-show="showYesNo && yesNoIndex == indexx" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
                                                 <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showYesNoExample()">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1298,7 +1298,7 @@
                                                             </span>
                                                         </div>
                                                     </label>
-                                                    <div v-show="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
+                                                    <div v-show="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
                                                         <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="showInputImageExample()">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1335,7 +1335,7 @@
                                                 </option>
                                             </select>
         
-                                            <div v-show="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
+                                            <div v-show="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
                                                 <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showDropdownExample()">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1384,7 +1384,7 @@
                                                     </svg>
                                                 </span>
                                             </div>                     
-                                            <div v-if="showFree && freeIndex == indexx" :class="`aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-bottom-[0%] aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
+                                            <div v-if="showFree && freeIndex == indexx" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-bottom-[0%] aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
                                                 <span :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showFreeExample()">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -3443,8 +3443,8 @@
             infoDiv.classList.remove("aso-invisible");
 
             var boundingRect = obj.getBoundingRect(false);
-            infoDiv.style.left =  boundingRect.left + boundingRect.width + 10 + 'px';
-            infoDiv.style.top = boundingRect.top + (boundingRect.height) + 10 + 'px';
+            infoDiv.style.left =  boundingRect.left + boundingRect.width + 20 + 'px';
+            infoDiv.style.top = boundingRect.top + (boundingRect.height) + 20 + 'px';
         } else {
             infoDiv.style.display = 'none';
         }

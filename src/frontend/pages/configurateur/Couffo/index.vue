@@ -380,7 +380,7 @@
             </div>
     
             <div class="aso-w-full aso-h-[32%] lg:aso-w-fit lg:aso-h-fit">
-                <div v-show="showOption" id="aso-options-container" :class="`aso-relative lg:aso-absolute lg:aso-left-[8%] lg:aso-top-[11%] aso-w-full lg:aso-w-[35%] aso-h-[85%] lg:aso-h-[70%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-rounded-md lg:aso-shadow-xl aso-z-20`">
+                <div v-show="showOption" id="aso-options-container" :class="`aso-relative lg:aso-absolute lg:aso-left-[8%] lg:aso-top-[11%] aso-w-full lg:aso-w-[35%] aso-h-[85%] lg:aso-h-[70%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-rounded-md lg:aso-shadow-xl aso-z-20`">
                     <div class="aso-hidden lg:aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
                         <span @click="closeOption" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-rounded-md aso-base-animation aso-cursor-pointer aso-z-10`">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
@@ -416,7 +416,7 @@
                             </div>
                         </div>
 
-                        <div v-show="showMaterialEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
+                        <div v-show="showMaterialEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
                             <div v-html="materialExample"></div>
                             <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
                                 <span @click="showMaterialExample(false)" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
@@ -597,7 +597,7 @@
                             </div>
                         </div>
 
-                        <div v-show="showFixingEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
+                        <div v-show="showFixingEx" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
                             <div v-html="fixingExample"></div>
                             <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
                                 <span @click="showFixingExample(false)" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
@@ -1242,10 +1242,10 @@
                                     </label>
                                 </div>
 
-                                <div v-show="showAddComponentEx && addComponentExId === index" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
+                                <div v-show="showAddComponentEx && addComponentExId === index" :class="`aso-absolute aso-top-0 aso-right-0 aso-w-[85%] lg:aso-w-full aso-h-[90%] aso-overflow-auto aso-scrollBar aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-p-2`">
                                     <img :src="addComponentExample" class="aso-w-auto aso-h-full">
                                     <div class="aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit aso-cursor-pointer">
-                                        <span @click="showAddComponentExample(false)" :class="`aso-flex aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.textColorContentHeader}] hover:aso-bg-aso-bg-[${configColors.backgroundColorHeader}]/30 aso-p-1 aso-base-animation`">
+                                        <span @click="showAddComponentExample(false)" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                             </svg>
@@ -1304,7 +1304,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div v-show="showYesNo && yesNoIndex == indexx" :class="`aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
+                                        <div v-show="showYesNo && yesNoIndex == indexx" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
                                             <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showYesNoExample()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1349,7 +1349,7 @@
                                                         </span>
                                                     </div>
                                                 </label>
-                                                <div v-show="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
+                                                <div v-show="inputImageExample && inputImageIndex == index && inputImageLabel == element.label" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
                                                     <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="showInputImageExample()">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1386,7 +1386,7 @@
                                             </option>
                                         </select>
     
-                                        <div v-show="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`aso-bg-[${configColors.backgroundColorOptionsMenu}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
+                                        <div v-show="dropdownExample && dropdownIndex == indexx && dropdownExampleImg != ''" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-top-0 aso-right-0 aso-translate-y-[-50%] lg:aso-translate-y-[0%] lg:aso-translate-x-[101%] aso-w-[85%] aso-h-fit aso-p-2 aso-z-10`">
                                             <div :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showDropdownExample()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1435,7 +1435,7 @@
                                                 </svg>
                                             </span>
                                         </div>                     
-                                        <div v-if="showFree && freeIndex == indexx" :class="`aso-bg-[${configColors.backgroundColorHeader}] aso-text-[${configColors.backgroundColorHeader}] aso-absolute aso-bottom-[0%] aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
+                                        <div v-if="showFree && freeIndex == indexx" :class="`aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] aso-absolute aso-bottom-[0%] aso-right-[0%] aso-w-[75%] aso-h-auto aso-p-2 aso-z-10`">
                                             <span :class="`aso-cursor-pointer aso-flex aso-items-center aso-justify-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-absolute aso-right-0 aso-top-0 aso-p-1`" @click="()=>showFreeExample()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -2100,7 +2100,7 @@
 
         let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
         configImagesFormat.value = acceptedFormatTable.join(', ');
-        console.log(configVisualiserTexts.value, "config")
+        console.log(configColors.value, "config")
 
         handleGetImageSettings(configImageSettings.value)
         // console.log(configImageSettings.value)

@@ -8,7 +8,7 @@
         <div v-if="isLoading" class="aso-bg-white aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-full p-4">
             <img class="aso-w-[200px] aso-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
         </div>
-        <div v-show="!isLoading" id="aso-frontend-app" class="aso-preview-configurator"></div>
+        <div id="aso-frontend-app" class="aso-preview-configurator"></div>
     </div>
     
 </template>
