@@ -1,5 +1,5 @@
 <template>
-    <div id="aso-frontend-app" class="aso-relative aso-w-full aso-h-[100vh]">
+    <div class="aso-relative aso-w-full aso-h-full">
 
         <div :class="`aso-w-full aso-h-full aso-flex aso-flex-col lg:aso-flex-row-reverse`">
             <div class="aso-w-full lg:aso-w-[92%] aso-h-[54%] lg:aso-h-full aso-flex aso-flex-col">

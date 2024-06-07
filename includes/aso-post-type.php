@@ -5,9 +5,7 @@ class ASO_Post_Type
     public function init_hooks(){
         add_action('init',array($this,'register_aso_post_type'));
         add_action('init',array($this,'register_aso_config_meta'));
-
-		add_action('init',array($this,'register_aso_manage_cliparts'));
-		add_action('init',array($this,'register_aso_manage_cliparts_meta'));
+        add_action('init',array($this,'register_aso_config_templates'));
 
         add_filter( 'the_content', array($this,'get_editor_shortcode_handler'));
 		add_filter( 'init', array($this,'aso_add_rewrite_rules'), 99 );
@@ -77,54 +75,14 @@ class ASO_Post_Type
 			)
 		);
 	}
-	
 
 	/**
-	 * create post type manage cliparts
-	 */
-	public function register_aso_manage_cliparts() {
-		
-		$labels = array(
-			'name'               => _x( 'ASO Manage cliparts', 'ASO' ),
-			'singular_name'      => _x( 'ASO Manage cliparts', 'ASO' ),
-			'add_new'            => _x( 'New ASO manage cliparts', 'ASO' ),
-			'add_new_item'       => _x( 'New ASO manage cliparts', 'ASO' ),
-			'edit_item'          => _x( 'Edit ASO manage cliparts', 'ASO' ),
-			'new_item'           => _x( 'New ASO manage cliparts', 'ASO' ),
-			'view_item'          => _x( 'View ASO manage cliparts', 'ASO' ),
-			'not_found'          => _x( 'No ASO manage cliparts', 'ASO' ),
-			'not_found_in_trash' => _x( 'No ASO manage cliparts in the trash', 'ASO' ),
-			'menu_name'          => _x( 'All Signs Options', 'ASO' ),
-			'all_items'          => _x( 'ASO Manage cliparts', 'ASO' ),
-		);
-
-		$args = array(
-			'labels'              => $labels,
-			'hierarchical'        => false,
-			'description'         => 'ASO Manage cliparts',
-			'supports'            => array( 'title' ),
-			'public'              => false,
-			'show_in_rest' 		  => true,
-			'show_ui'             => true,
-			'show_in_menu'        => false,
-			'show_in_nav_menus'   => false,
-			'publicly_queryable'  => false,
-			'exclude_from_search' => true,
-			'has_archive'         => false,
-			'query_var'           => false,
-			'can_export'          => true,
-		);
-
-		register_post_type( 'aso-manages-cliparts', $args );
-
-	}
-	 /**
-	 * Create meta data of aso-manages-cliparts-meta
+	 * Create meta data of aso-configs-meta
 	*/
-	public function register_aso_manage_cliparts_meta(){
+	public function register_aso_config_templates(){
 		register_meta(
-			'aso-manages-cliparts',
-			'aso-manages-cliparts-meta',
+			'aso-configs',
+			'aso-configs-templates',
 			array(
 				'show_in_rest' => array(
 					'schema' => array(
@@ -143,29 +101,50 @@ class ASO_Post_Type
 		);
 	}
 
-    	/**
+    /**
 	 * Add short code on config page
-	 */
+	*/
 
 	public function get_editor_shortcode_handler( $content ) {
 		global $wp_query;
 		$page_settings = get_option("aso_config_page");
-		$config_page_id = $page_settings["configuratorPage"];
-		if ( get_the_ID() == $config_page_id && !isset( $wp_query->query_vars['aso-product-id'] ) ) {
-					ob_start();
-		?>
-		<div class="config-page-error">
-			<div>				
-				<p><?=esc_html__( "You are trying to access the personalization page without a product to personalize or your permalink is not on postname.", 'ASO' );?></p>
-				<p><?=esc_html__( "This page should only be accessed using one of the customization buttons.", 'ASO' );?></p>
-			</div>
-		</div>
-		<?php			
-				
-			$content .= ob_get_clean();
-		}elseif ( isset( $wp_query->query_vars['aso-product-id'] ) ) {
-			if( is_page($config_page_id) ) {
+		if ( (get_the_ID() == $page_settings["configuratorPage"]) && is_page($page_settings["configuratorPage"]) ){
+			if(!isset( $wp_query->query_vars['aso-product-id'] )){
+				ob_start();
+				?>
+				<div class="aso-config-page-error">
+					<div class="aso-config-page-error-title">
+						<?php echo esc_html__("All Signs Options Warning","ASO") ?>
+					</div>
+					<div>				
+						<p><?php echo esc_html__( "You are trying to access the personalization page without the personalized button of a product to be personalized. 
+						This page should only be accessible using one of the customization buttons. 
+						If you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator.", 'ASO' );?></p>
+					</div>
+				</div>
+				<?php
+				$content .= ob_get_clean();
+			}else{
 				$content .= do_shortcode("[aso-configurator productid='".$wp_query->query_vars['aso-product-id']."']");
+			}
+		}elseif ( get_the_ID() == $page_settings["templatePage"] && is_page($page_settings["templatePage"]) ) {
+			if(!isset( $wp_query->query_vars['aso-product-id'] )){
+				ob_start();
+				?>
+				<div class="aso-config-page-error">
+					<div class="aso-config-page-error-title">
+						<?php echo esc_html__("All Signs Options Warning","ASO") ?>
+					</div>
+					<div>				
+						<p><?php echo esc_html__( "You are trying to access the template page without a product to customize. 
+						This page should only be accessible by using one of the template buttons. 
+						If you don't like this procedure, don't define this page as a template page and use the short code for template.", 'ASO' );?></p>
+					</div>
+				</div>
+				<?php
+				$content .= ob_get_clean();
+			}else{
+				$content .= do_shortcode("[aso-templates productid='".$wp_query->query_vars['aso-product-id']."']");
 			}
 		}
 		return $content;

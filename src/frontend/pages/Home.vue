@@ -1,4 +1,5 @@
 <template>
+  <Templates :data="templates" v-if="isTemplates"/>
   <Default v-if="skin == 'default'" :config="configData" :manage="manageData" :currency="currencySymbol"/>
   <Couffo v-if="skin == 'couffo'" :config="configData" :manage="manageData" :currency="currencySymbol"/>
 </template>
@@ -7,6 +8,7 @@
 import { ref, onMounted } from "vue";
 import Default from "./configurateur/Default/index.vue"
 import Couffo from "./configurateur/Couffo/index.vue"
+import Templates from './Templates/index.vue'
 import { useRoute } from "vue-router";
 import api from "@/admin/Api/api";
 const route = useRoute();
@@ -14,7 +16,8 @@ const skin = ref('');
 var configData = ref();
 var manageData = ref();
 var currencySymbol = ref("");
-
+const templates = ref(null);
+const isTemplates = ref(false);
 onMounted(async() => {
   if(route.name == 'preview-back'){
     const result = await api.getPreviewConfig(route.params.configId);
@@ -35,11 +38,16 @@ onMounted(async() => {
     document.head.appendChild(style);
     
   }else{
-    skin.value = aso_configurator_data.skin;
-    // console.log(aso_configurator_data, 'skin actif');
-    configData.value = aso_configurator_data.currentConfig;
-    manageData.value = aso_configurator_data.managesData;
-    currencySymbol.value = aso_configurator_data.currencySymbol
+    if(aso_configurator_data != undefined){
+      skin.value = aso_configurator_data.skin;
+      // console.log(aso_configurator_data, 'skin actif');
+      configData.value = aso_configurator_data.currentConfig;
+      manageData.value = aso_configurator_data.managesData;
+      currencySymbol.value = aso_configurator_data.currencySymbol
+    }else if(aso_templates_data != undefined){
+      isTemplates.value = true;
+      templates.value = aso_templates_data;
+    }
   }
 });
 

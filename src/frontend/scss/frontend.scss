@@ -1,5 +1,8 @@
 :root {
-  --aso-scrollBar-color: #000000
+  --aso-scrollBar-color: #000000;
+}
+.aso-configurator-container {
+  height: 100vh;
 }
 #aso-frontend-app {
   p {
@@ -10,7 +13,7 @@
     display: none;
     overflow: auto;
   }
-  
+
   .aso-scrollBar::-webkit-scrollbar {
     width: 6px;
     height: 4px;
@@ -20,8 +23,8 @@
     background-color: var(--aso-scrollBar-color);
     border-radius: 20px;
   }
-   
-  .aso-base-animation{
+
+  .aso-base-animation {
     transition-property: all;
     transition-duration: 500ms;
     // cursor: pointer;
@@ -31,32 +34,30 @@
     align-items: center !important;
     /* white-space: nowrap; */
   }
-  
-  .aso-option-buton{
+
+  .aso-option-buton {
     width: fit-content;
     height: 90%;
     display: flex;
     flex-direction: column;
   }
 
-  
   .aso-new-border {
     border: solid 1px !important;
   }
 
-  .aso-inputImage{
+  .aso-inputImage {
     /* aso-text-md  */
     display: flex !important;
     padding: 8px 14px 8px 14px !important;
     border-radius: 9999px !important;
     cursor: pointer !important;
   }
-  .aso-inputImage svg, .aso-inputImage p{
-      margin-left: 5px !important;
-      margin-right: 5px !important
+  .aso-inputImage svg,
+  .aso-inputImage p {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
   }
-
-  
 }
 .aso-text-size {
   padding: 0 !important;
@@ -75,6 +76,6 @@
   overflow-y: hidden;
   white-space: nowrap;
 }
-.aso-cardDiv{
+.aso-cardDiv {
   // display: inline-block;
 }

@@ -53,19 +53,16 @@ const ASO_VERSION = ref(aso_data.version);
 const goToPreview = ()=>{
     router.push('/configs/'+router.currentRoute.value.params.config+'/preview/'+router.currentRoute.value.params.configId)
     .then(() => {
-      // Recharger la page après la navigation
       window.location.reload()
     })
 }
 const goToMaterials = ()=>{
     router.push('/configs/'+router.currentRoute.value.params.config+'/'+router.currentRoute.value.params.configId+'/materials')
     .then(() => {
-      // Recharger la page après la navigation
       window.location.reload()
     })
 }
 function goToRoute() {
-  // Remplacez 'nom-de-la-route' par le nom de la route vers laquelle vous voulez vous rendre
   router.push({ name: 'nom-de-la-route' })
 }
 </script>
