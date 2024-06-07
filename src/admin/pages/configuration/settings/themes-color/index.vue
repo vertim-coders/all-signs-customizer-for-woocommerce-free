@@ -1043,6 +1043,42 @@
                 </div>
                 <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['optionsModals']">
                     <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Background Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.backgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsBackgroundColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.backgroundColor"
+                                @input="updateOptionsSideBarOptionsModalsBackgroundColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
+                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Text Color</label>
+                        <div class="aso-relative aso-flex">
+                            <input
+                                id="colorPicker"
+                                type="color"
+                                v-model="themes.colors.optionsSideBar.options.modals.textColor"
+                                @input="updateOptionsSideBarOptionsModalsTextColor"
+                                class="aso-w-9 aso-h-[30px]"
+                            />
+                            <input
+                                type="text"
+                                v-model="themes.colors.optionsSideBar.options.modals.textColor"
+                                @input="updateOptionsSideBarOptionsModalsTextColor"
+                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                            />
+                        </div>
+                    </div>
+                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
                         <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Background Color</label>
                         <div class="aso-relative aso-flex">
                             <input
@@ -1074,24 +1110,6 @@
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
                                 @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
-                            />
-                        </div>
-                    </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Text Color</label>
-                        <div class="aso-relative aso-flex">
-                            <input
-                                id="colorPicker"
-                                type="color"
-                                v-model="themes.colors.optionsSideBar.options.modals.TextColor"
-                                @input="updateOptionsSideBarOptionsModalsTextColor"
-                                class="aso-w-9 aso-h-[30px]"
-                            />
-                            <input
-                                type="text"
-                                v-model="themes.colors.optionsSideBar.options.modals.TextColor"
-                                @input="updateOptionsSideBarOptionsModalsTextColor"
                                 class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
                             />
                         </div>
@@ -2093,6 +2111,7 @@ const themes = ref({
                     headerBackgroundColor:"#0374e3",
                     headerTextColor:"#ffffff",
                     textColor:"#ffffff",
+                    backgroundColor:"#ffffff",
                     option:{
                         textColor:"#000000",
                         hoverBackgroundColor:"#eef3f6",
@@ -2138,7 +2157,7 @@ const themes = ref({
         recaps:{
             headerBackgroundColor:"#3590ea",
             headerTextColor:"#ffffff",
-            backgroundColor:"#fffff",
+            backgroundColor:"#ffffff",
             optionTextColor:"#000000",
             optionHoverBackgroundColor:"#eef3f6",
             optionHoverTextColor:"#000000",
@@ -2535,6 +2554,12 @@ const updateOptionsSideBarOptionsModalsTextColor = (event) => {
         event.target.value = '#'+ event.target.value;
     }
     themes.value.colors.optionsSideBar.options.modals.textColor= event.target.value;
+}
+const updateOptionsSideBarOptionsModalsBackgroundColor = (event) => {
+    if(event.target.value[0]!=='#'){
+        event.target.value = '#'+ event.target.value;
+    }
+    themes.value.colors.optionsSideBar.options.modals.backgroundColor= event.target.value;
 }
 const updateOptionsSideBarOptionsModalsHeaderBackgroundColor = (event) => {
     if(event.target.value[0]!=='#'){
