@@ -152,3 +152,12 @@ td.is_aso_customizable.column-is_aso_customizable {
 .single-product .summary.entry-summary > .aso-buttons-wrap-variation {
   display: none;
 }
+.aso-buttons-url {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+}
+.aso-buttons-url .button {
+  float: none !important;
+}

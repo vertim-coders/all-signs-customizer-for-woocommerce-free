@@ -129,7 +129,7 @@ class ASO_Api_Templates extends WP_REST_Controller {
         if(count($categories)>0){
             $tab = [];
             foreach ($categories as $key => $cat) {
-                $tab[] = ["value"=>$key,"label"=>$cat];
+                $tab[] = ["value"=>$key,"name"=>$cat];
             }
             $categories = $tab;
         }
@@ -158,7 +158,7 @@ class ASO_Api_Templates extends WP_REST_Controller {
                 }
                 $post_data = array(
                     'value'          => $config_id,
-                    'label'       => get_the_title(),
+                    'name'       => get_the_title(),
                 );
                 array_push($templates["configurations"],$post_data);                
             }

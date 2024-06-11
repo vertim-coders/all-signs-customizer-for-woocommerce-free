@@ -38,15 +38,15 @@ onMounted(async() => {
     document.head.appendChild(style);
     
   }else{
-    if(aso_configurator_data != undefined){
+    if(aso_data.page == 'configurator'){
       skin.value = aso_configurator_data.skin;
       // console.log(aso_configurator_data, 'skin actif');
       configData.value = aso_configurator_data.currentConfig;
       manageData.value = aso_configurator_data.managesData;
       currencySymbol.value = aso_configurator_data.currencySymbol
-    }else if(aso_templates_data != undefined){
+    }else {
       isTemplates.value = true;
-      templates.value = aso_templates_data;
+      templates.value = aso_templates;
     }
   }
 });

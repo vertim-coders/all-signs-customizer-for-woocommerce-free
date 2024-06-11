@@ -8,7 +8,7 @@ class ASO_Frontend {
 
     public function __construct() {
         add_shortcode( 'aso-configurator', [ $this, 'render_aso_configurator' ] );
-        add_shortcode( 'aso-templates', [ $this, 'render_aso_configurator' ] );
+        add_shortcode( 'aso-templates', [ $this, 'render_aso_templates' ] );
     }
 
     /**
@@ -119,12 +119,14 @@ class ASO_Frontend {
                         wp_localize_script("aso-product-min","aso_configurator_data",$ASO);
                         wp_localize_script("aso-product-min","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
+                            "page"=>"configurator"
                         ]);
 
                         wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-frontend","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
-                            'ajax_url' => esc_url(admin_url('admin-ajax.php'))
+                            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+                            "page"=>"configurator"
                         ]);
                     }
                 }
@@ -177,6 +179,23 @@ class ASO_Frontend {
             if(!empty($meta) && isset($meta[$productid]['config-id'])){
                 $configId = $meta[$productid]['config-id'];
                 if($configId !=0){
+                    $templates = get_post_meta($configId,"aso-templates",true);
+                    if(count($templates)>0){ ?>
+                        <div id='aso-frontend-app' class="aso-templates-container"></div>
+                        <?php
+                        wp_localize_script("aso-product-min","aso_templates",$templates);
+                        wp_localize_script("aso-product-min","aso_data",[
+                            "rest_url"=>get_rest_url()."aso/v1",
+                            "page"=>"templates"
+                        ]);
+
+                        wp_localize_script("aso-frontend","aso_templates",$templates);
+                        wp_localize_script("aso-frontend","aso_data",[
+                            "rest_url"=>get_rest_url()."aso/v1",
+                            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+                            "page"=>"templates"
+                        ]);
+                    }
                 }
             }
         }

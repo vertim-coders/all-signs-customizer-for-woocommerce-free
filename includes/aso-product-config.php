@@ -553,18 +553,19 @@
 		
 		if($aso_product->is_aso_customizable()){
 			$configs = get_post_meta($product_id,"product-aso-metas",true);
-			$meta_value = isset($configs[$product_id]['config-id']) ? get_post_meta((int)$configs[$product_id]['config-id'],"aso-templates",true) : [];
-			if ('simple' === $product->get_type() ) {
-				echo wp_kses_post($aso_product->get_design_buttons( true ));
-				if(count($meta_value)>0){
-					echo wp_kses_post($aso_product->get_templates_buttons());
-				}
-			} elseif ( 'variable' === $product->get_type() ) {
-				echo wp_kses_post($aso_product->get_design_buttons( true ));
-				if(count($meta_value)>0){
-					echo wp_kses_post($aso_product->get_templates_buttons());
-				}
-			}
+			$meta_value = get_post_meta($configs[$product_id]['config-id'],'aso-templates',true);
+			if ('simple' === $product->get_type() || 'variable' === $product->get_type()) {
+				ob_start(); ?>
+				<div class="aso-buttons-url">
+				<?php
+					echo wp_kses_post($aso_product->get_design_buttons( true ));
+					if(count($meta_value)>0){
+						echo wp_kses_post($aso_product->get_templates_buttons());
+					}
+				?>
+				</div>
+				<?php
+			} 
 		}
 	}
 	/**
@@ -583,6 +584,10 @@
 					$aso_product = new ASO_Product_Config( $productId );
 					if ( $aso_product->is_aso_customizable() ) {
 						$html .= wp_kses_post($aso_product->get_design_buttons());
+						$meta_value = get_post_meta($configs[$productId]['config-id'],'aso-templates',true);
+						if(count($meta_value)>0){
+							$html .= wp_kses_post($aso_product->get_templates_buttons());
+						}
 					}			
 				}
 			}

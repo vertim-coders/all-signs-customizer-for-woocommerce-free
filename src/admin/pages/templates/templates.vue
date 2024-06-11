@@ -60,7 +60,7 @@
         <div class="aso-space-y-1 " v-if="isNewTemplate">
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
                 <span class="aso-text-[16px] aso-font-bold">
-                    Templates
+                    {{isEdit ? 'Edit template' : 'Create template'}}
                 </span>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-2">
@@ -71,8 +71,8 @@
                         placeholder="Select category"
                         noOptionsText="No category found"
                         :options="categories"
-                        label="label"
-                        trackBy="label"
+                        label="name"
+                        trackBy="name"
                     />
                 </div>
                 <div class="aso-flex aso-justify-end aso-text-[12px]">
@@ -87,15 +87,20 @@
                         </div>
                     </button>
                 </div>
-                <div class="aso-flex aso-flex-col aso-space-y-2" :class="`${isEmptyConfig ? 'aso-field-required aso-font-bold' :''}`" v-if="!isEdit">
+                <div class="aso-flex aso-flex-col aso-space-y-2" :class="`${isEmptyConfig ? 'aso-field-required aso-font-bold' :''}`" >
                     <label class="aso-text-[12px] aso-text-[#444444]">Select Configuration</label>
-                    <Multiselect
-                        v-model="template.configId"
-                        placeholder="Select configuration"
-                        :options="configurations"
-                        label="label"
-                        trackBy="label"
-                    />
+                    <div  v-if="!isEdit">
+                        <Multiselect
+                            v-model="template.configId"
+                            placeholder="Select configuration"
+                            :options="configurations"
+                            label="name"
+                            trackBy="name"
+                        />
+                    </div>
+                    <select disabled="disabled" v-if="isEdit">
+                        <option :value="config.value" v-for="config in configurations">{{ config.name }}</option>
+                    </select>
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-8 aso-space-y-8">
