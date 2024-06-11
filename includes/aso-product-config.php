@@ -559,7 +559,7 @@
 				<div class="aso-buttons-url">
 				<?php
 					echo wp_kses_post($aso_product->get_design_buttons( true ));
-					if(count($meta_value)>0){
+					if( is_array($meta_value) && count($meta_value)>0){
 						echo wp_kses_post($aso_product->get_templates_buttons());
 					}
 				?>
@@ -585,7 +585,7 @@
 					if ( $aso_product->is_aso_customizable() ) {
 						$html .= wp_kses_post($aso_product->get_design_buttons());
 						$meta_value = get_post_meta($configs[$productId]['config-id'],'aso-templates',true);
-						if(count($meta_value)>0){
+						if(is_array($meta_value) && count($meta_value)>0){
 							$html .= wp_kses_post($aso_product->get_templates_buttons());
 						}
 					}			
