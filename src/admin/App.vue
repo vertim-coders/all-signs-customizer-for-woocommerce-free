@@ -2,7 +2,7 @@
     <div id="aso-backend-app" class="aso-h-[100vh]">
         <Headerbar v-if="$route.name!=='preview-back'"/>
         <Sidebar/>
-        <div :class="`aso-container aso-pl-[10px] aso-pt-[10px]`">
+        <div :class="`aso-w-[calc(100%-100px)] aso-pl-[10px] aso-pt-[10px]`">
             <router-view />
         </div>
     </div>

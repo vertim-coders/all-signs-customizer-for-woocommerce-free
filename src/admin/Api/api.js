@@ -965,5 +965,52 @@ const api = {
     );
     return CustomAdditional.data;
   },
+  //categories of templates
+  getAllCategories: async () => {
+    const categories = await axios.get(aso_api_url + "/categories");
+    return categories.data;
+  },
+  createCategory: async (category) => {
+    const categories = await axios.post(aso_api_url + "/categories", category);
+    return categories.data;
+  },
+  updateCategory: async (category_id, category) => {
+    const categories = await axios.put(
+      aso_api_url + "/categories/" + category_id,
+      category
+    );
+    return categories.data;
+  },
+  deleteCategory: async (category_id) => {
+    const categories = await axios.delete(
+      aso_api_url + "/categories/" + category_id
+    );
+    return categories.data;
+  },
+  //templates
+  getAllTemplates: async (url = "") => {
+    const templates = await axios.get(aso_api_url + "/templates/" + url);
+    return templates.data;
+  },
+  createTemplate: async (template) => {
+    const templates = await axios.post(
+      aso_api_url + "/templates/" + template.configId,
+      template
+    );
+    return templates.data;
+  },
+  updateTemplate: async (template_id, template) => {
+    const templates = await axios.put(
+      aso_api_url + "/templates/" + template.configId + "/" + template_id,
+      template
+    );
+    return templates.data;
+  },
+  deleteTemplate: async (config_id, template_id) => {
+    const templates = await axios.delete(
+      aso_api_url + "/templates/" + config_id + "/" + template_id
+    );
+    return templates.data;
+  },
 };
 export default api;

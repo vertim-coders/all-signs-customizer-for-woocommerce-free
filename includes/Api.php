@@ -9,6 +9,7 @@ use ASO\Api\Admin\ASO_Api_Manage_cliparts;
 use ASO\Api\Admin\ASO_Api_Manage_fonts;
 use ASO\Api\Admin\ASO_Api_Manage_sizes;
 use ASO\Api\Admin\ASO_Api_Materials;
+use ASO\Api\Admin\ASO_Api_Templates_Categories;
 use ASO\Api\Admin\Globals_Settings\ASO_Api_Globals_Settings;
 use ASO\Api\Admin\Materials\ASO_Materials_Simple;
 use ASO\Api\Admin\Materials\ASO_Materials_Advance;
@@ -16,6 +17,7 @@ use ASO\Api\Admin\Settings\ASO_Api_Customizer_Sign_Settings;
 use ASO\Api\Admin\Settings\ASO_Api_General_Settings;
 use ASO\Api\Admin\Settings\ASO_Api_Language_Images_Settings;
 use ASO\Api\Admin\Settings\ASO_Api_Theme_color_Settings;
+use ASO\Api\Admin\Templates\ASO_Api_Templates;
 use WP_REST_Controller;
 
 /**
@@ -80,6 +82,12 @@ class Api extends WP_REST_Controller {
         if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\Settings\ASO_Api_Theme_color_Settings')){
             require_once __DIR__ . '/Api/Admin/Settings/Theme-color.php';
         }
+        if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\ASO_Api_Templates_Categories')){
+            require_once __DIR__ . '/Api/Admin/Templates/Categories.php';
+        }
+        if(!class_exists( __NAMESPACE__ .'ASO\Api\Admin\ASO_Api_Templates_Categories')){
+            require_once __DIR__ . '/Api/Admin/Templates/Templates.php';
+        }
     }
 
     /**
@@ -102,6 +110,8 @@ class Api extends WP_REST_Controller {
         (new ASO_Api_Customizer_Sign_Settings())->register_routes();
         (new ASO_Api_Language_Images_Settings())->register_routes();
         (new ASO_Api_Theme_color_Settings())->register_routes();
+        (new ASO_Api_Templates_Categories())->register_routes();
+        (new ASO_Api_Templates())->register_routes();
     }
 
 }

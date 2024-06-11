@@ -1,0 +1,327 @@
+<?php
+namespace ASO\Api\Admin\Templates;
+
+use WP_Error;
+use WP_Post;
+use WP_Query;
+use WP_REST_Controller;
+
+/**
+ * class for api routes reaching templates
+ */
+class ASO_Api_Templates extends WP_REST_Controller {
+     /**
+     * [__construct description]
+     */
+    public function __construct() {
+        $this->namespace = 'aso/v1';
+        $this->rest_base = 'templates';
+    }
+    /**
+     * Register the routes
+     *
+     * @return void
+     */
+    public function register_routes() {
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base,
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_all_templates' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                ),
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base."/(?P<config_id>\d+)",
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::CREATABLE,
+                    'callback'            => array( $this, 'create_template' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base."/(?P<config_id>\d+)/(?P<template_id>\d+)",
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_template_info' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'template_id'    => array (
+                            'type'     => 'integer',
+                            'required' => true
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'update_template' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'template_id'    => array (
+                            'type'     => 'integer',
+                            'required' => true
+                        )
+                    ),
+                ),
+                array(
+                    'methods'             => \WP_REST_Server::DELETABLE,
+                    'callback'            => array( $this, 'delete_template' ),
+                    'permission_callback' => array( $this, 'get_config_permissions_check' ),
+                    'args'                => array(
+                        'config_id' => array (
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'template_id'    => array (
+                            'type'     => 'integer',
+                            'required' => true
+                        )
+                    ),
+                )
+            )
+        );
+        
+    }
+
+    /**
+     * Get all templates
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+
+     public function get_all_templates( $request ) {
+        
+        $args = array(
+            'post_type' => 'aso-configs',
+            'post_status' => 'publish',
+            'order' => 'DESC',
+            'orderby' => 'ID',
+            'numberposts' => -1
+        );
+        $search = $request->get_param("s");
+        
+    
+        // Get custom post types using WP_Query
+        $query = new WP_Query( $args );
+        $categories =get_option("aso-templates-categories",[]);
+        if(count($categories)>0){
+            $tab = [];
+            foreach ($categories as $key => $cat) {
+                $tab[] = ["value"=>$key,"label"=>$cat];
+            }
+            $categories = $tab;
+        }
+        $templates = [
+            "categories"=>$categories,
+            "configurations"=>[],
+            "templates"=>[],
+        ];
+        if ( $query->have_posts() ) {
+
+            
+            while ( $query->have_posts() ) {
+                $query->the_post();
+                $config_id=get_the_ID();
+                $meta = get_post_meta($config_id,'aso-templates',true);
+                if(is_array($meta) && count($meta)>0){
+                    foreach ($meta as $key => $value) {
+                        if(! empty( $search )){
+                            if(str_contains($search,$value['name'])){
+                                array_push($templates["templates"],$value);
+                            }
+                        }else{
+                            array_push($templates["templates"],$value);
+                        }
+                    }
+                }
+                $post_data = array(
+                    'value'          => $config_id,
+                    'label'       => get_the_title(),
+                );
+                array_push($templates["configurations"],$post_data);                
+            }
+    
+            return rest_ensure_response( $templates );
+    
+        } else {
+            return rest_ensure_response( $templates );
+        }
+    }
+
+    /**
+     * Get a templates
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+
+     public function get_template_info($request) {
+        $config_id = $request->get_param('config_id');
+        $template_id = $request->get_param('template_id');
+        if($config_id!=0){
+            $meta_value = get_post_meta($config_id, 'aso-templates', true);
+            
+            if (!empty($meta_value)) {
+                if(isset($templates[$template_id])){
+                    return rest_ensure_response( $templates[$template_id] );
+                }else{
+                    return rest_ensure_response( array("message" => __("No template found","ASO") ) );
+                }                
+            }else{
+                return rest_ensure_response(["message" => __("No data found","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["message" => __("template ID invalid","ASO")]);
+        }
+
+    }
+
+    /**
+     * Create template
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function create_template($request){
+
+        $config_id = $request->get_param('config_id');
+        $template_data = json_decode($request->get_body(),true);
+        
+        if($config_id!=0){
+            $post = get_post($config_id);
+            if($post){
+                $meta_value = get_post_meta($config_id, 'aso-templates', true);
+                if(!is_array($meta_value)){
+                    $meta_value = [];
+                    $meta_value[0]=$template_data; 
+                }else{
+                    array_push($meta_value,$template_data);                        
+                }
+
+                $response = update_post_meta($config_id,'aso-templates',$meta_value);
+
+                if($response){
+                    return rest_ensure_response(["success" => true,"message"=>__("Template added successfuly","ASO")]);
+                }else{
+                    return rest_ensure_response(["message" => __("Add template failed","ASO")]);
+                }
+            }
+            else{
+                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+        }
+    }
+
+    /**
+     * Update a template
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function update_template($request){
+        $config_id = $request->get_param('config_id');
+        $template_id = $request->get_param('template_id');
+        
+        $template = json_decode($request->get_body(),true);
+        if($config_id!=0){
+            $post = get_post($config_id);
+            if ($post) {
+                $meta_value = get_post_meta($config_id, 'aso-templates', true);
+                if(!empty($meta_value)) {
+                    
+                    if(isset($meta_value[$template_id])){
+                        if($meta_value[$template_id] == $template){
+                            return rest_ensure_response(["success" => "same","message"=>__("No change observed in template","ASO")]);
+                        }else{
+                            $meta_value[$template_id] = $template;
+                            $response = update_post_meta($config_id,'aso-templates',$meta_value);
+        
+                            if($response){
+                                return rest_ensure_response(["success" => true,"message"=>__("Template updated successfully","ASO")]);
+                            }else{
+                                return rest_ensure_response(["message" => __("update template failed","ASO")]);
+                            }
+                        }
+                    }else {
+                        return rest_ensure_response(["message" => __("update template failed","ASO")]);
+                    }
+
+
+                }else {
+                    return rest_ensure_response(["message" => __("No template setting found","ASO")]);
+                }
+                
+            }else{
+                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+        }
+    }
+
+    /**
+     * Delete a template
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function delete_template($request){
+        $config_id = $request->get_param('config_id');
+        $template_id = $request->get_param('template_id');
+        if($config_id!=0){
+            $post = get_post($config_id);
+            if ($post) {
+                $meta_value = get_post_meta($config_id, 'aso-templates', true);
+                if(!empty($meta_value) && isset($meta_value[$template_id])){
+                    
+                    array_splice($meta_value,$template_id,1);
+                    $response = update_post_meta($config_id,'aso-templates',$meta_value);
+
+                    if($response){
+                        return rest_ensure_response(["success" => true,"message"=>__("Template deleted successfully","ASO")]);
+                    }else{
+                        return rest_ensure_response(["message" => __("Delete template failed","ASO")]);
+                    }
+                }else{
+                    return rest_ensure_response(["message" => __("No template setting found","ASO")]);
+                }
+                
+            }else{
+                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            }
+        }else{
+            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+        }
+    }
+
+    /**
+     * Checks if a given request has access to read the items.
+     *
+     * @param  \WP_REST_Request $request Full details about the request.
+     *
+     * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_config_permissions_check( $request ) {
+        return true;
+    }
+}

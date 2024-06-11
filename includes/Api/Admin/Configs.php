@@ -115,7 +115,8 @@ class ASO_Api_Configs extends WP_REST_Controller {
             'post_content' => $params["description"],
             'post_type' => 'aso-configs',
             'post_meta' => [
-                "aso-configs-meta"=>[]
+                "aso-configs-meta"=>[],
+                "aso-templates"=>[],
             ],
             'post_status' => 'publish'
         ];
@@ -128,6 +129,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
                     "data" =>$params["data"]
                 ];
                 update_post_meta($post_id,'aso-configs-meta',$data);
+                update_post_meta($post_id,"aso-templates",[]);
                 return rest_ensure_response( ["success"=>true,"message"=>__("Configuration created with success","ASO"),"post_id"=>$post_id] );
             }else{
                 return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
@@ -290,7 +292,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
 
-     public function get_configs( $request ) {
+    public function get_configs( $request ) {
     
         $args = array(
             'post_type' => 'aso-configs',

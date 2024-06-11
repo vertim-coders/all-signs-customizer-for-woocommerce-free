@@ -52,7 +52,7 @@
 		add_action( 'manage_product_posts_custom_column', array($this, 'get_products_columns_values'), 10, 2 );
 		add_action( 'woocommerce_after_add_to_cart_button', array($this, 'hide_cart_button' ));
 		add_action( 'woocommerce_after_add_to_cart_button', array($this, 'get_customize_btn' ));
-		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'get_customize_btn_on_shop_page'), 10, 2 );
+		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'hide_or_display_custom_button_or_add_to_cart_button'), 10, 2 );
 		add_action( 'woocommerce_single_product_summary', array($this,'get_button_on_single_product_summary'), 5 );
 		
 	}
@@ -205,7 +205,7 @@
 	}
 
 
-	public function get_buttons( $with_upload = false ) {
+	public function get_design_buttons( $with_upload = false ) {
 		ob_start();
 		$content      = '';
 		$product      =  $this->product;
@@ -224,7 +224,7 @@
 				}
 				$aso_product = new aso_Product_Config( $variation['variation_id'] );
 				if( $aso_product->is_aso_customizable() ) {
-					echo $aso_product->get_buttons( $with_upload );
+					echo $aso_product->get_design_buttons( $with_upload );
 				}
 			}
 			
@@ -236,7 +236,7 @@
 			<?php
 
 			
-			$default_design_btn_url = $this->get_design_url();
+			$default_design_btn_url = $this->get_design_page_url();
 			$content               .= '<a  href="' . $default_design_btn_url . '" class="button aso-design-product">' . apply_filters( 'aso_default_design_btn_filter', __( 'Customize Your Sign', "ASO" ) ) . '</a>';
 
 			if ( ! isset( $item_id ) ) {
@@ -255,7 +255,57 @@
 		return $output;
 	}
 
-		/**
+	public function get_templates_buttons( $with_upload = false ) {
+		ob_start();
+		$content      = '';
+		$product      =  $this->product;
+
+		if ( $this->variation_id ) {
+			$item_id = $this->variation_id;
+		} else {
+			$item_id = $this->root_product_id;
+		}
+		
+		if ( $product->is_type('variable')) {
+			$variations = $product->get_available_variations();
+			foreach ( $variations as $variation ) {
+				if ( ! $variation['is_purchasable'] || ! $variation['is_in_stock'] ) {
+					continue;
+				}
+				$aso_product = new aso_Product_Config( $variation['variation_id'] );
+				if( $aso_product->is_aso_customizable() ) {
+					echo $aso_product->get_templates_buttons( $with_upload );
+				}
+			}
+			
+		} else {
+			
+			?>
+			<div class="aso-buttons-wrap-<?php echo esc_attr($product->get_type()); ?>" data-id="<?php echo esc_attr($this->variation_id); ?>">
+					
+			<?php
+
+			
+			$default_template_btn_url = $this->get_templates_page_url();
+			$content               .= '<a  href="' . $default_template_btn_url . '" class="button aso-template-product">' . apply_filters( 'aso_default_template_btn_filter', __( 'Design From Example', "ASO" ) ) . '</a>';
+
+			if ( ! isset( $item_id ) ) {
+				$item_id = '';
+			}
+			if ( ! isset( $default_template_btn_url ) ) {
+				$default_template_btn_url = '';
+			}
+			echo wp_kses_post(apply_filters( 'aso_show_templates_buttons_in_modal', wp_kses_post($content), $item_id, $default_template_btn_url, $product->get_type() ));
+			?>
+			</div>
+			<?php
+		}
+		
+		$output = ob_get_clean();
+		return $output;
+	}
+
+	/**
 	 * Returns the customization page URL
 	 *
 	 * @global array $aso_settings
@@ -265,7 +315,7 @@
 	 * @param int   $tpl_id ID of the template to load
 	 * @return string
 	 */
-	public function get_design_url( $design_index = false, $cart_item_key = false, $order_item_id = false, $tpl_id = false ) {
+	public function get_design_page_url( $design_index = false, $cart_item_key = false, $order_item_id = false, $tpl_id = false ) {
 
 		//global $wp_query;
 		if ( $this->variation_id ) {
@@ -309,6 +359,78 @@
 						$aso_page_url  = apply_filters( 'aso_customized_order_page_url', $aso_page_url );
 					} else {
 						$aso_page_url .= 'aso-design/' . $item_id . '/';
+						if ( $tpl_id ) {
+							$aso_page_url .= "$tpl_id/";
+						}
+					}
+				} else {
+					if ( $design_index !== false ) {
+						$aso_page_url .= '&aso-product-id' . $item_id . '&design_index=' . $design_index;
+					} elseif ( $cart_item_key ) {
+						$qty_key       = 'qty_' . $cart_item_key . '_' . $item_id;
+						$aso_page_url .= '&aso-product-id' . $item_id . '&edit=' . $cart_item_key . '&custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
+					} elseif ( $order_item_id ) {
+						$aso_page_url .= '&aso-product-id' . $item_id . '&vcid=' . $order_item_id;
+					} else {
+						$aso_page_url .= '&aso-product-id' . $item_id;
+						if ( $tpl_id ) {
+							$aso_page_url .= "&tpl=$tpl_id";
+						}
+					}
+				}
+			}
+		}
+
+		return $aso_page_url;
+	}
+	/**
+	 * Returns the customization page URL
+	 *
+	 * @global array $aso_settings
+	 * @param int   $design_index Saved design index to load
+	 * @param mixed $cart_item_key Cart item key to edit
+	 * @param int   $order_item_id Order item ID to load
+	 * @param int   $tpl_id ID of the template to load
+	 * @return string
+	 */
+	public function get_templates_page_url( $design_index = false, $cart_item_key = false, $order_item_id = false, $tpl_id = false ) {
+
+		//global $wp_query;
+		if ( $this->variation_id ) {
+			$item_id = $this->variation_id;
+		} else {
+			$item_id = $this->root_product_id;
+		}
+
+
+		$page_settings = get_option("aso_config_page");
+		if ( !empty($page_settings) && $page_settings != false ) {
+			$configPage = $page_settings["templatePage"];
+			if($configPage != 0){
+				$aso_page_id = $configPage;
+			}
+			else {
+				$aso_page_id = false;
+			}
+		} else {
+			$aso_page_id = false;
+		}
+		
+
+
+		$aso_page_url = '';
+		if ( $aso_page_id ) {
+
+			$aso_page_url = get_permalink( $aso_page_id );
+
+			if ( $item_id ) {
+				$query = wp_parse_url( $aso_page_url, PHP_URL_QUERY );
+				// Returns a string if the URL has parameters or NULL if not
+				if ( get_option( 'permalink_structure' ) ) {
+					if ( substr( $aso_page_url, -1 ) !== '/' ) {
+						$aso_page_url .= '/';
+					}else {
+						$aso_page_url .= 'aso-templates/' . $item_id . '/';
 						if ( $tpl_id ) {
 							$aso_page_url .= "$tpl_id/";
 						}
@@ -420,8 +542,6 @@
 		";
         wp_add_inline_script( 'aso-product-min', $inline_script );
         wp_add_inline_script( 'aso-tinymce-script', $inline_script );
-		?>
-	<?php
 	}
 	/**
 	 * Add Custom button on details product page
@@ -431,16 +551,26 @@
 		$aso_product = new aso_Product_Config( $product_id );
 		$product     = wc_get_product( $product_id );
 		
-		if ( $aso_product->is_aso_customizable() && 'simple' === $product->get_type() ) {
-			echo wp_kses_post($aso_product->get_buttons( true ));
-		} elseif ( 'variable' === $product->get_type() ) {
-			echo wp_kses_post($aso_product->get_buttons( true ));
+		if($aso_product->is_aso_customizable()){
+			$configs = get_post_meta($product_id,"product-aso-metas",true);
+			$meta_value = isset($configs[$product_id]['config-id']) ? get_post_meta((int)$configs[$product_id]['config-id'],"aso-templates",true) : [];
+			if ('simple' === $product->get_type() ) {
+				echo wp_kses_post($aso_product->get_design_buttons( true ));
+				if(count($meta_value)>0){
+					echo wp_kses_post($aso_product->get_templates_buttons());
+				}
+			} elseif ( 'variable' === $product->get_type() ) {
+				echo wp_kses_post($aso_product->get_design_buttons( true ));
+				if(count($meta_value)>0){
+					echo wp_kses_post($aso_product->get_templates_buttons());
+				}
+			}
 		}
 	}
 	/**
 	 * Add a personalization button on the shop page
 	 */
-	public function get_customize_btn_on_shop_page( $html, $product ) {
+	public function hide_or_display_custom_button_or_add_to_cart_button( $html, $product ) {
 		$productId = $product->get_id();
 		$configs = get_post_meta($productId,"product-aso-metas",true);
 		$meta_value = isset($configs[$productId]['config-id']) ? get_post_meta((int)$configs[$productId]['config-id'],"aso-configs-meta",true) : [];
@@ -452,7 +582,7 @@
 				if ( $product_class == 'WC_Product_Simple' ) {
 					$aso_product = new ASO_Product_Config( $productId );
 					if ( $aso_product->is_aso_customizable() ) {
-						$html .= wp_kses_post($aso_product->get_buttons());
+						$html .= wp_kses_post($aso_product->get_design_buttons());
 					}			
 				}
 			}
@@ -490,7 +620,7 @@
 			if ( in_array( $pid, $custom_products_ids ) ) {	
 				$aso_product = new aso_Product_Config( $product->get_id() );
 				if ( $aso_product->is_aso_customizable() ) {
-					echo wp_kses_post($aso_product->get_buttons());
+					echo wp_kses_post($aso_product->get_design_buttons());
 				}
 			}
 		}

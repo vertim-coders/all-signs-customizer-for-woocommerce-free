@@ -217,7 +217,7 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
                 $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["success" => true,"message"=>__("Option added successfuly","ASo")]);
+                    return rest_ensure_response(["success" => true,"message"=>__("Option added successfuly","ASO")]);
                 }else{
                     return rest_ensure_response(["message" => __("Add option failed","ASO")]);
                 }

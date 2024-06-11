@@ -2002,14 +2002,16 @@
     var showScrollButton = ref(false)
     function verifierScrollabilite() {
         const monDiv = document.getElementById('aso-options-buttons');
-        if (monDiv.scrollWidth > monDiv.clientWidth) {
-            showScrollButton.value = true;
-            monDiv.classList.remove("aso-justify-center");
-            monDiv.classList.add("aso-justify-start");
-        } else {
-            showScrollButton.value = false;
-            monDiv.classList.remove("aso-justify-start");
-            monDiv.classList.add("aso-justify-center");
+        if(monDiv){
+            if (monDiv.scrollWidth > monDiv.clientWidth) {
+                showScrollButton.value = true;
+                monDiv.classList.remove("aso-justify-center");
+                monDiv.classList.add("aso-justify-start");
+            } else {
+                showScrollButton.value = false;
+                monDiv.classList.remove("aso-justify-start");
+                monDiv.classList.add("aso-justify-center");
+            }
         }
     }
     function ScrollLeft(id){

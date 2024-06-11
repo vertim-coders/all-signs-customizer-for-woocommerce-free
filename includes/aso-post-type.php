@@ -8,7 +8,8 @@ class ASO_Post_Type
         add_action('init',array($this,'register_aso_config_templates'));
 
         add_filter( 'the_content', array($this,'get_editor_shortcode_handler'));
-		add_filter( 'init', array($this,'aso_add_rewrite_rules'), 99 );
+		add_filter( 'init', array($this,'aso_add_design_page_rewrite_rules'), 99 );
+		add_filter( 'init', array($this,'aso_add_template_page_rewrite_rules'), 99 );
 		add_filter( 'query_vars', array($this, 'aso_add_query_vars' ));
     }
 
@@ -157,7 +158,8 @@ class ASO_Post_Type
 		$a_vars[] = 'vcid';
 		return $a_vars;
 	}
-	public function aso_add_rewrite_rules( $param ) {
+	public function aso_add_design_page_rewrite_rules( $param ) {
+		
 		global $wp_rewrite;
 		$page_settings = get_option("aso_config_page");
 		if ( !empty($page_settings) && $page_settings != false ) {
@@ -214,7 +216,7 @@ class ASO_Post_Type
 			);
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'aso-template' . '/([^/]+)/([^/]+)/?$',
+				$slug . $sep . 'aso-design' . '/([^/]+)/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
@@ -231,6 +233,64 @@ class ASO_Post_Type
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
 					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&design-index=$matches[2]',
+				// This is a rather specific URL, so we add it to the top of the list
+					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
+					'top'
+			);
+
+			$wp_rewrite->flush_rules( false );
+		}
+	}
+
+	public function aso_add_template_page_rewrite_rules( $param ) {
+		
+		global $wp_rewrite;
+		$page_settings = get_option("aso_config_page");
+		if ( !empty($page_settings) && $page_settings != false ) {
+			$aso_page_id = $page_settings["templatePage"];
+		} else {
+			$aso_page_id = false;
+		}
+
+		/* if ( function_exists( 'icl_object_id' ) ) {
+			$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
+		} */
+		$aso_page = get_post( $aso_page_id );
+		if ( is_object( $aso_page ) ) {
+			$raw_slug = get_permalink( $aso_page->ID );
+			$home_url = home_url( '/' );
+			$slug     = str_replace( $home_url, '', $raw_slug );
+			// If the slug does not have the trailing slash, we get 404 (ex postname = /%postname%)
+			$sep = '';
+			if ( substr( $slug, -1 ) != '/' ) {
+				$sep = '/';
+			}
+			add_rewrite_rule(
+				// The regex to match the incoming URL
+				$slug . $sep . 'aso-templates' . '/([^/]+)/?$',
+				// The resulting internal URL: `index.php` because we still use WordPress
+				// `pagename` because we use this WordPress page
+				'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]',
+				// This is a rather specific URL, so we add it to the top of the list
+				// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
+				'top'
+			);
+			add_rewrite_rule(
+					// The regex to match the incoming URL
+				$slug . $sep . 'aso-templates' . '/([^/]+)/([^/]+)/?$',
+				// The resulting internal URL: `index.php` because we still use WordPress
+					// `pagename` because we use this WordPress page
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&tpl=$matches[2]',
+				// This is a rather specific URL, so we add it to the top of the list
+					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
+					'top'
+			);
+			add_rewrite_rule(
+					// The regex to match the incoming URL
+				$slug . $sep . 'aso-templates' . '/([^/]+)/([^/]+)/?$',
+				// The resulting internal URL: `index.php` because we still use WordPress
+					// `pagename` because we use this WordPress page
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&vcid=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
