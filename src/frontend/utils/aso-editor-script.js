@@ -5644,7 +5644,7 @@ function handleFinishConfiguration(textsTable, imagesTable){
                     arr.push(obj);
                 }
             }
-            addTextValues(textsValues, {id: text.id, values: formatValues(handleGetAddedTextValues(text)), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline}, 'id')
+            addTextValues(textsValues, {id: text.id, values: formatValues(handleGetAddedTextValues(text)), textContent: text.text, bold: text.fontWeight, italic: text.fontStyle, fontFamily: text.fontFamily, color: text.fill, underlined: text.underline, crossed: text.linethrough, overlined: text.overline, alignment: text.textAlign, object: text}, 'id')
         })
     }
     if(imagesTable.length > 0){
