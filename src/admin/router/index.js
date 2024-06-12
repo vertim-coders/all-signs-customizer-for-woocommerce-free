@@ -8,6 +8,7 @@ import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
 import Settings from "@/admin/pages/configuration/settings/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import Templates from "@/admin/pages/templates/index.vue";
+import ConfigurateTemplate from "@/admin/pages/templates/Configurate-template.vue";
 import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
 import Preview from "@/admin/pages/preview/index.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -149,6 +150,11 @@ const router = createRouter({
       path: "/configs/:config/preview/:configId",
       name: "preview-back",
       component: Preview,
+    },
+    {
+      path: "/configs/template/:configId/:templateId",
+      name: "template-maker",
+      component: ConfigurateTemplate,
     },
     {
       path: "/templates",

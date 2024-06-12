@@ -19,7 +19,7 @@ var currencySymbol = ref("");
 const templates = ref(null);
 const isTemplates = ref(false);
 onMounted(async() => {
-  if(route.name == 'preview-back'){
+  if(route.name == 'preview-back' || route.name == 'template-maker'){
     const result = await api.getPreviewConfig(route.params.configId);
     aso_configurator_data = result;
     skin.value = result.skin;
