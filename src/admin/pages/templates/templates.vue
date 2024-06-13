@@ -107,7 +107,7 @@
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                         <label for="" :class="`${isEmptyName ? 'aso-text-red-500 aso-font-bold' :'aso-font-normal'}`">Name template</label>
-                        <input type="text" v-model="template.name":class="`${isEmptyName ? 'aso-field-required aso-font-bold' :''} aso-rounded aso-w-full aso-h-[30px]`" @blur="template.name.trim()==''?isEmptyName =true : isEmptyName=false">
+                        <input type="text" v-model="template.name" :class="`${isEmptyName ? 'aso-field-required aso-font-bold' :''} aso-rounded aso-w-full aso-h-[30px]`" @blur="template.name.trim()==''?isEmptyName =true : isEmptyName=false">
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Base Price</label>
