@@ -14,6 +14,11 @@ const router = createRouter({
       name: "preview-back",
       component: Home,
     },
+    {
+      path: "/configs/template/:configId/:templateId",
+      name: "template-maker",
+      component: Home,
+    },
   ],
 });
 
