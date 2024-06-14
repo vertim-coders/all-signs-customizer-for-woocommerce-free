@@ -37,7 +37,7 @@ const isLoading = ref(false);
 const licenses = ref({
     product:"",
 });
-const productId = 1928;
+const productId = 2520;
 onMounted(async() => {
     isFetching.value = true;
     await fetchLicenses();
