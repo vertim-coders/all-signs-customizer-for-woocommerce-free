@@ -36,7 +36,7 @@ class ASO_Updater  {
 	
 		$site_url = get_site_url();
         $purchase_code = get_option("aso_product_pro");
-        $url      = 'https://signsdesigner.us/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&author=".ASO_ID;
+        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&author=".ASO_ID;
         $args     = array( 'timeout' => 60 );
         $response = wp_remote_get( $url, $args );
         if ( is_wp_error( $response ) ) {
