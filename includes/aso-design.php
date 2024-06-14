@@ -419,7 +419,7 @@ class ASO_Design {
 					}
 				}
 				$order_id = wc_get_order_id_by_order_item_id($item_id);
-				$aso_zip_file = aso_zip_file($order_id,$order_data['recaps']["output"],$dataUris);
+				$aso_zip_file = aso_zip_file($order_id,$item_id,$order_data['recaps']["output"],$dataUris);
 				$order_data['zip'] = $aso_zip_file;
 				wc_update_order_item_meta($item_id, "aso_meta_data", $order_data);
 			echo ob_get_clean();

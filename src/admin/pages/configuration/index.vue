@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-h-[100vh] aso-w-full">
+    <div class="aso-py-10 aso-w-full">
         <div v-if="step==0 && !openModal">
             <div  class="aso-sticky aso-top-[80px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                 <div class="aso-px-4 aso-pb-4">
@@ -87,7 +87,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-rotate-90 aso-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 </svg>
-                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[9999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showPrams[key]=false;">
+                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showPrams[key]=false;">
                                     <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectEditConfig(config,true)">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
@@ -247,7 +247,7 @@
 
         </div>
 
-        <div v-if="includeDemo" class="aso-space-y-2 aso-z-[9999]">
+        <div v-if="includeDemo" class="aso-space-y-2 aso-z-[999]">
             <div class="aso-bg-[#F8F9FB] aso-px-2 aso-py-4 aso-sticky aso-top-[75px] aso-z-[999] aso-shadow-sm">
                 <h2 class="aso-m-0">List of Demo data</h2>
             </div>
@@ -312,7 +312,7 @@
         </div>
 
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-z-[9999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -337,7 +337,7 @@
             </div>
         </div>        
         <!-- Clone Modal-->
-        <div v-if="openCloneModal" @click.self="closeCloneModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openCloneModal" @click.self="closeCloneModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeCloneModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -646,142 +646,143 @@ const defaultSettings = ref({
     themeColors: {
         skin:"default",
         colors: {
-            canvas:{
-                backgroundColor:"#ffffff",
-                borderColor:"#ffffff",
+            canvas: {
+                backgroundColor: "#f4f8fa",
+                borderColor: "#c3cfd6"
             },
-            bars:{
-                titleColor:"#000000",
-                backgroundColor:"#ffffff",
-                reset:{
-                    textColor:"#000000",
-                    hoverTextColor:"#dd3232",
-                    backgroundColor:"#ffffff",
-                    hoverBackgroundColor:"#f4f8fa",
-                    borderColor:"#ffffff",
-                    hoverBorderColor:"#f4f8fa",
-                    modalBackgroundColor:"#000000",
-                    modalContainerBackground:"#ffffff",
-                    modalTextColor:"#000000",
-                    modalYesButtonBackgroundColor:"#f4f8fa",
-                    modalYesButtonTextColor:"#000000",
-                    modalNoButtonBackgroundColor:"#dc2626",
-                    modalNoButtonTextColor:"#ffffff"
+            bars: {
+                titleColor: "#000000",
+                backgroundColor: "#ffffff",
+                reset: {
+                    textColor: "#000000",
+                    hoverTextColor: "#dd3232",
+                    backgroundColor: "#ffffff",
+                    hoverBackgroundColor: "#f4f8fa",
+                    borderColor: "#ffffff",
+                    hoverBorderColor: "#f4f8fa",
+                    modalBackgroundColor: "#000000",
+                    modalContainerBackground: "#ffffff",
+                    modalTextColor: "#000000",
+                    modalYesButtonBackgroundColor: "#f4f8fa",
+                    modalYesButtonTextColor: "#000000",
+                    modalNoButtonBackgroundColor: "#dc2626",
+                    modalNoButtonTextColor: "#ffffff"
                 },
-                undoRedo:{
-                    textColor:"#000000",
-                    hoverTextColor:"#0374e3",
-                    backgroundColor:"#ffffff",
-                    hoverBackgroundColor:"#f4f8fa",
-                    borderColor:"#ffffff",
-                    hoverBorderColor:"#f4f8fa",
-                    disabledBackgroundColor:"#ffffff",
-                    disabledTextColor:"#c3cfd6"
+                undoRedo: {
+                    textColor: "#000000",
+                    hoverTextColor: "#0374e3",
+                    backgroundColor: "#ffffff",
+                    hoverBackgroundColor: "#f4f8fa",
+                    borderColor: "#ffffff",
+                    hoverBorderColor: "#f4f8fa",
+                    disabledBackgroundColor: "#ffffff",
+                    disabledTextColor: "#c3cfd6"
                 },
-                preview:{
-                    textColor:"#000000",
-                    hoverTextColor:"#0374e3",
-                    backgroundColor:"#ffffff",
-                    hoverBackgroundColor:"#f4f8fa",
-                    borderColor:"#ffffff",
-                    hoverBorderColor:"#f4f8fa",
+                preview: {
+                    textColor: "#000000",
+                    hoverTextColor: "#0374e3",
+                    backgroundColor: "#ffffff",
+                    hoverBackgroundColor: "#f4f8fa",
+                    borderColor: "#ffffff",
+                    hoverBorderColor: "#f4f8fa"
                 },
-                help:{
-                    textColor:"#ffffff",
-                    hoverTextColor:"#ffffff",
-                    backgroundColor:"#0374e3",
-                    hoverBackgroundColor:"#025db7",
-                    borderColor:"#0374e3",
-                    hoverBorderColor:"#025db7",
+                help: {
+                    textColor: "#ffffff",
+                    hoverTextColor: "#ffffff",
+                    backgroundColor: "#0374e3",
+                    hoverBackgroundColor: "#025db7",
+                    borderColor: "#0374e3",
+                    hoverBorderColor: "#025db7"
                 },
-                price:{
-                    backgroundColor:"#ffffff",
-                    textColor:"#000000",
-                    textAfterColor:"#000000",
-                    textBeforeColor:"#000000",
-                },
+                price: {
+                    backgroundColor: "#ffffff",
+                    textColor: "#000000",
+                    textAfterColor: "#000000",
+                    textBeforeColor: "#000000"
+                }
             },
-            optionsSideBar:{
-                backgroundColor:"#eef3f6",
-                scrollButtonsBackgroundColor:"#4a4a4a",
-                scrollButtonsHoverBackgroundColor:"#74848d",
-                scrollButtonsTextColor:"#ffffff",
-                scrollButtonsHoverTextColor:"#ffffff",
-                options:{
-                    buttons:{
-                        backgroundColor:"#ffffff",
-                        hoverBackgroundColor:"#ffffff",
-                        textColor:"#000000",
-                        hoverTextColor:"#000000"
+            optionsSideBar: {
+                backgroundColor: "#eef3f6",
+                scrollButtonsBackgroundColor: "#4a4a4a",
+                scrollButtonsHoverBackgroundColor: "#74848d",
+                scrollButtonsTextColor: "#ffffff",
+                scrollButtonsHoverTextColor: "#ffffff",
+                options: {
+                    buttons: {
+                        backgroundColor: "#ffffff",
+                        hoverBackgroundColor: "#ffffff",
+                        textColor: "#000000",
+                        hoverTextColor: "#0374e3",
+                        hovertextColor: "#0374e3"
                     },
-                    modals:{
-                        headerBackgroundColor:"#0374e3",
-                        headerTextColor:"#ffffff",
-                        textColor:"#ffffff",
-                        backgroundColor:"#ffffff",
-                        option:{
-                            textColor:"#000000",
-                            hoverBackgroundColor:"#eef3f6",
-                            hoverTextColor:"#000000",
-                            activeTextColor:"#0374e3",
+                    modals: {
+                        headerBackgroundColor: "#0374e3",
+                        headerTextColor: "#ffffff",
+                        textColor: "#000000",
+                        option: {
+                            textColor: "#000000",
+                            hoverBackgroundColor: "#eef3f6",
+                            hoverTextColor: "#000000",
+                            activeTextColor: "#0374e3"
                         },
-                        buttons:{
-                            backgroundColor:"#0374e3",
-                            hoverBackgroundColor:"#3590ea",
-                            textColor:"#ffffff",
-                            hoverTextColor:"#ffffff"
-                        }
+                        buttons: {
+                            backgroundColor: "#0374e3",
+                            hoverBackgroundColor: "#3590ea",
+                            textColor: "#ffffff",
+                            hoverTextColor: "#ffffff"
+                        },
+                        backgroundColor: "#ffffff"
                     }
                 }
             },
-            objectsOptions:{
-                backgroundColor:"#ffffff",
-                edit:{
-                    buttonColor:"#ffffff",
-                    hoverButtonColor:"#787878",
-                    textColor:"#000000",
-                    hoverTextColor:"#ffffff"
+            objectsOptions: {
+                backgroundColor: "#ffffff",
+                edit: {
+                    buttonColor: "#ffffff",
+                    hoverButtonColor: "#787878",
+                    textColor: "#000000",
+                    hoverTextColor: "#ffffff"
                 },
-                clone:{
-                    buttonColor:"#ffffff",
-                    hoverButtonColor:"#787878",
-                    textColor:"#000000",
-                    hoverTextColor:"#ffffff"
+                clone: {
+                    buttonColor: "#ffffff",
+                    hoverButtonColor: "#787878",
+                    textColor: "#000000",
+                    hoverTextColor: "#ffffff"
                 },
-                delete:{
-                    buttonColor:"#ffffff",
-                    hoverButtonColor:"#787878",
-                    textColor:"#dd3232",
-                    hoverTextColor:"#dd3232"
+                delete: {
+                    buttonColor: "#ffffff",
+                    hoverButtonColor: "#787878",
+                    textColor: "#dd3232",
+                    hoverTextColor: "#dd3232"
                 },
-                center:{
-                    buttonColor:"#ffffff",
-                    hoverButtonColor:"#787878",
-                    textColor:"#000000",
-                    hoverTextColor:"#ffffff"
+                center: {
+                    buttonColor: "#ffffff",
+                    hoverButtonColor: "#787878",
+                    textColor: "#000000",
+                    hoverTextColor: "#ffffff"
                 }
             },
-            recaps:{
-                headerBackgroundColor:"#3590ea",
-                headerTextColor:"#ffffff",
-                backgroundColor:"#ffffff",
-                optionTextColor:"#000000",
-                optionHoverBackgroundColor:"#eef3f6",
-                optionHoverTextColor:"#000000",
-                optionBorderColor:"#eef3f6",
-                optionHoverBorderColor:"#eef3f6",
-                buttonFinishBackgroundColor:"#febd52",
-                buttonFinishTextColor:"#14213d",
-                buttonFinishHoverBackgroundColor:"#fcac29",
-                buttonFinishHoverTextColor:"#313e52",
-                buttonAddToCartBackgroundColor:"#febd52",
-                buttonAddToCartHoverBackgroundColor:"#fcac29",
-                buttonAddToCartTextColor:"#14213d",
-                buttonAddToCartHoverTextColor:"#313e52",
-                buttonEditBackgroundColor:"#0374e3",
-                buttonEditHoverBackgroundColor:"#025db7",
-                buttonEditTextColor:"#ffffff",
-                buttonEditHoverTextColor:"#f4f8fa",
+            recaps: {
+                headerBackgroundColor: "#3590ea",
+                headerTextColor: "#ffffff",
+                backgroundColor: "#fffff",
+                optionTextColor: "#000000",
+                optionHoverBackgroundColor: "#eef3f6",
+                optionHoverTextColor: "#000000",
+                optionBorderColor: "#eef3f6",
+                optionHoverBorderColor: "#eef3f6",
+                buttonFinishBackgroundColor: "#febd52",
+                buttonFinishTextColor: "#14213d",
+                buttonFinishHoverBackgroundColor: "#fcac29",
+                buttonFinishHoverTextColor: "#313e52",
+                buttonAddToCartBackgroundColor: "#febd52",
+                buttonAddToCartHoverBackgroundColor: "#fcac29",
+                buttonAddToCartTextColor: "#14213d",
+                buttonAddToCartHoverTextColor: "#313e52",
+                buttonEditBackgroundColor: "#0374e3",
+                buttonEditHoverBackgroundColor: "#025db7",
+                buttonEditTextColor: "#ffffff",
+                buttonEditHoverTextColor: "#f4f8fa"
             }
         },
         customCSS:""

@@ -14,12 +14,12 @@
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
                 <h3 class="aso-text-[16px]">Choose your customizer appearance</h3>
                 <div class="aso-p-6">
-                    <div class="aso-grid aso-grid-cols-2 aso-gap-6">
-                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded" :class="themes.skin == 'default' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
+                    <div class="aso-flex aso-justify-evenly aso-items-center">
+                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded aso-w-[320px]" :class="themes.skin == 'default' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
                             <input type="radio" id="default" name="skin" value="default" v-model="themes.skin" class="aso-invisible">
                             <label for="default">
-                                <div class="aso-w-full aso-h-[300px] aso-relative">
-                                    <img src="../../../../../../assets/images/skin-default.png" alt="Image 1" class="aso-w-full aso-h-full aso-cursor-pointer aso-absolute">
+                                <div class="aso-w-full aso-h-[200px] aso-relative aso-flex aso-justify-center aso-items-center">
+                                    <img src="../../../../../../assets/images/skin-default.png" alt="Image 1" class="aso-w-auto aso-h-full aso-cursor-pointer aso-absolute">
                                 </div>
                                 <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
                                    <label for="default" class="aso-text-base aso-font-semibold aso-text-black">Default skin</label>
@@ -27,11 +27,11 @@
                                 </div>
                             </label>
                         </div>
-                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded" :class="themes.skin == 'couffo' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
+                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded aso-w-[320px]" :class="themes.skin == 'couffo' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
                             <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" class="aso-invisible">
                             <label for="couffo">
-                                <div class="aso-w-full aso-h-[300px] aso-relative">
-                                    <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="aso-w-full aso-h-full aso-cursor-pointer aso-absolute">
+                                <div class="aso-w-full aso-h-[200px] aso-relative aso-flex aso-justify-center aso-items-center">
+                                    <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="aso-w-auto aso-h-full aso-cursor-pointer aso-absolute">
                                 </div>
                                 <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
                                     <label for="couffo" class="aso-text-base aso-font-semibold aso-text-black">Couffo Skin</label>
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div v-show="state=='colors'" class="aso-bg-[#F8F9FB]">
+        <div v-show="state=='colors'" class="aso-bg-[#F8F9FB] aso-py-6">
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
                 <div class="aso-flex aso-space-x-4">
                     <h2 class="aso-text-[15px] aso-font-bold">Canvas{{ themes.skin == "default" ? ', Header and Side Bars' : ', Header and Bottom Bars' }}</h2>

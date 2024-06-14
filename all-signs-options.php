@@ -92,7 +92,7 @@ final class ASO_All_Signs_Options {
 
         add_action('admin_notices', [$this,'check_woocommerce_install_and_version']);
         add_action('admin_notices', [$this,'check_config_pageselected']);
-        add_action( 'admin_notices', [$this, 'get_license_activation_notice'] );
+        add_action( 'admin_notices', [$this, 'get_not_available_notice'] );
         add_action( 'admin_notices', [$this,'permalink_notice'] );
     }
 
@@ -145,11 +145,15 @@ final class ASO_All_Signs_Options {
      */
     public function define_constants() {
         define( 'ASO_VERSION', $this->version );
+        define( 'ASO_ID', 1928 );
         define( 'ASO_FILE', __FILE__ );
         define( 'ASO_PATH', dirname( ASO_FILE ) );
         define( 'ASO_INCLUDES', ASO_PATH . '/includes' );
         define( 'ASO_URL', plugins_url( '', ASO_FILE ) );
         define( 'ASO_ASSETS', ASO_URL . '/assets' );
+
+        define("ASO_CHECK_TRANSIENT_EXPIRATION", 43200); // 12 hours
+        define("ASO_CHECK_TRANSIENT_NAME", "wp_update_check_aso");
 
         $upload_dir = wp_upload_dir();
         $generation_path = $upload_dir['basedir'] . "/ASO/";
@@ -511,6 +515,7 @@ final class ASO_All_Signs_Options {
         }
         
         require_once ASO_INCLUDES . '/Api.php';
+        require_once ASO_INCLUDES . '/update/updater.php';
         require_once ASO_INCLUDES . '/aso-post-type.php';
         require_once ASO_INCLUDES . '/aso-design.php';
         require_once ASO_INCLUDES . '/aso-product-config.php';
@@ -528,6 +533,7 @@ final class ASO_All_Signs_Options {
         add_action( 'init', array( $this, 'init_classes' ) );
 
         (new ASO_Post_Type())->init_hooks();
+        (new ASO_Updater())->init_hooks();
         (new ASO_Product_Config())->init_hooks();
         (new ASO_Design())->init_hooks();
         
@@ -766,25 +772,25 @@ final class ASO_All_Signs_Options {
     }
 
     /**
-	 * Get licence activation notice.
+	 * Get product activation notice.
 	 *
 	 * @return void
 	 */
-    public function get_license_activation_notice() {
+    public function get_not_available_notice() {
 
         if ( class_exists( 'WooCommerce' ) ) {
-            $aso_settings = get_option("aso_pro_license");
+            $aso_settings = get_option("aso_product_pro");
             
 
             if ( empty( $aso_settings ) ) {
                 ?>
-                    <div class="notice notice-warning aso-licence-warning">
+                    <div class="notice notice-warning aso-product-warning">
                         <p><b>All Signs Options Pro: </b><?php _e( "No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", 'ASO' ); ?></p>
                     </div>
                 <?php
             } else {
-                if(empty(get_option( 'aso_pro_activate_license')) || get_option( 'aso_pro_activate_license') == false){ ?>
-                    <div class="notice notice-error aso-licence-warning" style="display:none!important">
+                if(empty(get_option( 'aso_health-state')) || get_option( 'aso_health-state') == false){ ?>
+                    <div class="notice notice-error aso-product-warning" style="display:none!important">
                         <p><b>All Signs Options Pro: </b><?php _e( 'You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', 'ASO' ); ?></p>
                         <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate","ASO")?></a>
                         <div id="aso-license-message"></div>

@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-if="!isNewBorder">
+        <div class="aso-space-y-1 aso-py-10" v-if="!isNewBorder">
             <div>
                 <div class="aso-bg-[#F8F9FB] aso-text-[14px] aso-font-bold aso-px-4 aso-py-4 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     List of Borders

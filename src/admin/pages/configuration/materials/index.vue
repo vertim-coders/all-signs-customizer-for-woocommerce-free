@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="aso-py-10 aso-w-full">
         <div v-if="!isNewComponent">
             <div class="aso-sticky aso-top-[80px] aso-z-[999]">
-                <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
+                <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-pt-4 aso-pb-2 aso-flex">
                     <div  v-if="config.trim() != ''" class="aso-font-bold">
                         {{config}}
                     </div>
@@ -11,7 +11,7 @@
                         Material
                     </div>
                 </div>
-                <div v-if="!isFetching" class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
+                <div v-if="!isFetching" class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-bg-[#F8F9FB] aso-pb-4 aso-py-4">
                     
                     <div class="aso-w-1/4">
                         <button class="aso-flex aso-w-fit aso-h-[fit] aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addComponent">
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <!-- Table which display all materials -->
-            <div class="aso-w-full aso-overflow-x-auto aso-translate-y-8">
+            <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full">
                     <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
                         <div class="aso-flex aso-items-center aso-justify-center">Material Name</div>

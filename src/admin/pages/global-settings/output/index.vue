@@ -3,7 +3,7 @@
         <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
             <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
-        <div class="aso-space-y-4" v-if="!isFetching">
+        <div class="aso-space-y-4 aso-py-10" v-if="!isFetching">
             <div>
                 <div class="aso-bg-[#F8F9FB] aso-flex aso-flex-col aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     <div class="aso-flex aso-space-x-2">

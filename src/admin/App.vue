@@ -2,24 +2,34 @@
     <div id="aso-backend-app" class="aso-h-[100vh]">
         <Headerbar v-if="$route.name!=='preview-back'"/>
         <Sidebar/>
-        <div :class="`aso-w-[calc(100%-100px)] aso-pl-[10px] aso-pt-[10px]`">
-            <router-view />
+        <div :class="`aso-w-[calc(100%-85px)] aso-pl-[10px] aso-pt-[10px]`">
+            <router-view v-if="activateProduct"/>
+            <GlobalSettings v-if="!activateProduct"/>
         </div>
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js'
-//import '@/admin/utils/aso-tinymce.js'
 import Sidebar from './pages/components/sidebar.vue'
 import Headerbar from './pages/components/headerbar.vue';
-
-/* tinymce.init({
-    selector: '#aso-admin-tinymce',
-    width: '100%',
-    height: 200,
-}); */
+import NotFound from "@/admin/pages/NotFound/index.vue";
+import GlobalSettings from "@/admin/pages/global-settings/index.vue";
+import api from './Api/api';
+const activateProduct = ref(true);
+onMounted(async() => {
+    try {
+        const response = await api.getProductHealth();
+        if(response.activate) {
+            activateProduct.value = true;
+        }else{
+            activateProduct.value = false;
+        }
+    } catch (error) {
+        activateProduct.value = false;
+    }
+});
 
 tailwind.config ={
     prefix: 'aso-',

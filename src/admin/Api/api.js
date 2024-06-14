@@ -858,19 +858,23 @@ const api = {
     return main.data;
   },
 
-  //License Routes
-  saveGlobalSettingsLicenceKey: async (data, plugin = "pro") => {
-    const licence = await axios.post(
-      aso_api_url + "/globals-settings/license/" + plugin,
+  //Health Product Routes
+  saveGlobalSettingsProduct: async (data) => {
+    const product = await axios.post(
+      aso_api_url + "/globals-settings/product/",
       data
     );
-    return licence.data;
+    return product.data;
   },
-  getGlobalSettingsLicenceKey: async (plugin = "pro") => {
-    const licence = await axios.get(
-      aso_api_url + "/globals-settings/license/" + plugin
+  getProductHealth: async () => {
+    const product = await axios.get(
+      aso_api_url + "/globals-settings/product/checking"
     );
-    return licence.data;
+    return product.data;
+  },
+  getGlobalSettingsProduct: async () => {
+    const product = await axios.get(aso_api_url + "/globals-settings/product/");
+    return product.data;
   },
   saveGlobalSettingsConfigPage: async (data) => {
     const configPage = await axios.post(

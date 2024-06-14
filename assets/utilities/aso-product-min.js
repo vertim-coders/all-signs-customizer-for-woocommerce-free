@@ -28,7 +28,7 @@ var aso_ajax_url = aso_ajax_object.ajax_url;
       send_manufactrer_email(product_id, data);
     });
     const onload = function () {
-      window.aso_license_key = $.post(
+      window.aso_product_health = $.post(
         aso_ajax_url,
         {
           action: "aso_verify_licence_validity",

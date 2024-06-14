@@ -40,9 +40,6 @@ class Api extends WP_REST_Controller {
      * @return void
      */
     private function includes() {
-        if ( !class_exists( __NAMESPACE__ . '\Api\Example'  ) ) {
-            require_once __DIR__ . '/Api/Example.php';
-        }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASO_Api_Configs'  ) ) {
             require_once __DIR__ . '/Api/Admin/Configs.php';
         }
@@ -96,7 +93,6 @@ class Api extends WP_REST_Controller {
      * @return void
      */
     public function register_routes() {
-        (new Api\Example())->register_routes();
         (new ASO_Api_Configs())->register_routes();
         (new ASO_Api_Manage_fonts())->register_routes();
         (new ASO_Api_Manage_cliparts())->register_routes();

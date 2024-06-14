@@ -11,6 +11,7 @@ import Templates from "@/admin/pages/templates/index.vue";
 import ConfigurateTemplate from "@/admin/pages/templates/Configurate-template.vue";
 import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
 import Preview from "@/admin/pages/preview/index.vue";
+import NotFound from "@/admin/pages/NotFound/index.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
@@ -160,6 +161,11 @@ const router = createRouter({
       path: "/templates",
       name: "templates",
       component: Templates,
+    },
+    {
+      path: "/not-found",
+      name: "NotFound",
+      component: NotFound,
     },
   ],
 });

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="aso-space-y-4" v-if="!isNewFixingMethod">
+        <div class="aso-space-y-4 aso-py-10" v-if="!isNewFixingMethod">
             <div>
-                <div class="aso-sticky aso-z-[9999] aso-top-[105px] aso-bg-[#F8F9FB] aso-text-[14px] aso-font-bold aso-px-4 aso-py-4 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
+                <div class="aso-sticky aso-z-[998] aso-top-[105px] aso-bg-[#F8F9FB] aso-text-[14px] aso-font-bold aso-px-4 aso-py-4 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     List of Fixing methods
                 </div>   
                 <div class="aso-relative" id="monTableau">
                 <table class="aso-text-center aso-w-full aso-border aso-border-collapse aso-border-0">
-                    <thead class="aso-bg-[#f0f0f1] aso-sticky aso-z-[9999] aso-w-full aso-top-[150px]">
+                    <thead class="aso-bg-[#f0f0f1] aso-sticky aso-z-[998] aso-w-full aso-top-[150px]">
                         <tr class="">
                             <th scope="col" class="aso-px-6 aso-py-3 aso-text-[14px] aso-font-semibold">
                                 ID
@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-full">
+    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[998] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-full">
         <div class="aso-relative aso-top-[50px] aso-p-4 aso-w-full aso-max-w-[60%] aso-max-h-fit">
             <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700 aso-px-4">
                 <div class="aso-px-[10px] aso-pt-[5px]">

@@ -3,11 +3,11 @@
         <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
             <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
-        <div v-if="!isFetching" class="aso-space-y-4">
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8">
+        <div v-if="!isFetching" class="aso-space-y-4 aso-py-10">
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-2">
                 <div class="aso-flex aso-flex-col aso-space-y-3">
                     <label class="aso-text-[12px] aso-text-[#444444]">Enter the licence key</label>
-                    <input type="text" v-model="licenses.license" class="aso-w-full"/>
+                    <input type="text" v-model="licenses.product" class="aso-w-full"/>
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
@@ -20,7 +20,7 @@
                             </svg>
                         </div>
 
-                        <span class="aso-font-semibold aso-text-[16px]">Save</span>
+                        <span class="aso-font-semibold aso-text-[16px]">Save & Activate</span>
                     </button>
                 </div>
             </div>
@@ -31,34 +31,31 @@
 import api from '@/admin/Api/api';
 import {ref, onMounted} from 'vue';
 import toastMessage from '@/admin/utils/functions';
-const textarea = ref("<h1>DOSSA HEGNON Marie Edmond</h1><h1>Aboka Junior</h1>");
+import axios from 'axios';
 const isFetching = ref(false);
 const isLoading = ref(false);
 const licenses = ref({
-    license:"",
+    product:"",
 });
+const productId = 1928;
 onMounted(async() => {
     isFetching.value = true;
     await fetchLicenses();
     isFetching.value = false;
 });
 const fetchLicenses = async () => {
-    const result = await api.getGlobalSettingsLicenceKey();
+    const result = await api.getGlobalSettingsProduct();
     if(!result.message){
-        licenses.value.license = result.licenseKey;
+        licenses.value.product = result.product;
     }
     
 };
 const updateGlobalLicenses = async () => {
     isLoading.value = true;
-    const result = await api.saveGlobalSettingsLicenceKey(licenses.value);
+    const result = await api.saveGlobalSettingsProduct(licenses.value);
     if(result.success){
-        //await activateLicenseKey();
-        //await fetchLicenses();
-        isLoading.value = false;
-        window.location.reload();
-        toastMessage(result.success);
-        
+        await activateLicenseKey();
+        isLoading.value = false;       
     }else{
         isLoading.value = false;
         toastMessage(result.message,"error");
@@ -66,36 +63,17 @@ const updateGlobalLicenses = async () => {
 }
 const activateLicenseKey = async () => {
     try {
-        const response = await axios.post(
-            aso_ajax_object.ajax_url, 
-            {
-                action: 'aso_activate_license',
-            }, 
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }
-        );
-        switch (response.data.success) {
-            case 200:
-                toastMessage("Activation succeded! Your product is now activated");
-                window.aso_license_key = true;
-                if (document.location.href == "admin.php?page=aso#/global-settings") {
-                    document.location.href = 'admin.php?page=aso#/configurations';
-                }
-                document.location.reload(true);
-                break;
-            default:
-                window.aso_license_key = false;
-                jQuery(".aso-licence-warning").show();
-                jQuery(".wp-submenu li a[href='admin.php?page=aso#/configurations']").remove();
-                if(response.data.answer){
-                    toastMessage(response.data.answer, 'error');
-                }else{
-                    toastMessage(response.data.message, 'error');
-                }
-                /* jQuery('aso-license-message').html("<p>" + data + "</p>"); */
+        const url = 'https://tests.vertimcoders.com/ncpc/wp-json/vlc/license/?key='+ licenses.value.product +"&siteurl="+aso_data.site_url+"&author="+productId;
+        const response = await axios.get(url);
+        if (response.data.key) {
+            licenses.value.valid = true;
+            await api.saveGlobalSettingsProduct(licenses.value);
+            toastMessage("Activation successful! Your product is ready to use");
+            document.location.reload(true);
+        }else if(response.data.message){
+            toastMessage(response.data.message, 'error');
+        }else{
+            toastMessage(response.data, 'error');
         }
     } catch (error) {
         toastMessage(error, "error");

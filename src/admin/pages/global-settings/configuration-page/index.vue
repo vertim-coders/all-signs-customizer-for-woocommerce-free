@@ -3,9 +3,9 @@
         <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
             <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
-        <div class="aso-space-y-4" v-if="!isFetching">
+        <div class="aso-space-y-4 aso-py-10" v-if="!isFetching">
             <div>
-                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
+                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-2 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     <div class="aso-flex aso-space-x-4 aso-py-4">
                         <label class="aso-text-[12px] aso-text-[#444444] aso-py-1">With which tag do you want the configurator title to be displayed?</label>
                         <select v-model="configPages.others.titleBalise">
@@ -32,7 +32,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#DDDDDD]">
+                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-2 aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#DDDDDD]">
                     <div class="aso-flex aso-flex-col aso-space-y-3">
                         <label class="aso-text-[12px] aso-text-[#444444]">Template page</label>
                         <select class="aso-w-full" v-model="configPages.templatePage">
@@ -70,7 +70,7 @@
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="setBack" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="setBack" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="setBack" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">

@@ -29,29 +29,28 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
   public function register_route(){
     register_rest_route(
       $this->namespace,
-      '/' . $this->rest_base."/license/(?<plugin>\S+)",
+      '/' . $this->rest_base."/product",
       array(
         array(
           'methods'             => \WP_REST_Server::CREATABLE,
-          'callback'            => array( $this, 'save_license' ),
+          'callback'            => array( $this, 'save_aso_product' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-          'args'                => array (
-            'plugin' => array (
-              'type' => 'string',
-              'required' => true,
-            )
-          ),
         ),
         array(
           'methods'             => \WP_REST_Server::READABLE,
-          'callback'            => array( $this, 'get_license' ),
+          'callback'            => array( $this, 'get_aso_product' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
-          'args'                => array (
-            'plugin' => array (
-              'type' => 'string',
-              'required' => true,
-            )
-          ),
+        ),
+      )
+    );
+    register_rest_route(
+      $this->namespace,
+      '/' . $this->rest_base."/product/checking",
+      array(
+        array(
+          'methods'             => \WP_REST_Server::READABLE,
+          'callback'            => array( $this, 'check_product_health' ),
+          'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
       )
     );
@@ -206,45 +205,92 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     );
   }
   /**
-   * Add license key
+   * Add ASO Product
    * @param \WP_REST_Request $request Full details about the request.
    *
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function save_license( $request ) {
-    $plugin = $request->get_param('plugin');
-    $params=json_decode($request->get_body());
-    if(isset($params->license) && !empty($params->license)){
-      if(isset($plugin)){
-        if($plugin === "pro"){
-          $option = update_option("aso_pro_license",$params->license);
+  public function save_aso_product( $request ) {
+    $data=json_decode($request->get_body(),true);
+    if(isset($data["product"]) && !empty($data["product"])){
+      $product = get_option("aso_product_pro",false);
+      if( $product != $data["product"]){
+        $option = update_option("aso_product_pro",$data["product"]);
+        if($option){
+          return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","ASO")]);
+        }else{
+          return rest_ensure_response(["message" => __("Saving ASO Product Pro failed","ASO")]);
         }
-      }
-      if($option){
-        return rest_ensure_response(["success" => __("License key added successfully","ASO")]);
       }else{
-        return rest_ensure_response(["message" => __("Adding license key failed","ASO")]);
-      }
+        if($data["valid"]){
+          update_option('aso_health-state', $data['key']);
+          set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
+        }else{
+          update_option('aso_health-state', false);
+          set_transient('aso_health-state-checking', 'notvalid',0);
+        }
+        return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","ASO")]); 
+      }      
     }
-    return rest_ensure_response(["message" => __("License key not found","ASO")]);
+    return rest_ensure_response(["message" => __("ASO Product Pro not found","ASO")]);
   }
 
   /**
-   * Get license key
+	 * Check Product validity.
+	 *
+	 * @return void
+	 */
+	public function check_product_health() {
+
+    $aso_health_check = get_transient('aso_health-state-checking');
+    if ($aso_health_check === 'valid') {
+        wp_send_json(['activate' => true]);
+        return; 
+    }
+
+    $aso_product = get_option("aso_product_pro");
+    $aso_health = get_option('aso_health-state');
+
+    if (empty($aso_product)) {
+      delete_option('aso_health-state');
+      return rest_ensure_response(['activate' => false]);;
+    }
+
+    $site_url = get_site_url();
+    $url      = 'https://tests.vertimcoders.com/ncpc/wp-json/vlc/checking/?key=' . $aso_product . '&siteurl=' . urlencode( $site_url )."&author=".ASO_ID;
+    $args = ['timeout' => 60];
+    $response = wp_remote_get($url, $args);
+
+    if (is_wp_error($response)) {
+      $activate = !empty($aso_health);
+      return rest_ensure_response(['activate' => $activate]);;
+    }
+
+    $data = json_decode($response['body'], true);
+    
+    if ($data && isset($data['key']) && !empty($data['key'])) {
+      update_option( 'aso_health-state',true);
+      set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
+      return rest_ensure_response(['activate' => true]);
+    } else {
+      update_option( 'aso_health-state',false);
+      return rest_ensure_response(['activate' => false]);
+    }
+  }
+
+  /**
+   * Get ASO Product
    * @param \WP_REST_Request $request Full details about the request.
    *
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function get_license( $request ) {
-    $plugin = $request->get_param('plugin');
-    if($plugin === "pro"){
-      $option = get_option("aso_pro_license");
-    }
+  public function get_aso_product( $request ) {
+    $option = get_option("aso_product_pro");
   
     if($option==false || empty($option) ){
-      return rest_ensure_response(["message" => __("No license available","ASO")]);
+      return rest_ensure_response(["message" => __("No ASO Product Pro available","ASO")]);
     }else{
-      return rest_ensure_response(['licenseKey'=>$option]);
+      return rest_ensure_response(['product'=>$option]);
     }
   }
   /**

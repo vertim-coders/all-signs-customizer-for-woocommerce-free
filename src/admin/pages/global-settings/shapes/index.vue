@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aso-space-y-4" v-if="!isNewShapes">
+        <div class="aso-space-y-4 aso-py-10" v-if="!isNewShapes">
             <div>
                 <div class="aso-bg-[#F8F9FB] aso-text-[14px] aso-font-bold aso-px-4 aso-py-4 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     List of shapes

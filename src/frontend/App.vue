@@ -1,12 +1,26 @@
 <template>
-    <router-view />
+    <router-view v-if="activateProduct"/>
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js';
 import '../../assets/utilities/fabric.min.js';
+import api from '@/admin/Api/api.js';
 // import '@/frontend/utils/aso-editor-script.js';
+const activateProduct = ref(true);
+onMounted(async() => {
+    try {
+        const response = await api.getProductHealth();
+        if(response.activate) {
+            activateProduct.value = true;
+        }else{
+            activateProduct.value = false;
+        }
+    } catch (error) {
+        activateProduct.value = false;
+    }
+});
 
 tailwind.config ={
     prefix: 'aso-',
