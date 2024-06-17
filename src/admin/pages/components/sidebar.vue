@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-fixed aso-right-0 aso-z-[9998] aso-w-[85px] aso-h-[100vh] aso-bg-[#016464] aso-pt-[80px]">
+    <div class="aso-fixed aso-top-0  aso-right-0 aso-z-[9998] aso-w-[85px] aso-h-[100vh] aso-bg-[#016464] aso-pt-[100px]">
         <div class="aso-items-center aso-flex aso-justify-start aso-space-y-4 aso-flex-col">
             <div class="aso-flex aso-relative aso-justify-center aso-items-center">
                 <button :class="`aso-w-fit aso-h-fit aso-bg-transparent aso-border-none aso-text-white hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer ${$route.path == '/manage-fonts' ? 'aso-opacity-100' :'aso-opacity-50'}`" @click="()=>this.$router.push('/manage-fonts')">

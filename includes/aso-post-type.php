@@ -220,7 +220,7 @@ class ASO_Post_Type
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&vcid=$matches[2]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&tid=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'

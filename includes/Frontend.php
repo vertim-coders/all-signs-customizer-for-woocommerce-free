@@ -30,7 +30,8 @@ class ASO_Frontend {
         extract( // phpcs:ignore
 			shortcode_atts(
 				array(
-					'productid' => '0'
+					'productid' => '0',
+                    'tpid'=>false,
 				),
 				$atts,
                 'aso-products'
