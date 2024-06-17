@@ -31,7 +31,7 @@ class ASO_Updater  {
 	
 		$site_url = get_site_url();
         $purchase_code = get_option("aso_product_pro");
-        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
+        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
         $args     = array( 'timeout' => 60 );
         $response = wp_remote_get( $url, $args );
         if ( is_wp_error( $response ) ) {
@@ -110,7 +110,7 @@ class ASO_Updater  {
     private function check_aso_other_version() {
 		$site_url = get_site_url();
         $purchase_code = get_option("aso_product_pro");
-        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
+        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
         $args     = array( 'timeout' => 60 );
         $response = wp_remote_get( $url, $args );
         if ( is_wp_error( $response ) ) {

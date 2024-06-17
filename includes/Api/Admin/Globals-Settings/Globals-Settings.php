@@ -256,7 +256,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     }
 
     $site_url = get_site_url();
-    $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/checking/?key=' . $aso_product . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
+    $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/checking/?lcde=' . $aso_product . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
     $args = ['timeout' => 60];
     $response = wp_remote_get($url, $args);
 
