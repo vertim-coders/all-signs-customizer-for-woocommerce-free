@@ -159,6 +159,19 @@
                                 </svg>
                                 <p class="aso-text-[10px] aso-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
                             </div>
+
+                            <div v-if="route.name == 'template-maker'" @click="lockMoving('x')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
+                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                    <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
+                                </svg>
+                                <p class="aso-text-[10px] aso-font-semibold">Lock X</p>
+                            </div>
+                            <div v-if="route.name == 'template-maker'" @click="lockMoving('y')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
+                                <svg focusable="false" viewBox="0 0 24 24" class="aso-w-5 aso-h-5">
+                                    <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
+                                </svg>
+                                <p class="aso-text-[10px] aso-font-semibold">Lock Y</p>
+                            </div>
                         </div>
                     </div>
     
@@ -1759,9 +1772,13 @@
                 <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonEditTextColor}] hover:aso-text-[${configColors.recaps.buttonEditHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
                     {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
                 </button>
-                <button :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
                     <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
                     {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
+                </button>
+                <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isSavingTemplate"/>
+                    Save
                 </button>
             </div>
         </div>
@@ -1838,10 +1855,13 @@
         handleGetCharPrice,
         handleSetPrice,
         handleClipAddedObject,
-        handleGetNewPosition
+        handleGetNewPosition,
+        handleLockMoving,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
+    import { useRoute } from "vue-router";
+    const route = useRoute();
 
     const props = defineProps({
         config:Object,
@@ -3818,6 +3838,19 @@
         }
     }
 
+    var objectLockMoving = ref({
+        x: false,
+        y: false,
+    })
+    function lockMoving(axe){
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                objectLockMoving.value = handleLockMoving(object, axe)
+            }
+        }
+    }
+
     var sizees = ref([])
     var thicknesss = ref([])
     var customSizes = ref({})
@@ -5051,6 +5084,7 @@
 
     var finish = ref(false)
     var configData = ref({})
+    var templateData = ref({})
     function finishConfig(){
         closeObjectValues()
         var heightValue = handleGetObjectByName('height-value', canvas)
@@ -5343,6 +5377,93 @@
             }
 
         }
+
+
+        if(route.name == 'template-maker'){
+            function supprimerNonChiffres(chaine) {
+                return chaine.replace(/\D/g, '');
+            }
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio"])
+            var canvas1AsJson = JSON.stringify(jsonData1)
+            var current1State = JSON.parse(canvas1AsJson);
+
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio"])
+            var canvas2AsJson = JSON.stringify(jsonData2)
+            var current2State = JSON.parse(canvas2AsJson);
+
+
+            templateData.value = {
+                sign: {
+                    doubleFace: configDoublePart.value.active,
+                    size: {
+                        width: parseInt(supprimerNonChiffres(widthValue.text)),
+                        height: parseInt(supprimerNonChiffres(heightValue.text)),
+                        thickness: {
+                            avtive: currentSizeThickness.value,
+                            value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
+                        }
+                    },
+                    shape: selectedShape.value,
+                    color: {
+                        face1: {
+                            name: activeSignColor.value,
+                            codeHex: activeSignColorCode1.value,
+                            textColor: {
+                                active: signTextColor1.value.active,
+                                name: (signTextColor1.value.active ? colorTextColorName1.value : null),
+                                codeHex: (signTextColor1.value.active ? colorTextCodeHex1.value : null),
+                            }
+                        },
+                        face2: {
+                            name: activeSignFace2Color.value,
+                            codeHex : activeSignColorCode2.value,
+                            textColor: {
+                                active: signTextColor2.value.active,
+                                name: (signTextColor2.value.active ? colorTextColorName2.value : null),
+                                codeHex: (signTextColor2.value.active ? colorTextCodeHex2.value : null),
+                            }
+                        },
+                    },
+                    border: {
+                        face1: {
+                            type: activeFace1Border.value,
+                            color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
+                            codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                        },
+                        face2: {
+                            type: activeFace2Border.value,
+                            color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
+                            codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
+                        },
+                    },
+                    fixingMethod: {
+                        type: activeFixingMethode.value,
+                        ratio: activeCanvas.fixingRatio,
+                    },
+                },
+                texts: {
+                    face1 :addedObject.texts,
+                    face2 :face2AddedObject.texts
+                },
+                images: {
+                    face1 :addedObject.images,
+                    face2 :face2AddedObject.images
+                },
+                designImages: {
+                    face1: designImagesFace1,
+                    face2: generateOutputImage(designImagesFace2, canvasBack),
+                },
+                template:{
+                    face1: current1State,
+                    face2: current2State,
+                },
+                price: parseInt(supprimerNonChiffres(formatPrice(finalPrices)))
+            }
+            console.log(templateData.value, "template")
+        }
+
+
+
         console.log(configData.value, "Added")
         finish.value = true
     }
@@ -5530,6 +5651,21 @@
             toastMessage(add.message,"error");
             isAddingToCart.value = false
         }
+    }
+
+    const isSavingTemplate = ref(false)
+    const saveTemplate = async ()=>{
+        isSavingTemplate.value = true;
+        // const cart_data = {
+        //     recaps:{...configData.value,custom_price:finalPrices.value},
+        //     variation_id:aso_configurator_data.productID,
+        //     quantity:1
+        // }
+        // var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
+        // if(!add.success){
+        //     toastMessage(add.message,"error");
+        //     isSavingTemplate.value = false
+        // }
     }
 
 </script>

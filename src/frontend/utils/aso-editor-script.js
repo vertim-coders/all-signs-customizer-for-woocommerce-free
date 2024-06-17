@@ -83,6 +83,9 @@ function handleCloneCanvas() {
     "uniScaleTransform",
     "centeredScaling",
     "lockScalingFlip",
+    "lockMoving",
+    "lockScale",
+    "fixingRatio"
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -479,6 +482,9 @@ function updateModifications(good, position) {
       "uniScaleTransform",
       "centeredScaling",
       "lockScalingFlip",
+      "lockMoving",
+      "lockScale",
+      "fixingRatio"
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -491,6 +497,9 @@ function updateModifications(good, position) {
       "uniScaleTransform",
       "centeredScaling",
       "lockScalingFlip",
+      "lockMoving",
+      "lockScale",
+      "fixingRatio"
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -1050,9 +1059,13 @@ function handleMiseAEchelle(rW, rH) {
   if ((signWPx || signHPx) > 10000) {
     fixScale = 0.25;
     sizeRatio = "big";
+    canvas.fixingRatio = sizeRatio
+    backCanvas.fixingRatio = sizeRatio
   } else {
     fixScale = 0.5;
     sizeRatio = "small";
+    canvas.fixingRatio = sizeRatio
+    backCanvas.fixingRatio = sizeRatio
   }
 
   if (signWPx > signHPx) {
@@ -1634,6 +1647,33 @@ function handleCenterHorizontally(object) {
     }
   });
   canvas.renderAll();
+}
+
+function handleLockMoving(object, axe){
+  if(axe == 'x'){
+    if(object.lockMoving.x === true){
+      object.lockMoving.x = false
+    }else{
+      object.lockMoving.x = true
+    }
+    console.log(object.lockMoving)
+  }
+  if(axe == 'y'){
+    if(object.lockMoving.y === true){
+      object.lockMoving.y = false
+    }else{
+      object.lockMoving.y = true
+    }
+  }
+
+  return object.lockMoving
+}
+function handleLockScaling(object, axe){
+  if(object.lockScale === true){
+    object.lockScale = false
+  }else{
+    object.lockScale = true
+  }
 }
 
 //function pour afficher les borders
@@ -5335,6 +5375,12 @@ function handleAddTextToSign(clone) {
         clipPath: handleClipAddedObject(activeCanvas),
         // mouseUpHandler: handleGetAddedTextValues,
       });
+      text2.lockMoving = {
+        x: false,
+        y: false,
+      }
+      text2.lockScale = false
+
       text2.set("canvas", cloneCanvas);
 
       text2.on("editing:entered", () => {
@@ -5394,6 +5440,11 @@ function handleAddTextToSign(clone) {
         // pathStartOffset: 0
         // minScaleLimit: 0.3
       });
+      newText.lockMoving = {
+        x: false,
+        y: false,
+      }
+      newText.lockScale = false
 
       newText.on("editing:entered", () => {
         handleGetAddedTextValues(newText);
@@ -5680,6 +5731,12 @@ function handleAddImageToSign(image, imageId, price) {
       img.priceId = imgId ? imgId : 0;
       img.price = price ? price : null;
       img.clipPath = handleClipAddedObject(activeCanvas);
+
+      img.lockMoving = {
+        x: false,
+        y: false,
+      }
+      img.lockScale = false
 
       img.on("mousedown", function () {
         handleGetAddedImageValues(img);
@@ -6375,4 +6432,5 @@ export {
   handleSetPrice,
   handleClipAddedObject,
   handleGetNewPosition,
+  handleLockMoving,
 };
