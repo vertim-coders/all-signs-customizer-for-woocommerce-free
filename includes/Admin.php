@@ -74,7 +74,8 @@ class ASO_Admin {
         <?php wp_localize_script("aso-admin","aso_data",[
             "rest_url"=>$api_url."aso/v1",
             "ajax_url"=>esc_url(admin_url('admin-ajax.php')),
-            "site_url"=>get_site_url(),
+            "site_url"=>urlencode(get_site_url()),
+            "author"=>ASO_ID,
             "product"=>get_option("aso_product_pro", ''),
             "assets_url"=>ASO_ASSETS,
             "page"=>"admin",

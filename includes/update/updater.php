@@ -12,23 +12,18 @@ class ASO_Updater  {
     }
 
 	public function init_hooks(){
-		add_filter( 'plugins_api', [$this,'aso_plugin_info'], 20, 3);
-        add_filter('site_transient_update_plugins', [$this,'aso_push_update']);
-
+        // Define the alternative response for information checking
+        add_filter('plugins_api', [$this, 'aso_plugin_info'], 20, 3);
         // define the alternative API for updating checking
         add_filter('pre_set_site_transient_update_plugins', [$this, 'aso_push_update']);
-
-        // Define the alternative response for information checking
-        add_filter('plugins_api', [$this, 'check_info'], 10, 3);
 	}
 
     public function aso_plugin_info( $res, $action, $args ){
-		
 		// do nothing if this is not about getting plugin information
 		if( 'plugin_information' !== $action ) {
 			return $res;
 		}
-	
+		
 		// do nothing if it is not our plugin
 		if( basename(dirname(ASO_FILE )) !== $args->slug ) {
 			return $res;
@@ -36,7 +31,7 @@ class ASO_Updater  {
 	
 		$site_url = get_site_url();
         $purchase_code = get_option("aso_product_pro");
-        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&author=".ASO_ID;
+        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
         $args     = array( 'timeout' => 60 );
         $response = wp_remote_get( $url, $args );
         if ( is_wp_error( $response ) ) {
@@ -76,15 +71,17 @@ class ASO_Updater  {
 				);
 			}
 		}
+		
 		return $res;
 	}
     public function aso_push_update($transient) {
+		
 		$checkPluginTransient = get_transient(ASO_CHECK_TRANSIENT_NAME);
 		if ( empty( $transient->checked ) ) {
 			return $transient;
 		}
 		$remote = $checkPluginTransient ?: $this->check_aso_other_version();
-		 if (!$checkPluginTransient) {
+		if (!$checkPluginTransient) {
 		  set_transient(
 		    ASO_CHECK_TRANSIENT_NAME,
 		    $remote,
@@ -94,7 +91,7 @@ class ASO_Updater  {
         if(is_object($remote)){
             $res = new stdClass();
 			$res->slug = $remote->slug;
-			$res->plugin = $remote->slug.'/plugin.php'; // it could be just YOUR_PLUGIN_SLUG.php if your plugin doesn't have its own directory
+			$res->plugin = plugin_basename(ASO_FILE); // it could be just YOUR_PLUGIN_SLUG.php if your plugin doesn't have its own directory
 			$res->new_version = $remote->version;
 			$res->tested = $remote->tested;
 			$res->package = $remote->download_link;
@@ -107,14 +104,13 @@ class ASO_Updater  {
                 $transient->response[ $res->plugin ] = $res;
             }
         }
-	 
 		return $transient;
 		
 	}
     private function check_aso_other_version() {
 		$site_url = get_site_url();
         $purchase_code = get_option("aso_product_pro");
-        $url      = 'https://signsdesigner.us/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&author=".ASO_ID;
+        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?key=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
         $args     = array( 'timeout' => 60 );
         $response = wp_remote_get( $url, $args );
         if ( is_wp_error( $response ) ) {

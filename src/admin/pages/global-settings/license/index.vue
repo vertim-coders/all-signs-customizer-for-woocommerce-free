@@ -37,7 +37,7 @@ const isLoading = ref(false);
 const licenses = ref({
     product:"",
 });
-const productId = 2520;
+const productId = aso_data.author;
 onMounted(async() => {
     isFetching.value = true;
     await fetchLicenses();
@@ -63,12 +63,12 @@ const updateGlobalLicenses = async () => {
 }
 const activateLicenseKey = async () => {
     try {
-        const url = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/license/?key='+ licenses.value.product +"&siteurl="+aso_data.site_url+"&author="+productId;
+        const url = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/license/?key='+ licenses.value.product +"&siteurl="+aso_data.site_url+"&vertim="+productId;
         const response = await axios.get(url);
         if (response.data.key) {
-            licenses.value.valid = true;
-            await api.saveGlobalSettingsProduct(licenses.value);
+            licenses.value.valid = response.data.key;
             toastMessage("Activation successful! Your product is ready to use");
+            await api.saveGlobalSettingsProduct(licenses.value);
             document.location.reload(true);
         }else if(response.data.message){
             toastMessage(response.data.message, 'error');

@@ -89,7 +89,6 @@ final class ASO_All_Signs_Options {
         register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
         add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
-
         add_action('admin_notices', [$this,'check_woocommerce_install_and_version']);
         add_action('admin_notices', [$this,'check_config_pageselected']);
         add_action( 'admin_notices', [$this, 'get_not_available_notice'] );
@@ -145,7 +144,7 @@ final class ASO_All_Signs_Options {
      */
     public function define_constants() {
         define( 'ASO_VERSION', $this->version );
-        define( 'ASO_ID', 1928 );
+        define( 'ASO_ID', 3107 );
         define( 'ASO_FILE', __FILE__ );
         define( 'ASO_PATH', dirname( ASO_FILE ) );
         define( 'ASO_INCLUDES', ASO_PATH . '/includes' );

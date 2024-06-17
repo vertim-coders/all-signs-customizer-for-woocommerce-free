@@ -21,7 +21,7 @@ const activateProduct = ref(true);
 onMounted(async() => {
     try {
         const response = await api.getProductHealth();
-        if(response.activate) {
+        if(response.aso_health) {
             activateProduct.value = true;
         }else{
             activateProduct.value = false;

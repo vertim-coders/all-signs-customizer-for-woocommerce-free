@@ -222,8 +222,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           return rest_ensure_response(["message" => __("Saving ASO Product Pro failed","ASO")]);
         }
       }else{
-        if($data["valid"]){
-          update_option('aso_health-state', $data['key']);
+        if(isset($data["valid"])){
+          update_option('aso_health-state', $data['valid']);
           set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
         }else{
           update_option('aso_health-state', false);
@@ -244,8 +244,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 
     $aso_health_check = get_transient('aso_health-state-checking');
     if ($aso_health_check === 'valid') {
-        wp_send_json(['activate' => true]);
-        return; 
+      return rest_ensure_response(['aso_health' => true]);
     }
 
     $aso_product = get_option("aso_product_pro");
@@ -253,28 +252,28 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 
     if (empty($aso_product)) {
       delete_option('aso_health-state');
-      return rest_ensure_response(['activate' => false]);;
+      return rest_ensure_response(['aso_health' => false]);;
     }
 
     $site_url = get_site_url();
-    $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/checking/?key=' . $aso_product . '&siteurl=' . urlencode( $site_url )."&author=2520";
+    $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/checking/?key=' . $aso_product . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
     $args = ['timeout' => 60];
     $response = wp_remote_get($url, $args);
 
     if (is_wp_error($response)) {
       $activate = !empty($aso_health);
-      return rest_ensure_response(['activate' => $activate]);;
+      return rest_ensure_response(['aso_health' => $activate]);
     }
 
     $data = json_decode($response['body'], true);
     
     if ($data && isset($data['key']) && !empty($data['key'])) {
-      update_option( 'aso_health-state',true);
+      update_option( 'aso_health-state',$data['key']);
       set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
       return rest_ensure_response(['activate' => true]);
     } else {
       update_option( 'aso_health-state',false);
-      return rest_ensure_response(['activate' => false]);
+      return rest_ensure_response(['aso_health' => false]);
     }
   }
 
