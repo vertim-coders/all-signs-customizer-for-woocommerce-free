@@ -1003,6 +1003,12 @@ const api = {
     );
     return templates.data;
   },
+  getTemplate: async (config_id, template_id) => {
+    const templates = await axios.get(
+      aso_api_url + "/templates/" + config_id + "/" + template_id
+    );
+    return templates.data;
+  },
   updateTemplate: async (template_id, template) => {
     const templates = await axios.put(
       aso_api_url + "/templates/" + template.configId + "/" + template_id,

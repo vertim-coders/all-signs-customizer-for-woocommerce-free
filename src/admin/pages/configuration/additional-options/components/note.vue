@@ -19,7 +19,7 @@
             <p class="aso-text-[14px] aso-font-bold">3- Note Input</p>
             <p class="aso-text-[12px]">Character limit (optional)</p>
             <p class="aso-text-[12px]">Displays as a textarea field for customers to type any additional requirements.</p>
-            <input v-model="noteType.label" type="number" class="aso-w-3/4" value=""/>
+            <input v-model="noteType.noteLimitChar" type="number" class="aso-w-3/4" value=""/>
             <p class="aso-text-[12px]">The maximum number of text characters for notes.</p>
         </div>
     </div>

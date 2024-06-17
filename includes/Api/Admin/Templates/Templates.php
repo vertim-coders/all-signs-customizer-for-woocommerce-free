@@ -180,9 +180,9 @@ class ASO_Api_Templates extends WP_REST_Controller {
         $config_id = $request->get_param('config_id');
         $template_id = $request->get_param('template_id');
         if($config_id!=0){
-            $meta_value = get_post_meta($config_id, 'aso-templates', true);
+            $templates = get_post_meta($config_id, 'aso-templates', true);
             
-            if (!empty($meta_value)) {
+            if (!empty($templates)) {
                 if(isset($templates[$template_id])){
                     return rest_ensure_response( $templates[$template_id] );
                 }else{

@@ -265,9 +265,9 @@
             </div>
         </div>
     </div>
-  </template>
+</template>
   
-  <script setup>
+<script setup>
 import api from '@/admin/Api/api';
 import {onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';

@@ -111,8 +111,7 @@
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Base Price</label>
-                        <input type="number" v-model="template.basePrice" @blur="template.basePrice =''? template.basePrice =0 : ''" class="aso-rounded aso-w-full aso-h-[32px]">
-                        
+                        <input type="number" v-model="template.basePrice" @blur="template.basePrice ==''? template.basePrice =0 : ''" class="aso-rounded aso-w-full aso-h-[32px]">                        
                     </div>
                 </div>
             </div>
@@ -333,7 +332,7 @@ const updateTemplate = async ()=>{
             isNewTemplate.value=false;
             isEdit.value = false;
             template_id.value = null;
-            toastMessage(result.message);
+            toastMessage(result.message,"error");
             template.value = {
                 name:'',
                 categoryId:'',
