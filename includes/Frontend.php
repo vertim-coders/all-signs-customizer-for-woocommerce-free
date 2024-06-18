@@ -121,7 +121,7 @@ class ASO_Frontend {
                             "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
                             "borders_url"  => ASO_ASSETS.'/images/borders',
                             "templates"    =>[
-                                "designFromTemplate"=>$tplid ? ( !is_string($template) ? true : false) : false,
+                                "designFromTemplate"=>isset($template) && !is_string($template) ? true : false,
                                 "template"=>isset($template) && !is_string($template) ?  $template : []
                             ],
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
