@@ -5258,6 +5258,7 @@
 
         }
 
+        var face2AddedObject = {}
         if(configDoublePart.value.active){
             var face2TextObjects = []
             var face2ImageObjects = []
@@ -5283,7 +5284,7 @@
                     addUniqueObject(face2ImageObjects, objects[i], 'id')
                 }
             }
-            var face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects)
+            face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects)
 
             var designImagesFace2 = []
 
@@ -5450,15 +5451,15 @@
                 },
                 texts: {
                     face1 :addedObject.texts,
-                    face2 :face2AddedObject.texts
+                    face2 :(face2AddedObject !== {} ? face2AddedObject.texts : null)
                 },
                 images: {
                     face1 :addedObject.images,
-                    face2 :face2AddedObject.images
+                    face2 :(face2AddedObject !== {} ? face2AddedObject.images : null)
                 },
                 designImages: {
                     face1: designImagesFace1,
-                    face2: generateOutputImage(designImagesFace2, canvasBack),
+                    face2: (configDoublePart.value.active ? generateOutputImage(designImagesFace2, canvasBack) : []),
                 },
                 template:{
                     face1: current1State,
