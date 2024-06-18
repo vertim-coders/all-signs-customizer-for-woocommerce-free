@@ -5597,7 +5597,7 @@
         const template_data = {
             ...template.value,
             data:{
-                templateData:{...configData.value,custom_price:finalPrices.value},
+                templateData:{...configData.value},
                 cartData:{...configData.value,custom_price:finalPrices.value}
             }
         }

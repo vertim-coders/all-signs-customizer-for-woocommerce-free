@@ -126,7 +126,11 @@ class ASO_Post_Type
 				<?php
 				$content .= ob_get_clean();
 			}else{
-				$content .= do_shortcode("[aso-configurator productid='".$wp_query->query_vars['aso-product-id']."']");
+				if(isset($wp_query->query_vars['aso-tplid'])){
+					$content .= do_shortcode("[aso-configurator productid='".$wp_query->query_vars['aso-product-id']."' tplid='".$wp_query->query_vars['aso-tplid']."']");		
+				}else{
+					$content .= do_shortcode("[aso-configurator productid='".$wp_query->query_vars['aso-product-id']."']");		
+				}				
 			}
 		}elseif ( get_the_ID() == $page_settings["templatePage"] && is_page($page_settings["templatePage"]) ) {
 			if(!isset( $wp_query->query_vars['aso-product-id'] )){
@@ -144,21 +148,19 @@ class ASO_Post_Type
 				</div>
 				<?php
 				$content .= ob_get_clean();
-			}else{
-				$content .= do_shortcode("[aso-templates productid='".$wp_query->query_vars['aso-product-id']."']");
 			}
 		}
 		return $content;
 	}
 	public function aso_add_query_vars( $a_vars ) {
 		$a_vars[] = 'aso-product-id';
-		$a_vars[] = 'tpl';
+		$a_vars[] = 'aso-tplid';
 		$a_vars[] = 'edit';
 		$a_vars[] = 'design-index';
 		$a_vars[] = 'vcid';
 		return $a_vars;
 	}
-	public function aso_add_design_page_rewrite_rules( $param ) {
+	/*public function aso_add_design_page_rewrite_rules( $param ) {
 		
 		global $wp_rewrite;
 		$page_settings = get_option("aso_config_page");
@@ -168,9 +170,9 @@ class ASO_Post_Type
 			$aso_page_id = false;
 		}
 
-		/* if ( function_exists( 'icl_object_id' ) ) {
-			$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
-		} */
+		// if ( function_exists( 'icl_object_id' ) ) {
+		// 	$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
+		// } 
 		$aso_page = get_post( $aso_page_id );
 		if ( is_object( $aso_page ) ) {
 			$raw_slug = get_permalink( $aso_page->ID );
@@ -198,14 +200,14 @@ class ASO_Post_Type
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&tpl=$matches[2]',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&aso-tplid=$matches[2]',
 				// This is a rather specific URL, so we add it to the top of the list
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
 			);
 			add_rewrite_rule(
 					// The regex to match the incoming URL
-				$slug . $sep . 'edit' . '/([^/]+)/([^/]+)/?$',
+				$slug . $sep . 'aso-edit' . '/([^/]+)/([^/]+)/?$',
 				// The resulting internal URL: `index.php` because we still use WordPress
 					// `pagename` because we use this WordPress page
 					// `designer_slug` because we assign the first captured regex part to this variable
@@ -214,18 +216,6 @@ class ASO_Post_Type
 					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
 					'top'
 			);
-			add_rewrite_rule(
-					// The regex to match the incoming URL
-				$slug . $sep . 'aso-design' . '/([^/]+)/([^/]+)/?$',
-				// The resulting internal URL: `index.php` because we still use WordPress
-					// `pagename` because we use this WordPress page
-					// `designer_slug` because we assign the first captured regex part to this variable
-					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&tid=$matches[2]',
-				// This is a rather specific URL, so we add it to the top of the list
-					// Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					'top'
-			);
-
 			add_rewrite_rule(
 					// The regex to match the incoming URL
 				$slug . $sep . 'aso-saved-design' . '/([^/]+)/([^/]+)/?$',
@@ -240,9 +230,9 @@ class ASO_Post_Type
 
 			$wp_rewrite->flush_rules( false );
 		}
-	}
+	}*/
 
-	public function aso_add_template_page_rewrite_rules( $param ) {
+	/*public function aso_add_template_page_rewrite_rules( $param ) {
 		
 		global $wp_rewrite;
 		$page_settings = get_option("aso_config_page");
@@ -252,9 +242,9 @@ class ASO_Post_Type
 			$aso_page_id = false;
 		}
 
-		/* if ( function_exists( 'icl_object_id' ) ) {
-			$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
-		} */
+		// if ( function_exists( 'icl_object_id' ) ) {
+		// 	$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
+		// }
 		$aso_page = get_post( $aso_page_id );
 		if ( is_object( $aso_page ) ) {
 			$raw_slug = get_permalink( $aso_page->ID );
@@ -298,5 +288,65 @@ class ASO_Post_Type
 
 			$wp_rewrite->flush_rules( false );
 		}
+	} */
+
+	public function aso_add_design_page_rewrite_rules() {
+		global $wp_rewrite;
+		$page_settings = get_option("aso_config_page");
+		if (!empty($page_settings) && $page_settings != false) {
+			$aso_page_id = $page_settings["configuratorPage"];
+			$aso_page = get_post($aso_page_id);
+			if (is_object($aso_page)) {
+				$raw_slug = get_permalink($aso_page->ID);
+				$home_url = home_url('/');
+				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
+				
+				// Règle pour URL avec aso-tplid
+				add_rewrite_rule(
+					$slug . '/aso-design/([^/]+)/([^/]+)/?$',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&aso-tplid=$matches[2]',
+					'top'
+				);
+	
+				// Règle pour URL sans aso-tplid
+				add_rewrite_rule(
+					$slug . '/aso-design/([^/]+)/?$',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]',
+					'top'
+				);
+			}
+		}
+		$wp_rewrite->flush_rules(false);
 	}
+	
+	public function aso_add_template_page_rewrite_rules() {
+		global $wp_rewrite;
+		$page_settings = get_option("aso_config_page");
+		if (!empty($page_settings) && $page_settings != false) {
+			$aso_page_id = $page_settings["templatePage"];
+			$aso_page = get_post($aso_page_id);
+			if (is_object($aso_page)) {
+				$raw_slug = get_permalink($aso_page->ID);
+				$home_url = home_url('/');
+				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
+				
+				// Règle pour URL avec aso-tplid
+				add_rewrite_rule(
+					$slug . '/aso-templates/([^/]+)/([^/]+)/?$',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]&aso-tplid=$matches[2]',
+					'top'
+				);
+	
+				// Règle pour URL sans aso-tplid
+				add_rewrite_rule(
+					$slug . '/aso-templates/([^/]+)/?$',
+					'index.php?pagename=' . $slug . '&aso-product-id=$matches[1]',
+					'top'
+				);
+			}
+		}
+		$wp_rewrite->flush_rules(false);
+	}
+	
+	
 }

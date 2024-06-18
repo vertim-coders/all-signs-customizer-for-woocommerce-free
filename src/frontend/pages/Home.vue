@@ -1,5 +1,5 @@
 <template>
-  <Templates :data="templates" v-if="isTemplates"/>
+  <Templates v-if="isTemplates"/>
   <Default v-if="skin == 'default'" :config="configData" :manage="manageData" :currency="currencySymbol"/>
   <Couffo v-if="skin == 'couffo'" :config="configData" :manage="manageData" :currency="currencySymbol"/>
 </template>
@@ -16,7 +16,6 @@ const skin = ref('');
 var configData = ref();
 var manageData = ref();
 var currencySymbol = ref("");
-const templates = ref(null);
 const isTemplates = ref(false);
 onMounted(async() => {
   if(route.name == 'preview-back' || route.name == 'template-maker'){
@@ -46,7 +45,6 @@ onMounted(async() => {
       currencySymbol.value = aso_configurator_data.currencySymbol
     }else {
       isTemplates.value = true;
-      templates.value = aso_templates;
     }
   }
 });

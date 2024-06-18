@@ -1,6 +1,8 @@
 <?php
 namespace ASO;
 
+use ASO_Product_Config;
+
 /**
  * Frontend Pages Handler
  */
@@ -31,7 +33,7 @@ class ASO_Frontend {
 			shortcode_atts(
 				array(
 					'productid' => '0',
-                    'tpid'=>false,
+                    'tplid'=>false,
 				),
 				$atts,
                 'aso-products'
@@ -93,7 +95,10 @@ class ASO_Frontend {
                         if ( $product->get_type() === 'variable' ) {
                             $available_variations = $product->get_available_variations();
                         }
-                        
+                        $templates = [];
+                        if($tplid != false){
+                           $templates =  get_post_meta($configId,"aso-templates",true);
+                        }
                         $ASO = array(
                             'skin' => $config["data"]["settings"]['themeColors']['skin'],
                             'productID' => $productid,
@@ -110,6 +115,10 @@ class ASO_Frontend {
                             'variations'          => $available_variations,
                             "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
                             "borders_url"  => ASO_ASSETS.'/images/borders',
+                            "templates"    =>[
+                                "designFromTemplate"=> $tplid,
+                                "template"=>$tplid !=false ?  $templates[$tplid] : null
+                            ],
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
                         ?>
@@ -167,7 +176,8 @@ class ASO_Frontend {
         extract( // phpcs:ignore
 			shortcode_atts(
 				array(
-					'productid' => '0'
+					'productid' => '0',
+                    "cols"      =>  '3'
 				),
 				$atts,
                 'aso-products'
@@ -181,16 +191,27 @@ class ASO_Frontend {
                 $configId = $meta[$productid]['config-id'];
                 if($configId !=0){
                     $templates = get_post_meta($configId,"aso-templates",true);
+                    $aso_product = new ASO_Product_Config($productid);
                     if(count($templates)>0){ ?>
-                        <div id='aso-frontend-app' class="aso-templates-container"></div>
+                        <div id='aso-frontend-app' class="aso-templates"></div>
                         <?php
-                        wp_localize_script("aso-product-min","aso_templates",$templates);
+                        wp_localize_script("aso-product-min","aso_templates",[
+                            "data"=>$templates,
+                            "grid_cols"=>$cols,
+                            "design_page_url"=>$aso_product->get_design_page_url(),
+                            "currencySumbol"=>html_entity_decode(get_woocommerce_currency_symbol())
+                        ]);
                         wp_localize_script("aso-product-min","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
                             "page"=>"templates"
                         ]);
 
-                        wp_localize_script("aso-frontend","aso_templates",$templates);
+                        wp_localize_script("aso-frontend","aso_templates",[
+                            "data"=>$templates,
+                            "grid_cols"=>$cols,
+                            "design_page_url"=>$aso_product->get_design_page_url(),
+                            "currencySumbol"=>html_entity_decode(get_woocommerce_currency_symbol())
+                        ]);
                         wp_localize_script("aso-frontend","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),

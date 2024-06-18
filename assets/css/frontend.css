@@ -71,6 +71,10 @@
 .aso-configurator-container {
   height: 100vh; }
 
+.aso-templates-customize_button a {
+  color: inherit !important;
+  text-decoration: none !important; }
+
 #aso-frontend-app p {
   margin: 0 !important; }
 

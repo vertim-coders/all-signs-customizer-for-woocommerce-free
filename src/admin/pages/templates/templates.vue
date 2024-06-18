@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="aso-pt-5">
         <div v-if="!isNewTemplate">
             <div v-if="!isFetching" class="aso-bg-[#F8F9FB] aso-p-4 aso-grid aso-grid-cols-4">
                 <div class="aso-cursor-pointer aso-bg-[#d3d3d3] aso-border-[1px] aso-border-solid aso-border-[#d3d3d3] aso-flex aso-flex-col aso-justify-center aso-items-center" :class="templates.length==0 ? 'aso-h-[100px]' :''" @click="isNewTemplate = true">
@@ -9,19 +9,17 @@
                     <span class="0 aso-text-[17px]">Add new template</span>
                 </div>
                 <div v-for="(tem,key) in templates" class="aso-border-[1px] aso-border-[#d3d3d3] aso-border-solid aso-p-3 aso-bg-white">
-                    <div class="aso-w-fit">
-                        <img class="aso-w-52" v-if="tem.img" :src="tem.img" alt="">
-                        <img class="aso-w-52" v-if="!tem.img" src="../../../../assets/images/img_rectangle_noir.png" alt="">
+                    <div class="aso-flex aso-justify-center aso-items-center pb-2 aso-h-[120px]">
+                        <div class="aso-w-1/2 aso-h-full aso-flex aso-items-center aso-justify-center">
+                            <img class="aso-w-full" v-if="tem.prevImg && tem.prevImg!=''" :src="tem.prevImg" alt="">
+                            <img class="aso-w-full" v-if="!tem.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
+                        </div>
                     </div>
-
-                    <div class="aso-space-y-1">
+                    <div class="aso-my-1">
                         <div class="aso-font-bold aso-text-[14px]">{{tem.name}}</div>
                     </div>
-                    <!-- <div class="aso-flex aso-justify-end -">
-                        <span class="aso-font-bold">{{currencySumbol + ' '+tem.price}}</span>
-                    </div> -->
-                    <div class="-">
-                        <svg width="210" height="1" viewBox="0 0 258 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div class="aso-mb-2">
+                        <svg width="100%" height="1" viewBox="0 0 258 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line y1="0.5" x2="258" y2="0.5" stroke="url(#paint0_linear_1396_9108)"/>
                             <defs>
                             <linearGradient id="paint0_linear_1396_9108" x1="129" y1="1" x2="129" y2="2" gradientUnits="userSpaceOnUse">
@@ -33,8 +31,8 @@
 
                     </div>
                     <div class="aso-flex aso-justify-between">
-                        <div class="aso-bg-[#FFA08859] aso-w-fit aso-p-1.5 aso-rounded-full aso-px-4 -">
-                            <span class="aso-text-[#720909] aso-font-bold aso-text-[12px]">Base Price : {{currencySumbol + ' '+tem.basePrice}}</span>
+                        <div class="aso-bg-[#FFA08859] aso-w-fit aso-p-1.5 aso-rounded-full aso-px-4">
+                            <span class="aso-text-[#720909] aso-font-bold aso-text-[12px]">Base Price : {{tem.basePrice + ' '+ currencySumbol}}</span>
                         </div>
                         <div class="aso-flex aso-justify-end ">
                             <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectTemplate(key,tem,false)">
@@ -114,6 +112,22 @@
                         <input type="number" v-model="template.basePrice" @blur="template.basePrice ==''? template.basePrice =0 : ''" class="aso-rounded aso-w-full aso-h-[32px]">                        
                     </div>
                 </div>
+                <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                <label for="" class="aso-font-normal">Upload Template Preview Image</label>
+                <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
+                    <div class="aso-flex aso-space-x-2">
+                        <button @click="selectTemplatePrevImg" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                        <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                            <img v-if="template.prevImg != ''" :src="template.prevImg" alt="" class="aso-absolute aso-w-full aso-h-full">
+                            <button v-if="template.prevImg != ''" @click="()=>{template.prevImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
@@ -202,6 +216,7 @@ const template = ref({
     categoryId:'',
     configId:0,
     basePrice:0,
+    prevImg:'',
     data:{}
 });
 const isEmptyName = ref(false);
@@ -238,6 +253,34 @@ onMounted(async() => {
     isFetching.value = false;
 });
 
+const selectTemplatePrevImg = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Template Preview Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            template.value.prevImg = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+
 const saveCategory = async ()=> {
     isLoading.value = true;
     const save = await api.createCategory(category.value);
@@ -272,6 +315,7 @@ const saveTemplate = async ()=>{
                 categoryId:'',
                 configId:0,
                 basePrice:0,
+                prevImg:'',
                 data:{}
             }
         }else{
@@ -283,6 +327,7 @@ const saveTemplate = async ()=>{
                 categoryId:'',
                 configId:0,
                 basePrice:0,
+                prevImg:'',
                 data:{}
             }
         }
@@ -325,6 +370,7 @@ const updateTemplate = async ()=>{
                 categoryId:'',
                 configId:0,
                 basePrice:0,
+                prevImg:'',
                 data:{}
             }
         }else{
@@ -367,6 +413,7 @@ const deleteTemplate = async ()=>{
             categoryId:'',
             configId:0,
             basePrice:0,
+            prevImg:'',
             data:{}
         }
     }else{
@@ -380,6 +427,7 @@ const deleteTemplate = async ()=>{
             categoryId:'',
             configId:0,
             basePrice:0,
+            prevImg:'',
             data:{}
         }
     }
@@ -396,6 +444,7 @@ const back = () =>{
         categoryId:'',
         configId:0,
         basePrice:0,
+        prevImg:'',
         data:{}
     }
     category.value=''
@@ -413,6 +462,7 @@ const closeModal = ()=>{
         categoryId:'',
         configId:0,
         basePrice:0,
+        prevImg:'',
         data:{}
     }
     isDelete.value = false;

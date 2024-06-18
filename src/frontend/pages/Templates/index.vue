@@ -1,137 +1,47 @@
-<template lang="">
-    <div class="aso-grid aso-grid-cols-4 aso-grid-rows-2 aso-gap-8">
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
+<template>
+    <div :class="`aso-grid aso-grid-cols-${templates_grid_cols} aso-grid-rows-2 aso-gap-8 aso-templates-container`">
+        <div v-for="(template, index) in templates" class="aso-template-container aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-bg-transparent">
+            <div class="aso-template-image-container aso-flex aso-justify-center aso-items-center pb-2 aso-h-[150px]">
+                <div class="aso-w-1/2 aso-h-full aso-flex aso-items-center aso-justify-center">
+                    <img class="aso-w-full aso-h-2/3" v-if="template.prevImg && template.prevImg!=''" :src="template.prevImg" alt="">
+                    <img class="aso-w-full" v-if="!template.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
                 </div>
-
             </div>
-        </div>
-
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
-                </div>
-
-            </div>
-        </div>
-        
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-w-fit aso-bg-[#f4f8fa]">
-            <div class="aso-flex aso-justify-center aso-items-center aso-py-4">
-                <img class="aso-w-40 aso-h-28" src="../../../../assets/images/img_rectangle_noir.png" alt="" />
-            </div>
-            <div class="aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <div class="aso-font-bold">Engraved white plastic sign with black text</div>
-                <div>100 x 40 mm</div>
-                <div><span class="aso-font-bold">£5.09</span> incl. VAT</div>
-                <div class="aso-space-y-3 aso-py-3">
-                    <button class="aso-bg-[#0374e3] aso-rounded-md aso-w-full aso-p-2.5">Add to cart</button>
-                    <button class="aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">Customize</button>
+            <div class="aso-template-details-container aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
+                <h5 class="aso-template-title aso-font-bold">{{template.name}}</h5>
+                <div class="aso-template-size">{{template.data.templateData? template.data.templateData.sign.size.width : 0}} x {{template.data.templateData? template.data.templateData.sign.size.height : 0}}</div>
+                <div><span class="aso-font-bold aso-template-price">{{currencySumbol}} {{ template.data.templateData ?template.data.templateData.price :0}}</span> incl. VAT</div>
+                <div class="aso-space-y-3 aso-py-3 aso-template-details-buttons">
+                    <button class="aso-templates-add_to_cart_button aso-flex aso-justify-center aso-items-center aso-bg-[#0374e3] aso-rounded-[5px] aso-w-full aso-p-2.5">
+                        <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                        </svg>
+                        <svg v-if="isLoading" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="aso-w-6 aso-h-6">
+                            <circle cx="50" cy="50" r="32" stroke-width="8" stroke="currentColor" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                             <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+                            </circle>
+                        </svg>
+                        Add to cart
+                    </button>
+                    <div class="aso-templates-customize_button aso-text-white aso-flex aso-justify-center aso-items-center aso-bg-[#febd52] aso-rounded-md aso-w-full aso-p-2.5 hover:aso-bg-[#fcac29]">
+                        <a :href="design_page_url+index" class="aso-flex aso-justify-center aso-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            </svg>
+                            Customize
+                        </a>
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
 
+const templates = aso_templates.data;
+const currencySumbol = aso_templates.currency;
+const templates_grid_cols = aso_templates.grid_cols;
+const design_page_url = aso_templates.design_page_url;
 </script>
-<style lang="">
-    
-</style>
