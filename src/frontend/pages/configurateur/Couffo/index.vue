@@ -60,7 +60,7 @@
                     </div>
         
                     <div v-show="!isLoaded" class="aso-flex aso-w-1/3 aso-full-center">
-                        <div id="aso-editButtons" :class="`aso-bg-[${configColors.objectsOptions.backgroundColor}] aso-hidden lg:aso-flex aso-full-center aso-space-x-2 aso-p-2 aso-px-4 aso-rounded-lg`">
+                        <div id="aso-editButtons" :class="`aso-bg-[${configColors.objectsOptions.backgroundColor}] aso-hidden lg:aso-flex aso-full-center aso-space-x-1 aso-p-2 aso-px-3 aso-rounded-lg`">
                             <div @click="editObject()" id="aso-editObject" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `aso-cursor-pointer` : `aso-cursor-not-allowed` } aso-flex aso-full-center aso-space-x-1 aso-bg-[${configColors.objectsOptions.edit.buttonColor}] aso-text-[${configColors.objectsOptions.edit.textColor}] hover:aso-bg-[${configColors.objectsOptions.edit.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.edit.hoverTextColor}] aso-base-animation aso-px-1 aso-rounded-md`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -103,6 +103,14 @@
                                     <path d="M22 11a1 1 0 1 1 0 2h-3.586l1.293 1.293a1 1 0 0 1-1.414 1.414l-3-3a1 1 0 0 1 0-1.414l3-3a1 1 0 0 1 1.414 1.414L18.414 11H22zM4.293 9.707a1 1 0 0 1 1.414-1.414l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L5.586 13H2a1 1 0 1 1 0-2h3.586L4.293 9.707zM13 4a1 1 0 1 0-2 0v16a1 1 0 1 0 2 0V4z" fill="currentColor"></path>
                                 </svg>
                                 <p class="aso-text-[11px] aso-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
+                            </div>
+
+                            <div v-if="route.name == 'template-maker'" @click="() => showTempSettings = true" id="aso-templateObjects-button" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `aso-cursor-pointer` : `aso-cursor-not-allowed` } aso-flex aso-full-center aso-space-x-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-base-animation aso-px-1 aso-rounded-md`">
+                                <svg fill="currentColor" class="aso-w-5 aso-h-5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="0.0002">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <g id="SVGRepo_iconCarrier"> <g> <path d="M10,11l1,1.58L13.13,16l1.26,2L15,19l.61-1L18,14.19,20,11ZM4,16V4H16v6h2V2H2V18H13.21L12,16Zm7-6V7.77h2V6H7V7.77H9V10Z"/> </g> </g>
+                                </svg>
                             </div>
                         </div>
                         
@@ -996,21 +1004,6 @@
                                                 </svg>
                                                 <p class="aso-text-xs aso-font-semibold">Overline</p>
                                             </span>
-
-                                            
-                                            <span v-if="route.name == 'template-maker'" @click="lockMoving('x')" :class="`${objectLockMoving.x == true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
-                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
-                                                    <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                                <p class="aso-text-xs aso-font-semibold">Lock X</p>
-                                            </span>
-                                            <span v-if="route.name == 'template-maker'" @click="lockMoving('y')" :class="`${objectLockMoving.y == true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
-                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
-                                                    <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                                <p class="aso-text-xs aso-font-semibold">Lock Y</p>
-                                            </span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -1426,7 +1419,7 @@
                                 </div>
     
                                 <div v-if="option.type == 'include-type'" >
-                                    <div class="aso-relative aso-flex aso-flex aso-space-x-3 aso-justify-between aso-w-full">
+                                    <div class="aso-relative aso-flex aso-space-x-3 aso-justify-between aso-w-full">
                                         <div>
                                             <p :class="`aso-text-[${configColors.backgroundColorHeader}] aso-flex space-x-2 aso-font-medium aso-text-[16px]`">
                                                 <span class="aso-lowercase first-letter:aso-uppercase">
@@ -1487,6 +1480,37 @@
             </div>
         </div>
 
+        <div v-if="route.name == 'template-maker'" v-show="showTempSettings" id="aso-templateObjects-options" :class="`aso-absolute aso-top-[11%] aso-right-0 aso-w-[30%] aso-h-[40%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
+            <div class="aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
+                <span @click="() => showTempSettings = false" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-rounded-md aso-base-animation aso-cursor-pointer aso-z-10`">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </span>
+            </div>
+
+            <div class="aso-relative aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full">
+                <p :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] aso-text-base aso-font-semibold aso-p-2 aso-px-4`">Custom options</p>    
+
+                <div class="aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
+                    <div class="aso-flex aso-flex-wrap aso-gap-3">
+                        <span @click="lockMoving('x')" :class="`${objectLockMoving.x == true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
+                                <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="aso-text-xs aso-font-semibold">Lock X</p>
+                        </span>
+                        <span @click="lockMoving('y')" :class="`${objectLockMoving.y == true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
+                                <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="aso-text-xs aso-font-semibold">Lock Y</p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div v-if="finish" :class="`aso-absolute aso-top-0 aso-z-30 aso-w-full aso-h-full aso-flex aso-flex-col aso-bg-[${configColors.recaps.backgroundColor}]`">
             <div :class="`aso-w-full aso-p-4 aso-bg-[${configColors.recaps.headerBackgroundColor}] aso-text-[${configColors.recaps.headerTextColor}]`">
                 <p class="aso-text-xl aso-font-bold aso-text-center">Summary</p>
@@ -1902,12 +1926,15 @@
         var optionss = document.querySelector('#aso-options-container')
         var optionButton = document.querySelector('#aso-optionsButtons-container')
         var editButton = document.querySelector('#aso-editObject')
+        var templateButton = document.querySelector('#aso-templateObjects-button')
+        var templateOptions = document.querySelector('#aso-templateObjects-options')
 
         if(window.innerWidth > 688){
-            if(!optionss.contains(e.target) && !optionButton.contains(e.target) && !editButton.contains(e.target)) {
+            if(!optionss.contains(e.target) && !optionButton.contains(e.target) && !editButton.contains(e.target) && !templateButton.contains(e.target) && !templateOptions.contains(e.target)) {
                 closeOption()
                 selectText.value = false;
                 editImage.value = false;
+                showTempSettings.value = false;
             }
         }
     }
@@ -2012,6 +2039,8 @@
         }
 
     }
+
+    var showTempSettings = ref(false)
 
     var showScrollButton = ref(false)
     function verifierScrollabilite() {
@@ -5380,11 +5409,11 @@
                 },
                 texts: {
                     face1 :addedObject.texts,
-                    face2 :(face2AddedObject !== {} ? face2AddedObject.texts : null)
+                    face2 :(face2AddedObject != {} ? face2AddedObject.texts : null)
                 },
                 images: {
                     face1 :addedObject.images,
-                    face2 :(face2AddedObject !== {} ? face2AddedObject.images : null)
+                    face2 :(face2AddedObject != {} ? face2AddedObject.images : null)
                 },
                 designImages: {
                     face1: designImagesFace1,
