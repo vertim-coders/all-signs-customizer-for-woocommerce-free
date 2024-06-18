@@ -2450,7 +2450,9 @@
         activeCanvas = canvas
 
         window.dispatchEvent(new Event('resize'));
-        template.value = await api.getTemplate(template_config_id,template_id);
+        if(route.name == 'template-maker'){
+            template.value = await api.getTemplate(template_config_id,template_id);
+        }
         return {
             canvas
         }

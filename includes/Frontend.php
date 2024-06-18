@@ -96,7 +96,7 @@ class ASO_Frontend {
                             $available_variations = $product->get_available_variations();
                         }
                         $templates = [];
-                        if($tplid != false){
+                        if($tplid !== false){
                            $templates =  get_post_meta($configId,"aso-templates",true);
                            if(isset($templates[$tplid])){
                                 $template = $templates[$tplid];
@@ -122,7 +122,7 @@ class ASO_Frontend {
                             "borders_url"  => ASO_ASSETS.'/images/borders',
                             "templates"    =>[
                                 "designFromTemplate"=>$tplid ? ( !is_string($template) ? true : false) : false,
-                                "template"=>!is_string($template) ?  $template : []
+                                "template"=>isset($template) && !is_string($template) ?  $template : []
                             ],
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
