@@ -98,6 +98,11 @@ class ASO_Frontend {
                         $templates = [];
                         if($tplid != false){
                            $templates =  get_post_meta($configId,"aso-templates",true);
+                           if(isset($templates[$tplid])){
+                                $template = $templates[$tplid];
+                           }else{
+                                $template = '';
+                           }
                         }
                         $ASO = array(
                             'skin' => $config["data"]["settings"]['themeColors']['skin'],
@@ -116,8 +121,8 @@ class ASO_Frontend {
                             "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
                             "borders_url"  => ASO_ASSETS.'/images/borders',
                             "templates"    =>[
-                                "designFromTemplate"=> $tplid,
-                                "template"=>$tplid !=false ?  $templates[$tplid] : null
+                                "designFromTemplate"=>$tplid ? ( !is_string($template) ? true : false) : false,
+                                "template"=>!is_string($template) ?  $template : []
                             ],
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
