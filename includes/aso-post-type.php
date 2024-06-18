@@ -148,6 +148,8 @@ class ASO_Post_Type
 				</div>
 				<?php
 				$content .= ob_get_clean();
+			}else{
+				$content .= do_shortcode("[aso-templates productid='".$wp_query->query_vars['aso-product-id']."']");
 			}
 		}
 		return $content;
