@@ -69,6 +69,7 @@ const activateLicenseKey = async () => {
             licenses.value.valid = response.data.key;
             toastMessage("Activation successful! Your product is ready to use");
             await api.saveGlobalSettingsProduct(licenses.value);
+            document.location.href = 'admin.php?page=aso#/'
             document.location.reload(true);
         }else if(response.data.message){
             toastMessage(response.data.message, 'error');

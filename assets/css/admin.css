@@ -32,6 +32,13 @@
 .error {
   display: none !important; }
 
+.aso-home-gradient {
+  background: #f0f3fa;
+  background: linear-gradient(90deg, #f0f3fa 49%, #016464 100%); }
+
+.aso-pricing-link a {
+  text-decoration: none !important; }
+
 .wp-core-ui select {
   max-width: none !important; }
 

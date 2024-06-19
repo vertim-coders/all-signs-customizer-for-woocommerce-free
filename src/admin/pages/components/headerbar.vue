@@ -1,7 +1,7 @@
 <template>
     <div class="aso-fixed aso-z-[9999] aso-top-[32px] aso-w-full aso-h-[50px] aso-px-2 aso-bg-white aso-flex aso-justify-start aso-items-center aso-shadow aso-header">
         <div class="aso-relative aso-flex aso-justify-between aso-items-center aso-w-full">
-            <div class="pl-[40px]">
+            <div class="pl-[40px] aso-cursor-pointer" @click="goToHome">
                 <span>
                     <img class="aso-w-[110px]" src="../../../../assets/images/im_aso-icon2.png" alt="">
                 </span>
@@ -62,8 +62,8 @@ const goToMaterials = ()=>{
       window.location.reload()
     })
 }
-function goToRoute() {
-  router.push({ name: 'nom-de-la-route' })
+function goToHome() {
+  router.push({ name: 'home' })
 }
 </script>
 <style lang="">

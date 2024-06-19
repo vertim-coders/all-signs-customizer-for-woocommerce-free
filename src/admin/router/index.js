@@ -12,6 +12,7 @@ import ConfigurateTemplate from "@/admin/pages/templates/Configurate-template.vu
 import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
 import Preview from "@/admin/pages/preview/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
+import Home from "@/admin/pages/Home.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
@@ -19,6 +20,11 @@ const router = createRouter({
   routes: [
     {
       path: "/",
+      name: "home",
+      component: Home,
+    },
+    {
+      path: "/configurations",
       name: "configurations",
       component: Configuration,
     },

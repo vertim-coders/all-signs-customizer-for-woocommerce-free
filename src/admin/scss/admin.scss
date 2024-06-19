@@ -3,6 +3,17 @@
 .error {
   display: none !important;
 }
+.aso-home-gradient {
+  background: rgb(240, 243, 250);
+  background: linear-gradient(
+    90deg,
+    rgba(240, 243, 250, 1) 49%,
+    rgba(1, 100, 100, 1) 100%
+  );
+}
+.aso-pricing-link a {
+  text-decoration: none !important;
+}
 .wp-core-ui select {
   max-width: none !important;
 }
