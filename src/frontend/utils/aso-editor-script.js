@@ -1480,6 +1480,21 @@ function handleChangeSize(width, height, name, maxChar) {
     maxChars: maxChar,
   };
 }
+
+function handleGetSignPosition() {
+
+  var sign = handleGetObjectByName("safeObject")
+
+  return {
+    width: sign.width,
+    height: sign.height,
+    top: sign.top,
+    left: sign.left,
+
+    texts: addedTexts,
+  };
+}
+
 var currentThickness = 0;
 function handleChangeThickness(active, thick) {
   currentThickness = thick;
@@ -7279,13 +7294,12 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
 
 
   var currentSizeValues = handleChangeSize(templateData.size.width, templateData.size.height, "Template", -1)
-  handleGetShape(templateData.shape, templateData.fixingMethod)
+  handleGetShape(templateData.shape, templateData.fixingMethod.type)
   // console.log(currentSizeValues)
+  // handleSelectFixingMethode(templateData.fixingMethod.type)
 
   var sign = handleGetObjectByName('safeObject')
   function setMeasurmentValue(canvas){
-      // handleSelectFixingMethode(signData.fixingMethod)
-
       var Objects = canvas.getObjects();
       Objects.forEach(object => {
           if(object.name == 'heightLine'){
@@ -7335,11 +7349,13 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
   setMeasurmentValue(canvas)
   setMeasurmentValue(backCanvas)
 
+  
+
 
 
 
   return {
-      // size: currentSizeValues,
+      size: currentSizeValues,
       texts: addedTexts,
       images: addedImages,
   }
@@ -7446,6 +7462,7 @@ export {
   handleRedo,
   handleClearAll,
   handleGetObjectByName,
+  handleGetSignPosition,
   handleChangeSize,
   handleChangeThickness,
   handleDeleteObject,
