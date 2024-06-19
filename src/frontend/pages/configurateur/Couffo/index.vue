@@ -104,14 +104,6 @@
                                 </svg>
                                 <p class="aso-text-[11px] aso-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
                             </div>
-
-                            <div v-if="route.name == 'template-maker'" @click="() => showTempSettings = true" id="aso-templateObjects-button" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `aso-cursor-pointer` : `aso-cursor-not-allowed` } aso-flex aso-full-center aso-space-x-1 aso-bg-[${configColors.objectsOptions.center.buttonColor}] aso-text-[${configColors.objectsOptions.center.textColor}] hover:aso-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.center.hoverTextColor}] aso-base-animation aso-px-1 aso-rounded-md`">
-                                <svg fill="currentColor" class="aso-w-5 aso-h-5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="0.0002">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <g id="SVGRepo_iconCarrier"> <g> <path d="M10,11l1,1.58L13.13,16l1.26,2L15,19l.61-1L18,14.19,20,11ZM4,16V4H16v6h2V2H2V18H13.21L12,16Zm7-6V7.77h2V6H7V7.77H9V10Z"/> </g> </g>
-                                </svg>
-                            </div>
                         </div>
                         
                         <div class="aso-flex lg:aso-hidden aso-text-lg lg:aso-text-3xl aso-font-bold aso-text-center">
@@ -1825,6 +1817,7 @@
         handleRedo,
         handleClearAll,
         handleGetObjectByName,
+        handleGetSignPosition,
         handleChangeSize,
         handleChangeThickness,
         handleDeleteObject,
@@ -1940,9 +1933,9 @@
                 selectText.value = false;
                 editImage.value = false;
             }
-            if(route.name == 'template-maker' && !templateButton.contains(e.target) && !templateOptions.contains(e.target) ){
-                showTempSettings.value = false;
-            }
+            // if(route.name == 'template-maker' && !templateButton.contains(e.target) && !templateOptions.contains(e.target) ){
+            //     showTempSettings.value = false;
+            // }
         }
     }
 
@@ -2449,7 +2442,7 @@
             price: 0
         }
         getOptionPrice(templatePrice)
-        console.log(optionsPrices.value)
+        // console.log(optionsPrices.value)
 
         //chargement des additionnalOptions
         customAdditionalValues.value = data.additionalOptions
@@ -2474,7 +2467,21 @@
         var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign)
 
         //selection de fixing methode
-        activeFixingMethode.value = sign.fixingMethod.type  
+        if(fixinggs.value.length > 0){
+            fixinggs.value.forEach((fixingg, id) => {
+                allFixings.value.forEach((fixing, index) => {
+                    if(fixingg.fixingMethodId == index && !fixingg.excludeSizes.includes(currentSizeId) && !fixingg.excludeShapes.includes(currentShapeId)){
+                        matchingFixings.value.push({fixing, fixingg})
+                    }
+                })
+            })
+        }
+        var currentFixingId = matchingFixings.value.findIndex((item, index) => item.fixing.type === sign.fixingMethod.type)
+        activeFixingMethode.value = sign.fixingMethod.type
+        fixingExcludeSizes.value = matchingFixings.value[currentFixingId].fixingg.excludeSizes
+        fixingExcludeShapes.value = matchingFixings.value[currentFixingId].fixingg.excludeShapes
+        activeFixingId.value = currentFixingId
+
         
         //selection de shape
         selectedShape.value = sign.shape
@@ -2538,6 +2545,20 @@
         }
 
         //selection de border
+        if(borderrs.value.allBorders.length > 0){
+            borderrs.value.allBorders.forEach((borderr, id) => {
+                allBorders.value.forEach((border, index) => {
+                    if(borderr.manageBorderId == index){
+                        matchingBorders.value.push({border, borderr})
+                    }
+                })
+            })
+        }
+
+        var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)
+        border1ExcludeShapes.value = matchingBorders.value[currentBorder1Id].borderr.excludeShapes
+        border1ExcludeSizes.value = matchingBorders.value[currentBorder1Id].borderr.excludeSizes
+
         activeFace1Border.value = sign.border.face1.type;
         borderColorName1.value = sign.border.face1.color;
         activeFace1BorderColor.value = sign.border.face1.codeHex
@@ -2548,6 +2569,11 @@
 
         //verification pour la seconde face si existante
         if(sign.doubleFace === true){
+            var currentBorder2Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face2.type)
+            border2ExcludeShapes.value = matchingBorders.value[currentBorder2Id].borderr.excludeShapes
+            border2ExcludeSizes.value = matchingBorders.value[currentBorder2Id].borderr.excludeSizes
+
+
             activeFace2Border.value = sign.border.face2.type;
             borderColorName2.value = sign.border.face2.color
             activeFace2BorderColor.value = sign.border.face2.codeHex
@@ -2560,6 +2586,13 @@
 
         //selection du la size
         currentSizeName.value = 'Template'
+        var templateSize = {
+            name: 'Template',
+            width: sign.size.width,
+            height: sign.size.height
+        }
+        currentSizeData.value = templateSize
+        currentSizeValues.value = loadedTemplate.size
 
         //recupération des texts du template
         addedTexts.value = loadedTemplate.texts
@@ -3501,7 +3534,7 @@
 
 
         handleReadyToSaveState(false);
-        // currentSizeValues.value = handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeData.value.name, currentSizeSetting.value.maxTextChar)
+        currentSizeValues.value = handleGetSignPosition()
         handleReadyToSaveState(true);
     }
     function getCanvasCenter() {
@@ -3586,6 +3619,9 @@
         }
         getOptionPrice(priceObject)
 
+        if(route.name == 'template-maker'){
+            showTempSettings.value = true;
+        }
         // if(object.type === 'i-text'){
         //     showOptions('text')
         //     getTextObject(object)
@@ -3601,6 +3637,10 @@
             price: 0
         }
         getOptionPrice(priceObject)
+
+        if(route.name == 'template-maker'){
+            showTempSettings.value = false;
+        }
     }
 
     var allMaterials = ref([])
@@ -3969,7 +4009,7 @@
             currentSizeSetting.value = sizeSetting
             textNumberForSize.value = sizeSetting.textNumber
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
-            console.log(currentSizeValues.value)
+            console.log(currentSizeValues.value, "1")
         }else{
             currentSizeSetting.value = {}
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, -1)
@@ -5528,7 +5568,8 @@
                             avtive: currentSizeThickness.value,
                             value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
                         },
-                        ratioScale: activeCanvas.ratioScale
+                        ratioScale: activeCanvas.ratioScale,
+                        unit: configSettings.value.customizerSign.customizerOptions.measurementUnit
                     },
                     shape: selectedShape.value,
                     color: {
@@ -5587,6 +5628,7 @@
                 price: {
                     value: parseInt(supprimerNonChiffres(formatPrice(finalPrices.value))),
                     array: optionsPrices.value,
+                    textAfter: configVisualiserTexts.value.textAfterPrice,
                 },
                 additionalOptions: customAdditionalValues.value,
             }
