@@ -71,8 +71,8 @@
 .aso-configurator-container {
   height: 100vh; }
 
-.aso-templates-customize_button a {
-  color: inherit !important;
+.aso-templates-customize_button {
+  color: white !important;
   text-decoration: none !important; }
 
 #aso-frontend-app p {

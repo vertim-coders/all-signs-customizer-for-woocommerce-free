@@ -202,7 +202,9 @@ class ASO_Frontend {
                         <?php
                         wp_localize_script("aso-product-min","aso_templates",[
                             "data"=>$templates,
+                            "productId"=>$productid,
                             "grid_cols"=>$cols,
+                            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),
                             "currencySumbol"=>html_entity_decode(get_woocommerce_currency_symbol())
                         ]);
@@ -213,7 +215,9 @@ class ASO_Frontend {
 
                         wp_localize_script("aso-frontend","aso_templates",[
                             "data"=>$templates,
+                            "productId"=>$productid,
                             "grid_cols"=>$cols,
+                            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),
                             "currencySumbol"=>html_entity_decode(get_woocommerce_currency_symbol())
                         ]);

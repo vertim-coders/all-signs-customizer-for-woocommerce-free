@@ -23,7 +23,6 @@ class ASO_Updater  {
 		if( 'plugin_information' !== $action ) {
 			return $res;
 		}
-		
 		// do nothing if it is not our plugin
 		if( basename(dirname(ASO_FILE )) !== $args->slug ) {
 			return $res;
