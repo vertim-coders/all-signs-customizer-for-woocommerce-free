@@ -351,7 +351,7 @@
         
                             <div class="aso-h-full aso-p-2 aso-overflow-auto aso-scrollBar">
                                 <div v-for="(material, index) in props.config.data.materials" class="aso-space-y-3">
-                                    <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material)">
+                                    <input type="radio" :id="material.name + index" name="aso-material" class=" peer aso-hidden" @change="selectMaterial(material, index)">
                                     <label :for="material.name + index" :class="`aso-flex aso-full-center aso-space-x-2 aso-cursor-pointer aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:aso-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] aso-p-2 aso-base-animation`">
                                         <div :class="`${material.icon === '' ? `aso-bg-[${configColors.backgroundColorHeader}]` : ``} aso-w-1/4 aso-h-20 aso-flex aso-full-center`">
                                             <img v-if="material.icon != ''" :src="material.icon" class="aso-w-auto aso-h-full" />
@@ -1831,7 +1831,7 @@
 
 <script setup>
     import { ref, onMounted, defineProps, onBeforeUnmount } from 'vue';
-    import {handleReadyToSaveState, 
+    import {handleCheckTemplate, handleReadyToSaveState, 
         handleGetCanvas, handleGetCurrentUnit,
         handleGetDefaultText,
         handleUndo,
@@ -1845,6 +1845,7 @@
         handleCenterVertically,
         handleCenterHorizontally,
         handlechangeBorderColor,
+        handleGetBorderData,
         handleSelectBorder,
         handleGetBorderRestart,
         handleChangeSignColor,
@@ -1883,6 +1884,7 @@
         handleClipAddedObject,
         handleGetNewPosition,
         handleLockMoving,
+        handleAddTemplateText,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -1897,7 +1899,8 @@
     const props = defineProps({
         config:Object,
         manage:Object,
-        currency:String
+        currency:String,
+        template:Object
     });
     var configColors = ref({})
     configColors.value = props.config.data.settings.themeColors.colors
@@ -1943,10 +1946,12 @@
         var templateOptions = document.querySelector('#aso-templateObjects-options')
 
         if(window.innerWidth > 688){
-            if(!optionss.contains(e.target) && !optionButton.contains(e.target) && !editButton.contains(e.target) && !templateButton.contains(e.target) && !templateOptions.contains(e.target)) {
+            if(!optionss.contains(e.target) && !optionButton.contains(e.target) && !editButton.contains(e.target)) {
                 closeOption()
                 selectText.value = false;
                 editImage.value = false;
+            }
+            if(route.name == 'template-maker' && !templateButton.contains(e.target) && !templateOptions.contains(e.target) ){
                 showTempSettings.value = false;
             }
         }
@@ -2333,12 +2338,17 @@
             canvasBack.selection = false;
     
     
-            selectMaterial(props.config.data.materials[0])
-            if(materialType.value === 'simple'){
-                selectSimpleFirstValue()
-            }
-            if(materialType.value === 'advance'){
-                selectAdvanceFirstValue()
+            handleCheckTemplate(props.template.designFromTemplate)
+            if(props.template.designFromTemplate === true){
+                selectTemplate(props.template.template.data.templateData, props.template.template.basePrice)
+            }else{
+                selectMaterial(props.config.data.materials[0], 0)
+                if(materialType.value === 'simple'){
+                    selectSimpleFirstValue()
+                }
+                if(materialType.value === 'advance'){
+                    selectAdvanceFirstValue()
+                }
             }
 
             fabric.Object.prototype.transparentCorners = false;
@@ -2451,14 +2461,14 @@
             activeCanvas = canvas
 
             checkScreenView()
-            checkScreenSize();
+            // checkScreenSize();
             // centerSign(canvas)
             // centerSign(canvasBack)
             // window.addEventListener('resize', checkScreenSize);
 
             let resizeTimer;
             window.addEventListener('load', () => {
-                checkScreenSize()
+                // checkScreenSize()
                 // centerSign(canvas)
                 // centerSign(canvasBack)
             });
@@ -2491,56 +2501,144 @@
     
     
     });
-    // onBeforeUnmount(() => {
-    //     window.removeEventListener('resize', onWindowResize);
-    // });
 
-    let previousWidth = 0;
-    let previousHeight = 0;
-    
-    function onWindowResize() {
-        var canvasContainer = document.getElementById("aso-canvas-containers")
-        const currentWidth = canvasContainer.clientWidth;
-        const currentHeight = canvasContainer.clientHeight;
+    var isTemplate = ref(false)
+    function selectTemplate(data, price){
+        firstSetLoad.value = false
+        handleReadyToSaveState(false);
 
-        if (currentWidth > previousWidth || currentHeight > previousHeight) {
-            console.log('La fenêtre a augmenté de taille.');
-            resizeCanvas('up')
-        } else if (currentWidth < previousWidth || currentHeight < previousHeight) {
-            console.log('La fenêtre a diminué de taille.');
-            resizeCanvas('down')
+        console.log(data, price);
+        //chargement du prix du template
+        optionsPrices.value = data.price.array
+        var templatePrice = {
+            name: 'none',
+            price: 0
         }
+        getOptionPrice(templatePrice)
+        console.log(optionsPrices.value)
 
-        previousWidth = currentWidth;
-        previousHeight = currentHeight;
-    };
+        //chargement des additionnalOptions
+        customAdditionalValues.value = data.additionalOptions
 
-    function resizeCanvas(statut) {
-        var canvasContainer = document.getElementById("aso-canvas-containers")
-        var width = canvasContainer.clientWidth;
-        var height = canvasContainer.clientHeight;
+        function isColorOrImage(str) {
+            const colorCodeRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+            if (colorCodeRegex.test(str)) {
+                return 'color';
+            }
+            const imageUrlRegex = /\.(jpeg|jpg|gif|png)$/;
+            if (imageUrlRegex.test(str)) {
+                return 'image';
+            }
+            return 'other';
+        }
+        var sign = data.sign
 
-        canvas.setWidth(width);
-        canvas.setHeight(height);
+        //selection du matériel
+        var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name && index === sign.material.id)
+        selectMaterial(props.config.data.materials[templateMaterialId])
 
-        var delta = 1
+        var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign)
 
-        if(statut === 'up'){
-            delta = -1
+        //selection de fixing methode
+        activeFixingMethode.value = sign.fixingMethod.type  
+        
+        //selection de shape
+        selectedShape.value = sign.shape
+
+        //selection des couleur de sign
+        if(isColorOrImage(sign.color.face1.codeHex) === 'color'){
+            activeSignColor.value = sign.color.face1.name
+            patternActive1.value = false
+            activeSignColorCode1.value = sign.color.face1.codeHex
+            var pattern = {
+                active: false,
+                codeHex: sign.color.face1.codeHex,
+                url: "",
+            }
+            // setSignColor(canvas, pattern, sign.color.face1.textColor, 'black')
         }else{
-            delta = 1
+            activeSignColor.value = sign.color.face1.name
+            patternActive1.value = true
+            activeSignColorCode1.value = sign.color.face1.codeHex
+            var pattern = {
+                active: true,
+                codeHex: '',
+                url: sign.color.face1.codeHex,
+            }
+            // setSignColor(canvas, pattern, sign.color.face1.textColor, 'black')
+        }
+        if(sign.color.face1.textColor.active){
+            signTextColor1.value = true
+            colorTextColorName1.value = sign.color.face1.textColor.name
+            colorTextCodeHex1.value = sign.color.face1.textColor.codeHex
         }
 
-        var zoom = canvas.getZoom();
-        zoom *= 0.99 ** delta;
-        if (zoom > 20) zoom = 20;
-        if (zoom < 0.01) zoom = 0.01;
-        console.log("delta:", delta, "zoom:", zoom)
+        if(sign.doubleFace === true){
+            if(isColorOrImage(sign.color.face2.codeHex) === 'color'){
+                activeSignFace2Color.value = sign.color.face2.name;
+                patternActive2.value = false
+                activeSignColorCode2.value = sign.color.face2.codeHex
+                var pattern = {
+                    active: false,
+                    codeHex: sign.color.face2.codeHex,
+                    url: "",
+                }
+                // setSignColor(canvasBack, pattern, sign.color.face2.textColor, 'black')
+            }else{
+                activeSignFace2Color.value = sign.color.face2.name;
+                patternActive2.value = true
+                activeSignColorCode2.value = sign.color.face2.codeHex
+                var pattern = {
+                    active: false,
+                    codeHex: '',
+                    url: sign.color.face2.codeHex,
+                }
+                // setSignColor(canvasBack, pattern, sign.color.face2.textColor, 'black')
+            }
 
+            if(sign.color.face2.textColor.active){
+                signTextColor2.value = true
+                colorTextColorName2.value = sign.color.face2.textColor.name
+                colorTextCodeHex2.value = sign.color.face2.textColor.codeHex
+            }
+        }
 
-        canvas.zoomToPoint({ x: canvas.getWidth() / 2, y: canvas.getHeight() /2 }, zoom);
+        //selection de border
+        activeFace1Border.value = sign.border.face1.type;
+        borderColorName1.value = sign.border.face1.color;
+        activeFace1BorderColor.value = sign.border.face1.codeHex
+        if(sign.border.face1.type !== 'none' && sign.border.face1.codeHex !== ('' || null)){
+            colorForBorder1.value = true
+        }
+        handleGetBorderData('front-face', {border: sign.border.face1.type, color: sign.border.face1.codeHex})
 
+        //verification pour la seconde face si existante
+        if(sign.doubleFace === true){
+            activeFace2Border.value = sign.border.face2.type;
+            borderColorName2.value = sign.border.face2.color
+            activeFace2BorderColor.value = sign.border.face2.codeHex
+            if(sign.border.face2.type !== 'none' && sign.border.face2.codeHex !== ('' || null)){
+                colorForBorder2.value = true
+            }
+            handleGetBorderData('back-face', {border: sign.border.face2.type, color: sign.border.face2.codeHex})
 
+        } 
+
+        //selection du la size
+        currentSizeName.value = 'Template'
+
+        //recupération des texts du template
+        addedTexts.value = loadedTemplate.texts
+
+        //recupération des images du template
+        usedImages.value = loadedTemplate.images
+        // console.log(loadedTemplate.images, "loadedTemplate.images")
+
+        if(!firstSetLoad.value){
+            saveStep("select of first values")
+        }
+        handleReadyToSaveState(true, true)
+        firstSetLoad.value = true
     }
 
     var matchingFixings = ref([])
@@ -3355,7 +3453,7 @@
         stepArray.value.currentStateIndex = -1
         stepArray.value.undoFinishedStatus = 1;
         firstSetLoad.value = false
-        selectMaterial(props.config.data.materials[0])
+        selectMaterial(props.config.data.materials[0], 0)
     }
 
 
@@ -3432,7 +3530,7 @@
 
 
         handleReadyToSaveState(false);
-        currentSizeValues.value = handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeData.value.name, currentSizeSetting.value.maxTextChar)
+        // currentSizeValues.value = handleChangeSize(currentSizeData.value.width, currentSizeData.value.height, currentSizeData.value.name, currentSizeSetting.value.maxTextChar)
         handleReadyToSaveState(true);
     }
     function getCanvasCenter() {
@@ -3457,7 +3555,7 @@
         var sign = handleGetObjectByName('safeObject')
         var canvasCenter = getCanvasCenter()
 
-        const allObjects = canvas.getObjects();
+        const allObjects = canva.getObjects();
 
         if (allObjects.length > 0) {
             const group = new fabric.Group(allObjects);
@@ -3555,13 +3653,15 @@
     var allMaterials = ref([])
     var customSizeActive = ref(false)
     var currentMaterial = ref({})
+    var currentMaterialId = ref(0)
     var currentMaterialTextImages = ref({})
     var selectedMaterial = ref('')
     var materialType = ref('')
     var firstLoad = ref(false);
 
-    function selectMaterial(material){
+    function selectMaterial(material, id){
         currentMaterial.value = material
+        currentMaterialID.value = id
         currentMaterialTextImages.value = material.data.textImages
         materialType.value = material.type
         // console.log("selectMaterial", material)
@@ -3916,7 +4016,7 @@
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
         }else{
             currentSizeSetting.value = {}
-            currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, null)
+            currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, -1)
         }
 
         currentSizeName.value = sizeData.label;
@@ -5422,13 +5522,13 @@
 
         if(route.name == 'template-maker'){
             function supprimerNonChiffres(chaine) {
-                return chaine.replace(/\D/g, '');
+                return chaine.replace(/[^0-9]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio", "ratioScale", "source"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio", "ratioScale", "source"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -5436,13 +5536,18 @@
             templateData.value = {
                 sign: {
                     doubleFace: configDoublePart.value.active,
+                    material: {
+                        name: selectedMaterial.value,
+                        id: currentMaterialId.value,
+                    },
                     size: {
                         width: parseInt(supprimerNonChiffres(widthValue.text)),
                         height: parseInt(supprimerNonChiffres(heightValue.text)),
                         thickness: {
                             avtive: currentSizeThickness.value,
                             value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
-                        }
+                        },
+                        ratioScale: activeCanvas.ratioScale
                     },
                     shape: selectedShape.value,
                     color: {
@@ -5498,7 +5603,11 @@
                     face1: current1State,
                     face2: current2State,
                 },
-                price: parseInt(supprimerNonChiffres(formatPrice(finalPrices)))
+                price: {
+                    value: parseInt(supprimerNonChiffres(formatPrice(finalPrices.value))),
+                    array: optionsPrices.value,
+                },
+                additionalOptions: customAdditionalValues.value,
             }
             console.log(templateData.value, "template")
         }
@@ -5700,7 +5809,7 @@
         const template_data = {
             ...template.value,
             data:{
-                templateData:{...configData.value},
+                templateData:{...templateData.value},
                 cartData:{...configData.value,custom_price:finalPrices.value}
             }
         }
