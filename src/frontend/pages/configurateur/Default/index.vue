@@ -780,7 +780,7 @@
                                 </div>
         
                                 <div v-show="selectText" class="aso-space-1">
-                                    <textarea name="" id="aso-text-editor" class="aso-h-24 aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" v-model="selectedText.value" @input="changeTextValue"></textarea>
+                                    <textarea name="" id="aso-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="aso-h-24 aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" v-model="selectedText.value" @input="changeTextValue"></textarea>
         
                                     <div v-show="allFonts.length > 0" class="aso-space-y-1">
                                         <p class="aso-font-medium">Font</p>
@@ -835,7 +835,7 @@
                                         <div v-show="configTextFontSettings.active" :class="`${!configTextSettings.enableTextAlignment ? `aso-w-full` : `aso-w-[45%]`} aso-space-y-2 aso-flex aso-flex-col`">
                                             <p class="aso-font-medium">{{configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size'}}</p>
                                             <div class="aso-flex aso-flex-1 aso-w-full">
-                                                <span @click="changeTextSizeValue('down')" :class="`aso-w-1/3 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-rounded-s-md aso-cursor-pointer aso-base-animation`">
+                                                <span @click="changeTextSizeValue('down')" :class="`${route.name !== 'template-maker' && selectedText.object.lockScale ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-w-1/3 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-rounded-s-md aso-base-animation`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
                                                     </svg>
@@ -843,7 +843,7 @@
 
                                                 <input type="number" name="" id="aso-text-size" class="aso-w-1/3 aso-h-full aso-border aso-border-red-600 aso-p-1 aso-text-center" :min="configTextFontSettings.minimumFontSize" :max="configTextFontSettings.maximumFontSize" @input="changeTextSize($event.target.value, configTextFontSettings.minimumFontSize, configTextFontSettings.maximumFontSize)" disabled style="margin: 0 !important; padding: 0 !important; text-align: center !important;">
                                                 
-                                                <span @click="changeTextSizeValue('up')" :class="`aso-w-1/3 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-rounded-e-md aso-cursor-pointer aso-base-animation`">
+                                                <span @click="changeTextSizeValue('up')" :class="`${route.name !== 'template-maker' && selectedText.object.lockScale ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-w-1/3 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-rounded-e-md aso-base-animation`">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-5 aso-h-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                                     </svg>
@@ -951,7 +951,7 @@
                                 </div>
                             </div>
                         </div>
-        
+    
                         <div v-show="step == 'image'" class="aso-relative aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-images-section">
                             <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textImage}}</p>    
 
@@ -1059,7 +1059,7 @@
                                         <p class="aso-font-medium">Size</p>
                                         <div class="aso-p-2 aso-space-y-1">
                                             <!-- <label class="aso-text-xs" for="aso-image-sizeWidth">width</label> -->
-                                            <input type="range" name="aso-imageSize" id="aso-image-sizeWidth" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @input="changeImageWidth">
+                                            <input :disabled="route.name !== 'template-maker' && selectedImage.object.lockScale" type="range" name="aso-imageSize" id="aso-image-sizeWidth" :class="`${route.name !== 'template-maker' && selectedImage.object.lockScale ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-w-full`" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @input="changeImageWidth">
                                             <!-- <label class="aso-text-xs" for="aso-image-sizeHeight">height</label>
                                             <input type="range" name="aso-imageSize" id="aso-image-sizeHeight" class="aso-w-full" :min="0.1" :max="1.4" :step="0.05" :value="0.4" @change="changeImageHeight"> -->
                                             <p class="aso-flex aso-full-center aso-font-medium"> <span id="image-width"></span> x <span id="image-height"></span> </p>
@@ -1485,31 +1485,41 @@
             </div>
         </div>
 
-        <div v-if="route.name == 'template-maker'" v-show="showTempSettings" id="aso-templateObjects-options" :class="`aso-absolute aso-top-[11%] aso-right-0 lg:aso-right-[10%] aso-w-[30%] aso-h-[40%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
-            <div class="aso-flex aso-absolute aso-top-0 aso-right-0 aso-w-fit aso-h-fit">
-                <span @click="() => showTempSettings = false" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-rounded-md aso-base-animation aso-cursor-pointer aso-z-10`">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </span>
-            </div>
-
+        <div v-if="route.name == 'template-maker'" v-show="showTempSettings" id="aso-templateObjects-options" :class="`aso-absolute aso-top-[11%] aso-right-0 lg:aso-right-[10%] aso-w-fit aso-h-fit aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
             <div class="aso-relative aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full">
                 <p :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] aso-text-base aso-font-semibold aso-p-2 aso-px-4`">Custom options</p>    
 
                 <div class="aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
-                    <div class="aso-flex aso-flex-wrap aso-gap-3">
-                        <span @click="lockMoving('x')" :class="`${objectLockMoving.x == true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
-                                <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                    <div class="aso-flex aso-flex-col aso-flex-wrap aso-gap-3">
+                        <span @click="lockMoving('x')" :class="`${lockingXobject === true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-items-center aso-space-x-2 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
                             <p class="aso-text-xs aso-font-semibold">Lock X</p>
-                        </span>
-                        <span @click="lockMoving('y')" :class="`${objectLockMoving.y == true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-flex-col aso-full-center aso-space-y-1 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-7 aso-h-7">
-                                <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+                            <svg v-if="lockingXobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
+                            <svg v-if="!lockingXobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        </span>
+                        <span @click="lockMoving('y')" :class="`${lockingYobject === true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-items-center aso-space-x-2 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
                             <p class="aso-text-xs aso-font-semibold">Lock Y</p>
+
+                            <svg v-if="lockingYobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                            <svg v-if="!lockingYobject" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        </span>
+                        <span @click="lockScaling()" :class="`${lockObjectScale === true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-items-center aso-space-x-2 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
+                            <p class="aso-text-xs aso-font-semibold">Lock Resize</p>
+                            
+                            <svg v-if="lockObjectScale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                            <svg v-if="!lockObjectScale" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
                         </span>
                     </div>
                 </div>
@@ -1877,6 +1887,9 @@
         handleClipAddedObject,
         handleGetNewPosition,
         handleLockMoving,
+        handleLockScaling,
+        handleLockRotating,
+        handleLockEdition,
         handleAddTemplateText,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
@@ -2494,6 +2507,22 @@
     
     
     });
+
+    function setControlsForAllObjects(canva) {
+        canva.getObjects().forEach(function(obj) {
+            obj.setControlsVisibility({
+                mt: false, // Middle top
+                mb: false, // Middle bottom
+                ml: false, // Middle left
+                mr: false, // Middle right
+                bl: true,  // Bottom left
+                br: true,  // Bottom right
+                tl: true,  // Top left
+                tr: true,  // Top right
+            });
+        });
+        canva.renderAll();
+    }
 
     var isTemplate = ref(false)
     function selectTemplate(data, price){
@@ -3561,6 +3590,8 @@
         centerSign(canvas)
         centerSign(canvasBack)
 
+        setControlsForAllObjects(canvas)
+        setControlsForAllObjects(canvasBack)
 
         handleReadyToSaveState(false);
         currentSizeValues.value = handleGetSignPosition()
@@ -3671,6 +3702,11 @@
         // }
 
         if(route.name == 'template-maker'){
+            objectLockMoving.value = object.lockMoving
+            checkTemplateObjectLockMoving()
+            lockObjectScale.value = object.lockScale
+            lockObjectRotation.value = object.lockRotation
+            lockObjectEdition.value = object.lockEdition
             showTempSettings.value = true;
         }
 
@@ -4028,6 +4064,33 @@
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
                 objectLockMoving.value = handleLockMoving(object, axe)
+                checkTemplateObjectLockMoving()
+            }
+        }
+    }
+    var lockingXobject = ref(false)
+    var lockingYobject = ref(false)
+    function checkTemplateObjectLockMoving(){
+        if(objectLockMoving.value.x === true){
+            lockingXobject.value = true
+        }else{
+            lockingXobject.value = false
+        }
+
+        if(objectLockMoving.value.y === true){
+            lockingYobject.value = true
+        }else{
+            lockingYobject.value = false
+        }
+    }
+
+    var lockObjectScale = ref(false)
+    function lockScaling(){
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                lockObjectScale.value = handleLockScaling(object)
+                // checkTemplateObjectLockMoving()
             }
         }
     }
@@ -4941,6 +5004,7 @@
                 if(image.id === obj.id){
                     activeCanvas.setActiveObject(obj);
                     handleGetAddedImageValues(obj)
+                    selectedImage.value.object = obj
                     selectedImage.value.filters = obj.filters
                     checkFilter()
                 }
@@ -5099,15 +5163,32 @@
         var min = configTextFontSettings.value.minimumFontSize
         var input = document.getElementById('aso-text-size')
 
-        if(statut === 'up'){
-            if(input.value < max){
-                input.stepUp()
-                handleChangeTextSize(parseInt(input.value), min, max)
+        if(route.name === 'template-maker'){
+            if(statut === 'up'){
+                if(input.value < max){
+                    input.stepUp()
+                    handleChangeTextSize(parseInt(input.value), min, max)
+                }
+            } else if(statut === 'down'){
+                if(input.value > min){
+                    input.stepDown()
+                    handleChangeTextSize(parseInt(input.value), min, max)
+                }
             }
-        } else if(statut === 'down'){
-            if(input.value > min){
-                input.stepDown()
-                handleChangeTextSize(parseInt(input.value), min, max)
+        }else{
+            if(selectedText.value.object.lockScale === false){
+                console.log(selectedText.value.object.lockScale, "lock scale")
+                if(statut === 'up'){
+                    if(input.value < max){
+                        input.stepUp()
+                        handleChangeTextSize(parseInt(input.value), min, max)
+                    }
+                } else if(statut === 'down'){
+                    if(input.value > min){
+                        input.stepDown()
+                        handleChangeTextSize(parseInt(input.value), min, max)
+                    }
+                }
             }
         }
     }
@@ -5147,10 +5228,22 @@
         filters: [],
     })
     function turnLeftImage(){
-        handleTurnImageLeft()
+        if(route.name === 'template-maker'){
+            handleTurnImageLeft()
+        }else{
+            if(selectedImage.value.object.lockRotate === false){
+                handleTurnImageLeft()
+            }
+        }
     }
     function turnRightImage(){
-        handleTurnRightImage()
+        if(route.name === 'template-maker'){
+            handleTurnRightImage()
+        }else{
+            if(selectedImage.value.object.lockRotate === false){
+                handleTurnRightImage()
+            }
+        }
     }
     function flipImage(){
         handleFlipImage()
@@ -5565,11 +5658,11 @@
             function supprimerNonChiffres(chaine) {
                 return chaine.replace(/[^0-9]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio", "ratioScale", "source"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "fixingRatio", "ratioScale", "source"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -5767,7 +5860,7 @@
         return dataURL;
     }
 
-// fonctions concernant l'affichage des exemples
+    // fonctions concernant l'affichage des exemples
     //popup d'exemple matéral
     var showMaterialEx = ref(false)
     var materialExample = ref('')

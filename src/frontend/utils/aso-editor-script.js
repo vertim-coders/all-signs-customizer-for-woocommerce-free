@@ -90,6 +90,8 @@ function handleCloneCanvas() {
     "lockScalingFlip",
     "lockMoving",
     "lockScale",
+    "lockRotate",
+    "lockEdition",
     "fixingRatio",
     "ratioScale"
   ]);
@@ -490,6 +492,8 @@ function updateModifications(good, position) {
       "lockScalingFlip",
       "lockMoving",
       "lockScale",
+      "lockRotate",
+      "lockEdition",
       "fixingRatio",
       "ratioScale"
     ]);
@@ -506,6 +510,8 @@ function updateModifications(good, position) {
       "lockScalingFlip",
       "lockMoving",
       "lockScale",
+      "lockRotate",
+      "lockEdition",
       "fixingRatio",
       "ratioScale"
     ]);
@@ -1682,7 +1688,6 @@ function handleLockMoving(object, axe){
     }else{
       object.lockMoving.x = true
     }
-    console.log(object.lockMoving)
   }
   if(axe == 'y'){
     if(object.lockMoving.y === true){
@@ -1691,7 +1696,8 @@ function handleLockMoving(object, axe){
       object.lockMoving.y = true
     }
   }
-
+  
+  console.log(object.lockMoving)
   return object.lockMoving
 }
 function handleLockScaling(object, axe){
@@ -1700,6 +1706,26 @@ function handleLockScaling(object, axe){
   }else{
     object.lockScale = true
   }
+
+  return object.lockScale
+}
+function handleLockRotating(object, axe){
+  if(object.lockRotate === true){
+    object.lockRotate = false
+  }else{
+    object.lockRotate = true
+  }
+
+  return object.lockRotate
+}
+function handleLockEdition(object, axe){
+  if(object.lockEdition === true){
+    object.lockEdition = false
+  }else{
+    object.lockEdition = true
+  }
+
+  return object.lockEdition
 }
 
 //function pour afficher les borders
@@ -6355,13 +6381,23 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
                 rect = templateObject[0]
             }
             if(templateObject[0].name === 'aso-SignText'){
-                // templateObject[0].fill = 'black'
+                templateObject[0].dirty = true
 
                 if(templateObject[0].lockMoving.x === true){
                     templateObject[0].lockMovementX = true
                 }
                 if(templateObject[0].lockMoving.y === true){
                     templateObject[0].lockMovementY = true
+                }
+                if(templateObject[0].lockScale === true){
+                    templateObject[0].lockScalingX = true
+                    templateObject[0].lockScalingY = true
+                }
+                if(templateObject[0].lockRotate === true){
+                    templateObject[0].lockRotation = true
+                }
+                if(templateObject[0].lockEdition === true){
+                    templateObject[0].editable = false
                 }
   
                 templateObject[0].on('editing:entered', () => {
@@ -6386,12 +6422,30 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
                 // console.log(templateObject[0])
                 addUniqueObject(addedTexts, templateObject[0], 'id');
             }
+
+            // if (templateObject[0].type === 'text' || templateObject[0].type === 'i-text') {
+            //   templateObject[0].set('dirty', true);
+            //   if (templateObject[0].text) {
+            //     // Forcer la mise à jour du texte en le réappliquant
+            //     let currentText = templateObject[0].text;
+            //     templateObject[0].set('text', '');
+            //     templateObject[0].set('text', currentText);
+            //   }
+            // }
+
             if(templateObject[0].name === 'aso-SignImage'){
               if(templateObject[0].lockMoving.x === true){
                   templateObject[0].lockMovementX = true
               }
               if(templateObject[0].lockMoving.y === true){
                   templateObject[0].lockMovementY = true
+              }
+              if(templateObject[0].lockScale === true){
+                  templateObject[0].lockScalingX = true
+                  templateObject[0].lockScalingY = true
+              }
+              if(templateObject[0].lockRotate === true){
+                  templateObject[0].lockRotation = true
               }
               
               templateObject[0].on('mousedown', function() {
@@ -6404,885 +6458,887 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
               addUniqueObject(addedImages, {id: templateObject[0].id, url: templateObject[0].getSrc(), object: templateObject[0]}, 'id');
             }
   
-            if(templateData){
-              if(signData.fixingMethod.type == 'screw'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'screw1'){
-                              // console.log(templateObject[0], rect, "screw1")
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            // if(templateData){
+            //   if(signData.fixingMethod.type == 'screw'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'screw1'){
+            //                   // console.log(templateObject[0], rect, "screw1")
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                          }
-                          if(templateObject[0].name === 'screw2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'screw2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'screw1'){
-                              console.log(templateObject[0], rect, "screw1")
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'screw1'){
+            //                   console.log(templateObject[0], rect, "screw1")
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top
     
-                          }
-                          if(templateObject[0].name === 'screw2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'screw2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top
-                          }
-                          if(templateObject[0].name === 'screw3'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top
+            //               }
+            //               if(templateObject[0].name === 'screw3'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                          }
-                          if(templateObject[0].name === 'screw4'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'screw4'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
-                          }
-                      }
-                  }
-                  if(signData.shape == 'triangle'){
-                      if(templateObject[0].name === 'screw1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               }
+            //           }
+            //       }
+            //       if(signData.shape == 'triangle'){
+            //           if(templateObject[0].name === 'screw1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
-                          templateObject[0].top = rect.top + (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
+            //               templateObject[0].top = rect.top + (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'screw2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - newHeight)
-                      }
-                      if(templateObject[0].name === 'screw3'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - newHeight)
+            //           }
+            //           if(templateObject[0].name === 'screw3'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                      }
-                  }
-                  if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
-                      if(templateObject[0].name === 'screw1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           }
+            //       }
+            //       if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
+            //           if(templateObject[0].name === 'screw1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
-                      }
-                  }
-                  if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
-                      if(templateObject[0].name === 'screw1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //           }
+            //       }
+            //       if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
+            //           if(templateObject[0].name === 'screw1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left +(newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left +(newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      }   
-                  }
-                  if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
-                      if(templateObject[0].name === 'screw1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           }   
+            //       }
+            //       if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
+            //           if(templateObject[0].name === 'screw1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-                  if(signData.shape == 'stop'){
-                      if(templateObject[0].name === 'screw1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //       if(signData.shape == 'stop'){
+            //           if(templateObject[0].name === 'screw1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-              }
-              if(signData.fixingMethod.type == 'screw-cap'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'screw-cap1'){
-                              console.log(templateObject[0], rect, "screw1")
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'screw-cap'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'screw-cap1'){
+            //                   console.log(templateObject[0], rect, "screw1")
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                          }
-                          if(templateObject[0].name === 'screw-cap2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'screw-cap2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'screw-cap1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'screw-cap1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top
     
-                          }
-                          if(templateObject[0].name === 'screw-cap2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'screw-cap2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top
-                          }
-                          if(templateObject[0].name === 'screw-cap3'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top
+            //               }
+            //               if(templateObject[0].name === 'screw-cap3'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                          }
-                          if(templateObject[0].name === 'screw-cap4'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'screw-cap4'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
-                          }
-                      }
-                  }
-                  if(signData.shape == 'triangle'){
-                      if(templateObject[0].name === 'screw-cap1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               }
+            //           }
+            //       }
+            //       if(signData.shape == 'triangle'){
+            //           if(templateObject[0].name === 'screw-cap1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
-                          templateObject[0].top = rect.top + (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
+            //               templateObject[0].top = rect.top + (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'screw-cap2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw-cap2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - newHeight)
-                      }
-                      if(templateObject[0].name === 'screw-cap3'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - newHeight)
+            //           }
+            //           if(templateObject[0].name === 'screw-cap3'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                      }
-                  }
-                  if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
-                      if(templateObject[0].name === 'screw-cap1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           }
+            //       }
+            //       if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
+            //           if(templateObject[0].name === 'screw-cap1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw-cap2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw-cap2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
-                      }
-                  }
-                  if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
-                      if(templateObject[0].name === 'screw-cap1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //           }
+            //       }
+            //       if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
+            //           if(templateObject[0].name === 'screw-cap1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left +(newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left +(newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw-cap2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw-cap2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      }   
-                  }
-                  if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
-                      if(templateObject[0].name === 'screw-cap1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           }   
+            //       }
+            //       if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
+            //           if(templateObject[0].name === 'screw-cap1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw-cap2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw-cap2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-                  if(signData.shape == 'stop'){
-                      if(templateObject[0].name === 'screw-cap1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //       if(signData.shape == 'stop'){
+            //           if(templateObject[0].name === 'screw-cap1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'screw-cap2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'screw-cap2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-              }
-              if(signData.fixingMethod.type == 'suction-cup'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'suction-cup1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'suction-cup'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'suction-cup1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                          }
-                          if(templateObject[0].name === 'suction-cup2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'suction-cup2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'suction-cup1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'suction-cup1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top
     
-                          }
-                          if(templateObject[0].name === 'suction-cup2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'suction-cup2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top
-                          }
-                          if(templateObject[0].name === 'suction-cup3'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top
+            //               }
+            //               if(templateObject[0].name === 'suction-cup3'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                          }
-                          if(templateObject[0].name === 'suction-cup4'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'suction-cup4'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
-                          }
-                      }
-                  }
-                  if(signData.shape == 'triangle'){
-                      if(templateObject[0].name === 'suction-cup1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               }
+            //           }
+            //       }
+            //       if(signData.shape == 'triangle'){
+            //           if(templateObject[0].name === 'suction-cup1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
-                          templateObject[0].top = rect.top + (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
+            //               templateObject[0].top = rect.top + (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'suction-cup2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'suction-cup2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - newHeight)
-                      }
-                      if(templateObject[0].name === 'suction-cup3'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - newHeight)
+            //           }
+            //           if(templateObject[0].name === 'suction-cup3'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                      }
-                  }
-                  if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
-                      if(templateObject[0].name === 'suction-cup1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           }
+            //       }
+            //       if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
+            //           if(templateObject[0].name === 'suction-cup1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'suction-cup2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'suction-cup2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
-                      }
-                  }
-                  if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
-                      if(templateObject[0].name === 'suction-cup1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //           }
+            //       }
+            //       if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
+            //           if(templateObject[0].name === 'suction-cup1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left +(newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left +(newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'suction-cup2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'suction-cup2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      }   
-                  }
-                  if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
-                      if(templateObject[0].name === 'suction-cup1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           }   
+            //       }
+            //       if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
+            //           if(templateObject[0].name === 'suction-cup1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'suction-cup2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'suction-cup2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-                  if(signData.shape == 'stop'){
-                      if(templateObject[0].name === 'suction-cup1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //       if(signData.shape == 'stop'){
+            //           if(templateObject[0].name === 'suction-cup1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'suction-cup2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'suction-cup2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-              }
-              if(signData.fixingMethod.type == 'standoff'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'standoff1'){
-                              console.log(templateObject[0], rect, "screw1")
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'standoff'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'standoff1'){
+            //                   console.log(templateObject[0], rect, "screw1")
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                          }
-                          if(templateObject[0].name === 'standoff2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'standoff2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'standoff1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'standoff1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top
     
-                          }
-                          if(templateObject[0].name === 'standoff2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'standoff2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top
-                          }
-                          if(templateObject[0].name === 'standoff3'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top
+            //               }
+            //               if(templateObject[0].name === 'standoff3'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                              templateObject[0].left = rect.left
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //                   templateObject[0].left = rect.left
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                          }
-                          if(templateObject[0].name === 'standoff4'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'standoff4'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - newWidth
-                              templateObject[0].top = rect.top + (rect.height - (newHeight))
-                          }
-                      }
-                  }
-                  if(signData.shape == 'triangle'){
-                      if(templateObject[0].name === 'standoff1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left + rect.width - newWidth
+            //                   templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               }
+            //           }
+            //       }
+            //       if(signData.shape == 'triangle'){
+            //           if(templateObject[0].name === 'standoff1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
-                          templateObject[0].top = rect.top + (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/2 - (newWidth/2))
+            //               templateObject[0].top = rect.top + (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'standoff2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'standoff2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - newHeight)
-                      }
-                      if(templateObject[0].name === 'standoff3'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - newHeight)
+            //           }
+            //           if(templateObject[0].name === 'standoff3'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height - (newHeight))
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height - (newHeight))
     
-                      }
-                  }
-                  if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
-                      if(templateObject[0].name === 'standoff1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           }
+            //       }
+            //       if(signData.shape == 'oval' || signData.shape == 'rotated-square'){
+            //           if(templateObject[0].name === 'standoff1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //               templateObject[0].left = rect.left + (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'standoff2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'standoff2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
-                      }
-                  }
-                  if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
-                      if(templateObject[0].name === 'standoff1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + ((rect.height/2) - (newHeight/2))
+            //           }
+            //       }
+            //       if(signData.shape == 'turn-left' || signData.shape == 'arrow-left'){
+            //           if(templateObject[0].name === 'standoff1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left +(newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left +(newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'standoff2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'standoff2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      }   
-                  }
-                  if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
-                      if(templateObject[0].name === 'standoff1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           }   
+            //       }
+            //       if(signData.shape == 'turn-right' || signData.shape == 'arrow-right'){
+            //           if(templateObject[0].name === 'standoff1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'standoff2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'standoff2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-                  if(signData.shape == 'stop'){
-                      if(templateObject[0].name === 'standoff1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width - newWidth) - (newWidth/2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //       if(signData.shape == 'stop'){
+            //           if(templateObject[0].name === 'standoff1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
     
-                      }
-                      if(templateObject[0].name === 'standoff2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'standoff2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + (rect.width - newWidth)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      } 
-                  }
-              }
-              if(signData.fixingMethod.type == 'flag'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides' || signData.shape == 'turn-right' || signData.shape == 'turn-left'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'flag1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               templateObject[0].left = rect.left + (rect.width - newWidth)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           } 
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'flag'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides' || signData.shape == 'turn-right' || signData.shape == 'turn-left'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'flag1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                              templateObject[0].left = rect.left - (newWidth / 2)
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'flag1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left - (newWidth / 2)
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'flag1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                              templateObject[0].left = rect.left - (newWidth / 2)
-                              templateObject[0].top = rect.top + ((rect.height /4) - (newHeight/2))
+            //                   templateObject[0].left = rect.left - (newWidth / 2)
+            //                   templateObject[0].top = rect.top + ((rect.height /4) - (newHeight/2))
       
-                          }
-                          if(templateObject[0].name === 'flag2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'flag2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left - (newWidth / 2)
-                              templateObject[0].top = rect.top + (((rect.height /4)*3) - (newHeight/2))
-                          } 
-                      }
-                  }
-                  if(signData.shape == 'turn-left'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'flag1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left - (newWidth / 2)
+            //                   templateObject[0].top = rect.top + (((rect.height /4)*3) - (newHeight/2))
+            //               } 
+            //           }
+            //       }
+            //       if(signData.shape == 'turn-left'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'flag1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                              templateObject[0].left = rect.left + rect.width - (newWidth / 2)
-                              templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'flag1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left + rect.width - (newWidth / 2)
+            //                   templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'flag1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                              templateObject[0].left = rect.left + rect.width - (newWidth / 2)
-                              templateObject[0].top = rect.top + ((rect.height /4) - (newHeight/2))
+            //                   templateObject[0].left = rect.left + rect.width - (newWidth / 2)
+            //                   templateObject[0].top = rect.top + ((rect.height /4) - (newHeight/2))
       
-                          }
-                          if(templateObject[0].name === 'flag2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                              var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               }
+            //               if(templateObject[0].name === 'flag2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   var newWidth = templateObject[0].width * templateObject[0].scaleX
                               
-                              templateObject[0].left = rect.left + rect.width - (newWidth / 2)
-                              templateObject[0].top = rect.top + (((rect.height /4)*3) - (newHeight/2))
-                          } 
-                      }
-                  }
-                  if(signData.shape == 'oval' || signData.shape == 'stop'){
-                      if(templateObject[0].name === 'flag1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //                   templateObject[0].left = rect.left + rect.width - (newWidth / 2)
+            //                   templateObject[0].top = rect.top + (((rect.height /4)*3) - (newHeight/2))
+            //               } 
+            //           }
+            //       }
+            //       if(signData.shape == 'oval' || signData.shape == 'stop'){
+            //           if(templateObject[0].name === 'flag1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
     
-                          templateObject[0].left = rect.left - (newWidth / 2)
-                          templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'table-stand'){
-                  if(selectedShape == 'square' || selectedShape == 'rounded-square'){
-                      if(templateObject[0].name === 'table-stand'){
-                          templateObject[0].left = rect.left - 10
-                          templateObject[0].top = rect.top + rect.height   
-                      } 
-                  }
-              }
-              if(signData.fixingMethod.type == 'ceiling'){
-                  if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
-                      if(templateObject[0].name === 'ceiling1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left - (newWidth / 2)
+            //               templateObject[0].top = rect.top + (rect.height /2 - (newHeight/2))
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'table-stand'){
+            //       if(selectedShape == 'square' || selectedShape == 'rounded-square'){
+            //           if(templateObject[0].name === 'table-stand'){
+            //               templateObject[0].left = rect.left - 10
+            //               templateObject[0].top = rect.top + rect.height   
+            //           } 
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'ceiling'){
+            //       if(selectedShape == 'square' || selectedShape == 'rounded-square' || selectedShape == 'rounded-top' || selectedShape == 'rounded-sides'){
+            //           if(templateObject[0].name === 'ceiling1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (rect.width/5) - newWidth
-                          templateObject[0].top = rect.top - (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/5) - newWidth
+            //               templateObject[0].top = rect.top - (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'ceiling2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'ceiling2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + ((object.width/5)*4) 
-                          templateObject[0].top = rect.top - (newHeight/2)
-                      }
-                  }
-                  if(selectedShape == 'turn-left'){
-                      if(templateObject[0].name === 'ceiling1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + ((object.width/5)*4) 
+            //               templateObject[0].top = rect.top - (newHeight/2)
+            //           }
+            //       }
+            //       if(selectedShape == 'turn-left'){
+            //           if(templateObject[0].name === 'ceiling1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + ((rect.width/5)*3.5) - newWidth
-                          templateObject[0].top = rect.top - (newHeight/2)
+            //               templateObject[0].left = rect.left + ((rect.width/5)*3.5) - newWidth
+            //               templateObject[0].top = rect.top - (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'ceiling2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'ceiling2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + ((rect.width/5)*4) 
-                          templateObject[0].top = rect.top - (newHeight/2)
-                      }
-                  }
-                  if(selectedShape == 'turn-right'){
-                      if(templateObject[0].name === 'ceiling1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + ((rect.width/5)*4) 
+            //               templateObject[0].top = rect.top - (newHeight/2)
+            //           }
+            //       }
+            //       if(selectedShape == 'turn-right'){
+            //           if(templateObject[0].name === 'ceiling1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (rect.width/5) - newWidth
-                          templateObject[0].top = rect.top - (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/5) - newWidth
+            //               templateObject[0].top = rect.top - (newHeight/2)
     
-                      }
-                      if(templateObject[0].name === 'ceiling2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                          var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           }
+            //           if(templateObject[0].name === 'ceiling2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + ((rect.width/5)*1.5) 
-                          templateObject[0].top = rect.top - (newHeight/2)
-                      }
-                  }
-                  if(selectedShape == 'oval' || selectedShape == 'stop'){
-                      if(templateObject[0].name === 'ceiling1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + ((rect.width/5)*1.5) 
+            //               templateObject[0].top = rect.top - (newHeight/2)
+            //           }
+            //       }
+            //       if(selectedShape == 'oval' || selectedShape == 'stop'){
+            //           if(templateObject[0].name === 'ceiling1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + (rect.width/2) - (newWidth/2)
-                          templateObject[0].top = rect.top - (newHeight/2)
+            //               templateObject[0].left = rect.left + (rect.width/2) - (newWidth/2)
+            //               templateObject[0].top = rect.top - (newHeight/2)
     
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'hanging'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(signData.fixingMethod.ratio == 'small'){
-                          if(templateObject[0].name === 'hanging-hole'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'hanging'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(signData.fixingMethod.ratio == 'small'){
+            //               if(templateObject[0].name === 'hanging-hole'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                              templateObject[0].left = rect.left + rect.width/2 - 15,
-                              templateObject[0].top = rect.top + 15    
-                          }
-                      }
-                      if(signData.fixingMethod.ratio == 'big'){
-                          if(templateObject[0].name === 'hanging-hole1'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + rect.width/2 - 15,
+            //                   templateObject[0].top = rect.top + 15    
+            //               }
+            //           }
+            //           if(signData.fixingMethod.ratio == 'big'){
+            //               if(templateObject[0].name === 'hanging-hole1'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                              templateObject[0].left = rect.left + (rect.width/8) - 15,
-                              templateObject[0].top = rect.top + 15    
-                          }
-                          if(templateObject[0].name === 'hanging-hole2'){
-                              var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + (rect.width/8) - 15,
+            //                   templateObject[0].top = rect.top + 15    
+            //               }
+            //               if(templateObject[0].name === 'hanging-hole2'){
+            //                   var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                              templateObject[0].left = rect.left + ((rect.width/8)*7) - 15,
-                              templateObject[0].top = rect.top + 15    
-                          }
-                      }
-                  }
-                  if(selectedShape == 'oval' || selectedShape == 'stop' || selectedShape == 'triangle' || selectedShape == 'rotated-square'){
-                      if(templateObject[0].name === 'hanging-hole'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //                   templateObject[0].left = rect.left + ((rect.width/8)*7) - 15,
+            //                   templateObject[0].top = rect.top + 15    
+            //               }
+            //           }
+            //       }
+            //       if(selectedShape == 'oval' || selectedShape == 'stop' || selectedShape == 'triangle' || selectedShape == 'rotated-square'){
+            //           if(templateObject[0].name === 'hanging-hole'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                          templateObject[0].left = rect.left + rect.width/2 - (rect.height * 0.04),
-                          templateObject[0].top = rect.top + 20  
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'pole-attachment'){
-                  if(templateObject[0].name === 'pole'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + rect.width/2 - (rect.height * 0.04),
+            //               templateObject[0].top = rect.top + 20  
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'pole-attachment'){
+            //       if(templateObject[0].name === 'pole'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
-                      templateObject[0].left = rect.left + rect.width/2 -((rect.width/4)/2),
-                      templateObject[0].top = rect.top - (rect.height/2)
-                  }
-              }
-              if(signData.fixingMethod.type == 'table-clamp'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(templateObject[0].name === 'table-clamp1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           templateObject[0].left = rect.left + rect.width/2 -((rect.width/4)/2),
+            //           templateObject[0].top = rect.top - (rect.height/2)
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'table-clamp'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(templateObject[0].name === 'table-clamp1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left + (rect.width/5) - newWidth
-                          templateObject[0].top = rect.top + rect.height - (newHeight/2)
-                      }
-                      if(templateObject[0].name === 'table-clamp2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width/5) - newWidth
+            //               templateObject[0].top = rect.top + rect.height - (newHeight/2)
+            //           }
+            //           if(templateObject[0].name === 'table-clamp2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left + ((rect.width/5)*4) 
-                          templateObject[0].top = rect.top + rect.height - (newHeight/2)
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'base-support'){
-                  if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
-                      if(templateObject[0].name === 'base-support1'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + ((rect.width/5)*4) 
+            //               templateObject[0].top = rect.top + rect.height - (newHeight/2)
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'base-support'){
+            //       if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
+            //           if(templateObject[0].name === 'base-support1'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left + (rect.width/5) - newWidth
-                          templateObject[0].top = rect.top + rect.height - (newHeight) + 5
-                      }
-                      if(templateObject[0].name === 'base-support2'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + (rect.width/5) - newWidth
+            //               templateObject[0].top = rect.top + rect.height - (newHeight) + 5
+            //           }
+            //           if(templateObject[0].name === 'base-support2'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left + ((rect.width/5)*4) 
-                          templateObject[0].top = rect.top + rect.height - (newHeight) + 5
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'sign-holder'){
-                  if(signData.shape == 'square'){
-                      if(templateObject[0].name === 'sign-holder-top'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left + ((rect.width/5)*4) 
+            //               templateObject[0].top = rect.top + rect.height - (newHeight) + 5
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'sign-holder'){
+            //       if(signData.shape == 'square'){
+            //           if(templateObject[0].name === 'sign-holder-top'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top - (newHeight) + (newHeight/2)
-                      }
-                      if(templateObject[0].name === 'sign-holder-bottom'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top - (newHeight) + (newHeight/2)
+            //           }
+            //           if(templateObject[0].name === 'sign-holder-bottom'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + rect.height - (newHeight/2) 
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'roll-up'){
-                  if(signData.shape == 'square'){
-                      if(templateObject[0].name === 'sign-holder-top'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + rect.height - (newHeight/2) 
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'roll-up'){
+            //       if(signData.shape == 'square'){
+            //           if(templateObject[0].name === 'sign-holder-top'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top - newHeight
-                      }
-                      if(templateObject[0].name === 'sign-holder-bottom'){
-                          var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top - newHeight
+            //           }
+            //           if(templateObject[0].name === 'sign-holder-bottom'){
+            //               var newHeight = templateObject[0].height * templateObject[0].scaleY 
       
-                          templateObject[0].left = rect.left
-                          templateObject[0].top = rect.top + rect.height
-                      }
-                  }
-              }
-              if(signData.fixingMethod.type == 'eyelets'){}
-              if(signData.fixingMethod.type == 'keyring'){
-                if(signData.shape == 'square' || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides"){
-                  if(templateObject[0].name === 'keyring'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //               templateObject[0].left = rect.left
+            //               templateObject[0].top = rect.top + rect.height
+            //           }
+            //       }
+            //   }
+            //   if(signData.fixingMethod.type == 'eyelets'){}
+            //   if(signData.fixingMethod.type == 'keyring'){
+            //     if(signData.shape == 'square' || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides"){
+            //       if(templateObject[0].name === 'keyring'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
   
-                      templateObject[0].left = rect.left - newWidth / 2.5
-                      templateObject[0].top = rect.top - newHeight / 1.4
-                  }
-                  if(templateObject[0].name === 'keyring-hole'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           templateObject[0].left = rect.left - newWidth / 2.5
+            //           templateObject[0].top = rect.top - newHeight / 1.4
+            //       }
+            //       if(templateObject[0].name === 'keyring-hole'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
   
-                      templateObject[0].left = rect.left + 13
-                      templateObject[0].top = rect.top + 13
-                  }
-                }
-                if(signData.shape == 'oval' || selectedShape == "stop" ){
-                  if(templateObject[0].name === 'keyring'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           templateObject[0].left = rect.left + 13
+            //           templateObject[0].top = rect.top + 13
+            //       }
+            //     }
+            //     if(signData.shape == 'oval' || selectedShape == "stop" ){
+            //       if(templateObject[0].name === 'keyring'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
   
-                      templateObject[0].left = rect.left + rect.width / 2 - newWidth / 2
-                      templateObject[0].top = rect.top - newHeight / 1.4
-                  }
-                  if(templateObject[0].name === 'keyring-hole'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
-                      var newRadius = rect.height * 0.05;
+            //           templateObject[0].left = rect.left + rect.width / 2 - newWidth / 2
+            //           templateObject[0].top = rect.top - newHeight / 1.4
+            //       }
+            //       if(templateObject[0].name === 'keyring-hole'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           var newRadius = rect.height * 0.05;
   
-                      templateObject[0].left = rect.left + rect.width / 2 - newRadius
-                      templateObject[0].top = rect.top + 15
-                  }
-                }
-                if(signData.shape == 'rotated-square'){
-                  if(templateObject[0].name === 'keyring'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           templateObject[0].left = rect.left + rect.width / 2 - newRadius
+            //           templateObject[0].top = rect.top + 15
+            //       }
+            //     }
+            //     if(signData.shape == 'rotated-square'){
+            //       if(templateObject[0].name === 'keyring'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
   
-                      templateObject[0].left = rect.left + rect.width / 2 - newWidth / 2
-                      templateObject[0].top = rect.top - newHeight / 1.4
-                  }
-                  if(templateObject[0].name === 'keyring-hole'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
-                      var newRadius = rect.height * 0.05;
+            //           templateObject[0].left = rect.left + rect.width / 2 - newWidth / 2
+            //           templateObject[0].top = rect.top - newHeight / 1.4
+            //       }
+            //       if(templateObject[0].name === 'keyring-hole'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           var newRadius = rect.height * 0.05;
   
-                      templateObject[0].left = rect.left + rect.width / 2 - newRadius
-                      templateObject[0].top = rect.top + 15
-                  }
-                }
-                if(signData.shape == 'triangle'){
-                  if(templateObject[0].name === 'keyring'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           templateObject[0].left = rect.left + rect.width / 2 - newRadius
+            //           templateObject[0].top = rect.top + 15
+            //       }
+            //     }
+            //     if(signData.shape == 'triangle'){
+            //       if(templateObject[0].name === 'keyring'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
   
-                      templateObject[0].left = rect.left + rect.width / 2 - newWidth / 2
-                      templateObject[0].top = rect.top + rect.height / 10 - newHeight / 1.2
-                  }
-                  if(templateObject[0].name === 'keyring-hole'){
-                      var newHeight = templateObject[0].height * templateObject[0].scaleY 
-                      var newWidth = templateObject[0].width * templateObject[0].scaleX
-                      var newRadius = rect.height * 0.05;
+            //           templateObject[0].left = rect.left + rect.width / 2 - newWidth / 2
+            //           templateObject[0].top = rect.top + rect.height / 10 - newHeight / 1.2
+            //       }
+            //       if(templateObject[0].name === 'keyring-hole'){
+            //           var newHeight = templateObject[0].height * templateObject[0].scaleY 
+            //           var newWidth = templateObject[0].width * templateObject[0].scaleX
+            //           var newRadius = rect.height * 0.05;
   
-                      templateObject[0].left = rect.left + rect.width / 2 - newRadius
-                      templateObject[0].top = rect.top + rect.height / 10
-                  }
-                }
-              }
-              if(signData.fixingMethod.type == 's-hook'){}
-            }
+            //           templateObject[0].left = rect.left + rect.width / 2 - newRadius
+            //           templateObject[0].top = rect.top + rect.height / 10
+            //       }
+            //     }
+            //   }
+            //   if(signData.fixingMethod.type == 's-hook'){}
+            // }
                         
             // console.log(...templateObject)                            
             canva.add(...templateObject);
-            // resetFixing(canva)
   
-            canva.renderAll();
+            canva.requestRenderAll();
+            // setTimeout(() => {
+            //   canva.renderAll();
+            // }, 500); 
         });
     })
   }
@@ -7294,9 +7350,10 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
 
 
   var currentSizeValues = handleChangeSize(templateData.size.width, templateData.size.height, "Template", -1)
-  handleGetShape(templateData.shape, templateData.fixingMethod.type)
+  handleGetShape(templateData.shape)
   // console.log(currentSizeValues)
-  // handleSelectFixingMethode(templateData.fixingMethod.type)
+  // resetFixing(canvas)
+  handleSelectFixingMethode(templateData.fixingMethod.type)
 
   var sign = handleGetObjectByName('safeObject')
   function setMeasurmentValue(canvas){
@@ -7349,10 +7406,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
   setMeasurmentValue(canvas)
   setMeasurmentValue(backCanvas)
 
-  
 
-
-
+  canvas.renderAll()
 
   return {
       size: currentSizeValues,
@@ -7509,5 +7564,8 @@ export {
   handleClipAddedObject,
   handleGetNewPosition,
   handleLockMoving,
+  handleLockScaling,
+  handleLockRotating,
+  handleLockEdition,
   handleAddTemplateText,
 };
