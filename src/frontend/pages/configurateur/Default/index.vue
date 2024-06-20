@@ -1521,6 +1521,26 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </span>
+                        <span @click="lockRotation()" :class="`${lockObjectRotation === true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-items-center aso-space-x-2 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
+                            <p class="aso-text-xs aso-font-semibold">Lock Rotation</p>
+                            
+                            <svg v-if="lockObjectRotation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                            <svg v-if="!lockObjectRotation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        </span>
+                        <span @click="lockEdition()" :class="`${lockObjectEdition === true ? `aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} aso-flex aso-items-center aso-space-x-2 hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
+                            <p class="aso-text-xs aso-font-semibold">Lock text Edition</p>
+                            
+                            <svg v-if="lockObjectEdition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                            <svg v-if="!lockObjectEdition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -2688,6 +2708,15 @@
         }
         currentSizeData.value = templateSize
         currentSizeValues.value = loadedTemplate.size
+        //selection du thickness
+        if(sign.size.thickness.active){
+            currentSizeThickness.value = true
+            var thick = sign.size.thickness.value
+            currentThickValue.value = thick
+        }else{
+            currentSizeThickness.value = false
+            currentThickValue.value = 0
+        }
 
         //recupération des texts du template
         addedTexts.value = loadedTemplate.texts
@@ -4095,6 +4124,28 @@
         }
     }
 
+    var lockObjectRotation = ref(false)
+    function lockRotation(){
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                lockObjectRotation.value = handleLockRotating(object)
+            }
+        }
+    }
+
+    var lockObjectEdition = ref(false)
+    function lockEdition(){
+        if(activeCanvas.getActiveObject() !== undefined){
+            if(activeCanvas.getActiveObject() !== null){
+                var object = activeCanvas.getActiveObject();
+                if(object.type === 'i-text'){
+                    lockObjectEdition.value = handleLockEdition(object)
+                }
+            }
+        }
+    }
+
     var sizees = ref([])
     var thicknesss = ref([])
     var customSizes = ref({})
@@ -5121,6 +5172,7 @@
             
             activeCanvas.getObjects().forEach(function(obj){
                 if(object.id === obj.id){
+                    selectedText.value.object = object
                     if(setActive){
                         activeCanvas.setActiveObject(obj);
                     }

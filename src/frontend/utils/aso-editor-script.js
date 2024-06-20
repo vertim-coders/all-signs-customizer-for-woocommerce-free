@@ -1488,7 +1488,6 @@ function handleChangeSize(width, height, name, maxChar) {
 }
 
 function handleGetSignPosition() {
-
   var sign = handleGetObjectByName("safeObject")
 
   return {
@@ -6381,7 +6380,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
                 rect = templateObject[0]
             }
             if(templateObject[0].name === 'aso-SignText'){
-                templateObject[0].dirty = true
+                // templateObject[0].dirty = true
+                // templateObject[0].set('noScaleCache', false);
 
                 if(templateObject[0].lockMoving.x === true){
                     templateObject[0].lockMovementX = true
@@ -6399,6 +6399,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
                 if(templateObject[0].lockEdition === true){
                     templateObject[0].editable = false
                 }
+                templateObject[0].clipPath = null
   
                 templateObject[0].on('editing:entered', () => {
                     handleGetAddedTextValues(templateObject[0]);  
@@ -6423,15 +6424,16 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
                 addUniqueObject(addedTexts, templateObject[0], 'id');
             }
 
-            // if (templateObject[0].type === 'text' || templateObject[0].type === 'i-text') {
-            //   templateObject[0].set('dirty', true);
-            //   if (templateObject[0].text) {
-            //     // Forcer la mise à jour du texte en le réappliquant
-            //     let currentText = templateObject[0].text;
-            //     templateObject[0].set('text', '');
-            //     templateObject[0].set('text', currentText);
-            //   }
-            // }
+            if (templateObject[0].type === 'text' || templateObject[0].type === 'i-text') {
+              templateObject[0].set('dirty', true);
+              if (templateObject[0].text) {
+                // Forcer la mise à jour du texte en le réappliquant
+                let currentText = templateObject[0].text;
+                // console.log(currentText)
+                templateObject[0].set('text', '');
+                templateObject[0].set('text', currentText);
+              }
+            }
 
             if(templateObject[0].name === 'aso-SignImage'){
               if(templateObject[0].lockMoving.x === true){
@@ -6447,6 +6449,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
               if(templateObject[0].lockRotate === true){
                   templateObject[0].lockRotation = true
               }
+
+              templateObject[0].clipPath = null
               
               templateObject[0].on('mousedown', function() {
                   handleGetAddedImageValues(templateObject[0]); 
@@ -7335,7 +7339,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
             // console.log(...templateObject)                            
             canva.add(...templateObject);
   
-            canva.requestRenderAll();
+            // canva.renderAll();
             // setTimeout(() => {
             //   canva.renderAll();
             // }, 500); 
@@ -7352,7 +7356,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
   var currentSizeValues = handleChangeSize(templateData.size.width, templateData.size.height, "Template", -1)
   handleGetShape(templateData.shape)
   // console.log(currentSizeValues)
-  // resetFixing(canvas)
+  resetFixing(canvas)
   handleSelectFixingMethode(templateData.fixingMethod.type)
 
   var sign = handleGetObjectByName('safeObject')
@@ -7406,8 +7410,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
   setMeasurmentValue(canvas)
   setMeasurmentValue(backCanvas)
 
-
-  canvas.renderAll()
 
   return {
       size: currentSizeValues,

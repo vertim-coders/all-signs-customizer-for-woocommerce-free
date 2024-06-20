@@ -1472,7 +1472,7 @@
             </div>
         </div>
 
-        <div v-show="showTempSettings" id="aso-templateObjects-options" :class="`aso-absolute aso-top-[11%] aso-right-0 aso-w-fit aso-h-fit aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
+        <div v-if="route.name == 'template-maker'" v-show="showTempSettings" id="aso-templateObjects-options" :class="`aso-absolute aso-top-[11%] aso-right-0 aso-w-fit aso-h-fit aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
             <div class="aso-relative aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full">
                 <p :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] aso-text-base aso-font-semibold aso-p-2 aso-px-4`">Custom options</p>    
 
@@ -2640,6 +2640,15 @@
         }
         currentSizeData.value = templateSize
         currentSizeValues.value = loadedTemplate.size
+        //selection du thickness
+        if(sign.size.thickness.active){
+            currentSizeThickness.value = true
+            var thick = sign.size.thickness.value
+            currentThickValue.value = thick
+        }else{
+            currentSizeThickness.value = false
+            currentThickValue.value = 0
+        }
 
         //recupération des texts du template
         addedTexts.value = loadedTemplate.texts
@@ -2647,37 +2656,6 @@
         //recupération des images du template
         usedImages.value = loadedTemplate.images
         // console.log(loadedTemplate.images, "loadedTemplate.images")
-
-        canvas.renderAll()
-        canvasBack.renderAll()
-
-        // var recto = document.getElementById("canvaas")
-        // // recto.click()
-
-        // function triggerMouseDown(canva, x, y) {
-        //     // Créer un objet d'options similaire à celui que Fabric.js passerait normalement
-        //     const options = {
-        //         e: {
-        //             clientX: x,
-        //             clientY: y,
-        //             which: 1
-        //         },
-        //         target: canva.findTarget({
-        //             clientX: x,
-        //             clientY: y
-        //         }),
-        //         pointer: canva.getPointer({ clientX: x, clientY: y })
-        //     };
-
-        //     // Déclencher manuellement l'événement
-        //     canva.__eventListeners['mouse:down'].forEach(handler => {
-        //         handler(options);
-        //     });
-        // }
-
-
-        // Déclencher l'événement `mouse:down` après 2 secondes
-        // triggerMouseDown(canvas, 100, 100);
 
         if(!firstSetLoad.value){
             saveStep("select of first values")
