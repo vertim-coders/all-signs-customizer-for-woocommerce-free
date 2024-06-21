@@ -2378,10 +2378,15 @@
             fabric.Object.prototype.borderColor = 'black';
             fabric.Object.prototype.cornerStyle = 'circle';
             
-            canvas.on('selection:created', showObjectValues);
+            canvas.on('selection:created', function(e){
+                showObjectValues()
+            });
+            canvas.on('selection:updated', function(e) {
+                var object = e.selected[0]
+                checkTemplateObjectLockMoving(object)
+            });
             canvas.on('selection:cleared', closeObjectValues);
             canvas.on('mouse:down', function(options) {
-                console.log("Down: " + options)
                 var sign = handleGetObjectByName('safeObject');
                 canvas.getObjects().forEach(function(obj) {
                     if (obj.name === 'aso-SignText') {
@@ -2399,6 +2404,10 @@
             });
 
             canvasBack.on('selection:created', showObjectValues);
+            canvasBack.on('selection:updated', function(e) {
+                var object = e.selected[0]
+                checkTemplateObjectLockMoving(object)
+            });
             canvasBack.on('selection:cleared', closeObjectValues);
             canvasBack.on('mouse:down', function(options) {
                 var sign = handleGetObjectByName('safeObject');
@@ -3679,11 +3688,7 @@
         getOptionPrice(priceObject)
 
         if(route.name == 'template-maker'){
-            objectLockMoving.value = object.lockMoving
-            checkTemplateObjectLockMoving()
-            lockObjectScale.value = object.lockScale
-            lockObjectRotation.value = object.lockRotation
-            lockObjectEdition.value = object.lockEdition
+            checkTemplateObjectLockMoving(object)
             showTempSettings.value = true;
         }
         // if(object.type === 'i-text'){
@@ -4045,24 +4050,29 @@
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
                 objectLockMoving.value = handleLockMoving(object, axe)
-                checkTemplateObjectLockMoving()
+                checkTemplateObjectLockMoving(object)
             }
         }
     }
     var lockingXobject = ref(false)
     var lockingYobject = ref(false)
-    function checkTemplateObjectLockMoving(){
+    function checkTemplateObjectLockMoving(object){
+        // console.log("Checking", object)
+        objectLockMoving.value = object.lockMoving
         if(objectLockMoving.value.x === true){
             lockingXobject.value = true
         }else{
             lockingXobject.value = false
         }
-
         if(objectLockMoving.value.y === true){
             lockingYobject.value = true
         }else{
             lockingYobject.value = false
         }
+
+        lockObjectScale.value = object.lockScale
+        lockObjectRotation.value = object.lockRotation
+        lockObjectEdition.value = object.lockEdition
     }
 
     var lockObjectScale = ref(false)
@@ -4071,7 +4081,7 @@
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
                 lockObjectScale.value = handleLockScaling(object)
-                // checkTemplateObjectLockMoving()
+                checkTemplateObjectLockMoving(object)
             }
         }
     }
@@ -4082,6 +4092,7 @@
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
                 lockObjectRotation.value = handleLockRotating(object)
+                checkTemplateObjectLockMoving(object)
             }
         }
     }
@@ -4093,6 +4104,7 @@
                 var object = activeCanvas.getActiveObject();
                 if(object.type === 'i-text'){
                     lockObjectEdition.value = handleLockEdition(object)
+                    checkTemplateObjectLockMoving(object)
                 }
             }
         }
