@@ -2570,7 +2570,7 @@
 
         console.log(data);
         //chargement du prix du template
-        optionsPrices.value = optionsPrices.value = data.price ? data.price.array : []
+        optionsPrices.value = data.price ? data.price.array : []
         var templatePrice = {
             name: 'none',
             price: 0
