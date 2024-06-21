@@ -1,14 +1,14 @@
 <template>
     <div :class="`aso-grid aso-grid-cols-${templates_grid_cols} aso-grid-rows-2 aso-gap-8 aso-templates-container`">
         <div v-for="(template, index) in templates" class="aso-template-container aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-bg-transparent">
-            <div class="aso-template-image-container aso-flex aso-justify-center aso-items-center pb-2 aso-h-[150px]">
-                <div class="aso-w-1/2 aso-h-full aso-flex aso-items-center aso-justify-center">
-                    <img class="aso-w-full aso-h-2/3" v-if="template.prevImg && template.prevImg!=''" :src="template.prevImg" alt="">
+            <div class="aso-template-image-container aso-flex aso-justify-center aso-items-center pb-2 aso-h-[200px]">
+                <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-center aso-overflow-hidden aso-object-cover">
+                    <img class="aso-w-full" v-if="template.prevImg && template.prevImg!=''" :src="template.prevImg" alt="">
                     <img class="aso-w-full" v-if="!template.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
                 </div>
             </div>
             <div class="aso-template-details-container aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
-                <h5 class="aso-template-title aso-font-bold">{{template.name}}</h5>
+                <span class="aso-template-title aso-font-bold">{{template.name}}</span>
                 <div class="aso-template-size">{{template.data.templateData? template.data.templateData.sign.size.width + ' ' +template.data.templateData.sign.size.unit : 0}} x {{template.data.templateData? template.data.templateData.sign.size.height + ' ' +template.data.templateData.sign.size.unit : 0}}</div>
                 <div><span class="aso-font-bold aso-template-price">{{currencySumbol}} {{ template.data.templateData ?template.data.templateData.price.value :0}}</span> {{ template.data.templateData ?template.data.templateData.price.textAfter :''}}</div>
                 <div class="aso-space-y-3 aso-py-3 aso-template-details-buttons">
@@ -40,7 +40,7 @@ import { add_to_cart } from '@/frontend/utils/functions';
 import { ref } from 'vue';
 
 const templates = aso_templates.data;
-const currencySumbol = aso_templates.currency;
+const currencySumbol = aso_templates.currencySymbol;
 const templates_grid_cols = aso_templates.grid_cols;
 const design_page_url = aso_templates.design_page_url;
 const productId = aso_templates.productId;

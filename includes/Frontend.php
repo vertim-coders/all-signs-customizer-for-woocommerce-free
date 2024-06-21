@@ -100,6 +100,7 @@ class ASO_Frontend {
                            $templates =  get_post_meta($configId,"aso-templates",true);
                            if(isset($templates[$tplid])){
                                 $template = $templates[$tplid];
+                                $product_price = $templates[$tplid]["basePrice"];
                            }else{
                                 $template = '';
                            }
@@ -206,7 +207,7 @@ class ASO_Frontend {
                             "grid_cols"=>$cols,
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),
-                            "currencySumbol"=>html_entity_decode(get_woocommerce_currency_symbol())
+                            "currencySymbol"=>html_entity_decode(get_woocommerce_currency_symbol())
                         ]);
                         wp_localize_script("aso-product-min","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
@@ -219,7 +220,7 @@ class ASO_Frontend {
                             "grid_cols"=>$cols,
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),
-                            "currencySumbol"=>html_entity_decode(get_woocommerce_currency_symbol())
+                            "currencySymbol"=>html_entity_decode(get_woocommerce_currency_symbol())
                         ]);
                         wp_localize_script("aso-frontend","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",

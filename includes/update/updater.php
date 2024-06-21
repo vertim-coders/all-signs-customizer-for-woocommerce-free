@@ -75,6 +75,8 @@ class ASO_Updater  {
 	}
     public function aso_push_update($transient) {
 		
+		var_dump($transient);
+		die();
 		$checkPluginTransient = get_transient(ASO_CHECK_TRANSIENT_NAME);
 		if ( empty( $transient->checked ) ) {
 			return $transient;

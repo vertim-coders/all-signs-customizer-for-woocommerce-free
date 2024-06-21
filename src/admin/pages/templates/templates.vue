@@ -9,8 +9,8 @@
                     <span class="0 aso-text-[17px]">Add new template</span>
                 </div>
                 <div v-for="(tem,key) in templates" class="aso-border-[1px] aso-border-[#d3d3d3] aso-border-solid aso-p-3 aso-bg-white">
-                    <div class="aso-flex aso-justify-center aso-items-center pb-2 aso-h-[120px]">
-                        <div class="aso-w-1/2 aso-h-full aso-flex aso-items-center aso-justify-center">
+                    <div class="aso-flex aso-justify-center aso-items-center pb-2 aso-h-[200px]">
+                        <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-center aso-overflow-hidden aso-object-cover">
                             <img class="aso-w-full" v-if="tem.prevImg && tem.prevImg!=''" :src="tem.prevImg" alt="">
                             <img class="aso-w-full" v-if="!tem.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
                         </div>
