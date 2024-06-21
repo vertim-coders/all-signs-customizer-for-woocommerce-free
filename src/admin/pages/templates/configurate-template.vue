@@ -10,7 +10,7 @@
         </div>
         <div class="aso-flex aso-w-[100%]" id="aso-configurator-loader">
             <div class="aso-flex aso-w-[100%] aso-h-[100%] aso-flex aso-flex-col lg:aso-flex-row-reverse">
-                <div class="aso-w-[92%] aso-h-full aso-p-4 aso-flex aso-flex-col">
+                <div class="aso-w-[92%] aso-config-admin aso-p-4 aso-flex aso-flex-col">
                     <div class="aso-w-full aso-h-[7%] lg:aso-h-[10%] aso-flex aso-items-center aso-justify-between">
                         <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-between aso-px-2">
                             <div

@@ -2162,6 +2162,9 @@
     }
 
     onMounted(async() => {
+        if(document.querySelector("#aso-configurator-loader")){
+            document.querySelector("#aso-configurator-loader").remove();
+        }
         configSettings.value = props.config.data.settings
         configDoublePart.value = props.config.data.settings.customizerSign.signPart.doublePart
 
@@ -2359,17 +2362,25 @@
         
             canvas.selection = false;
             canvasBack.selection = false;
+
+            if(route.name == 'template-maker'){
+                template.value = await api.getTemplate(template_config_id,template_id);
+            }
     
             handleCheckTemplate(props.template.designFromTemplate)
-            if(props.template.designFromTemplate === true){
-                selectTemplate(props.template.template.data.templateData, props.template.template.basePrice)
+            if(route.name === 'template-maker'){
+                selectTemplate(template.value.data.templateData, 'making')
             }else{
-                selectMaterial(props.config.data.materials[0], 0)
-                if(materialType.value === 'simple'){
-                    selectSimpleFirstValue()
-                }
-                if(materialType.value === 'advance'){
-                    selectAdvanceFirstValue()
+                if(props.template.designFromTemplate === true){
+                    selectTemplate(props.template.template.data.templateData)
+                }else{
+                    selectMaterial(props.config.data.materials[0], 0)
+                    if(materialType.value === 'simple'){
+                        selectSimpleFirstValue()
+                    }
+                    if(materialType.value === 'advance'){
+                        selectAdvanceFirstValue()
+                    }
                 }
             }
 
@@ -2463,9 +2474,7 @@
         if(route.name == 'template-maker'){
             template.value = await api.getTemplate(template_config_id,template_id);
         }
-        if(document.querySelector("#aso-configurator-loader")){
-            document.querySelector("#aso-configurator-loader").remove();
-        }
+        
         return {
             canvas
         }
@@ -2489,11 +2498,11 @@
     }
 
     var isTemplate = ref(false)
-    function selectTemplate(data, price){
+    function selectTemplate(data, statut){
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
-        console.log(data, price);
+        console.log(data);
         //chargement du prix du template
         optionsPrices.value = data.price.array
         var templatePrice = {
@@ -2520,10 +2529,10 @@
         var sign = data.sign
 
         //selection du matériel
-        var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name && index === sign.material.id)
+        var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name)
         selectMaterial(props.config.data.materials[templateMaterialId])
 
-        var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign)
+        var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
 
         //selection de fixing methode
         if(fixinggs.value.length > 0){

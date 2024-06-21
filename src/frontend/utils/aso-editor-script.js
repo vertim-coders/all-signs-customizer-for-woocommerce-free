@@ -6356,7 +6356,7 @@ function handleClipAddedObject(canva) {
 
 
 
-function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
+function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
   // console.log(canvasJson)
   var signData = templateData
 
@@ -6382,23 +6382,25 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
             if(templateObject[0].name === 'aso-SignText'){
                 // templateObject[0].dirty = true
                 // templateObject[0].set('noScaleCache', false);
+                if(statut !== 'making'){
+                  if(templateObject[0].lockMoving.x === true){
+                      templateObject[0].lockMovementX = true
+                  }
+                  if(templateObject[0].lockMoving.y === true){
+                      templateObject[0].lockMovementY = true
+                  }
+                  if(templateObject[0].lockScale === true){
+                      templateObject[0].lockScalingX = true
+                      templateObject[0].lockScalingY = true
+                  }
+                  if(templateObject[0].lockRotate === true){
+                      templateObject[0].lockRotation = true
+                  }
+                  if(templateObject[0].lockEdition === true){
+                      templateObject[0].editable = false
+                  }
+                }
 
-                if(templateObject[0].lockMoving.x === true){
-                    templateObject[0].lockMovementX = true
-                }
-                if(templateObject[0].lockMoving.y === true){
-                    templateObject[0].lockMovementY = true
-                }
-                if(templateObject[0].lockScale === true){
-                    templateObject[0].lockScalingX = true
-                    templateObject[0].lockScalingY = true
-                }
-                if(templateObject[0].lockRotate === true){
-                    templateObject[0].lockRotation = true
-                }
-                if(templateObject[0].lockEdition === true){
-                    templateObject[0].editable = false
-                }
                 templateObject[0].clipPath = null
   
                 templateObject[0].on('editing:entered', () => {
@@ -6424,30 +6426,32 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData){
                 addUniqueObject(addedTexts, templateObject[0], 'id');
             }
 
-            if (templateObject[0].type === 'text' || templateObject[0].type === 'i-text') {
-              templateObject[0].set('dirty', true);
-              if (templateObject[0].text) {
-                // Forcer la mise à jour du texte en le réappliquant
-                let currentText = templateObject[0].text;
-                // console.log(currentText)
-                templateObject[0].set('text', '');
-                templateObject[0].set('text', currentText);
-              }
-            }
+            // if (templateObject[0].type === 'text' || templateObject[0].type === 'i-text') {
+            //   templateObject[0].set('dirty', true);
+            //   if (templateObject[0].text) {
+            //     // Forcer la mise à jour du texte en le réappliquant
+            //     let currentText = templateObject[0].text;
+            //     // console.log(currentText)
+            //     templateObject[0].set('text', '');
+            //     templateObject[0].set('text', currentText);
+            //   }
+            // }
 
             if(templateObject[0].name === 'aso-SignImage'){
-              if(templateObject[0].lockMoving.x === true){
-                  templateObject[0].lockMovementX = true
-              }
-              if(templateObject[0].lockMoving.y === true){
-                  templateObject[0].lockMovementY = true
-              }
-              if(templateObject[0].lockScale === true){
-                  templateObject[0].lockScalingX = true
-                  templateObject[0].lockScalingY = true
-              }
-              if(templateObject[0].lockRotate === true){
-                  templateObject[0].lockRotation = true
+              if(statut !== 'making'){
+                if(templateObject[0].lockMoving.x === true){
+                    templateObject[0].lockMovementX = true
+                }
+                if(templateObject[0].lockMoving.y === true){
+                    templateObject[0].lockMovementY = true
+                }
+                if(templateObject[0].lockScale === true){
+                    templateObject[0].lockScalingX = true
+                    templateObject[0].lockScalingY = true
+                }
+                if(templateObject[0].lockRotate === true){
+                    templateObject[0].lockRotation = true
+                }
               }
 
               templateObject[0].clipPath = null

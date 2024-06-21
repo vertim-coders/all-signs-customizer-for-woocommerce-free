@@ -41,7 +41,7 @@ class ASO_Frontend {
 		);
         ob_start();
         ?> 
-        <div id="aso-configurator-loader">
+        <div id="aso-configurator-loader" style="height:50vh;">
             <div style="display: flex; flex: 1;width: 100%; height: 100%">
                 <div 
                     style="display: flex; flex-direction: column; width: 20%; height: 100%;">
@@ -213,7 +213,7 @@ class ASO_Frontend {
 		);
         ob_start();
         ?> 
-        <div id="aso-templates-loader" style="width:100%;">
+        <div id="aso-templates-loader" style="width:100%; height:50vh;">
             <div style="display: grid; 
                 grid-template-columns: repeat(3, 1fr); 
                 grid-gap: 10px; 
