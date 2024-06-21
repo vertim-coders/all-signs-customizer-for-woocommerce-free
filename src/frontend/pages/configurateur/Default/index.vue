@@ -2528,6 +2528,9 @@
         if(route.name == 'template-maker'){
             template.value = await api.getTemplate(template_config_id,template_id);
         }
+        if(document.querySelector("#aso-configurator-loader")){
+            document.querySelector("#aso-configurator-loader").remove();
+        }
         return {
             canvas
         }

@@ -40,6 +40,27 @@ class ASO_Frontend {
 			)
 		);
         ob_start();
+        ?> 
+        <div id="aso-configurator-loader">
+            <div style="display: flex; flex: 1;width: 100%; height: 100%">
+                <div 
+                    style="display: flex; flex-direction: column; width: 20%; height: 100%;">
+                    <div class="aso-loader-container"
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                    </div>
+                </div>
+                <div 
+                    style="display: flex; justify-content:space-between; flex-direction: column; width: 80%; height: 100%; padding: 0 0 0 10px;">
+                    <div class="aso-loader-container"
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 45%;">
+                    </div>
+                    <div class="aso-loader-container"
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 45%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
         $product =wc_get_product($productid);
         if($product){
             $meta = get_post_meta($productid,'product-aso-metas',true);
@@ -128,7 +149,8 @@ class ASO_Frontend {
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
                         );
                         ?>
-                        <div id='aso-frontend-app' class="aso-configurator-container"></div>
+                        <div id='aso-frontend-app' class="aso-configurator-container">
+                        </div>
                         <?php 
                         $this->includes_config_fonts($visibleFonts);
                         $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
@@ -189,6 +211,37 @@ class ASO_Frontend {
                 'aso-products'
 			)
 		);
+        ob_start();
+        ?> 
+        <div id="aso-templates-loader" style="width:100%;">
+            <div style="display: grid; 
+                grid-template-columns: repeat(3, 1fr); 
+                grid-gap: 10px; 
+                padding: 10px; 
+                width: 100%; 
+                height: 100%"
+            >
+                <div 
+                    style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="aso-loader-container"
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                    </div>
+                </div>
+                <div 
+                    style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="aso-loader-container"
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                    </div>
+                </div>
+                <div 
+                    style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="aso-loader-container"
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
         $product =wc_get_product($productid);
         if($product){
             $meta = get_post_meta($productid,'product-aso-metas',true);
@@ -231,6 +284,8 @@ class ASO_Frontend {
                 }
             }
         }
+        $content.= ob_get_clean();
+        return $content;
     }
 
     private function include_custom_css( $css){

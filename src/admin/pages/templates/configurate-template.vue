@@ -8,8 +8,76 @@
                 Back
             </button>
         </div>
-        <div v-if="isLoading" class="aso-bg-white aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-full p-4">
-            <img class="aso-w-[200px] aso-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
+        <div class="aso-flex aso-w-[100%]" id="aso-configurator-loader">
+            <div class="aso-flex aso-w-[100%] aso-h-[100%] aso-flex aso-flex-col lg:aso-flex-row-reverse">
+                <div class="aso-w-[92%] aso-h-full aso-p-4 aso-flex aso-flex-col">
+                    <div class="aso-w-full aso-h-[7%] lg:aso-h-[10%] aso-flex aso-items-center aso-justify-between">
+                        <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-between aso-px-2">
+                            <div
+                                class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[65%] aso-animate-pulse">
+                            </div>
+                            <div class="aso-w-1/3 aso-h-[65%] aso-flex aso-space-x-4">
+                                <div
+                                    class="aso-w-1/3 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full aso-animate-pulse">
+                                </div>
+                                <div
+                                    class="aso-w-1/3 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full aso-animate-pulse">
+                                </div>
+                                <div
+                                    class="aso-w-1/3 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-full aso-animate-pulse">
+                                </div>
+                            </div>
+                            <div
+                                class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[65%] aso-animate-pulse">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aso-relative aso-w-full aso-h-[93%] lg:aso-h-[90%] aso-flex aso-flex-col aso-items-center">
+                        <div
+                            class="aso-absolute aso-top-[50%] aso-left-[50%] aso-translate-x-[-50%] aso-translate-y-[-50%] aso-w-[30%] aso-h-[30%] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                        </div>
+
+                        <div class="aso-absolute aso-hidden lg:aso-flex aso-bottom-[0%] aso-w-[88%] aso-h-[7%] aso-flex aso-items-center aso-justify-between">
+                            <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-between aso-px-2">
+                                <div
+                                    class="aso-w-1/6 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[12%] aso-animate-pulse">
+                                </div>
+                                <div
+                                    class="aso-w-1/5 aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-h-[12%] aso-animate-pulse">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="aso-w-[8%] aso-h-full aso-p-4 aso-flex aso-flex-col aso-items-center aso-justify-center aso-space-y-4">
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                    <div
+                        class="aso-w-[50px] lg:aso-w-[80%] aso-h-[90%] lg:aso-h-[25px] aso-bg-gradient-to-r aso-from-zinc-400 aso-via-zinc-200 aso-to-zinc-400 aso-p-4 aso-animate-pulse">
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="aso-frontend-app" class="aso-preview-configurator"></div>
     </div>
@@ -18,12 +86,6 @@
 <script setup>
 import router from '@/admin/router';
 import { onMounted, ref } from 'vue';
-const isLoading = ref(true);
-onMounted(()=>{
-    setTimeout(() => {
-      isLoading.value = false;
-    }, 3000)
-});
 
 const goBackAndReload = () =>{
     router.reloadPrevious = true;

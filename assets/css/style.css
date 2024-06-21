@@ -157,3 +157,23 @@ td.is_aso_customizable.column-is_aso_customizable {
 .aso-buttons-url .button {
   float: none !important; }
 
+#aso-configurator-loader,
+#aso-templates-loader {
+  height: 50vh; }
+
+@keyframes pulseGradient {
+  0%,
+  100% {
+    background-size: 200% 100%;
+    background-position: 200% 50%;
+    opacity: 0.5;
+    /* Plus transparent */ }
+  50% {
+    background-size: 200% 100%;
+    background-position: -100% 50%;
+    opacity: 1;
+    /* Pleine visibilité */ } }
+  #aso-configurator-loader .aso-loader-container,
+  #aso-templates-loader .aso-loader-container {
+    animation: pulseGradient 1.5s ease infinite; }
+

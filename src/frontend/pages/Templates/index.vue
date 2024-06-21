@@ -37,7 +37,7 @@
 </template>
 <script setup>
 import { add_to_cart } from '@/frontend/utils/functions';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const templates = aso_templates.data;
 const currencySumbol = aso_templates.currencySymbol;
@@ -45,6 +45,11 @@ const templates_grid_cols = aso_templates.grid_cols;
 const design_page_url = aso_templates.design_page_url;
 const productId = aso_templates.productId;
 const isAddingToCart = ref(false);
+onMounted(()=>{
+    if(document.querySelector("#aso-templates-loader")){
+        document.querySelector("#aso-templates-loader").remove();
+    }
+})
 const addToCart = async (template)=>{
         isAddingToCart.value = true
     //if(Object.keys(template.data.cartData).length > 0){
