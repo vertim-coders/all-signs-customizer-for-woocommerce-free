@@ -29,7 +29,8 @@ onMounted(async() => {
     const style = document.createElement('style')
     for (let index = 0; index < result.managesData.fonts.length; index++) {
       const font = result.managesData.fonts[index];
-      style.innerHTML += `@font-face { font-family: ${font.label.replace(/ /,'-')}; src: url(${font.url}) format('truetype'); }`
+      const url = font.url.replace('http://', '//');
+      style.innerHTML += `@font-face { font-family: ${font.label.replace(/ /,'-')}; src: url(${url}) format('truetype'); }`
     }
     
     if(result.currentConfig.data.settings.themeColors.customCSS && result.currentConfig.data.settings.themeColors.customCSS.trim()!=='') {
