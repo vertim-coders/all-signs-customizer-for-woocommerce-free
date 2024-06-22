@@ -5,7 +5,7 @@ use ASO\ASO_Post_Type;
 use ASO\ASO_Public;
 
 /*
-Plugin Name: All Signs Options
+Plugin Name: All Signs Options Pro
 Plugin URI: https://signsdesigner.us/
 Description: The ultimate custom sign configurator for woocommerce.
 Our custom  signs configurator allows you to extend your business of personalization of  signs by offering you a nice configurator to allow your customers to customize signs in  acrylic, metal, 2D and 3D, thanks to a highly configurable sign product builder.
@@ -158,7 +158,7 @@ final class ASO_All_Signs_Options
         define('ASO_ASSETS', ASO_URL . '/assets');
 
         define("ASO_CHECK_TRANSIENT_EXPIRATION", 12 * HOUR_IN_SECONDS); // 12 hours
-        define("ASO_CHECK_TRANSIENT_NAME", "wp_update_check_aso");
+        define("ASO_CHECK_TRANSIENT_NAME", "wp_update_check_aso_pro");
 
         $upload_dir = wp_upload_dir();
         $generation_path = $upload_dir['basedir'] . "/ASO/";
