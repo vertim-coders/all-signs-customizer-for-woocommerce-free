@@ -2623,9 +2623,11 @@
         }
         var currentFixingId = matchingFixings.value.findIndex((item, index) => item.fixing.type === sign.fixingMethod.type)
         activeFixingMethode.value = sign.fixingMethod.type
-        fixingExcludeSizes.value = matchingFixings.value[currentFixingId].fixingg.excludeSizes
-        fixingExcludeShapes.value = matchingFixings.value[currentFixingId].fixingg.excludeShapes
-        activeFixingId.value = currentFixingId
+        if(sign.material.type === 'simple'){
+            fixingExcludeSizes.value = matchingFixings.value[currentFixingId].fixingg.excludeSizes
+            fixingExcludeShapes.value = matchingFixings.value[currentFixingId].fixingg.excludeShapes
+            activeFixingId.value = currentFixingId
+        }
 
         
         //selection de shape
@@ -2690,44 +2692,46 @@
         }
 
         //selection de border
-        if(borderrs.value.allBorders.length > 0){
-            borderrs.value.allBorders.forEach((borderr, id) => {
-                allBorders.value.forEach((border, index) => {
-                    if(borderr.manageBorderId == index){
-                        matchingBorders.value.push({border, borderr})
-                    }
+        if(sign.material.type === 'simple'){
+            if(borderrs.value.allBorders.length > 0){
+                borderrs.value.allBorders.forEach((borderr, id) => {
+                    allBorders.value.forEach((border, index) => {
+                        if(borderr.manageBorderId == index){
+                            matchingBorders.value.push({border, borderr})
+                        }
+                    })
                 })
-            })
-        }
-
-        var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)
-        border1ExcludeShapes.value = matchingBorders.value[currentBorder1Id].borderr.excludeShapes
-        border1ExcludeSizes.value = matchingBorders.value[currentBorder1Id].borderr.excludeSizes
-
-        activeFace1Border.value = sign.border.face1.type;
-        borderColorName1.value = sign.border.face1.color;
-        activeFace1BorderColor.value = sign.border.face1.codeHex
-        if(sign.border.face1.type !== 'none' && sign.border.face1.codeHex !== ('' || null)){
-            colorForBorder1.value = true
-        }
-        handleGetBorderData('front-face', {border: sign.border.face1.type, color: sign.border.face1.codeHex})
-
-        //verification pour la seconde face si existante
-        if(sign.doubleFace === true){
-            var currentBorder2Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face2.type)
-            border2ExcludeShapes.value = matchingBorders.value[currentBorder2Id].borderr.excludeShapes
-            border2ExcludeSizes.value = matchingBorders.value[currentBorder2Id].borderr.excludeSizes
-
-
-            activeFace2Border.value = sign.border.face2.type;
-            borderColorName2.value = sign.border.face2.color
-            activeFace2BorderColor.value = sign.border.face2.codeHex
-            if(sign.border.face2.type !== 'none' && sign.border.face2.codeHex !== ('' || null)){
-                colorForBorder2.value = true
             }
-            handleGetBorderData('back-face', {border: sign.border.face2.type, color: sign.border.face2.codeHex})
+            var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)
+            border1ExcludeShapes.value = matchingBorders.value[currentBorder1Id].borderr.excludeShapes
+            border1ExcludeSizes.value = matchingBorders.value[currentBorder1Id].borderr.excludeSizes
+    
+            activeFace1Border.value = sign.border.face1.type;
+            borderColorName1.value = sign.border.face1.color;
+            activeFace1BorderColor.value = sign.border.face1.codeHex
+            if(sign.border.face1.type !== 'none' && sign.border.face1.codeHex !== ('' || null)){
+                colorForBorder1.value = true
+            }
+            handleGetBorderData('front-face', {border: sign.border.face1.type, color: sign.border.face1.codeHex})
 
-        } 
+            //verification pour la seconde face si existante
+            if(sign.doubleFace === true){
+                var currentBorder2Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face2.type)
+                border2ExcludeShapes.value = matchingBorders.value[currentBorder2Id].borderr.excludeShapes
+                border2ExcludeSizes.value = matchingBorders.value[currentBorder2Id].borderr.excludeSizes
+    
+    
+                activeFace2Border.value = sign.border.face2.type;
+                borderColorName2.value = sign.border.face2.color
+                activeFace2BorderColor.value = sign.border.face2.codeHex
+                if(sign.border.face2.type !== 'none' && sign.border.face2.codeHex !== ('' || null)){
+                    colorForBorder2.value = true
+                }
+                handleGetBorderData('back-face', {border: sign.border.face2.type, color: sign.border.face2.codeHex})
+    
+            } 
+        }
+
 
         //selection du la size
         currentSizeName.value = 'Template'
@@ -5758,6 +5762,7 @@
                     material: {
                         name: selectedMaterial.value,
                         id: currentMaterialId.value,
+                        type: materialType.value,
                     },
                     size: {
                         width: parseInt(supprimerNonChiffres(widthValue.text)),
