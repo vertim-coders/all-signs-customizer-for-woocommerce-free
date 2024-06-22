@@ -2369,7 +2369,18 @@
     
             handleCheckTemplate(props.template.designFromTemplate)
             if(route.name === 'template-maker'){
-                selectTemplate(template.value.data.templateData, 'making')
+                if(template.value.data.templateData.length == 0){
+                    console.log(template.value.data.templateData, "template-maker")
+                    selectMaterial(props.config.data.materials[0], 0)
+                    if(materialType.value === 'simple'){
+                        selectSimpleFirstValue()
+                    }
+                    if(materialType.value === 'advance'){
+                        selectAdvanceFirstValue()
+                    }
+                }else{                    
+                    selectTemplate(template.value.data.templateData, 'making')
+                }
             }else{
                 if(props.template.designFromTemplate === true){
                     selectTemplate(props.template.template.data.templateData)

@@ -12,7 +12,8 @@
   );
 }
 .aso-config-admin {
-  height: calc(100vh)-80px;
+  height: 100vh;
+  // height: calc(100vh)-80px;
 }
 .aso-pricing-link a {
   text-decoration: none !important;
