@@ -157,7 +157,7 @@ final class ASO_All_Signs_Options
         define('ASO_URL', plugins_url('', ASO_FILE));
         define('ASO_ASSETS', ASO_URL . '/assets');
 
-        define("ASO_CHECK_TRANSIENT_EXPIRATION", 43200); // 12 hours
+        define("ASO_CHECK_TRANSIENT_EXPIRATION", 12 * HOUR_IN_SECONDS); // 12 hours
         define("ASO_CHECK_TRANSIENT_NAME", "wp_update_check_aso");
 
         $upload_dir = wp_upload_dir();
