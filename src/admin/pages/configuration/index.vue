@@ -765,7 +765,7 @@ const defaultSettings = ref({
             recaps: {
                 headerBackgroundColor: "#3590ea",
                 headerTextColor: "#ffffff",
-                backgroundColor: "#fffff",
+                backgroundColor: "#ffffff",
                 optionTextColor: "#000000",
                 optionHoverBackgroundColor: "#eef3f6",
                 optionHoverTextColor: "#000000",

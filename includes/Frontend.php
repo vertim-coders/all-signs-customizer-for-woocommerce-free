@@ -41,21 +41,69 @@ class ASO_Frontend {
 		);
         ob_start();
         ?> 
-        <div id="aso-configurator-loader" style="height:50vh;">
+        <div id="aso-configurator-loader" style="height:90vh;">
             <div style="display: flex; flex: 1;width: 100%; height: 100%">
-                <div 
-                    style="display: flex; flex-direction: column; width: 20%; height: 100%;">
-                    <div class="aso-loader-container"
-                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                <div
+                    style="display: flex; flex-direction: column; width: 92%; height: 100%; margin-left: 10px; margin-right: 10px;">
+                    <div style="width: 100%; height: 10%; margin-top: 10px; display: flex; justify-content: space-between;">
+                        <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                        </div>
+                        <div style="width: 31.33%; height: 100%; display: flex; justify-content: space-between;">
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                        </div>
+                    </div>
+
+                    <div style="width: 100%; height: 90%; margin-top: 20px;">
+                        <div style="width: 100%; height: 80%; display: flex; justify-content: center; align-items: center;">
+                            <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 40%; height: 50%">
+                            </div>
+                        </div>
+
+                        <div
+                            style="width: 100%; height: 20%; display: flex; justify-items: center; justify-content: center; align-items: center;">
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                            </div>
+                            <div
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div 
-                    style="display: flex; justify-content:space-between; flex-direction: column; width: 80%; height: 100%; padding: 0 0 0 10px;">
-                    <div class="aso-loader-container"
-                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 45%;">
+                <div style="display: flex; flex-direction: column; width: 8%; height: 100%; margin-left: 20px; margin-right: 20px;">
+                    <div
+                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 10%; margin-top: 10px; animation: pulseGradient 1.5s ease infinite;">
                     </div>
-                    <div class="aso-loader-container"
-                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 45%;">
+                    <div
+                        style="width: 100%; height: 90%; display: flex; flex-direction: column; justify-items: center; justify-content: center; align-items: center;">
+                        <div
+                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 10%; animation: pulseGradient 1.5s ease infinite;">
+                        </div>
+                        <div
+                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 10%; margin-top: 20px; animation: pulseGradient 1.5s ease infinite;">
+                        </div>
                     </div>
                 </div>
             </div>
