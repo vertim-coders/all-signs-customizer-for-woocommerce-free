@@ -237,7 +237,8 @@
 
 			
 			$default_design_btn_url = $this->get_design_page_url();
-			$content               .= '<a  href="' . $default_design_btn_url . '" class="button aso-design-product">' . apply_filters( 'aso_default_design_btn_filter', __( 'Customize Your Sign', "ASO" ) ) . '</a>';
+			$have_pages_settings = get_option("aso_config_page");
+			$content               .= '<a  href="' . $default_design_btn_url . '" class="button aso-design-product">' . $have_pages_settings["buttons"]["productDesignButton"] . '</a>';
 
 			if ( ! isset( $item_id ) ) {
 				$item_id = '';
@@ -287,7 +288,9 @@
 
 			
 			$default_template_btn_url = $this->get_templates_page_url();
-			$content               .= '<a  href="' . $default_template_btn_url . '" class="button aso-template-product">' . apply_filters( 'aso_default_template_btn_filter', __( 'Design From Example', "ASO" ) ) . '</a>';
+			$have_pages_settings = get_option("aso_config_page");
+
+			$content               .= '<a  href="' . $default_template_btn_url . '" class="button aso-template-product">' . $have_pages_settings["buttons"]["productTemplateButton"] . '</a>';
 
 			if ( ! isset( $item_id ) ) {
 				$item_id = '';

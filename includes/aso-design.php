@@ -72,7 +72,7 @@ class ASO_Design {
 
 	public function display_previewBtn_editBtn_in_cart($cart_item){
 		$product = $cart_item['data'];
-		
+		$have_pages_settings = get_option("aso_config_page");
 		// Construisez les URL pour les aperçus et les éditions (ajustez selon vos besoins)
 		//$preview_url = get_permalink($product->get_id());
 
@@ -98,7 +98,7 @@ class ASO_Design {
 				</div>
 			</div>
 			<div class="aso-product-links">
-				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo __("Sign Recaps","ASO")?></span>
+				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo $have_pages_settings["buttons"]["recapsButtonOnCart"] ?></span>
 			</div>
 			<?php
 			$product_name.=ob_get_clean();		

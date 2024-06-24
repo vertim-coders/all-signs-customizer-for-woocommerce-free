@@ -8,15 +8,15 @@
                     </svg>
                     <span class="0 aso-text-[17px]">Add new template</span>
                 </div>
-                <div v-for="(tem,key) in templates" class="aso-border-[1px] aso-border-[#d3d3d3] aso-border-solid aso-p-3 aso-bg-white">
+                <div v-for="tem in templates" class="aso-border-[1px] aso-border-[#d3d3d3] aso-border-solid aso-p-3 aso-bg-white">
                     <div class="aso-flex aso-justify-center aso-items-center pb-2 aso-h-[200px]">
                         <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-center aso-overflow-hidden aso-object-cover">
-                            <img class="aso-w-full" v-if="tem.prevImg && tem.prevImg!=''" :src="tem.prevImg" alt="">
-                            <img class="aso-w-full" v-if="!tem.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
+                            <img class="aso-w-full" v-if="tem.data.prevImg && tem.data.prevImg!=''" :src="tem.data.prevImg" alt="">
+                            <img class="aso-w-full" v-if="!tem.data.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
                         </div>
                     </div>
                     <div class="aso-my-1">
-                        <div class="aso-font-bold aso-text-[14px]">{{tem.name}}</div>
+                        <div class="aso-font-bold aso-text-[14px]">{{tem.data.name}}</div>
                     </div>
                     <div class="aso-mb-2">
                         <svg width="100%" height="1" viewBox="0 0 258 1" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,16 +32,16 @@
                     </div>
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-bg-[#FFA08859] aso-w-fit aso-p-1.5 aso-rounded-full aso-px-4">
-                            <span class="aso-text-[#720909] aso-font-bold aso-text-[12px]">Base Price : {{tem.basePrice + ' '+ currencySumbol}}</span>
+                            <span class="aso-text-[#720909] aso-font-bold aso-text-[12px]">Base Price : {{tem.data.basePrice + ' '+ currencySumbol}}</span>
                         </div>
                         <div class="aso-flex aso-justify-end ">
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectTemplate(key,tem,false)">
+                            <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer" @click="selectTemplate(tem.index,tem.data,false)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer" @click="selectTemplate(key,tem,true)">
+                            <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer" @click="selectTemplate(tem.index,tem.data,true)">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_delete.svg" alt="">
                             </button>
-                            <button class="aso-border-none aso-bg-transparent aso-cursor-pointer" @click="goToTemplate(tem,key)">
+                            <button class="aso-border-none aso-bg-transparent aso-cursor-pointer" @click="goToTemplate(tem.data,tem.index)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -250,7 +250,20 @@ const isLoading = ref(false);
 
 const fetchTemplates = async ()=>{
     const result = await api.getAllTemplates();
-    templates.value = result.templates;
+    let tab = [];
+    console.log(result.templates)
+    for (let index = 0; index < result.templates.length; index++) {
+        const element = result.templates[index];
+        console.log(element);
+        for (let i = 0; i < element.length; i++) {
+            const el = {
+                index:i,
+                data: element[i]
+            };
+            tab.push(el);
+        }        
+    }
+    templates.value = tab;
     configurations.value = result.configurations;
     if(result.categories.length!=0){
         categories.value = result.categories
@@ -431,6 +444,7 @@ const updateTemplate = async ()=>{
 const deleteTemplate = async ()=>{
     isLoading.value=true;
     const result = await api.deleteTemplate(template.value.configId,template_id.value);
+    console.log(result);
     if(result.success){
         await fetchTemplates();
         isLoading.value=false;
@@ -459,7 +473,7 @@ const deleteTemplate = async ()=>{
         isDelete.value = false;
         template_id.value = null;
         openModal.value = false;
-        toastMessage(result.message);
+        toastMessage(result.message,"error");
         template.value = {
             name:'',
             categoryId:'',

@@ -306,6 +306,7 @@ class ASO_Frontend {
                             "data"=>$templates,
                             "productId"=>$productid,
                             "grid_cols"=>$cols,
+                            "pageConfigs"=>get_option("aso_config_page"),
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),
                             "currencySymbol"=>html_entity_decode(get_woocommerce_currency_symbol())
@@ -319,6 +320,7 @@ class ASO_Frontend {
                             "data"=>$templates,
                             "productId"=>$productid,
                             "grid_cols"=>$cols,
+                            "pageConfigs"=>get_option("aso_config_page"),
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),
                             "currencySymbol"=>html_entity_decode(get_woocommerce_currency_symbol())

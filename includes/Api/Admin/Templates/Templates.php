@@ -146,15 +146,18 @@ class ASO_Api_Templates extends WP_REST_Controller {
                 $config_id=get_the_ID();
                 $meta = get_post_meta($config_id,'aso-templates',true);
                 if(is_array($meta) && count($meta)>0){
+                    $tab = [];
                     foreach ($meta as $key => $value) {
                         if(! empty( $search )){
                             if(str_contains($search,$value['name'])){
-                                array_push($templates["templates"],$value);
+                                array_push($tab,$value);
                             }
                         }else{
-                            array_push($templates["templates"],$value);
+                            array_push($tab,$value);
                         }
                     }
+                    array_push($templates["templates"],$tab);
+
                 }
                 $post_data = array(
                     'value'          => $config_id,

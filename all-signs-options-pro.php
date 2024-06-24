@@ -187,13 +187,28 @@ final class ASO_All_Signs_Options
         $pages_settings = [
             "configuratorPage" => 0,
             "templatePage" => 0,
+            "buttons"=>[
+                "productDesignButton"=>'Customize The Product',
+                "productTemplateButton"=>'Design From Example',
+                "templateAddToCartButton"=>'Add To Cart',
+                "templateDesignButton"=> 'Customize',
+                "recapsButtonOnCart"=>'Sign Recaps'        
+            ],
             "others" => [
                 "titleBalise" => 'h1'
             ],
         ];
-        $have_pages_settings = get_option("aso_output_options");
+        $have_pages_settings = get_option("aso_config_page");
         if ($have_pages_settings == false) {
-            update_option("aso_output_options", $pages_settings);
+            update_option("aso_config_page", $pages_settings);
+        }else{
+            $differenceCles = array_diff_key($pages_settings, $have_pages_settings);
+            if (count($differenceCles) > 0) {
+                foreach ($differenceCles as $key => $value) {
+                    $have_pages_settings[$key] = $value;
+                }
+                update_option("aso_config_page", $have_pages_settings);
+            }
         }
     }
     private function aso_define_borders()
@@ -298,17 +313,17 @@ final class ASO_All_Signs_Options
             ]
         ];
         $have_shapes = get_option("aso_all_shapes");
-        if ($have_shapes == false) {
+        //if ($have_shapes == false) {
             update_option("aso_all_shapes", $shapes);
-        } else {
-            $differenceCles = array_diff_key($shapes, $have_shapes);
-            if (count($differenceCles) > 0) {
-                foreach ($differenceCles as $key => $value) {
-                    $have_shapes[$key] = $value;
-                }
-                update_option("aso_all_shapes", $have_shapes);
-            }
-        }
+       // } else {
+        //     $differenceCles = array_diff_key($shapes, $have_shapes);
+        //     if (count($differenceCles) > 0) {
+        //         foreach ($differenceCles as $key => $value) {
+        //             $have_shapes[$key] = $value;
+        //         }
+        //         update_option("aso_all_shapes", $have_shapes);
+        //     }
+        // }
     }
     private function aso_define_fixingMethods()
     {

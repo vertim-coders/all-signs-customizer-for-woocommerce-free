@@ -1,10 +1,16 @@
 <template>
     <div>
+        <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[180px] aso-z-[9999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4] aso-translate-y-2">
+            <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex">
+                <button @click="state='pages'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'pages' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Pages</button>
+                <button @click="state='buttons'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'buttons' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Buttons</button>
+            </div>
+        </div>
         <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
             <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
         <div class="aso-space-y-4 aso-py-10" v-if="!isFetching">
-            <div>
+            <div v-if="state == 'pages'">
                 <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-2 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
                     <div class="aso-flex aso-space-x-4 aso-py-4">
                         <label class="aso-text-[12px] aso-text-[#444444] aso-py-1">With which tag do you want the configurator title to be displayed?</label>
@@ -53,7 +59,28 @@
                         </button>
                     </div>
                 </div>
-
+            </div>
+            <div v-if="state == 'buttons'" class="aso-px-10">
+                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
+                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of design button on product: </label>
+                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.productDesignButton" />
+                </div>
+                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
+                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of template button on product: </label>
+                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.productTemplateButton" />
+                </div>
+                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
+                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of add to cart button on template: </label>
+                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.templateAddToCartButton" />
+                </div>
+                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
+                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of design button on template: </label>
+                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.templateDesignButton" />
+                </div>
+                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
+                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of recap button in cart: </label>
+                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.recapsButtonOnCart" />
+                </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
@@ -104,9 +131,17 @@ import toastMessage from '@/admin/utils/functions';
 var isLoading = ref(false);
 var isFetching= ref(false);
 var pages = ref([]);
+const state = ref('pages');
 var configPages = ref({
     configuratorPage:0,
     templatePage:0,
+    buttons:{
+        productDesignButton:'Customize The Product',
+        productTemplateButton:'Design From Example',
+        templateAddToCartButton:'Add To Cart',
+        templateDesignButton: 'Customize',
+        recapsButtonOnCart:'Sign Recaps'        
+    },
     others:{
         titleBalise:'h1'
     }
