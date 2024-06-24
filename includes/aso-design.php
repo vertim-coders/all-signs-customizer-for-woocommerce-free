@@ -414,8 +414,10 @@ class ASO_Design {
 						}
 					}
 				}else{
-					foreach ($order_data['recaps']['images']["value"] as $key => $image) {							
-						array_push($dataUris,$image["url"]);
+					if(isset($order_data['recaps']['images']["value"])){
+						foreach ($order_data['recaps']['images']["value"] as $key => $image) {							
+							array_push($dataUris,$image["url"]);
+						}
 					}
 				}
 				$order_id = wc_get_order_id_by_order_item_id($item_id);
