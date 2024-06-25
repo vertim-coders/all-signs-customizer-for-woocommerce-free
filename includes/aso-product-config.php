@@ -556,13 +556,17 @@
 		
 		if($aso_product->is_aso_customizable()){
 			$configs = get_post_meta($product_id,"product-aso-metas",true);
-			$meta_value = get_post_meta($configs[$product_id]['config-id'],'aso-templates',true);
+			$meta_templates = get_post_meta($configs[$product_id]['config-id'],'aso-templates',true);
+			$meta_design = get_post_meta($configs[$product_id]['config-id'],'aso-configs-meta',true);
 			if ('simple' === $product->get_type() || 'variable' === $product->get_type()) {
 				ob_start(); ?>
 				<div class="aso-buttons-url">
 				<?php
-					echo wp_kses_post($aso_product->get_design_buttons( true ));
-					if( is_array($meta_value) && count($meta_value)>0){
+					$general_product_options  = $meta_design["data"]["settings"]["generals"]["product"] ?? null;
+					if($general_product_options != null && $general_product_options["designFromScratch"]===true){
+						echo wp_kses_post($aso_product->get_design_buttons( true ));
+					}
+					if( is_array($meta_templates) && count($meta_templates)>0){
 						echo wp_kses_post($aso_product->get_templates_buttons());
 					}
 				?>
@@ -586,7 +590,9 @@
 				if ( $product_class == 'WC_Product_Simple' ) {
 					$aso_product = new ASO_Product_Config( $productId );
 					if ( $aso_product->is_aso_customizable() ) {
-						$html .= wp_kses_post($aso_product->get_design_buttons());
+						if($general_options["designFromScratch"]){
+							$html .= wp_kses_post($aso_product->get_design_buttons());
+						}
 						$meta_value = get_post_meta($configs[$productId]['config-id'],'aso-templates',true);
 						if(is_array($meta_value) && count($meta_value)>0){
 							$html .= wp_kses_post($aso_product->get_templates_buttons());

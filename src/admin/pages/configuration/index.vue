@@ -2552,61 +2552,9 @@ const metaConfigs = ref({
                             },
                             {
                                 isDefault: false,
-                                name: "Stockhlom",
-                                description: "Shiny brass",
-                                icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm1.png",
-                                image: aso_data.assets_url+'/images/stockholm1-prev.png',
-                                color: {
-                                name: "Stockhlom",
-                                codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stockholm1-prev.png'
-                                },
-                                fixingMethods: [
-                                2
-                                ],
-                                shapeId: 0,
-                                size: {
-                                width: 154,
-                                height: 43,
-                                basePrice: 0,
-                                startPriceAtChar: 1,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0
-                                },
-                                additionalPrice: 35.99
-                            },
-                            {
-                                isDefault: false,
-                                name: "Stockhlom",
-                                description: "Brushed nickel-plated brass",
-                                icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/stockholm2.png",
-                                image: aso_data.assets_url+'/images/stockholm2-prev.png',
-                                color: {
-                                name: "Stockhlom",
-                                codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stockholm2-prev.png'
-                                },
-                                fixingMethods: [
-                                2
-                                ],
-                                shapeId: 0,
-                                size: {
-                                width: 154,
-                                height: 43,
-                                basePrice: 0,
-                                startPriceAtChar: 1,
-                                maxTextChar: -1,
-                                minCharText:0,
-                                charPrice: 0
-                                },
-                                additionalPrice: 37.69
-                            },
-                            {
-                                isDefault: false,
                                 name: "Berlin",
                                 description: "Shiny brass",
-                                icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1-png",
+                                icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1.png",
                                 image: aso_data.assets_url+'/images/berlin1-prev.png',
                                 color: {
                                 name: "Berlin",
@@ -2840,7 +2788,7 @@ const metaConfigs = ref({
                                 isDefault: false,
                                 name: "Sydney",
                                 description: "Brushed brass",
-                                icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney.png",
+                                icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney1.png",
                                 image: aso_data.assets_url+"/images/sydney-prev.png",
                                 color: {
                                 name: "Sydney",
