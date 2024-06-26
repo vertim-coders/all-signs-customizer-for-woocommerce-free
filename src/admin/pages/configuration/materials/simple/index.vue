@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="aso-sticky aso-top-[80px] aso-z-[9999]">
+        <div class="aso-sticky aso-top-[80px] aso-z-[999]">
             <div class="aso-bg-[#F8F9FB] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
                     {{config}}
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="aso-bg-white aso-sticky aso-top-[130px] aso-z-[9999] aso-shadow-md aso-justify-center aso-items-center aso-flex">
+        <div class="aso-bg-white aso-sticky aso-top-[130px] aso-z-[999] aso-shadow-md aso-justify-center aso-items-center aso-flex">
             <div class="">
                 <button @click="()=>router.push('/configs/'+config.replace(/ /,'-')+'/'+configID+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/simple/sizes')" :class="`aso-flex aso-w-fit aso-h-fit aso-px-6 aso-p-4 aso-bg-transparent aso-space-x-2 aso-text-black ${route.name == 'Simple-Sizes' ? 'aso-border-b-[3px] aso-border-r-0 aso-border-l-0 aso-border-t-0 aso-border-solid aso-border-b-[#016464] aso-text-[#016464] aso-bg-[#F9F9F9]' : 'aso-border-none'} hover:aso-border-b-[3px] hover:aso-border-r-0 hover:aso-border-l-0 hover:aso-border-t-0 hover:aso-border-solid hover:aso-border-b-[#016464] hover:aso-bg-[#F9F9F9] hover:aso-text-[#016464] aso-cursor-pointer`">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 47 41" fill="black" xmlns="http://www.w3.org/2000/svg">
@@ -110,7 +110,7 @@
                 </button>
             </div>
         </div>
-        <div class="aso-h-[80vh] aso-overflow-y-auto aso-overflow-x-hidden aso-relative">
+        <div class="aso-h-[100vh] aso-overflow-y-auto aso-overflow-x-hidden aso-relative">
             <Sizes v-if="route.name == 'Simple-Sizes'"/>
             <Borders v-if="route.name == 'Simple-Borders'"/>
             <Colors v-if="route.name == 'Simple-Colors'"/>

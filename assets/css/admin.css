@@ -36,6 +36,10 @@
   background: #f0f3fa;
   background: linear-gradient(90deg, #f0f3fa 49%, #016464 100%); }
 
+#aso-frontend-app.aso-preview-configurator .aso-scrollBar img {
+  width: -webkit-fill-available;
+  width: -moz-available; }
+
 .aso-config-admin {
   height: 100vh; }
 

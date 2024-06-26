@@ -564,9 +564,9 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
                     if(count($meta_value['data']['materials'][$material_id]['data']['sizes']['allSizes'])>0){
-                        return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['sizes']);
+                        return rest_ensure_response(["materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes'],"measurementUnit"=>$meta_value["data"]["settings"]["customizerSign"]['customizerOptions']["measurementUnit"]]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Sizes not found',"ASO"),"materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes']]);
+                        return rest_ensure_response(["message"=>__('Sizes not found',"ASO"),"materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes'],"measurementUnit"=>$meta_value["data"]["settings"]["customizerSign"]['customizerOptions']["measurementUnit"]]);
                     }    
                 }
                 else{

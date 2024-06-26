@@ -313,17 +313,17 @@ final class ASO_All_Signs_Options
             ]
         ];
         $have_shapes = get_option("aso_all_shapes");
-        //if ($have_shapes == false) {
+        if ($have_shapes == false) {
             update_option("aso_all_shapes", $shapes);
-       // } else {
-        //     $differenceCles = array_diff_key($shapes, $have_shapes);
-        //     if (count($differenceCles) > 0) {
-        //         foreach ($differenceCles as $key => $value) {
-        //             $have_shapes[$key] = $value;
-        //         }
-        //         update_option("aso_all_shapes", $have_shapes);
-        //     }
-        // }
+        } else {
+            $differenceCles = array_diff_key($shapes, $have_shapes);
+            if (count($differenceCles) > 0) {
+                foreach ($differenceCles as $key => $value) {
+                    $have_shapes[$key] = $value;
+                }
+                update_option("aso_all_shapes", $have_shapes);
+            }
+        }
     }
     private function aso_define_fixingMethods()
     {

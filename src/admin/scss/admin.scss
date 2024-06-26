@@ -11,6 +11,10 @@
     rgba(1, 100, 100, 1) 100%
   );
 }
+#aso-frontend-app.aso-preview-configurator .aso-scrollBar img {
+  width: -webkit-fill-available;
+  width: -moz-available;
+}
 .aso-config-admin {
   height: 100vh;
   // height: calc(100vh)-80px;

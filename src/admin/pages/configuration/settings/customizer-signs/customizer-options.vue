@@ -7,10 +7,10 @@
                         <div class="aso-flex aso-flex-col aso-w-2/5">
                             <label class="aso-text-[12px]">Measurement Unit</label>
                             <select v-model="customizer.measurementUnit">
-                                <option value="cm">Centimeters</option>
-                                <option value="in">Inches</option>
                                 <option value="mm">Millimeters</option>
+                                <option value="cm">Centimeters</option>
                                 <option value="m">Meters</option>
+                                <option value="in">Inches</option>
                             </select>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5">

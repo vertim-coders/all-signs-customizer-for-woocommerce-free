@@ -112,7 +112,7 @@
                 <div v-if="sizes.thickness.active" class="aso-grid aso-grid-cols-5 aso-gap-4">
                     <div class="aso-relative aso-space-y-2 aso-py-2 aso-flex aso-flex-col aso-text-[12px]" :key="key" v-for="thick,key in sizes.thickness.values">
                         <input type="number" v-model="sizes.thickness.values[key]" class="aso-rounded aso-w-[80%] aso-h-[30px]">
-                        <div @click="handleDeleteThickness(key)" class="aso-bg-white aso-flex aso-absolute aso-justify-center aso-items-center aso-right-6 aso-my-0  -aso-top-4 aso-shadow-md aso-rounded-full aso-cursor-pointer">
+                        <div @click="handleDeleteThickness(key)" class="aso-bg-red-500 aso-text-white aso-flex aso-absolute aso-justify-center aso-items-center aso-right-6 aso-my-0  -aso-top-4 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
@@ -138,43 +138,87 @@
                     </div>
                 </div>
                 <div class="aso-space-y-6 aso-pt-12" v-if="sizes.customSize.active">
-                    <div class="aso-flex aso-justify-between">
-                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                    <div class="aso-grid aso-grid-cols-3 aso-gap-6 aso-items-center">
+                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-bold aso-font-normal">Width label</label>
                             <input type="text" v-model="sizes.customSize.width.label" class="aso-rounded aso-w-full aso-h-[30px]">
                         </div>
-                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
-                            <label for="" class="aso-bold aso-font-normal">Height label</label>
-                            <input type="text" v-model="sizes.customSize.height.label" class="aso-rounded aso-w-full aso-h-[30px]">
-                        </div>
-                    </div>
-                    <div class="aso-flex aso-justify-between">
-                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-bold aso-font-normal">Min width</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.width.min" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
-                            
                         </div>
-                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-bold aso-font-normal">Min Height</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.height.min" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
                         </div>
-                    </div>
-                    <div class="aso-flex aso-justify-between">
-                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                            <label for="" class="aso-bold aso-font-normal">Height label</label>
+                            <input type="text" v-model="sizes.customSize.height.label" class="aso-rounded aso-w-full aso-h-[30px]">
+                        </div>
+                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-bold aso-font-normal">Max Width</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.width.max" class="aso-rounded aso-w-full aso-h-[30px]">
                             </div>
                             
                         </div>
-                        <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-bold aso-font-normal">Max height</label>
                             <div class="">
                                 <input type="number" v-model="sizes.customSize.height.max" class="aso-rounded aso-w-full aso-h-[30px]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aso-space-y-2">
+                        <label>Pricings</label>
+                        <div>
+                            <div class="aso-relative aso-space-y-2 aso-py-2 aso-flex aso-flex-col aso-text-[12px]" :key="key" v-for="pricing,key in sizes.customSize.pricings">
+                                <div>
+                                    <div class="aso-py-2 aso-grid aso-grid-cols-4 aso-gap-4 aso-text-[12px]">   
+                                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                                            <label for="" class="aso-bold aso-font-normal">Surface</label>
+                                            <div class="aso-relative">
+                                                <input type="number" v-model="sizes.customSize.pricings[key].surface" class="aso-rounded aso-w-full aso-h-[30px]" :class="`${!isValidPricing(key)?'aso-field-required':''}`">
+                                                <span class="aso-absolute aso-top-[2px] aso-right-[10%]">{{ measurementUnit }}<sup>2</sup></span>
+                                            </div>
+                                        </div>
+                                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                                            <label for="" class="aso-bold aso-font-normal">Base Price</label>
+                                            <div class="aso-relative">
+                                                <input type="number" v-model="sizes.customSize.pricings[key].basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="sizes.customSize.pricings[key].basePrice.trim()=='' ? izes.customSize.pricings[key].basePrice=0 : ''">
+                                            </div>
+                                        </div>
+                                        <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
+                                            <label for="" class="aso-bold aso-font-normal">Char Price</label>
+                                            <div class="aso-relative">
+                                                <input type="number" v-model="sizes.customSize.pricings[key].charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="sizes.customSize.pricings[key].charPrice.trim()=='' ? izes.customSize.pricings[key].charPrice=0 : ''">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="" class="aso-bold aso-font-normal aso-invisible">Delete pricing</label>
+                                            <div class="aso-flex aso-justify-start aso-items-start aso-h-full aso-pt-1">
+                                                <div @click="handleDeletePricing(key)" class="aso-flex aso-items-center aso-justify-center aso-bg-red-500 aso-text-white aso-flex aso-justify-center aso-items-center aso-shadow-md aso-rounded-md aso-cursor-pointer aso-w-1/4 aso-h-[30px]">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-[70%] aso-h-[70%]">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <p v-if="!isValidPricing(key)" class="aso-m-0 aso-text-red-500">{{ key == 0 ? 'Must be greater than or equal to the greater of the minimum custom size values and less than or equal to the greater of the maximum custom size values.' : 'Must be greater than the previous line value and less than or equal to the greater of the height or the maximum width of custom size.' }}</p>
+                                </div>
+                            </div>
+                            <div v-if="canAddNewPricing">
+                                <button :disabled="isLoading" @click="handleAddNewPricing" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-2 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                    <span class="aso-font-semibold aso-text-[16px]">More</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -182,7 +226,7 @@
             </div>
             <div class="aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-flex aso-justify-end">
-                    <button @click="updateMaterialSize" class="aso-flex aso-bg-[#016464]  aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                    <button @click="updateMaterialSize" class="aso-flex aso-bg-[#016464]  aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer" :class="`${!canAddNewPricing ? 'aso-cursor-not-allowed' : '' }`">
                         <div class="aso-translate-y-1">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
                             <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +326,7 @@
             
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -305,33 +349,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Delete Modal-->
-        <div v-if="openAlert" @click.self="closeAlert" :key="key" v-for="(sz, key) in sizes.allSizes" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
-            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
-                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
-                    <button @click.stop="closeAlert" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-alert-hide="popup-alert">
-                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="aso-sr-only">Close alert</span>
-                    </button>
-                    <div class="aso-p-4 md:p-5 aso-text-center">
-                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                        </svg>
-                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this thickness?</h3>
-                        <!--<input v-model="addColors[key].name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />-->
-                        <button @click="handleDeleteNewThickness(key)" data-alert-hide="popup-alert" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            Yes, I'm sure
-                        </button>
-                        <button @click.stop="closeAlert" data-alert-hide="popup-alert" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        </div>        
     </div>
 </template>
 <script setup>
@@ -360,7 +378,10 @@ const sizes = ref({
             label:'Height',
             min:0,
             max:0
-        }
+        },
+        pricings:[
+
+        ]
     },
     thickness: {
         active: false,
@@ -368,8 +389,9 @@ const sizes = ref({
     },
     allSizes:[]
 });
+const measurementUnit = ref('mm');
+const canAddNewPricing = ref(true);
 const isEdit = ref(false);
-const openAlert = ref(false);
 const openModal = ref(false);
 const noSizesFound = ref('');
 const size = ref({
@@ -393,12 +415,15 @@ onMounted(async ()=>{
 
 const fetchMaterialSizes = async () => {
     const result = await api.getMaterialSimpleSizes(configID.value,materialId.value);
-    
-    if(result.message){
-        noSizesFound.value = result.message;
+    if(!result.success){
+        if(result.message){
+            noSizesFound.value = result.message;
+        }
+        if( !result.materialSizes.customSize.pricings){
+            result.materialSizes.customSize.pricings = [];
+        }
         sizes.value = result.materialSizes;
-    }else{
-        sizes.value = result;
+        measurementUnit.value = result.measurementUnit;
     }
 }
 
@@ -416,48 +441,50 @@ const checkIfThereDefault = ()=> {
     }
 }
 const updateMaterialSize = async () => {
-    isLoading.value = true;
-    checkIfThereDefault();
-    const result = await api.updateMaterialSimpleSizes(configID.value,materialId.value,sizes.value);
-    if(result.success){
-        await fetchMaterialSizes();
-        if(result.success == true ) {
-            toastMessage(result.message);
+    if(canAddNewPricing){
+        isLoading.value = true;
+        checkIfThereDefault();
+        const result = await api.updateMaterialSimpleSizes(configID.value,materialId.value,sizes.value);
+        if(result.success){
+            await fetchMaterialSizes();
+            if(result.success == true ) {
+                toastMessage(result.message);
+            }else{
+                toastMessage(result.message,"warning");
+            }
+            isLoading.value = false;
+            isNewSize.value = false;
+            size.value = {
+                isDefault:false,
+                label:"",
+                width:0,
+                height:0,
+                startPriceAtChar:1,
+                textNumber:0,
+                maxTextChar:-1,
+                minCharText:0,
+                charPrice:0,
+                basePrice:0
+            };
+            openModal.value = false;
         }else{
-            toastMessage(result.message,"warning");
+            isLoading.value = false;
+            toastMessage(result.message,"error");
+            isNewSize.value = false;
+            size.value = {
+                isDefault:false,
+                label:"",
+                width:0,
+                height:0,
+                startPriceAtChar:1,
+                textNumber:0,
+                maxTextChar:-1,
+                minCharText:0,
+                charPrice:0,
+                basePrice:0
+            };
+            openModal.value = false;
         }
-        isLoading.value = false;
-        isNewSize.value = false;
-        size.value = {
-            isDefault:false,
-            label:"",
-            width:0,
-            height:0,
-            startPriceAtChar:1,
-            textNumber:0,
-            maxTextChar:-1,
-            minCharText:0,
-            charPrice:0,
-            basePrice:0
-        };
-        openModal.value = false;
-    }else{
-        isLoading.value = false;
-        toastMessage(result.message,"error");
-        isNewSize.value = false;
-        size.value = {
-            isDefault:false,
-            label:"",
-            width:0,
-            height:0,
-            startPriceAtChar:1,
-            textNumber:0,
-            maxTextChar:-1,
-            minCharText:0,
-            charPrice:0,
-            basePrice:0
-        };
-        openModal.value = false;
     }
 }
 
@@ -528,9 +555,6 @@ const back = () => {
 const closeModal = () => {
     openModal.value = !openModal.value;
 }
-const closeAlert = () => {
-    openAlert.value = !openAlert.value;
-}
 const changeCustomSizeActive = () => {
     sizes.value.customSize.active = !sizes.value.customSize.active;
 };
@@ -548,18 +572,37 @@ const handleAddNewThickness = ()=> {
 }
 const handleDeleteThickness = (key)=> {
     sizes.value.thickness.values.splice(key,1);
-    openAlert.value = true;
 }
 
-const handleDeleteNewThickness = (key) => {
-    var tab = [];
-    for (let index = 0; index < sizes.value.allSizes.length; index++) {
-        tab.push(sizes.value.allSizes.length[index])
-    }
-    tab.splice(key,1);
-    if(tab.length>0){
-        sizes.value.allSizes.length=tab;
-    }
-    closeAlert()
+const handleAddNewPricing = ()=>{
+    sizes.value.customSize.pricings.push({
+        basePrice:0,
+        charPrice:0,
+        surface:0
+    });
 }
+const handleDeletePricing = (key)=>{
+    sizes.value.customSize.pricings.splice(key,1);
+}
+const isValidPricing = (key)=>{
+    const minSurface = (sizes.value.customSize.width.min > sizes.value.customSize.height.min) ? sizes.value.customSize.width.min : sizes.value.customSize.height.min;
+    const maxSurface = (sizes.value.customSize.width.max > sizes.value.customSize.height.max) ? sizes.value.customSize.width.max : sizes.value.customSize.height.max;
+    
+    if(minSurface<=sizes.value.customSize.pricings[key].surface && maxSurface >= sizes.value.customSize.pricings[key].surface){
+        if(key!=0){
+            if(sizes.value.customSize.pricings[key].surface > sizes.value.customSize.pricings[key-1].surface && sizes.value.customSize.pricings[key].surface<=maxSurface){
+                canAddNewPricing.value=true;
+                return true;
+            }else{
+                canAddNewPricing.value=false;
+                return false;
+            }
+        }
+        canAddNewPricing.value=true;
+        return true;
+    }
+    canAddNewPricing.value=false;
+    return false;
+}
+
 </script>

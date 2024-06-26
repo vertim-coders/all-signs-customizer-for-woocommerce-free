@@ -1028,7 +1028,12 @@ const metaConfigs = ref({
 								max: 900,
 								min: 50,
 								label: "Height"
-							}
+							},
+                            pricings:[
+                                {surface:300,basePrice:10,charPrice:1.5},
+                                {surface:700,basePrice:10,charPrice:3},
+                                {surface:1400,basePrice:10,charPrice:5},
+                            ]
 						}
 					},
 					colors: {
@@ -5557,7 +5562,12 @@ const metaConfigs = ref({
 								max: 1100,
 								min: 30,
 								label: "Height"
-							}
+							},
+                            pricings:[
+                                {surface:300,basePrice:10,charPrice:1.5},
+                                {surface:700,basePrice:10,charPrice:3},
+                                {surface:1400,basePrice:10,charPrice:5},
+                            ]
 						}
 					},
 					colors: {
@@ -6111,7 +6121,12 @@ const metaConfigs = ref({
 								max: 1100,
 								min: 30,
 								label: "Height"
-							}
+							},
+                            pricings:[
+                                {surface:300,basePrice:10,charPrice:1.5},
+                                {surface:700,basePrice:10,charPrice:3},
+                                {surface:1400,basePrice:10,charPrice:5},
+                            ]
 						}
 					},
 					colors: {
