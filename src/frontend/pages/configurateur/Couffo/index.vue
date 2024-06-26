@@ -533,7 +533,7 @@
                                         <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height">
                                     </div>
                                 </div>
-                                <span @click="changeSize(customSizeValues, customSizeTextValues)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
+                                <span @click="selectCustomSize(customSizes)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
                                     {{ configVisualiserTexts.customSizeButtonDone && configVisualiserTexts.customSizeButtonDone.trim() !== '' ? configVisualiserTexts.customSizeButtonDone : 'Done' }}
                                 </span>
                             </div>
@@ -4245,6 +4245,37 @@
         //     centerSign(canvasBack)
         // }, 50);
     }
+
+    function selectCustomSize(customSize){
+        console.log(customSize, "custom size")
+        function checkInterval(array, value){
+            let settings = array[0];
+            for (let i = 0; i < array.length; i++) {
+                if (value <= (array[i].surface)) {
+                    resultat = array[i];
+                    
+                    break;
+                }
+                settings = array[i];
+            }
+            return settings;   
+        }
+        var valeur = customSizeValues.value.width * customSizeValues.value.height
+
+        var matchingSettings = checkInterval(customSize.pricings, valeur)
+        console.log(matchingSettings, "resultat")
+
+        customSizeTextValues.value = {
+            textNumber: 0, 
+            charPrice: matchingSettings.charPrice, 
+            basePrice: matchingSettings.basePrice, 
+            maxTextChar: -1, 
+            startPriceAtChar: 0
+        }
+
+        changeSize(customSizeValues.value, customSizeTextValues.value)
+    }
+
     var currentThickValue = ref(0)
     function selectSizeThickness(thick){
         currentThickValue.value = thick

@@ -482,7 +482,7 @@
                                             <input class="aso-w-full aso-border aso-border-zinc-600 aso-p-1 aso-rounded-sm" type="number" name="" id="sizeHeight" :min="customSizes.height.min" :max="customSizes.height.max" v-model="customSizeValues.height">
                                         </div>
                                     </div>
-                                    <span @click="changeSize(customSizeValues, customSizeTextValues)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
+                                    <span @click="selectCustomSize(customSizes)" :class="`aso-absolute aso-bottom-0 aso-left-0 aso-w-full aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold aso-text-md aso-full-center aso-border aso-px-2 aso-p-1 aso-base-animation aso-cursor-pointer`">
                                         {{ configVisualiserTexts.customSizeButtonDone && configVisualiserTexts.customSizeButtonDone.trim() !== '' ? configVisualiserTexts.customSizeButtonDone : 'Done' }}
                                     </span>
                                 </div>
@@ -1641,30 +1641,6 @@
                     </p>
                 </div>
 
-                <!-- <div v-if="materialType === 'advance' && activeSignColor != '' " class="aso-flex aso-items-center aso-justify-between aso-w-full aso-px-4 aso-py-3 aso-border-b-2">
-                    <div :class="`aso-w-1/3 aso-text-[#000000]`">
-                        <p v-if="configVisualiserTexts.textColor" class="aso-text-[16px] text-black aso-font-semibold">{{configVisualiserTexts.textColor}}</p>
-                        <p v-if="!configVisualiserTexts.textColor" class="aso-text-[16px] text-black aso-font-semibold">Color</p>
-                    </div>
-                    <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
-                        <div class="aso-flex aso-space-x-2 aso-full-center">
-                            <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                            <span class="lowercase first-letter:uppercase">{{activeSignColor}}</span>
-                            <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                <img :src="activeSignColorCode1" class="aso-w-[35px] aso-h-[35px]" />
-                            </span>
-                        </div>
-
-                        <div v-if="configDoublePart.active" class="aso-flex aso-space-x-2 aso-full-center">
-                            <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                            <span class="lowercase first-letter:uppercase">{{activeSignFace2Color}}</span>
-                            <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                <img :src="activeSignColorCode1" class="aso-w-[35px] aso-h-[35px]" />
-                            </span>
-                        </div>
-                    </p>
-                </div> -->
-
                 <div v-if="activeFixingMethode != '' " :class="`aso-flex aso-items-center aso-justify-between aso-px-4 aso-py-3 aso-border-b-2 aso-border-[${configColors.recaps.optionBorderColor}] hover:aso-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:aso-text-[${configColors.recaps.optionHoverTextColor}] hover:aso-bg-[${configColors.recaps.optionHoverBorderColor}] aso-base-animation`">
                     <div :class="``">
                         <p v-if="configVisualiserTexts.textFixingMethods" class="aso-text-[16px] aso-font-semibold">{{configVisualiserTexts.textFixingMethods}}</p>
@@ -1686,7 +1662,7 @@
                             <div v-if="activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                    <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
+                                    <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.codeHex}] aso-flex`"></span>
                                     <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face1.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
@@ -1694,7 +1670,7 @@
                             <div v-if="activeFace1Border !== 'none' && colorForBorder1" class="aso-flex aso-space-x-1 aso-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName1}}</span>
                                 <span :class="`aso-h-fit aso-w-fit aso-p-[1px] aso-border aso-border-[${configColors.backgroundColorHeader}]`">
-                                    <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.codeHex}] aso-flex`"></span>
+                                    <span v-if="!configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.codeHex}] aso-flex`"></span>
                                     <span v-if="configDoublePart.active" :class="`aso-h-[35px] aso-w-[35px] aso-p-4 aso-bg-[${configData.sign.border.value.face1.codeHex}] aso-flex`"></span>
                                 </span>
                             </div>
@@ -2693,6 +2669,7 @@
 
         //selection de border
         if(sign.material.type === 'simple'){
+            // console.log(sign.border, "border")
             if(borderrs.value.allBorders.length > 0){
                 borderrs.value.allBorders.forEach((borderr, id) => {
                     allBorders.value.forEach((border, index) => {
@@ -4282,6 +4259,36 @@
         if(firstSetLoad.value){
             saveStep('select size')
         }
+    }
+    
+    function selectCustomSize(customSize){
+        console.log(customSize, "custom size")
+        function checkInterval(array, value){
+            let settings = array[0];
+            for (let i = 0; i < array.length; i++) {
+                if (value <= (array[i].surface)) {
+                    resultat = array[i];
+                    
+                    break;
+                }
+                settings = array[i];
+            }
+            return settings;   
+        }
+        var valeur = customSizeValues.value.width * customSizeValues.value.height
+
+        var matchingSettings = checkInterval(customSize.pricings, valeur)
+        console.log(matchingSettings, "resultat")
+
+        customSizeTextValues.value = {
+            textNumber: 0, 
+            charPrice: matchingSettings.charPrice, 
+            basePrice: matchingSettings.basePrice, 
+            maxTextChar: -1, 
+            startPriceAtChar: 0
+        }
+
+        changeSize(customSizeValues.value, customSizeTextValues.value)
     }
 
     var currentThickValue = ref(0)
