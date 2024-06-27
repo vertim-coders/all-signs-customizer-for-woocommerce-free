@@ -174,7 +174,39 @@
                         </div>
                     </div>
                     <div class="aso-space-y-2">
-                        <label>Pricings</label>
+                        <div class="aso-space-x-4 aso-flex aso-relative">
+                            <label>Pricings</label>
+                            <div @click="showPricingModal = true" class="aso-cursor-pointer aso-w-7 aso-h-7 aso-rounded-full aso-bg-blue-500 aso-text-white aso-flex aso-items-center aso-justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                                </svg>
+                            </div>  
+                            <div v-if="showPricingModal" class="aso-absolute -aso-top-20 aso-left-20 aso-z-50 aso-justify-center aso-items-center aso-w-full">
+                                <div class="aso-relative aso-p-4 aso-w-full aso-max-w-2xl aso-max-h-full">
+                                    <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
+                                        <!-- Modal header -->
+                                        <div class="aso-flex aso-items-center aso-justify-between aso-p-2 aso-border-solid  aso-border-t-0 aso-border-x-0 aso-border-b aso-rounded-t dark:border-gray-600">
+                                            <h3 class="aso-text-xl aso-font-semibold aso-text-gray-900 dark:text-white">
+                                                Custom Sizes Pricing Rules
+                                            </h3>
+                                            <button @click="showPricingModal = false" class="aso-text-gray-400 aso-bg-transparent hover:aso-bg-gray-200 hover:aso-text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                                                <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="aso-sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="aso-p-4 md:aso-p-5 aso-space-y-4">
+                                            <p class="aso-text-base aso-text-justify aso-leading-relaxed aso-text-gray-500 dark:text-gray-400">
+                                                For custom size pricing, the idea is to create surface intervals, which would enable the price to be calculated according to the dimensions chosen by the customer. 
+                                                Example: for a 100 * 100 surface, I want the base price to be 25 and the price per char to be 2, so in the surface area I'll write 100 and in base Price I'll write 25 net char Price I'll write 2. Note that the values to be entered in the interval must not exceed or be less than the various values defined in min Height and min Width and max Height and max Width. The plugin uses the largest of each category (min and max) to check pricing.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                         
+                        </div>
                         <div>
                             <div class="aso-relative aso-space-y-2 aso-py-2 aso-flex aso-flex-col aso-text-[12px]" :key="key" v-for="pricing,key in sizes.customSize.pricings">
                                 <div>
@@ -406,6 +438,7 @@ const size = ref({
     charPrice:0,
     basePrice:0
 });
+const showPricingModal = ref(false);
 const emptyLabel = ref(false);
 onMounted(async ()=>{
     isFetching.value = true;

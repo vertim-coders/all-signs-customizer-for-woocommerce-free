@@ -5566,7 +5566,7 @@ const metaConfigs = ref({
                             pricings:[
                                 {surface:300,basePrice:10,charPrice:1.5},
                                 {surface:700,basePrice:10,charPrice:3},
-                                {surface:1400,basePrice:10,charPrice:5},
+                                {surface:1100,basePrice:10,charPrice:5},
                             ]
 						}
 					},
@@ -6125,7 +6125,7 @@ const metaConfigs = ref({
                             pricings:[
                                 {surface:300,basePrice:10,charPrice:1.5},
                                 {surface:700,basePrice:10,charPrice:3},
-                                {surface:1400,basePrice:10,charPrice:5},
+                                {surface:1100,basePrice:10,charPrice:5},
                             ]
 						}
 					},
