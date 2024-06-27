@@ -1459,11 +1459,12 @@
                     </button>
                 </div>
             </div>
-    
-            <div v-if="showImg" :class="`aso-absolute aso-top-[20%] lg:aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2`">
+        </div>
 
-                <span @click="closeprevImg" :class="`aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+        <div v-if="showImg" :class="`aso-absolute aso-top-0 aso-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso aso-w-full aso-h-full aso-flex aso-full-center`">
+            <div :class="`aso-relative aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2`">
+                <span @click="closeprevImg" :class="`aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </span>
