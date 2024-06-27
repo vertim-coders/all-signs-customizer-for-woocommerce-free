@@ -4247,16 +4247,15 @@
     }
 
     function selectCustomSize(customSize){
-        console.log(customSize, "custom size")
-        function checkInterval(array, value){
-            let settings = array[0];
-            for (let i = 0; i < array.length; i++) {
-                if (value <= (array[i].surface * array[i].surface)) {
-                    resultat = array[i];
-                    
+        // console.log(customSize, "custom size")
+        function checkInterval(pricings, value){
+            let settings = pricings[0];
+            for (let i = 0; i < pricings.length; i++) {
+                if (value <= (pricings[i].surface * pricings[i].surface)) {
+                    settings = pricings[i];
                     break;
                 }
-                settings = array[i];
+                settings = pricings[i];
             }
             return settings;   
         }
