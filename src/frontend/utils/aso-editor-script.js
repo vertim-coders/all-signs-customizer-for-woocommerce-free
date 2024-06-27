@@ -2085,11 +2085,11 @@ function handleChangeSignColor(
           }
         } else {
           currentSignTextColor = defTextColor;
-          if (object.name == "aso-SignText") {
-            if (defTextColor) {
-              object.set("fill", defTextColor);
-            }
-          }
+          // if (object.name == "aso-SignText") {
+          //   if (defTextColor) {
+          //     object.set("fill", defTextColor);
+          //   }
+          // }
         }
       }
     });
