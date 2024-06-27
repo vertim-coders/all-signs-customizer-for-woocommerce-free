@@ -4251,7 +4251,7 @@
         function checkInterval(array, value){
             let settings = array[0];
             for (let i = 0; i < array.length; i++) {
-                if (value <= (array[i].surface)) {
+                if (value <= (array[i].surface * array[i].surface)) {
                     resultat = array[i];
                     
                     break;
