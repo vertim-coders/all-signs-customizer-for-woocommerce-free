@@ -1,6 +1,6 @@
 <template>
     <div class="aso-h-[100vh]">
-        <div class="aso-space-y-1" v-if="!isNewOptions">
+        <div class="aso-space-y-1 aso-mt-10" v-if="!isNewOptions">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
                 <button :disabled="isLoading" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addOption">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <div class="aso-space-y-1" v-if="isNewOptions">
+        <div class="aso-space-y-1 aso-mt-10" v-if="isNewOptions">
             <div class="aso-text-[16px] aso-font-bold aso-px-8 aso-py-4 aso-bg-[#F8F9FB]">
                 Add options
             </div>
@@ -168,7 +168,7 @@
                     <label for="" class="aso-text-[16px] aso-font-normal">Exclude Material Colors</label>
                     <Multiselect
                             v-model="option.excludeColors"
-                            placeholder="Select shapes"
+                            placeholder="Select colors"
                             :options="MaterialColors"
                             label="name"
                             trackBy="name"
@@ -224,7 +224,7 @@
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+        <div v-if="openModal" @click.self="closeModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">

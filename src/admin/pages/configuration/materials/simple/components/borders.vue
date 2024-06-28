@@ -248,7 +248,7 @@
                     <label for="" class="aso-text-[16px] aso-font-normal">Exclude size</label>
                     <Multiselect
                         v-model="border.excludeSizes" 
-                        placeholder=""
+                        placeholder="Select Sizes"
                         label="name"
                         trackBy="id"
                         :options="MaterialSimpleSizes"
@@ -288,7 +288,7 @@
             </div>
         </div>
          <!-- Delete Modal-->
-         <div v-if="openModal" @click.self="closeModal" class="aso-z-[99999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-[100vh]">
+         <div v-if="openModal" @click.self="closeModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
                     <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
@@ -376,22 +376,11 @@ const checkNotSelectedManageBorders = ( key= -1) => {
 }
 onMounted(async ()=>{
     isFetching.value = true;
-    await fetchMaterialSizes();
     await fetchMaterialShapes();
     await fetchMaterialBorders();
     isFetching.value = false;
 });
 
-const fetchMaterialSizes = async () => {
-    const sizesResult = await api.getMaterialSimpleSizes(configID.value, materialId.value);
-    if(!sizesResult.message){
-        var tab = [];
-        for (let index = 0; index < sizesResult.allSizes.length; index++) {
-            tab.push({name:sizesResult.allSizes[index].label,value:index});
-        }
-        MaterialSimpleSizes.value = tab;
-    }
-}
 const fetchMaterialShapes = async () => {
     const result = await api.getMaterialSimpleShapes(configID.value,materialId.value);
     if(!result.message){
@@ -409,6 +398,11 @@ const fetchMaterialBorders = async () => {
     const result = await api.getMaterialSimpleBorders(configID.value,materialId.value);
     borders.value = result.materialBorders;
     manageBorders.value=result.manageBorders;
+    var tab = [];
+    for (let index = 0; index < result.materialSizes.length; index++) {
+        tab.push({name:result.materialSizes[index].label,value:index});
+    }
+    MaterialSimpleSizes.value = tab;
     if(result.message){
         noBordersFound.value = result.message;
     }

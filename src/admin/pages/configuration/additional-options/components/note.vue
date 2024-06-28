@@ -23,7 +23,7 @@
             <p class="aso-text-[12px]">The maximum number of text characters for notes.</p>
         </div>
     </div>
-    <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end aso-sticky aso-z-[9999] aso-bottom-0">
+    <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end aso-sticky aso-z-[999] aso-bottom-0">
         <div class="aso-bg-[#016464] aso-rounded">
             <button class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="setBack">
                 <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
