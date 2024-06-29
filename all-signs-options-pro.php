@@ -239,6 +239,21 @@ final class ASO_All_Signs_Options
         if ($have_borders == false) {
             update_option("aso_all_borders", $borders);
         } else {
+            for ($i=0; $i < count($have_borders); $i++) { 
+                $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
+
+                $found = false;
+                foreach ($search_strings as $string) {
+                    if (strpos($have_borders[$i]["icon"], $string) !== false) {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                if ($found) {
+                    $have_borders[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_borders[$i]["icon"]);
+                }
+            }
             $differenceCles = array_diff_key($borders, $have_borders);
             if (count($differenceCles) > 0) {
                 foreach ($differenceCles as $key => $value) {
@@ -316,6 +331,21 @@ final class ASO_All_Signs_Options
         if ($have_shapes == false) {
             update_option("aso_all_shapes", $shapes);
         } else {
+            for ($i=0; $i < count($have_shapes); $i++) { 
+                $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
+
+                $found = false;
+                foreach ($search_strings as $string) {
+                    if (strpos($have_shapes[$i]["icon"], $string) !== false) {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                if ($found) {
+                    $have_shapes[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_shapes[$i]["icon"]);
+                }
+            }
             $differenceCles = array_diff_key($shapes, $have_shapes);
             if (count($differenceCles) > 0) {
                 foreach ($differenceCles as $key => $value) {
@@ -473,6 +503,21 @@ final class ASO_All_Signs_Options
         if ($have_fixingMethods == false) {
             update_option("aso_all_fixingMethods", $fixingMethods);
         } else {
+            for ($i=0; $i < count($have_fixingMethods); $i++) { 
+                $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
+
+                $found = false;
+                foreach ($search_strings as $string) {
+                    if (strpos($have_fixingMethods[$i]["icon"], $string) !== false) {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                if ($found) {
+                    $have_fixingMethods[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_fixingMethods[$i]["icon"]);
+                }
+            }
             $differenceCles = array_diff_key($fixingMethods, $have_fixingMethods);
             if (count($differenceCles) > 0) {
                 foreach ($differenceCles as $key => $value) {

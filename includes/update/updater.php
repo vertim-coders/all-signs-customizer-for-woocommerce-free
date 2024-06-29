@@ -15,7 +15,7 @@ class ASO_Updater  {
         // Define the alternative response for information checking
         add_filter('plugins_api', [$this, 'aso_plugin_info'], 20, 3);
         // define the alternative API for updating checking
-		add_filter('pre_set_site_transient_update_plugins', [$this, 'aso_push_update']);
+		add_filter('site_transient_update_plugins', [$this, 'aso_push_update']);
 	}
 
     public function aso_plugin_info( $res, $action, $args ){

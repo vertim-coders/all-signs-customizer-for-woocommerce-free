@@ -1337,7 +1337,9 @@ const metaConfigs = ref({
 								}
 							],
 							enableBorderWidth: false,
-							enableBorderColor: true
+							enableBorderColor: true,
+                            borderColorsLabel:"Borders Colors",
+                            customColorsPrevImg:''
 						},
 						allBorders: [
 							{
@@ -2211,6 +2213,7 @@ const metaConfigs = ref({
                             ],
                             enableBorderWidth: false,
                             enableBorderColor: true,
+                            borderColorsLabel:"Borders Colors",
                             customColorsPrevImg:''
                         },
                         allBorders: [
@@ -8375,7 +8378,7 @@ const metaConfigs = ref({
                             enableBorderWidth: false,
                             enableBorderColor: true,
                             borderColorsLabel:"Borders Colors",
-                                customColorsPrevImg:''
+                            customColorsPrevImg:''
                         },
                         allBorders: [
                         {
