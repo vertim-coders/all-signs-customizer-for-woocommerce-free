@@ -241,7 +241,7 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                    <label class="aso-text-[12px] aso-text-[#444444]">Reset Modal Yes Button Text</label>
+                    <label class="aso-text-[12px] aso-text-[#444444]">Reset Modal No Button Text</label>
                     <input type="text" v-model="visualizer.resetModalNo" class="aso-w-full"/>
                 </div>
             </div>

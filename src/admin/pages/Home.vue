@@ -1,24 +1,23 @@
 <template lang="">
-    <div class="aso-mt-[40px] aso-w-full aso-flex aso-items-center aso-justify-center">
-        <div class="aso-h-full aso-bg-white aso-w-full aso-flex aso-flex-col aso-justify-center aso-items-center aso-p-10">
+    <div class="aso-mt-[40px] aso-fixed aso-w-[calc(100%-160px)] aso-flex aso-items-center aso-justify-center aso-h-[80vh]">
+        <div class="aso-h-[80vh] aso-bg-white aso-w-full aso-flex aso-flex-col aso-justify-center aso-items-center aso-p-10">
             <div class="aso-grid sm:aso-grid-cols-1 lg:aso-grid-cols-2 aso-gap-4 aso-space-x-4 aso-h-full aso-home-gradient aso-bg-gradient-to-r aso-from-white aso-to-[#016464]">
                 <div class="aso-flex aso-flex-col aso-item-center lg:aso-px-4 sm:aso-px-10">
                     <div class="aso-py-2">
-                        <span class="aso-text-[18px]">Welcome to All Signs Options</span>
+                        <span class="aso-text-[14px]">Welcome to ASO configurator</span>
                     </div>
                     <div class="aso-my-4">
-                        <h3 class="aso-m-0 aso-font-bold aso-text-[30px]">Test our</h3>
-                        <h3 class="aso-m-0 aso-mt-8 aso-font-bold aso-text-[30px]">plugin now</h3>
+                        <h3 class="aso-m-0 aso-font-bold aso-text-[30px]">All Signs Options</h3>
                     </div>
-                    <p class="aso-text-justify aso-text-[16px] aso-m-0 aso-mt-6 aso-mb-8">
-                        Every feature we offer is a promise of quality, efficiency and  performance. Explore how our innovations can take your business to new  heights.
+                    <p class="aso-text-justify aso-text-[12px] aso-m-0 aso-mt-6 aso-mb-8">
+                        Thank you for installing the ASO configurator for Woocommerce! Everything in ASO is streamlined to make your custom sign selling experience as simple and intuitive as possible for you and your customers. We hope you'll turn it into a powerful marketing asset that brings customers to your digital doorstep.
                     </p>
                     <div class="aso-pricing-link">
-                        <a target="_blank" href="https://signsdesigner.us/aso/pricing" class="aso-text-white aso-bg-[#75A1FF] hover:aso-bg-[#75A1FF] focus:aso-outline-none focus:aso-ring-4 focus:aso-ring-[#75A1FF] aso-font-medium aso-rounded-md aso-text-sm aso-px-5 aso-py-2.5 aso-text-center aso-me-2 aso-mb-2 aso-text-none">Explore Pricing Plans</a>
+                        <RouterLink to="/configurations" class="aso-text-white aso-bg-[#75A1FF] hover:aso-bg-[#75A1FF] focus:aso-outline-none focus:aso-ring-4 focus:aso-ring-[#75A1FF] aso-font-medium aso-rounded-md aso-text-sm aso-px-5 aso-py-2.5 aso-text-center aso-me-2 aso-mb-2 aso-text-none">Get started</RouterLink>
                     </div>
                 </div>
-                <div :class="`aso-bg-[url(${statisticImage})] aso-flex aso-justify-end aso-items-center`">
-                    <img src="../../../assets/images/home/im_home-skin-vue.png" class="aso-w-full" alt=""/>
+                <div :class="`aso-bg-[url(${statisticImage})] aso-flex aso-justify-center aso-items-center`">
+                    <img src="../../../assets/images/home/im_home-skin-vue.png" class="aso-w-2/3" alt=""/>
                 </div>
             </div>
             <div class="aso-w-full aso-pt-[20px]">
@@ -33,9 +32,9 @@
                             </div>
                         </div>
                         <div class="aso-p-4">
-                            <a href="#" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Get Support</a>
+                            <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Get Support</a>
                             <div>
-                                <span>basic task management tools</span>
+                                <span>Start the conversation from our site via the chat button and we'll get back to you</span>
                             </div>
                         </div>
                     </div>
@@ -48,9 +47,9 @@
                             </svg>
                         </div>
                         <div class="aso-p-4">
-                            <a href="#" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Documentation</a>
+                            <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Knowledgebase</a>
                             <div>
-                                <span>basic task management tools</span>
+                                <span> Cut your learning curve and get started with ASO in no time!</span>
                             </div>
                         </div>
                     </div>
@@ -62,23 +61,9 @@
 
                         </div>
                         <div class="aso-p-4">
-                            <RouterLink to="/configurations" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Configurations</RouterLink>
+                            <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Suggest a Feature</a>
                             <div>
-                                <span>All configurator data</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="aso-flex aso-p-2 aso-justify-center aso-items-center aso-bg-gradient-to-bl aso-from-[#79CFFA] aso-from-100% aso-via-[#0E211A] aso-via-0% aso-to-[#0E211A] aso-to-0% aso-rounded-md aso-text-white">
-                       <div class="aso-bg-[#FFFFFF] aso-opacity-50 aso-p-4 aso-rounded-md aso-text-[#79CFFA]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            </svg>
-                        </div>
-                        <div class="aso-p-4">
-                            <RouterLink to="/global-settings/license" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Global Settings</RouterLink>
-                            <div>
-                                <span>All things that plugin needs</span>
+                                <span>We're always working to improve ASO, so we'd love to hear how we can do better.</span>
                             </div>
                         </div>
                     </div>

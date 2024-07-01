@@ -115,7 +115,7 @@
                             </div>
                         </div>
     
-                        <div id="aso-editButtons" class="aso-absolute aso-invisible aso-w-fit aso-h-fit aso-flex aso-full-center aso-space-x-1 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
+                        <div id="aso-editButtons" class="aso-absolute aso-hidden aso-w-fit aso-h-fit aso-flex aso-full-center aso-space-x-1 aso-bg-white aso-p-2 aso-border-2 aso-rounded-md aso-shadow-md aso-translate-x-[-50%]">
                             <div @click="editObject()" id="aso-editObject" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.objectsOptions.edit.buttonColor}] aso-text-[${configColors.objectsOptions.edit.textColor}] hover:aso-bg-[${configColors.objectsOptions.edit.hoverButtonColor}] hover:aso-text-[${configColors.objectsOptions.edit.hoverTextColor}] aso-cursor-pointer aso-px-1 aso-rounded-md`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -1473,10 +1473,12 @@
                     </div>
                 </div>       
             </div>
+        </div>
 
-            <div v-if="showImg" :class="`aso-absolute aso-top-[20%] lg:aso-top-[50%] aso-translate-y-[-50%] aso-left-[50%] aso-translate-x-[-50%] aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2`">
-                <span @click="closeprevImg" :class="`aso-w-6 aso-h-6 aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-center aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+        <div v-if="showImg" :class="`aso-absolute aso-top-0 aso-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso aso-w-full aso-h-full aso-flex aso-full-center`">
+            <div :class="`aso-relative aso-w-[80%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2`">
+                <span @click="closeprevImg" :class="`aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </span>
@@ -2142,6 +2144,8 @@
         handleGetCanvas(canvas1, canvas2, statut)
     }
 
+    var isTemplate = ref(false);
+
     onMounted(async() => {
         if(document.querySelector("#aso-configurator-loader")){
             document.querySelector("#aso-configurator-loader").remove();
@@ -2347,6 +2351,7 @@
             }
     
             handleCheckTemplate(props.template.designFromTemplate)
+            isTemplate.value = props.template.designFromTemplate
             if(route.name === 'template-maker'){
                 if(template.value.data.templateData.length == 0){
                     console.log(template.value.data.templateData, "template-maker")
@@ -2386,6 +2391,7 @@
             });
             canvas.on('selection:updated', function(e) {
                 var object = e.selected[0]
+                updateInfoDiv(object)
                 checkTemplateObjectLockMoving(object)
             });
             canvas.on('selection:cleared', closeObjectValues);
@@ -2407,8 +2413,10 @@
             });
             canvas.on('object:added', function(e) {
                 var activeObject = e.target;
-                if(activeObject.name === 'aso-SignImage'){
-                    updateInfoDiv(activeObject);
+                if(!isTemplate.value){
+                    if(activeObject.name === 'aso-SignImage'){
+                        updateInfoDiv(activeObject);
+                    }
                 }
             });
             canvas.on('object:moving', function(e) {
@@ -2519,6 +2527,7 @@
         setScrollColor(configColors.value.optionsSideBar.options.modals.headerBackgroundColor)
         verifierScrollabilite()
         setIsLoadedToFalse()
+        // closeInfoDiv()
         activeCanvas = canvas
 
         window.dispatchEvent(new Event('resize'));
@@ -3704,7 +3713,7 @@
     function updateInfoDiv(obj) {
         var infoDiv = document.getElementById('aso-editButtons');
         if (obj) {
-            infoDiv.classList.remove("aso-invisible");
+            infoDiv.classList.remove("aso-hidden");
 
             var boundingRect = obj.getBoundingRect(false);
             infoDiv.style.left =  boundingRect.left + boundingRect.width + 20 + 'px';
@@ -3716,7 +3725,8 @@
 
     function closeInfoDiv(){
         var infoDiv = document.getElementById('aso-editButtons');
-        infoDiv.classList.add("aso-invisible");
+        infoDiv.classList.add("aso-hidden");
+        console.log("closeInfoDiv")
     }
 
     var angleActive = ref(false);
@@ -6064,6 +6074,10 @@
 <style scoped>
     #canvaas {
         /* border: 3px solid green */
+    }
+
+    .aso-hide{
+        display: none;
     }
 
     .flipper {

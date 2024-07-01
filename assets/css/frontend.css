@@ -5,6 +5,9 @@
 #canvaas[data-v-5ab70054] {
         /* border: 3px solid green */
 }
+.aso-hide[data-v-5ab70054]{
+        display: none;
+}
 .flipper[data-v-5ab70054] {
         position: relative;
         /* width: 100%;
