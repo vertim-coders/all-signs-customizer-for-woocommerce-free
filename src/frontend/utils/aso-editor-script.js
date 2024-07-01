@@ -7138,7 +7138,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                           var newHeight = templateObject[0].height * templateObject[0].scaleY 
                           var newWidth = templateObject[0].width * templateObject[0].scaleX
                           
-                          templateObject[0].left = rect.left + ((object.width/5)*4) 
+                          templateObject[0].left = rect.left + ((rect.width/5)*4) 
                           templateObject[0].top = rect.top - (newHeight/2)
                       }
                   }

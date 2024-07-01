@@ -238,7 +238,7 @@
                                 </div>
                             </div>
     
-                            <div v-if="materialType == 'simple'" @click="showOptions('border')" :class="`${step === 'border' ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1  aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation aso-cursor-pointer aso-cardDiv`">
+                            <div v-if="materialType == 'simple' && borderrs.allBorders.length > 0" @click="showOptions('border')" :class="`${step === 'border' ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-w-fit aso-h-[90%] aso-flex aso-flex-col aso-full-center aso-space-y-1  aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation aso-cursor-pointer aso-cardDiv`">
                                 <svg v-if="configSectionIcons.changeIconBorder === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />
                                 </svg>
@@ -289,7 +289,7 @@
                             </div>
     
                             <div v-if="(materialType == 'simple' && additionalComponents.length > 0 )" v-for="(option, id) in additionalComponents" class="aso-w-fit aso-h-[90%] aso-cardDiv" >
-                                <div @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id  ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-full aso-flex aso-flex-col aso-full-center aso-space-y-1  aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation aso-cursor-pointer`">
+                                <div v-if="option.options.length > 0" @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id  ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-full aso-flex aso-flex-col aso-full-center aso-space-y-1  aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg lg:aso-shadow-[-7px_1px_15px_0px_#828282] aso-base-animation aso-cursor-pointer`">
                                     <svg v-if="option.icon === '' " class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <g id="fluent-mdl2:product-release">
                                         <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
@@ -1816,10 +1816,10 @@
                 </div>
                 <div class="aso-h-[30%] aso-flex aso-items-center aso-justify-between">
                     <div @click="clearAll" :class="`aso-bg-[${configColors.bars.reset.modalYesButtonBackgroundColor}] aso-text-[${configColors.bars.reset.modalYesButtonTextColor}] aso-px-6 aso-p-2 aso-rounded-md aso-cursor-pointer aso-base-animation`">
-                        {{ configVisualiserTexts.resetModalNo && configVisualiserTexts.resetModalNo.trim() !== '' ? configVisualiserTexts.resetModalNo : 'Yes' }}
+                        {{ configVisualiserTexts.resetModalYes && configVisualiserTexts.resetModalYes.trim() !== '' ? configVisualiserTexts.resetModalYes : 'Non' }}
                     </div>
                     <div @click="confirmResetAll(false)" :class="`aso-bg-[${configColors.bars.reset.modalNoButtonBackgroundColor}] aso-text-[${configColors.bars.reset.modalNoButtonTextColor}] hover:aso-text-white/80 aso-px-6 aso-p-2 aso-rounded-md aso-cursor-pointer aso-base-animation`">
-                        {{ configVisualiserTexts.resetModalYes && configVisualiserTexts.resetModalYes.trim() !== '' ? configVisualiserTexts.resetModalYes : 'Non' }}
+                        {{ configVisualiserTexts.resetModalNo && configVisualiserTexts.resetModalNo.trim() !== '' ? configVisualiserTexts.resetModalNo : 'Yes' }}
                     </div>
                 </div>
             </div>
@@ -2147,399 +2147,404 @@
     var isTemplate = ref(false);
 
     onMounted(async() => {
-        if(document.querySelector("#aso-configurator-loader")){
-            document.querySelector("#aso-configurator-loader").remove();
-        }
-        configSettings.value = props.config.data.settings
-        configDoublePart.value = props.config.data.settings.customizerSign.signPart.doublePart
 
-        // allSizes.value = props.manage.manageSize
-        allMaterials.value = props.config.data.materials
-        allShapes.value = props.manage.allShapes
-        allFixings.value = props.manage.allFixingMethod
-        allColors.value = props.manage.colors
-        allBorders.value = props.manage.allBorder
-        allFonts.value = props.manage.fonts
-        allClipart.value = props.manage.cliparts
-        
-        configTextSettings.value = props.config.data.settings.customizerSign.text
-        configTextFontSettings.value = props.config.data.settings.customizerSign.text.enableFontSize
-        configImageSettings.value = props.config.data.settings.customizerSign.images
-        configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
-        configImageSettingsFilters.value = props.config.data.settings.customizerSign.images.filter
-        configSectionIcons.value = props.config.data.settings.languageImages.images
-        configOutputSettings.value = props.config.data.settings.generals.output
-        configVisualiserTexts.value = props.config.data.settings.languageImages.visualizer
-
-        customSizeValues.value.label = (configVisualiserTexts.value.customSize && configVisualiserTexts.value.customSize.trim() !== '' ? configVisualiserTexts.value.customSize : 'Custom size')
-        
-        configAdditionnalOptions.value = props.config.data.additionalOptions
-        
-        let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
-        configImagesFormat.value = acceptedFormatTable.join(', ');
-        // console.log(configVisualiserTexts.value)
-
-        handleGetImageSettings(configImageSettings.value)
-        // console.log(configColors.value)
-
-        handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
-        handleGetDefaultText(
-            {
-                width: (configVisualiserTexts.value.textWidth && configVisualiserTexts.value.textWidth.trim() !== '' ? configVisualiserTexts.value.textWidth : 'width'),
-                height: (configVisualiserTexts.value.textHeight && configVisualiserTexts.value.textHeight.trim() !== '' ? configVisualiserTexts.value.textHeight : 'height'),
-                left: (configVisualiserTexts.value.textLeft && configVisualiserTexts.value.textLeft.trim() !== '' ? configVisualiserTexts.value.textLeft : 'Left'),
-                top: (configVisualiserTexts.value.textTop && configVisualiserTexts.value.textTop.trim() !== '' ? configVisualiserTexts.value.textTop : 'top'),
-                right: (configVisualiserTexts.value.textRight && configVisualiserTexts.value.textRight.trim() !== '' ? configVisualiserTexts.value.textRight : 'right'),
-                bottom: (configVisualiserTexts.value.textBottom && configVisualiserTexts.value.textBottom.trim() !== '' ? configVisualiserTexts.value.textBottom : 'bottom'),
-            }
-        )
-
-        fontFamSelected.value = (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial')
-        configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
-        
-
-        var optionss = document.querySelector('#aso-options-container')
-        document.addEventListener('click', handleDocumentClick)
-        console.log(fabric.version)
-
-        const canvasElementFace1 = canvasFace1Ref.value
-        const canvasElementFace2 = canvasFace2Ref.value
-
-        // document.addEventListener("DOMContentLoaded", function() {
-
-            var canvasContainer = document.getElementById("aso-canvas-containers")
-            var canvasWidth = canvasContainer.clientWidth;
-            var canvasHeight = canvasContainer.clientHeight;
-
-            canvas = new fabric.Canvas(canvasElementFace1,{
-                // backgroundColor : "#f5f5f5",
-                width: canvasWidth, 
-                height: canvasHeight, 
-                // selectable: true,
-                // hasControls: true,
-                interactive: true,
-                name: 'front-face'
-            });
-            canvasBack = new fabric.Canvas(canvasElementFace2,{
-                // backgroundColor : "#f5f5f5",
-                width: canvasElementFace2.clientWidth, 
-                height: canvasElementFace2.clientHeight, 
-                // selectable: true,
-                // hasControls: true,
-                interactive: true,
-                name: 'back-face'
-            });
-
-            canvas.hoverCursor = 'pointer';
-            canvasBack.hoverCursor = 'pointer';
-
-            const rectWidth = 600; 
-            const rectHeight = 400; 
-            const clipWidth = rectWidth + (rectWidth * 0.3); 
-            const clipHeight = rectHeight + (rectHeight * 0.3); 
-
-            const rectLeft = (canvas.width /2) -(rectWidth/2)
-            const rectTop = (canvas.height/2) - (rectHeight/2);
-            const clipLeft = (canvas.width /2) -(clipWidth/2)
-            const clipTop = (canvas.height/2) - (clipHeight/2);
-
-            const rectangle = new fabric.Rect({
-                width: rectWidth,
-                height: rectHeight,
-                fill: '#cfcece', // Couleur du rectangle
-                left: rectLeft,
-                top: rectTop,
-                shadow: defaultShadow.value,
-                selectable: false,
-                name: 'safeObject',
-                originX: 'center',
-                originY: 'center',
-                id: 0,
-            });
-            const rectangle2 = new fabric.Rect({
-                width: rectWidth,
-                height: rectHeight,
-                fill: '#cfcece', // Couleur du rectangle
-                left: rectLeft,
-                top: rectTop,
-                shadow: defaultShadow.value,
-                selectable: false,
-                name: 'safeObject',
-                originX: 'center',
-                originY: 'center',
-                id: 0,
-            });
-            
-            const cnvasClip = new fabric.Rect({
-                width: clipWidth ,
-                height: clipHeight ,
-                left: clipLeft,
-                top: clipTop,
-            });
-
-            const bodyElement = document.body;
-            const computedStyle = getComputedStyle(bodyElement);
-
-            const pageFontFamily = computedStyle.fontFamily
-
-            var hLine = new fabric.Line([(rectangle.left + rectangle.width +20), rectangle.top, (rectangle.left + rectangle.width +20), (rectangle.top + rectangle.height)], {
-                stroke: 'black',
-                strokeWidth: 2,
-                selectable: false,
-                name: 'heightLine',
-                id: 1, 
-                visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
-            });
-            var hValue = new fabric.IText(String(rectHeight),{
-                left: (rectangle.left + rectangle.width +10),
-                top: rectangle.top + (rectangle.height/2),
-                fontSize: 15,
-                fontFamily: pageFontFamily,
-                fill: 'black',
-                name: 'height-value',
-                id: 2,
-                selectable: false,
-                visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
-            })
-            
-            var wLine = new fabric.Line([rectangle.left, (rectangle.top+rectangle.height+20), (rectangle.left+rectangle.width+20), (rectangle.top+rectangle.height+20) ], {
-                stroke: 'black',
-                strokeWidth: 2,
-                selectable: false,
-                name: 'widthLine',
-                id: 3,
-                visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false)
-            });
-            var wValue = new fabric.IText(String(rectWidth),{
-                left: rectangle.left + (rectangle.width/2),
-                top: rectangle.top + (rectangle.height +10),
-                fontSize: 15,
-                fontFamily: pageFontFamily,
-                fill: 'black',
-                name: 'width-value',
-                id: 4,
-                selectable: false,
-                visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false)
-            })
-            var thickness = new fabric.IText(String(configVisualiserTexts.thickness + ': 1cm'),{
-                left: rectangle.left + (rectangle.width/2),
-                top: rectangle.top + (rectangle.height +20),
-                fontSize: 15,
-                fontFamily: pageFontFamily,
-                fill: 'black',
-                name: 'thickness-value',
-                id: 4,
-                selectable: false,
-            })
-
-
-            canvas.add(rectangle, hLine, hValue, wLine, wValue, thickness);
-            canvasBack.add(rectangle2);
-        
-            if(configDoublePart.value.active === true){
-                getCanvas(canvas, canvasBack, 'double')
-            }else{
-                getCanvas(canvas, canvasBack, 'simple')
-            }
-            handleCloneCanvas(canvas, canvasBack)
-        
-            canvas.selection = false;
-            canvasBack.selection = false;
+        try{
+            await document.fonts.ready;
     
-            if(route.name == 'template-maker'){
-                template.value = await api.getTemplate(template_config_id,template_id);
+            if(document.querySelector("#aso-configurator-loader")){
+                document.querySelector("#aso-configurator-loader").remove();
             }
+            configSettings.value = props.config.data.settings
+            configDoublePart.value = props.config.data.settings.customizerSign.signPart.doublePart
     
-            handleCheckTemplate(props.template.designFromTemplate)
-            isTemplate.value = props.template.designFromTemplate
-            if(route.name === 'template-maker'){
-                if(template.value.data.templateData.length == 0){
-                    console.log(template.value.data.templateData, "template-maker")
-                    selectMaterial(props.config.data.materials[0], 0)
-                    if(materialType.value === 'simple'){
-                        selectSimpleFirstValue()
-                    }
-                    if(materialType.value === 'advance'){
-                        selectAdvanceFirstValue()
-                    }
-                }else{                    
-                    selectTemplate(template.value.data.templateData, 'making')
+            // allSizes.value = props.manage.manageSize
+            allMaterials.value = props.config.data.materials
+            allShapes.value = props.manage.allShapes
+            allFixings.value = props.manage.allFixingMethod
+            allColors.value = props.manage.colors
+            allBorders.value = props.manage.allBorder
+            allFonts.value = props.manage.fonts
+            allClipart.value = props.manage.cliparts
+            
+            configTextSettings.value = props.config.data.settings.customizerSign.text
+            configTextFontSettings.value = props.config.data.settings.customizerSign.text.enableFontSize
+            configImageSettings.value = props.config.data.settings.customizerSign.images
+            configImageSettingsClipart.value = props.config.data.settings.customizerSign.images.enableClipart
+            configImageSettingsFilters.value = props.config.data.settings.customizerSign.images.filter
+            configSectionIcons.value = props.config.data.settings.languageImages.images
+            configOutputSettings.value = props.config.data.settings.generals.output
+            configVisualiserTexts.value = props.config.data.settings.languageImages.visualizer
+    
+            customSizeValues.value.label = (configVisualiserTexts.value.customSize && configVisualiserTexts.value.customSize.trim() !== '' ? configVisualiserTexts.value.customSize : 'Custom size')
+            
+            configAdditionnalOptions.value = props.config.data.additionalOptions
+            
+            let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
+            configImagesFormat.value = acceptedFormatTable.join(', ');
+            // console.log(configVisualiserTexts.value)
+    
+            handleGetImageSettings(configImageSettings.value)
+            // console.log(configColors.value)
+    
+            handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
+            handleGetDefaultText(
+                {
+                    width: (configVisualiserTexts.value.textWidth && configVisualiserTexts.value.textWidth.trim() !== '' ? configVisualiserTexts.value.textWidth : 'width'),
+                    height: (configVisualiserTexts.value.textHeight && configVisualiserTexts.value.textHeight.trim() !== '' ? configVisualiserTexts.value.textHeight : 'height'),
+                    left: (configVisualiserTexts.value.textLeft && configVisualiserTexts.value.textLeft.trim() !== '' ? configVisualiserTexts.value.textLeft : 'Left'),
+                    top: (configVisualiserTexts.value.textTop && configVisualiserTexts.value.textTop.trim() !== '' ? configVisualiserTexts.value.textTop : 'top'),
+                    right: (configVisualiserTexts.value.textRight && configVisualiserTexts.value.textRight.trim() !== '' ? configVisualiserTexts.value.textRight : 'right'),
+                    bottom: (configVisualiserTexts.value.textBottom && configVisualiserTexts.value.textBottom.trim() !== '' ? configVisualiserTexts.value.textBottom : 'bottom'),
                 }
-            }else{
-                if(props.template.designFromTemplate === true){
-                    selectTemplate(props.template.template.data.templateData)
+            )
+    
+            fontFamSelected.value = (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial')
+            configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
+            
+    
+            var optionss = document.querySelector('#aso-options-container')
+            document.addEventListener('click', handleDocumentClick)
+            console.log(fabric.version)
+    
+            const canvasElementFace1 = canvasFace1Ref.value
+            const canvasElementFace2 = canvasFace2Ref.value
+    
+            // document.addEventListener("DOMContentLoaded", function() {
+    
+                var canvasContainer = document.getElementById("aso-canvas-containers")
+                var canvasWidth = canvasContainer.clientWidth;
+                var canvasHeight = canvasContainer.clientHeight;
+    
+                canvas = new fabric.Canvas(canvasElementFace1,{
+                    // backgroundColor : "#f5f5f5",
+                    width: canvasWidth, 
+                    height: canvasHeight, 
+                    // selectable: true,
+                    // hasControls: true,
+                    interactive: true,
+                    name: 'front-face'
+                });
+                canvasBack = new fabric.Canvas(canvasElementFace2,{
+                    // backgroundColor : "#f5f5f5",
+                    width: canvasElementFace2.clientWidth, 
+                    height: canvasElementFace2.clientHeight, 
+                    // selectable: true,
+                    // hasControls: true,
+                    interactive: true,
+                    name: 'back-face'
+                });
+    
+                canvas.hoverCursor = 'pointer';
+                canvasBack.hoverCursor = 'pointer';
+    
+                const rectWidth = 600; 
+                const rectHeight = 400; 
+                const clipWidth = rectWidth + (rectWidth * 0.3); 
+                const clipHeight = rectHeight + (rectHeight * 0.3); 
+    
+                const rectLeft = (canvas.width /2) -(rectWidth/2)
+                const rectTop = (canvas.height/2) - (rectHeight/2);
+                const clipLeft = (canvas.width /2) -(clipWidth/2)
+                const clipTop = (canvas.height/2) - (clipHeight/2);
+    
+                const rectangle = new fabric.Rect({
+                    width: rectWidth,
+                    height: rectHeight,
+                    fill: '#cfcece', // Couleur du rectangle
+                    left: rectLeft,
+                    top: rectTop,
+                    shadow: defaultShadow.value,
+                    selectable: false,
+                    name: 'safeObject',
+                    originX: 'center',
+                    originY: 'center',
+                    id: 0,
+                });
+                const rectangle2 = new fabric.Rect({
+                    width: rectWidth,
+                    height: rectHeight,
+                    fill: '#cfcece', // Couleur du rectangle
+                    left: rectLeft,
+                    top: rectTop,
+                    shadow: defaultShadow.value,
+                    selectable: false,
+                    name: 'safeObject',
+                    originX: 'center',
+                    originY: 'center',
+                    id: 0,
+                });
+                
+                const cnvasClip = new fabric.Rect({
+                    width: clipWidth ,
+                    height: clipHeight ,
+                    left: clipLeft,
+                    top: clipTop,
+                });
+    
+                const bodyElement = document.body;
+                const computedStyle = getComputedStyle(bodyElement);
+    
+                const pageFontFamily = computedStyle.fontFamily
+    
+                var hLine = new fabric.Line([(rectangle.left + rectangle.width +20), rectangle.top, (rectangle.left + rectangle.width +20), (rectangle.top + rectangle.height)], {
+                    stroke: 'black',
+                    strokeWidth: 2,
+                    selectable: false,
+                    name: 'heightLine',
+                    id: 1, 
+                    visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
+                });
+                var hValue = new fabric.IText(String(rectHeight),{
+                    left: (rectangle.left + rectangle.width +10),
+                    top: rectangle.top + (rectangle.height/2),
+                    fontSize: 15,
+                    fontFamily: pageFontFamily,
+                    fill: 'black',
+                    name: 'height-value',
+                    id: 2,
+                    selectable: false,
+                    visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
+                })
+                
+                var wLine = new fabric.Line([rectangle.left, (rectangle.top+rectangle.height+20), (rectangle.left+rectangle.width+20), (rectangle.top+rectangle.height+20) ], {
+                    stroke: 'black',
+                    strokeWidth: 2,
+                    selectable: false,
+                    name: 'widthLine',
+                    id: 3,
+                    visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false)
+                });
+                var wValue = new fabric.IText(String(rectWidth),{
+                    left: rectangle.left + (rectangle.width/2),
+                    top: rectangle.top + (rectangle.height +10),
+                    fontSize: 15,
+                    fontFamily: pageFontFamily,
+                    fill: 'black',
+                    name: 'width-value',
+                    id: 4,
+                    selectable: false,
+                    visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false)
+                })
+                var thickness = new fabric.IText(String(configVisualiserTexts.thickness + ': 1cm'),{
+                    left: rectangle.left + (rectangle.width/2),
+                    top: rectangle.top + (rectangle.height +20),
+                    fontSize: 15,
+                    fontFamily: pageFontFamily,
+                    fill: 'black',
+                    name: 'thickness-value',
+                    id: 4,
+                    selectable: false,
+                })
+    
+    
+                canvas.add(rectangle, hLine, hValue, wLine, wValue, thickness);
+                canvasBack.add(rectangle2);
+            
+                if(configDoublePart.value.active === true){
+                    getCanvas(canvas, canvasBack, 'double')
                 }else{
-                    selectMaterial(props.config.data.materials[0], 0)
-                    if(materialType.value === 'simple'){
-                        selectSimpleFirstValue()
+                    getCanvas(canvas, canvasBack, 'simple')
+                }
+                handleCloneCanvas(canvas, canvasBack)
+            
+                canvas.selection = false;
+                canvasBack.selection = false;
+        
+                if(route.name == 'template-maker'){
+                    template.value = await api.getTemplate(template_config_id,template_id);
+                }
+        
+                handleCheckTemplate(props.template.designFromTemplate)
+                isTemplate.value = props.template.designFromTemplate
+                if(route.name === 'template-maker'){
+                    if(template.value.data.templateData.length == 0){
+                        console.log(template.value.data.templateData, "template-maker")
+                        selectMaterial(props.config.data.materials[0], 0)
+                        if(materialType.value === 'simple'){
+                            selectSimpleFirstValue()
+                        }
+                        if(materialType.value === 'advance'){
+                            selectAdvanceFirstValue()
+                        }
+                    }else{                    
+                        selectTemplate(template.value.data.templateData, 'making')
                     }
-                    if(materialType.value === 'advance'){
-                        selectAdvanceFirstValue()
+                }else{
+                    if(props.template.designFromTemplate === true){
+                        selectTemplate(props.template.template.data.templateData)
+                    }else{
+                        selectMaterial(props.config.data.materials[0], 0)
+                        if(materialType.value === 'simple'){
+                            selectSimpleFirstValue()
+                        }
+                        if(materialType.value === 'advance'){
+                            selectAdvanceFirstValue()
+                        }
                     }
                 }
-            }
-
-            fabric.Object.prototype.transparentCorners = false;
-            fabric.Object.prototype.cornerColor = 'black';
-            fabric.Object.prototype.borderColor = 'black';
-            fabric.Object.prototype.cornerStyle = 'circle';
-            
-            canvas.on('selection:created', function(e) {
-                var activeObject = e.selected[0];
-                updateInfoDiv(activeObject);
-                showObjectValues()
-            });
-            canvas.on('selection:updated', function(e) {
-                var object = e.selected[0]
-                updateInfoDiv(object)
-                checkTemplateObjectLockMoving(object)
-            });
-            canvas.on('selection:cleared', closeObjectValues);
-            canvas.on('mouse:down', function(options) {
-                var sign = handleGetObjectByName('safeObject');
-                canvas.getObjects().forEach(function(obj) {
-                    if (obj.name === 'aso-SignText') {
-                        if(obj.isEditing){
-                            obj.exitEditing();
+    
+                fabric.Object.prototype.transparentCorners = false;
+                fabric.Object.prototype.cornerColor = 'black';
+                fabric.Object.prototype.borderColor = 'black';
+                fabric.Object.prototype.cornerStyle = 'circle';
+                
+                canvas.on('selection:created', function(e) {
+                    var activeObject = e.selected[0];
+                    updateInfoDiv(activeObject);
+                    showObjectValues()
+                });
+                canvas.on('selection:updated', function(e) {
+                    var object = e.selected[0]
+                    updateInfoDiv(object)
+                    checkTemplateObjectLockMoving(object)
+                });
+                canvas.on('selection:cleared', closeObjectValues);
+                canvas.on('mouse:down', function(options) {
+                    var sign = handleGetObjectByName('safeObject');
+                    canvas.getObjects().forEach(function(obj) {
+                        if (obj.name === 'aso-SignText') {
+                            if(obj.isEditing){
+                                obj.exitEditing();
+                            }
+                            obj.clipPath = handleClipAddedObject(canvas);
+                            canvas.renderAll();
                         }
-                        obj.clipPath = handleClipAddedObject(canvas);
-                        canvas.renderAll();
-                    }
-                    if (obj.name === 'aso-SignImage') {
-                        obj.clipPath = handleClipAddedObject(canvas);
-                        canvas.renderAll();
+                        if (obj.name === 'aso-SignImage') {
+                            obj.clipPath = handleClipAddedObject(canvas);
+                            canvas.renderAll();
+                        }
+                    });
+                });
+                canvas.on('object:added', function(e) {
+                    var activeObject = e.target;
+                    if(!isTemplate.value){
+                        if(activeObject.name === 'aso-SignImage'){
+                            updateInfoDiv(activeObject);
+                        }
                     }
                 });
-            });
-            canvas.on('object:added', function(e) {
-                var activeObject = e.target;
-                if(!isTemplate.value){
+                canvas.on('object:moving', function(e) {
+                    var activeObject = e.target;
+                    if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
+                        updateInfoDiv(activeObject);
+                    }
+                });
+                canvas.on('object:scaling', function(e) {
+                    var activeObject = e.target;
+                    if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
+                        updateInfoDiv(activeObject);
+                    }
+                });
+                canvas.on('selection:cleared', closeInfoDiv);
+    
+                canvas.on('mouse:wheel', function(opt) {
+                    if (opt.e.ctrlKey) { // Vérifier si la touche Ctrl est enfoncée
+                        var delta = opt.e.deltaY;
+                        var zoom = canvas.getZoom();
+                        zoom *= 0.999 ** delta;
+                        if (zoom > 20) zoom = 20;
+                        if (zoom < 0.01) zoom = 0.01;
+    
+                        console.log("delta:", delta, "zoom:", zoom)
+    
+                        canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+                        opt.e.preventDefault();
+                        opt.e.stopPropagation();
+                    }
+                });
+    
+    
+    
+                canvasBack.on('selection:created', function(e) {
+                    var activeObject = e.selected[0];
+                    updateInfoDiv(activeObject);
+                    showObjectValues()
+                });
+                canvasBack.on('selection:updated', function(e) {
+                    var object = e.selected[0]
+                    checkTemplateObjectLockMoving(object)
+                });
+                canvasBack.on('selection:cleared', closeObjectValues);
+                canvasBack.on('mouse:down', function(options) {
+                    var sign = handleGetObjectByName('safeObject');
+                    canvasBack.getObjects().forEach(function(obj) {
+                        if (obj.name === 'aso-SignText') {
+                            if(obj.isEditing){
+                                obj.exitEditing();
+                            }
+                            obj.clipPath = handleClipAddedObject(canvasBack);
+                            canvasBack.renderAll();
+                        }
+                        if (obj.name === 'aso-SignImage') {
+                            obj.clipPath = handleClipAddedObject(canvasBack);
+                            canvasBack.renderAll();
+                        }
+                    });
+                });
+                canvasBack.on('object:added', function(e) {
+                    var activeObject = e.target;
                     if(activeObject.name === 'aso-SignImage'){
                         updateInfoDiv(activeObject);
                     }
-                }
-            });
-            canvas.on('object:moving', function(e) {
-                var activeObject = e.target;
-                if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
-                    updateInfoDiv(activeObject);
-                }
-            });
-            canvas.on('object:scaling', function(e) {
-                var activeObject = e.target;
-                if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
-                    updateInfoDiv(activeObject);
-                }
-            });
-            canvas.on('selection:cleared', closeInfoDiv);
-
-            canvas.on('mouse:wheel', function(opt) {
-                if (opt.e.ctrlKey) { // Vérifier si la touche Ctrl est enfoncée
-                    var delta = opt.e.deltaY;
-                    var zoom = canvas.getZoom();
-                    zoom *= 0.999 ** delta;
-                    if (zoom > 20) zoom = 20;
-                    if (zoom < 0.01) zoom = 0.01;
-
-                    console.log("delta:", delta, "zoom:", zoom)
-
-                    canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
-                    opt.e.preventDefault();
-                    opt.e.stopPropagation();
-                }
-            });
-
-
-
-            canvasBack.on('selection:created', function(e) {
-                var activeObject = e.selected[0];
-                updateInfoDiv(activeObject);
-                showObjectValues()
-            });
-            canvasBack.on('selection:updated', function(e) {
-                var object = e.selected[0]
-                checkTemplateObjectLockMoving(object)
-            });
-            canvasBack.on('selection:cleared', closeObjectValues);
-            canvasBack.on('mouse:down', function(options) {
-                var sign = handleGetObjectByName('safeObject');
-                canvasBack.getObjects().forEach(function(obj) {
-                    if (obj.name === 'aso-SignText') {
-                        if(obj.isEditing){
-                            obj.exitEditing();
-                        }
-                        obj.clipPath = handleClipAddedObject(canvasBack);
-                        canvasBack.renderAll();
-                    }
-                    if (obj.name === 'aso-SignImage') {
-                        obj.clipPath = handleClipAddedObject(canvasBack);
-                        canvasBack.renderAll();
+                });
+                canvasBack.on('object:moving', function(e) {
+                    var activeObject = e.target;
+                    if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
+                        updateInfoDiv(activeObject);
                     }
                 });
-            });
-            canvasBack.on('object:added', function(e) {
-                var activeObject = e.target;
-                if(activeObject.name === 'aso-SignImage'){
-                    updateInfoDiv(activeObject);
-                }
-            });
-            canvasBack.on('object:moving', function(e) {
-                var activeObject = e.target;
-                if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
-                    updateInfoDiv(activeObject);
-                }
-            });
-            canvasBack.on('object:scaling', function(e) {
-                var activeObject = e.target;
-                if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
-                    updateInfoDiv(activeObject);
-                }
-            });
-            canvasBack.on('selection:cleared', closeInfoDiv);
-            
-            activeCanvas = canvas
-
-            checkScreenView()
-            // checkScreenSize();
-            // centerSign(canvas)
-            // centerSign(canvasBack)
-            // window.addEventListener('resize', checkScreenSize);
-
-            let resizeTimer;
-            window.addEventListener('load', () => {
-                // checkScreenSize()
+                canvasBack.on('object:scaling', function(e) {
+                    var activeObject = e.target;
+                    if(activeObject.name === 'aso-SignText' || activeObject.name === 'aso-SignImage'){
+                        updateInfoDiv(activeObject);
+                    }
+                });
+                canvasBack.on('selection:cleared', closeInfoDiv);
+                
+                activeCanvas = canvas
+    
+                checkScreenView()
+                // checkScreenSize();
                 // centerSign(canvas)
                 // centerSign(canvasBack)
-            });
-            window.addEventListener('resize', () => {
-                checkScreenView()
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    checkScreenSize()
+                // window.addEventListener('resize', checkScreenSize);
+    
+                let resizeTimer;
+                window.addEventListener('load', () => {
+                    // checkScreenSize()
                     // centerSign(canvas)
                     // centerSign(canvasBack)
-                }, 250); // Délai de 250 millisecondes
-            });
+                });
+                window.addEventListener('resize', () => {
+                    checkScreenView()
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        checkScreenSize()
+                        // centerSign(canvas)
+                        // centerSign(canvasBack)
+                    }, 250); // Délai de 250 millisecondes
+                });
+                
+            // });
             
-        // });
-        
-        
-        setScrollColor(configColors.value.optionsSideBar.options.modals.headerBackgroundColor)
-        verifierScrollabilite()
-        setIsLoadedToFalse()
-        // closeInfoDiv()
-        activeCanvas = canvas
-
-        window.dispatchEvent(new Event('resize'));
-        if(route.name == 'template-maker'){
-            template.value = await api.getTemplate(template_config_id,template_id);
-        }
-        
-        return {
-            canvas
-        }
-        
+            
+            setScrollColor(configColors.value.optionsSideBar.options.modals.headerBackgroundColor)
+            verifierScrollabilite()
+            setIsLoadedToFalse()
+            // closeInfoDiv()
+            activeCanvas = canvas
     
+            window.dispatchEvent(new Event('resize'));
+            if(route.name == 'template-maker'){
+                template.value = await api.getTemplate(template_config_id,template_id);
+            }
+            
+            return {
+                canvas
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des polices:', error);
+        }    
     
     });
 
@@ -2593,6 +2598,47 @@
         //selection du matériel
         var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name)
         selectMaterial(props.config.data.materials[templateMaterialId])
+
+        //selection de border
+        if(sign.material.type === 'simple'){
+            if(borderrs.value.allBorders.length > 0){
+                borderrs.value.allBorders.forEach((borderr, id) => {
+                    allBorders.value.forEach((border, index) => {
+                        if(borderr.manageBorderId == index){
+                            matchingBorders.value.push({border, borderr})
+                        }
+                    })
+                })
+            }
+            var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)
+            border1ExcludeShapes.value = matchingBorders.value[currentBorder1Id].borderr.excludeShapes
+            border1ExcludeSizes.value = matchingBorders.value[currentBorder1Id].borderr.excludeSizes
+    
+            activeFace1Border.value = sign.border.face1.type;
+            borderColorName1.value = sign.border.face1.color;
+            activeFace1BorderColor.value = sign.border.face1.codeHex
+            if(sign.border.face1.type !== 'none' && sign.border.face1.codeHex !== ('' || null)){
+                colorForBorder1.value = true
+            }
+            handleGetBorderData('front-face', {border: sign.border.face1.type, color: sign.border.face1.codeHex})
+
+            //verification pour la seconde face si existante
+            if(sign.doubleFace === true){
+                var currentBorder2Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face2.type)
+                border2ExcludeShapes.value = matchingBorders.value[currentBorder2Id].borderr.excludeShapes
+                border2ExcludeSizes.value = matchingBorders.value[currentBorder2Id].borderr.excludeSizes
+    
+    
+                activeFace2Border.value = sign.border.face2.type;
+                borderColorName2.value = sign.border.face2.color
+                activeFace2BorderColor.value = sign.border.face2.codeHex
+                if(sign.border.face2.type !== 'none' && sign.border.face2.codeHex !== ('' || null)){
+                    colorForBorder2.value = true
+                }
+                handleGetBorderData('back-face', {border: sign.border.face2.type, color: sign.border.face2.codeHex})
+    
+            } 
+        }
 
         var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
 
@@ -2675,49 +2721,6 @@
                 colorTextCodeHex2.value = sign.color.face2.textColor.codeHex
             }
         }
-
-        //selection de border
-        if(sign.material.type === 'simple'){
-            // console.log(sign.border, "border")
-            if(borderrs.value.allBorders.length > 0){
-                borderrs.value.allBorders.forEach((borderr, id) => {
-                    allBorders.value.forEach((border, index) => {
-                        if(borderr.manageBorderId == index){
-                            matchingBorders.value.push({border, borderr})
-                        }
-                    })
-                })
-            }
-            var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)
-            border1ExcludeShapes.value = matchingBorders.value[currentBorder1Id].borderr.excludeShapes
-            border1ExcludeSizes.value = matchingBorders.value[currentBorder1Id].borderr.excludeSizes
-    
-            activeFace1Border.value = sign.border.face1.type;
-            borderColorName1.value = sign.border.face1.color;
-            activeFace1BorderColor.value = sign.border.face1.codeHex
-            if(sign.border.face1.type !== 'none' && sign.border.face1.codeHex !== ('' || null)){
-                colorForBorder1.value = true
-            }
-            handleGetBorderData('front-face', {border: sign.border.face1.type, color: sign.border.face1.codeHex})
-
-            //verification pour la seconde face si existante
-            if(sign.doubleFace === true){
-                var currentBorder2Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face2.type)
-                border2ExcludeShapes.value = matchingBorders.value[currentBorder2Id].borderr.excludeShapes
-                border2ExcludeSizes.value = matchingBorders.value[currentBorder2Id].borderr.excludeSizes
-    
-    
-                activeFace2Border.value = sign.border.face2.type;
-                borderColorName2.value = sign.border.face2.color
-                activeFace2BorderColor.value = sign.border.face2.codeHex
-                if(sign.border.face2.type !== 'none' && sign.border.face2.codeHex !== ('' || null)){
-                    colorForBorder2.value = true
-                }
-                handleGetBorderData('back-face', {border: sign.border.face2.type, color: sign.border.face2.codeHex})
-    
-            } 
-        }
-
 
         //selection du la size
         currentSizeName.value = 'Template'
@@ -3075,16 +3078,18 @@
                 let index = 0
                 var haveDefault = false
 
-                while (index < addOption.options.length && !haveDefault) {
-                    if(addOption.options[index].isDefault){
-                        selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index].additionalPrice)
-                        haveDefault = true
-                        break;
+                if(addOption.options.length > 0){
+                    while (index < addOption.options.length && !haveDefault) {
+                        if(addOption.options[index].isDefault){
+                            selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index].additionalPrice)
+                            haveDefault = true
+                            break;
+                        }
+                        index++;
                     }
-                    index++;
-                }
-                if(!haveDefault){
-                    selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0].additionalPrice)
+                    if(!haveDefault){
+                        selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0].additionalPrice)
+                    }
                 }
             })
         }
@@ -4272,7 +4277,7 @@
     }
     
     function selectCustomSize(customSize){
-        // console.log(customSize, "custom size")
+        console.log(customSize, "custom size")
         function checkInterval(pricings, value){
             let settings = pricings[0];
             for (let i = 0; i < pricings.length; i++) {
@@ -4284,20 +4289,25 @@
             }
             return settings;   
         }
-        var valeur = customSizeValues.value.width * customSizeValues.value.height
 
-        var matchingSettings = checkInterval(customSize.pricings, valeur)
-        console.log(matchingSettings, "resultat")
-
-        customSizeTextValues.value = {
-            textNumber: 0, 
-            charPrice: matchingSettings.charPrice, 
-            basePrice: matchingSettings.basePrice, 
-            maxTextChar: -1, 
-            startPriceAtChar: 0
+        if((customSizeValues.value.width >= customSize.width.min && customSizeValues.value.width <= customSize.width.max) && (customSizeValues.value.height >= customSize.height.min && customSizeValues.value.height <= customSize.height.max)){
+            if(customSize.pricings.length > 0){
+                var valeur = customSizeValues.value.width * customSizeValues.value.height
+                var matchingSettings = checkInterval(customSize.pricings, valeur)
+                // console.log(matchingSettings, "resultat")
+        
+                customSizeTextValues.value = {
+                    textNumber: 0, 
+                    charPrice: matchingSettings.charPrice, 
+                    basePrice: matchingSettings.basePrice, 
+                    maxTextChar: -1, 
+                    startPriceAtChar: 0
+                }
+            }
+    
+            changeSize(customSizeValues.value, customSizeTextValues.value)
         }
 
-        changeSize(customSizeValues.value, customSizeTextValues.value)
     }
 
     var currentThickValue = ref(0)
