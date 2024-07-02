@@ -209,6 +209,16 @@ eval("\nvar has = (__webpack_require__(/*! ../internals/set-helpers */ \"./node_
 
 /***/ }),
 
+/***/ "./node_modules/core-js/internals/an-instance.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/internals/an-instance.js ***!
+  \*******************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+eval("\nvar isPrototypeOf = __webpack_require__(/*! ../internals/object-is-prototype-of */ \"./node_modules/core-js/internals/object-is-prototype-of.js\");\n\nvar $TypeError = TypeError;\n\nmodule.exports = function (it, Prototype) {\n  if (isPrototypeOf(Prototype, it)) return it;\n  throw new $TypeError('Incorrect invocation');\n};\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/an-instance.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/internals/an-object.js":
 /*!*****************************************************!*\
   !*** ./node_modules/core-js/internals/an-object.js ***!
@@ -449,6 +459,16 @@ eval("\nvar $TypeError = TypeError;\nvar MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF; //
 
 /***/ }),
 
+/***/ "./node_modules/core-js/internals/dom-exception-constants.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/internals/dom-exception-constants.js ***!
+  \*******************************************************************/
+/***/ (function(module) {
+
+eval("\nmodule.exports = {\n  IndexSizeError: { s: 'INDEX_SIZE_ERR', c: 1, m: 1 },\n  DOMStringSizeError: { s: 'DOMSTRING_SIZE_ERR', c: 2, m: 0 },\n  HierarchyRequestError: { s: 'HIERARCHY_REQUEST_ERR', c: 3, m: 1 },\n  WrongDocumentError: { s: 'WRONG_DOCUMENT_ERR', c: 4, m: 1 },\n  InvalidCharacterError: { s: 'INVALID_CHARACTER_ERR', c: 5, m: 1 },\n  NoDataAllowedError: { s: 'NO_DATA_ALLOWED_ERR', c: 6, m: 0 },\n  NoModificationAllowedError: { s: 'NO_MODIFICATION_ALLOWED_ERR', c: 7, m: 1 },\n  NotFoundError: { s: 'NOT_FOUND_ERR', c: 8, m: 1 },\n  NotSupportedError: { s: 'NOT_SUPPORTED_ERR', c: 9, m: 1 },\n  InUseAttributeError: { s: 'INUSE_ATTRIBUTE_ERR', c: 10, m: 1 },\n  InvalidStateError: { s: 'INVALID_STATE_ERR', c: 11, m: 1 },\n  SyntaxError: { s: 'SYNTAX_ERR', c: 12, m: 1 },\n  InvalidModificationError: { s: 'INVALID_MODIFICATION_ERR', c: 13, m: 1 },\n  NamespaceError: { s: 'NAMESPACE_ERR', c: 14, m: 1 },\n  InvalidAccessError: { s: 'INVALID_ACCESS_ERR', c: 15, m: 1 },\n  ValidationError: { s: 'VALIDATION_ERR', c: 16, m: 0 },\n  TypeMismatchError: { s: 'TYPE_MISMATCH_ERR', c: 17, m: 1 },\n  SecurityError: { s: 'SECURITY_ERR', c: 18, m: 1 },\n  NetworkError: { s: 'NETWORK_ERR', c: 19, m: 1 },\n  AbortError: { s: 'ABORT_ERR', c: 20, m: 1 },\n  URLMismatchError: { s: 'URL_MISMATCH_ERR', c: 21, m: 1 },\n  QuotaExceededError: { s: 'QUOTA_EXCEEDED_ERR', c: 22, m: 1 },\n  TimeoutError: { s: 'TIMEOUT_ERR', c: 23, m: 1 },\n  InvalidNodeTypeError: { s: 'INVALID_NODE_TYPE_ERR', c: 24, m: 1 },\n  DataCloneError: { s: 'DATA_CLONE_ERR', c: 25, m: 1 }\n};\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/dom-exception-constants.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/internals/engine-is-browser.js":
 /*!*************************************************************!*\
   !*** ./node_modules/core-js/internals/engine-is-browser.js ***!
@@ -506,6 +526,16 @@ eval("\nvar global = __webpack_require__(/*! ../internals/global */ \"./node_mod
 /***/ (function(module) {
 
 eval("\n// IE8- don't enum bug keys\nmodule.exports = [\n  'constructor',\n  'hasOwnProperty',\n  'isPrototypeOf',\n  'propertyIsEnumerable',\n  'toLocaleString',\n  'toString',\n  'valueOf'\n];\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/enum-bug-keys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/error-stack-clear.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/internals/error-stack-clear.js ***!
+  \*************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+eval("\nvar uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-this */ \"./node_modules/core-js/internals/function-uncurry-this.js\");\n\nvar $Error = Error;\nvar replace = uncurryThis(''.replace);\n\nvar TEST = (function (arg) { return String(new $Error(arg).stack); })('zxcasd');\n// eslint-disable-next-line redos/no-vulnerable -- safe\nvar V8_OR_CHAKRA_STACK_ENTRY = /\\n\\s*at [^:]*:[^\\n]*/;\nvar IS_V8_OR_CHAKRA_STACK = V8_OR_CHAKRA_STACK_ENTRY.test(TEST);\n\nmodule.exports = function (stack, dropEntries) {\n  if (IS_V8_OR_CHAKRA_STACK && typeof stack == 'string' && !$Error.prepareStackTrace) {\n    while (dropEntries--) stack = replace(stack, V8_OR_CHAKRA_STACK_ENTRY, '');\n  } return stack;\n};\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/error-stack-clear.js?");
 
 /***/ }),
 
@@ -669,6 +699,16 @@ eval("\nvar uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-
 
 /***/ }),
 
+/***/ "./node_modules/core-js/internals/inherit-if-required.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/core-js/internals/inherit-if-required.js ***!
+  \***************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+eval("\nvar isCallable = __webpack_require__(/*! ../internals/is-callable */ \"./node_modules/core-js/internals/is-callable.js\");\nvar isObject = __webpack_require__(/*! ../internals/is-object */ \"./node_modules/core-js/internals/is-object.js\");\nvar setPrototypeOf = __webpack_require__(/*! ../internals/object-set-prototype-of */ \"./node_modules/core-js/internals/object-set-prototype-of.js\");\n\n// makes subclassing work correct for wrapped built-ins\nmodule.exports = function ($this, dummy, Wrapper) {\n  var NewTarget, NewTargetPrototype;\n  if (\n    // it can work only with native `setPrototypeOf`\n    setPrototypeOf &&\n    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this\n    isCallable(NewTarget = dummy.constructor) &&\n    NewTarget !== Wrapper &&\n    isObject(NewTargetPrototype = NewTarget.prototype) &&\n    NewTargetPrototype !== Wrapper.prototype\n  ) setPrototypeOf($this, NewTargetPrototype);\n  return $this;\n};\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/inherit-if-required.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/internals/inspect-source.js":
 /*!**********************************************************!*\
   !*** ./node_modules/core-js/internals/inspect-source.js ***!
@@ -826,6 +866,16 @@ eval("\nvar uncurryThis = __webpack_require__(/*! ../internals/function-uncurry-
 /***/ (function(module) {
 
 eval("\nvar ceil = Math.ceil;\nvar floor = Math.floor;\n\n// `Math.trunc` method\n// https://tc39.es/ecma262/#sec-math.trunc\n// eslint-disable-next-line es/no-math-trunc -- safe\nmodule.exports = Math.trunc || function trunc(x) {\n  var n = +x;\n  return (n > 0 ? floor : ceil)(n);\n};\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/math-trunc.js?");
+
+/***/ }),
+
+/***/ "./node_modules/core-js/internals/normalize-string-argument.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/core-js/internals/normalize-string-argument.js ***!
+  \*********************************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+eval("\nvar toString = __webpack_require__(/*! ../internals/to-string */ \"./node_modules/core-js/internals/to-string.js\");\n\nmodule.exports = function (argument, $default) {\n  return argument === undefined ? arguments.length < 2 ? '' : $default : toString(argument);\n};\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/internals/normalize-string-argument.js?");
 
 /***/ }),
 
@@ -1516,6 +1566,16 @@ eval("\n// TODO: Remove from `core-js@4`\n__webpack_require__(/*! ../modules/es.
 /***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
 eval("\n// TODO: Remove from `core-js@4`\n__webpack_require__(/*! ../modules/es.set.union.v2 */ \"./node_modules/core-js/modules/es.set.union.v2.js\");\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/modules/esnext.set.union.v2.js?");
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/web.dom-exception.stack.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/core-js/modules/web.dom-exception.stack.js ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+eval("\nvar $ = __webpack_require__(/*! ../internals/export */ \"./node_modules/core-js/internals/export.js\");\nvar global = __webpack_require__(/*! ../internals/global */ \"./node_modules/core-js/internals/global.js\");\nvar getBuiltIn = __webpack_require__(/*! ../internals/get-built-in */ \"./node_modules/core-js/internals/get-built-in.js\");\nvar createPropertyDescriptor = __webpack_require__(/*! ../internals/create-property-descriptor */ \"./node_modules/core-js/internals/create-property-descriptor.js\");\nvar defineProperty = (__webpack_require__(/*! ../internals/object-define-property */ \"./node_modules/core-js/internals/object-define-property.js\").f);\nvar hasOwn = __webpack_require__(/*! ../internals/has-own-property */ \"./node_modules/core-js/internals/has-own-property.js\");\nvar anInstance = __webpack_require__(/*! ../internals/an-instance */ \"./node_modules/core-js/internals/an-instance.js\");\nvar inheritIfRequired = __webpack_require__(/*! ../internals/inherit-if-required */ \"./node_modules/core-js/internals/inherit-if-required.js\");\nvar normalizeStringArgument = __webpack_require__(/*! ../internals/normalize-string-argument */ \"./node_modules/core-js/internals/normalize-string-argument.js\");\nvar DOMExceptionConstants = __webpack_require__(/*! ../internals/dom-exception-constants */ \"./node_modules/core-js/internals/dom-exception-constants.js\");\nvar clearErrorStack = __webpack_require__(/*! ../internals/error-stack-clear */ \"./node_modules/core-js/internals/error-stack-clear.js\");\nvar DESCRIPTORS = __webpack_require__(/*! ../internals/descriptors */ \"./node_modules/core-js/internals/descriptors.js\");\nvar IS_PURE = __webpack_require__(/*! ../internals/is-pure */ \"./node_modules/core-js/internals/is-pure.js\");\n\nvar DOM_EXCEPTION = 'DOMException';\nvar Error = getBuiltIn('Error');\nvar NativeDOMException = getBuiltIn(DOM_EXCEPTION);\n\nvar $DOMException = function DOMException() {\n  anInstance(this, DOMExceptionPrototype);\n  var argumentsLength = arguments.length;\n  var message = normalizeStringArgument(argumentsLength < 1 ? undefined : arguments[0]);\n  var name = normalizeStringArgument(argumentsLength < 2 ? undefined : arguments[1], 'Error');\n  var that = new NativeDOMException(message, name);\n  var error = new Error(message);\n  error.name = DOM_EXCEPTION;\n  defineProperty(that, 'stack', createPropertyDescriptor(1, clearErrorStack(error.stack, 1)));\n  inheritIfRequired(that, this, $DOMException);\n  return that;\n};\n\nvar DOMExceptionPrototype = $DOMException.prototype = NativeDOMException.prototype;\n\nvar ERROR_HAS_STACK = 'stack' in new Error(DOM_EXCEPTION);\nvar DOM_EXCEPTION_HAS_STACK = 'stack' in new NativeDOMException(1, 2);\n\n// eslint-disable-next-line es/no-object-getownpropertydescriptor -- safe\nvar descriptor = NativeDOMException && DESCRIPTORS && Object.getOwnPropertyDescriptor(global, DOM_EXCEPTION);\n\n// Bun ~ 0.1.1 DOMException have incorrect descriptor and we can't redefine it\n// https://github.com/Jarred-Sumner/bun/issues/399\nvar BUGGY_DESCRIPTOR = !!descriptor && !(descriptor.writable && descriptor.configurable);\n\nvar FORCED_CONSTRUCTOR = ERROR_HAS_STACK && !BUGGY_DESCRIPTOR && !DOM_EXCEPTION_HAS_STACK;\n\n// `DOMException` constructor patch for `.stack` where it's required\n// https://webidl.spec.whatwg.org/#es-DOMException-specialness\n$({ global: true, constructor: true, forced: IS_PURE || FORCED_CONSTRUCTOR }, { // TODO: fix export logic\n  DOMException: FORCED_CONSTRUCTOR ? $DOMException : NativeDOMException\n});\n\nvar PolyfilledDOMException = getBuiltIn(DOM_EXCEPTION);\nvar PolyfilledDOMExceptionPrototype = PolyfilledDOMException.prototype;\n\nif (PolyfilledDOMExceptionPrototype.constructor !== PolyfilledDOMException) {\n  if (!IS_PURE) {\n    defineProperty(PolyfilledDOMExceptionPrototype, 'constructor', createPropertyDescriptor(1, PolyfilledDOMException));\n  }\n\n  for (var key in DOMExceptionConstants) if (hasOwn(DOMExceptionConstants, key)) {\n    var constant = DOMExceptionConstants[key];\n    var constantName = constant.s;\n    if (!hasOwn(PolyfilledDOMException, constantName)) {\n      defineProperty(PolyfilledDOMException, constantName, createPropertyDescriptor(6, constant.c));\n    }\n  }\n}\n\n\n//# sourceURL=webpack://three/./node_modules/core-js/modules/web.dom-exception.stack.js?");
 
 /***/ }),
 

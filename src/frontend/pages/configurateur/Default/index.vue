@@ -5940,8 +5940,7 @@
 
             case 'svg':
                 const svgData = canva.toSVG();
-                const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-                dataURL = URL.createObjectURL(blob);
+                dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
             break;
         
             default:

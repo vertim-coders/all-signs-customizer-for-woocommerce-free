@@ -62,9 +62,7 @@ class ASO_Design {
 	public function aso_change_product_image_in_cart( $product_image_code, $values) {
 		if ( isset( $values['aso_meta_data']["recaps"] ) ) {
 			$previews = $values['aso_meta_data']["recaps"]["designImages"];
-			foreach ($previews as $key => $image) {
-				$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($image) . "'>";
-			}		
+			$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($previews[0]) . "'>";	
 			return $product_image_code;
 		}
 
@@ -278,6 +276,7 @@ class ASO_Design {
 			<div class="aso-custom-options-info">
 				<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
 				<div style="display:flex; justify-content:center; align-items:center;">
+				<?php if ($admin) {?>
 					<?php foreach ($recaps["designImages"] as $key => $image) {?>
 						<div style="position:relative; width:fit-content">
 							<img src="<?php echo esc_url($image)?>" style="
@@ -288,6 +287,16 @@ class ASO_Design {
 							<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
 						</div> 
 					<?php } ?>
+				<?php }else{ ?>
+						<div style="position:relative; width:fit-content">
+							<img src="<?php echo esc_url($recaps["designImages"][0])?>" style="
+								width: auto;
+								height: 50px;"/>
+						</div>
+						<div style="margin:10px 0">
+							<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($recaps["designImages"][0])?>" download><?php echo __( 'Download Image', 'ASO' )?></a>
+						</div> 
+				<?php } ?>
 				</div>
 			</div>
 		</div>

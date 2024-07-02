@@ -7,7 +7,7 @@
                         <span class="aso-text-[14px]">Welcome to ASO configurator</span>
                     </div>
                     <div class="aso-my-4">
-                        <h3 class="aso-m-0 aso-font-bold aso-text-[30px]">All Signs Options</h3>
+                        <h3 class="aso-m-0 aso-font-bold aso-text-[30px]">All Signs Options PRO</h3>
                     </div>
                     <p class="aso-text-justify aso-text-[12px] aso-m-0 aso-mt-6 aso-mb-8">
                         Thank you for installing the ASO configurator for Woocommerce! Everything in ASO is streamlined to make your custom sign selling experience as simple and intuitive as possible for you and your customers. We hope you'll turn it into a powerful marketing asset that brings customers to your digital doorstep.
