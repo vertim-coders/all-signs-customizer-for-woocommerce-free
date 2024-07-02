@@ -12,20 +12,6 @@
                         </label>
                     </div>
                 </div>
-                <div class="aso-flex aso-flex-col aso-space-y-4">
-                    <span class="aso-text-[16px]">File upload script</span>
-                    <span class="aso-text-[12px] aso-text-[#444444]">This option allows you to set which file upload script you would like to use</span>
-                </div>
-                <div class="aso-flex aso-space-x-3">
-                    <span class="aso-text-[#444444] aso-text-[12px]">Normal</span>
-                    <div class="aso-flex aso-items-center">
-                        <label for="toggleFile" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                            <input id="toggleFile" type="checkbox" name="toggleFile" class="aso-sr-only aso-peer" v-model="image.fileUploadScript.customWithGraphical">
-                            <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-1px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-[#016464] after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
-                        </label>
-                    </div>
-                    <span class="aso-text-[#444444] aso-text-[12px]">Custom with graphical enchacements</span>
-                </div>
                 <div>
                     <div class="aso-flex aso-justify-between aso-space-x-6 aso-space-y-2">
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
@@ -208,7 +194,6 @@ const isFetching = ref(false);
 const image = ref({
     enableUploadImage:true,
     fileUploadScript:{
-      customWithGraphical:false,
       uploadMinWidth:100,
       uploadMaxWidth:100,
       allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],

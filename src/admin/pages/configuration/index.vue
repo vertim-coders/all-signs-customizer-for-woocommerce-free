@@ -549,7 +549,6 @@ const defaultSettings = ref({
         images: {
             enableUploadImage:true,
             fileUploadScript:{
-                customWithGraphical:false,
                 uploadMinWidth:100,
                 uploadMaxWidth:100,
                 allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
