@@ -584,6 +584,11 @@ function handleUndo() {
             canva.clear();
             currentState.objects.forEach(function (obj) {
               fabric.util.enlivenObjects([obj], function (prevObject) {
+                if (prevObject[0].name === "safeObject"){
+                  if(typeof  prevObject[0].fill !== 'string'){
+                    prevObject[0].fill = 'transparent'
+                  }
+                }
                 if (prevObject[0].name === "aso-SignText") {
                   prevObject[0].on("editing:entered", () => {
                     handleGetAddedTextValues(prevObject[0]);
@@ -757,6 +762,11 @@ function handleRedo() {
           canva.clear();
           currentState.objects.forEach(function (obj) {
             fabric.util.enlivenObjects([obj], function (prevObject) {
+              if (prevObject[0].name === "safeObject"){
+                if(typeof  prevObject[0].fill !== 'string'){
+                  prevObject[0].fill = 'transparent'
+                }
+              }
               if (prevObject[0].name === "aso-SignText") {
                 prevObject[0].on("editing:entered", () => {
                   handleGetAddedTextValues(prevObject[0]);
@@ -873,8 +883,8 @@ function handleRedo() {
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
 
   console.log(currentConfig.canvasObjects, "Redo");
-  // centerSign(canvas)
-  // centerSign(backCanvas)
+  centerSign(canvas)
+  centerSign(backCanvas)
 
   readyToSave = true;
 
@@ -959,49 +969,72 @@ function handleReadyToSaveState(statut, start) {
   }
 }
 
-function centerSign(canva) {
-  // console.log(canva, "center")
-  var sign = handleGetObjectByName("safeObject");
-  var canvasCenter = getCanvasCenter();
+function centerSign(canva){
+  var sign = handleGetObjectByName('safeObject')
+  var canvasCenter = getCanvasCenter()
 
-  const allObjects = canvas.getObjects();
+  const allObjects = canva.getObjects();
 
-  if (allObjects.length > 0) {
-    const group = new fabric.Group(allObjects);
-    canva.discardActiveObject();
+  sign.setCoords();
+  var newLeft = canvasCenter.x - sign.width/2
+  var newTop = canvasCenter.y - sign.height/2
+  sign.left = newLeft
+  sign.top = newTop
 
-    // Centrer le groupe
-    group.set("left", canvasCenter.x - group.width / 2);
-    group.set("top", canvasCenter.y - group.height / 2);
-
-    group.setCoords();
-
-    // currentSizeValues.value.left = canvasCenter.x - group.width/2
-    // currentSizeValues.value.top = canvasCenter.y - group.height/2
-    handleGetNewPosition(
-      canvasCenter.x - group.width / 2,
-      canvasCenter.y - group.height / 2
-    );
-
-    // Dégrouper les objets
-    group._restoreObjectsState();
-    canva.remove(group);
-    canva.getObjects().forEach((obj) => {
-      if (obj.name === "aso-signText") {
-        if (firstLoad) {
-          // obj.left = obj.left*obj.scaleX
-          // obj.top = obj.top*obj.scaleY
-        }
-      }
-      obj.setCoords();
-    });
+  // currentSizeValues.value.left = newLeft
+  // currentSizeValues.value.top = newTop
+  handleGetNewPosition(canvasCenter.x - sign.width/2, canvasCenter.y - sign.height/2)
+  function setMeasurmentValue(canvas){
+      var Objects = canvas.getObjects();
+      Objects.forEach(object => {
+          if(object.name == 'heightLine'){
+              object.set({
+                  x1 : (newLeft + sign.width + 30), 
+                  y1: newTop, 
+                  x2: (newLeft + sign.width + 30), 
+                  y2: (newTop + sign.height)
+              })
+          }
+          if(object.name == 'widthLine'){
+              object.set({
+                  x1: newLeft, 
+                  y1: (newTop + sign.height + 28.5), 
+                  x2: (newLeft + sign.width + 10), 
+                  y2: (newTop + sign.height + 28.5)
+              })
+          }
+          if(object.name == 'height-value'){
+              // object.text = String(signData.size.height + ' ' + currentUnit)
+              object.top = newTop + (sign.height/2)
+              object.left = newLeft + sign.width + 55
+          }
+          if(object.name == 'width-value'){
+              // object.text = String(signData.size.width + ' ' + currentUnit)
+              object.left = newLeft + (sign.width/2) - (object.width/2)
+              object.top = newTop + (sign.height + 35)
+          }
+          if(object.name == 'thickness-value'){
+              object.left = newLeft + (sign.width/2) - (object.width/2)
+              object.top = newTop + (sign.height + 65)
+              // object.text = String("Thickness" + ': ' + currentThickness + ' ' + currentUnit)
+          }
+          if(selectedShape == 'square'){
+              if(object.name == 'old-world-border'){
+                  var scaleX = sign.width / object.width;
+                  var scaleY = sign.height / object.height;
+                  object.left = newLeft
+                  object.top = newTop
+                  object.scaleX = scaleX
+                  object.scaleY = scaleY
+              }
+          }
+      })
+      canvas.renderAll()
   }
-  // sign.set('left', canvasCenter.x - sign.width/2)
-  // sign.set('top', canvasCenter.y - sign.height/2)
+  setMeasurmentValue(canva)
+  handleSelectFixingMethode(activeFixingMethode)
 
-  // sign.setCoords();
-
-  canva.renderAll();
+  canva.renderAll()
 }
 
 function convertToPx(dimension, unit) {
@@ -1328,7 +1361,7 @@ function handleChangeSize(width, height, name, maxChar) {
       if (object.name == "height-value") {
         object.text = String(height + " " + currentUnit);
         object.top = newRectTop + newSignHeight / 2;
-        object.left = newRectLeft + newSignWidth + 35;
+        object.left = newRectLeft + newSignWidth + 55;
       }
       if (object.name == "width-value") {
         object.text = String(width + " " + currentUnit);
@@ -1495,6 +1528,8 @@ function handleGetSignPosition() {
     height: sign.height,
     top: sign.top,
     left: sign.left,
+    maxChar: maxTextCharForSize,
+    sizeName: currentSizeName,
 
     texts: addedTexts,
   };
@@ -6355,6 +6390,23 @@ function handleClipAddedObject(canva) {
 }
 
 
+function handleMoveobject(to){
+  var object = activeCanvas.getActiveObject();
+  const index = activeCanvas.getObjects().indexOf(object);
+
+  const objects = activeCanvas.getObjects();
+  const lastIndex = objects.length - 1;
+  if(to === 'up'){
+    object.moveTo(index + 1);
+  }
+  if(to === 'down'){
+    object.moveTo(index - 1);
+  }
+
+  activeCanvas.renderAll()
+  // console.log('Index de l\'image:', index, "last index", lastIndex);
+}
+
 
 function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
   // console.log(canvasJson)
@@ -7410,7 +7462,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
           if(object.name == 'height-value'){
               object.text = String(signData.size.height + ' ' + currentUnit)
               object.top = sign.top + (sign.height/2)
-              object.left = sign.left + sign.width + 35
+              object.left = sign.left + sign.width + 55
           }
           if(object.name == 'width-value'){
               object.text = String(signData.size.width + ' ' + currentUnit)
@@ -7445,10 +7497,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
       images: addedImages,
   }
 }
-
-
-
-
 
 
 function handleFinishConfiguration(textsTable, imagesTable) {
@@ -7598,4 +7646,5 @@ export {
   handleLockRotating,
   handleLockEdition,
   handleAddTemplateText,
+  handleMoveobject,
 };

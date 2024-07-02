@@ -26,15 +26,6 @@
                             <input type="text" v-model="signPart.doublePart.part2" class="aso-w-full"/>
                         </div>
                     </div>
-                    <div class="aso-flex aso-space-x-3" v-if="signPart.doublePart.active">
-                        <div class="aso-text-[16px]">Enable Copy design from side</div>
-                        <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="toggleCopy" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleCopy" type="checkbox" name="toggleCopy" class="aso-sr-only aso-peer" v-model="signPart.doublePart.enableCopyDesignFromSide">
-                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-1px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
