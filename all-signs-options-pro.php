@@ -2,13 +2,11 @@
 
 use ASO\ASO_Design;
 use ASO\ASO_Post_Type;
-use ASO\ASO_Public;
 
 /*
 Plugin Name: All Signs Options Pro
 Plugin URI: https://signsdesigner.us/
-Description: The ultimate custom sign configurator for woocommerce.
-Our custom  signs configurator allows you to extend your business of personalization of  signs by offering you a nice configurator to allow your customers to customize signs in  acrylic, metal, 2D and 3D, thanks to a highly configurable sign product builder.
+Description: The leading app for selling all types of custom signs with WordPress/Woocommerce.  ASO is designed to streamline and improve the process of designing, quoting and ordering custom signs for sign makers and their customers via a beautiful, user-friendly configurator with flexible options for setting up your online store.
 
 Version: 1.0
 Author: Vertim Coders
