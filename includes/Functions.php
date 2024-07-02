@@ -218,7 +218,7 @@
     function aso_get_custom_products() {
         global $wpdb;
         $query = "SELECT p.id FROM {$wpdb->posts} p JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id WHERE p.post_type = 'product' AND pm.meta_key = %s";
-        $params = ['product-asoc-metas'];
+        $params = ['product-aso-metas'];
         $conditions = [];
         for ($i = 1; $i <= 9; $i++) {
             $conditions[] = "pm.meta_value LIKE %s";
