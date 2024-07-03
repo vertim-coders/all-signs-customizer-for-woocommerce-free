@@ -53,6 +53,12 @@
                                 </svg>
                             </span>
 
+                            <span @click="downLoadConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </span>
+
                             <span @click="centerSign(canvas)" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
                                 <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
@@ -215,7 +221,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
                             </span>
-                            <span @click="centerSign(canvas)" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
+                            <span @click="downLoadConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </span>
+                            <span :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
                                 <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                     <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
@@ -1560,7 +1571,7 @@
                     </svg>
                 </span>
     
-                <img id="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
+                <img ref="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
             </div>
         </div>
 
@@ -5935,18 +5946,48 @@
     function closeprevImg(){
         showImg.value = false
     }
+    const showPreview = ref(null)
     function showConfigRender(){
             // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
         if(configDoublePart.value.active){
             if(activeFace.value === "front-face"){
-                prevImg.value = genImage(canvas, 'png');
+                if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                    prevImg.value = genImageWithWatermark(canvas, 'png', 'preview');
+                }else{
+                    prevImg.value = genImage(canvas, 'png');
+                }
             }else if(activeFace.value === "back-face"){
+                if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                    prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview');
+                }else{
+                    prevImg.value = genImage(canvasBack, 'png');
+                }
+            }
+        }else{
+            if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                prevImg.value = genImageWithWatermark(canvas, 'png', 'preview');
+            }else{
+                prevImg.value = genImage(canvas, 'png');
+            }
+        }
+        showImg.value = true
+    }
+    function downLoadConfigRender(){
+        if(configDoublePart.value.active){
+            if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                genImageWithWatermark(canvas, 'png', 'download');
+                genImageWithWatermark(canvasBack, 'png', 'download');
+            }else{
+                prevImg.value = genImage(canvas, 'png');
                 prevImg.value = genImage(canvasBack, 'png');
             }
         }else{
-            prevImg.value = genImage(canvas, 'png');
+            if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                genImageWithWatermark(canvas, 'png', 'download');
+            }else{
+                genImage(canvas, 'png');
+            }
         }
-        showImg.value = true
     }
 
     function genImage(canva, format, width, height) {
@@ -6033,6 +6074,134 @@
         canva.renderAll();
 
         return dataURL;
+    }
+    function genImageWithWatermark(canva, format, purpose, width, height) {
+        // Sauvegarde les dimensions actuelles du canvas
+        const originalWidth = canva.getWidth();
+        const originalHeight = canva.getHeight();
+
+        var canvasCenter = getCanvasCenter()
+
+        // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
+        if (width && height) {
+            canva.setWidth(width);
+            canva.setHeight(height);
+            // checkScreenSize()
+        }
+
+        fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
+            // img.scaleToWidth(40);
+            // img.scaleToHeight(40);
+
+            const imgWidth = 100;
+            const imgHeight = 100;
+            const spacing = 50; // Espacement entre les images
+
+            // Créer un canvas temporaire
+            const patternCanvas = document.createElement('canvas');
+            const patternContext = patternCanvas.getContext('2d');
+
+            // Définir les dimensions du canvas temporaire
+            patternCanvas.width = imgWidth + spacing;
+            patternCanvas.height = imgHeight + spacing;
+
+            // Dessiner l'image de filigrane sur le canvas temporaire
+            patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
+
+            const pattern = new fabric.Pattern({
+                // source: img.getElement(),
+                source: patternCanvas,
+                repeat: 'repeat'
+            });
+
+            const watermarkRect = new fabric.Rect({
+                left: -canvasCenter.x,
+                top: -canvasCenter.y,
+                width: (originalWidth*2),
+                height: (originalHeight*2),
+                fill: pattern,  
+                selectable: false,
+                evented: false,
+                name: 'watermark',
+                opacity: 0.5,
+            });
+            canva.add(watermarkRect);
+            watermarkRect.sendToBack()
+
+            console.log(handleGetObjectByName('watermark', canvas), "watermark")
+    
+    
+            canva.getObjects().forEach(object => {
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                    object.set('visible', false);
+                }
+            });
+            canva.renderAll();
+    
+            var dataURL  = ""
+            // Génère l'image avec le format spécifié
+            switch (format) {
+                case 'png':
+                    dataURL = canva.toDataURL({
+                        format: 'png',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                break;
+    
+                case 'jpeg':
+                    canva.backgroundColor = configColors.value.canvasBackgroundColor
+                    dataURL = canva.toDataURL({
+                        format: 'jpeg',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                break;
+    
+                case 'webp':
+                    dataURL = canva.toDataURL({
+                        format: 'webp',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                break;
+    
+                case 'svg':
+                    const svgData = canva.toSVG();
+                    dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                break;
+            
+                default:
+    
+                break;
+            }
+    
+            // Restaure les dimensions et l'affichage originales du canvas
+            canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+            canva.getObjects().forEach(object => {
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                    object.set('visible', true);
+                }
+                if(object.name === 'watermark'){
+                    canva.remove(object)
+                }
+            });
+    
+            canva.setWidth(originalWidth);
+            canva.setHeight(originalHeight);
+    
+            // checkScreenSize()
+            canva.renderAll();
+
+            if(purpose === 'preview'){
+                showPreview.value.src = dataURL
+            }else{
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'canvas_with_watermark.jpg';
+                link.click();
+            }
+    
+        });
+        // return dataURL;
+
     }
 
 

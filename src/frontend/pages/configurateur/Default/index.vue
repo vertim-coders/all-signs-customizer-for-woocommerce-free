@@ -1526,16 +1526,18 @@
                         </p>
                     </div>
     
-                    <!-- <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                        <span :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-base-animation`">
+                    <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                        <span @click="downLoadConfigRender()" :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
                         </span>
-                        <p class="aso-hidden lg:aso-flex aso-text-sm aso-font-medium">Import</p>
+                        <p :class="`aso-hidden lg:aso-flex aso-text-sm aso-font-medium aso-text-[${configColors.optionsSideBar.textColor}]  `">
+                            {{ configVisualiserTexts.textDownload && configVisualiserTexts.textDownload.trim() !== '' ? configVisualiserTexts.textDownload : 'Preview' }}
+                        </p>
                     </div>
     
-                    <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                    <!-- <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
                         <span :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.backgroundButton}] hover:aso-bg-[${configColors.backgroundColorHoverButton}] aso-text-[${configColors.textColorButton}] hover:aso-text-[${configColors.textColorHoverButton}] aso-base-animation`">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                 <path d="M7.25012 7.6C7.25012 8.566 8.03412 9.35 9.00012 9.35H15.0001C15.4642 9.35 15.9094 9.16563 16.2376 8.83744C16.5657 8.50925 16.7501 8.06413 16.7501 7.6V4.276C16.7501 4.124 16.8741 4 17.0261 4C17.0983 3.99987 17.1696 4.01536 17.2352 4.04539C17.3008 4.07543 17.3591 4.1193 17.4061 4.174L20.3691 7.629C20.7795 8.10775 20.9938 8.72391 20.9691 9.354L20.6271 18.098C20.6018 18.7434 20.3277 19.3539 19.8622 19.8017C19.3967 20.2495 18.776 20.4997 18.1301 20.5H17.7511C17.6185 20.5 17.4913 20.4473 17.3976 20.3536C17.3038 20.2598 17.2511 20.1326 17.2511 20V15C17.2511 14.5359 17.0667 14.0908 16.7386 13.7626C16.4104 13.4344 15.9653 13.25 15.5011 13.25H8.50112C8.27122 13.2499 8.04355 13.295 7.83112 13.3829C7.61868 13.4708 7.42565 13.5997 7.26304 13.7622C7.10043 13.9247 6.97144 14.1177 6.88343 14.3301C6.79542 14.5425 6.75012 14.7701 6.75012 15V20C6.75012 20.1326 6.69744 20.2598 6.60367 20.3536C6.50991 20.4473 6.38273 20.5 6.25012 20.5H6.11312C5.53116 20.5001 4.96913 20.288 4.53231 19.9034C4.09549 19.5189 3.81384 18.9883 3.74012 18.411C3.24634 14.553 3.22518 10.6491 3.67712 6.786L3.73712 6.266C3.81017 5.64178 4.10993 5.06613 4.57948 4.64839C5.04902 4.23065 5.65564 3.99991 6.28412 4H6.75012C6.88273 4 7.00991 4.05268 7.10367 4.14645C7.19744 4.24022 7.25012 4.36739 7.25012 4.5V7.6Z" fill="currentColor"/>
@@ -1568,7 +1570,7 @@
                     </svg>
                 </span>
     
-                <img id="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
+                <img ref="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
             </div>
         </div>
 
@@ -5958,18 +5960,48 @@
     function closeprevImg(){
         showImg.value = false
     }
+    const showPreview = ref(null)
     function showConfigRender(){
             // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
         if(configDoublePart.value.active){
             if(activeFace.value === "front-face"){
-                prevImg.value = genImage(canvas, 'png');
+                if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                    prevImg.value = genImageWithWatermark(canvas, 'png', 'preview');
+                }else{
+                    prevImg.value = genImage(canvas, 'png');
+                }
             }else if(activeFace.value === "back-face"){
+                if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                    prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview');
+                }else{
+                    prevImg.value = genImage(canvasBack, 'png');
+                }
+            }
+        }else{
+            if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                prevImg.value = genImageWithWatermark(canvas, 'png', 'preview');
+            }else{
+                prevImg.value = genImage(canvas, 'png');
+            }
+        }
+        showImg.value = true
+    }
+    function downLoadConfigRender(){
+        if(configDoublePart.value.active){
+            if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                genImageWithWatermark(canvas, 'png', 'download');
+                genImageWithWatermark(canvasBack, 'png', 'download');
+            }else{
+                prevImg.value = genImage(canvas, 'png');
                 prevImg.value = genImage(canvasBack, 'png');
             }
         }else{
-            prevImg.value = genImage(canvas, 'png');
+            if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                genImageWithWatermark(canvas, 'png', 'download');
+            }else{
+                genImage(canvas, 'png');
+            }
         }
-        showImg.value = true
     }
 
     function genImage(canva, format, width, height) {
@@ -5981,7 +6013,7 @@
         if (width && height) {
             canva.setWidth(width);
             canva.setHeight(height);
-            // checkScreenSize()
+            checkScreenSize()
         }
 
 
@@ -6056,6 +6088,134 @@
         canva.renderAll();
 
         return dataURL;
+    }
+    function genImageWithWatermark(canva, format, purpose, width, height) {
+        // Sauvegarde les dimensions actuelles du canvas
+        const originalWidth = canva.getWidth();
+        const originalHeight = canva.getHeight();
+
+        var canvasCenter = getCanvasCenter()
+
+        // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
+        if (width && height) {
+            canva.setWidth(width);
+            canva.setHeight(height);
+            // checkScreenSize()
+        }
+
+        fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
+            // img.scaleToWidth(40);
+            // img.scaleToHeight(40);
+
+            const imgWidth = 100;
+            const imgHeight = 100;
+            const spacing = 50; // Espacement entre les images
+
+            // Créer un canvas temporaire
+            const patternCanvas = document.createElement('canvas');
+            const patternContext = patternCanvas.getContext('2d');
+
+            // Définir les dimensions du canvas temporaire
+            patternCanvas.width = imgWidth + spacing;
+            patternCanvas.height = imgHeight + spacing;
+
+            // Dessiner l'image de filigrane sur le canvas temporaire
+            patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
+
+            const pattern = new fabric.Pattern({
+                // source: img.getElement(),
+                source: patternCanvas,
+                repeat: 'repeat'
+            });
+
+            const watermarkRect = new fabric.Rect({
+                left: -canvasCenter.x,
+                top: -canvasCenter.y,
+                width: (originalWidth*2),
+                height: (originalHeight*2),
+                fill: pattern,  
+                selectable: false,
+                evented: false,
+                name: 'watermark',
+                opacity: 0.5,
+            });
+            canva.add(watermarkRect);
+            watermarkRect.sendToBack()
+
+            console.log(handleGetObjectByName('watermark', canvas), "watermark")
+    
+    
+            canva.getObjects().forEach(object => {
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                    object.set('visible', false);
+                }
+            });
+            canva.renderAll();
+    
+            var dataURL  = ""
+            // Génère l'image avec le format spécifié
+            switch (format) {
+                case 'png':
+                    dataURL = canva.toDataURL({
+                        format: 'png',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                break;
+    
+                case 'jpeg':
+                    canva.backgroundColor = configColors.value.canvasBackgroundColor
+                    dataURL = canva.toDataURL({
+                        format: 'jpeg',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                break;
+    
+                case 'webp':
+                    dataURL = canva.toDataURL({
+                        format: 'webp',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                break;
+    
+                case 'svg':
+                    const svgData = canva.toSVG();
+                    dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                break;
+            
+                default:
+    
+                break;
+            }
+    
+            // Restaure les dimensions et l'affichage originales du canvas
+            canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+            canva.getObjects().forEach(object => {
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                    object.set('visible', true);
+                }
+                if(object.name === 'watermark'){
+                    canva.remove(object)
+                }
+            });
+    
+            canva.setWidth(originalWidth);
+            canva.setHeight(originalHeight);
+    
+            // checkScreenSize()
+            canva.renderAll();
+
+            if(purpose === 'preview'){
+                showPreview.value.src = dataURL
+            }else{
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'canvas_with_watermark.jpg';
+                link.click();
+            }
+    
+        });
+        // return dataURL;
+
     }
 
     // fonctions concernant l'affichage des exemples
