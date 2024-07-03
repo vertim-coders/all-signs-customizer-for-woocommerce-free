@@ -250,6 +250,7 @@ final class ASO_All_Signs_Options
 
                 if ($found) {
                     $have_borders[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_borders[$i]["icon"]);
+                    update_option("aso_all_borders", $have_borders);
                 }
             }
             $differenceCles = array_diff_key($borders, $have_borders);
@@ -342,6 +343,7 @@ final class ASO_All_Signs_Options
 
                 if ($found) {
                     $have_shapes[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_shapes[$i]["icon"]);
+                    update_option("aso_all_shapes", $have_shapes);
                 }
             }
             $differenceCles = array_diff_key($shapes, $have_shapes);
@@ -514,6 +516,7 @@ final class ASO_All_Signs_Options
 
                 if ($found) {
                     $have_fixingMethods[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_fixingMethods[$i]["icon"]);
+                    update_option("aso_all_fixingMethods", $have_fixingMethods);
                 }
             }
             $differenceCles = array_diff_key($fixingMethods, $have_fixingMethods);
