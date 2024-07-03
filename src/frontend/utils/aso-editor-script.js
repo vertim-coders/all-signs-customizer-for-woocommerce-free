@@ -970,70 +970,42 @@ function handleReadyToSaveState(statut, start) {
 }
 
 function centerSign(canva){
-  var sign = handleGetObjectByName('safeObject')
+  var sign = handleGetObjectByName('safeObject', canva)
   var canvasCenter = getCanvasCenter()
-
   const allObjects = canva.getObjects();
 
-  sign.setCoords();
-  var newLeft = canvasCenter.x - sign.width/2
-  var newTop = canvasCenter.y - sign.height/2
-  sign.left = newLeft
-  sign.top = newTop
+  if (allObjects.length > 0) {
+      const group = new fabric.Group(allObjects);
+      canva.discardActiveObject();
 
-  // currentSizeValues.value.left = newLeft
-  // currentSizeValues.value.top = newTop
-  handleGetNewPosition(canvasCenter.x - sign.width/2, canvasCenter.y - sign.height/2)
-  function setMeasurmentValue(canvas){
-      var Objects = canvas.getObjects();
-      Objects.forEach(object => {
-          if(object.name == 'heightLine'){
-              object.set({
-                  x1 : (newLeft + sign.width + 30), 
-                  y1: newTop, 
-                  x2: (newLeft + sign.width + 30), 
-                  y2: (newTop + sign.height)
-              })
-          }
-          if(object.name == 'widthLine'){
-              object.set({
-                  x1: newLeft, 
-                  y1: (newTop + sign.height + 28.5), 
-                  x2: (newLeft + sign.width + 10), 
-                  y2: (newTop + sign.height + 28.5)
-              })
-          }
-          if(object.name == 'height-value'){
-              // object.text = String(signData.size.height + ' ' + currentUnit)
-              object.top = newTop + (sign.height/2)
-              object.left = newLeft + sign.width + 55
-          }
-          if(object.name == 'width-value'){
-              // object.text = String(signData.size.width + ' ' + currentUnit)
-              object.left = newLeft + (sign.width/2) - (object.width/2)
-              object.top = newTop + (sign.height + 35)
-          }
-          if(object.name == 'thickness-value'){
-              object.left = newLeft + (sign.width/2) - (object.width/2)
-              object.top = newTop + (sign.height + 65)
-              // object.text = String("Thickness" + ': ' + currentThickness + ' ' + currentUnit)
-          }
-          if(selectedShape == 'square'){
-              if(object.name == 'old-world-border'){
-                  var scaleX = sign.width / object.width;
-                  var scaleY = sign.height / object.height;
-                  object.left = newLeft
-                  object.top = newTop
-                  object.scaleX = scaleX
-                  object.scaleY = scaleY
+      // Centrer le groupe
+      group.set('left', canvasCenter.x - sign.width/2)
+      group.set('top', canvasCenter.y - sign.height/2)
+
+      group.setCoords();
+
+      // currentSizeValues.value.left = canvasCenter.x - sign.width/2
+      // currentSizeValues.value.top = canvasCenter.y - sign.height/2
+      handleGetNewPosition(canvasCenter.x - sign.width/2, canvasCenter.y - sign.height/2)
+
+
+      // Dégrouper les objets
+      group._restoreObjectsState();
+      canva.remove(group);
+      canva.getObjects().forEach((obj) => {
+          if(obj.name === 'aso-signText'){
+              if(obj.isEditing){
+                  obj.exitEditing();
               }
-          }
-      })
-      canvas.renderAll()
-  }
-  setMeasurmentValue(canva)
-  handleSelectFixingMethode(activeFixingMethode)
+              obj.clipPath = handleClipAddedObject(canva);
 
+          }
+          if (obj.name === 'aso-SignImage') {
+              obj.clipPath = handleClipAddedObject(canva);
+          }
+          obj.setCoords()
+      })
+  }
   canva.renderAll()
 }
 
