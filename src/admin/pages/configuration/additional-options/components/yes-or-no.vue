@@ -92,7 +92,7 @@
             </div>
             <div v-if="yesOrNo.price.type!='none'">
                 <div class="flex flex-col space-y-1 w-10/12 pt-4 pb-8 px-8">
-                    <input type="number" class="border rounded p-2 h-[35px]" v-model="yesOrNo.price.value" @blur="yesOrNo.price.value.trim()!=''? yesOrNo.price.value : 0">
+                    <input type="number" class="border rounded p-2 h-[35px]" v-model="yesOrNo.price.value" @blur="isNaN(yesOrNo.price.value) ? yesOrNo.price.value = 0 : ''">
                     <p class="text-[11px] w-2/3">{{yesOrNo.price.type == 'base'? 'Additional cost when selected by customer (e.g. $10.00).' : "Multiply the final price of the sign when selected (e.g. 2 x 100)."}}</p>
                 </div>
             </div>

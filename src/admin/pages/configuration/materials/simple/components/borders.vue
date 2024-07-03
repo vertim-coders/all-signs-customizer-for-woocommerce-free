@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-h-[100vh]">
+    <div>
         <div class="aso-space-y-1 aso-translate-y-7" v-if="!isNewBorder">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageBorders.length > 0">
                 <button :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newBorder">
@@ -119,7 +119,7 @@
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Price</label>
                             <div class="aso-relative aso-flex">
-                                <input type="number" class="aso-rounded aso-w-full aso-h-[30px]" v-model="borders.settings.colors[key].additionalPrice" @blur="borders.settings.colors[key].additionalPrice.trim()==''? borders.settings.colors[key].additionalPrice = 0 : ''"> 
+                                <input type="number" class="aso-rounded aso-w-full aso-h-[30px]" v-model="borders.settings.colors[key].additionalPrice" @blur="isNaN(borders.settings.colors[key].additionalPrice) ? borders.settings.colors[key].additionalPrice = 0 : ''"> 
                             </div>
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">

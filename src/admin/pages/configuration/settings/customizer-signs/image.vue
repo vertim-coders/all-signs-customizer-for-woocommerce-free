@@ -16,11 +16,11 @@
                     <div class="aso-flex aso-justify-between aso-space-x-6 aso-space-y-2">
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-text-[12px] aso-text-[#444444]">Upload min width (px)</label>
-                            <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMinWidth.trim() ==''){image.fileUploadScript.uploadMinWidth=100}}"/>
+                            <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="aso-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMinWidth)){image.fileUploadScript.uploadMinWidth=100}}"/>
                         </div>
                         <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                             <label class="aso-text-[12px] aso-text-[#444444]">Upload Max width (px)</label>
-                            <input type="number" v-model="image.fileUploadScript.uploadMaxWidth" class="aso-w-full" @blur="()=>{ if(image.fileUploadScript.uploadMaxWidth.trim()==''){image.fileUploadScript.uploadMaxWidth =1024}}"/>
+                            <input type="number" v-model="image.fileUploadScript.uploadMaxWidth" class="aso-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMaxWidth)){image.fileUploadScript.uploadMaxWidth =1024}}"/>
                         </div>
                     </div>
                     <div class="aso-pt-2">

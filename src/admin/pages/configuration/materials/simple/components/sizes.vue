@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-h-[100vh]">
+    <div class="">
         <div class="aso-space-y-1 aso-translate-y-7" v-if="!isNewSize">
             <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
                 
@@ -221,13 +221,13 @@
                                         <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                                             <label for="" class="aso-bold aso-font-normal">Base Price</label>
                                             <div class="aso-relative">
-                                                <input type="number" v-model="sizes.customSize.pricings[key].basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="sizes.customSize.pricings[key].basePrice.trim()=='' ? izes.customSize.pricings[key].basePrice=0 : ''">
+                                                <input type="number" v-model="sizes.customSize.pricings[key].basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(sizes.customSize.pricings[key].basePrice) ? sizes.customSize.pricings[key].basePrice=0 : ''">
                                             </div>
                                         </div>
                                         <div class="aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                                             <label for="" class="aso-bold aso-font-normal">Char Price</label>
                                             <div class="aso-relative">
-                                                <input type="number" v-model="sizes.customSize.pricings[key].charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="sizes.customSize.pricings[key].charPrice.trim()=='' ? izes.customSize.pricings[key].charPrice=0 : ''">
+                                                <input type="number" v-model="sizes.customSize.pricings[key].charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(sizes.customSize.pricings[key].charPrice) ? sizes.customSize.pricings[key].charPrice=0 : ''">
                                             </div>
                                         </div>
                                         <div>

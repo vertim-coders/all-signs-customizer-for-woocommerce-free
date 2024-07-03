@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px] aso-invisible">
                         <label for="" class="aso-font-bold">Upload Option Backgound Image</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">
@@ -231,14 +231,14 @@
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-text-[14px]">Base Price</label>
                             <div class="aso-relative">
-                                <input type="number" v-model="option.size.basePrice"  class="aso-rounded aso-w-full aso-h-[30px]">
+                                <input type="number" v-model="option.size.basePrice"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(option.size.basePrice) ? option.size.basePrice = 0 : ''">
                             </div>
                             
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-text-[14px]">Min char text to start applying the base price</label>
                             <div class="">
-                                <input type="number" v-model="option.size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]">
+                                <input type="number" v-model="option.size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(option.size.startPriceAtChar) ? option.size.startPriceAtChar = 1 : ''">
                             </div>
                             
                         </div>
@@ -247,7 +247,7 @@
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-text-[14px]">Max text char</label>
                             <div class="">
-                                <input type="number" v-model="option.size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]">
+                                <input type="number" v-model="option.size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(option.size.maxTextChar) ? option.size.maxTextChar = -1 : ''">
                             </div>
                             <p class="aso-text-[11px]">Set -1 if you don't want to limit</p>
                         </div>
@@ -255,7 +255,7 @@
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-text-[14px]">Char Price</label>
                             <div class="aso-relative">
-                                <input type="number" v-model="option.size.charPrice"  class="aso-rounded aso-w-full aso-h-[30px]">
+                                <input type="number" v-model="option.size.charPrice"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(option.size.charPrice) ? option.size.charPrice = 0 : ''">
                             </div>
                             <p class="aso-text-[11px] aso-invisible">Invisible</p>
                         </div>
@@ -265,7 +265,7 @@
                 <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-space-y-2">
                         <label for="" class="aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="option.additionalPrice" class="aso-rounded aso-w-full aso-h-[35px]">                    
+                        <input type="number" v-model="option.additionalPrice" class="aso-rounded aso-w-full aso-h-[35px]" @blur="isNaN(option.additionalPrice) ? option.additionalPrice = 0 : ''">                    
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Color Name</label>

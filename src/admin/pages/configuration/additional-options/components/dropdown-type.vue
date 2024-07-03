@@ -73,7 +73,7 @@
                         </div>
                         <div v-show="dropdownType.options[key].price.type!='none'">
                             <div class="aso-flex aso-flex-col aso-space-y-1 aso-w-10/12 aso-pt-4 aso-pb-8 aso-px-8">
-                                <input type="number" class="aso-border-solid aso-rounded aso-p-2 aso-h-[35px]" v-model="dropdownType.options[key].price.value" @blur="dropdownType.options[key].price.value.trim()!=''? dropdownType.options[key].price.value : 0">
+                                <input type="number" class="aso-border-solid aso-rounded aso-p-2 aso-h-[35px]" v-model="dropdownType.options[key].price.value" @blur="isNaN(dropdownType.options[key].price.value) ? dropdownType.options[key].price.value = 0 : ''">
                                 <p class="text-[11px] w-2/3">{{dropdownType.options[key].price.type == 'base'? 'Additional cost when selected by customer (e.g. $10.00).' : "Multiply the final price of the sign when selected (e.g. 2 x 100)."}}</p>
                             </div>
                         </div>

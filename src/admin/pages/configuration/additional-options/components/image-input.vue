@@ -106,7 +106,7 @@
                         </div>
                         <div v-show="inputTypeImage.options[key].price.type!='none'">
                             <div class="aso-flex aso-flex-col aso-space-y-1 aso-w-10/12 aso-pt-4 aso-pb-8 aso-px-8">
-                                <input type="number" class="aso-border-solid aso-rounded aso-p-2 aso-h-[35px]" v-model="inputTypeImage.options[key].price.value" @blur="inputTypeImage.options[key].price.value.trim()!=''? inputTypeImage.options[key].price.value : 0">
+                                <input type="number" class="aso-border-solid aso-rounded aso-p-2 aso-h-[35px]" v-model="inputTypeImage.options[key].price.value" @blur="isNaN(inputTypeImage.options[key].price.value) ? inputTypeImage.options[key].price.value = 0 : ''">
                                 <p class="text-[11px] w-2/3">{{inputTypeImage.options[key].price.type == 'base'? 'Additional cost when selected by customer (e.g. $10.00).' : "Multiply the final price of the sign when selected (e.g. 2 x 100)."}}</p>
                             </div>
                         </div>

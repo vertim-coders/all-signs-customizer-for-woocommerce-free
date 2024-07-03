@@ -110,7 +110,7 @@
                 </button>
             </div>
         </div>
-        <div class="aso-h-[100vh] aso-overflow-y-auto aso-overflow-x-hidden aso-relative">
+        <div >
             <Sizes v-if="route.name == 'Simple-Sizes'"/>
             <Borders v-if="route.name == 'Simple-Borders'"/>
             <Colors v-if="route.name == 'Simple-Colors'"/>

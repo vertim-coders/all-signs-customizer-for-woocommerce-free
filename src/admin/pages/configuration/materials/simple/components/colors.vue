@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="aso-h-[70vh] aso-overflow-y-auto aso-overflow-x-hidden aso-space-y-1 aso-translate-y-7" v-if="!isNewColor">
+        <div v-if="!isNewColor">
             <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2">
                 <button v-if="!isFetching" :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newColor">
                     <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,7 +15,7 @@
             </div>
             <div class="aso-relative" id="monTableau">
                 <table class="aso-w-full aso-text-center aso-px-4 aso-border aso-border-collapse aso-border-0">
-                    <thead class="aso-text-[14px] aso-bg-[#f0f0f1] aso-sticky aso-top-0 aso-z-[999]">
+                    <thead class="aso-text-[14px] aso-bg-[#f0f0f1]">
                         <tr class="">
                             <th scope="col" class="aso-p-4 aso-px-8 aso-w-12 aso-font-normal">
                                 Title 
@@ -292,7 +292,7 @@
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="color.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="color.additionalPrice.trim()==''?color.additionalPrice=0:''">
+                        <input type="number" v-model="color.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(color.additionalPrice) ? color.additionalPrice=0 :''">
                     </div>
                 </div>
             </div>
@@ -436,7 +436,7 @@
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col" v-show="dropdownColors[key]">
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]"  @blur="addColors[key].additionalPrice.trim()==''?addColors[key].additionalPrice=0:''">
+                        <input type="number" v-model="addColors[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]"  @blur="isNaN(addColors[key].additionalPrice)?addColors[key].additionalPrice=0:''">
                     </div>
                     <div @click="handleDeleteNewMaterialColor(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-my-0  aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
