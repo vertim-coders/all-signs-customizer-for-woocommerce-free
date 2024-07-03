@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-mt-10">
+    <div class="aso-mt-4">
         <div class="aso-space-y-1"  v-if="!isNewComponentAdvance">
             <div class="aso-bg-[#F8F9FB] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
                 <div v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">

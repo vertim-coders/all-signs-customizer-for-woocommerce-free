@@ -310,19 +310,21 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
+        $have_fixingMethods = get_option("aso_all_fixingMethods");
+        $have_shapes = get_option("aso_all_shapes");
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){
-                if($meta['data']['materials'][$material_id]['data'][$component_id]){
-                    return rest_ensure_response(["component"=>$meta['data']['materials'][$material_id]['data'][$component_id],"message"=>__("No Material Component Options Found","ASO")]);
+                if(isset($meta['data']['materials'][$material_id]['data'][$component_id])){
+                    return rest_ensure_response(["manageShapes"=>$have_shapes,"manageFixingMethods"=>$have_fixingMethods,"component"=>$meta['data']['materials'][$material_id]['data'][$component_id],"message"=>__("No Material Component Options Found","ASO")]);
                 }else{
-                    return rest_ensure_response(["message"=>__("No materials component found","ASO")]);
+                    return rest_ensure_response(["manageShapes"=>$have_shapes,"manageFixingMethods"=>$have_fixingMethods,"message"=>__("No materials component found","ASO")]);
                 }
             }else{                    
-                return rest_ensure_response(["message"=>__("No materials component found","ASO")]);
+                return rest_ensure_response(["manageShapes"=>$have_shapes,"manageFixingMethods"=>$have_fixingMethods,"message"=>__("No materials component found","ASO")]);
             }
         }else{
-            return rest_ensure_response(["message"=>__("No Materials found","ASO")]);
+            return rest_ensure_response(["manageShapes"=>$have_shapes,"manageFixingMethods"=>$have_fixingMethods,"message"=>__("No Materials found","ASO")]);
         }
     }
   

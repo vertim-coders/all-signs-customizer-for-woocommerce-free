@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-mt-10">
+    <div class="aso-mt-4">
         <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
             <div v-if="config.trim() != ''" class="aso-font-bold">
                 {{config}}
@@ -199,7 +199,6 @@
                             :options="shapes"
                             label="name"
                             trackBy="name"
-                            :searchable="true"
                         >
                             <template v-slot:singleLabel="{ value }">
                                 <div class="multiselect-single-label">
@@ -384,8 +383,6 @@ const isEdit = ref(false);
 
 onMounted(async() => {
     isFetching.value = true;
-    await fetchAllFixingMethods();
-    await fetchAllShapes();
     await fetchMaterialAdvanceOptions();
 });
 
@@ -395,20 +392,14 @@ const goToMaterials = ()=>{
     window.location.reload()
     })
 }
-const fetchAllFixingMethods = async () => {
-    const result = await api.getGlobalFixingMethods();
-    fixingMethods.value = result.map((fx,key)=>{
-        return {name:fx.name,value:key,icon:fx.icon};
-    });
-}
-const fetchAllShapes = async () => {
-    const result = await api.getGlobalShapes();
-    shapes.value = result.map((sh,key)=>{
-        return {name:sh.name,value:key,icon:sh.icon};
-    });
-}
 const fetchMaterialAdvanceOptions = async () => {
     const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);
+    shapes.value = result.manageShapes.map((sh,key)=>{
+        return {name:sh.name,value:key,icon:sh.icon};
+    });
+    fixingMethods.value = result.manageFixingMethods.map((fx,key)=>{
+        return {name:fx.name,value:key,icon:fx.icon};
+    });
     if(result.component){
         componentAdvance.value = result.component;
         noOptionsFound.value = result.message;
