@@ -283,11 +283,11 @@
                     <div class="aso-flex aso-justify-between">
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                             <label for="" class="aso-text-[14px] aso-font-bold">Width</label>
-                            <input type="number" v-model="size.width"  class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="size.width"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(size.width)?size.width=0:''">
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                             <label for="" class="aso-text-[14px] aso-font-bold">Height</label>
-                            <input type="number"  v-model="size.height"  class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number"  v-model="size.height"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(size.height)?size.height=0:''">
                         </div>
                     </div>
                 </div>
@@ -295,14 +295,14 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Base Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.basePrice ==''? size.basePrice=0:''">
+                            <input type="number" v-model="size.basePrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(size.basePrice)? size.basePrice=0:''">
                         </div>
                         
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Min char text to start applying the base price</label>
                         <div class="">
-                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.startPriceAtChar ==''? size.startPriceAtChar=1:''">
+                            <input type="number" v-model="size.startPriceAtChar" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(size.startPriceAtChar)? size.startPriceAtChar=1:''">
                         </div>
                         
                     </div>
@@ -311,7 +311,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Max text char</label>
                         <div class="">
-                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.maxTextChar ==''? size.maxTextChar=-1:''">
+                            <input type="number" v-model="size.maxTextChar"  class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(size.maxTextChar)? size.maxTextChar=-1:''">
                         </div>
                         <p class="aso-text-[11px]">Set -1 if you don't want to limit</p>
                     </div>
@@ -319,7 +319,7 @@
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[14px] aso-font-bold">Char Price</label>
                         <div class="aso-relative">
-                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="size.charPrice ==''? size.charPrice=0:''">
+                            <input type="number" v-model="size.charPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(size.charPrice)? size.charPrice=0:''">
                         </div>
                         <p class="aso-text-[11px] aso-invisible">Invisible</p>
                     </div>
