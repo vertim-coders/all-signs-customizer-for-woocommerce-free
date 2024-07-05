@@ -2535,6 +2535,21 @@
                         }
                     });
                 });
+                canvas.on('mouse:wheel', function(opt) {
+                    if (opt.e.ctrlKey) { // Vérifier si la touche Ctrl est enfoncée
+                        var delta = opt.e.deltaY;
+                        var zoom = canvas.getZoom();
+                        zoom *= 0.999 ** delta;
+                        if (zoom > 20) zoom = 20;
+                        if (zoom < 0.01) zoom = 0.01;
+    
+                        console.log("delta:", delta, "zoom:", zoom)
+    
+                        canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+                        opt.e.preventDefault();
+                        opt.e.stopPropagation();
+                    }
+                });
     
                 canvasBack.on('selection:created', showObjectValues);
                 canvasBack.on('selection:updated', function(e) {
@@ -2557,6 +2572,21 @@
                             canvasBack.renderAll();
                         }
                     });
+                });
+                canvasBack.on('mouse:wheel', function(opt) {
+                    if (opt.e.ctrlKey) { // Vérifier si la touche Ctrl est enfoncée
+                        var delta = opt.e.deltaY;
+                        var zoom = canvasBack.getZoom();
+                        zoom *= 0.999 ** delta;
+                        if (zoom > 20) zoom = 20;
+                        if (zoom < 0.01) zoom = 0.01;
+    
+                        console.log("delta:", delta, "zoom:", zoom)
+    
+                        canvasBack.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+                        opt.e.preventDefault();
+                        opt.e.stopPropagation();
+                    }
                 });
                 
                 activeCanvas = canvas
