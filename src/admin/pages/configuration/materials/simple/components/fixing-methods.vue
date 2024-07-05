@@ -114,7 +114,7 @@
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="fixingMethod.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input type="number" v-model="fixingMethod.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(fixingMethod.additionalPrice)?fixingMethod.additionalPrice=0:''">
                     </div>
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
@@ -177,7 +177,7 @@
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                            <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(addNewFixingMethods[key].additionalPrice)?addNewFixingMethods[key].additionalPrice=0:''">
                         </div>
                     </div>
                     <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col" v-show="dropdownFixingMethods[key]">

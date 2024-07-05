@@ -96,7 +96,7 @@
                             trackBy="name"
                         />
                     </div>
-                    <select disabled="disabled" v-if="isEdit">
+                    <select disabled="disabled" v-if="isEdit" v-model="template.configId">
                         <option :value="config.value" v-for="config in configurations">{{ config.name }}</option>
                     </select>
                 </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Base Price</label>
-                        <input type="number" v-model="template.basePrice" @blur="template.basePrice ==''? template.basePrice =0 : ''" class="aso-rounded aso-w-full aso-h-[32px]">                        
+                        <input type="number" v-model="template.basePrice" @blur="isNaN(template.basePrice)? template.basePrice =0 : ''" class="aso-rounded aso-w-full aso-h-[32px]">                        
                     </div>
                 </div>
                 <div class="aso-flex aso-justify-between">
@@ -164,7 +164,7 @@
             </div>
         </div>
         <!-- open Category Modal-->
-        <div v-if="openCategoryModal" @click.self="isLoading?'' :closeCategoryModal()" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)]">
+        <div v-if="openCategoryModal" @click.self="isLoading?'' :closeCategoryModal()" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow ">
                     <button :disabled="isLoading" @click.stop="closeCategoryModal" type="button" class="aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center" data-modal-hide="popup-modal">

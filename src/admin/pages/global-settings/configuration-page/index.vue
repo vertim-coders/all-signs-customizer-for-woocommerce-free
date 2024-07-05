@@ -74,6 +74,10 @@
                     <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.templateAddToCartButton" />
                 </div>
                 <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
+                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of show all templates on template page: </label>
+                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.allTemplatesText" />
+                </div>
+                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
                     <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of design button on template: </label>
                     <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.templateDesignButton" />
                 </div>
@@ -140,6 +144,7 @@ var configPages = ref({
         productTemplateButton:'Design From Example',
         templateAddToCartButton:'Add To Cart',
         templateDesignButton: 'Customize',
+        allTemplatesText:"All",
         recapsButtonOnCart:'Sign Recaps'        
     },
     others:{

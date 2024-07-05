@@ -129,7 +129,7 @@
                 </div>
                 <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                     <label for="" class="aso-font-normal">Additional Price</label>
-                    <input type="number" v-model="clipart.additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]"/>
+                    <input type="number" v-model="clipart.additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]" @blur="isNaN(clipart.additionalPrice)?clipart.additionalPrice=0:''"/>
                 </div>
             </div>
             <div class="aso-relative aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-2 aso-h-[60vh] aso-overflow-y-auto aso-overflow-x-hidden" v-if="!useApi && !isEdit">
@@ -140,7 +140,7 @@
                     </div>
                     <div class="aso-w-1/4 aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                         <label for="" class="aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="cliparts[key].additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]"/>
+                        <input type="number" v-model="cliparts[key].additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]" @blur="isNaN(cliparts[key].additionalPrice)?cliparts[key].additionalPrice=0:''"/>
                     </div>
                     <div class="aso-w-1/4 aso-flex aso-flex-col aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
@@ -243,7 +243,7 @@
                         </div>
                         <div class=" aso-space-y-2 aso-flex aso-flex-col aso-text-[14px]">
                             <label for="" class="aso-font-normal">Additional Price</label>
-                            <input type="number" v-model="cliparts[key].additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]"/>
+                            <input type="number" v-model="cliparts[key].additionalPrice" class="aso-rounded aso-w-[1/3] aso-h-[35px]" @blur="isNaN(cliparts[key].additionalPrice)?cliparts[key].additionalPrice=0:''"/>
                         </div>
                         <div @click="handleDeleteClipartSelected(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">

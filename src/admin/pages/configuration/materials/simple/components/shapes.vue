@@ -113,7 +113,7 @@
                     </div>
                     <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                         <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="shape.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                        <input type="number" v-model="shape.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(shape.additionalPrice)?shape.additionalPrice=0:''">
                         
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="aso-w-2/5 aso-space-y-2 aso-text-[12px] aso-flex aso-flex-col">
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                            <input type="number" v-model="addNewShapes[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]">
+                            <input type="number" v-model="addNewShapes[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(addNewShapes[key].additionalPrice)?addNewShapes[key].additionalPrice=0:''">
                         </div>
                         <div @click="handleDeleteNewShape(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-2 aso-shadow-md aso-rounded-full aso-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">

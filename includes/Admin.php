@@ -77,7 +77,6 @@ class ASO_Admin {
             "ajax_url"=>esc_url(admin_url('admin-ajax.php')),
             "site_url"=>urlencode(get_site_url()),
             "author"=>ASO_ID,
-            "product"=>get_option("aso_product_pro", ''),
             "assets_url"=>ASO_ASSETS,
             "page"=>"admin",
             "version"=> ASO_VERSION,

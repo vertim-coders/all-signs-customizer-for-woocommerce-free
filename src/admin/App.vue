@@ -18,18 +18,38 @@ import NotFound from "@/admin/pages/NotFound/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import api from './Api/api';
 const activateProduct = ref(true);
+const product = ref('');
+const productId = aso_data.author;
 onMounted(async() => {
     try {
         const response = await api.getProductHealth();
+        product.value = response.product;
         if(response.aso_health) {
             activateProduct.value = true;
         }else{
+            await activateLicenseKey();
             activateProduct.value = false;
         }
     } catch (error) {
         activateProduct.value = false;
     }
 });
+const activateLicenseKey = async () => {
+    try {
+        const url = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/license/?lcde='+ product.value +"&siteurl="+aso_data.site_url+"&vertim="+productId;
+        const response = await axios.get(url);
+        if (response.data.key) {
+            activateProduct.value = true;
+            await api.saveGlobalSettingsProduct(licenses.value);
+        }else if(response.data.message){
+            toastMessage(response.data.message, 'error');
+        }else{
+            toastMessage(response.data, 'error');
+        }
+    } catch (error) {
+        toastMessage(error, "error");
+    }
+}
 
 tailwind.config ={
     prefix: 'aso-',

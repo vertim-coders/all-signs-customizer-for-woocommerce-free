@@ -1,5 +1,5 @@
 <template>
-    <div class="aso-py-10 aso-w-full">
+    <div class="aso-py-4 aso-w-full">
         <div v-if="step==0 && !openModal">
             <div  class="aso-sticky aso-top-[80px] aso-z-[999] aso-bg-[#F8F9FB] aso-border-b-3 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-[#f0f0f1] ">
                 <div class="aso-px-4 aso-pb-4">
@@ -104,17 +104,17 @@
             </div>
             <div class="aso-flex aso-items-center aso-justify-center aso-translate-y-12 aso-py-7 aso-w-full" v-if="pages>1">
                 <div class="aso-grid aso-grid-cols-5 aso-gap-4">
-                    <button @click="handlePrevPage" :diseabled="page == 1" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border ${page == 1 ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :``}`">
+                    <button @click="handlePrevPage" :diseabled="page == 1" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border ${page == 1 ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :`aso-cursor-pointer`}`">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                         </svg>
                     </button>
 
-                    <div v-for="pg in pages" :key="pg">
-                        <button @click="()=>changePage(pg)" v-if="pg != page" :class="`aso-text-[#016464] aso-bg-white aso-h-10 aso-w-10 aso-p-2 aso-text-base aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border`">{{ pg }}</button>    
+                    <div v-for="pg in visiblePages" :key="pg">
+                        <button @click="()=>changePage(pg)" v-if="pg != page" :class="`aso-text-[#016464] aso-bg-white aso-h-10 aso-w-10 aso-p-2 aso-text-base aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border aso-cursor-pointer`">{{ pg }}</button>    
                         <button @click="()=>changePage(pg)" :diseabled="pg == page" v-if="pg == page" :class="`aso-bg-[#016464] aso-h-10 w-10 aso-p-3.5 aso-text-base aso-text-white aso-font-medium aso-rounded-lg aso-flex aso-items-center aso-justify-center aso-border aso-cursor-not-allowed`">{{ page }}</button>
                     </div>
-                    <button @click="handleNextPage" :diseabled="page < pages" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg flex aso-items-center aso-justify-center aso-border ${page == pages ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :``}`">
+                    <button @click="handleNextPage" :diseabled="page < pages" :class="`aso-text-[#016464] aso-h-10 aso-w-10 aso-p-2 aso-text-base  aso-bg-white aso-font-medium aso-rounded-lg flex aso-items-center aso-justify-center aso-border ${page == pages ? `aso-cursor-not-allowed aso-bg-gray-50 aso-text-[#e5e5e5]` :`aso-cursor-pointer`}`">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
@@ -369,7 +369,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import api from "@/admin/Api/api";
 import toastMessage from '@/admin/utils/functions';
 import Multiselect from '@vueform/multiselect';
@@ -8482,8 +8482,8 @@ const includeDemo = ref(false);
 
 const configs = ref([]);
 const totalPages = ref(0);
-var pages = ref(0);
-var page = ref(1);
+const pages = ref(0);
+const page = ref(1);
 const totalConfigsFound = ref(0);
 const isFetching = ref(false);
 const canAddNew = ref(false);
@@ -8619,6 +8619,14 @@ const handlePrevPage = async () => {
        page.value = prevPage;
     }
 }
+const visiblePages = computed(() => {
+  if (pages.value <= 3) return Array.from({ length: pages.value }, (_, i) => i + 1)
+
+  if (page.value === 1) return [1, 2, 3]
+  if (page.value === pages.value) return [pages.value - 2, pages.value - 1, pages.value]
+
+  return [page.value - 1, page.value, page.value + 1]
+})
 
 /** Function for adding new Config */
 const addNewConfig = async (configuration) => {

@@ -190,6 +190,7 @@ final class ASO_All_Signs_Options
                 "productTemplateButton"=>'Design From Example',
                 "templateAddToCartButton"=>'Add To Cart',
                 "templateDesignButton"=> 'Customize',
+                "allTemplatesText"=> 'All',
                 "recapsButtonOnCart"=>'Sign Recaps'        
             ],
             "others" => [

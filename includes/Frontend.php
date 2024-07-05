@@ -205,14 +205,18 @@ class ASO_Frontend {
                         wp_localize_script("aso-product-min","aso_configurator_data",$ASO);
                         wp_localize_script("aso-product-min","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
-                            "page"=>"configurator"
+                            "page"=>"configurator",
+                            "site_url"=>urlencode(get_site_url()),
+                            "author"=>ASO_ID
                         ]);
 
                         wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-frontend","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                            "page"=>"configurator"
+                            "page"=>"configurator",
+                            "site_url"=>urlencode(get_site_url()),
+                            "author"=>ASO_ID
                         ]);
                     }
                 }
@@ -298,12 +302,20 @@ class ASO_Frontend {
                 $configId = $meta[$productid]['config-id'];
                 if($configId !=0){
                     $templates = get_post_meta($configId,"aso-templates",true);
+                    $all_categories = get_option("aso-templates-categories",[]);
+                    $categories = [];
+                    foreach ($templates as $template) {
+                        if(isset($all_categories[$template["categoryId"]])){
+                            array_push($categories,["value"=>$template["categoryId"],"name"=>$all_categories[$template["categoryId"]]]);
+                        }
+                    }
                     $aso_product = new ASO_Product_Config($productid);
                     if(count($templates)>0){ ?>
                         <div id='aso-frontend-app' class="aso-templates"></div>
                         <?php
                         wp_localize_script("aso-product-min","aso_templates",[
                             "data"=>$templates,
+                            "categories"=>$categories,
                             "productId"=>$productid,
                             "grid_cols"=>$cols,
                             "pageConfigs"=>get_option("aso_config_page"),
@@ -313,11 +325,14 @@ class ASO_Frontend {
                         ]);
                         wp_localize_script("aso-product-min","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
-                            "page"=>"templates"
+                            "page"=>"templates",
+                            "site_url"=>urlencode(get_site_url()),
+                            "author"=>ASO_ID
                         ]);
 
                         wp_localize_script("aso-frontend","aso_templates",[
                             "data"=>$templates,
+                            "categories"=>$categories,
                             "productId"=>$productid,
                             "grid_cols"=>$cols,
                             "pageConfigs"=>get_option("aso_config_page"),
@@ -328,7 +343,9 @@ class ASO_Frontend {
                         wp_localize_script("aso-frontend","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                            "page"=>"templates"
+                            "page"=>"templates",
+                            "site_url"=>urlencode(get_site_url()),
+                            "author"=>ASO_ID
                         ]);
                     }
                 }
