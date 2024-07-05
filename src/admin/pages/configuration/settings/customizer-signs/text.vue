@@ -202,7 +202,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
+                    <!-- <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
                         <div class="">
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-2 aso-py-1.5">
                                 <svg class="aso-w-4 aso-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,8 +217,8 @@
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
-                    </div>
-                    <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
+                    </div> -->
+                    <!-- <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
                         <div class="">
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-2 aso-py-1.5">
                                 <svg class="aso-w-4 aso-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -233,7 +233,7 @@
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
                         <div class="">
                             <div class="aso-flex aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB]">
@@ -263,7 +263,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
+                    <!-- <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-3">
                         <div class="">
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-2 aso-py-1.5">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../../assets/icons/ic_curved_up.svg" alt="">
@@ -276,8 +276,8 @@
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
-                    </div>
-                    <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-1">
+                    </div> -->
+                    <!-- <div class="aso-text-center aso-space-y-0.5 aso-flex aso-space-x-1">
                         <div class="">
                             <button class="aso-bg-transparent aso-cursor-pointer aso-border aso-border-solid aso-border-[1px] aso-border-[#BBBBBB] aso-w-fit aso-h-fit aso-px-2 aso-py-1.5">
                                 <img class="aso-w-4 aso-h-4" src="../../../../../../assets/icons/ic_curved_down.svg" alt="">
@@ -290,7 +290,7 @@
                                 <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
                             </label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

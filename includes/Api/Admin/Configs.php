@@ -307,8 +307,8 @@ class ASO_Api_Configs extends WP_REST_Controller {
         if ( ! empty( $per_page ) ) {
             $args['posts_per_page'] = $per_page ;
         } else {
-            $per_page = 1;
-            $args['posts_per_page'] = 1;
+            $per_page = 6;
+            $args['posts_per_page'] = 6;
         }
 
         $oder =  $request->get_param( 'order' );
