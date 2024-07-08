@@ -24,7 +24,7 @@
     <div v-if="!isFetching">
         <Visualizer v-if="showStep == 'visualizer'" :data="languageImages.main" :fetch-settings="fetchLanguageImageSettings"/>
         <Images v-if="showStep == 'images'" :data="languageImages.images" :fetch-settings="fetchLanguageImageSettings"/>
-        <UploadDesign v-if="showStep == 'upload-design'" :data="languageImages.uploadDesign" :fetch-settings="fetchLanguageImageSettings"/>
+        <UploadDesign v-show="showStep == 'upload-design'" :data="languageImages.uploadDesign" :fetch-settings="fetchLanguageImageSettings"/>
         
     </div>
 </template>

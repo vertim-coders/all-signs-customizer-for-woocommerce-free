@@ -38,11 +38,11 @@
             <!-- Table which display all configurations -->
             <div class="aso-w-full aso-overflow-x-auto">
                 <div class="aso-overflow-hidden aso-w-full ">
-                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
+                    <div class="aso-grid aso-grid-cols-3 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-[#f0f0f1] aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
                         <div class="aso-flex aso-items-center aso-justify-center">Name Configuration</div>
                         <div class="aso-flex aso-items-center aso-justify-center">Description</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div>
+                        <!-- <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
+                        <div class="aso-flex aso-items-center aso-justify-center">PopupImg</div> -->
                         <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
                     </div>
                     
@@ -54,22 +54,22 @@
                             <p class="aso-text-2xl aso-font-bold">NO CONFIGURATION FOUND</p>
                         </div>
                     </div>
-                    <div v-if="!isFetching" v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b-1 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-gray-200 aso-gap-x-16">
-                        <div class="aso-text-gray-500 aso-flex dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                    <div v-if="!isFetching" v-for="(config,key) in configs" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-3 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b-1 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-gray-200 aso-gap-x-16">
+                        <div class="aso-text-gray-500 aso-flex dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4">
                             <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
                                 <span class="aso-text-[12px]">{{getInitials(config.name)}}</span> 
                             </span>
                             <span class="aso-flex aso-justify-center aso-items-center">{{ config.name }}</span>
                         </div>
-                        <div class="aso-text-gray-500 aso-justify-center aso-items-center aso-flex dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                        <div class="aso-text-gray-500 aso-justify-center aso-items-center aso-flex dark:aso-text-gray-400 aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis">
                             <span>{{config.description}}</span>
                         </div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                        <!-- <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
-                        </div> 
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center" @click="()=>$router.push('/configs/'+config.name.replace(/ /,'-')+'/'+config.id+'/materials')">
+                        </div>  -->
+                        <!-- <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
                             <img class="aso-w-10 aso-h-10 aso-rounded" :src="config.popImg" alt="" v-if="config.popImg!=''">
-                        </div>
+                        </div> -->
                         <div class="aso-flex aso-space-x-2 aso-justify-center aso-items-center aso-text-gray-500 dark:aso-text-gray-400">
                            <!--  <button class="aso-bg-transparent aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex">
                                 <img class="aso-w-5 aso-h-5" src="../../../../assets/icons/ic_preview.svg" alt="">
@@ -138,7 +138,7 @@
                         <input type="text" v-model="newConfig.description" class="aso-rounded aso-w-full aso-h-[35px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-justify-between">
+                <!-- <div class="aso-flex aso-justify-between">
                     <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-normal">Upload icon</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
                 <div class="aso-bg-[#016464] aso-rounded">
@@ -547,6 +547,7 @@ const defaultSettings = ref({
             enableCurvedDown:true,
         },
         images: {
+            enableDownloadImage:true,
             enableUploadImage:true,
             fileUploadScript:{
                 uploadMinWidth:100,
@@ -565,24 +566,26 @@ const defaultSettings = ref({
                 enableBlur:true,
                 enableSepia:true,
                 enableSharpen:true,
-            }
+            },
+            colors:[]
         }
     },
     languageImages: {
         uploadDesign: {
             activate: false,
             link: "",
-            phraseSubmitCustom: "Take a customization"
+            phraseSubmitCustom: "Take a customization",
+            helpContent:'',
         },
         images: {
             resetAllIcon:'',
-            cancelAnAction:'',
-            icon:'',
+            undoIcon:'',
+            redoIcon:'',
             changeIconPreview:'',
+            changeIconHelp:'',
             changeIconImport:'',
             changeIconShare:'',
             changeIconSaveProject:'',
-            changeIconShareSideBar:'',
             changeIconMaterial:'',
             changeIconShape:'',
             changeIconFixingMethod:'',
@@ -590,7 +593,7 @@ const defaultSettings = ref({
             changeIconSize:'',
             changeIconText:'',
             changeIconColor:'',
-            changeIconSizeMenu:'',
+            changeIconDownload:'',
             changeIconBorder:'',
             changeIconImage:'',
         },
@@ -8781,7 +8784,6 @@ const delConfig = async () => {
 const goToMaterial = (c)=>{
     router.push('/configs/'+c.name.replace(/ /,'-')+'/'+c.id+'/materials')
     .then(() => {
-      // Recharger la page après la navigation
       window.location.reload()
     })
 }

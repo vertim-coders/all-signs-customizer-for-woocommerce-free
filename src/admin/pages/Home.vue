@@ -9,7 +9,7 @@
                     <div class="aso-my-4">
                         <h3 class="aso-m-0 aso-font-bold aso-text-[30px]">All Signs Options PRO</h3>
                     </div>
-                    <p class="aso-text-justify aso-text-[12px] aso-m-0 aso-mt-6 aso-mb-8">
+                    <p class="aso-text-justify aso-text-[14px] aso-m-0 aso-mt-6 aso-mb-8">
                         Thank you for installing the ASO configurator for Woocommerce! Everything in ASO is streamlined to make your custom sign selling experience as simple and intuitive as possible for you and your customers. We hope you'll turn it into a powerful marketing asset that brings customers to your digital doorstep.
                     </p>
                     <div class="aso-pricing-link">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div :class="`aso-bg-[url(${statisticImage})] aso-flex aso-justify-center aso-items-center`">
-                    <img src="../../../assets/images/home/im_home-skin-vue.png" class="aso-w-2/3" alt=""/>
+                    <img src="../../../assets/images/home/im_home-skin-vue.png" class="aso-w-3/4" alt=""/>
                 </div>
             </div>
             <div class="aso-w-full aso-pt-[20px]">
@@ -49,7 +49,7 @@
                         <div class="aso-p-4">
                             <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Knowledgebase</a>
                             <div>
-                                <span> Cut your learning curve and get started with ASO in no time!</span>
+                                <span>Reduce your learning curve and get started with ASO in no time by reading our FAQ!</span>
                             </div>
                         </div>
                     </div>

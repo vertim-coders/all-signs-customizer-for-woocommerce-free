@@ -28,6 +28,16 @@
                 </div>
                 
             </div>
+            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pb-8 aso-space-y-6 aso-translate-y-8">
+                <h3 class="aso-text-[16px] aso-semibold aso-m-0">The message to be displayed when the help button is clicked</h3>
+                <div class="aso-relative aso-w-full aso-max-h-fit">
+                    <div class="aso-px-4">
+                        <div class="aso-px-[10px] aso-pt-[5px]">
+                            <textarea name="" id="aso-admin-tinymce" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end aso-translate-y-12">
             <div class="aso-bg-[#016464] aso-rounded">
@@ -54,7 +64,8 @@ const configId = ref(route.params.configId);
 const uploadDesign = ref({
     activate: false,
     link: "",
-    phraseSubmitCustom: "Take a customization"
+    phraseSubmitCustom: "Take a customization",
+    helpContent:'',
 })
 
 
@@ -62,10 +73,27 @@ onMounted(() => {
     if(props.data){
         uploadDesign.value = {...uploadDesign.value,...props.data}
     }
+    tinymce.init({
+        selector: '#aso-admin-tinymce',
+        plugins: 'wordpress paste link image media',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        height: 200,
+        width: '100%',
+        branding: false,
+        setup: function(editor) {
+            editor.on('init', function() {
+                editor.setContent(uploadDesign.value.helpContent);
+            });
+        }
+    });
 });
 
 const updateUploadDesignSettings = async () => {
     isLoading.value = true;
+    uploadDesign.value.helpContent = tinymce.activeEditor.getContent();
     const result = await api.updateLanguageImagesUploadDesign(configId.value,uploadDesign.value);
     if(result.success){
         await props.fetchSettings();

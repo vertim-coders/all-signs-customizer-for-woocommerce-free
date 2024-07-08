@@ -4,6 +4,15 @@
             <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6 aso-translate-y-8">
                 
                 <div class="aso-flex aso-space-x-3">
+                    <div class="aso-text-[16px]">Enable download Image</div>
+                    <div class="aso-flex aso-items-center aso-translate-y-0.5">
+                        <label for="toggleEnableUpload" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                            <input id="toggleEnableUpload" type="checkbox" class="aso-sr-only aso-peer" v-model="image.enableDownloadImage">
+                            <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
+                        </label>
+                    </div>
+                </div>
+                <div class="aso-flex aso-space-x-3">
                     <div class="aso-text-[16px]">Enable upload Image</div>
                     <div class="aso-flex aso-items-center aso-translate-y-0.5">
                         <label for="toggleEnableUpload" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
@@ -56,6 +65,54 @@
                             mode="tags"
                             :loading="isFetching"
                         />
+                    </div>
+                </div>
+                <div class="aso-space-y-2">
+                    <label class="aso-text-[16px] aso-font-bold">Colors for uploaded svg (only for uploaded images that are svg)</label>
+                    <div class="aso-grid aso-grid-cols-3 aso-gap-4" v-if="image.colors.length>0">
+                        <div class="aso-flex aso-justify-start aso-space-x-2" :key="key" v-for="(color,key) in image.colors">
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Name</label>
+                                <input type="text" class="aso-rounded aso-w-full aso-h-[30px]" v-model="image.colors[key].name" autocomplete="off"> 
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <div class="aso-relative aso-flex">
+                                    <input
+                                        id="colorPicker"
+                                        type="color"
+                                        v-model="image.colors[key].codeHex"
+                                        @input="(e)=>changeColorCodeHex(e,key)"
+                                        class="aso-w-9 aso-h-[30px]"
+                                    />
+                                    <input
+                                        type="text"
+                                        v-model="image.colors[key].codeHex"
+                                        @input="(e)=>changeColorCodeHex(e,key)"
+                                        class="aso-p-1 aso-text-black aso-w-full -aso-translate-y-px"
+                                    />
+                                </div>
+                                
+                            </div>
+                            <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
+                                <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal aso-invisible">Background color</label>
+                                <div class="aso-relative aso-flex">
+                                    <button @click="removeColor(key)" class="aso-w-[50px] aso-h-full aso-border-solid aso-border-red-600 aso-rounded aso-bg-red-600 aso-cursor-pointer aso-text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-[70%] aso-h-[70%]">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aso-pt-4">
+                        <button @click="addNewColor" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <span class="aso-font-semibold aso-text-[16px]">Add More Color</span>
+                        </button>
                     </div>
                 </div>
                 <div>
@@ -192,6 +249,7 @@ const configId = ref(route.params.configId);
 const isLoading =ref(false);
 const isFetching = ref(false);
 const image = ref({
+    enableDownloadImage:true,
     enableUploadImage:true,
     fileUploadScript:{
       uploadMinWidth:100,
@@ -210,7 +268,8 @@ const image = ref({
         enableBlur:true,
         enableSepia:true,
         enableSharpen:true,
-    }
+    },
+    colors:[]
 });
 const allowedUploadsExtentions = [
     {name:"PNG",value:"png"},
@@ -254,5 +313,8 @@ const updateImageSettings = async () => {
         toastMessage(result.message,"error");
     }
 };
+const addNewColor = ()=> {
+    image.value.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
+}
 
 </script>
