@@ -1604,8 +1604,8 @@
             </div>
         </div>
 
-        <div v-if="showImg" :class="`aso-absolute aso-top-0 aso-z-20 aso-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso aso-w-full aso-h-full aso-flex aso-full-center`">
-            <div :class="`aso-relative aso-w-[90%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2`">
+        <div v-if="showImg" :class="`aso-absolute aso-top-0 aso-z-20 aso-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso aso-w-full aso-h-full aso-flex aso-full-center aso-overflow-hidden`">
+            <div :class="`aso-relative aso-w-[90%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2 aso-overflow-hidden`">
                 <span @click="closeprevImg" :class="`aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -2635,15 +2635,11 @@
                 
                 activeCanvas = canvas
     
-                // checkScreenSize();
                 checkScreenView()
     
                 let resizeTimer;
                 window.addEventListener('load', () => {
-                    // checkScreenSize()
                     checkScreenView()
-                    // centerSign(canvas)
-                    // centerSign(canvasBack)
                 });
                 window.addEventListener('resize', () => {
                     clearTimeout(resizeTimer);
@@ -3741,12 +3737,17 @@
     }
 
 
-    function checkScreenSize(){
+    function checkScreenSize(width, height){
         handleReadyToSaveState(false);
 
         var canvasContainer = document.getElementById("aso-canvas-containers")
-        var canvasWidth = canvasContainer.clientWidth;
-        var canvasHeight = canvasContainer.clientHeight;
+        if(width){
+            var canvasWidth = width;
+            var canvasHeight = height;
+        }else{
+            var canvasWidth = canvasContainer.clientWidth;
+            var canvasHeight = canvasContainer.clientHeight;
+        }
         // console.log(canvasWidth, canvasHeight, "canvas", canvasContainer)
 
         let windowRatio = canvasWidth / canvasHeight;
@@ -6053,7 +6054,7 @@
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                prevImg.value = genImageWithWatermark(canvas, 'png', 'preview');
+                prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
             }else{
                 prevImg.value = genImage(canvas, 'png');
             }
@@ -6174,7 +6175,7 @@
         if (width && height) {
             canva.setWidth(width);
             canva.setHeight(height);
-            // checkScreenSize()
+            checkScreenSize(width, height)
         }
 
         fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
@@ -6203,10 +6204,14 @@
             });
 
             const watermarkRect = new fabric.Rect({
-                left: -canvasCenter.x,
-                top: -canvasCenter.y,
-                width: (originalWidth*2),
-                height: (originalHeight*2),
+                left: 0,
+                top: 0,
+                // left: -canvasCenter.x,
+                // top: -canvasCenter.y,
+                width: (width*2),
+                height: (height*2),
+                // width: (originalWidth*2),
+                // height: (originalHeight*2),
                 fill: pattern,  
                 selectable: false,
                 evented: false,
@@ -6274,8 +6279,8 @@
     
             canva.setWidth(originalWidth);
             canva.setHeight(originalHeight);
-    
-            // checkScreenSize()
+            checkScreenSize()
+
             canva.renderAll();
 
             if(purpose === 'preview'){
