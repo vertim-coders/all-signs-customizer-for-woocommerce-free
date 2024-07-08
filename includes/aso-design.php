@@ -296,10 +296,10 @@ class ASO_Design {
 					</div>
 				<?php } ?>
 			<?php } ?>			
+			<?php if ($admin) {?>
 			<div class="aso-custom-options-info">
 				<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
 				<div style="display:flex; justify-content:center; align-items:center;">
-				<?php if ($admin) {?>
 					<?php foreach ($recaps["designImages"] as $key => $image) {?>
 						<div style="position:relative; width:fit-content">
 							<img src="<?php echo esc_url($image)?>" style="
@@ -310,9 +310,9 @@ class ASO_Design {
 							<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
 						</div> 
 					<?php } ?>
-				<?php } ?>
 				</div>
 			</div>
+			<?php } ?>
 		</div>
 		<?php
 		return ob_get_clean(); 
