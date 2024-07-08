@@ -79,7 +79,7 @@ class ASO_Design {
 		//$npd_product = new aso_Product_Config( $product->get_id() );
 		$product_name = '';
 		if(isset($cart_item['aso_meta_data']["recaps"])){
-			$modal_id = uniqid();
+			$modal_id = uniqid('aso-recaps');
 			ob_start();
 			?>
 			
@@ -95,8 +95,31 @@ class ASO_Design {
 					</div>
 				</div>
 			</div>
+			<?php 
+				$preview_modal_id = uniqid('as-preview');
+			?>
+			<div class="omodal fade o-modal wpc_part" id="<?php echo esc_attr($preview_modal_id); ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="omodal-dialog">
+					<div class="omodal-content">
+						<div class="omodal-header">
+							<button type="button" class="close" data-dismiss="omodal" aria-hidden="true">&times;</button>
+						</div>
+						<div class="omodal-body">
+						<img src="<?php echo esc_url($cart_item['aso_meta_data']["recaps"]["designImages"][0])?>" style="
+								width: auto;
+								height: 500px;"/>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="aso-product-links">
 				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo $have_pages_settings["buttons"]["recapsButtonOnCart"] ?></span>
+				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($preview_modal_id); ?>">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+					</svg>
+				</span>
 			</div>
 			<?php
 			$product_name.=ob_get_clean();		
@@ -287,15 +310,6 @@ class ASO_Design {
 							<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
 						</div> 
 					<?php } ?>
-				<?php }else{ ?>
-						<div style="position:relative; width:fit-content">
-							<img src="<?php echo esc_url($recaps["designImages"][0])?>" style="
-								width: auto;
-								height: 50px;"/>
-						</div>
-						<div style="margin:10px 0">
-							<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($recaps["designImages"][0])?>" download><?php echo __( 'Download Image', 'ASO' )?></a>
-						</div> 
 				<?php } ?>
 				</div>
 			</div>
@@ -410,11 +424,13 @@ class ASO_Design {
 	 * 
 	 */
 	function mail_template( $item_id, $item, $_product ) {
+		
 		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
-
 		if ( isset( $order_data ) && !empty( $order_data ) ) {
 			ob_start();
-				echo $this->display_custom_recaps($order_data["recaps"],true);
+				if (is_account_page()) {
+					echo $this->display_custom_recaps($order_data["recaps"],true);
+				}
 				$dataUris = [];
 				if(isset($order_data['recaps']['images']["value"]['face1'])){
 					foreach ($order_data['recaps']['images']["value"] as $key => $face) {
@@ -435,8 +451,6 @@ class ASO_Design {
 				wc_update_order_item_meta($item_id, "aso_meta_data", $order_data);
 			echo ob_get_clean();
 		}
-
-	
 
 	}
 }
