@@ -29,42 +29,52 @@
                                     <path id="Vector" d="M14.9789 0C7.48448 0 1.38745 6.09744 1.38745 13.5918C1.38745 20.6362 6.81604 26.5274 13.7967 27.1298L11.1056 28.4938C10.7732 28.6762 10.5754 29.0863 10.7723 29.4102L10.8675 29.6563C11.0653 29.9802 11.4937 30.0951 11.8251 29.9136L16.3166 27.6139C16.3223 27.6102 16.3284 27.6112 16.334 27.6074L16.6354 27.4424C16.8018 27.351 16.912 27.2015 16.956 27.0351C17.002 26.8687 16.9809 26.6835 16.882 26.5223L16.7034 26.2293C16.7006 26.2237 16.695 26.2199 16.6917 26.2148L13.9176 21.8798C13.7207 21.5559 13.2932 21.441 12.96 21.6224L12.742 21.7743C12.4096 21.9557 12.3876 22.4245 12.5845 22.7475L14.2214 25.2867C14.2125 25.2862 14.2045 25.2829 14.196 25.2825C8.06477 24.8803 3.26242 19.7442 3.26242 13.5919C3.26245 7.13109 8.51852 1.875 14.9789 1.875C21.4401 1.875 26.7257 7.13109 26.7257 13.5919C26.7257 17.3119 25.0171 20.7286 22.0382 22.966C21.6244 23.2772 21.5409 23.8651 21.8517 24.279C22.163 24.6938 22.7508 24.7763 23.1647 24.4655C26.6199 21.8701 28.6012 17.9068 28.6012 13.5919C28.6007 6.09753 22.4737 0 14.9789 0Z" fill="currentColor"/>
                                     </g>
                                 </svg>
-                                <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="aso-w-5 aso-h-5" />                                                            
+                                <img v-if="configSectionIcons.resetAllIcon !== '' " :src="configSectionIcons.resetAllIcon" class="aso-w-5 aso-h-5" />                            
                             </span>
 
                             <span @click="undo" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-[${configColors.bars.undoRedo.backgroundColor}] aso-text-[${configColors.bars.undoRedo.textColor}] hover:aso-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.undoRedo.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.undoRedo.borderColor}] hover:aso-border-[${configColors.bars.undoRedo.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
-                                <svg v-if="configSectionIcons.cancelAnAction === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
+                                <svg v-if="configSectionIcons.undoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                 </svg>
-                                <img v-if="configSectionIcons.cancelAnAction !== '' " :src="configSectionIcons.cancelAnAction" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
+                                <img v-if="configSectionIcons.undoIcon !== '' " :src="configSectionIcons.undoIcon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
                             </span>
 
                             <span @click="redo" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-[${configColors.bars.undoRedo.backgroundColor}] aso-text-[${configColors.bars.undoRedo.textColor}] hover:aso-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.undoRedo.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.undoRedo.borderColor}] hover:aso-border-[${configColors.bars.undoRedo.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
-                                <svg v-if="configSectionIcons.icon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
+                                <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                 </svg>
-                                <img v-if="configSectionIcons.icon !== '' " :src="configSectionIcons.icon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
+                                <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.icon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
                             </span>
 
                             <span @click="showConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                <svg v-if="configSectionIcons.changeIconPreview === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
+                                <img v-if="configSectionIcons.changeIconPreview !== '' " :src="configSectionIcons.changeIconPreview" class="aso-w-5 aso-h-5" />                                                            
                             </span>
 
-                            <span @click="downLoadConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                            <span v-if="configImageSettings.enableDownloadImage" @click="downLoadConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
+                                <svg v-if="configSectionIcons.changeIconDownload === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
+                                <img v-if="configSectionIcons.changeIconDownload !== '' " :src="configSectionIcons.changeIconDownload" class="aso-w-5 aso-h-5" />                                                            
                             </span>
 
-                            <span @click="centerSign(canvas)" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
-                                <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
+                            <span @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
+                                <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                     <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
                                 </svg>
+                                <img v-if="configSectionIcons.changeIconHelp !== '' " :src="configSectionIcons.changeIconHelp" class="aso-w-4 aso-h-4" />                                                            
                             </span>
+
+                            <a v-if="props.config.data.settings.languageImages.uploadDesign.activate" :href="props.config.data.settings.languageImages.uploadDesign.link" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
+                                <svg v-if="configSectionIcons.changeIconImport === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                </svg>
+                                <img v-if="configSectionIcons.changeIconImport !== '' " :src="configSectionIcons.changeIconImport" class="aso-w-4 aso-h-4" />                                                            
+                            </a>
                         </div>
                     </div>
     
@@ -85,10 +95,10 @@
                         <div class="aso-flex aso-full-center aso-space-x-4">
                             <div class="aso-flex aso-full-center aso-space-x-2">
                                 <span @click="undo" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-[${configColors.bars.undoRedo.backgroundColor}] aso-text-[${configColors.bars.undoRedo.textColor}] hover:aso-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.undoRedo.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.undoRedo.borderColor}] hover:aso-border-[${configColors.bars.undoRedo.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
-                                    <svg v-if="configSectionIcons.cancelAnAction === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
+                                    <svg v-if="configSectionIcons.undoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                     </svg>
-                                    <img v-if="configSectionIcons.cancelAnAction !== '' " :src="configSectionIcons.cancelAnAction" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
+                                    <img v-if="configSectionIcons.undoIcon !== '' " :src="configSectionIcons.undoIcon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
                                 </span>
                                 <div class="aso-hidden lg:aso-flex aso-text-sm">
                                     {{ configVisualiserTexts.textButtonBack && configVisualiserTexts.textButtonBack.trim() !== '' ? configVisualiserTexts.textButtonBack : 'Undo' }}
@@ -97,10 +107,10 @@
     
                             <div class="aso-flex aso-full-center aso-space-x-2">
                                 <span @click="redo" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 aso-rounded-full aso-bg-[${configColors.bars.undoRedo.backgroundColor}] aso-text-[${configColors.bars.undoRedo.textColor}] hover:aso-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.undoRedo.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.undoRedo.borderColor}] hover:aso-border-[${configColors.bars.undoRedo.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
-                                    <svg v-if="configSectionIcons.icon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
+                                    <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                     </svg>
-                                    <img v-if="configSectionIcons.icon !== '' " :src="configSectionIcons.icon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
+                                    <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
                                 </span>
                                 <div class="aso-hidden lg:aso-flex aso-text-sm">
                                     {{ configVisualiserTexts.textButtonNext && configVisualiserTexts.textButtonNext.trim() !== '' ? configVisualiserTexts.textButtonNext : 'Redo' }}
@@ -215,23 +225,32 @@
                     <div :class="`aso-absolute aso-bottom-0 aso-w-full aso-h-[10%] aso-bg-[${configColors.bars.backgroundColor}]/60 aso-hidden lg:aso-flex aso-full-center aso-space-x-4`">
                         
                         <div class="aso-w-1/3 aso-flex aso-justify-start aso-items-center aso-space-x-4 aso-px-6">
-                            <span @click="showConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                            <span @click="showConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)]`">
+                                <svg v-if="configSectionIcons.changeIconPreview === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
+                                <img v-if="configSectionIcons.changeIconPreview !== '' " :src="configSectionIcons.changeIconPreview" class="aso-w-5 aso-h-5" />                                                            
                             </span>
-                            <span @click="downLoadConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}]`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                            <span v-if="configImageSettings.enableDownloadImage" @click="downLoadConfigRender()" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)]`">
+                                <svg v-if="configSectionIcons.changeIconDownload === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                                 </svg>
+                                <img v-if="configSectionIcons.changeIconDownload !== '' " :src="configSectionIcons.changeIconDownload" class="aso-w-5 aso-h-5" />
                             </span>
-                            <span :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
-                                <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
+                            <span @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)]`">
+                                <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                     <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
                                 </svg>
+                                <img v-if="configSectionIcons.changeIconHelp !== '' " :src="configSectionIcons.changeIconHelp" class="aso-w-5 aso-h-5" />
                             </span>
+                            <a v-if="props.config.data.settings.languageImages.uploadDesign.activate" :href="props.config.data.settings.languageImages.uploadDesign.link" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)]`">
+                                <svg v-if="configSectionIcons.changeIconImport === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                                </svg>
+                                <img v-if="configSectionIcons.changeIconImport !== '' " :src="configSectionIcons.changeIconImport" class="aso-w-5 aso-h-5" />
+                            </a>
                         </div>
     
                         <div class="aso-w-2/3 aso-h-full aso-flex aso-justify-end aso-items-center">
@@ -253,6 +272,17 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+
+                    <div v-if="showHelpSection" :class="`aso-absolute aso-left-[2%] aso-bottom-0 aso-flex aso-flex-col lg:aso-translate-y-[-25%] aso-w-[250px] lg:aso-w-[350px] aso-h-[50%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}]`">
+                        <div class="aso-flex aso-w-full aso-h-fit aso-justify-end aso-cursor-pointer">
+                            <span @click="()=> showHelpSection = false" :class="`aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-1 aso-base-animation`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent"></div>
                     </div>
                 </div>
             </div>
@@ -707,7 +737,9 @@
                     </div>
     
                     <div v-show="step == 'color'" class="aso-flex aso-flex-col lg:aso-space-y-3 aso-w-full aso-h-full" id="aso-colors-section">
-                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">{{configVisualiserTexts.textColor}}</p>    
+                        <p :class="`aso-hidden lg:aso-flex aso-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] aso-text-lg aso-font-semibold aso-p-2 aso-px-4`">
+                            {{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}
+                        </p>    
     
                         <div v-if="materialType === 'simple'" class="aso-w-full aso-h-full aso-space-y-2 aso-p-3 aso-overflow-auto aso-scrollBar">
                             <div :class="`aso-flex aso-flex-wrap aso-gap-2 aso-p-1 aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`">
@@ -1202,7 +1234,16 @@
                                     </div>
                                 </div>
 
-                                <div v-if="configImageSettingsFilters.active" class="aso-space-y-2">
+                                <div class="aso-space-y-1" v-if="activeImageType === 'svg'">
+                                    <p class="aso-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
+                                    <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
+                                        <div v-for="(color, index) in configImageSettings.colors" class="">
+                                            <div @click="changeSvgColor(color.codeHex)" :class="`${currentSvgColor === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-if="configImageSettingsFilters.active && activeImageType !== 'svg'" class="aso-space-y-2">
                                     <p class="aso-font-medium">Filters</p>
                                     <div class="aso-w-full aso-flex aso-items-center">
                                         <div class="aso-flex aso-space-x-6">
@@ -2002,6 +2043,8 @@
         handleLockRotating,
         handleLockEdition,
         handleAddTemplateText,
+        handleMoveobject,
+        handleChangeAddedSvgColor,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import { useRoute } from "vue-router";
@@ -2176,6 +2219,7 @@
 
     }
 
+    var showHelpSection = ref(false);
     var showTempSettings = ref(false)
 
     var showScrollButton = ref(false)
@@ -2299,14 +2343,14 @@
     
             configAdditionnalOptions.value = props.config.data.additionalOptions
             
-            // console.log(props.config.data.materials[0], "configTextFontSettings")
+            // console.log(props.config.data.settings.languageImages.uploadDesign, "configTextFontSettings")
     
             let acceptedFormatTable = configImageSettings.value.fileUploadScript.allowedUploadsExtentions.map(element => (element === 'svg' ? 'image/svg+xml' : 'image/' + element));
             configImagesFormat.value = acceptedFormatTable.join(', ');
             // console.log(props.template, "config")
     
             handleGetImageSettings(configImageSettings.value)
-            // console.log(configImageSettings.value)
+            console.log(configImageSettings.value, "configTextFontSettings")
     
             handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
             handleGetDefaultText(
@@ -4066,7 +4110,7 @@
                     showOptions('text')
                     getTextObject(currentObject, true)
                 }
-                if(currentObject.type === 'image'){
+                if(currentObject.name === 'aso-SignImage'){
                     showOptions('image')
                     editAddedImage(currentObject)
                 }
@@ -4091,10 +4135,10 @@
                     }
                     getOptionPrice(priceObject)
                 }
-                if(object.type == 'image'){
+                if(object.name == 'aso-SignImage'){
                     usedImages.value = handleDeleteObject(object)
                     // selectText.value = false
-                    // console.log(usedImages.value, 'image')
+                    console.log(usedImages.value, 'image')
                     // console.log(optionsPrices.value, "before")
         
                     var index = 0
@@ -4132,10 +4176,12 @@
                 textsPrices.value = handleSetPrice()
         
                 var stop = false
-                if(object.type === 'image'){
+                if(object.name === 'aso-SignImage'){
                     optionsPrices.value.forEach(element => {
                         if(element.type){
-                            if(object.getSrc() === element.name && !stop){
+                            var objectUrl = (object.objectType === "svg" ? object.imageUrl : object.getSrc())
+                            // console.log(objectUrl)
+                            if(objectUrl === element.name && !stop){
                                 // console.log(element, "qsdqsdqsdqsd")
                                 var imagePriceObject = {
                                     id: newImagePriceId.value,
@@ -4150,6 +4196,7 @@
                     });
         
                     usedImages.value = handleCloneObject(object, newImagePriceId.value)
+                    console.log(usedImages.value)
                 }
                 var priceObject = {
                     name: 'none',
@@ -5184,7 +5231,7 @@
                             }
                         }
                     }
-                    addUniqueObject(recentlyUsedImages.value, {id: objects[i].id, object: objects[i], url: objects[i].getSrc()}, 'id', 'url')
+                    addUniqueObject(recentlyUsedImages.value, {id: objects[i].id, object: objects[i], url: (objects[i].objectType === 'svg' ? objects[i].imageUrl : objects[i].getSrc())}, 'id', 'url')
                 }
             }
         }
@@ -5203,16 +5250,23 @@
     function deleteFromRecentlyUsed(index, tab){
         tab.splice(index, 1);
     }
+    var activeImageType = ref('no-svg')
     function editAddedImage(image){
         if(activeFace.value === image.canvasName){
             editImage.value = true
             activeCanvas.getObjects().forEach(function(obj){
                 if(image.id === obj.id){
+                    activeImageType.value = obj.objectType
+
                     activeCanvas.setActiveObject(obj);
                     handleGetAddedImageValues(obj)
                     selectedImage.value.object = obj
                     selectedImage.value.filters = obj.filters
-                    checkFilter()
+                    if(obj.objectType === 'svg'){
+                        currentSvgColor.value = obj.fill
+                    }else{
+                        checkFilter()
+                    }
                 }
             })
         }
@@ -5269,6 +5323,10 @@
         }else{
             setFilter.value.sharpen = false
         }
+    }
+    var currentSvgColor = ref('')
+    function changeSvgColor(color){
+        currentSvgColor.value = handleChangeAddedSvgColor(color)
     }
 
 
@@ -5874,11 +5932,11 @@
             function supprimerNonChiffres(chaine) {
                 return chaine.replace(/[^0-9]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
