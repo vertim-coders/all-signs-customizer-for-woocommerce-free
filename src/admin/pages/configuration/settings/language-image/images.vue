@@ -178,7 +178,7 @@
                         </div>
 
                     </div>
-                    <div class="aso-flex aso-flex-col aso-w-full aso-space-y-2 aso-text-[11px] aso-text-[#444444]">
+                    <!-- <div class="aso-flex aso-flex-col aso-w-full aso-space-y-2 aso-text-[11px] aso-text-[#444444]">
                         <label class="">Change icon Product</label>
                         <div class="aso-flex aso-w-full aso-space-x-2">
                             <button @click="selectChangeIconProduct" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">Upload icon</button>
@@ -192,7 +192,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
                     <div class="aso-flex aso-flex-col aso-w-full aso-space-y-2 aso-text-[11px] aso-text-[#444444]">
                         <label class="">Change icon Size</label>
                         <div class="aso-flex aso-w-full aso-space-x-2">

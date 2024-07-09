@@ -617,6 +617,8 @@ const defaultSettings = ref({
             textShare:"Share",
             textImport:"Import",
             textDownload:"Download",
+            textMoveUp:"Move Up",
+            textMoveDown:"Move Down",
             textSave:"Save",
             textHelp:"Help",
             textMaterial:"Material",

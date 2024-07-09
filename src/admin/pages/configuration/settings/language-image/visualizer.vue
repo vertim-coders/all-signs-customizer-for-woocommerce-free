@@ -96,8 +96,18 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                    <label class="aso-text-[12px] aso-text-[#444444]">Import text</label>
-                    <input type="text" v-model="visualizer.textImport" class="aso-w-full"/>
+                    <label class="aso-text-[12px] aso-text-[#444444]">Move Up</label>
+                    <input type="text" v-model="visualizer.textMoveUp" class="aso-w-full"/>
+                </div>
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Move down</label>
+                    <input type="text" v-model="visualizer.textMoveDown" class="aso-w-full"/>
+                </div>
+            </div>
+            <div class="aso-flex aso-justify-between">
+                <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
+                    <label class="so-text-[12px] aso-text-[#444444]">Help text</label>
+                    <input type="text" v-model="visualizer.textHelp" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
                     <label class="so-text-[12px] aso-text-[#444444]">Download text</label>
@@ -106,12 +116,12 @@
             </div>
             <div class="aso-flex aso-justify-between">
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                    <label class="aso-text-[12px] aso-text-[#444444]">Save text</label>
-                    <input type="text" v-model="visualizer.textSave" class="aso-w-full"/>
+                    <label class="aso-text-[12px] aso-text-[#444444]">Import text</label>
+                    <input type="text" v-model="visualizer.textImport" class="aso-w-full"/>
                 </div>
                 <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                    <label class="so-text-[12px] aso-text-[#444444]">Help text</label>
-                    <input type="text" v-model="visualizer.textHelp" class="aso-w-full"/>
+                    <label class="aso-text-[12px] aso-text-[#444444]">Save text</label>
+                    <input type="text" v-model="visualizer.textSave" class="aso-w-full"/>
                 </div>
             </div>
         </div>
@@ -288,6 +298,8 @@ const visualizer = ref({
     textShare:"Share",
     textImport:"Import",
     textDownload:"Download",
+    textMoveUp:"Move Up",
+    textMoveDown:"Move Down",
     textSave:"Save",
     textHelp:"Help",
     textMaterial:"Material",
