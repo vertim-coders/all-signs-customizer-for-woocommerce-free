@@ -93,7 +93,9 @@ function handleCloneCanvas() {
     "lockRotate",
     "lockEdition",
     "fixingRatio",
-    "ratioScale"
+    "ratioScale",
+    "objectType",
+    "imageUrl"
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -495,7 +497,9 @@ function updateModifications(good, position) {
       "lockRotate",
       "lockEdition",
       "fixingRatio",
-      "ratioScale"
+      "ratioScale",
+      "objectType",
+      "imageUrl",
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -513,7 +517,9 @@ function updateModifications(good, position) {
       "lockRotate",
       "lockEdition",
       "fixingRatio",
-      "ratioScale"
+      "ratioScale",
+      "objectType",
+      "imageUrl"
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -1612,8 +1618,10 @@ function handleDeleteObject(object) {
 
     return addedTexts;
   }
-  if (target.type == "image") {
+  if (target.name == "aso-SignImage") {
     removeTextById(target.id, addedImages);
+
+    console.log(addedImages, "added images")
 
     if (readyToSave) {
       updateModifications(true, "selection de fixing");
@@ -1633,19 +1641,35 @@ function handleCloneObject(object, imageId) {
       // console.log(cloned.canvas, "cloned canvas");
       handleAddTextToSign(cloned);
     }
-    if (cloned.type == "image") {
-      // cloned.id = newId += 1
-      // cloned.set('name', 'aso-SignImage')
-      // cloned.on('mousedown', function() {
-      //     handleGetAddedImageValues(cloned);
-      // });
-      // canvas.add(cloned);
-      // lockToCanvas(cloned)
-      handleAddImageToSign(cloned.getSrc(), imageId);
-      // console.log(addedImages)
+    if (cloned.type == "image" || cloned.type == "path" || cloned.type == "group") {
+      cloned.uniScaleTransform = true;
+      cloned.centeredScaling = true;
+      cloned.lockScalingFlip = true;
+      cloned.originX = "center";
+      cloned.originY = "center";
+      cloned.canvasName = object.canvasName;
+      cloned.price = object.price
+      cloned.lockMoving = {
+        x: object.lockMoving.x,
+        y: object.lockMoving.y,
+      }
+      cloned.lockScale = object.lockScale
+      cloned.id = newId += 1
+      cloned.objectType = (object.objectType === "svg" ? 'svg' : 'no-svg');
+      cloned.imageUrl = (object.objectType === "svg" ? object.imageUrl : cloned.getSrc());
+      cloned.set('name', 'aso-SignImage')
+      cloned.on('mousedown', function() {
+          handleGetAddedImageValues(cloned);
+      });
+      cloned.on('mouseup', function() {
+          handleGetAddedImageValues(cloned);
+      });
+
+      addedImages.push({ id: cloned.id, url: (object.objectType === "svg" ? object.imageUrl : cloned.getSrc()), object: cloned });
+      canvas.add(cloned);
     }
   });
-  if (object.type === "image") {
+  if (object.name === "aso-SignImage") {
     return addedImages;
   }
 }
@@ -2577,6 +2601,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 7;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2596,6 +2621,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 8;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2616,6 +2642,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 7;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2635,6 +2662,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 8;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2654,6 +2682,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 9;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2673,6 +2702,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 10;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2692,6 +2722,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 7;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
 
@@ -2708,6 +2739,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 8;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
 
@@ -2725,6 +2757,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 9;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
             }
@@ -2744,6 +2777,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 7;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
 
@@ -2761,6 +2795,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 8;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
             }
@@ -2780,6 +2815,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 7;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
 
@@ -2796,6 +2832,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 8;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
             }
@@ -2816,6 +2853,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 7;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
 
@@ -2833,6 +2871,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 8;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
             }
@@ -2850,6 +2889,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 7;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
 
@@ -2866,6 +2906,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 8;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
               });
             }
@@ -2896,6 +2937,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 11;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2915,6 +2957,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 12;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2935,6 +2978,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 11;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2954,6 +2998,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 12;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2973,6 +3018,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 13;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -2992,6 +3038,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 14;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3013,6 +3060,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 11;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3032,6 +3080,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 12;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3052,6 +3101,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 13;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3074,6 +3124,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 11;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3094,6 +3145,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 12;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3116,6 +3168,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 11;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3135,6 +3188,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 12;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3158,6 +3212,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 11;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3178,6 +3233,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 12;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3198,6 +3254,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 11;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3217,6 +3274,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 12;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3246,6 +3304,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 15;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3265,6 +3324,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 16;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3284,6 +3344,7 @@ function handleSelectFixingMethode(methode) {
                     img.set("name", "suction-cup1");
                     img.id = 15;
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3303,6 +3364,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 16;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3322,6 +3384,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 17;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3341,6 +3404,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 18;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3362,6 +3426,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 15;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3381,6 +3446,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 16;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3401,6 +3467,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 17;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3423,6 +3490,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 15;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3443,6 +3511,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 16;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3465,6 +3534,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 15;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3484,6 +3554,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 16;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3507,6 +3578,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 15;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3527,6 +3599,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 16;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3547,6 +3620,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 15;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3566,6 +3640,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 16;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3595,6 +3670,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 19;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3614,6 +3690,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 20;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3633,6 +3710,7 @@ function handleSelectFixingMethode(methode) {
                     img.set("name", "standoff1");
                     img.id = 19;
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3652,6 +3730,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 20;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3671,6 +3750,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 21;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3690,6 +3770,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 22;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3711,6 +3792,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 19;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3730,6 +3812,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 20;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3750,6 +3833,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 21;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3772,6 +3856,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 19;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3792,6 +3877,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 20;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3814,6 +3900,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 19;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3833,6 +3920,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 20;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3856,6 +3944,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 19;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3876,6 +3965,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 20;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3896,6 +3986,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 19;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3915,6 +4006,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 20;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -3946,6 +4038,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 23;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                     img.bringToFront();
                   }
@@ -3967,6 +4060,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 23;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -3987,6 +4081,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 24;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -4006,6 +4101,7 @@ function handleSelectFixingMethode(methode) {
                 img.id = 23;
 
                 img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                 canva.add(img);
                 img.bringToFront();
               });
@@ -4027,6 +4123,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 23;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                     img.bringToFront();
                   }
@@ -4048,6 +4145,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 23;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -4068,6 +4166,7 @@ function handleSelectFixingMethode(methode) {
                     img.id = 24;
 
                     img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                     canva.add(img);
                   }
                 );
@@ -4134,6 +4233,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 26;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4153,6 +4253,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 27;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4173,6 +4274,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 26;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4193,6 +4295,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 26;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4212,6 +4315,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 27;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4232,6 +4336,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 26;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4251,6 +4356,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 27;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4454,6 +4560,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 35;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4473,6 +4580,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 36;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4501,6 +4609,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 37;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                   // img.sendToBack()
                 }
@@ -4521,6 +4630,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 38;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                   // img.sendToBack()
                 }
@@ -4549,6 +4659,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 39;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4568,6 +4679,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 40;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4589,6 +4701,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 41;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4609,6 +4722,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 42;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4637,6 +4751,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 44;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4671,6 +4786,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 44;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4706,6 +4822,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 44;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4741,6 +4858,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 44;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4785,6 +4903,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 45;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4820,6 +4939,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 45;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4855,6 +4975,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 45;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4892,6 +5013,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 47;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4911,6 +5033,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 48;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4934,6 +5057,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 47;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -4954,6 +5078,7 @@ function handleSelectFixingMethode(methode) {
                   img.id = 48;
 
                   img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
                   canva.add(img);
                 }
               );
@@ -5777,57 +5902,120 @@ function handleGetAddedImageValues(object) {
 }
 var addedImages = [];
 function handleAddImageToSign(image, imageId, price) {
+  function isSVGImage(image) {
+      var src = image;
+      return src.endsWith('.svg') || src.startsWith('data:image/svg+xml');
+  }
   function useImage(imgUrl, imgId, price) {
-    fabric.Image.fromURL(imgUrl, function (img) {
-      img.scale(0.4);
+    if(isSVGImage(imgUrl)){
+      fabric.loadSVGFromURL(imgUrl, function (image) {
+        const img = fabric.util.groupSVGElements(image);
 
-      img.setCoords();
-      var newWidth = img.width * img.scaleX;
-      var newHeight = img.height * img.scaleY;
-
-      img.top = sign.top + sign.height / 2;
-      img.left = sign.left + sign.width / 2;
-      // img.flipX = true
-      img.uniScaleTransform = true;
-      img.centeredScaling = true;
-      (img.lockScalingFlip = true), (img.originX = "center");
-      img.originY = "center";
-
-      img.id = newId += 1;
-      img.name = "aso-SignImage";
-      img.canvasName = activeCanvas.name;
-      img.priceId = imgId ? imgId : 0;
-      img.price = price ? price : null;
-      // img.clipPath = handleClipAddedObject(activeCanvas);
-
-      img.lockMoving = {
-        x: false,
-        y: false,
-      }
-      img.lockScale = false
-
-      img.on("mousedown", function () {
-        handleGetAddedImageValues(img);
-        // updateModifications(true, "deposer l'image ")
+        img.scale(0.4);
+  
+        img.setCoords();
+        var newWidth = img.width * img.scaleX;
+        var newHeight = img.height * img.scaleY;
+  
+        img.top = sign.top + sign.height / 2;
+        img.left = sign.left + sign.width / 2;
+        // img.flipX = true
+        img.uniScaleTransform = true;
+        img.centeredScaling = true;
+        (img.lockScalingFlip = true), (img.originX = "center");
+        img.originY = "center";
+  
+        img.id = newId += 1;
+        img.name = "aso-SignImage";
+        img.canvasName = activeCanvas.name;
+        img.priceId = imgId ? imgId : 0;
+        img.price = price ? price : null;
+        img.objectType = 'svg'
+        img.imageUrl = imgUrl
+        // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+        img.lockMoving = {
+          x: false,
+          y: false,
+        }
+        img.lockScale = false
+  
+        img.on("mousedown", function () {
+          handleGetAddedImageValues(img);
+          // updateModifications(true, "deposer l'image ")
+        });
+        img.on("mouseup", function () {
+          handleGetAddedImageValues(img);
+          // updateModifications(true, "deposer l'image ")
+        });
+  
+        activeCanvas.add(img);
+        img.bringToFront();
+        activeCanvas.setActiveObject(img);
+        // lockToCanvas(img)
+  
+        handleCenterHorizontally(img);
+        handleCenterVertically(img);
+  
+        addedImages.push({ id: img.id, url: imgUrl, object: img });
+  
+        updateModifications(true, "==ajout d'image ==");
+        // console.log(img.getSrc(), "image source")
       });
-      img.on("mouseup", function () {
-        handleGetAddedImageValues(img);
-        // updateModifications(true, "deposer l'image ")
+    }else{
+      fabric.Image.fromURL(imgUrl, function (img) {
+        img.scale(0.4);
+  
+        img.setCoords();
+        var newWidth = img.width * img.scaleX;
+        var newHeight = img.height * img.scaleY;
+  
+        img.top = sign.top + sign.height / 2;
+        img.left = sign.left + sign.width / 2;
+        // img.flipX = true
+        img.uniScaleTransform = true;
+        img.centeredScaling = true;
+        (img.lockScalingFlip = true), (img.originX = "center");
+        img.originY = "center";
+  
+        img.id = newId += 1;
+        img.name = "aso-SignImage";
+        img.canvasName = activeCanvas.name;
+        img.priceId = imgId ? imgId : 0;
+        img.price = price ? price : null;
+        img.objectType = "no-svg";
+        img.imageUrl = imgUrl
+        // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+        img.lockMoving = {
+          x: false,
+          y: false,
+        }
+        img.lockScale = false
+  
+        img.on("mousedown", function () {
+          handleGetAddedImageValues(img);
+          // updateModifications(true, "deposer l'image ")
+        });
+        img.on("mouseup", function () {
+          handleGetAddedImageValues(img);
+          // updateModifications(true, "deposer l'image ")
+        });
+  
+        activeCanvas.add(img);
+        img.bringToFront();
+        activeCanvas.setActiveObject(img);
+        // lockToCanvas(img)
+  
+        handleCenterHorizontally(img);
+        handleCenterVertically(img);
+  
+        addedImages.push({ id: img.id, url: imgUrl, object: img });
+  
+        updateModifications(true, "==ajout d'image ==");
+        // console.log(img.getSrc(), "image source")
       });
-
-      activeCanvas.add(img);
-      img.bringToFront();
-      activeCanvas.setActiveObject(img);
-      // lockToCanvas(img)
-
-      handleCenterHorizontally(img);
-      handleCenterVertically(img);
-
-      addedImages.push({ id: img.id, url: imgUrl, object: img });
-
-      updateModifications(true, "==ajout d'image ==");
-      // console.log(img.getSrc(), "image source")
-    });
+    }
   }
 
   var sign = handleGetObjectByName("safeObject");
@@ -5921,7 +6109,7 @@ function handleAddImageToSign(image, imageId, price) {
 }
 function handleChangeImageWidth(scale) {
   var currentImage = activeCanvas.getActiveObject();
-  if (currentImage.type === "image") {
+  if (currentImage.type === "image" || currentImage.type === "path" || currentImage.type === "group") {
     currentImage.scaleX = scale;
     currentImage.scaleY = scale;
     activeCanvas.requestRenderAll();
@@ -6085,6 +6273,29 @@ function handleSelectFilter(filter) {
     return selectedImage.filters;
   }
 }
+function handleChangeAddedSvgColor(color){
+  var currentImage = activeCanvas.getActiveObject();
+  
+  if(currentImage.objectType == 'svg'){
+    activeCanvas.getObjects().forEach((objet) => {
+      if (objet.name === "aso-SignImage" && objet === currentImage) {
+        console.log(objet)
+        if(objet._objects && objet._objects.length > 0){
+          objet.getObjects().forEach(path => {
+            path.set("fill", color);
+          });
+        }else{
+          objet.set("fill", color);
+        }
+      }
+    });
+
+    activeCanvas.renderAll();
+  }
+
+  return color;
+}
+
 
 var totalCharPrice = 0;
 var charPrice = 0;
@@ -6510,7 +6721,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                   handleGetAddedImageValues(templateObject[0]); 
               });
 
-              addUniqueObject(addedImages, {id: templateObject[0].id, url: templateObject[0].getSrc(), object: templateObject[0]}, 'id');
+              var objectUrl = (templateObject[0].objectType == 'svg' ? templateObject[0].imageUrl : templateObject[0].getSrc())
+              addUniqueObject(addedImages, {id: templateObject[0].id, url: objectUrl, object: templateObject[0]}, 'id');
             }
   
             if(templateData){
@@ -7544,7 +7756,7 @@ function handleFinishConfiguration(textsTable, imagesTable) {
         imagesValues,
         {
           id: image.id,
-          url: image.getSrc(),
+          url: (image.objectType === 'svg' ? image.imageUrl : image.getSrc()),
           values: formatValues(handleGetAddedImageValues(image)),
         },
         "id"
@@ -7619,4 +7831,5 @@ export {
   handleLockEdition,
   handleAddTemplateText,
   handleMoveobject,
+  handleChangeAddedSvgColor,
 };
