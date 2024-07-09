@@ -27,8 +27,6 @@ class ASO_Frontend {
         wp_enqueue_script( 'aso-frontend' );
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
-        // wp_enqueue_script( 'aso-editor-script' );
-        wp_enqueue_script( 'aso-fabric' );
         extract( // phpcs:ignore
 			shortcode_atts(
 				array(

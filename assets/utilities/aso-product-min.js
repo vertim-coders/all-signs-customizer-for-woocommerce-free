@@ -27,28 +27,7 @@ var aso_ajax_url = aso_ajax_object.ajax_url;
       var data = $(this).data("order");
       send_manufactrer_email(product_id, data);
     });
-    const onload = function () {
-      window.aso_product_health = $.post(
-        aso_ajax_url,
-        {
-          action: "aso_verify_licence_validity",
-        },
-        function (data) {
-          if (data.activate) {
-            $(".aso-licence-warning").hide();
-            return true;
-          } else {
-            $(".aso-licence-warning").show();
-            $(
-              ".wp-submenu li a[href='admin.php?page=aso#/global-settings']"
-            ).remove();
-            return false;
-          }
-        }
-      );
-    };
 
-    onload();
     /* $(".aso-qty").keypress(function (e) {
               if (e.which < 48 || e.which > 57) {
                   return(false);

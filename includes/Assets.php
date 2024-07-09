@@ -4,14 +4,16 @@ namespace ASO;
 /**
  * Scripts and Styles Class
  */
-class Assets {
+class Assets
+{
 
-    function __construct() {
+    function __construct()
+    {
 
-        if ( is_admin() ) {
-            add_action( 'admin_enqueue_scripts', [ $this, 'register' ], 5 );
+        if (is_admin()) {
+            add_action('admin_enqueue_scripts', [$this, 'register'], 5);
         } else {
-            add_action( 'wp_enqueue_scripts', [ $this, 'register' ], 5 );
+            add_action('wp_enqueue_scripts', [$this, 'register'], 5);
         }
     }
 
@@ -20,9 +22,10 @@ class Assets {
      *
      * @return void
      */
-    public function register() {
-        $this->register_scripts( $this->get_scripts() );
-        $this->register_styles( $this->get_styles() );
+    public function register()
+    {
+        $this->register_scripts($this->get_scripts());
+        $this->register_styles($this->get_styles());
     }
 
     /**
@@ -32,18 +35,19 @@ class Assets {
      *
      * @return void
      */
-    private function register_scripts( $scripts ) {
+    private function register_scripts($scripts)
+    {
         // Return if JS folder not exists
         if (!is_dir(ASO_PATH . '/assets/js')) {
             return;
         }
 
-        foreach ( $scripts as $handle => $script ) {
-            $deps      = isset( $script['deps'] ) ? $script['deps'] : false;
-            $in_footer = isset( $script['in_footer'] ) ? $script['in_footer'] : false;
-            $version   = isset( $script['version'] ) ? $script['version'] : ASO_VERSION;
+        foreach ($scripts as $handle => $script) {
+            $deps = isset($script['deps']) ? $script['deps'] : false;
+            $in_footer = isset($script['in_footer']) ? $script['in_footer'] : false;
+            $version = isset($script['version']) ? $script['version'] : ASO_VERSION;
 
-            wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
+            wp_register_script($handle, $script['src'], $deps, $version, $in_footer);
         }
     }
 
@@ -54,11 +58,12 @@ class Assets {
      *
      * @return void
      */
-    public function register_styles( $styles ) {
-        foreach ( $styles as $handle => $style ) {
-            $deps = isset( $style['deps'] ) ? $style['deps'] : false;
+    public function register_styles($styles)
+    {
+        foreach ($styles as $handle => $style) {
+            $deps = isset($style['deps']) ? $style['deps'] : false;
 
-            wp_register_style( $handle, $style['src'], $deps, ASO_VERSION );
+            wp_register_style($handle, $style['src'], $deps, ASO_VERSION);
         }
     }
 
@@ -67,59 +72,56 @@ class Assets {
      *
      * @return array
      */
-    public function get_scripts() {
+    public function get_scripts()
+    {
         // Return if JS folder not exists
         if (!is_dir(ASO_PATH . '/assets/js')) {
             return;
         }
 
-        $prefix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
+        $prefix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.min' : '';
 
         $scripts = [
             'aso-runtime' => [
-                'src'       => ASO_ASSETS . '/js/runtime.js',
-                'version'   => filemtime( ASO_PATH . '/assets/js/runtime.js' ),
+                'src' => ASO_ASSETS . '/js/runtime.js',
+                'version' => filemtime(ASO_PATH . '/assets/js/runtime.js'),
                 'in_footer' => true
             ],
             'aso-vendor' => [
-                'src'       => ASO_ASSETS . '/js/vendors.js',
-                'version'   => filemtime( ASO_PATH . '/assets/js/vendors.js' ),
+                'src' => ASO_ASSETS . '/js/vendors.js',
+                'version' => filemtime(ASO_PATH . '/assets/js/vendors.js'),
                 'in_footer' => true
             ],
             'aso-frontend' => [
-                'src'       => ASO_ASSETS . '/js/frontend.js',
-                'deps'      => [ 'jquery', 'aso-vendor', 'aso-runtime' ],
-                'version'   => filemtime( ASO_PATH . '/assets/js/frontend.js' ),
+                'src' => ASO_ASSETS . '/js/frontend.js',
+                'deps' => ['jquery', 'aso-vendor', 'aso-runtime'],
+                'version' => filemtime(ASO_PATH . '/assets/js/frontend.js'),
                 'in_footer' => true
             ],
             'aso-admin' => [
-                'src'       => ASO_ASSETS . '/js/admin.js',
-                'deps'      => [ 'jquery','aso-vendor', 'aso-runtime' ],
-                'version'   => filemtime( ASO_PATH . '/assets/js/admin.js' ),
+                'src' => ASO_ASSETS . '/js/admin.js',
+                'deps' => ['jquery', 'aso-vendor', 'aso-runtime'],
+                'version' => filemtime(ASO_PATH . '/assets/js/admin.js'),
                 'in_footer' => true
             ],
             'aso-omodal' => [
-                'src'       => ASO_ASSETS . '/utilities/modal.min.js',
-                'in_footer' => true
-            ],
-            'aso-editor-script' => [
-                'src'       => ASO_ASSETS . '/utilities/aso-editor-script.js',
+                'src' => ASO_ASSETS . '/utilities/modal.min.js',
                 'in_footer' => true
             ],
             'aso-fabric' => [
-                'src'       => ASO_ASSETS . '/utilities/fabric.min.js',
+                'src' => ASO_ASSETS . '/utilities/fabric.min.js',
                 'in_footer' => true
             ],
             'aso-sortable' => [
-                'src'       => ASO_ASSETS . '/utilities/sortable.js',
+                'src' => ASO_ASSETS . '/utilities/sortable.js',
                 'in_footer' => true
             ],
             'aso-toast' => [
-                'src'       => ASO_ASSETS . '/utilities/toast.min.js',
+                'src' => ASO_ASSETS . '/utilities/toast.min.js',
                 'in_footer' => true
             ],
             'aso-tinymce-script' => [
-                'src'       => includes_url('/js/tinymce/') . 'tinymce.min.js',
+                'src' => includes_url('/js/tinymce/') . 'tinymce.min.js',
                 'in_footer' => true
             ]
         ];
@@ -132,23 +134,24 @@ class Assets {
      *
      * @return array
      */
-    public function get_styles() {
+    public function get_styles()
+    {
 
         $styles = [
             'aso-style' => [
-                'src' =>  ASO_ASSETS . '/css/style.css'
+                'src' => ASO_ASSETS . '/css/style.css'
             ],
             'aso-frontend' => [
-                'src' =>  ASO_ASSETS . '/css/frontend.css'
+                'src' => ASO_ASSETS . '/css/frontend.css'
             ],
             'aso-admin' => [
-                'src' =>  ASO_ASSETS . '/css/admin.css'
+                'src' => ASO_ASSETS . '/css/admin.css'
             ],
             'aso-omodal' => [
-                'src' =>  ASO_ASSETS . '/utilities/modal.min.css'
+                'src' => ASO_ASSETS . '/utilities/modal.min.css'
             ],
             'aso-toast' => [
-                'src' =>  ASO_ASSETS . '/utilities/toast.min.css'
+                'src' => ASO_ASSETS . '/utilities/toast.min.css'
             ],
         ];
 

@@ -55,7 +55,6 @@ class ASO_Admin {
         wp_enqueue_style( 'aso-frontend' );
         wp_enqueue_script( 'aso-admin' );
         wp_enqueue_script( 'aso-frontend' );
-        wp_enqueue_script( 'aso-fabric' );
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
         wp_enqueue_script( 'aso-sortable' );
