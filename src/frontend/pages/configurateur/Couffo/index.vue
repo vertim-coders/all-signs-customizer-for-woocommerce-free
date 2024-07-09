@@ -61,7 +61,7 @@
                                 <img v-if="configSectionIcons.changeIconDownload !== '' " :src="configSectionIcons.changeIconDownload" class="aso-w-5 aso-h-5" />                                                            
                             </span>
 
-                            <span @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
+                            <span v-if="props.config.data.settings.languageImages.uploadDesign.helpContent != ''" @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}]`">
                                 <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                     <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
@@ -238,7 +238,7 @@
                                 </svg>
                                 <img v-if="configSectionIcons.changeIconDownload !== '' " :src="configSectionIcons.changeIconDownload" class="aso-w-5 aso-h-5" />
                             </span>
-                            <span @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)]`">
+                            <span v-if="props.config.data.settings.languageImages.uploadDesign.helpContent != ''" @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-p-1.5 aso-full-center aso-cursor-pointer aso-rounded-full aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}] aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)]`">
                                 <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4">
                                     <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                     <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
@@ -1103,7 +1103,9 @@
                                                     <path d="m12.707 3.2929c-0.3905-0.39052-1.0237-0.39052-1.4142 0l-4 4c-0.39052 0.39053-0.39052 1.0237 0 1.4142 0.39053 0.39052 1.0237 0.39052 1.4142 0l2.2929-2.2929v7.5858c0 0.5523 0.4477 1 1 1s1-0.4477 1-1v-7.5858l2.2929 2.2929c0.3905 0.39052 1.0237 0.39052 1.4142 0 0.3905-0.39053 0.3905-1.0237 0-1.4142l-4-4z" fill="currentColor"></path>
                                                     <path d="m3.1056 13.211 5.8944-2.9472v2.2361l-5 2.5 8 4 8-4-5-2.5v-2.2361l5.8944 2.9472c0.6776 0.3388 1.1056 1.0313 1.1056 1.7889 0 0.7575-0.428 1.4501-1.1056 1.7888l-8 4c-0.563 0.2816-1.2258 0.2816-1.7888 0l-8-4c-0.67757-0.3387-1.1056-1.0313-1.1056-1.7888 0-0.7576 0.428-1.4501 1.1056-1.7889z" fill="currentColor"></path>
                                                 </svg>
-                                                <p class="aso-text-xs aso-font-semibold">Move up</p>
+                                                <p class="aso-text-xs aso-font-semibold">
+                                                    {{ configVisualiserTexts.textMoveUp && configVisualiserTexts.textMoveUp.trim() !== '' ? configVisualiserTexts.textMoveUp : 'Move up' }}
+                                                </p>
                                             </span>
 
                                             <span  @click="moveObject('down')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
@@ -1111,7 +1113,9 @@
                                                     <path d="m12.707 20.707c-0.3905 0.3905-1.0237 0.3905-1.4142 0l-4-4c-0.39052-0.3905-0.39052-1.0237 0-1.4142 0.39053-0.3905 1.0237-0.3905 1.4142 0l2.2929 2.2929v-7.5858c0-0.55228 0.4477-1 1-1s1 0.44772 1 1v7.5858l2.2929-2.2929c0.3905-0.3905 1.0237-0.3905 1.4142 0s0.3905 1.0237 0 1.4142l-4 4z" fill="currentColor"></path>
                                                     <path d="m3.1056 10.789 5.8944 2.9472v-2.2361l-5-2.5 8-4 8 4-5 2.5v2.2361l5.8944-2.9472c0.6776-0.3388 1.1056-1.0314 1.1056-1.7889s-0.428-1.4501-1.1056-1.7888l-8-4c-0.563-0.28152-1.2258-0.28152-1.7888 0l-8 4c-0.67757 0.33878-1.1056 1.0313-1.1056 1.7888s0.428 1.4501 1.1056 1.7889z" fill="currentColor"></path>
                                                 </svg>
-                                                <p class="aso-text-xs aso-font-semibold">Move down</p>
+                                                <p class="aso-text-xs aso-font-semibold">
+                                                    {{ configVisualiserTexts.textMoveDown && configVisualiserTexts.textMoveDown.trim() !== '' ? configVisualiserTexts.textMoveDown : 'Move down' }}
+                                                </p>
                                             </span>
                                         </div>
                                     </div>
@@ -1338,7 +1342,9 @@
                                                     <path d="m12.707 3.2929c-0.3905-0.39052-1.0237-0.39052-1.4142 0l-4 4c-0.39052 0.39053-0.39052 1.0237 0 1.4142 0.39053 0.39052 1.0237 0.39052 1.4142 0l2.2929-2.2929v7.5858c0 0.5523 0.4477 1 1 1s1-0.4477 1-1v-7.5858l2.2929 2.2929c0.3905 0.39052 1.0237 0.39052 1.4142 0 0.3905-0.39053 0.3905-1.0237 0-1.4142l-4-4z" fill="currentColor"></path>
                                                     <path d="m3.1056 13.211 5.8944-2.9472v2.2361l-5 2.5 8 4 8-4-5-2.5v-2.2361l5.8944 2.9472c0.6776 0.3388 1.1056 1.0313 1.1056 1.7889 0 0.7575-0.428 1.4501-1.1056 1.7888l-8 4c-0.563 0.2816-1.2258 0.2816-1.7888 0l-8-4c-0.67757-0.3387-1.1056-1.0313-1.1056-1.7888 0-0.7576 0.428-1.4501 1.1056-1.7889z" fill="currentColor"></path>
                                                 </svg>
-                                                <p class="aso-text-xs aso-font-semibold">Move up</p>
+                                                <p class="aso-text-xs aso-font-semibold">
+                                                    {{ configVisualiserTexts.textMoveUp && configVisualiserTexts.textMoveUp.trim() !== '' ? configVisualiserTexts.textMoveUp : 'Move up' }}
+                                                </p>
                                             </span>
 
                                             <span  @click="moveObject('down')" :class="`aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-cursor-pointer aso-base-animation`">
@@ -1346,7 +1352,9 @@
                                                     <path d="m12.707 20.707c-0.3905 0.3905-1.0237 0.3905-1.4142 0l-4-4c-0.39052-0.3905-0.39052-1.0237 0-1.4142 0.39053-0.3905 1.0237-0.3905 1.4142 0l2.2929 2.2929v-7.5858c0-0.55228 0.4477-1 1-1s1 0.44772 1 1v7.5858l2.2929-2.2929c0.3905-0.3905 1.0237-0.3905 1.4142 0s0.3905 1.0237 0 1.4142l-4 4z" fill="currentColor"></path>
                                                     <path d="m3.1056 10.789 5.8944 2.9472v-2.2361l-5-2.5 8-4 8 4-5 2.5v2.2361l5.8944-2.9472c0.6776-0.3388 1.1056-1.0314 1.1056-1.7889s-0.428-1.4501-1.1056-1.7888l-8-4c-0.563-0.28152-1.2258-0.28152-1.7888 0l-8 4c-0.67757 0.33878-1.1056 1.0313-1.1056 1.7888s0.428 1.4501 1.1056 1.7889z" fill="currentColor"></path>
                                                 </svg>
-                                                <p class="aso-text-xs aso-font-semibold">Move down</p>
+                                                <p class="aso-text-xs aso-font-semibold">
+                                                    {{ configVisualiserTexts.textMoveDown && configVisualiserTexts.textMoveDown.trim() !== '' ? configVisualiserTexts.textMoveDown : 'Move down' }}
+                                                </p>
                                             </span>
                                         </div>
                                     </div>
@@ -5704,30 +5712,30 @@
         function generateOutputImage(tab, canva) {
             switch (configOutputSettings.value.filesFormat) {
                 case 'png':
-                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
                 break;
 
                 case 'jpeg':
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
+                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
                 break;
 
                 case 'svg':
-                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
+                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
                 break;
 
                 case 'png+jpeg':
-                    tab.push({format: 'png', url: genImage(canva, 'png')})
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
+                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
+                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
                 break;
 
                 case 'png+svg':
-                    tab.push({format: 'png', url: genImage(canva, 'png')})
-                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
+                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
+                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
                 break;
 
                 case 'jpeg+svg':
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
-                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
+                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
+                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
                 break;
             }
             
@@ -6054,6 +6062,7 @@
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
+                // prevImg.value = generateHighResolutionImage(canvas, 'png');
                 prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
             }else{
                 prevImg.value = genImage(canvas, 'png');
@@ -6079,91 +6088,91 @@
         }
     }
 
-    function genImage(canva, format, width, height) {
-        // Sauvegarde les dimensions actuelles du canvas
-        const originalWidth = canva.getWidth();
-        const originalHeight = canva.getHeight();
+    // function genImage(canva, format, width, height) {
+    //     // Sauvegarde les dimensions actuelles du canvas
+    //     const originalWidth = canva.getWidth();
+    //     const originalHeight = canva.getHeight();
 
-        // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
-        if (width && height) {
-            canva.setWidth(width);
-            canva.setHeight(height);
-            checkScreenSize()
-        }
-
-
-        // fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
-        //     // Créer le pattern à partir de l'image
-        //     const pattern = new fabric.Pattern({
-        //         source: img.getElement(),
-        //         repeat: 'repeat'
-        //     });
-
-        //     // Définir le pattern comme arrière-plan du canvas
-        //     canva.setBackgroundColor({source: pattern.source, repeat: 'repeat'}, canva.renderAll.bind(canva));
-
-        //     // Ajouter des objets au canva après avoir défini le pattern
-        //     canva.renderAll();
-        // });
+    //     // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
+    //     if (width && height) {
+    //         canva.setWidth(width);
+    //         canva.setHeight(height);
+    //         checkScreenSize()
+    //     }
 
 
-        canva.getObjects().forEach(object => {
-            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
-                object.set('visible', false);
-            }
-        });
+    //     // fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
+    //     //     // Créer le pattern à partir de l'image
+    //     //     const pattern = new fabric.Pattern({
+    //     //         source: img.getElement(),
+    //     //         repeat: 'repeat'
+    //     //     });
 
-        var dataURL  = ""
-        // Génère l'image avec le format spécifié
-        switch (format) {
-            case 'png':
-                dataURL = canva.toDataURL({
-                    format: 'png',
-                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                });
-            break;
+    //     //     // Définir le pattern comme arrière-plan du canvas
+    //     //     canva.setBackgroundColor({source: pattern.source, repeat: 'repeat'}, canva.renderAll.bind(canva));
 
-            case 'jpeg':
-                canva.backgroundColor = configColors.value.canvasBackgroundColor
-                dataURL = canva.toDataURL({
-                    format: 'jpeg',
-                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                });
-            break;
+    //     //     // Ajouter des objets au canva après avoir défini le pattern
+    //     //     canva.renderAll();
+    //     // });
 
-            case 'webp':
-                dataURL = canva.toDataURL({
-                    format: 'webp',
-                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                });
-            break;
 
-            case 'svg':
-                const svgData = canva.toSVG();
-                dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-            break;
+    //     canva.getObjects().forEach(object => {
+    //         if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+    //             object.set('visible', false);
+    //         }
+    //     });
+
+    //     var dataURL  = ""
+    //     // Génère l'image avec le format spécifié
+    //     switch (format) {
+    //         case 'png':
+    //             dataURL = canva.toDataURL({
+    //                 format: 'png',
+    //                 quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+    //             });
+    //         break;
+
+    //         case 'jpeg':
+    //             canva.backgroundColor = configColors.value.canvasBackgroundColor
+    //             dataURL = canva.toDataURL({
+    //                 format: 'jpeg',
+    //                 quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+    //             });
+    //         break;
+
+    //         case 'webp':
+    //             dataURL = canva.toDataURL({
+    //                 format: 'webp',
+    //                 quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+    //             });
+    //         break;
+
+    //         case 'svg':
+    //             const svgData = canva.toSVG();
+    //             dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    //         break;
         
-            default:
+    //         default:
 
-            break;
-        }
+    //         break;
+    //     }
 
-        // Restaure les dimensions et l'affichage originales du canvas
-        canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-        canva.getObjects().forEach(object => {
-            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
-                object.set('visible', true);
-            }
-        });
+    //     // Restaure les dimensions et l'affichage originales du canvas
+    //     canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+    //     canva.getObjects().forEach(object => {
+    //         if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+    //             object.set('visible', true);
+    //         }
+    //     });
 
-        canva.setWidth(originalWidth);
-        canva.setHeight(originalHeight);
+    //     canva.setWidth(originalWidth);
+    //     canva.setHeight(originalHeight);
 
-        // checkScreenSize()
-        canva.renderAll();
+    //     // checkScreenSize()
+    //     canva.renderAll();
 
-        return dataURL;
-    }
+    //     return dataURL;
+    // }
     function genImageWithWatermark(canva, format, purpose, width, height) {
         // Sauvegarde les dimensions actuelles du canvas
         const originalWidth = canva.getWidth();
@@ -6224,8 +6233,13 @@
             console.log(handleGetObjectByName('watermark', canvas), "watermark")
     
     
+            var thickVisibility
             canva.getObjects().forEach(object => {
-                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
+                    object.set('visible', false);
+                }
+                if(object.name === 'thickness-value'){
+                    thickVisibility = object.visible
                     object.set('visible', false);
                 }
             });
@@ -6269,8 +6283,11 @@
             // Restaure les dimensions et l'affichage originales du canvas
             canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
             canva.getObjects().forEach(object => {
-                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
                     object.set('visible', true);
+                }
+                if(object.name === 'thickness-value'){
+                    object.set('visible', thickVisibility);
                 }
                 if(object.name === 'watermark'){
                     canva.remove(object)
@@ -6297,6 +6314,192 @@
 
     }
 
+    function convertToPx(dimension, unit) {
+        var dimensions = dimension;
+        var unit = unit;
+        if (typeof unit != "undefined" && typeof dimensions != "undefined") {
+            switch (unit) {
+            case "cm":
+                dimensions = dimensions * 120;
+                break;
+            case "mm":
+                dimensions = dimensions * 12;
+                break;
+            case "in":
+                dimensions = dimensions * 300;
+                break;
+            case "pt":
+                dimensions = dimensions / 0.75;
+                break;
+            case "Px":
+                dimensions = dimensions;
+            default:
+                break;
+            }
+            return dimensions;
+        }
+    }
+    function generateHighResolutionImage(canva, format) {
+        // Dimensions actuelles du canvas en pixels
+        var width = 12
+        var height = 7
+        var dpi = 300
+        
+        var originalWidth = 0
+        var originalHeight = 0
+        const originalZoom = canva.getZoom();
+        if(width){
+            var realWidth = convertToPx(width, 'in')
+            var realHeight = convertToPx(height, 'in')
+            originalWidth = realWidth;
+            originalHeight = realHeight;
+        }else{
+            originalWidth = canva.width;
+            originalHeight = canva.height;
+        }
+
+
+        // Taille physique en pouces (supposons que le canvas est initialement à 72 DPI)
+        const widthInInches = originalWidth / 72;
+        const heightInInches = originalHeight / 72;
+
+        // Nouvelles dimensions pour 300 DPI
+        const scaleFactor = dpi / 72;
+        const newWidth = Math.round(originalWidth * scaleFactor);
+        const newHeight = Math.round(originalHeight * scaleFactor);
+
+        console.log(scaleFactor, newWidth, newHeight, originalWidth, originalHeight)
+        //cacher les element à retirer de l'image
+        var thickVisibility
+        canva.getObjects().forEach(object => {
+            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                object.set('visible', false);
+            }
+            if(object.name === 'thickness-value'){
+                thickVisibility = object.visible
+                object.set('visible', false);
+            }
+            // if(object.name === 'watermark'){
+            //     canva.remove(object)
+            // }
+        });
+
+        // Créer un canvas temporaire à haute résolution
+        // const tempCanvas = new fabric.Canvas(document.createElement('canvas'));
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = newWidth;
+        tempCanvas.height = newHeight;
+        const tempContext = tempCanvas.getContext('2d');
+
+        // Configurer le lissage
+        tempContext.imageSmoothingEnabled = true;
+        tempContext.imageSmoothingQuality = 'high';
+
+        // Augmenter temporairement la taille du canvas Fabric
+        canva.setWidth(newWidth);
+        canva.setHeight(newHeight);
+        canva.setZoom(12);
+        centerSign(canva)
+
+
+        // Rendre le canvas à la nouvelle résolution
+        canva.renderAll();
+
+        // Copier le contenu sur le canvas temporaire
+        tempContext.drawImage(canva.getElement(), 0, 0, newWidth, newHeight);
+
+        // Restaurer les dimensions originales du canvas Fabric
+        canva.setWidth(originalWidth);
+        canva.setHeight(originalHeight);
+        canva.getObjects().forEach(object => {
+            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                object.set('visible', true);
+            }
+            if(object.name === 'thickness-value'){
+                object.set('visible', thickVisibility);
+            }
+        });
+        // canva.setZoom(originalZoom);
+        checkScreenSize()
+
+
+        function canvasToSVG(canva, width, height) {
+            // Obtenez l'image base64 du canvas
+            const imageData = canva.toDataURL('image/png');
+            
+            // Créez le contenu SVG
+            const svgContent = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+                <image width="${width}" height="${height}" href="${imageData}" />
+                </svg>
+            `;
+            
+            // Encodez le contenu SVG en base64
+            const svgBase64 = btoa(unescape(encodeURIComponent(svgContent)));
+            const dataUrl = `data:image/svg+xml;base64,${svgBase64}`;
+            
+            return dataUrl;
+        }
+
+        canva.renderAll();
+
+        // Générer l'URL de données de l'image
+        // const dataUrl = tempCanvas.toDataURL(`image/${format}`, 1.0);
+        var dataUrl = ''
+        switch (format) {
+            case 'png':
+                dataUrl = tempCanvas.toDataURL({
+                    format: 'png',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+            break;
+
+            case 'jpeg':
+                canva.backgroundColor = configColors.value.canvasBackgroundColor
+                dataUrl = tempCanvas.toDataURL({
+                    format: 'jpeg',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+            break;
+
+            case 'webp':
+                dataUrl = tempCanvas.toDataURL({
+                    format: 'webp',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+            break;
+
+            case 'svg':
+                // const svgData = canva.toSVG();
+                const svgData = tempCanvas.toDataURL({
+                    format: 'png',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+                // dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                dataUrl = canvasToSVG(tempCanvas, newWidth, newHeight)
+            break;
+        
+            default:
+
+            break;
+        }
+
+        // const link = document.createElement('a');
+        // link.href = dataUrl;
+        // link.download = 'my_design';
+        // link.click();
+
+        // Créer un objet avec les informations utiles
+        return dataUrl
+        // return {
+        //     dataUrl: dataUrl,
+        //     width: newWidth,
+        //     height: newHeight,
+        //     widthInInches: widthInInches,
+        //     heightInInches: heightInInches,
+        //     dpi: dpi
+        // };
+    }
 
 
     // fonctions concernant l'affichage des exemples
