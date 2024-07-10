@@ -1005,7 +1005,7 @@
                                 </div>
     
                                 <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="aso-space-y-1">
-                                    <p class="aso-font-medium">Color</p>
+                                    <p class="aso-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
                                     <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
                                         <div v-for="(color, index) in configTextSettings.colors" class="">
                                             <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
@@ -1014,7 +1014,7 @@
                                         <div :class="`aso-relative`">
                                             <input id="aso-setTextColor1" type="color" v-model="customTextColor" class="aso-inputColor-hide aso-absolute aso-top-[50%]" @input="changeTextColor($event.target.value)" />
                                             <label for="aso-setTextColor1" v-if="configTextSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-8 aso-h-8 aso-flex aso-full-center aso-overflow-hidden aso-cursor-pointer`">
-                                                <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
+                                                <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
                                                     <g fill="none" fill-rule="evenodd">
                                                         <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
                                                         <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
@@ -1026,6 +1026,7 @@
                                                         <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                     </g>
                                                 </svg>
+                                                <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="aso-w-full aso-h-full">
                                             </label>
                                         </div>
                                     </div>
@@ -1243,6 +1244,24 @@
                                     <div class="aso-w-full aso-flex aso-flex-wrap aso-gap-2 aso-items-center aso-p-1 aso-border">
                                         <div v-for="(color, index) in configImageSettings.colors" class="">
                                             <div @click="changeSvgColor(color.codeHex)" :class="`${currentSvgColor === color.codeHex ? `aso-ring-2 aso-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } aso-w-8 aso-h-8 aso-bg-[${color.codeHex}] aso-p-2 aso-rounded-sm aso-border aso-cursor-pointer`"></div>
+                                        </div>
+                                        <div :class="`aso-relative`">
+                                            <input id="aso-setSvgColor" type="color" class="aso-inputColor-hide aso-absolute aso-top-[50%]" @input="changeSvgColor($event.target.value)" />
+                                            <label for="aso-setSvgColor" v-if="configImageSettings.enableCustomColor" :class="`${activeSignColor == 'custom' ? `aso-border-4 aso-border-solid aso-border-[#016464]` : `` } aso-w-8 aso-h-8 aso-flex aso-full-center aso-overflow-hidden aso-cursor-pointer`">
+                                                <svg v-if="configImageSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="aso-w-full aso-h-full">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                        <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                        <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                        <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                        <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                        <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                        <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                        <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                    </g>
+                                                </svg>
+                                                <img v-if="configImageSettings.colorsPrevImg != ''" :src="configImageSettings.colorsPrevImg" class="aso-w-full aso-h-full">
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -2058,6 +2077,7 @@
     import { useRoute } from "vue-router";
     import toastMessage from '@/admin/utils/functions';
     import api from "@/admin/Api/api";
+    import { jsPDF } from 'jspdf';
 
     const route = useRoute();
     const template_config_id = route.params.configId;
@@ -5738,6 +5758,10 @@
                     tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
                 break;
             }
+
+            var pdfBlob = generateHighResolutionImage(canva, 'pdf')
+            const pdfUrl = URL.createObjectURL(pdfBlob)
+            tab.push({format: 'pdf', url: pdfUrl})
             
             return tab
         }
@@ -6081,98 +6105,106 @@
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                genImageWithWatermark(canvas, 'png', 'download');
+                genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
+                // var pdfBlob = generateHighResolutionImage(canvas, 'pdf')
+                // console.log(pdfBlob);
+                // const blobUrl = URL.createObjectURL(pdfBlob)
+                
+                // const link = document.createElement('a');
+                // link.href = blobUrl;
+                // link.download = 'image.pdf';
+                // link.click();
             }else{
                 genImage(canvas, 'png');
             }
         }
     }
 
-    // function genImage(canva, format, width, height) {
-    //     // Sauvegarde les dimensions actuelles du canvas
-    //     const originalWidth = canva.getWidth();
-    //     const originalHeight = canva.getHeight();
+    function genImage(canva, format, width, height) {
+        // Sauvegarde les dimensions actuelles du canvas
+        const originalWidth = canva.getWidth();
+        const originalHeight = canva.getHeight();
 
-    //     // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
-    //     if (width && height) {
-    //         canva.setWidth(width);
-    //         canva.setHeight(height);
-    //         checkScreenSize()
-    //     }
-
-
-    //     // fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
-    //     //     // Créer le pattern à partir de l'image
-    //     //     const pattern = new fabric.Pattern({
-    //     //         source: img.getElement(),
-    //     //         repeat: 'repeat'
-    //     //     });
-
-    //     //     // Définir le pattern comme arrière-plan du canvas
-    //     //     canva.setBackgroundColor({source: pattern.source, repeat: 'repeat'}, canva.renderAll.bind(canva));
-
-    //     //     // Ajouter des objets au canva après avoir défini le pattern
-    //     //     canva.renderAll();
-    //     // });
+        // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
+        if (width && height) {
+            canva.setWidth(width);
+            canva.setHeight(height);
+            checkScreenSize()
+        }
 
 
-    //     canva.getObjects().forEach(object => {
-    //         if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
-    //             object.set('visible', false);
-    //         }
-    //     });
+        // fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
+        //     // Créer le pattern à partir de l'image
+        //     const pattern = new fabric.Pattern({
+        //         source: img.getElement(),
+        //         repeat: 'repeat'
+        //     });
 
-    //     var dataURL  = ""
-    //     // Génère l'image avec le format spécifié
-    //     switch (format) {
-    //         case 'png':
-    //             dataURL = canva.toDataURL({
-    //                 format: 'png',
-    //                 quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //             });
-    //         break;
+        //     // Définir le pattern comme arrière-plan du canvas
+        //     canva.setBackgroundColor({source: pattern.source, repeat: 'repeat'}, canva.renderAll.bind(canva));
 
-    //         case 'jpeg':
-    //             canva.backgroundColor = configColors.value.canvasBackgroundColor
-    //             dataURL = canva.toDataURL({
-    //                 format: 'jpeg',
-    //                 quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //             });
-    //         break;
+        //     // Ajouter des objets au canva après avoir défini le pattern
+        //     canva.renderAll();
+        // });
 
-    //         case 'webp':
-    //             dataURL = canva.toDataURL({
-    //                 format: 'webp',
-    //                 quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //             });
-    //         break;
 
-    //         case 'svg':
-    //             const svgData = canva.toSVG();
-    //             dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-    //         break;
+        canva.getObjects().forEach(object => {
+            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                object.set('visible', false);
+            }
+        });
+
+        var dataURL  = ""
+        // Génère l'image avec le format spécifié
+        switch (format) {
+            case 'png':
+                dataURL = canva.toDataURL({
+                    format: 'png',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+            break;
+
+            case 'jpeg':
+                canva.backgroundColor = configColors.value.canvasBackgroundColor
+                dataURL = canva.toDataURL({
+                    format: 'jpeg',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+            break;
+
+            case 'webp':
+                dataURL = canva.toDataURL({
+                    format: 'webp',
+                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                });
+            break;
+
+            case 'svg':
+                const svgData = canva.toSVG();
+                dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+            break;
         
-    //         default:
+            default:
 
-    //         break;
-    //     }
+            break;
+        }
 
-    //     // Restaure les dimensions et l'affichage originales du canvas
-    //     canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-    //     canva.getObjects().forEach(object => {
-    //         if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
-    //             object.set('visible', true);
-    //         }
-    //     });
+        // Restaure les dimensions et l'affichage originales du canvas
+        canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+        canva.getObjects().forEach(object => {
+            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+                object.set('visible', true);
+            }
+        });
 
-    //     canva.setWidth(originalWidth);
-    //     canva.setHeight(originalHeight);
+        canva.setWidth(originalWidth);
+        canva.setHeight(originalHeight);
 
-    //     // checkScreenSize()
-    //     canva.renderAll();
+        // checkScreenSize()
+        canva.renderAll();
 
-    //     return dataURL;
-    // }
+        return dataURL;
+    }
     function genImageWithWatermark(canva, format, purpose, width, height) {
         // Sauvegarde les dimensions actuelles du canvas
         const originalWidth = canva.getWidth();
@@ -6478,11 +6510,69 @@
                 // dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
                 dataUrl = canvasToSVG(tempCanvas, newWidth, newHeight)
             break;
+
+            case 'pdf':
+                const zoom = canva.getZoom();
+                const pan = canva.viewportTransform;
+                const pdfWidth = newWidth / zoom;
+                const pdfHeight = newHeight / zoom;
+                const offsetX = -pan[4] / zoom;
+                const offsetY = -pan[5] / zoom;
+
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'px',
+                    format: [pdfWidth, pdfHeight]
+                });
+
+                pdf.addImage(tempCanvas.toDataURL('image/png'), 'PNG', offsetX/4, offsetY/100, pdfWidth/2, pdfHeight/2);
+                const pdfOutput = pdf.output('blob');
+
+                dataUrl = pdfOutput
+            break;
         
             default:
 
             break;
         }
+        // return new Promise((resolve, reject) => {
+        //     try {
+        //         var dataUrl = '';
+        //         switch (format) {
+        //             case 'png':
+        //                 dataUrl = tempCanvas.toDataURL('image/png', 1.0);
+        //                 resolve(dataUrl);
+        //                 break;
+        //             case 'jpeg':
+        //                 canva.backgroundColor = configColors.value.canvasBackgroundColor;
+        //                 dataUrl = tempCanvas.toDataURL('image/jpeg', 1.0);
+        //                 resolve(dataUrl);
+        //                 break;
+        //             case 'webp':
+        //                 dataUrl = tempCanvas.toDataURL('image/webp', 1.0);
+        //                 resolve(dataUrl);
+        //                 break;
+        //             case 'svg':
+        //                 dataUrl = canvasToSVG(tempCanvas, newWidth, newHeight);
+        //                 resolve(dataUrl);
+        //                 break;
+        //             case 'pdf':
+        //                 const pdf = new jsPDF({
+        //                     orientation: newWidth > newHeight ? 'landscape' : 'portrait',
+        //                     unit: 'px',
+        //                     format: [newWidth, newHeight]
+        //                 });
+
+        //                 pdf.addImage(tempCanvas.toDataURL('image/png'), 'PNG', 0, 0, newWidth, newHeight);
+        //                 const pdfOutput = pdf.output('blob');
+        //                 resolve(pdfOutput); // Résoudre avec le Blob directement
+        //             break;
+        //             reject(new Error('Format non supporté'));
+        //         }
+        //     } catch (error) {
+        //         reject(error);
+        //     }
+        // });
 
         // const link = document.createElement('a');
         // link.href = dataUrl;

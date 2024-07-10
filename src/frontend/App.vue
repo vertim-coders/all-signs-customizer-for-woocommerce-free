@@ -6,6 +6,7 @@
 import {onMounted, ref} from 'vue';
 import '@/frontend/utils/tailwindcss.min.js';
 import '../../assets/utilities/fabric.min.js';
+// import '../../assets/utilities/jspdf.min.js';
 import api from '@/admin/Api/api.js';
 // import '@/frontend/utils/aso-editor-script.js';
 const activateProduct = ref(true);
