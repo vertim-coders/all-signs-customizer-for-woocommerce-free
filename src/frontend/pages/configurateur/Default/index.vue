@@ -1575,8 +1575,8 @@
                         </p>
                     </div>
     
-                    <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                        <span v-if="props.config.data.settings.languageImages.uploadDesign.helpContent != ''" @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
+                    <div v-if="props.config.data.settings.languageImages.uploadDesign.helpContent != ''" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                        <span @click="()=> showHelpSection = !showHelpSection" :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.bars.help.backgroundColor}] aso-text-[${configColors.bars.help.textColor}] hover:aso-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.help.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.help.borderColor}] hover:aso-border-[${configColors.bars.help.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
                             <svg v-if="configSectionIcons.changeIconHelp === '' " viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                 <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
                                 <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
@@ -1588,8 +1588,8 @@
                         </p>
                     </div>
 
-                    <div class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
-                        <a v-if="props.config.data.settings.languageImages.uploadDesign.activate" :href="props.config.data.settings.languageImages.uploadDesign.link" :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
+                    <div v-if="props.config.data.settings.languageImages.uploadDesign.activate" class="aso-flex aso-flex-col aso-full-center aso-space-y-2">
+                        <a :href="props.config.data.settings.languageImages.uploadDesign.link" :class="`aso-flex aso-full-center aso-rounded-full aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-p-2 lg:aso-p-3 aso-bg-[${configColors.bars.preview.backgroundColor}] aso-text-[${configColors.bars.preview.textColor}] hover:aso-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.preview.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.preview.borderColor}] hover:aso-border-[${configColors.bars.preview.hoverBorderColor}] aso-base-animation aso-cursor-pointer`">
                             <svg v-if="configSectionIcons.changeIconImport === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                             </svg>
@@ -1609,7 +1609,7 @@
                             </svg>
                         </span>
                     </div>
-                    <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent"></div>
+                    <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent" class="aso-flex aso-flex-col aso-w-full aso-overflow-auto"></div>
                 </div>
             </div>
         </div>
@@ -5751,9 +5751,9 @@
                 break;
             }
 
-            var pdfBlob = generateHighResolutionImage(canva, 'pdf')
-            const pdfUrl = URL.createObjectURL(pdfBlob)
-            tab.push({format: 'pdf', url: pdfUrl})
+            // var pdfBlob = generateHighResolutionImage(canva, 'pdf')
+            // const pdfUrl = URL.createObjectURL(pdfBlob)
+            // tab.push({format: 'pdf', url: pdfUrl})
             
             return tab
         }

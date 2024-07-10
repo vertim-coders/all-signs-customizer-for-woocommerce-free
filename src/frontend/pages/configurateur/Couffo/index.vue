@@ -282,7 +282,7 @@
                                 </svg>
                             </span>
                         </div>
-                        <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent"></div>
+                        <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent" class="aso-flex aso-flex-col aso-w-full aso-overflow-auto"></div>
                     </div>
                 </div>
             </div>
@@ -5759,9 +5759,9 @@
                 break;
             }
 
-            var pdfBlob = generateHighResolutionImage(canva, 'pdf')
-            const pdfUrl = URL.createObjectURL(pdfBlob)
-            tab.push({format: 'pdf', url: pdfUrl})
+            // var pdfBlob = generateHighResolutionImage(canva, 'pdf')
+            // const pdfUrl = URL.createObjectURL(pdfBlob)
+            // tab.push({format: 'pdf', url: pdfUrl})
             
             return tab
         }
