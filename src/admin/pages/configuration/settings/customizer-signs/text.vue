@@ -77,7 +77,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="aso-w-2/5 aso-space-x-2 aso-flex aso-items-center" v-if="text.enableCustomColor">
+                    <div class="aso-w-3/5 aso-space-x-2 aso-flex aso-items-center" v-if="text.enableCustomColor">
                         <label for="" class="aso-text-[16px] aso-text[#444444] aso-font-normal aso-w-full">Custom Color Preview Image : </label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
                             <div class="aso-flex aso-space-x-2">

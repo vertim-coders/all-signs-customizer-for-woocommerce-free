@@ -549,6 +549,8 @@ const defaultSettings = ref({
         images: {
             enableDownloadImage:true,
             enableUploadImage:true,
+            enableCustomColor:true,
+            colorsPrevImg:'',
             fileUploadScript:{
                 uploadMinWidth:100,
                 uploadMaxWidth:100,

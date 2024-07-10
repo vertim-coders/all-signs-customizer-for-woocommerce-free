@@ -67,6 +67,33 @@
                         />
                     </div>
                 </div>
+                <div class="aso-flex aso-justify-start aso-space-x-8 aso-items-center">
+                    <div class="aso-flex aso-space-x-3">
+                        <div class="aso-text-[16px]">Enable Custom color</div>
+                        <div class="aso-flex aso-items-center aso-translate-y-0.5">
+                            <label for="toggleCustom" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
+                                <input id="toggleCustom" type="checkbox" name="toggleCustom" class="aso-sr-only aso-peer" v-model="image.enableCustomColor">
+                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="aso-w-3/5 aso-space-x-2 aso-flex aso-items-center" v-if="image.enableCustomColor">
+                        <label for="" class="aso-text-[16px] aso-text[#444444] aso-font-normal aso-w-full">Custom Color Preview Image : </label>
+                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
+                            <div class="aso-flex aso-space-x-2">
+                                <button @click="selectColorPrevImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">Upload image</button>
+                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
+                                    <img v-if="image.colorsPrevImg != ''" :src="image.colorsPrevImg" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                    <button v-if="image.colorsPrevImg != ''" @click="()=>{image.colorsPrevImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                </div>
                 <div class="aso-space-y-2">
                     <label class="aso-text-[16px] aso-font-bold">Colors for uploaded svg (only for uploaded images that are svg)</label>
                     <div class="aso-grid aso-grid-cols-3 aso-gap-4" v-if="image.colors.length>0">
@@ -251,6 +278,8 @@ const isFetching = ref(false);
 const image = ref({
     enableDownloadImage:true,
     enableUploadImage:true,
+    enableCustomColor:true,
+    colorsPrevImg:'',
     fileUploadScript:{
       uploadMinWidth:100,
       uploadMaxWidth:100,
@@ -287,6 +316,33 @@ onMounted(async ()=>{
     }
     isFetching.value = false;
 });
+const selectColorPrevImage = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Custom Svg Color Preview Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            image.value.colorsPrevImg = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
 const fetchManageCliparts = async () => {
     const result = await api.getManageCliparts();
     if (result.data.length > 0) {
