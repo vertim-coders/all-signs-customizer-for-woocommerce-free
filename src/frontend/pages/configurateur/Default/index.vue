@@ -79,10 +79,10 @@
                         <div class="aso-flex aso-justify-center aso-items-center aso-space-x-4">
                             <div class="aso-flex aso-full-center aso-space-x-2">
                                 <span @click="undo" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-bg-[${configColors.bars.undoRedo.backgroundColor}] aso-text-[${configColors.bars.undoRedo.textColor}] hover:aso-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.undoRedo.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.undoRedo.borderColor}] hover:aso-border-[${configColors.bars.undoRedo.hoverBorderColor}] aso-p-2 aso-rounded-full aso-base-animation aso-cursor-pointer`">
-                                    <svg v-if="configSectionIcons.cancelAnAction === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
+                                    <svg v-if="configSectionIcons.undoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                                     </svg>
-                                    <img v-if="configSectionIcons.cancelAnAction !== '' " :src="configSectionIcons.cancelAnAction" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
+                                    <img v-if="configSectionIcons.undoIcon !== '' " :src="configSectionIcons.undoIcon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
                                 </span>
                                 <div class="aso-hidden lg:aso-flex aso-text-sm">
                                     {{ configVisualiserTexts.textButtonBack && configVisualiserTexts.textButtonBack.trim() !== '' ? configVisualiserTexts.textButtonBack : 'Undo' }}
@@ -91,10 +91,10 @@
     
                             <div class="aso-flex aso-full-center aso-space-x-2">
                                 <span @click="redo" :class="`aso-w-fit aso-h-fit aso-flex aso-full-center aso-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] aso-bg-[${configColors.bars.undoRedo.backgroundColor}] aso-text-[${configColors.bars.undoRedo.textColor}] hover:aso-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:aso-text-[${configColors.bars.undoRedo.hoverTextColor}] aso-border-2 aso-border-[${configColors.bars.undoRedo.borderColor}] hover:aso-border-[${configColors.bars.undoRedo.hoverBorderColor}] aso-p-2 aso-rounded-full aso-base-animation aso-cursor-pointer`">
-                                    <svg v-if="configSectionIcons.icon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
+                                    <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                     </svg>
-                                    <img v-if="configSectionIcons.icon !== '' " :src="configSectionIcons.icon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
+                                    <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="aso-w-4 aso-h-4 lg:aso-w-5 lg:aso-h-5" />                            
                                 </span>
                                 <div class="aso-hidden lg:aso-flex aso-text-sm">
                                     {{ configVisualiserTexts.textButtonNext && configVisualiserTexts.textButtonNext.trim() !== '' ? configVisualiserTexts.textButtonNext : 'Redo' }}
@@ -5724,30 +5724,30 @@
         function generateOutputImage(tab, canva) {
             switch (configOutputSettings.value.filesFormat) {
                 case 'png':
-                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
                 break;
 
                 case 'jpeg':
-                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
                 break;
 
                 case 'svg':
-                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
 
                 case 'png+jpeg':
-                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
-                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
                 break;
 
                 case 'png+svg':
-                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
-                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
 
                 case 'jpeg+svg':
-                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
-                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
             }
 

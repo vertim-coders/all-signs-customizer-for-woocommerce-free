@@ -5732,25 +5732,25 @@
         function generateOutputImage(tab, canva) {
             switch (configOutputSettings.value.filesFormat) {
                 case 'png':
-                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
                 break;
 
                 case 'jpeg':
-                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
                 break;
 
                 case 'svg':
-                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
 
                 case 'png+jpeg':
-                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
-                    tab.push({format: 'jpeg', url: generateHighResolutionImage(canva, 'jpeg')})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
                 break;
 
                 case 'png+svg':
-                    tab.push({format: 'png', url: generateHighResolutionImage(canva, 'png')})
-                    tab.push({format: 'svg', url: generateHighResolutionImage(canva, 'svg')})
+                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
                 break;
 
                 case 'jpeg+svg':
