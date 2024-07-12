@@ -1,45 +1,10 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
-    function aso_zip_file($order_id,$item_id,$ouput_settings,$dataUris){
-		$outputOptions = get_option("aso_output_options",[]);
-		$upload_dirs = ASO_IMAGE_PATH;
-		wp_mkdir_p( $upload_dirs );
-		if(isset($outputOptions["zipName"]) && $outputOptions["zipName"]==true){
-			if(isset($ouput_settings["prefix"]) && !empty($ouput_settings["prefix"])){
-				$zip_file = "/".$ouput_settings["prefix"].$order_id."-$item_id.zip";
-			}else{
-				$zip_file = "/".$order_id."-$item_id.zip";
-			}
-		}else{
-			if(isset($ouput_settings["prefix"]) && !empty($ouput_settings["prefix"])){
-				$zip_file = "/".$ouput_settings["prefix"].uniqid( 'aso-' )."-$item_id.zip";
-			}else{
-				$zip_file = "/".uniqid( 'aso-' )."-$item_id.zip";
-			}
-			
-		}
-
-		$zip = new ZipArchive();
-		$zip->open($upload_dirs.$zip_file, ZipArchive::CREATE);
-
-		// Ajouter les fichiers au ZIP à partir des dataURI
-		foreach ($dataUris as $index => $dataUri) {
-			$file_data = base64_decode(explode(',', $dataUri)[1]);
-			$file_extension = explode('/', mime_content_type($dataUri))[1];
-			$file_name = "file_{$index}.{$file_extension}";
-			$zip->addFromString($file_name, $file_data);
-		}
-
-		// Fermer le ZIP
-		$zip->close();
-		return ASO_IMAGE_URL.$zip_file;
-	}
-
+    if ( ! defined( 'ABSPATH' ) ) exit;
+    
 	/**
 	 * save preview image
 	 */
-	function aso_save_canvas_image( $images) {
+	function aso_save_prev_images( $images) {
 		$upload_dirs = ASO_IMAGE_PATH;
 		wp_mkdir_p( $upload_dirs );
 		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
@@ -60,11 +25,46 @@
                     $file        = base64_decode(explode(',', $image["url"])[1]);
                     $file_name       = $upload_dir. $name. $key. ".". $image['format'];
                     file_put_contents( $file_name, $file ); // phpcs:ignore
-                    $preview_img[] = ASO_IMAGE_URL . '/'.$name. $key. ".". $image['format'];
+                    $preview_img[$key][] = ASO_IMAGE_URL . '/'.$name. $key. ".". $image['format'];
                 }
             }
         }
         return $preview_img;
+	}
+	/**
+	 * save preview image
+	 */
+	function aso_save_upload_images( $images) {
+		$upload_dirs = ASO_IMAGE_PATH;
+		wp_mkdir_p( $upload_dirs );
+		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
+        $preview_imgs=[];
+        if(isset($images['face1'])){
+            foreach ($images as $key=>$face) {
+                foreach ($face as $index => $image) {
+                    $file_data = base64_decode(explode(',', $image["url"])[1]);
+                    $file_extension = explode('/', mime_content_type($image["url"]))[1];
+                    $name                     = uniqid( 'aso-' );
+                    $file_name = $upload_dir ."$name-$key-file_{$index}.{$file_extension}";
+                    $file_extension = explode("+",$file_extension)[0];
+                    file_put_contents( $file_name, $file_data ); // phpcs:ignore
+                    $preview_imgs[$key][] = ["name"=>"$name-$key-file_{$index}.{$file_extension}","url"=>ASO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                }
+            }
+        }else{
+            if(isset($images)){
+                foreach ($images as $index => $image) {
+                    $file_data = base64_decode(explode(',', $image["url"])[1]);
+                    $file_extension = explode('/', mime_content_type($image["url"]))[1];
+                    $name                     = uniqid( 'aso-' );
+                    $file_extension = explode("+",$file_extension)[0];
+                    $file_name = $upload_dir ."$name-file_{$index}.{$file_extension}";
+                    file_put_contents( $file_name, $file_data ); // phpcs:ignore
+                    $preview_imgs[] = ["name"=>"$name-file_{$index}.{$file_extension}","url"=>ASO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];                    
+                }
+            }
+        }
+        return $preview_imgs;
 	}
 	
 	/**
@@ -88,7 +88,21 @@
                 $_SESSION['aso_calculated_totals'] = false; */
                 
                 $newly_added_cart_item_key = false;
-                $aso_previews = aso_save_canvas_image( $recaps["designImages"]);
+                $aso_previews = aso_save_prev_images( $recaps["designImages"]);
+                $uploads= aso_save_upload_images($recaps['images']["value"]);
+                if(isset($uploads["face1"])){
+                    foreach ($uploads as $key => $face) {
+                        foreach($face as $index=>$upload){
+                            unset($recaps['images']["value"][$key][$index]["url"]);
+                            $recaps['images']["value"][$key][$index]["infos"] = $upload;
+                        }
+                    }
+                }else{
+                    foreach ($uploads as $key => $upload) {
+                        unset($recaps['images']["value"][$key]["url"]);
+                        $recaps['images']["value"][$key]["infos"] = $upload;
+                    }
+                }
                 //$preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
                 if ( $cart_item_key ) {
                     WC()->cart->cart_contents[ $cart_item_key ]['aso_recaps'] = $recaps;

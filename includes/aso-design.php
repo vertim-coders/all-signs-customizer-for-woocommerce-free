@@ -1,6 +1,4 @@
 <?php
-namespace ASO;
-use ASO_Product_Config;
 /**
  * Contains all methods and hooks callbacks related to the design
  *
@@ -62,7 +60,11 @@ class ASO_Design {
 	public function aso_change_product_image_in_cart( $product_image_code, $values) {
 		if ( isset( $values['aso_meta_data']["recaps"] ) ) {
 			$previews = $values['aso_meta_data']["recaps"]["designImages"];
-			$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($previews[0]) . "'>";	
+			if(isset($previews["face1"])){
+				$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($previews["face1"][0]) . "'>";	
+			}else{
+				$product_image_code = "<img class='aso-cartitem-img' src='" . esc_url($previews[0]) . "'>";	
+			}
 			return $product_image_code;
 		}
 
@@ -105,9 +107,18 @@ class ASO_Design {
 							<button type="button" class="close" data-dismiss="omodal" aria-hidden="true">&times;</button>
 						</div>
 						<div class="omodal-body">
-						<img src="<?php echo esc_url($cart_item['aso_meta_data']["recaps"]["designImages"][0])?>" style="
-								width: auto;
-								height: 500px;"/>
+							<?php if(!isset($cart_item['aso_meta_data']["recaps"]["designImages"]["face1"])){ ?>
+								<img src="<?php echo esc_url($cart_item['aso_meta_data']["recaps"]["designImages"][0])?>" style="
+										width: auto;
+										height: 500px;"/>
+							<?php } else { ?>
+								<div>
+									<img src="<?php echo esc_url($cart_item['aso_meta_data']["recaps"]["designImages"]["face1"][0])?>" style="width: auto; height: 500px;"/>
+								</div>
+								<div>
+									<img src="<?php echo esc_url($cart_item['aso_meta_data']["recaps"]["designImages"]["face2"][0])?>" style="width: auto; height: 500px;"/>
+								</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
@@ -222,28 +233,32 @@ class ASO_Design {
 							<div >
 								<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
 								<?php foreach ($face as $text) {?>
-									<div class="aso-custom-options-info-infos" >
-									<span><?php echo esc_html($text["textContent"])?></span>
-									<?php if($admin) { foreach ($text["values"] as $key => $position) {?>
-										<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
-									<?php } } ?>
+									<div>
+										<span><?php echo esc_html($text["textContent"])?></span>
+										<div class="aso-custom-options-info-infos" >
+										<?php if($admin) { foreach ($text["values"] as $key => $position) {?>
+											<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
+										<?php } } ?>
+										</div>
 									</div>
 								<?php } ?>
 							</div>
 						<?php }
 						} else{?>
 							<?php foreach ($recaps["texts"]["value"] as $key => $text) {?>
-								<div class="aso-custom-options-info-infos" >
+								<div>
 									<span><?php echo esc_html($text["textContent"])?></span>
-									<?php if($admin) { foreach ($text["values"] as $key => $position) {?>
-										<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
-									<?php } } ?>
+									<div class="aso-custom-options-info-infos" >
+										<?php if($admin) { foreach ($text["values"] as $key => $position) {?>
+											<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
+										<?php } } ?>
+									</div>
 								</div>
 							<?php }?>
 					<?php } ?>
 				</div>
 			<?php } ?>
-			<?php if( isset($recaps["images"]["value"]) && count($recaps["images"]["value"])>0) {?>
+			<?php if( isset($recaps["images"]["value"]) && count($recaps["images"]["value"])>0 && $admin) {?>
 			<div class="aso-custom-options-info">
 				<label for=""><?php echo esc_html($recaps["images"]["label"])?>: </label>
 				<?php if(isset($recaps["images"]["value"]["face1"])) {?>
@@ -251,9 +266,9 @@ class ASO_Design {
 						<div>
 							<label for=""style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key])?>: </label>
 							<?php foreach ($face as $image) {?>
-								<div class="aso-custom-options-info-infos" >
-									<div class="aso-cart-color-option" >
-										<img src="<?php echo $image["url"]?>"/>
+								<div class="aso-custom-options-info-infos" style="display: block !important;">
+									<div>
+										<p><?php echo __("file","ASO") . " : ". $image["infos"]["name"] ?></p>
 									</div>
 									<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
 										<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
@@ -265,11 +280,9 @@ class ASO_Design {
 					} else{?>
 					<div style="display:flex; flex-direction:column; justify-content:center; align-items:center;">
 						<?php foreach ($recaps["images"]["value"] as $key => $image) {?>
-							<div class="aso-custom-options-info-infos" >
-								<div class="aso-cart-color-option" style="position:relative; margin: 0 5px 0 0;">
-									<img src="<?php echo $image["url"]?>" style="position: absolute;
-									width: auto;
-									height: 50px;"/>
+							<div class="aso-custom-options-info-infos" style="display: block !important;">
+								<div>
+									<p><?php echo __("file","ASO") . " : ". $image["infos"]["name"] ?></p>
 								</div>
 								<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
 									<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
@@ -299,16 +312,31 @@ class ASO_Design {
 			<?php if ($admin) {?>
 			<div class="aso-custom-options-info">
 				<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
-				<div style="display:flex; justify-content:center; align-items:center;">
-					<?php foreach ($recaps["designImages"] as $key => $image) {?>
-						<div style="position:relative; width:fit-content">
-							<img src="<?php echo esc_url($image)?>" style="
-								width: auto;
-								height: 50px;"/>
-						</div>
-						<div style="margin:10px 0">
-							<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
-						</div> 
+				<div>
+					<?php if(!isset($recaps["designImages"]["face1"])) { ?>
+						<?php foreach ($recaps["designImages"] as $key => $face) {?>
+							<div style="display:flex; justify-content:center; align-items:center;">
+								<div style="position:relative; width:fit-content">
+									<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
+								</div>
+								<div style="margin:10px 0">
+									<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
+								</div> 
+							</div>
+						<?php } ?>
+					<?php } else {?>
+						<?php foreach ($recaps["designImages"] as $key => $face) {
+							foreach ($face as $key => $image) {?>
+								<div style="display:flex; justify-content:center; align-items:center;">
+									<div style="position:relative; width:fit-content">
+										<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
+									</div>
+									<div style="margin:10px 0">
+										<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
+									</div> 
+								</div>
+							<?php }
+						} ?>
 					<?php } ?>
 				</div>
 			</div>
@@ -431,26 +459,258 @@ class ASO_Design {
 				if (is_account_page()) {
 					echo $this->display_custom_recaps($order_data["recaps"],true);
 				}
-				$dataUris = [];
+				$uploads = [];
 				if(isset($order_data['recaps']['images']["value"]['face1'])){
 					foreach ($order_data['recaps']['images']["value"] as $key => $face) {
 						foreach ($face as $key => $image) {
-							array_push($dataUris,$image["url"]);
+							array_push($uploads,$image["infos"]);
 						}
 					}
 				}else{
 					if(isset($order_data['recaps']['images']["value"])){
 						foreach ($order_data['recaps']['images']["value"] as $key => $image) {							
-							array_push($dataUris,$image["url"]);
+							array_push($uploads,$image["infos"]);
 						}
 					}
 				}
 				$order_id = wc_get_order_id_by_order_item_id($item_id);
-				$aso_zip_file = aso_zip_file($order_id,$item_id,$order_data['recaps']["output"],$dataUris);
+				$aso_zip_file = $this->aso_zip_file($order_id,$item_id,$order_data['recaps']["output"],$order_data['recaps']['designImages'],$uploads,$order_data["recaps"]["sign"]["size"]["value"]);
 				$order_data['zip'] = $aso_zip_file;
 				wc_update_order_item_meta($item_id, "aso_meta_data", $order_data);
 			echo ob_get_clean();
 		}
 
 	}
+
+	private function aso_zip_file($order_id, $item_id, $output_settings, $previews, $uploads, $sizes) {
+		$outputOptions = get_option("aso_output_options", []);
+		$upload_dirs = ASO_IMAGE_PATH;
+		wp_mkdir_p($upload_dirs);
+		if (isset($outputOptions["zipName"]) && $outputOptions["zipName"] == true) {
+			if (isset($output_settings["prefix"]) && !empty($output_settings["prefix"])) {
+				$zip_file = "/" . $output_settings["prefix"] . $order_id . "-$item_id.zip";
+			} else {
+				$zip_file = "/" . $order_id . "-$item_id.zip";
+			}
+		} else {
+			if (isset($output_settings["prefix"]) && !empty($output_settings["prefix"])) {
+				$zip_file = "/" . $output_settings["prefix"] . "aso-$item_id.zip";
+			} else {
+				$zip_file = "/" . "aso-$item_id.zip";
+			}
+		}
+		if(!file_exists($upload_dirs . $zip_file)){
+			$zip = new ZipArchive();
+			if ($zip->open($upload_dirs . $zip_file, ZipArchive::CREATE) === TRUE) {
+				foreach ($uploads as $index => $upload) {
+					$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $upload["name"];
+					if (file_exists($file)) {
+						$file_content = file_get_contents($file);
+						$zip->addFromString(basename($file), $file_content);
+						unlink($file);
+					}
+				}
+				preg_match('/^([\d.]+)\s*(\w*)$/', trim($sizes["width"]["value"]), $matches);
+				$unit = isset($matches[2]) ? strtolower($matches[2]) : 'mm';
+				$width = $this->convertToNumber($sizes["width"]["value"]);
+				$height = $this->convertToNumber($sizes["height"]["value"]);
+			
+				$pdfs = $this->save_pdf_output($width, $height, $unit, $previews);
+				if(is_array($pdfs) && count($pdfs)>0){
+					foreach ($pdfs as $key => $pdf) {
+						if (file_exists($pdf)) {
+							$pdf_content = file_get_contents($pdf);
+							$zip->addFromString(basename($pdf), $pdf_content);
+							unlink($pdf);
+						}
+					}
+				}
+				$zip->close();
+			}
+		}
+	
+	
+		return ASO_IMAGE_URL . $zip_file;
+	}
+	
+
+	private function convertToNumber($chaine) {
+		preg_match('/^([\d.]+)\s*(\w*)$/', trim($chaine), $matches);
+	
+		if (count($matches) >= 2) {
+			$nombre = floatval($matches[1]);
+			$unite = isset($matches[2]) ? strtolower($matches[2]) : '';
+			switch ($unite) {
+				case 'mm':
+					return $nombre;
+				case 'cm':
+					return $nombre * 10;
+				case 'm':
+					return $nombre * 1000;
+				case 'in':
+					return $nombre * 25.4;
+				default:
+					return $nombre;
+			}
+		} else {
+			return 0;
+		}
+	}
+	
+	
+	
+	private function save_pdf_output($width, $height, string $unit, array $prevImages) {
+
+		if(isset($prevImages["face1"])){
+			$url = [];
+			foreach ($prevImages as $key => $face) {
+				$path_parts = pathinfo($face[0]);
+				$ext = $path_parts['extension'];
+				$output_file = $path_parts["filename"];
+
+				$upload_dirs = ASO_IMAGE_PATH;
+				wp_mkdir_p($upload_dirs);
+				$output_file = $upload_dirs . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.pdf';
+				if ($ext != 'svg') {
+					require_once ASO_INCLUDES . DIRECTORY_SEPARATOR . 'tcpdf' . DIRECTORY_SEPARATOR . 'tcpdf.php';
+					$pdf_orientation = "p";
+					$pdf_margin_lr = 0;
+					$pdf_margin_tb = 0;
+					define('MILIMETER_VALUE', 0.264583333);
+			
+					//$pdf_unit = PDF_UNIT;
+					$pdf_width = round($width); // Arrondir la largeur
+					$pdf_height = round($height); // Arrondir la hauteur
+					$pdf_unit = $unit;
+			
+					$pdf_format = array($pdf_width, $pdf_height);
+			
+					$pdf = new TCPDF($pdf_orientation, $pdf_unit, $pdf_format, true, 'UTF-8', false);
+			
+					$pdf->SetCreator('All Signs Options by Vertim Coders');
+					$pdf->SetAuthor('All Signs Options by Vertim Coders');
+					$pdf->SetTitle('Output');
+					$pdf->setPrintHeader(false);
+					$pdf->setPrintFooter(false);
+			
+					// set default monospaced font.
+					$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+			
+					// set margins.
+					$pdf->SetMargins($pdf_margin_lr, $pdf_margin_tb, -1, true);
+					$pdf->SetHeaderMargin($pdf_margin_tb);
+					$pdf->SetFooterMargin($pdf_margin_tb);
+			
+					// set auto page breaks.
+					$pdf->SetAutoPageBreak(true, $pdf_margin_tb);
+			
+					// set image scale factor.
+					$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+			
+					$pdf->AddPage();
+			
+					$pdf->Image(
+						$face[0], // Input file.
+						'', // File left position value.
+						'', // File top position value.
+						$pdf_width, // File Width value.
+						0, // File Height value.
+						'', // File type.
+						'', // File link.
+						'', // File align position.
+						true, // Can resize file.
+						300, // File resolution DPI.
+						'C', // Page Align.
+						false, // Imask.
+						false, // Image mask.
+						0, // Border.
+						false, // Fit box.
+						false, // Hidden.
+						false, // Fit on page.
+						false, // Alt.
+						array() // Alt image.
+					);
+			
+					$pdf->Output($output_file, 'F');
+					$url[]= $output_file;
+				}
+			}
+			return $url;
+		}else{
+			$path_parts = pathinfo($prevImages[0]);
+			$ext = $path_parts['extension'];
+			$output_file = $path_parts["filename"];
+
+			$upload_dirs = ASO_IMAGE_PATH;
+			wp_mkdir_p($upload_dirs);
+			$output_file = $upload_dirs . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.pdf';
+			if ($ext != 'svg') {
+				require_once ASO_INCLUDES . DIRECTORY_SEPARATOR . 'tcpdf' . DIRECTORY_SEPARATOR . 'tcpdf.php';
+				$pdf_orientation = "p";
+				$pdf_margin_lr = 0;
+				$pdf_margin_tb = 0;
+				define('MILIMETER_VALUE', 0.264583333);
+		
+				//$pdf_unit = PDF_UNIT;
+				$pdf_width = round($width); // Arrondir la largeur
+				$pdf_height = round($height); // Arrondir la hauteur
+				$pdf_unit = $unit;
+		
+				$pdf_format = array($pdf_width, $pdf_height);
+		
+				$pdf = new TCPDF($pdf_orientation, $pdf_unit, $pdf_format, true, 'UTF-8', false);
+		
+				$pdf->SetCreator('All Signs Options by Vertim Coders');
+				$pdf->SetAuthor('All Signs Options by Vertim Coders');
+				$pdf->SetTitle('Output');
+				$pdf->setPrintHeader(false);
+				$pdf->setPrintFooter(false);
+		
+				// set default monospaced font.
+				$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+		
+				// set margins.
+				$pdf->SetMargins($pdf_margin_lr, $pdf_margin_tb, -1, true);
+				$pdf->SetHeaderMargin($pdf_margin_tb);
+				$pdf->SetFooterMargin($pdf_margin_tb);
+		
+				// set auto page breaks.
+				$pdf->SetAutoPageBreak(true, $pdf_margin_tb);
+		
+				// set image scale factor.
+				$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+		
+				$pdf->AddPage();
+		
+				$pdf->Image(
+					$prevImages[0], // Input file.
+					'', // File left position value.
+					'', // File top position value.
+					$pdf_width, // File Width value.
+					0, // File Height value.
+					'', // File type.
+					'', // File link.
+					'', // File align position.
+					true, // Can resize file.
+					300, // File resolution DPI.
+					'C', // Page Align.
+					false, // Imask.
+					false, // Image mask.
+					0, // Border.
+					false, // Fit box.
+					false, // Hidden.
+					false, // Fit on page.
+					false, // Alt.
+					array() // Alt image.
+				);
+		
+				$pdf->Output($output_file, 'F');
+				return [$output_file];
+			}
+		}
+		return false;
+	}
+	
+
+	
 }

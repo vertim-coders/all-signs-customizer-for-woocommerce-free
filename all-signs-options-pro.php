@@ -1,6 +1,5 @@
 <?php
 
-use ASO\ASO_Design;
 use ASO\ASO_Post_Type;
 
 /*
