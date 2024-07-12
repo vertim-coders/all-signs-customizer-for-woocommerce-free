@@ -314,7 +314,7 @@ class ASO_Design {
 				<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
 				<div>
 					<?php if(!isset($recaps["designImages"]["face1"])) { ?>
-						<?php foreach ($recaps["designImages"] as $key => $face) {?>
+						<?php foreach ($recaps["designImages"] as $key => $image) {?>
 							<div style="display:flex; justify-content:center; align-items:center;">
 								<div style="position:relative; width:fit-content">
 									<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
