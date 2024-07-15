@@ -2609,6 +2609,36 @@
                         opt.e.stopPropagation();
                     }
                 });
+
+                var mc = new Hammer.Manager(canvas.getElement());
+                console.log(Hammer, "zezrezrzrzer")
+                // Ajouter un geste de pincement
+                var pinch = new Hammer.Pinch();
+                mc.add([pinch]);
+
+                // Variables pour suivre l'état du zoom
+                var lastZoom = canvas.getZoom();
+                var lastScale = 1;
+
+                mc.on('pinch', function(e) {
+                    if (e.scale !== lastScale) {
+                        var zoom = lastZoom * e.scale;
+
+                        // Limiter le zoom à une valeur maximale raisonnable (par exemple, 20x)
+                        if (zoom > 20) zoom = 20;
+
+                        // Limiter le zoom à une valeur minimale (par exemple, 0.01x)
+                        if (zoom < 0.01) zoom = 0.01;
+
+                        canvas.zoomToPoint({ x: e.center.x, y: e.center.y }, zoom);
+                        lastScale = e.scale;
+                    }
+                });
+
+                mc.on('pinchend', function() {
+                    lastZoom = canvas.getZoom();
+                    lastScale = 1;
+                });
     
     
     
