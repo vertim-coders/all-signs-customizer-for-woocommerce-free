@@ -284,6 +284,19 @@
                         </div>
                         <div v-html="props.config.data.settings.languageImages.uploadDesign.helpContent" class="aso-flex aso-flex-col aso-w-full aso-overflow-auto"></div>
                     </div>
+
+                    <div :class="`aso-absolute aso-top-0 aso-right-0 aso-flex aso-w-fit aso-p-2 aso-space-x-1`">
+                        <span @click="zoomCanvas('up')" :class="`aso-flex aso-cursor-pointer`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
+                            </svg>
+                        </span>
+                        <span @click="zoomCanvas('down')" :class="`aso-flex aso-cursor-pointer`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6" />
+                            </svg>
+                        </span>
+                    </div>
                 </div>
             </div>
     
@@ -2704,6 +2717,26 @@
 
         
     });
+
+    function zoomCanvas(to){
+        var canvasCenter = getCanvasCenter(activeCanvas)
+        if (to == 'up') { // Vérifier si la touche Ctrl est enfoncée
+            var delta = -111.11111405455044;
+            var zoom = activeCanvas.getZoom();
+            zoom *= 0.9999 ** delta;
+            if (zoom > 20) zoom = 20;
+            if (zoom < 0.01) zoom = 0.01;
+            activeCanvas.zoomToPoint({ x: activeCanvas.getWidth()/2, y: activeCanvas.getHeight()/2 }, zoom);
+        }
+        if (to == 'down') { // Vérifier si la touche Ctrl est enfoncée
+            var delta = 111.11111405455044;
+            var zoom = activeCanvas.getZoom();
+            zoom *= 0.9999 ** delta;
+            if (zoom > 20) zoom = 20;
+            if (zoom < 0.01) zoom = 0.01;
+            activeCanvas.zoomToPoint({ x: activeCanvas.getWidth()/2, y: activeCanvas.getHeight()/2 }, zoom);
+        }
+    }
 
     function setControlsForAllObjects(canva) {
         canva.getObjects().forEach(function(obj) {
