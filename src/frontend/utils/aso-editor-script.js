@@ -1083,14 +1083,17 @@ function handleMiseAEchelle(rW, rH) {
 
   if ((signWPx || signHPx) > 10000) {
     fixScale = 0.25;
-    sizeRatio = "big";
     canvas.fixingRatio = sizeRatio
     backCanvas.fixingRatio = sizeRatio
   } else {
-    fixScale = 0.5;
-    sizeRatio = "small";
+    fixScale = 0.35;
     canvas.fixingRatio = sizeRatio
     backCanvas.fixingRatio = sizeRatio
+  }
+  if(signHPx >= (signWPx/2)){
+    sizeRatio = "big";
+  }else{
+    sizeRatio = "small";
   }
 
   if (signWPx > signHPx) {
