@@ -304,7 +304,9 @@ class ASO_Frontend {
                     $categories = [];
                     foreach ($templates as $template) {
                         if(isset($all_categories[$template["categoryId"]])){
-                            array_push($categories,["value"=>$template["categoryId"],"name"=>$all_categories[$template["categoryId"]]]);
+                            if(!in_array(["value"=>$template["categoryId"],"name"=>$all_categories[$template["categoryId"]]],$categories)){
+                                array_push($categories,["value"=>$template["categoryId"],"name"=>$all_categories[$template["categoryId"]]]);
+                            }
                         }
                     }
                     $aso_product = new ASO_Product_Config($productid);
