@@ -1176,8 +1176,8 @@
                                     <p class="aso-font-medium">Currently in use</p>
                                     <div class="aso-flex aso-items-center aso-flex-wrap aso-gap-2 aso-p-1">
                                         <div v-for="(usedImage, index) in usedImages">
-                                            <div @click="editAddedImage(usedImage.object)" :class="`${activeFace == usedImage.object.canvasName ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] aso-border aso-cursor-pointer aso-base-animation`">
-                                                <img :src="usedImage.url" alt="" class="aso-w-20 aso-h-auto">
+                                            <div @click="editAddedImage(usedImage.object)" :class="`${activeFace == usedImage.object.canvasName ? `aso-cursor-pointer` : `aso-cursor-not-allowed`} aso-w-20 aso-h-20 aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] aso-border aso-cursor-pointer aso-base-animation`">
+                                                <img :src="usedImage.url" alt="" class="aso-w-auto aso-h-full">
                                                 <p class="aso-text-xs aso-font-medium">Edit image</p>
                                             </div>
                                         </div>
@@ -1217,13 +1217,15 @@
                                                 <p class="aso-text-xs">{{clipart.description}}</p>
                                             </div>
                                             <div v-show="showClipart && clipartId == index" :class="`aso-relative lg:aso-absolute lg:aso-top-0 lg:aso-right-0 lg:aso-translate-x-[101%] lg:aso-w-full lg:aso-h-[90%] aso-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.textColor}] lg:aso-shadow-xl`">
-                                                <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
-                                                    <div v-for="(image, id) in currentClipart">
-                                                        <div @click="addImageToSign(image.url, image.additionalPrice, id)" class="aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-border aso-cursor-pointer">
-                                                            <img :src="image.url" alt="" :class="`aso-w-20 aso-h-20 aso-border aso-border-solid aso-border-[${configColors.optionsSideBar.options.modals.option.textColor}] aso-p-1 aso-rounded-md`">
-                                                            <p class="aso-text-sm aso-font-medium">{{image.title}}</p>
-                                                            <p v-if="image.additionalPrice > 0" class="aso-text-[11px] aso-leading-normal">({{image.additionalPrice}} {{props.currency}})</p>
-                                                            <p v-if="!image.additionalPrice > 0" class="aso-text-[11px] aso-leading-normal aso-invisible">none</p>
+                                                <div :class="`aso-flex aso-flex-col aso-w-full aso-h-full aso-overflow-auto aso-scrollBar`">
+                                                    <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
+                                                        <div v-for="(image, id) in currentClipart">
+                                                            <div @click="addImageToSign(image.url, image.additionalPrice, id)" class="aso-flex aso-flex-col aso-space-y-2 aso-full-center aso-p-1 aso-border aso-cursor-pointer">
+                                                                <img :src="image.url" alt="" :class="`aso-w-20 aso-h-20 aso-border aso-border-solid aso-border-[${configColors.optionsSideBar.options.modals.option.textColor}] aso-p-1 aso-rounded-md`">
+                                                                <p class="aso-text-sm aso-font-medium">{{image.title}}</p>
+                                                                <p v-if="image.additionalPrice > 0" class="aso-text-[11px] aso-leading-normal">({{image.additionalPrice}} {{props.currency}})</p>
+                                                                <p v-if="!image.additionalPrice > 0" class="aso-text-[11px] aso-leading-normal aso-invisible">none</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -5260,6 +5262,8 @@
             imageError.value = ""
             usedImages.value = currentImages.images
             addRecentImages()
+            editImage.value = false
+            clipartSection.value = false
         } catch (error) {
             currentImages = error
             imageError.value = error.error;
@@ -6080,7 +6084,7 @@
                     face2: current2State,
                 },
                 price: {
-                    value: parseInt(supprimerNonChiffres(formatPrice(finalPrices.value))),
+                    value: supprimerNonChiffres(formatPrice(finalPrices.value)),
                     array: optionsPrices.value,
                     textAfter: configVisualiserTexts.value.textAfterPrice,
                 },
@@ -6106,15 +6110,15 @@
         if(configDoublePart.value.active){
             if(activeFace.value === "front-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                    prevImg.value = genImageWithWatermark(canvas, 'png', 'preview');
+                    prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvas, 'png');
+                    prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
                 }
             }else if(activeFace.value === "back-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                    prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview');
+                    prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvasBack, 'png');
+                    prevImg.value = genImage(canvasBack, 'png', 'preview', 1317, 622);;
                 }
             }
         }else{
@@ -6122,7 +6126,7 @@
                 // prevImg.value = generateHighResolutionImage(canvas, 'png');
                 prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
             }else{
-                prevImg.value = genImage(canvas, 'png');
+                prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
             }
         }
         showImg.value = true
@@ -6130,30 +6134,22 @@
     function downLoadConfigRender(){
         if(configDoublePart.value.active){
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                genImageWithWatermark(canvas, 'png', 'download');
-                genImageWithWatermark(canvasBack, 'png', 'download');
+                genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
+                genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
             }else{
-                prevImg.value = genImage(canvas, 'png');
-                prevImg.value = genImage(canvasBack, 'png');
+                genImage(canvas, 'png', 'download', 1317, 622);
+                genImage(canvasBack, 'png', 'download', 1317, 622);
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                 genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
-                // var pdfBlob = generateHighResolutionImage(canvas, 'pdf')
-                // console.log(pdfBlob);
-                // const blobUrl = URL.createObjectURL(pdfBlob)
-                
-                // const link = document.createElement('a');
-                // link.href = blobUrl;
-                // link.download = 'image.pdf';
-                // link.click();
             }else{
-                genImage(canvas, 'png');
+                genImage(canvas, 'png', 'download', 1317, 622);
             }
         }
     }
 
-    function genImage(canva, format, width, height) {
+    function genImage(canva, format, purpose, width, height) {
         // Sauvegarde les dimensions actuelles du canvas
         const originalWidth = canva.getWidth();
         const originalHeight = canva.getHeight();
@@ -6162,27 +6158,17 @@
         if (width && height) {
             canva.setWidth(width);
             canva.setHeight(height);
-            checkScreenSize()
+            checkScreenSize(width, height)
         }
 
 
-        // fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
-        //     // Créer le pattern à partir de l'image
-        //     const pattern = new fabric.Pattern({
-        //         source: img.getElement(),
-        //         repeat: 'repeat'
-        //     });
-
-        //     // Définir le pattern comme arrière-plan du canvas
-        //     canva.setBackgroundColor({source: pattern.source, repeat: 'repeat'}, canva.renderAll.bind(canva));
-
-        //     // Ajouter des objets au canva après avoir défini le pattern
-        //     canva.renderAll();
-        // });
-
-
+        var thickVisibility
         canva.getObjects().forEach(object => {
-            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
+            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
+                object.set('visible', false);
+            }
+            if(object.name === 'thickness-value'){
+                thickVisibility = object.visible
                 object.set('visible', false);
             }
         });
@@ -6228,13 +6214,23 @@
             if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
                 object.set('visible', true);
             }
+            if(object.name === 'thickness-value'){
+                object.set('visible', thickVisibility);
+            }
         });
 
         canva.setWidth(originalWidth);
         canva.setHeight(originalHeight);
+        checkScreenSize()
 
-        // checkScreenSize()
         canva.renderAll();
+        if(purpose == 'download'){
+            console.log("Downloading")
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'preview.jpg';
+            link.click();
+        }
 
         return dataURL;
     }

@@ -2081,8 +2081,10 @@ function handlechangeBorderColor(color, position) {
 var currentSignColor = "";
 var currentSignTextColor = "";
 var firstColorSet = true;
-var signBackground = "color";
-var patternUrl = "";
+var signBackground1 = "color";
+var signBackground2 = "color";
+var patternUrl1 = "";
+var patternUrl2 = "";
 function handleChangeSignColor(
   name,
   pattern,
@@ -2099,11 +2101,20 @@ function handleChangeSignColor(
       if (object.type !== "line") {
         if (object.name == "safeObject") {
           if (pattern.active) {
-            signBackground = "pattern";
-            patternUrl = pattern.url;
+            if(canva.name == 'front-face'){
+              signBackground1 = "pattern";
+              patternUrl1 = pattern.url;
+            }else{
+              signBackground2 = "pattern";
+              patternUrl2 = pattern.url;
+            }
             setPattern(canva, pattern.url);
           } else {
-            signBackground = "color";
+            if(canva.name == 'front-face'){
+              signBackground1 = "color";
+            }else{
+              signBackground2 = "color";
+            }
             object.set("fill", pattern.codeHex);
           }
         }
@@ -2146,6 +2157,7 @@ function handleChangeSignColor(
 }
 function setPattern(canva, image) {
   const imgElement = new Image();
+  imgElement.crossOrigin = 'anonymous';
   imgElement.src = image;
   // console.log(image, "setPattern")
   // var object = handleGetObjectByName('safeObject', canvas)
@@ -2165,12 +2177,11 @@ function setPattern(canva, image) {
         object.set("fill", pattern);
         // canvas.add(pattern);
         canva.renderAll();
-      });
+      }, { crossOrigin: 'anonymous' });
     }
   });
 }
 function handleSetImageToSignBackground(image) {
-  // console.log("setImageToSignBackground", image)
   setPattern(canvas, image);
   setPattern(backCanvas, image);
   // updateModifications(true, 'changer sign color')
@@ -2200,7 +2211,13 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
         // var left = canvasCenter.x - (nheight/2);
         var width = nwidth;
         var height = nheight;
-        var objectfill = object.fill;
+        var objectfill;
+
+        if(typeof  object.fill !== 'string'){
+          object.fill = 'transparent'
+        }else{
+          objectfill = object.fill;
+        }
         var objectId = object.id;
 
         if (object.name == "safeObject") {
@@ -2472,10 +2489,13 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
   }
 
   setShape(canvas);
-  if (signBackground === "pattern") {
-    setPattern(canvas, patternUrl);
-  }
   setShape(backCanvas);
+  if (signBackground1 === "pattern") {
+    setPattern(canvas, patternUrl1);
+  }
+  if (signBackground2 === "pattern") {
+    setPattern(backCanvas, patternUrl2);
+  }
   // if(firstLoad){
   //     if(signBackground === 'pattern'){
   //         setPattern(canvas, patternUrl);
@@ -6017,7 +6037,7 @@ function handleAddImageToSign(image, imageId, price) {
   
         updateModifications(true, "==ajout d'image ==");
         // console.log(img.getSrc(), "image source")
-      });
+      }, { crossOrigin: 'anonymous' });
     }
   }
 
@@ -6637,7 +6657,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                   templateObject[0].set("fill", pattern);
                   // canvas.add(pattern);
                   canva.renderAll();
-                });
+                }, { crossOrigin: 'anonymous' });
               }
             }
             if(templateObject[0].name === 'aso-SignText'){
