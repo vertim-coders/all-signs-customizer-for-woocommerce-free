@@ -8681,30 +8681,70 @@ const includeMetaData = async (state) => {
         }else{
             await api.addManagefont({many:true,fonts:[
                 {
-                    "label": "Abhaya Libre",
-                    "url": "http://fonts.gstatic.com/s/abhayalibre/v14/e3t5euGtX-Co5MNzeAOqinEYo23yr9xI6oYtBA.woff2",
-                    "isGoogleFont": true
+                    label: "Abril Fatface",
+                    url: "http://fonts.gstatic.com/s/abrilfatface/v23/zOL64pLDlL1D99S8g8PtiKchm-VsjOLhZBY.woff2",
+                    isGoogleFont: true
                 },
                 {
-                    "label": "Abril Fatface",
-                    "url": "http://fonts.gstatic.com/s/abrilfatface/v23/zOL64pLDlL1D99S8g8PtiKchm-VsjOLhZBY.woff2",
-                    "isGoogleFont": true
+                    label: "Bellefair",
+                    url: "http://fonts.gstatic.com/s/bellefair/v14/kJExBuYY6AAuhiXUxG19-vA2pOdvDA.woff2",
+                    isGoogleFont: true
                 },
                 {
-                    "label": "Advent Pro",
-                    "url": "http://fonts.gstatic.com/s/adventpro/v23/V8mqoQfxVT4Dvddr_yOwrzaFxV7JtdQgFqXdUAQrGp_zgX5sWCpLHSNPSZoonw1aBA.woff2",
-                    "isGoogleFont": true
+                    label: "Dancing Script",
+                    url: "http://fonts.gstatic.com/s/dancingscript/v24/If2cXTr6YS-zF4S-kcSWSVi_sxjsohD9F50Ruu7BMSoHSOB9ptDqpw.woff2",
+                    isGoogleFont: true
                 },
                 {
-                    "label": "Akron",
-                    "url": "http://fonts.gstatic.com/s/akronim/v23/fdN-9sqWtWZZlHRp-gVxkFYN-a8.woff2",
-                    "isGoogleFont": true
+                    label: "Poppins",
+                    url: "http://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrFJXUc1NECPY.woff2",
+                    isGoogleFont: true
                 },
                 {
-                    "label": "Bellefair",
-                    "url": "http://fonts.gstatic.com/s/bellefair/v14/kJExBuYY6AAuhiXUxG19-vA2pOdvDA.woff2",
-                    "isGoogleFont": true
+                    label: "Playfair Display",
+                    url: "http://fonts.gstatic.com/s/playfairdisplay/v36/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDVZNLo_U2r.woff2",
+                    isGoogleFont: true
                 },
+                {
+                    label: "PT Sans",
+                    url: "http://fonts.gstatic.com/s/ptsans/v17/jizaRExUiTo99u79P0COxOGMMDQ.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Slabo",
+                    url: "http://fonts.gstatic.com/s/slabo27px/v14/mFT0WbgBwKPR_Z4hGN2qsx0J1EJ7i90.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Oswald",
+                    url: "http://fonts.gstatic.com/s/oswald/v53/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvgURoZAaRliE.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Lato",
+                    url: "http://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHvxw6XweuBCY.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Lobster",
+                    url: "http://fonts.gstatic.com/s/lobster/v30/neILzCirqoswsqX9_oCsMqEzSJQ.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Great Vibes",
+                    url: "http://fonts.gstatic.com/s/greatvibes/v18/RWmMoKWR9v4ksMfaWd_JN-XHg6UKDXlq.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Satisfy",
+                    url: "http://fonts.gstatic.com/s/satisfy/v21/rP2Hp2yn6lkG50LoOZGCHBeHFl0.woff2",
+                    isGoogleFont: true
+                },
+                {
+                    label: "Quicksand",
+                    url: "http://fonts.gstatic.com/s/quicksand/v30/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkP8o18S0wx40QDw.woff2",
+                    isGoogleFont: true
+                }
             ]});
             await fetchFonts();
             configuration.data.settings.customizerSign.text.selectedFonts = manageFonts.value;
