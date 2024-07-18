@@ -2927,7 +2927,7 @@
         }
 
         //selection du la size
-        currentSizeName.value = 'Template'
+        currentSizeName.value = String(sign.size.width + "x" + sign.size.height)
         var templateSize = {
             name: 'Template',
             width: sign.size.width,
@@ -6024,8 +6024,8 @@
                         type: materialType.value,
                     },
                     size: {
-                        width: parseInt(supprimerNonChiffres(widthValue.text)),
-                        height: parseInt(supprimerNonChiffres(heightValue.text)),
+                        width: supprimerNonChiffres(widthValue.text),
+                        height: supprimerNonChiffres(heightValue.text),
                         thickness: {
                             avtive: currentSizeThickness.value,
                             value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),

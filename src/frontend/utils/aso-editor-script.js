@@ -127,6 +127,8 @@ function handleGetCurrentUnit(
   maxTextSize = maxFontSize;
 
   currenTextFontFam = textFontFam;
+
+  console.log(currenTextFontFam, "currenTextFontFam")
 }
 
 var visualizerText = {};
