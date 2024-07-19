@@ -188,7 +188,7 @@
             </div>
         </div>
         <!-- Open delete modal -->
-        <div v-if="openModal" @click.self="isLoading?'' :closeModal()" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)]">
+        <div v-if="openModal" @click.self="isLoading?'' :closeModal()" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
             <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
                 <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow ">
                     <button :disabled="isLoading" @click.stop="closeModal" type="button" class="aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center" data-modal-hide="popup-modal">

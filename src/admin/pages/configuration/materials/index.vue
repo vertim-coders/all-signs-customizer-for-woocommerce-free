@@ -239,7 +239,7 @@
             </div>
         </div> 
     </div>
-    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-[calc(100%-1rem)] aso-h-full">
+    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full aso-h-full">
         <div class="aso-relative aso-top-[50px] aso-p-4 aso-w-full aso-max-w-[60%] aso-max-h-fit">
             <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700 aso-px-4">
                 <div class="aso-px-[10px] aso-pt-[5px]">
