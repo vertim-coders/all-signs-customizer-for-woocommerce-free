@@ -2319,7 +2319,7 @@
 
     var showSize = ref(false)
     function dropSizeToggle(){
-        console.log('drop')
+        // console.log('drop')
         showSize.value = !showSize.value;
     }
 
@@ -2393,7 +2393,7 @@
             // console.log(props.template, "config")
     
             handleGetImageSettings(configImageSettings.value)
-            console.log(configImageSettings.value, "configTextFontSettings")
+            // console.log(configImageSettings.value, "configTextFontSettings")
     
             handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
             handleGetDefaultText(
@@ -2568,7 +2568,7 @@
                 handleCheckTemplate(props.template.designFromTemplate)
                 if(route.name === 'template-maker'){
                     if(template.value.data.templateData.length == 0){
-                        console.log(template.value.data.templateData, "template-maker")
+                        // console.log(template.value.data.templateData, "template-maker")
                         selectMaterial(props.config.data.materials[0], 0)
                         if(materialType.value === 'simple'){
                             selectSimpleFirstValue()
@@ -2630,7 +2630,7 @@
                         if (zoom > 20) zoom = 20;
                         if (zoom < 0.01) zoom = 0.01;
     
-                        console.log("delta:", delta, "zoom:", zoom)
+                        // console.log("delta:", delta, "zoom:", zoom)
     
                         canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
                         opt.e.preventDefault();
@@ -2668,7 +2668,7 @@
                         if (zoom > 20) zoom = 20;
                         if (zoom < 0.01) zoom = 0.01;
     
-                        console.log("delta:", delta, "zoom:", zoom)
+                        // console.log("delta:", delta, "zoom:", zoom)
     
                         canvasBack.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
                         opt.e.preventDefault();
@@ -2761,7 +2761,7 @@
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
-        console.log(data);
+        // console.log(data);
         //chargement du prix du template
         optionsPrices.value = data.price ? data.price.array : []
         var templatePrice = {
@@ -2938,7 +2938,6 @@
 
         //recupération des images du template
         usedImages.value = loadedTemplate.images
-        // console.log(loadedTemplate.images, "loadedTemplate.images")
 
         if(!firstSetLoad.value){
             saveStep("select of first values")
@@ -2972,11 +2971,6 @@
                     currentSizeId.value = id
                     stopSize = true
                 }
-                // if(!sizee.isDefault && !stopSize){
-                //     // console.log("change")
-                //     changeSize(size, sizee, id)
-                //     stopSize = true
-                // }
             })
         }else{
             var size ={
@@ -3094,7 +3088,7 @@
                 index++;
             }
             if(!haveDefault){
-                console.log("first")
+                // console.log("first")
                 selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0, true)
             }
         }else{
@@ -3482,7 +3476,7 @@
             // stepArray.value.redoButton.disabled= "disabled";
         }
 
-        console.log(stepArray.value.states.length, "states INDEX")
+        // console.log(stepArray.value.states.length, "states INDEX")
         // console.log(stepArray.value.currentStateIndex, "state index")
     }
     function previousStep(){
@@ -4190,7 +4184,7 @@
                 if(object.type == 'i-text'){
                     addedTexts.value = handleDeleteObject(object)
                     selectText.value = false
-                    console.log(addedTexts.value)
+                    // console.log(addedTexts.value)
         
                     textsPrices.value = handleSetPrice()
                     var priceObject = {
@@ -4202,7 +4196,7 @@
                 if(object.name == 'aso-SignImage'){
                     usedImages.value = handleDeleteObject(object)
                     // selectText.value = false
-                    console.log(usedImages.value, 'image')
+                    // console.log(usedImages.value, 'image')
                     // console.log(optionsPrices.value, "before")
         
                     var index = 0
@@ -4260,7 +4254,7 @@
                     });
         
                     usedImages.value = handleCloneObject(object, newImagePriceId.value)
-                    console.log(usedImages.value)
+                    // console.log(usedImages.value)
                 }
                 var priceObject = {
                     name: 'none',
@@ -4384,7 +4378,7 @@
             currentSizeSetting.value = sizeSetting
             textNumberForSize.value = sizeSetting.textNumber
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
-            console.log(currentSizeValues.value, "1")
+            // console.log(currentSizeValues.value, "1")
         }else{
             currentSizeSetting.value = {}
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, -1)
@@ -4471,7 +4465,7 @@
     }
 
     function selectCustomSize(customSize){
-        console.log(customSize, "custom size")
+        // console.log(customSize, "custom size")
         function checkInterval(pricings, value){
             let settings = pricings[0];
             for (let i = 0; i < pricings.length; i++) {
@@ -5268,7 +5262,7 @@
             currentImages = error
             imageError.value = error.error;
             usedImages.value = error.images;
-            console.log(imageError.value, "lsdfsdf", usedImages.value);
+            // console.log(imageError.value, "lsdfsdf", usedImages.value);
         }
 
         if(currentImages != {}){
@@ -5428,7 +5422,7 @@
     var addedTexts = ref([])
     function addTextToSign(){
         addedTexts.value =  handleAddTextToSign()
-        console.log(addedTexts.value, "added text")
+        // console.log(addedTexts.value, "added text")
         if(addedTexts.value.length > 0){
             var index = addedTexts.value.length - 1
             getTextObject(addedTexts.value[index], false)
@@ -5516,7 +5510,7 @@
             }
         }else{
             if(selectedText.value.object.lockScale === false){
-                console.log(selectedText.value.object.lockScale, "lock scale")
+                // console.log(selectedText.value.object.lockScale, "lock scale")
                 if(statut === 'up'){
                     if(input.value < max){
                         input.stepUp()
@@ -5735,7 +5729,7 @@
             return color
         }
 
-        console.log(getBorderColor(activeFace1Border.value, canvas))
+        // console.log(getBorderColor(activeFace1Border.value, canvas))
 
 
         var textObjects = []
@@ -6090,12 +6084,12 @@
                 },
                 additionalOptions: customAdditionalValues.value,
             }
-            console.log(templateData.value, "template")
+            // console.log(templateData.value, "template")
         }
 
 
 
-        console.log(configData.value, "Added")
+        // console.log(configData.value, "Added")
         finish.value = true
     }
 
@@ -6291,7 +6285,7 @@
             canva.add(watermarkRect);
             watermarkRect.sendToBack()
 
-            console.log(handleGetObjectByName('watermark', canvas), "watermark")
+            // console.log(handleGetObjectByName('watermark', canvas), "watermark")
     
     
             var thickVisibility
@@ -6429,7 +6423,7 @@
         const newWidth = Math.round(originalWidth * scaleFactor);
         const newHeight = Math.round(originalHeight * scaleFactor);
 
-        console.log(scaleFactor, newWidth, newHeight, originalWidth, originalHeight)
+        // console.log(scaleFactor, newWidth, newHeight, originalWidth, originalHeight)
         //cacher les element à retirer de l'image
         var thickVisibility
         canva.getObjects().forEach(object => {

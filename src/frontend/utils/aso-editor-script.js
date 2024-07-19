@@ -128,7 +128,7 @@ function handleGetCurrentUnit(
 
   currenTextFontFam = textFontFam;
 
-  console.log(currenTextFontFam, "currenTextFontFam")
+  // console.log(currenTextFontFam, "currenTextFontFam")
 }
 
 var visualizerText = {};
@@ -156,303 +156,6 @@ var state = [];
 var mods = 0;
 
 let currentStateIndex = 0;
-//fonction de sauvegarde de l'état
-// function updateModifications(savehistory, position) {
-//     // console.log(position)
-//     if (savehistory === true) {
-//         if(state.length <= 6){
-//             let objects = handleCheckObjects()
-//             // console.log(objects, "object saved")
-
-//             // Sérialiser chaque objet en détail
-//             let serializedObjects = objects.map(obj => obj.toObject(['id', 'name', 'selectable', 'evented']));
-
-//             // Récupérer l'état JSON du canvas
-//             let jsonData = canvas.toJSON();
-
-//             // Combiner le JSON avec les objets sérialisés
-//             let canvasState = {
-//                 jsonData: jsonData,
-//                 objects: serializedObjects,
-//                 options: {
-//                     size: 0,
-//                     sizeName: currentSizeName,
-//                     shape: selectedShape,
-//                     border: activeBorder,
-//                     signColor: currentSignColor,
-//                     fixing: activeFixingMethode
-//                 },
-//             };
-
-//             state.push(canvasState);
-//             currentStateIndex = state.length - 1;
-//         }
-//     }
-//     // console.log(state, "state")
-// }
-
-// function handleUndo() {
-//   if (mods < state.length && currentStateIndex > 0) {
-//     const canvasState = state[state.length - 1 - mods - 1];
-//     const currentObjects = canvas.getObjects();
-//     const activeOptions = canvasState.options
-
-//     canvas.discardActiveObject();
-//     // Supprimer les objets qui n'existent pas dans l'état précédent
-//     currentObjects.forEach(obj => {
-//       if (!canvasState.objects.some(prevObj => prevObj.id === obj.id)) {
-//         // console.log(obj.id, 'undo - borderA');
-//         canvas.remove(obj);
-//       }
-//     });
-
-//     // Remplacer les objets existants par leur version précédente
-//     if (canvasState.objects.length > 0) {
-//       canvasState.objects.forEach(prevObj => {
-//         const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
-//         if (currentObj) {
-//         //   console.log(currentObj.id, 'undo - borderZ');
-
-//           fabric.util.enlivenObjects([prevObj], objects => {
-//             const newObj = objects[0];
-//             if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
-//                 newObj.on('editing:entered', () => {
-//                     handleGetAddedTextValues(newObj);
-//                 });
-//                 newObj.on('editing:exited', () => {
-//                     handleGetAddedTextValues(newObj);
-//                 });
-//                 newObj.on('selected', () => {
-//                     handleGetAddedTextValues(newObj);
-//                     console.log("newTextdqdqdqsdqd");
-
-//                 });
-//                 newObj.on('mousedown', function() {
-//                     handleGetAddedTextValues(newObj);
-//                     updateModifications(true, 'deposer le text')
-//                 });
-//                 newObj.on('mouseup', function() {
-//                     handleGetAddedTextValues(newObj);
-//                     updateModifications(true, 'deposer le text')
-//                 });
-//             }
-//             if(newObj.type === 'image' && newObj.id != 6 ){
-//                 newObj.on('mousedown', function() {
-//                     handleGetAddedImageValues(newObj);
-//                     updateModifications(true, "deposer l'image ")
-//                 });
-//                 newObj.on('mouseup', function() {
-//                     handleGetAddedImageValues(newObj);
-//                     updateModifications(true, "deposer l'image ")
-//                 });
-//                 newObj.on('selected', function() {
-//                     handleGetAddedImageValues(newObj);
-//                     updateModifications(true, "deposer l'image ")
-//                 });
-//             }
-//             canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
-//             canvas.remove(currentObj);
-//           });
-
-//           currentSizeName = activeOptions.sizeName;
-//           selectedShape = activeOptions.shape
-//           activeBorder = activeOptions.border
-//           currentSignColor = activeOptions.signColor
-//           activeFixingMethode = activeOptions.fixing
-
-//         }
-//       });
-//     }
-
-//     canvas.renderAll();
-//     mods += 1;
-
-//     currentStateIndex -= 1;
-
-//     console.log('cuurent state', currentStateIndex)
-//     return {
-//         sizeName: currentSizeName,
-//         shape: selectedShape,
-//         signBorder: activeBorder,
-//         signColor: currentSignColor,
-//         fixing: activeFixingMethode,
-//     }
-//   }
-// }
-// function handleRedo() {
-//     if (mods > 0) {
-//         const canvasState = state[state.length - mods];
-//         const currentObjects = canvas.getObjects();
-//         const activeOptions = canvasState.options
-
-//         canvas.discardActiveObject();
-//         // Supprimer les objets qui n'existent pas dans l'état suivant
-//         currentObjects.forEach(obj => {
-//             if (!canvasState.objects.some(nextObj => nextObj.id == obj.id)) {
-//                 // console.log(obj.id, 'redo - borderA');
-//                 canvas.remove(obj);
-//             }
-//         });
-
-//       // Ajouter les objets qui n'existent pas dans l'état actuel
-//         // canvasState.objects.forEach(nextObj => {
-//         //     if (!currentObjects.some(obj => obj.id == nextObj.id)) {
-//         //     console.log(nextObj.id, 'redo - borderB');
-
-//         //     fabric.util.enlivenObjects([nextObj], objects => {
-//         //         const newObj = objects[0];
-//         //         canvas.add(newObj);
-//         //     });
-//         //     }
-//         // });
-
-//         canvasState.objects.forEach(nextObj => {
-//             const currentObj = currentObjects.find(obj => obj.id === nextObj.id);
-//             if (currentObj) {
-//             //   console.log(currentObj.id, 'redo - borderZ');
-
-//               fabric.util.enlivenObjects([nextObj], objects => {
-//                 const newObj = objects[0];
-//                 if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
-//                     newObj.on('editing:entered', () => {
-//                         handleGetAddedTextValues(newObj);
-//                     });
-//                     newObj.on('editing:exited', () => {
-//                         handleGetAddedTextValues(newObj);
-//                     });
-//                     newObj.on('selected', () => {
-//                         handleGetAddedTextValues(newObj);
-//                         console.log("newTextdqdqdqsdqd");
-
-//                     });
-//                     newObj.on('mousedown', function() {
-//                         handleGetAddedTextValues(newObj);
-//                         updateModifications(true, 'deposer le text')
-//                     });
-//                     newObj.on('mouseup', function() {
-//                         handleGetAddedTextValues(newObj);
-//                         updateModifications(true, 'deposer le text')
-//                     });
-//                 }
-//                 if(newObj.type === 'image' && newObj.id != 6 ){
-//                     newObj.on('mousedown', function() {
-//                         handleGetAddedImageValues(newObj);
-//                         updateModifications(true, "deposer l'image ")
-//                     });
-//                     newObj.on('mouseup', function() {
-//                         handleGetAddedImageValues(newObj);
-//                         updateModifications(true, "deposer l'image ")
-//                     });
-//                     newObj.on('selected', function() {
-//                         handleGetAddedImageValues(newObj);
-//                         updateModifications(true, "deposer l'image ")
-//                     });
-//                 }
-//                 // canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
-//                 canvas.remove(currentObj);
-//                 canvas.add(newObj);
-
-//               });
-//             }
-//             if (!currentObjects.some(obj => obj.id == nextObj.id)) {
-//                 console.log(nextObj.id, 'redo - borderB');
-
-//                 fabric.util.enlivenObjects([nextObj], objects => {
-//                     const newObj = objects[0];
-//                     if(newObj.type === 'i-text' && (newObj.id != 2 || newObj.id != 4)){
-//                         newObj.on('editing:entered', () => {
-//                             handleGetAddedTextValues(newObj);
-//                         });
-//                         newObj.on('editing:exited', () => {
-//                             handleGetAddedTextValues(newObj);
-//                         });
-//                         newObj.on('selected', () => {
-//                             handleGetAddedTextValues(newObj);
-
-//                         });
-//                         newObj.on('mousedown', function() {
-//                             handleGetAddedTextValues(newObj);
-//                             updateModifications(true, 'deposer le text')
-//                         });
-//                         newObj.on('mouseup', function() {
-//                             handleGetAddedTextValues(newObj);
-//                             updateModifications(true, 'deposer le text')
-//                         });
-//                     }
-//                     if(newObj.type === 'image' && newObj.id != 6 ){
-//                         newObj.on('mousedown', function() {
-//                             handleGetAddedImageValues(newObj);
-//                             updateModifications(true, "deposer l'image ")
-//                         });
-//                         newObj.on('mouseup', function() {
-//                             handleGetAddedImageValues(newObj);
-//                             updateModifications(true, "deposer l'image ")
-//                         });
-//                         newObj.on('selected', function() {
-//                             handleGetAddedImageValues(newObj);
-//                             updateModifications(true, "deposer l'image ")
-//                         });
-//                     }
-//                     canvas.add(newObj);
-//                 });
-//             }
-//             currentSizeName = activeOptions.sizeName;
-//             selectedShape = activeOptions.shape
-//             activeBorder = activeOptions.border
-//             currentSignColor = activeOptions.signColor
-//             activeFixingMethode = activeOptions.fixing
-//           });
-
-//       canvas.renderAll();
-//       mods -= 1;
-//       currentStateIndex += 1;
-
-//     console.log('cuurent state', currentStateIndex)
-//     }
-//     return {
-//         sizeName: currentSizeName,
-//         shape: selectedShape,
-//         signBorder: activeBorder,
-//         signColor: currentSignColor,
-//         fixing: activeFixingMethode,
-//     }
-// }
-// function handleClearAll() {
-
-//     const canvasState = state[0];
-//     const currentObjects = canvas.getObjects();
-
-//     canvas.discardActiveObject();
-//     // Supprimer les objets qui n'existent pas dans l'état précédent
-//     currentObjects.forEach(obj => {
-//         if (!canvasState.objects.some(prevObj => prevObj.id === obj.id)) {
-//         // console.log(obj.id, 'undo - borderA');
-//         canvas.remove(obj);
-//         }
-//     });
-
-//     // Remplacer les objets existants par leur version précédente
-//     if (canvasState.objects.length > 0) {
-//         canvasState.objects.forEach(prevObj => {
-//         const currentObj = currentObjects.find(obj => obj.id === prevObj.id);
-//         if (currentObj) {
-//         //   console.log(currentObj.id, 'undo - borderZ');
-
-//             fabric.util.enlivenObjects([prevObj], objects => {
-//             const newObj = objects[0];
-//             canvas.insertAt(newObj, currentObjects.indexOf(currentObj));
-//             canvas.remove(currentObj);
-//             });
-//         }
-//         });
-//     }
-
-//     canvas.renderAll();
-//     mods = 0;
-
-//     currentStateIndex = 0;
-//     state = [state[0]]
-// }
 
 var currentConfig = {
   canvasState: [],
@@ -561,8 +264,8 @@ function updateModifications(good, position) {
       // currentConfig.redoButton.disabled= "disabled";
     }
   }
-  console.log(currentConfig.canvasState.length, "canvasState JS");
-  console.log(currentConfig.canvasObjects, "canvasObjects JS");
+  // console.log(currentConfig.canvasState.length, "canvasState JS");
+  // console.log(currentConfig.canvasObjects, "canvasObjects JS");
 }
 
 function handleUndo() {
@@ -663,13 +366,13 @@ function handleUndo() {
           addedTexts = [];
           canvas.getObjects().forEach(function (obj) {
             if (obj.name === "aso-SignText") {
-              console.log(obj);
+              // console.log(obj);
               addedTexts.push(obj);
             }
           });
           backCanvas.getObjects().forEach(function (obj) {
             if (obj.name === "aso-SignText") {
-              console.log(obj);
+              // console.log(obj);
               addedTexts.push(obj);
             }
           });
@@ -731,7 +434,7 @@ function handleUndo() {
   frontTextCharLength = sumOptionsPrice(FtextObjects, "text").length;
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
 
-  console.log(currentConfig.canvasObjects, "UNdo");
+  // console.log(currentConfig.canvasObjects, "UNdo");
   centerSign(canvas);
   centerSign(backCanvas);
 
@@ -795,7 +498,7 @@ function handleRedo() {
                   reScaleText(prevObject[0]);
                 });
 
-                console.log(prevObject[0]);
+                // console.log(prevObject[0]);
               }
               if (prevObject[0].name === "aso-SignImage") {
                 prevObject[0].on("mousedown", function () {
@@ -843,13 +546,13 @@ function handleRedo() {
         addedTexts = [];
         canvas.getObjects().forEach(function (obj) {
           if (obj.name === "aso-SignText") {
-            console.log(obj);
+            // console.log(obj);
             addedTexts.push(obj);
           }
         });
         backCanvas.getObjects().forEach(function (obj) {
           if (obj.name === "aso-SignText") {
-            console.log(obj);
+            // console.log(obj);
             addedTexts.push(obj);
           }
         });
@@ -890,7 +593,7 @@ function handleRedo() {
   frontTextCharLength = sumOptionsPrice(FtextObjects, "text").length;
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
 
-  console.log(currentConfig.canvasObjects, "Redo");
+  // console.log(currentConfig.canvasObjects, "Redo");
   centerSign(canvas)
   centerSign(backCanvas)
 
@@ -5718,7 +5421,7 @@ function sumOptionsPrice(arr, key) {
 }
 function handleChangeTextValue(event) {
   var editor = document.getElementById("aso-text-editor");
-  console.log(maxTextCharForSize, "current max character", frontTextCharLength);
+  // console.log(maxTextCharForSize, "current max character", frontTextCharLength);
 
   var currentText = selectedText.object;
   if (
@@ -5773,7 +5476,7 @@ function handleChangeTextWeight() {
   } else if (selectedText.weight == "bold") {
     currentText.set("fontWeight", "normal");
   }
-  console.log("current");
+  // console.log("current");
   activeCanvas.renderAll();
   handleGetAddedTextValues(currentText);
 
@@ -6064,9 +5767,9 @@ function handleAddImageToSign(image, imageId, price) {
         // Vérifie si l'image respecte les conditions de taille
         if (width > maxWidth || width < minWidth) {
           reject(
-            console.log(
-              `L'image doit avoir une taille comprise entre ${minWidth} et ${maxWidth}`
-            )
+            // console.log(
+            //   `L'image doit avoir une taille comprise entre ${minWidth} et ${maxWidth}`
+            // )
           );
         } else {
           resolve(file);
@@ -6304,7 +6007,7 @@ function handleChangeAddedSvgColor(color){
   if(currentImage.objectType == 'svg'){
     activeCanvas.getObjects().forEach((objet) => {
       if (objet.name === "aso-SignImage" && objet === currentImage) {
-        console.log(objet)
+        // console.log(objet)
         if(objet._objects && objet._objects.length > 0){
           objet.getObjects().forEach(path => {
             path.set("fill", color);
@@ -6640,7 +6343,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
               rect = templateObject[0]
               if(typeof  templateObject[0].fill !== 'string'){
                 templateObject[0].fill = 'transparent'
-                console.log('WARNING:')
+                // console.log('WARNING:')
                 var image
                 if(canva.name === 'front-face'){
                   image = templateData.color.face1.codeHex
@@ -6755,7 +6458,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                   if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
                       if(signData.fixingMethod.ratio == 'small'){
                           if(templateObject[0].name === 'screw1'){
-                              // console.log(templateObject[0], rect, "screw1")
                               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
                               templateObject[0].left = rect.left
@@ -6772,7 +6474,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                       }
                       if(signData.fixingMethod.ratio == 'big'){
                           if(templateObject[0].name === 'screw1'){
-                              console.log(templateObject[0], rect, "screw1")
                               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
                               templateObject[0].left = rect.left
@@ -6896,7 +6597,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                   if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
                       if(signData.fixingMethod.ratio == 'small'){
                           if(templateObject[0].name === 'screw-cap1'){
-                              console.log(templateObject[0], rect, "screw1")
                               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
                               templateObject[0].left = rect.left
@@ -7175,7 +6875,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut){
                   if(signData.shape == 'square' || signData.shape == 'rounded-square' || signData.shape == 'rounded-top' || signData.shape == 'rounded-sides'){
                       if(signData.fixingMethod.ratio == 'small'){
                           if(templateObject[0].name === 'standoff1'){
-                              console.log(templateObject[0], rect, "screw1")
                               var newHeight = templateObject[0].height * templateObject[0].scaleY 
     
                               templateObject[0].left = rect.left
