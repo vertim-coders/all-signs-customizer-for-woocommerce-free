@@ -5394,6 +5394,7 @@ function handleAddTextToSign(clone) {
       handleCenterVertically(newText);
 
       addedTexts.push(newText);
+      handleChangeTextFontFam(currenTextFontFam)
       // lockToCanvas(newText)
     }
     activeCanvas.renderAll();
