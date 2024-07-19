@@ -6106,13 +6106,13 @@
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                     prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
+                    prevImg.value = genImage(canvas, 'png', 'preview');
                 }
             }else if(activeFace.value === "back-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                     prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvasBack, 'png', 'preview', 1317, 622);;
+                    prevImg.value = genImage(canvasBack, 'png', 'preview');
                 }
             }
         }else{
@@ -6120,7 +6120,7 @@
                 // prevImg.value = generateHighResolutionImage(canvas, 'png');
                 prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
             }else{
-                prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
+                prevImg.value = genImage(canvas, 'png', 'preview');
             }
         }
         showImg.value = true
@@ -6131,14 +6131,14 @@
                 genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
                 genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
             }else{
-                genImage(canvas, 'png', 'download', 1317, 622);
-                genImage(canvasBack, 'png', 'download', 1317, 622);
+                genImage(canvas, 'png', 'download');
+                genImage(canvasBack, 'png', 'download');
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                 genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
             }else{
-                genImage(canvas, 'png', 'download', 1317, 622);
+                genImage(canvas, 'png', 'download');
             }
         }
     }

@@ -5463,11 +5463,19 @@
             
             activeCanvas.getObjects().forEach(function(obj){
                 if(object.id === obj.id){
-                    selectedText.value.object = object
                     if(setActive){
                         activeCanvas.setActiveObject(obj);
                     }
                     handleGetAddedTextValues(obj)
+                    selectedText.value.object = obj
+                    selectedText.value.color = obj.fill
+                    fontFamSelected.value = obj.fontFamily
+                    selectedText.value.weight = obj.fontWeight
+                    selectedText.value.align = obj.textAlign
+                    selectedText.value.style = obj.fontStyle
+                    selectedText.value.underline = obj.underline
+                    selectedText.value.linethrough = obj.linethrough
+                    selectedText.value.overline = obj.overline
                 }
             })
             activeCanvas.requestRenderAll();
@@ -6116,13 +6124,13 @@
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                     prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
+                    prevImg.value = genImage(canvas, 'png', 'preview');
                 }
             }else if(activeFace.value === "back-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                     prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvasBack, 'png', 'preview', 1317, 622);;
+                    prevImg.value = genImage(canvasBack, 'png', 'preview');
                 }
             }
         }else{
@@ -6141,14 +6149,14 @@
                 genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
                 genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
             }else{
-                genImage(canvas, 'png', 'download', 1317, 622);
-                genImage(canvasBack, 'png', 'download', 1317, 622);
+                genImage(canvas, 'png', 'download');
+                genImage(canvasBack, 'png', 'download');
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                 genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
             }else{
-                genImage(canvas, 'png', 'download', 1317, 622);
+                genImage(canvas, 'png', 'download');
             }
         }
     }
