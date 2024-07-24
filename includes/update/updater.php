@@ -29,16 +29,10 @@ class ASO_Updater  {
 			return $res;
 		}
 	
-		$site_url = get_site_url();
-        $purchase_code = get_option("aso_product_pro");
-        $url      = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
-        $args     = array( 'timeout' => 60 );
-        $response = wp_remote_get( $url, $args );
-        if ( is_wp_error( $response ) ) {
-            $error_message = $response->get_error_message();
-			return array();
-        }
-		$remote = json_decode($response['body']);
+		$checkPluginTransient = get_transient(ASO_CHECK_TRANSIENT_NAME);
+		
+		$remote = $checkPluginTransient ?: $this->check_aso_other_version();
+
 		
         if (is_object( $remote)) {
 			if(isset($remote->version) && isset($remote->download_url)){
