@@ -77,9 +77,7 @@ class ASO_Updater  {
 	}
     public function aso_push_update($transient) {
 		$checkPluginTransient = get_transient(ASO_CHECK_TRANSIENT_NAME);
-		if ( empty( $transient->checked ) ) {
-			return $transient;
-		}
+		
 		$remote = $checkPluginTransient ?: $this->check_aso_other_version();
 		
 		if (!$checkPluginTransient) {
