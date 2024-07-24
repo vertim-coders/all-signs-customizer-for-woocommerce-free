@@ -27,7 +27,7 @@ onMounted(async() => {
         if(response.aso_health) {
             activateProduct.value = true;
         }else{
-            await activateLicenseKey();
+            //await activateLicenseKey();
             activateProduct.value = false;
         }
     } catch (error) {
