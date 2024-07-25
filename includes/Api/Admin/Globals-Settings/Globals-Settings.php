@@ -241,7 +241,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	 * @return void
 	 */
 	public function check_product_health() {
-
+    
     $aso_health_check = get_transient('aso_health-state-checking');
     if ($aso_health_check === 'valid') {
       return rest_ensure_response(['aso_health' => true]);
@@ -270,7 +270,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     if ($data && isset($data['key']) && !empty($data['key'])) {
       update_option( 'aso_health-state',$data['key']);
       set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
-      return rest_ensure_response(['activate' => true]);
+      return rest_ensure_response(['aso_health' => true]);
     } else {
       update_option( 'aso_health-state',false);
       return rest_ensure_response(['aso_health' => false]);
