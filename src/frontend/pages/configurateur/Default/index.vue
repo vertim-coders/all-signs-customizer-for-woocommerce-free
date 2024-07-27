@@ -1638,6 +1638,8 @@
                 </span>
     
                 <img ref="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
+                <canvas  ref="image-canvas"  class="aso-w-[90%] aso-hidden"></canvas>
+                <!-- <object type="image/svg+xml" ref="showPreview" :data="prevImg" class="aso-w-full aso-h-auto" /></object> -->
             </div>
         </div>
 
@@ -6138,7 +6140,7 @@
                 // prevImg.value = generateHighResolutionImage(canvas, 'png');
                 prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
             }else{
-                prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
+                prevImg.value = genImage(canvas, 'svg', 'preview');
             }
         }
         showImg.value = true
@@ -6161,6 +6163,8 @@
         }
     }
 
+    var imageCanvasRef = ref(null);
+
     function genImage(canva, format, purpose, width, height) {
         // Sauvegarde les dimensions actuelles du canvas
         const originalWidth = canva.getWidth();
@@ -6168,9 +6172,101 @@
 
         // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
         if (width && height) {
-            canva.setWidth(width);
-            canva.setHeight(height);
-            checkScreenSize(width, height)
+        }
+
+        function convertSvgToImage(svgDataUrl, format = 'png', callback) {
+
+            const img = new Image();
+            img.onload = function() {
+                // Créer un canvas
+                const canvas = document.createElement('canvas');
+                var tempCanvas  = new fabric.Canvas(imageCanvasRef.value,{
+                    width: 1900, 
+                    height: 1080, 
+                    interactive: false,
+                    backgroundColor : "transparent",
+                });
+
+                fabric.loadSVGFromURL(svgDataUrl, function (image) {
+                    const img = fabric.util.groupSVGElements(image);
+
+                    img.scale(2.5);
+
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
+
+                    // img.top = sign.top + sign.height / 2;
+                    // img.left = sign.left + sign.width / 2;
+                    img.width = newWidth;
+                    img.height = newHeight;
+
+                    // img.originX = "center";
+                    // img.originY = "center";
+
+                    tempCanvas.add(img);
+                    img.center()
+                    tempCanvas.renderAll();
+
+                    console.log(tempCanvas, "tempCanvas", img)
+
+                    var dataURL = tempCanvas.toDataURL({
+                        format: 'png',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = dataURL ;
+                    downloadLink.download = 'fileName' + ".png";
+
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+
+                });
+
+
+                // canvas.width = 1900;
+                // canvas.height = 1080;
+
+                // var zoom = 2.5
+                // var x = (1900 - img.width*zoom) / 2;
+                // var y = (1080 - img.height*zoom) / 2;
+                
+                // // Dessiner l'image sur le canvas
+                // const ctx = canvas.getContext('2d');
+                // ctx.drawImage(img, x, y, img.width*zoom, img.height*zoom);
+                // ctx.scale(2, 2);
+                
+                // Obtenir l'URL de données du canvas
+                // let dataUrl;
+                // if (format.toLowerCase() === 'png') {
+                //     dataUrl = canvas.toDataURL('image/png');
+
+                //     var downloadLink = document.createElement("a");
+                //     downloadLink.href = dataUrl ;
+                //     downloadLink.download = 'fileName' + ".png";
+
+                //     document.body.appendChild(downloadLink);
+                //     downloadLink.click();
+                //     document.body.removeChild(downloadLink);
+
+                // } else if (format.toLowerCase() === 'jpeg' || format.toLowerCase() === 'jpg') {
+                //     dataUrl = canvas.toDataURL('image/jpeg');
+                // } else {
+                //     throw new Error('Format non supporté. Utilisez "png" ou "jpeg".');
+                // }
+                
+                // Appeler le callback avec l'URL de données
+                // callback(dataUrl);
+            };
+            
+            img.onerror = function() {
+                console.error('Erreur lors du chargement du SVG');
+            };
+            
+            // Définir la source de l'image comme l'URL de données SVG
+            img.src = svgDataUrl;
         }
 
 
@@ -6211,8 +6307,36 @@
             break;
 
             case 'svg':
-                const svgData = canva.toSVG();
-                dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                canva.getObjects().forEach((obj, index) =>{
+                    if(obj.name === 'safeObject'){
+                        if(typeof obj.fill != ''){
+                            console.log(obj.fill, obj.fill.source.src)
+                            fabric.Image.fromURL( obj.fill.source.src, function (img) {
+
+                                img.left = obj.left
+                                img.top = obj.top
+
+                                img.clipPath = obj
+
+                                img.name = 'aso-signPattern'
+
+                                if(obj.width > obj.height){
+                                    img.scaleToWidth( obj.width)
+                                }else{
+                                    img.scaleToHeight( obj.height)
+                                }
+                                canva.add( img )
+                                img.moveTo(index+1)
+
+                                const svgData = canva.toSVG();
+                                console.log(svgData, "svg data")
+                                dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                
+                                convertSvgToImage(dataURL, 'png')
+                            })
+                        }
+                    }
+                })
             break;
         
             default:
@@ -6230,10 +6354,6 @@
                 object.set('visible', thickVisibility);
             }
         });
-
-        canva.setWidth(originalWidth);
-        canva.setHeight(originalHeight);
-        checkScreenSize()
 
         canva.renderAll();
         if(purpose == 'download'){
@@ -6685,10 +6805,6 @@
 </script>
 
 <style scoped>
-    #canvaas {
-        /* border: 3px solid green */
-    }
-
     .aso-hide{
         display: none;
     }

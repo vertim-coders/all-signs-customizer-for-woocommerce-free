@@ -5,6 +5,7 @@ if (aso_data.page == "configurator" || aso_data.page == "admin") {
   fixingUrl = aso_configurator_data.fixing_methods_url;
   borderUrl = aso_configurator_data.borders_url;
 }
+console.log(aso_configurator_data, "qdqdqsdsqdsqdsqsd")
 var canvas = null;
 var canvasBackground = "";
 var backCanvas = null;
@@ -96,6 +97,7 @@ function handleCloneCanvas() {
     "ratioScale",
     "objectType",
     "imageUrl",
+    "fontFamilyUrl"
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -118,7 +120,8 @@ function handleGetCurrentUnit(
   fontSize,
   minFontSize,
   maxFontSize,
-  textFontFam
+  textFontFam,
+  textFontFamUrl
 ) {
   currentUnit = unit;
   defaultFontSize = fontSize;
@@ -127,6 +130,7 @@ function handleGetCurrentUnit(
   maxTextSize = maxFontSize;
 
   currenTextFontFam = textFontFam;
+  currenTextFontFamUrl = textFontFamUrl;
 
   // console.log(currenTextFontFam, "currenTextFontFam")
 }
@@ -205,6 +209,7 @@ function updateModifications(good, position) {
       "ratioScale",
       "objectType",
       "imageUrl",
+      "fontFamilyUrl",
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -225,6 +230,7 @@ function updateModifications(good, position) {
       "ratioScale",
       "objectType",
       "imageUrl",
+      "fontFamilyUrl",
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -1966,8 +1972,8 @@ function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
                 width: width,
                 left: left,
                 top: top,
-                rx: 15,
-                ry: 15,
+                rx: 35,
+                ry: 35,
                 fill: objectfill,
                 selectable: false,
                 name: "safeObject",
@@ -4495,7 +4501,7 @@ function handleSelectFixingMethode(methode) {
                   img.selectable = false;
                   img.objectType = "aso-fixingMethods";
                   canva.add(img);
-                }
+                }, { crossOrigin: "anonymous" }
               );
 
               var keyringHole = new fabric.Circle({
@@ -5279,8 +5285,8 @@ function handleAddTextToSign(clone) {
     if (clone) {
       var cloneCanvas = clone.canvas;
 
-      var text1JSON = clone.toJSON();
-      // console.log(text1JSON)
+      var text1JSON = clone.toJSON(["fontFamilyUrl"]);
+      console.log(text1JSON)
       delete text1JSON.evented;
 
       var text2 = new fabric.IText(text1JSON.text, {
@@ -5300,6 +5306,7 @@ function handleAddTextToSign(clone) {
         fill: text1JSON.fill,
         textAlign: text1JSON.textAlign,
         fontFamily: text1JSON.fontFamily,
+        fontFamilyUrl: text1JSON.fontFamilyUrl,
         fontWeight: text1JSON.fontWeight,
         fontStyle: text1JSON.fontStyle,
         uniScaleTransform: true,
@@ -5353,6 +5360,7 @@ function handleAddTextToSign(clone) {
         left: sign.left + sign.width / 3,
         fill: currentSignTextColor,
         fontFamily: currenTextFontFam,
+        fontFamilyUrl : currenTextFontFamUrl,
         // fontSize: defaultFontSize,
         scaleX: defaultFontSize / 12,
         scaleY: defaultFontSize / 12,
@@ -5408,7 +5416,7 @@ function handleAddTextToSign(clone) {
       handleCenterVertically(newText);
 
       addedTexts.push(newText);
-      handleChangeTextFontFam(currenTextFontFam.replaceAll(/\s+/g, "-"));
+      handleChangeTextFontFam(currenTextFontFam.replaceAll(/\s+/g, "-"), currenTextFontFamUrl);
       // lockToCanvas(newText)
     }
     activeCanvas.renderAll();
@@ -5523,9 +5531,12 @@ function handleChangeTextSize(size, minSize, maxSize) {
   }
 }
 var currenTextFontFam = "";
-function handleChangeTextFontFam(font) {
+var currenTextFontFamUrl = "";
+function handleChangeTextFontFam(font, url) {
+  console.log(font, url, "changed");
   var currentText = selectedText.object;
   currentText.set("fontFamily", font);
+  currentText.set("fontFamilyUrl", url);
   activeCanvas.renderAll();
 
   handleGetAddedTextValues(currentText);
@@ -6149,8 +6160,8 @@ function handleClipAddedObject(canva) {
         top: sign.top,
         left: sign.left,
         absolutePositioned: true,
-        rx: 15,
-        ry: 15,
+        rx: 35,
+        ry: 35,
         selectable: false,
       });
       break;

@@ -76,6 +76,12 @@ module.exports = {
   },
 
   resolve: {
+    fallback: {
+      // "fs": require.resolve("browserify-fs"),
+      // "path": require.resolve("path-browserify")
+      "fs": false,
+      "path": false
+    },
     alias: {
       vue$: "vue/dist/vue.esm-bundler.js",
       "@": path.resolve("./src/"),
