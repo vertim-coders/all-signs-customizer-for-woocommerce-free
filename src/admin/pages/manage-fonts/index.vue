@@ -279,6 +279,8 @@
                         if(isFontType(attachment.url)){
                             font.value.label =attachment.name;
                             font.value.url=attachment.url;
+                        }else{
+                            toastMessage("Sorry, ASO does not support woff or woff2 fonts. You can convert your font to one of these formats ttf or otf","warning");
                         }
                     }
                 );
@@ -406,7 +408,7 @@
     }
 
     const isFontType = (url) => {
-        const fontsType = ['ttf', 'otf', 'woff', 'woff2'];
+        const fontsType = ['ttf', 'otf'];
         const extension = url.split('.').pop().toLowerCase();
         return fontsType.includes(extension);
     }
