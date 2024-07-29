@@ -5,7 +5,7 @@ if (aso_data.page == "configurator" || aso_data.page == "admin") {
   fixingUrl = aso_configurator_data.fixing_methods_url;
   borderUrl = aso_configurator_data.borders_url;
 }
-console.log(aso_configurator_data, "qdqdqsdsqdsqdsqsd")
+
 var canvas = null;
 var canvasBackground = "";
 var backCanvas = null;
@@ -97,7 +97,7 @@ function handleCloneCanvas() {
     "ratioScale",
     "objectType",
     "imageUrl",
-    "fontFamilyUrl"
+    "fontFamilyUrl",
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -4501,7 +4501,8 @@ function handleSelectFixingMethode(methode) {
                   img.selectable = false;
                   img.objectType = "aso-fixingMethods";
                   canva.add(img);
-                }, { crossOrigin: "anonymous" }
+                },
+                { crossOrigin: "anonymous" }
               );
 
               var keyringHole = new fabric.Circle({
@@ -5286,7 +5287,7 @@ function handleAddTextToSign(clone) {
       var cloneCanvas = clone.canvas;
 
       var text1JSON = clone.toJSON(["fontFamilyUrl"]);
-      console.log(text1JSON)
+      console.log(text1JSON);
       delete text1JSON.evented;
 
       var text2 = new fabric.IText(text1JSON.text, {
@@ -5323,14 +5324,14 @@ function handleAddTextToSign(clone) {
       };
       text2.lockScale = false;
       text2.setControlsVisibility({
-          mt: false, // Middle top
-          mb: false, // Middle bottom
-          ml: false, // Middle left
-          mr: false, // Middle right
-          bl: true,  // Bottom left
-          br: true,  // Bottom right
-          tl: true,  // Top left
-          tr: true,  // Top right
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
       });
 
       text2.set("canvas", cloneCanvas);
@@ -5370,7 +5371,7 @@ function handleAddTextToSign(clone) {
         left: sign.left + sign.width / 3,
         fill: currentSignTextColor,
         fontFamily: currenTextFontFam,
-        fontFamilyUrl : currenTextFontFamUrl,
+        fontFamilyUrl: currenTextFontFamUrl,
         // fontSize: defaultFontSize,
         scaleX: defaultFontSize / 12,
         scaleY: defaultFontSize / 12,
@@ -5400,14 +5401,14 @@ function handleAddTextToSign(clone) {
       newText.lockScale = false;
 
       newText.setControlsVisibility({
-          mt: false, // Middle top
-          mb: false, // Middle bottom
-          ml: false, // Middle left
-          mr: false, // Middle right
-          bl: true,  // Bottom left
-          br: true,  // Bottom right
-          tl: true,  // Top left
-          tr: true,  // Top right
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
       });
 
       newText.on("editing:entered", () => {
@@ -5437,7 +5438,10 @@ function handleAddTextToSign(clone) {
       handleCenterVertically(newText);
 
       addedTexts.push(newText);
-      handleChangeTextFontFam(currenTextFontFam.replaceAll(/\s+/g, "-"), currenTextFontFamUrl);
+      handleChangeTextFontFam(
+        currenTextFontFam.replaceAll(/\s+/g, "-"),
+        currenTextFontFamUrl
+      );
       // lockToCanvas(newText)
     }
     activeCanvas.renderAll();
@@ -5715,14 +5719,14 @@ function handleAddImageToSign(image, imageId, price) {
         };
         img.lockScale = false;
         img.setControlsVisibility({
-            mt: false, // Middle top
-            mb: false, // Middle bottom
-            ml: false, // Middle left
-            mr: false, // Middle right
-            bl: true,  // Bottom left
-            br: true,  // Bottom right
-            tl: true,  // Top left
-            tr: true,  // Top right
+          mt: false, // Middle top
+          mb: false, // Middle bottom
+          ml: false, // Middle left
+          mr: false, // Middle right
+          bl: true, // Bottom left
+          br: true, // Bottom right
+          tl: true, // Top left
+          tr: true, // Top right
         });
 
         img.on("mousedown", function () {
@@ -5780,14 +5784,14 @@ function handleAddImageToSign(image, imageId, price) {
           };
           img.lockScale = false;
           img.setControlsVisibility({
-              mt: false, // Middle top
-              mb: false, // Middle bottom
-              ml: false, // Middle left
-              mr: false, // Middle right
-              bl: true,  // Bottom left
-              br: true,  // Bottom right
-              tl: true,  // Top left
-              tr: true,  // Top right
+            mt: false, // Middle top
+            mb: false, // Middle bottom
+            ml: false, // Middle left
+            mr: false, // Middle right
+            bl: true, // Bottom left
+            br: true, // Bottom right
+            tl: true, // Top left
+            tr: true, // Top right
           });
 
           img.on("mousedown", function () {
