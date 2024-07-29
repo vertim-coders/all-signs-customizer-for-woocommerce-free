@@ -10,9 +10,15 @@
   "dependencies": {
     "@vueform/multiselect": "^2.6.6",
     "axios": "^1.6.7",
+    "browserify-fs": "^1.0.0",
     "jspdf": "^2.5.1",
+    "node-sass": "^9.0.0",
+    "opentype.js": "^1.3.4",
+    "path-browserify": "^1.0.1",
+    "sass": "^1.77.8",
     "vue": "^3.2.36",
-    "vue-router": "^4.1.3"
+    "vue-router": "^4.1.3",
+    "wawoff2": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
@@ -32,7 +38,6 @@
     "eslint-plugin-vue": "^8.0.3",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.6.1",
-    "node-sass": "^7.0.3",
     "sass-loader": "^10.3.1",
     "terser-webpack-plugin": "^5.3.3",
     "url-loader": "^4.1.1",

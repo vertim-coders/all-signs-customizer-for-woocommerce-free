@@ -852,7 +852,7 @@
                                         </div>
                                         <div v-show="showFont" class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                             <div class="aso-flex aso-items-center aso-justify-center aso-w-fit aso-h-10" v-for="(font, index) in allFonts">
-                                                <input type="radio" :id="font.label + index + 1" name="aso-fonts" class=" peer aso-hidden " @click="changeTextFontFam((font.label.replaceAll(/\s+/g, '-')), index)">
+                                                <input type="radio" :id="font.label + index + 1" name="aso-fonts" class=" peer aso-hidden " @click="changeTextFontFam((font.label.replaceAll(/\s+/g, '-')), font.url, index)">
                                                 <label :for="font.label + index + 1" :class="`${fontFamSelected == font.label ? `aso-ring-2 aso-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `aso-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
                                                     aso-font-[${font.label.replaceAll(/\s+/g, '-')}] aso-w-full aso-border-solid aso-border aso-justify-center aso-font-semibold aso-text-sm hover:aso-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] hover:aso-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] aso-rounded-md aso-p-2 aso-text-center aso-cursor-pointer aso-transition-all aso-ease-in-out aso-duration-500`"
                                                     >
@@ -1637,7 +1637,9 @@
                     </svg>
                 </span>
     
-                <img ref="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" />
+                <!-- <img ref="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" /> -->
+                <div id="showPreview" class="aso-w-full aso-h-full aso-flex"></div>
+                <canvas  ref="imageCanvasRef"  class="aso-w-[90%] aso-hidden" style="display: none"></canvas>
             </div>
         </div>
 
@@ -1716,13 +1718,13 @@
                     <p class="aso-text-[14px] aso-space-y-1 aso-flex aso-flex-col aso-items-center w-2/3 justify-end">
                         <div class="aso-flex aso-space-x-2 aso-full-center">
                             <span v-if="configDoublePart.active"  class="aso-font-medium">{{configDoublePart.part1}}: </span>
-                            <img v-if="configDoublePart.active" :src="configData.designImages.face1[0].url" class="aso-w-auto aso-h-[70px]" >
-                            <img v-if="!configDoublePart.active" :src="configData.designImages[0].url" class="aso-w-auto aso-h-[70px]" >
+                            <div id="aso-previewFinish1" class="aso-w-auto aso-h-[70px]"></div>
                         </div>
 
                         <div v-if="configDoublePart.active" class="aso-flex aso-space-x-2 aso-full-center">
                             <span class="aso-font-medium">{{configDoublePart.part2}}: </span>
-                            <img :src="configData.designImages.face2[0].url" class="aso-w-auto aso-h-[70px]" >
+                            <div id="aso-previewFinish2" class="aso-w-auto aso-h-[70px]"></div>
+                            <!-- <img :src="configData.designImages.face2[0].url" class="aso-w-auto aso-h-[70px]" > -->
                         </div>
                     </p>
                 </div>
@@ -2062,6 +2064,10 @@
     import { useRoute } from "vue-router";
     import api from "@/admin/Api/api";
     import { jsPDF } from 'jspdf';
+    
+    import opentype from 'opentype.js'
+    import { load } from 'opentype.js'
+    const wawoff = require('wawoff2');
 
     const route = useRoute();
     const template_config_id = route.params.configId;
@@ -2356,7 +2362,7 @@
             handleGetImageSettings(configImageSettings.value)
             // console.log(configImageSettings.value)
     
-            handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'))
+            handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'), allFonts.value[0].url)
             handleGetDefaultText(
                 {
                     width: (configVisualiserTexts.value.textWidth && configVisualiserTexts.value.textWidth.trim() !== '' ? configVisualiserTexts.value.textWidth : 'width'),
@@ -5545,9 +5551,9 @@
     }
     var fontFamSelected = ref("Arial")
     var allFonts = ref([])
-    function changeTextFontFam(font){
+    function changeTextFontFam(font, url, index){
         fontFamSelected.value = font
-        handleChangeTextFontFam(font)
+        handleChangeTextFontFam(font, url)
     }
     var customTextColor = ref("#000000")
     function changeTextColor(color){
@@ -5711,7 +5717,7 @@
     var configData = ref({})
     var templateData = ref({})
     var finishLoading = ref(true)
-    function finishConfig(){
+    async function finishConfig(){
         closeObjectValues()
         var heightValue = handleGetObjectByName('height-value', canvas)
         var widthValue = handleGetObjectByName('width-value', canvas)
@@ -5778,33 +5784,33 @@
 
 
         var designImagesFace1 = []
-        function generateOutputImage(tab, canva) {
+        async function generateOutputImage(tab, canva) {
             switch (configOutputSettings.value.filesFormat) {
                 case 'png':
-                    tab.push({format: 'png', url: genImage(canva, 'png')})
+                    tab.push({format: 'png', url: await genImage(canva, 'png')})
                 break;
 
                 case 'jpeg':
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
+                    tab.push({format: 'jpeg', url: await genImage(canva, 'jpeg')})
                 break;
 
                 case 'svg':
-                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
+                    tab.push({format: 'svg', url: await genImage(canva, 'svg')})
                 break;
 
                 case 'png+jpeg':
-                    tab.push({format: 'png', url: genImage(canva, 'png')})
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
+                    tab.push({format: 'png', url: await genImage(canva, 'png')})
+                    tab.push({format: 'jpeg', url: await genImage(canva, 'jpeg')})
                 break;
 
                 case 'png+svg':
-                    tab.push({format: 'png', url: genImage(canva, 'png')})
-                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
+                    tab.push({format: 'png', url: await genImage(canva, 'png')})
+                    tab.push({format: 'svg', url: await genImage(canva, 'svg')})
                 break;
 
                 case 'jpeg+svg':
-                    tab.push({format: 'jpeg', url: genImage(canva, 'jpeg')})
-                    tab.push({format: 'svg', url: genImage(canva, 'svg')})
+                    tab.push({format: 'jpeg', url: await genImage(canva, 'jpeg')})
+                    tab.push({format: 'svg', url: await genImage(canva, 'svg')})
                 break;
             }
 
@@ -5873,7 +5879,7 @@
             },
             additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
             additionalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
-            designImages: generateOutputImage(designImagesFace1, canvas),
+            designImages: await generateOutputImage(designImagesFace1, canvas),
             output:{
                 prefix: (configOutputSettings.value.zipOutputFiles.active ? configOutputSettings.value.zipOutputFiles.zipOutFolderPrefix : ''),
                 designDisplayComposition: configOutputSettings.value.designComposition
@@ -6014,11 +6020,11 @@
             function supprimerNonChiffres(chaine) {
                 return chaine.replace(/[^0-9]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -6107,8 +6113,13 @@
 
 
 
-        // console.log(configData.value, "Added")
+        console.log(configData.value, "Added")
         finish.value = true
+        genImage(canvas, 'svg', 'finish-1')
+        if(configDoublePart.value.active){
+            genImage(canvasBack, 'svg', 'finish-2')
+        }
+
     }
 
     var showImg = ref(false)
@@ -6117,198 +6128,335 @@
         showImg.value = false
     }
     const showPreview = ref(null)
-    function showConfigRender(){
+    async function showConfigRender(){
             // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
+        showImg.value = true
+
         if(configDoublePart.value.active){
             if(activeFace.value === "front-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                    prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
+                    prevImg.value = await genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvas, 'png', 'preview');
+                    prevImg.value = await genImage(canvas, 'png', 'preview');
                 }
             }else if(activeFace.value === "back-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                    prevImg.value = genImageWithWatermark(canvasBack, 'png', 'preview', 1317, 622);
+                    prevImg.value = await genImageWithWatermark(canvasBack, 'png', 'preview', 1317, 622);
                 }else{
-                    prevImg.value = genImage(canvasBack, 'png', 'preview');
+                    prevImg.value = await genImage(canvasBack, 'png', 'preview');
                 }
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                // prevImg.value = generateHighResolutionImage(canvas, 'png');
-                prevImg.value = genImageWithWatermark(canvas, 'png', 'preview', 1317, 622);
+                prevImg.value = await genImageWithWatermark(canvas, 'svg', 'preview');
             }else{
-                prevImg.value = genImage(canvas, 'png', 'preview', 1317, 622);
+                prevImg.value = await genImage(canvas, 'png', 'preview');
             }
         }
-        showImg.value = true
     }
-    function downLoadConfigRender(){
+    async function downLoadConfigRender(){
         if(configDoublePart.value.active){
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
-                genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
             }else{
-                genImage(canvas, 'png', 'download');
-                genImage(canvasBack, 'png', 'download');
+                await genImage(canvas, 'png', 'download');
+                await genImage(canvasBack, 'png', 'download');
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
             }else{
-                genImage(canvas, 'png', 'download');
+                await genImage(canvas, 'png', 'download');
             }
         }
     }
 
-    function genImage(canva, format, purpose, width, height) {
-        // Sauvegarde les dimensions actuelles du canvas
-        const originalWidth = canva.getWidth();
-        const originalHeight = canva.getHeight();
+    var imageCanvasRef = ref(null);
+    async function genImage(canva, format, purpose, width, height) {
+        try{
 
-        // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
-        if (width && height) {
-            canva.setWidth(width);
-            canva.setHeight(height);
-            checkScreenSize(width, height)
-        }
+            var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
+            const optionsPreview = {
+                width: '100%',
+                height: '100%',
+                encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+            };
 
-
-        var thickVisibility
-        canva.getObjects().forEach(object => {
-            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
-                object.set('visible', false);
+            const options = {
+                width: '1900px',  // ou la largeur que vous souhaitez
+                height: '1080px', // ou la hauteur que vous souhaitez
+                encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+            };
+            function checkWoff2(chaine) {
+                return chaine.endsWith('.woff2');
             }
-            if(object.name === 'thickness-value'){
-                thickVisibility = object.visible
-                object.set('visible', false);
+            function hasExtendedLowercase(text, font, xHeight, fontSize) {
+                if (typeof text !== 'string') {
+                    console.error('Text must be a string');
+                    return false;
+                }
+                const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
+                const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
+                
+                // let hasSame = false;
+                // for (let char of testChars) {
+                //     if (char.match(/[a-z]/)) {
+                //         let path = font.getPath(char, 0, 0, fontSize);
+                //         let bbox = path.getBoundingBox();
+                //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
+                //         if (xHeight > bbox.y2 - bbox.y1) {
+                //             return true;
+                //         }
+                //     }
+                // }
+                for (let char of testExtendsChars) {
+                    if (char.match(/[a-z]/)) {
+                        let path = font.getPath(char, 0, 0, fontSize);
+                        let bbox = path.getBoundingBox();
+                        // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
+                        // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
+                        if (xHeight*0.9 > bbox.y2 - bbox.y1) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
             }
-        });
+            async function drawnPathFromText() {
+                return new Promise((resolve, reject) => {
+                    var elements = canva.getObjects()
+                    let promises = []
 
-        var dataURL  = ""
-        // Génère l'image avec le format spécifié
-        switch (format) {
-            case 'png':
-                dataURL = canva.toDataURL({
-                    format: 'png',
-                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    elements.forEach((object, index) => {
+                        if (object.name === 'aso-SignText') {
+                            if (!checkWoff2(object.fontFamily)) {
+                                let promise = (async () => {
+                                    try {
+                                        var buffer = await fetch(object.fontFamilyUrl).then(res => res.arrayBuffer());
+                                        var font = opentype.parse(buffer);
+                                        // var lines = object.text.split('\n')
+                                        var lines = (typeof object.text === 'string') ? object.text.split('\n') : [];
+                                        var fontSize = 40
+                                        const x = 50;
+                                        let y = fontSize*object.scaleX;
+                                        // let y = (object.height*object.scaleY)/object._textLines.length;
+
+                                        const group = new fabric.Group([], {
+                                            left: object.left,
+                                            top: object.top,
+                                            name: 'aso-svg-path',
+                                            clipPath: handleClipAddedObject(canva),
+                                        });
+
+                                        
+                                        lines.forEach(line => {
+                                            console.log(line, lines)
+                                            var path = font.getPath(line, x, y, fontSize*object.scaleX);   
+
+                                            let xBBox = path.getBoundingBox();
+                                            let xHeight = xBBox.y2 - xBBox.y1;
+                                            
+                                            var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
+                                            console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                                            // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+
+                                            var miniGroup = new fabric.Group([], {
+                                            });
+                                            const fabricPath = new fabric.Path(path.toPathData(20), {
+                                                strokeWidth: 2,
+                                                // top: object.top + y, 
+                                                stroke: object.fill,
+                                                fill: object.fill,
+                                            });
+                                            if(object.fontWeight == 'bold'){
+                                                fabricPath.strokeWidth = 2.3
+                                                fabricPath.stroke = object.fill
+                                            }
+                                            if(object.fontStyle == 'italic'){
+                                                fabricPath.skewX = -3
+                                            }
+                                            if(object.underline){
+                                                var objLeft = fabricPath.left
+                                                var objTop = fabricPath.top + fabricPath.height
+                                                var top = (longLetter ? objTop-6 : objTop+4)
+                                                console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
+
+                                                var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                                                    stroke: object.fill,
+                                                    left: objLeft,
+                                                    top: top,
+                                                    scaleY: object.scaleY,
+                                                    strokeWidth: 3,
+                                                });
+
+                                                miniGroup.addWithUpdate(underline);
+                                            }
+                                            if(object.overline){
+                                                var objLeft = fabricPath.left
+                                                var objTop = fabricPath.top - 8
+
+                                                var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                                                    stroke: object.fill,
+                                                    left: objLeft,
+                                                    top: objTop,
+                                                    scaleY: object.scaleY,
+                                                    strokeWidth: 3,
+                                                });
+
+                                                miniGroup.addWithUpdate(overline);
+                                            }
+                                            if(object.linethrough){
+                                                console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                var objLeft = fabricPath.left
+                                                var objTop = fabricPath.top + fabricPath.height / 2
+                                                var top = (longLetter ? objTop-6 : objTop+4)
+
+                                                var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                                                    stroke: object.fill,
+                                                    left: objLeft,
+                                                    top: top,
+                                                    scaleY: object.scaleY,
+                                                    strokeWidth: 2,
+                                                    name: 'aso-svg-path',
+                                                });
+
+                                                miniGroup.addWithUpdate(linethrough);
+                                            }
+                                            miniGroup.addWithUpdate(fabricPath);
+                                            group.addWithUpdate(miniGroup);
+                                            canva.renderAll()
+                                            
+                                            y += fontSize*object.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                            // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                            // console.log(y, "Ajustez cette vale");
+                                        });
+
+                                        group.left = object.left - (group.width / 2);
+                                        group.top = object.top - (group.height / 2);
+
+                                        canvas.add(group);
+                                        group.moveTo(index)
+                                        return group;
+                                    } catch (error) {
+                                        console.error("Error in processing text:", error);
+                                        throw error;
+                                    }
+                                })();
+                                promises.push(promise);
+                            }
+                        }
+                        if (object.name === 'safeObject') {
+                            if (typeof object.fill !== 'string') {
+                                var patternFill = object.fill
+                                let promise = new Promise((resolve, reject) => {
+                                    fabric.Image.fromURL(object.fill.source.src, (img) => {
+                                        try {
+                                            img.left = object.left;
+                                            img.top = object.top;
+
+                                            img.clipPath = handleClipAddedObject(canva);
+                                            object.fill = '#313131';
+                                            
+                                            img.name = 'aso-signPattern';
+                                            
+                                            if (object.width > object.height) {
+                                                img.scaleToWidth(object.width);
+                                            } else {
+                                                img.scaleToHeight(object.height);
+                                            }
+                                            canva.add(img);
+                                            img.moveTo(index + 1);                                                                                        
+                                            
+                                            object.fill = patternFill;
+                                            canva.renderAll()
+                                            resolve(img);
+                                        } catch (error) {
+                                            reject(error);
+                                        }
+                                    });
+                                });
+                                promises.push(promise);
+                            }
+                        }
+                    });
+
+                    Promise.all(promises)
+                        .then(groups => resolve(groups))
+                        .catch(error => reject(error));
                 });
-            break;
-
-            case 'jpeg':
-                canva.backgroundColor = configColors.value.canvasBackgroundColor
-                dataURL = canva.toDataURL({
-                    format: 'jpeg',
-                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                });
-            break;
-
-            case 'webp':
-                dataURL = canva.toDataURL({
-                    format: 'webp',
-                    quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                });
-            break;
-
-            case 'svg':
-                const svgData = canva.toSVG();
-                dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-            break;
-        
-            default:
-
-            break;
-        }
-
-        // Restaure les dimensions et l'affichage originales du canvas
-        canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-        canva.getObjects().forEach(object => {
-            if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'thickness-value'){
-                object.set('visible', true);
             }
-            if(object.name === 'thickness-value'){
-                object.set('visible', thickVisibility);
+
+
+            function convertSvgToImage(svgDataUrl, format) {
+                return new Promise((resolve, reject) => {
+                    const canvas = document.createElement('canvas');
+                    var tempCanvas = new fabric.Canvas(canvas, {
+                        width: 1900,
+                        height: 1080,
+                        interactive: false,
+                        backgroundColor: "transparent",
+                    });
+
+                    fabric.loadSVGFromURL(svgDataUrl, function (image, options) {
+                        try {
+                            const img = fabric.util.groupSVGElements(image, options);
+                            img.scale(1);
+                            
+                            // img.left = -300
+                            // img.top = -300
+                            img.setCoords();
+                            var newW = img.width * img.scaleX
+                            var newH = img.height * img.scaleX
+
+                            // img.width = 1900;
+                            // img.height = 1080;
+                            img.strokeWidth = 10
+                            img.stroke = 'red'
+
+                            console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+
+                            tempCanvas.add(img);
+                            // img.center();
+                            tempCanvas.renderAll();
+
+                            var dataUrl = ""
+                            switch (format) {
+                                case 'png':
+                                    dataUrl = tempCanvas.toDataURL({
+                                        format: 'png',
+                                        quality: 1.0
+                                    });
+                                break;       
+                                case 'jpeg':
+                                    dataUrl = tempCanvas.toDataURL({
+                                        format: 'jpeg',
+                                        quality: 1.0
+                                    });
+                                break;       
+                                case 'webp':
+                                    dataUrl = tempCanvas.toDataURL({
+                                        format: 'webp',
+                                        quality: 1.0
+                                    });
+                                break;       
+                            }
+
+                            tempCanvas.dispose();
+
+                            // Résoudre la Promise avec l'URL des données
+                            resolve(dataUrl);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    });
+                });
             }
-        });
-
-        canva.setWidth(originalWidth);
-        canva.setHeight(originalHeight);
-        checkScreenSize()
-
-        canva.renderAll();
-        if(purpose == 'download'){
-            console.log("Downloading")
-            const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'preview.jpg';
-            link.click();
-        }
-
-        return dataURL;
-    }
-    function genImageWithWatermark(canva, format, purpose, width, height) {
-        // Sauvegarde les dimensions actuelles du canvas
-        const originalWidth = canva.getWidth();
-        const originalHeight = canva.getHeight();
-
-        var canvasCenter = getCanvasCenter()
-
-        // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
-        if (width && height) {
-            canva.setWidth(width);
-            canva.setHeight(height);
-            checkScreenSize(width, height)
-        }
-
-        fabric.Image.fromURL(configOutputSettings.value.waterMark, function(img) {
-            // img.scaleToWidth(40);
-            // img.scaleToHeight(40);
-
-            const imgWidth = 100;
-            const imgHeight = 100;
-            const spacing = 50; // Espacement entre les images
-
-            // Créer un canvas temporaire
-            const patternCanvas = document.createElement('canvas');
-            const patternContext = patternCanvas.getContext('2d');
-
-            // Définir les dimensions du canvas temporaire
-            patternCanvas.width = imgWidth + spacing;
-            patternCanvas.height = imgHeight + spacing;
-
-            // Dessiner l'image de filigrane sur le canvas temporaire
-            patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
-
-            const pattern = new fabric.Pattern({
-                // source: img.getElement(),
-                source: patternCanvas,
-                repeat: 'repeat'
-            });
-
-            const watermarkRect = new fabric.Rect({
-                left: 0,
-                top: 0,
-                // left: -canvasCenter.x,
-                // top: -canvasCenter.y,
-                width: (width*2),
-                height: (height*2),
-                // width: (originalWidth*2),
-                // height: (originalHeight*2),
-                fill: pattern,  
-                selectable: false,
-                evented: false,
-                name: 'watermark',
-                opacity: 0.5,
-            });
-            canva.add(watermarkRect);
-            watermarkRect.sendToBack()
-
-            // console.log(handleGetObjectByName('watermark', canvas), "watermark")
     
     
             var thickVisibility
             canva.getObjects().forEach(object => {
-                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
                     object.set('visible', false);
                 }
                 if(object.name === 'thickness-value'){
@@ -6317,23 +6465,34 @@
                 }
             });
             canva.renderAll();
-    
+
+            await drawnPathFromText()
+                    
+            const svgData = canva.toSVG(options);
+            const svgDataPreview = canva.toSVG(optionsPreview);
+            var previewScreen = document.getElementById('showPreview')
+
+            var svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+
             var dataURL  = ""
             // Génère l'image avec le format spécifié
+            
             switch (format) {
                 case 'png':
-                    dataURL = canva.toDataURL({
-                        format: 'png',
-                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                    });
+                    // dataURL = canva.toDataURL({
+                    //     format: 'png',
+                    //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    // });
+                    dataURL = await convertSvgToImage(svgUrl, 'png')
                 break;
     
                 case 'jpeg':
                     canva.backgroundColor = configColors.value.canvasBackgroundColor
-                    dataURL = canva.toDataURL({
-                        format: 'jpeg',
-                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                    });
+                    // dataURL = canva.toDataURL({
+                    //     format: 'jpeg',
+                    //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    // });
+                    dataURL = await convertSvgToImage(svgUrl, 'jpeg')
                 break;
     
                 case 'webp':
@@ -6341,11 +6500,11 @@
                         format: 'webp',
                         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
                     });
+                    dataURL = await convertSvgToImage(svgUrl, 'webp')
                 break;
     
                 case 'svg':
-                    const svgData = canva.toSVG();
-                    dataURL = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+                    dataURL = svgUrl
                 break;
             
                 default:
@@ -6356,33 +6515,592 @@
             // Restaure les dimensions et l'affichage originales du canvas
             canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
             canva.getObjects().forEach(object => {
-                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value'){
+                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
                     object.set('visible', true);
                 }
                 if(object.name === 'thickness-value'){
                     object.set('visible', thickVisibility);
                 }
-                if(object.name === 'watermark'){
+                if(object.name === 'watermark' || object.name === 'aso-svg-path' || object.name === 'aso-signPattern'){
+                    // console.log(object, "watermark")
                     canva.remove(object)
                 }
             });
-    
-            canva.setWidth(originalWidth);
-            canva.setHeight(originalHeight);
-            checkScreenSize()
 
             canva.renderAll();
 
             if(purpose === 'preview'){
-                showPreview.value.src = dataURL
-            }else{
+                previewScreen.innerHTML = svgDataPreview;
+            }else if(purpose === 'download'){
                 const link = document.createElement('a');
                 link.href = dataURL;
-                link.download = 'canvas_with_watermark.jpg';
+                link.download = 'canvas_with_watermark.svg';
                 link.click();
+            }else if(purpose === 'finish-1'){
+                var previewFinish1 = document.getElementById('aso-previewFinish1')
+                previewFinish1.innerHTML = svgDataPreview;
+            }else if(purpose === 'finish-2'){
+                var previewFinish1 = document.getElementById('aso-previewFinish2')
+                previewFinish1.innerHTML = svgDataPreview;
             }
+
+            return dataURL;
+
+        }catch (error) {
+            console.error("Une erreur est survenue:", error);
+        }
+        // return dataURL;
+
+    }
+    async function genImageWithWatermark(canva, format, purpose, width, height) {
+        try{
+            // Sauvegarde les dimensions actuelles du canvas
+            const originalWidth = canva.getWidth();
+            const originalHeight = canva.getHeight();
+
+            var canvasCenter = getCanvasCenter()
+
+            // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
+            // if (width && height) {
+            //     canva.setWidth(width);
+            //     canva.setHeight(height);
+            //     checkScreenSize(width, height)
+            // }
+
+            fabric.Image.fromURL(configOutputSettings.value.waterMark, async function(img) {  
+                var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
+                const imgWidth = 100;
+                const imgHeight = 100;
+                const spacing = 50; // Espacement entre les images
+
+                // Créer un canvas temporaire
+                const patternCanvas = document.createElement('canvas');
+                const patternContext = patternCanvas.getContext('2d');
+                // Définir les dimensions du canvas temporaire
+                patternCanvas.width = imgWidth + spacing;
+                patternCanvas.height = imgHeight + spacing;
+                // Dessiner l'image de filigrane sur le canvas temporaire
+                patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
+                const pattern = new fabric.Pattern({
+                    // source: img.getElement(),
+                    source: patternCanvas,
+                    repeat: 'no-repeat'
+                });
+                const watermarkRect = new fabric.Rect({
+                    left: sign.left + sign.width - imgWidth - 10,
+                    top: sign.top + sign.height - imgHeight - 10,
+                    // left: -canvasCenter.x,
+                    // top: -canvasCenter.y,
+                    width: imgWidth,
+                    height: imgHeight,
+                    // width: (originalWidth*2),
+                    // height: (originalHeight*2),
+                    fill: pattern,  
+                    selectable: false,
+                    evented: false,
+                    name: 'watermark',
+                    opacity: 0.5,
+                });
+                canva.add(watermarkRect);
+                watermarkRect.bringToFront()
+
+
+                const optionsPreview = {
+                    width: '100%',
+                    height: '100%',
+                    // viewBox: {
+                    //     x: -100,
+                    //     y: -50,
+                    //     width: canva.width+300,
+                    //     height: canva.height+300
+                    // },
+                    encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+                };
+
+                const options = {
+                    width: '1900px',  // ou la largeur que vous souhaitez
+                    height: '1080px', // ou la hauteur que vous souhaitez
+                    encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+                };
+                function checkWoff2(chaine) {
+                    return chaine.endsWith('.woff2');
+                }
+
+                function hasExtendedLowercase(text, font, xHeight, fontSize) {
+                    if (typeof text !== 'string') {
+                        console.error('Text must be a string');
+                        return false;
+                    }
+                    const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
+                    const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
+                    
+                    // let hasSame = false;
+                    // for (let char of testChars) {
+                    //     if (char.match(/[a-z]/)) {
+                    //         let path = font.getPath(char, 0, 0, fontSize);
+                    //         let bbox = path.getBoundingBox();
+                    //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
+                    //         if (xHeight > bbox.y2 - bbox.y1) {
+                    //             return true;
+                    //         }
+                    //     }
+                    // }
+                    for (let char of testExtendsChars) {
+                        if (char.match(/[a-z]/)) {
+                            let path = font.getPath(char, 0, 0, fontSize);
+                            let bbox = path.getBoundingBox();
+                            // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
+                            // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
+                            if (xHeight*0.9 > bbox.y2 - bbox.y1) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+
+                async function drawnPathFromText() {
+                    return new Promise((resolve, reject) => {
+                        var elements = canvas.getObjects()
+                        let promises = []
+
+                        elements.forEach((object, index) => {
+                            if (object.name === 'aso-SignText') {
+                                if (!checkWoff2(object.fontFamily)) {
+                                    let promise = (async () => {
+                                        try {
+                                            var buffer = await fetch(object.fontFamilyUrl).then(res => res.arrayBuffer());
+                                            var font = opentype.parse(buffer);
+                                            // var lines = object.text.split('\n')
+                                            var lines = (typeof object.text === 'string') ? object.text.split('\n') : [];
+                                            var fontSize = 40
+                                            const x = 50;
+                                            let y = fontSize*object.scaleX;
+                                            // let y = (object.height*object.scaleY)/object._textLines.length;
+
+                                            const group = new fabric.Group([], {
+                                                left: object.left,
+                                                top: object.top,
+                                                name: 'aso-svg-path',
+                                                clipPath: handleClipAddedObject(canva),
+                                            });
+
+                                            
+                                            lines.forEach(line => {
+                                                console.log(line, lines)
+                                                var path = font.getPath(line, x, y, fontSize*object.scaleX);   
+
+                                                let xBBox = path.getBoundingBox();
+                                                let xHeight = xBBox.y2 - xBBox.y1;
+                                                
+                                                var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
+                                                console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                                                // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+
+                                                var miniGroup = new fabric.Group([], {
+                                                });
+                                                const fabricPath = new fabric.Path(path.toPathData(20), {
+                                                    strokeWidth: 2,
+                                                    // top: object.top + y, 
+                                                    stroke: object.fill,
+                                                    fill: object.fill,
+                                                });
+                                                if(object.fontWeight == 'bold'){
+                                                    fabricPath.strokeWidth = 2.3
+                                                    fabricPath.stroke = object.fill
+                                                }
+                                                if(object.fontStyle == 'italic'){
+                                                    fabricPath.skewX = -3
+                                                }
+                                                // console.log(font, path, fabricPath);
+                                                if(object.underline){
+                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                    var objLeft = fabricPath.left
+                                                    var objTop = fabricPath.top + fabricPath.height
+                                                    var top = (longLetter ? objTop-6 : objTop+4)
+                                                    console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
+
+                                                    var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                                                        stroke: object.fill,
+                                                        left: objLeft,
+                                                        top: top,
+                                                        scaleY: object.scaleY,
+                                                        strokeWidth: 3,
+                                                    });
+
+                                                    miniGroup.addWithUpdate(underline);
+                                                }
+                                                if(object.overline){
+                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                    var objLeft = fabricPath.left
+                                                    var objTop = fabricPath.top - 8
+
+                                                    var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                                                        stroke: object.fill,
+                                                        left: objLeft,
+                                                        top: objTop,
+                                                        scaleY: object.scaleY,
+                                                        strokeWidth: 3,
+                                                    });
+
+                                                    miniGroup.addWithUpdate(overline);
+                                                }
+                                                if(object.linethrough){
+                                                    console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                    var objLeft = fabricPath.left
+                                                    var objTop = fabricPath.top + fabricPath.height / 2
+                                                    var top = (longLetter ? objTop-6 : objTop+4)
+
+                                                    var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                                                        stroke: object.fill,
+                                                        left: objLeft,
+                                                        top: top,
+                                                        scaleY: object.scaleY,
+                                                        strokeWidth: 2,
+                                                        name: 'aso-svg-path',
+                                                    });
+
+                                                    miniGroup.addWithUpdate(linethrough);
+                                                }
+                                                miniGroup.addWithUpdate(fabricPath);
+                                                group.addWithUpdate(miniGroup);
+                                                canva.renderAll()
+                                                
+                                                y += fontSize*object.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                                // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                                // console.log(y, "Ajustez cette vale");
+                                            });
+
+                                            group.left = object.left - (group.width / 2);
+                                            group.top = object.top - (group.height / 2);
+
+                                            canvas.add(group);
+                                            group.moveTo(index)
+                                            return group;
+                                        } catch (error) {
+                                            console.error("Error in processing text:", error);
+                                            throw error;
+                                        }
+                                    })();
+                                    promises.push(promise);
+                                }
+                            }
+                            if (object.name === 'safeObject') {
+                                if (typeof object.fill !== 'string') {
+                                    var patternFill = object.fill
+                                    let promise = new Promise((resolve, reject) => {
+                                        fabric.Image.fromURL(object.fill.source.src, (img) => {
+                                            try {
+                                                img.left = object.left;
+                                                img.top = object.top;
+
+                                                img.clipPath = handleClipAddedObject(canva);
+                                                object.fill = '#313131';
+                                                
+                                                img.name = 'aso-signPattern';
+                                                
+                                                if (object.width > object.height) {
+                                                    img.scaleToWidth(object.width);
+                                                } else {
+                                                    img.scaleToHeight(object.height);
+                                                }
+                                                canva.add(img);
+                                                img.moveTo(index + 1);                                                                                        
+                                                
+                                                object.fill = patternFill;
+                                                canva.renderAll()
+                                                resolve(img);
+                                            } catch (error) {
+                                                reject(error);
+                                            }
+                                        });
+                                    });
+                                    promises.push(promise);
+                                }
+                            }
+                        });
+
+                        Promise.all(promises)
+                            .then(groups => resolve(groups))
+                            .catch(error => reject(error));
+                    });
+                }
+
+                // function convertSvgToImage(svgDataUrl, format = 'png'){
+                //     const canvas = document.createElement('canvas');
+                //     var tempCanvas  = new fabric.Canvas(imageCanvasRef.value,{
+                //         width: 1900, 
+                //         height: 1080, 
+                //         interactive: false,
+                //         backgroundColor : "transparent",
+                //     });
+
+                //     var url = ''
+                    
+                //     fabric.loadSVGFromURL(svgDataUrl, async function (image) {
+                //         const img = fabric.util.groupSVGElements(image);
+
+                //         img.scale(1.5);
+
+                //         img.setCoords();
+                //         var newWidth = img.width * img.scaleX;
+                //         var newHeight = img.height * img.scaleY;
+
+                //         img.width = 1900;
+                //         img.height = 1080;
+
+                //         tempCanvas.add(img);
+                //         img.center()
+                //         tempCanvas.renderAll();
+
+                //         console.log(tempCanvas, "tempCanvas", img)
+
+                //         const dataURL = tempCanvas.toDataURL({
+                //             format: 'png',
+                //             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                //         });
+
+                //         url = await dataURL
+
+                //         var downloadLink = document.createElement("a");
+                //         downloadLink.href = dataURL ;
+                //         downloadLink.download = 'fileName' + ".png";
+
+                //         document.body.appendChild(downloadLink);
+                //         downloadLink.click();
+                //         document.body.removeChild(downloadLink);
+
+                //         tempCanvas.dispose()
+                //     });
+                // }
+                function convertSvgToImage(svgDataUrl, format) {
+                    return new Promise((resolve, reject) => {
+                        const canvas = document.createElement('canvas');
+                        var tempCanvas = new fabric.Canvas(canvas, {
+                            width: 1900,
+                            height: 1080,
+                            interactive: false,
+                            backgroundColor: "transparent",
+                        });
+
+                        // fabric.Image.fromURL( svgDataUrl, function (img) {
+                        //     try {
+                        //         // const img = fabric.util.groupSVGElements(image, options);
+                        //         img.scale(1);
+                                
+                        //         // img.left = -300
+                        //         // img.top = -300
+                        //         img.setCoords();
+                        //         var newW = img.width * img.scaleX
+                        //         var newH = img.height * img.scaleX
+
+                        //         // img.width = 1900;
+                        //         // img.height = 1080;
+                        //         // img.strokeWidth = 10
+                        //         // img.stroke = 'red'
+
+                        //         console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+
+                        //         tempCanvas.add(img);
+                        //         // img.center();
+                        //         tempCanvas.renderAll();
+
+                        //         var dataUrl = ""
+                        //         switch (format) {
+                        //             case 'png':
+                        //                 dataUrl = tempCanvas.toDataURL({
+                        //                     format: 'png',
+                        //                     quality: 1.0
+                        //                 });
+                        //             break;       
+                        //             case 'jpeg':
+                        //                 dataUrl = tempCanvas.toDataURL({
+                        //                     format: 'jpeg',
+                        //                     quality: 1.0
+                        //                 });
+                        //             break;       
+                        //             case 'webp':
+                        //                 dataUrl = tempCanvas.toDataURL({
+                        //                     format: 'webp',
+                        //                     quality: 1.0
+                        //                 });
+                        //             break;       
+                        //         }
+
+                        //         tempCanvas.dispose();
+
+                        //         // Résoudre la Promise avec l'URL des données
+                        //         resolve(dataUrl);
+                        //     } catch (error) {
+                        //         reject(error);
+                        //     }
+                        // });
+                        fabric.loadSVGFromURL(svgDataUrl, function (image, options) {
+                            try {
+                                const img = fabric.util.groupSVGElements(image, options);
+                                img.scale(1);
+                                
+                                // img.left = -300
+                                // img.top = -300
+                                img.setCoords();
+                                var newW = img.width * img.scaleX
+                                var newH = img.height * img.scaleX
+
+                                // img.width = 1900;
+                                // img.height = 1080;
+                                img.strokeWidth = 10
+                                img.stroke = 'red'
+
+                                console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+
+                                tempCanvas.add(img);
+                                // img.center();
+                                tempCanvas.renderAll();
+
+                                var dataUrl = ""
+                                switch (format) {
+                                    case 'png':
+                                        dataUrl = tempCanvas.toDataURL({
+                                            format: 'png',
+                                            quality: 1.0
+                                        });
+                                    break;       
+                                    case 'jpeg':
+                                        dataUrl = tempCanvas.toDataURL({
+                                            format: 'jpeg',
+                                            quality: 1.0
+                                        });
+                                    break;       
+                                    case 'webp':
+                                        dataUrl = tempCanvas.toDataURL({
+                                            format: 'webp',
+                                            quality: 1.0
+                                        });
+                                    break;       
+                                }
+
+                                tempCanvas.dispose();
+
+                                // Résoudre la Promise avec l'URL des données
+                                resolve(dataUrl);
+                            } catch (error) {
+                                reject(error);
+                            }
+                        });
+                    });
+                }
+        
+        
+                var thickVisibility
+                canva.getObjects().forEach(object => {
+                    if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                        object.set('visible', false);
+                    }
+                    if(object.name === 'thickness-value'){
+                        thickVisibility = object.visible
+                        object.set('visible', false);
+                    }
+                });
+                canva.renderAll();
+
+                await drawnPathFromText()
+                        
+                const svgData = canva.toSVG(options);
+                // const svgData = canva.toSVG(options);
+                const svgDataPreview = canva.toSVG(optionsPreview);
+                var previewScreen = document.getElementById('showPreview')
+                previewScreen.innerHTML = svgDataPreview;
+                var svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+
+                var dataURL  = ""
+                // Génère l'image avec le format spécifié
+                
+                switch (format) {
+                    case 'png':
+                        // dataURL = canva.toDataURL({
+                        //     format: 'png',
+                        //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                        // });
+                        dataURL = await convertSvgToImage(svgUrl, 'png')
+                    break;
+        
+                    case 'jpeg':
+                        canva.backgroundColor = configColors.value.canvasBackgroundColor
+                        // dataURL = canva.toDataURL({
+                        //     format: 'jpeg',
+                        //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                        // });
+                        dataURL = await convertSvgToImage(svgUrl, 'jpeg')
+                    break;
+        
+                    case 'webp':
+                        dataURL = canva.toDataURL({
+                            format: 'webp',
+                            quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                        });
+                        dataURL = await convertSvgToImage(svgUrl, 'webp')
+                    break;
+        
+                    case 'svg':
+                        dataURL = svgUrl
+
+
+                        // await drawnPathFromText()
+                        
+                        // var red = await convertSvgToImage(svgUrl, 'png')
+                        // console.log(canvas.getZoom(), "dfghfhf")
     
-        });
+                        // var downloadLink = document.createElement("a");
+                        // var ink = document.createElement("a");
+                        // ink.href = svgUrl;
+                        // downloadLink.href = red;
+                        // ink.download = 'fileName' + ".svg";
+                        // downloadLink.download = 'fileName' + ".png";
+    
+                        // document.body.appendChild(downloadLink);
+                        // downloadLink.click();
+                        // document.body.removeChild(downloadLink);
+
+                        // document.body.appendChild(ink);
+                        // ink.click();
+                        // document.body.removeChild(ink);
+                    break;
+                
+                    default:
+        
+                    break;
+                }
+        
+                // Restaure les dimensions et l'affichage originales du canvas
+                canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+                canva.getObjects().forEach(object => {
+                    if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                        object.set('visible', true);
+                    }
+                    if(object.name === 'thickness-value'){
+                        object.set('visible', thickVisibility);
+                    }
+                    if(object.name === 'watermark' || object.name === 'aso-svg-path' || object.name === 'aso-signPattern'){
+                        // console.log(object, "watermark")
+                        canva.remove(object)
+                    }
+                });
+    
+                canva.renderAll();
+    
+                if(purpose === 'preview'){
+                    // showPreview.value.src = dataURL
+                }else{
+                    const link = document.createElement('a');
+                    link.href = dataURL;
+                    link.download = 'canvas_with_watermark.svg';
+                    link.click();
+                }
+
+            });
+        }catch (error) {
+            console.error("Une erreur est survenue:", error);
+        }
         // return dataURL;
 
     }
@@ -6685,10 +7403,6 @@
 </script>
 
 <style scoped>
-    #canvaas {
-        /* border: 3px solid green */
-    }
-
     .aso-hide{
         display: none;
     }
