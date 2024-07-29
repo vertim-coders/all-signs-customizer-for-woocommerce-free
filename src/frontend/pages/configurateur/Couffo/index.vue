@@ -6294,6 +6294,7 @@
 
     //     return dataURL;
     // }
+    var imageCanvasRef = ref(null);
     async function genImage(canva, format, purpose, width, height) {
         try{
 
@@ -6325,6 +6326,38 @@
             function checkWoff2(chaine) {
                 return chaine.endsWith('.woff2');
             }
+            function hasExtendedLowercase(text, font, xHeight, fontSize) {
+                if (typeof text !== 'string') {
+                    console.error('Text must be a string');
+                    return false;
+                }
+                const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
+                const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
+                
+                // let hasSame = false;
+                // for (let char of testChars) {
+                //     if (char.match(/[a-z]/)) {
+                //         let path = font.getPath(char, 0, 0, fontSize);
+                //         let bbox = path.getBoundingBox();
+                //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
+                //         if (xHeight > bbox.y2 - bbox.y1) {
+                //             return true;
+                //         }
+                //     }
+                // }
+                for (let char of testExtendsChars) {
+                    if (char.match(/[a-z]/)) {
+                        let path = font.getPath(char, 0, 0, fontSize);
+                        let bbox = path.getBoundingBox();
+                        // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
+                        // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
+                        if (xHeight*0.9 > bbox.y2 - bbox.y1) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
             async function drawnPathFromText() {
                 return new Promise((resolve, reject) => {
                     var elements = canva.getObjects()
@@ -6337,26 +6370,38 @@
                                     try {
                                         var buffer = await fetch(object.fontFamilyUrl).then(res => res.arrayBuffer());
                                         var font = opentype.parse(buffer);
-                                        var lines = object.text.split('\n')
-                                        const x = 50;
-                                        let y = 50;
+                                        // var lines = object.text.split('\n')
+                                        var lines = (typeof object.text === 'string') ? object.text.split('\n') : [];
                                         var fontSize = 40
+                                        const x = 50;
+                                        let y = fontSize*object.scaleX;
+                                        // let y = (object.height*object.scaleY)/object._textLines.length;
 
                                         const group = new fabric.Group([], {
                                             left: object.left,
                                             top: object.top,
                                             name: 'aso-svg-path',
+                                            clipPath: handleClipAddedObject(canva),
                                         });
 
+                                        
                                         lines.forEach(line => {
-                                            var path = font.getPath(line, x, y, fontSize);                                            
+                                            console.log(line, lines)
+                                            var path = font.getPath(line, x, y, fontSize*object.scaleX);   
+
+                                            let xBBox = path.getBoundingBox();
+                                            let xHeight = xBBox.y2 - xBBox.y1;
+                                            
+                                            var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
+                                            console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                                            // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+
                                             var miniGroup = new fabric.Group([], {
                                             });
                                             const fabricPath = new fabric.Path(path.toPathData(20), {
-                                                strokeWidth: 2, 
-                                                scaleX: object.scaleX,
-                                                scaleY: object.scaleY,
-                                                // stroke: object.fill,
+                                                strokeWidth: 2,
+                                                // top: object.top + y, 
+                                                stroke: object.fill,
                                                 fill: object.fill,
                                             });
                                             if(object.fontWeight == 'bold'){
@@ -6366,34 +6411,31 @@
                                             if(object.fontStyle == 'italic'){
                                                 fabricPath.skewX = -3
                                             }
-                                            // console.log(font, path, fabricPath);
                                             if(object.underline){
-                                                console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                 var objLeft = fabricPath.left
-                                                var objTop = fabricPath.top + (object.height/object._textLines.length) - 5
+                                                var objTop = fabricPath.top + fabricPath.height
+                                                var top = (longLetter ? objTop-6 : objTop+4)
+                                                console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
 
                                                 var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                     stroke: object.fill,
-                                                    scaleX: object.scaleX,
-                                                    scaleY: object.scaleY,
                                                     left: objLeft,
-                                                    top: objTop,
+                                                    top: top,
+                                                    scaleY: object.scaleY,
                                                     strokeWidth: 3,
                                                 });
 
                                                 miniGroup.addWithUpdate(underline);
                                             }
                                             if(object.overline){
-                                                console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                 var objLeft = fabricPath.left
                                                 var objTop = fabricPath.top - 8
 
                                                 var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                     stroke: object.fill,
-                                                    scaleX: object.scaleX,
-                                                    scaleY: object.scaleY,
                                                     left: objLeft,
                                                     top: objTop,
+                                                    scaleY: object.scaleY,
                                                     strokeWidth: 3,
                                                 });
 
@@ -6402,14 +6444,14 @@
                                             if(object.linethrough){
                                                 console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                 var objLeft = fabricPath.left
-                                                var objTop = fabricPath.top + ((object.height/object._textLines.length) / 2)
+                                                var objTop = fabricPath.top + fabricPath.height / 2
+                                                var top = (longLetter ? objTop-6 : objTop+4)
 
                                                 var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                     stroke: object.fill,
-                                                    scaleX: object.scaleX,
-                                                    scaleY: object.scaleY,
                                                     left: objLeft,
-                                                    top: objTop,
+                                                    top: top,
+                                                    scaleY: object.scaleY,
                                                     strokeWidth: 2,
                                                     name: 'aso-svg-path',
                                                 });
@@ -6420,13 +6462,16 @@
                                             group.addWithUpdate(miniGroup);
                                             canva.renderAll()
                                             
-                                            y += (fontSize*1.7); // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                            y += fontSize*object.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                            // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                            // console.log(y, "Ajustez cette vale");
                                         });
 
                                         group.left = object.left - (group.width / 2);
                                         group.top = object.top - (group.height / 2);
 
                                         canvas.add(group);
+                                        group.moveTo(index)
                                         return group;
                                     } catch (error) {
                                         console.error("Error in processing text:", error);
@@ -6642,7 +6687,6 @@
         // return dataURL;
 
     }
-    var imageCanvasRef = ref(null);
     async function genImageWithWatermark(canva, format, purpose, width, height) {
         try{
             // Sauvegarde les dimensions actuelles du canvas
@@ -6716,6 +6760,40 @@
                 function checkWoff2(chaine) {
                     return chaine.endsWith('.woff2');
                 }
+
+                function hasExtendedLowercase(text, font, xHeight, fontSize) {
+                    if (typeof text !== 'string') {
+                        console.error('Text must be a string');
+                        return false;
+                    }
+                    const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
+                    const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
+                    
+                    // let hasSame = false;
+                    // for (let char of testChars) {
+                    //     if (char.match(/[a-z]/)) {
+                    //         let path = font.getPath(char, 0, 0, fontSize);
+                    //         let bbox = path.getBoundingBox();
+                    //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
+                    //         if (xHeight > bbox.y2 - bbox.y1) {
+                    //             return true;
+                    //         }
+                    //     }
+                    // }
+                    for (let char of testExtendsChars) {
+                        if (char.match(/[a-z]/)) {
+                            let path = font.getPath(char, 0, 0, fontSize);
+                            let bbox = path.getBoundingBox();
+                            // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
+                            // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
+                            if (xHeight*0.9 > bbox.y2 - bbox.y1) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+
                 async function drawnPathFromText() {
                     return new Promise((resolve, reject) => {
                         var elements = canvas.getObjects()
@@ -6728,10 +6806,12 @@
                                         try {
                                             var buffer = await fetch(object.fontFamilyUrl).then(res => res.arrayBuffer());
                                             var font = opentype.parse(buffer);
-                                            var lines = object.text.split('\n')
-                                            const x = 50;
-                                            let y = (object.height*object.scaleY)/object._textLines.length;
+                                            // var lines = object.text.split('\n')
+                                            var lines = (typeof object.text === 'string') ? object.text.split('\n') : [];
                                             var fontSize = 40
+                                            const x = 50;
+                                            let y = fontSize*object.scaleX;
+                                            // let y = (object.height*object.scaleY)/object._textLines.length;
 
                                             const group = new fabric.Group([], {
                                                 left: object.left,
@@ -6740,16 +6820,24 @@
                                                 clipPath: handleClipAddedObject(canva),
                                             });
 
+                                            
                                             lines.forEach(line => {
-                                                var path = font.getPath(line, x, y, fontSize);                                            
+                                                console.log(line, lines)
+                                                var path = font.getPath(line, x, y, fontSize*object.scaleX);   
+
+                                                let xBBox = path.getBoundingBox();
+                                                let xHeight = xBBox.y2 - xBBox.y1;
+                                                
+                                                var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
+                                                console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                                                // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+
                                                 var miniGroup = new fabric.Group([], {
                                                 });
                                                 const fabricPath = new fabric.Path(path.toPathData(20), {
                                                     strokeWidth: 2,
                                                     // top: object.top + y, 
-                                                    scaleX: object.scaleX,
-                                                    scaleY: object.scaleY,
-                                                    // stroke: object.fill,
+                                                    stroke: object.fill,
                                                     fill: object.fill,
                                                 });
                                                 if(object.fontWeight == 'bold'){
@@ -6761,16 +6849,17 @@
                                                 }
                                                 // console.log(font, path, fabricPath);
                                                 if(object.underline){
-                                                    console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                     var objLeft = fabricPath.left
-                                                    var objTop = fabricPath.top + (object.height/object._textLines.length) - 5
+                                                    var objTop = fabricPath.top + fabricPath.height
+                                                    var top = (longLetter ? objTop-6 : objTop+4)
+                                                    console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
 
                                                     var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                         stroke: object.fill,
-                                                        scaleX: object.scaleX,
-                                                        scaleY: object.scaleY,
                                                         left: objLeft,
-                                                        top: objTop,
+                                                        top: top,
+                                                        scaleY: object.scaleY,
                                                         strokeWidth: 3,
                                                     });
 
@@ -6783,10 +6872,9 @@
 
                                                     var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                         stroke: object.fill,
-                                                        scaleX: object.scaleX,
-                                                        scaleY: object.scaleY,
                                                         left: objLeft,
                                                         top: objTop,
+                                                        scaleY: object.scaleY,
                                                         strokeWidth: 3,
                                                     });
 
@@ -6795,14 +6883,14 @@
                                                 if(object.linethrough){
                                                     console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                     var objLeft = fabricPath.left
-                                                    var objTop = fabricPath.top + ((object.height/object._textLines.length) / 2)
+                                                    var objTop = fabricPath.top + fabricPath.height / 2
+                                                    var top = (longLetter ? objTop-6 : objTop+4)
 
                                                     var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                         stroke: object.fill,
-                                                        scaleX: object.scaleX,
-                                                        scaleY: object.scaleY,
                                                         left: objLeft,
-                                                        top: objTop,
+                                                        top: top,
+                                                        scaleY: object.scaleY,
                                                         strokeWidth: 2,
                                                         name: 'aso-svg-path',
                                                     });
@@ -6813,14 +6901,16 @@
                                                 group.addWithUpdate(miniGroup);
                                                 canva.renderAll()
                                                 
-                                                y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-                                                console.log(y, "Ajustez cette vale");
+                                                y += fontSize*object.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                                // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                                                // console.log(y, "Ajustez cette vale");
                                             });
 
                                             group.left = object.left - (group.width / 2);
                                             group.top = object.top - (group.height / 2);
 
                                             canvas.add(group);
+                                            group.moveTo(index)
                                             return group;
                                         } catch (error) {
                                             console.error("Error in processing text:", error);
@@ -7126,7 +7216,7 @@
                         object.set('visible', thickVisibility);
                     }
                     if(object.name === 'watermark' || object.name === 'aso-svg-path' || object.name === 'aso-signPattern'){
-                        console.log(object, "watermark")
+                        // console.log(object, "watermark")
                         canva.remove(object)
                     }
                 });
