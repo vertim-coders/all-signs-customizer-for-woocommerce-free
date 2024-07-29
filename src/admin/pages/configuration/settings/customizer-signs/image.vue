@@ -144,6 +144,39 @@
                 </div>
                 <div>
                     <div class="aso-flex aso-space-x-3">
+                        <div class="aso-text-[16px]">Preview scenes</div>
+                    </div>
+                    <div>
+                        <div class="aso-flex aso-justify-center aso-items-center aso-pt-8 aso-pb-3 aso-px-8">
+                            <div class="aso-flex aso-space-x-2">
+                                <button  @click="addImage" class="aso-flex aso-w-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer aso-h-[40px] aso-flex aso-items-center aso-justify-center">
+                                    <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="plus-lg">
+                                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                                        </g>
+                                    </svg>
+                                    <div class="aso-text-[14px]">
+                                        Add Preview Scenes
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="aso-grid aso-gap-x-6 aso-gap-y-1 aso-grid-cols-5 aso-px-8 aso-py-4">
+                            <div v-for="(img,index) in image.scenes" :class="`aso-relative aso-flex aso-w-[120px] aso-border aso-b-white aso-rounded-md aso-overflow-hidden`">
+                                <div class="aso-relative aso-w-[120px] aso-h-[120px] aso-object-cover">
+                                    <img :src="img" alt="" class="aso-absolute aso-w-full aso-h-full">
+                                </div>
+                                <button @click="()=>deleteImage(index)"  :class="`aso-cursor-pointer aso-border-solid aso-border-0 aso-bg-red-500 aso-absolute aso-top-0 aso-right-0 aso-flex aso-items-center aso-justify-center aso-text-white aso-w-[25px] aso-h-[25px] aso-rounded-md aso-shadow-zinc-400 aso-shadow-lg aso-text-white aso-font-medium aso-transition-all aso-ease-in-out aso-duration-1000`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="aso-w-4 aso-h-4">
+                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm3 10.5a.75.75 0 000-1.5H9a.75.75 0 000 1.5h6z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="aso-flex aso-space-x-3">
                         <div class="aso-text-[16px]">Filter</div>
                         <div class="aso-flex aso-items-center aso-translate-y-0.5">
                             <label for="toggleEnableFilter" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
@@ -298,7 +331,8 @@ const image = ref({
         enableSepia:true,
         enableSharpen:true,
     },
-    colors:[]
+    colors:[],
+    scenes:[]
 });
 const allowedUploadsExtentions = [
     {name:"PNG",value:"png"},
@@ -371,6 +405,41 @@ const updateImageSettings = async () => {
 };
 const addNewColor = ()=> {
     image.value.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
+}
+const addImage = () => {
+    var uploader = wp.media(
+            {
+                title: 'Please set the picture',
+                button: {
+                    text: "Select picture(s)"
+                },
+                multiple: true
+            }
+        )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get( 'selection' );
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if(attachment.type == 'image'){
+                            if(image.value.scenes){
+                                if(!image.value.scenes.includes(attachment.url)){
+                                    image.value.scenes.push(attachment.url);
+                                }
+                            }else{
+                                image.value.scenes.push(attachment.url);
+                            }
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+const deleteImage = (index) => {
+    image.value.scenes.splice(index,1);
 }
 
 </script>

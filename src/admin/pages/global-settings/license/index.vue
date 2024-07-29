@@ -67,12 +67,14 @@ const activateLicenseKey = async () => {
         const response = await axios.get(url);
         if (response.data.key) {
             licenses.value.valid = response.data.key;
-            toastMessage("Activation successful! Your product is ready to use");
             await api.saveGlobalSettingsProduct(licenses.value);
+            toastMessage("Activation successful! Your product is ready to use");
             document.location.href = 'admin.php?page=aso#/'
             document.location.reload(true);
         }else if(response.data.message){
+            await api.saveGlobalSettingsProduct(licenses.value);
             toastMessage(response.data.message, 'error');
+            document.location.reload(true);
         }else{
             toastMessage(response.data, 'error');
         }

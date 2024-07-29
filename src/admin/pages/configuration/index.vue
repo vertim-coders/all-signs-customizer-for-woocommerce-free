@@ -569,7 +569,8 @@ const defaultSettings = ref({
                 enableSepia:true,
                 enableSharpen:true,
             },
-            colors:[]
+            colors:[],
+            scenes:[]
         }
     },
     languageImages: {
