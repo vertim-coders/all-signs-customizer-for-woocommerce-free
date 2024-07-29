@@ -5322,6 +5322,16 @@ function handleAddTextToSign(clone) {
         y: false,
       };
       text2.lockScale = false;
+      text2.setControlsVisibility({
+          mt: false, // Middle top
+          mb: false, // Middle bottom
+          ml: false, // Middle left
+          mr: false, // Middle right
+          bl: true,  // Bottom left
+          br: true,  // Bottom right
+          tl: true,  // Top left
+          tr: true,  // Top right
+      });
 
       text2.set("canvas", cloneCanvas);
 
@@ -5388,6 +5398,17 @@ function handleAddTextToSign(clone) {
         y: false,
       };
       newText.lockScale = false;
+
+      newText.setControlsVisibility({
+          mt: false, // Middle top
+          mb: false, // Middle bottom
+          ml: false, // Middle left
+          mr: false, // Middle right
+          bl: true,  // Bottom left
+          br: true,  // Bottom right
+          tl: true,  // Top left
+          tr: true,  // Top right
+      });
 
       newText.on("editing:entered", () => {
         handleGetAddedTextValues(newText);
@@ -5693,6 +5714,16 @@ function handleAddImageToSign(image, imageId, price) {
           y: false,
         };
         img.lockScale = false;
+        img.setControlsVisibility({
+            mt: false, // Middle top
+            mb: false, // Middle bottom
+            ml: false, // Middle left
+            mr: false, // Middle right
+            bl: true,  // Bottom left
+            br: true,  // Bottom right
+            tl: true,  // Top left
+            tr: true,  // Top right
+        });
 
         img.on("mousedown", function () {
           handleGetAddedImageValues(img);
@@ -5748,6 +5779,16 @@ function handleAddImageToSign(image, imageId, price) {
             y: false,
           };
           img.lockScale = false;
+          img.setControlsVisibility({
+              mt: false, // Middle top
+              mb: false, // Middle bottom
+              ml: false, // Middle left
+              mr: false, // Middle right
+              bl: true,  // Bottom left
+              br: true,  // Bottom right
+              tl: true,  // Top left
+              tr: true,  // Top right
+          });
 
           img.on("mousedown", function () {
             handleGetAddedImageValues(img);

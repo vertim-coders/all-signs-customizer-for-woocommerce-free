@@ -2400,7 +2400,7 @@
             // console.log(props.template, "config")
     
             handleGetImageSettings(configImageSettings.value)
-            // console.log(configImageSettings.value, "configTextFontSettings")
+            // console.log(allFonts.value, "configTextFontSettings")
     
             handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'), allFonts.value[0].url)
             handleGetDefaultText(
@@ -2517,7 +2517,7 @@
                     fontFamily: pageFontFamily,
                     fill: 'black',
                     name: 'height-value',
-                    backgroundColor: configColors.value.canvas.backgroundColor,
+                    // backgroundColor: configColors.value.canvas.backgroundColor,
                     angle: 90,
                     id: 2,
                     selectable: false,
@@ -2745,22 +2745,6 @@
             if (zoom < 0.01) zoom = 0.01;
             activeCanvas.zoomToPoint({ x: activeCanvas.getWidth()/2, y: activeCanvas.getHeight()/2 }, zoom);
         }
-    }
-
-    function setControlsForAllObjects(canva) {
-        canva.getObjects().forEach(function(obj) {
-            obj.setControlsVisibility({
-                mt: false, // Middle top
-                mb: false, // Middle bottom
-                ml: false, // Middle left
-                mr: false, // Middle right
-                bl: true,  // Bottom left
-                br: true,  // Bottom right
-                tl: true,  // Top left
-                tr: true,  // Top right
-            });
-        });
-        canva.renderAll();
     }
 
     var isTemplate = ref(false)
@@ -3853,9 +3837,6 @@
         
         centerSign(canvas)
         centerSign(canvasBack)
-
-        setControlsForAllObjects(canvas)
-        setControlsForAllObjects(canvasBack)
 
         currentSizeValues.value = handleGetSignPosition()
         handleReadyToSaveState(true);
@@ -6194,17 +6175,17 @@
     async function downLoadConfigRender(){
         if(configDoublePart.value.active){
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                await genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
-                await genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvas, 'svg', 'download', 1317, 622);
+                await genImageWithWatermark(canvasBack, 'svg', 'download', 1317, 622);
             }else{
-                await genImage(canvas, 'png', 'download');
-                await genImage(canvasBack, 'png', 'download');
+                await genImage(canvas, 'svg', 'download');
+                await genImage(canvasBack, 'svg', 'download');
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                await genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvas, 'svg', 'download', 1317, 622);
             }else{
-                await genImage(canvas, 'png', 'download');
+                await genImage(canvas, 'svg', 'download');
             }
         }
     }
@@ -6669,7 +6650,7 @@
             }else if(purpose === 'download'){
                 const link = document.createElement('a');
                 link.href = dataURL;
-                link.download = 'canvas_with_watermark.svg';
+                link.download = 'img'+'.'+format;
                 link.click();
             }else if(purpose === 'finish-1'){
                 var previewFinish1 = document.getElementById('aso-previewFinish1')
@@ -7144,7 +7125,6 @@
                 // const svgData = canva.toSVG(options);
                 const svgDataPreview = canva.toSVG(optionsPreview);
                 var previewScreen = document.getElementById('showPreview')
-                previewScreen.innerHTML = svgDataPreview;
                 var svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
 
                 var dataURL  = ""
@@ -7186,16 +7166,16 @@
                         // console.log(canvas.getZoom(), "dfghfhf")
     
                         // var downloadLink = document.createElement("a");
-                        // var ink = document.createElement("a");
-                        // ink.href = svgUrl;
                         // downloadLink.href = red;
-                        // ink.download = 'fileName' + ".svg";
                         // downloadLink.download = 'fileName' + ".png";
-    
+                        
                         // document.body.appendChild(downloadLink);
                         // downloadLink.click();
                         // document.body.removeChild(downloadLink);
-
+                        
+                        // var ink = document.createElement("a");
+                        // ink.href = svgUrl;
+                        // ink.download = 'fileName' + ".svg";
                         // document.body.appendChild(ink);
                         // ink.click();
                         // document.body.removeChild(ink);
@@ -7224,12 +7204,14 @@
                 canva.renderAll();
     
                 if(purpose === 'preview'){
-                    // showPreview.value.src = dataURL
+                    previewScreen.innerHTML = svgDataPreview;
                 }else{
-                    const link = document.createElement('a');
-                    link.href = dataURL;
-                    link.download = 'canvas_with_watermark.svg';
-                    link.click();
+                    var ink = document.createElement("a");
+                    ink.href = dataURL;
+                    ink.download = 'image' + "." + format;
+                    document.body.appendChild(ink);
+                    ink.click();
+                    document.body.removeChild(ink);
                 }
 
             });

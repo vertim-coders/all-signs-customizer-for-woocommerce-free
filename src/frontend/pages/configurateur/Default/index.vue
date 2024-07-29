@@ -2478,7 +2478,7 @@
                     fill: 'black',
                     name: 'height-value',
                     id: 2,
-                    backgroundColor: configColors.value.canvas.backgroundColor,
+                    // backgroundColor: configColors.value.canvas.backgroundColor,
                     angle: 90,
                     selectable: false,
                     visible: (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
@@ -2756,22 +2756,6 @@
             if (zoom < 0.01) zoom = 0.01;
             activeCanvas.zoomToPoint({ x: activeCanvas.getWidth()/2, y: activeCanvas.getHeight()/2 }, zoom);
         }
-    }
-
-    function setControlsForAllObjects(canva) {
-        canva.getObjects().forEach(function(obj) {
-            obj.setControlsVisibility({
-                mt: false, // Middle top
-                mb: false, // Middle bottom
-                ml: false, // Middle left
-                mr: false, // Middle right
-                bl: true,  // Bottom left
-                br: true,  // Bottom right
-                tl: true,  // Top left
-                tr: true,  // Top right
-            });
-        });
-        canva.renderAll();
     }
 
     var isTemplate = ref(false)
@@ -3856,9 +3840,6 @@
         
         centerSign(canvas)
         centerSign(canvasBack)
-
-        setControlsForAllObjects(canvas)
-        setControlsForAllObjects(canvasBack)
 
         currentSizeValues.value = handleGetSignPosition()
         handleReadyToSaveState(true);
@@ -6157,17 +6138,17 @@
     async function downLoadConfigRender(){
         if(configDoublePart.value.active){
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                await genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
-                await genImageWithWatermark(canvasBack, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvas, 'svg', 'download', 1317, 622);
+                await genImageWithWatermark(canvasBack, 'svg', 'download', 1317, 622);
             }else{
-                await genImage(canvas, 'png', 'download');
-                await genImage(canvasBack, 'png', 'download');
+                await genImage(canvas, 'svg', 'download');
+                await genImage(canvasBack, 'svg', 'download');
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                await genImageWithWatermark(canvas, 'png', 'download', 1317, 622);
+                await genImageWithWatermark(canvas, 'svg', 'download', 1317, 622);
             }else{
-                await genImage(canvas, 'png', 'download');
+                await genImage(canvas, 'svg', 'download');
             }
         }
     }
@@ -6534,7 +6515,7 @@
             }else if(purpose === 'download'){
                 const link = document.createElement('a');
                 link.href = dataURL;
-                link.download = 'canvas_with_watermark.svg';
+                link.download = 'img'+'.'+format;
                 link.click();
             }else if(purpose === 'finish-1'){
                 var previewFinish1 = document.getElementById('aso-previewFinish1')
@@ -7089,12 +7070,14 @@
                 canva.renderAll();
     
                 if(purpose === 'preview'){
-                    // showPreview.value.src = dataURL
+                    previewScreen.innerHTML = svgDataPreview;
                 }else{
-                    const link = document.createElement('a');
-                    link.href = dataURL;
-                    link.download = 'canvas_with_watermark.svg';
-                    link.click();
+                    var ink = document.createElement("a");
+                    ink.href = dataURL;
+                    ink.download = 'image' + "." + format;
+                    document.body.appendChild(ink);
+                    ink.click();
+                    document.body.removeChild(ink);
                 }
 
             });
