@@ -2,9 +2,11 @@
     <div id="aso-backend-app" class="aso-h-[100vh]">
         <Headerbar v-if="$route.name!=='preview-back'"/>
         <Sidebar v-if="$route.name !== 'home'"/>
-        <div :class="$route.name !== 'home' ? `aso-w-[calc(100%-85px)] aso-pl-[10px] aso-pt-[10px] aso-mt-[40px]` : 'aso-w-full aso-px-[10px] aso-pt-[10px]'">
-            <router-view v-if="activateProduct"/>
-            <GlobalSettings v-if="!activateProduct"/>
+        <div v-if="activateProduct" :class="$route.name !== 'home' ? `aso-w-[calc(100%-85px)] aso-pl-[10px] aso-pt-[10px] aso-mt-[40px]` : 'aso-w-full aso-px-[10px] aso-pt-[10px]'">
+            <router-view />
+        </div>
+        <div v-if="!activateProduct" :class="`aso-w-[calc(100%-85px)] aso-pl-[10px] aso-pt-[10px] aso-mt-[40px]`">
+            <GlobalSettings />
         </div>
     </div>
 </template>
