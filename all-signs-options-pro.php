@@ -846,7 +846,7 @@ final class ASO_All_Signs_Options
                 </span>
                 <div>
                     <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-options-pro") ?></h2>
-                    <p><?php esc_html_e('To do this, go to', "all-signs-options-pro"), ?> <a href="<?php echo admin_url('options-permalink.php') ?>"><?php echo esc_html_e("Settings > Permanent links", "all-signs-options-pro"), ?></a></p>
+                    <p><?php esc_html_e('To do this, go to', "all-signs-options-pro") ?> <a href="<?php echo admin_url('options-permalink.php') ?>"><?php echo esc_html_e("Settings > Permanent links", "all-signs-options-pro") ?></a></p>
                 </div>
             </div>
             <?php  }
@@ -874,7 +874,7 @@ final class ASO_All_Signs_Options
                 if (empty(get_option('aso_health-state')) || get_option('aso_health-state') == false) { ?>
                     <div class="notice notice-error aso-product-warning" style="display:none!important">
                         <p><b>All Signs Options Pro: </b><?php _e('You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', "all-signs-options-pro"); ?></p>
-                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate", "all-signs-options-pro"), ?></a>
+                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate", "all-signs-options-pro") ?></a>
                         <div id="aso-license-message"></div>
                     </div>
 <?php }
