@@ -105,18 +105,18 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 if(empty($meta_value)){
-                    return rest_ensure_response(["message" => __("No Settings found","ASO")]);
+                    return rest_ensure_response(["message" => __("No Settings found","all-signs-options-pro")]);
                 }else{
                     if(isset($meta_value["data"]["settings"]["generals"])){
                         return rest_ensure_response($meta_value["data"]["settings"]["generals"]);
                     }
-                    return rest_ensure_response(["message" => __("No generals Settings found","ASO")]);
+                    return rest_ensure_response(["message" => __("No generals Settings found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["message" =>__("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" =>__("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
      /**
@@ -137,18 +137,18 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" =>true,"message"=> __("Product options in generals settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true,"message"=> __("Product options in generals settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" =>false,"message" => __("Update product options in generals settings failed","ASO")]);
+                        return rest_ensure_response(["success" =>false,"message" => __("Update product options in generals settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in product options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in product options in generals settings failed","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 
@@ -170,19 +170,19 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" =>true,"message" => __("Mobile options in generals settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true,"message" => __("Mobile options in generals settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" =>false,"message" => __("Update mobile options in generals settings failed","ASO")]);
+                        return rest_ensure_response(["success" =>false,"message" => __("Update mobile options in generals settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in mobile options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in mobile options in generals settings failed","all-signs-options-pro")]);
 
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     /**
@@ -202,18 +202,18 @@ class ASO_Api_General_Settings extends WP_REST_Controller {
                     $meta_value["data"]["settings"]["generals"]['output']=$output_options;
                     $response= update_post_meta($id,'aso-configs-meta',$meta_value);
                     if($response){
-                        return rest_ensure_response(["success" => true,"message" => __("Output options in generals settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" => true,"message" => __("Output options in generals settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" => false,"message" => __("Update output options in generals settings failed","ASO")]);
+                        return rest_ensure_response(["success" => false,"message" => __("Update output options in generals settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" => "same","message" => __("No change observed in output options in generals settings failed","ASO")]);
+                    return rest_ensure_response(["success" => "same","message" => __("No change observed in output options in generals settings failed","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" => false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     /**

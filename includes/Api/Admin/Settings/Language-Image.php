@@ -127,13 +127,13 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                     if(isset($meta_value["data"]["settings"]["languageImages"])){
                         return rest_ensure_response($meta_value["data"]["settings"]["languageImages"]);
                     }
-                    return rest_ensure_response(["message" => __("No language Images Settings found","ASO")]);
+                    return rest_ensure_response(["message" => __("No language Images Settings found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" =>__("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" =>__("Custom ID invalid","all-signs-options-pro")]);
         }
     }
      /**
@@ -155,18 +155,18 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" =>true,"message"=>__("Main options in language Images settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true,"message"=>__("Main options in language Images settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" =>false,"message" => __("Update Main options in language Images settings failed","ASO")]);
+                        return rest_ensure_response(["success" =>false,"message" => __("Update Main options in language Images settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in Main options in language Images settings failed","ASO")]);
+                    return rest_ensure_response(["success" =>"same","message" => __("No change observed in Main options in language Images settings failed","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
      /**
@@ -188,18 +188,18 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" =>true,"message"=> __("Customizer Design options in language Images settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true,"message"=> __("Customizer Design options in language Images settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" =>false,"message" => __("Update Customizer Design options in language Images settings failed","ASO")]);
+                        return rest_ensure_response(["success" =>false,"message" => __("Update Customizer Design options in language Images settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Customizer Design options in language Images settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Customizer Design options in language Images settings","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
      /**
@@ -221,18 +221,18 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" =>true, "message"=> __("Visualizer options in language Images settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true, "message"=> __("Visualizer options in language Images settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success"=>false,"message" => __("update Visualizer options in language Images settings failed","ASO")]);
+                        return rest_ensure_response(["success"=>false,"message" => __("update Visualizer options in language Images settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Visualizer options in language Images","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Visualizer options in language Images","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
      /**
@@ -253,18 +253,18 @@ class ASO_Api_Language_Images_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" =>true,"message"=> __("Images options in language Images settings updated successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true,"message"=> __("Images options in language Images settings updated successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" =>false,"message" => __("Update Images options in language Images settings failed","ASO")]);
+                        return rest_ensure_response(["success" =>false,"message" => __("Update Images options in language Images settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Images options in language Images settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Images options in language Images settings","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     /**

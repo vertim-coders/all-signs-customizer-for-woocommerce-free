@@ -461,22 +461,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta_value['data']['materials'][$material_id]['data']['shapes'] = $new_shapes;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component shapes successfully updated","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component shapes successfully updated","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component shapes has not been updated","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component shapes has not been updated","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component shapes has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component shapes has not been updated","all-signs-options-pro")]);
                 }
 
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -497,17 +497,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if(isset($meta_value['data']['materials'][$material_id]['data']['shapes']) && count($meta_value['data']['materials'][$material_id]['data']['shapes']) > 0){
                         return rest_ensure_response(["materialShapes"=>$meta_value['data']['materials'][$material_id]['data']['shapes'],"manageShapes"=>$all_manages_shapes]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Shape not found',"ASO"),"manageShapes"=>$all_manages_shapes]);
+                        return rest_ensure_response(["message"=>__('Shape not found',"all-signs-options-pro"),"manageShapes"=>$all_manages_shapes]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component shapes has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component shapes has not been updated","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }        
     }
 
@@ -531,22 +531,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta_value['data']['materials'][$material_id]['data']['sizes'] = $new_sizes;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component sizes successfully updated","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component sizes successfully updated","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component sizes has not been updated","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component sizes has not been updated","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component sizes has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component sizes has not been updated","all-signs-options-pro")]);
                 }
 
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -566,17 +566,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if(count($meta_value['data']['materials'][$material_id]['data']['sizes']['allSizes'])>0){
                         return rest_ensure_response(["materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes'],"measurementUnit"=>$meta_value["data"]["settings"]["customizerSign"]['customizerOptions']["measurementUnit"]]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Sizes not found',"ASO"),"materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes'],"measurementUnit"=>$meta_value["data"]["settings"]["customizerSign"]['customizerOptions']["measurementUnit"]]);
+                        return rest_ensure_response(["message"=>__('Sizes not found',"all-signs-options-pro"),"materialSizes"=>$meta_value['data']['materials'][$material_id]['data']['sizes'],"measurementUnit"=>$meta_value["data"]["settings"]["customizerSign"]['customizerOptions']["measurementUnit"]]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel ID not Found","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel ID not Found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }        
     }
 
@@ -600,22 +600,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta_value['data']['materials'][$material_id]['data']['borders'] = $new_borders;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component borders successfully updated","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component borders successfully updated","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","all-signs-options-pro")]);
                 }
 
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -636,17 +636,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if(count($meta_value['data']['materials'][$material_id]['data']['borders']["allBorders"])>0){
                         return rest_ensure_response(["materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Border not found',"ASO"),"materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
+                        return rest_ensure_response(["message"=>__('Border not found',"all-signs-options-pro"),"materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }        
     }
     /**
@@ -669,22 +669,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta_value['data']['materials'][$material_id]['data']['textImages'] = $new_textImages;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component textImages successfully updated","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component textImages successfully updated","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component textImages has not been updated","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component textImages has not been updated","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component borders has not been updated","all-signs-options-pro")]);
                 }
 
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -704,17 +704,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if($meta_value['data']['materials'][$material_id]['data']['textImages']){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['textImages']);
                     }else{
-                        return rest_ensure_response(["message"=>__('Text not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Text not found',"all-signs-options-pro")]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component textImages has not been found","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component textImages has not been found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }        
     }
     /**
@@ -737,22 +737,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta_value['data']['materials'][$material_id]['data']['colors'] = $new_colors;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component colors successfully updated","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component colors successfully updated","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component colors has not been updated","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component colors has not been updated","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component colors has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component colors has not been updated","all-signs-options-pro")]);
                 }
 
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -772,17 +772,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if(count($meta_value['data']['materials'][$material_id]['data']['colors']["allColors"])>0){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['colors']);
                     }else{
-                        return rest_ensure_response(["message"=>__('Color not found',"ASO"),"colors"=>$meta_value['data']['materials'][$material_id]['data']['colors']]);
+                        return rest_ensure_response(["message"=>__('Color not found',"all-signs-options-pro"),"colors"=>$meta_value['data']['materials'][$material_id]['data']['colors']]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component colors has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component colors has not been updated","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }  
 
     }
@@ -806,22 +806,22 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta_value['data']['materials'][$material_id]['data']['fixingMethods'] = $new_fixingMethods;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta_value);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component fixingMethods successfully updated","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component fixingMethods successfully updated","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component fixingMethods has not been updated","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component fixingMethods has not been updated","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component fixingMethods has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component fixingMethods has not been updated","all-signs-options-pro")]);
                 }
 
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -842,17 +842,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if(count($meta_value['data']['materials'][$material_id]['data']['fixingMethods'])>0){
                         return rest_ensure_response(["materialFixingMethods"=>$meta_value['data']['materials'][$material_id]['data']['fixingMethods'],"manageFixingMethods"=>$all_manage_fixingMethods,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
                     }else{
-                        return rest_ensure_response(["message"=>__('Fixing Methods not found',"ASO"),"manageFixingMethods"=>$all_manage_fixingMethods,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
+                        return rest_ensure_response(["message"=>__('Fixing Methods not found',"all-signs-options-pro"),"manageFixingMethods"=>$all_manage_fixingMethods,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component fixing Methods has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component fixing Methods has not been updated","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }
         
     }
@@ -880,18 +880,18 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     array_push($meta["data"]['materials'][$material_id]['data']['additionalOptions'], $additional);
                     $update = update_post_meta($config_id, 'aso-configs-meta', $meta);
                     if ($update === true) {
-                        return rest_ensure_response(["success" => true, "message" => __("Material component Additional Option successfully added", "ASO")]);
+                        return rest_ensure_response(["success" => true, "message" => __("Material component Additional Option successfully added", "all-signs-options-pro")]);
                     } else {
-                        return rest_ensure_response(["success" => false, "message" => __("Material component Additional Option has not been added", "ASO")]);
+                        return rest_ensure_response(["success" => false, "message" => __("Material component Additional Option has not been added", "all-signs-options-pro")]);
                     }
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Additional Option array not found in meta data", "ASO")]);
+                    return rest_ensure_response(["success" => false, "message" => __("Additional Option array not found in meta data", "all-signs-options-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Material ID not found in meta data", "ASO")]);
+                return rest_ensure_response(["success" => false, "message" => __("Material ID not found in meta data", "all-signs-options-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Invalid configuration ID", "ASO")]);
+            return rest_ensure_response(["success" => false, "message" => __("Invalid configuration ID", "all-signs-options-pro")]);
         }
     } 
     /**
@@ -911,17 +911,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if($meta_value['data']['materials'][$material_id]['data']['additionalOptions']){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['additionalOptions']);
                     }else{
-                        return rest_ensure_response(["message"=>__('Additional Option not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__('Additional Option not found',"all-signs-options-pro")]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option has not been updated","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }    
     }
     /**
@@ -941,13 +941,13 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                 if(count($meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options']) > 0){
                     return rest_ensure_response( ["data"=>$meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]]);
                 }else{
-                    return rest_ensure_response(["data"=>$meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id],"message"=>__("No Options Found","ASO")]);
+                    return rest_ensure_response(["data"=>$meta_value["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id],"message"=>__("No Options Found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No Additional Option data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No Additional Option data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         }    
     }
     /**
@@ -976,21 +976,21 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id] = $old_additional;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component Additional Option successfully edited","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component Additional Option successfully edited","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option  has not been edited","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option  has not been edited","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option  has not been edited","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option  has not been edited","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option  has not been edited","ASO")]);
+                return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Additional Option  has not been edited","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message"=>__("No Configuration found","ASO")]);
+            return rest_ensure_response(["message"=>__("No Configuration found","all-signs-options-pro")]);
         } 
     }
     /**
@@ -1011,18 +1011,18 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     array_splice($meta["data"]['materials'][$material_id]['data']['additionalOptions'],$additional_id,1);
                     $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                     if($update === true){
-                        return rest_ensure_response(['success'=>true,"message"=>__("Component Additional Option successfully deleted","ASO")]);
+                        return rest_ensure_response(['success'=>true,"message"=>__("Component Additional Option successfully deleted","all-signs-options-pro")]);
                     }else{                        
-                        return rest_ensure_response(['success'=>false,"message"=>__("Component Additional Option have not been deleted","ASO")]);
+                        return rest_ensure_response(['success'=>false,"message"=>__("Component Additional Option have not been deleted","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(['success'=>false,"message"=>__("No materials component Additional Option found","ASO")]);
+                    return rest_ensure_response(['success'=>false,"message"=>__("No materials component Additional Option found","all-signs-options-pro")]);
                 }
             }else{                    
-                return rest_ensure_response(['success'=>false,"message"=>__("No materials component Additional Option found","ASO")]);
+                return rest_ensure_response(['success'=>false,"message"=>__("No materials component Additional Option found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(['success'=>false,"message"=>__("No Materials Additional Option found","ASO")]);
+            return rest_ensure_response(['success'=>false,"message"=>__("No Materials Additional Option found","all-signs-options-pro")]);
         }
         
     }
@@ -1061,18 +1061,18 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     }
                     $update = update_post_meta($config_id, 'aso-configs-meta', $meta);
                     if ($update === true) {
-                        return rest_ensure_response(["success" => true, "message" => __("Material component Option successfully added", "ASO")]);
+                        return rest_ensure_response(["success" => true, "message" => __("Material component Option successfully added", "all-signs-options-pro")]);
                     } else {
-                        return rest_ensure_response(["success" => false, "message" => __("Material component  Option has not been added", "ASO")]);
+                        return rest_ensure_response(["success" => false, "message" => __("Material component  Option has not been added", "all-signs-options-pro")]);
                     }
                 } else {
-                    return rest_ensure_response(["success" => false, "message" => __(" Option array not found in meta data", "ASO")]);
+                    return rest_ensure_response(["success" => false, "message" => __(" Option array not found in meta data", "all-signs-options-pro")]);
                 }
             } else {
-                return rest_ensure_response(["success" => false, "message" => __("Material ID not found in meta data", "ASO")]);
+                return rest_ensure_response(["success" => false, "message" => __("Material ID not found in meta data", "all-signs-options-pro")]);
             }
         } else {
-            return rest_ensure_response(["success" => false, "message" => __("Invalid configuration ID", "ASO")]);
+            return rest_ensure_response(["success" => false, "message" => __("Invalid configuration ID", "all-signs-options-pro")]);
         }  
     }
     /**
@@ -1094,17 +1094,17 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     if($meta_value['data']['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options']){
                         return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][$option_id]);
                     }else{
-                        return rest_ensure_response(["message"=>__(' Option not found',"ASO")]);
+                        return rest_ensure_response(["message"=>__(' Option not found',"all-signs-options-pro")]);
                     }    
                 }
                 else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component  Option has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component  Option has not been updated","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+                return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","ASO")]);
+            return rest_ensure_response(["sucess"=>false,"message"=>__("No config data found","all-signs-options-pro")]);
         } 
     }
     /**
@@ -1134,21 +1134,21 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                         $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][$option_id] = $old_option;
                         $update = update_post_meta($config_id,'aso-configs-meta',$meta);
                         if($update === true){
-                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component  Option successfully edited","ASO")]);
+                            return rest_ensure_response(["success"=>true, "message"=>__("Materiel component  Option successfully edited","all-signs-options-pro")]);
                         }else{
-                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component  Option  has not been edited","ASO")]);
+                            return rest_ensure_response(["success"=>false, "message"=>__("Materiel component  Option  has not been edited","all-signs-options-pro")]);
                         }
                     }else{
-                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","ASO")]);
+                        return rest_ensure_response(["success"=>"same", "message"=>__("No change was observed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Option  has not been edited","ASO")]);
+                    return rest_ensure_response(["success"=>false, "message"=>__("Materiel component Option  has not been edited","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success"=>false, "message"=>__("Materiel component  Option  has not been edited","ASO")]);
+                return rest_ensure_response(["success"=>false, "message"=>__("Materiel component  Option  has not been edited","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message"=>__("No Configuration found","ASO")]);
+            return rest_ensure_response(["message"=>__("No Configuration found","all-signs-options-pro")]);
         } 
     }
 
@@ -1171,18 +1171,18 @@ class ASO_Materials_Simple extends WP_REST_Controller {
                     array_splice($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'],$option_id,1);
                     $update = update_post_meta($config_id, 'aso-configs-meta', $meta);
                     if ($update === true) 
-                        return rest_ensure_response(['success'=>true,"message"=>__("Component  Option successfully deleted","ASO")]);
+                        return rest_ensure_response(['success'=>true,"message"=>__("Component  Option successfully deleted","all-signs-options-pro")]);
                     else 
-                        return rest_ensure_response(['success'=>true,"message"=>__("Component  Option have not been deleted","ASO")]);
+                        return rest_ensure_response(['success'=>true,"message"=>__("Component  Option have not been deleted","all-signs-options-pro")]);
 
                 }else{
-                    return rest_ensure_response(['success'=>false,"message"=>__("No materials component  Option found","ASO")]);
+                    return rest_ensure_response(['success'=>false,"message"=>__("No materials component  Option found","all-signs-options-pro")]);
                 }
             }else{                    
-                return rest_ensure_response(['success'=>false,"message"=>__("No materials component Option found","ASO")]);
+                return rest_ensure_response(['success'=>false,"message"=>__("No materials component Option found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(['success'=>false,"message"=>__("No Materials Option found","ASO")]);
+            return rest_ensure_response(['success'=>false,"message"=>__("No Materials Option found","all-signs-options-pro")]);
         }  
     }
     /**

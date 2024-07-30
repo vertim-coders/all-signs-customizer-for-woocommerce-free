@@ -71,13 +71,13 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
 
                         return rest_ensure_response($meta_value["data"]["settings"]["themeColors"]);
                     }
-                    return rest_ensure_response(["message" => __("No Theme color Settings found","ASO")]);
+                    return rest_ensure_response(["message" => __("No Theme color Settings found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["message" => __(" Theme color ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __(" Theme color ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Theme color ID i nvalid","ASO")]);
+            return rest_ensure_response(["message" => __("Theme color ID i nvalid","all-signs-options-pro")]);
         }
     }
     public function update_theme_color_settings ($request){
@@ -91,18 +91,18 @@ class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
                     $meta_value["data"]["settings"]["themeColors"] = $theme_colors;
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
                     if($response){
-                        return rest_ensure_response(["success" =>true, "message"=>__("Theme Colors update successfully settings added successfully","ASO")]);
+                        return rest_ensure_response(["success" =>true, "message"=>__("Theme Colors update successfully settings added successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success" =>false, "message"=> __("Add Theme Colors update successfully settings failed","ASO")]);
+                        return rest_ensure_response(["success" =>false, "message"=> __("Add Theme Colors update successfully settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in theme colors","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in theme colors","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success" =>false,"message" => __(" Theme color ID invalid","ASO")]);
+                return rest_ensure_response(["success" =>false,"message" => __(" Theme color ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success" =>false,"message" => __("Theme color ID i nvalid","ASO")]);
+            return rest_ensure_response(["success" =>false,"message" => __("Theme color ID i nvalid","all-signs-options-pro")]);
         }
     }
     /**

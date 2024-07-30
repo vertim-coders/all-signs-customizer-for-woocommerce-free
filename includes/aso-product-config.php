@@ -95,7 +95,7 @@
 		?>
 		<div class="aso_config_data show_if_simple">
 			<?php
-			$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"ASO") );
+			$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"all-signs-options-pro") );
 			?>
 		</div>
 		<?php
@@ -150,7 +150,7 @@
 			<td>
 				<div class="aso_config_data show_if_simple">
 				<?php
-				$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"ASO") );
+				$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"all-signs-options-pro") );
 				?>
 				</div>
 			</td>
@@ -176,7 +176,7 @@
 	 * @return array $defaults result
 	 */
 	function get_product_columns( $defaults ) {
-		$defaults['is_aso_customizable'] = __( "All Signs Options", "ASO" );
+		$defaults['is_aso_customizable'] = __( "All Signs Options", "all-signs-options-pro");
 		return $defaults;
 	}
 	/**
@@ -190,12 +190,12 @@
 			$aso_metas = get_post_meta( $id, 'product-aso-metas', true );
 			if ( isset( $aso_metas[ $id ]['config-id'] ) && get_post($aso_metas[ $id ]['config-id'])) {
 				if ( empty( $aso_metas[ $id ]['config-id'] ) ) {
-					esc_attr_e( 'No', "ASO" );
+					esc_attr_e( 'No', "all-signs-options-pro");
 				} else {
-					esc_attr_e( "Yes", "ASO" );
+					esc_attr_e( "Yes", "all-signs-options-pro");
 				}
 			} else {
-				esc_attr_e( 'No', "ASO" );
+				esc_attr_e( 'No', "all-signs-options-pro");
 			}
 		}
 	}

@@ -189,13 +189,13 @@ class ASO_Api_Templates extends WP_REST_Controller {
                 if(isset($templates[$template_id])){
                     return rest_ensure_response( $templates[$template_id] );
                 }else{
-                    return rest_ensure_response( array("message" => __("No template found","ASO") ) );
+                    return rest_ensure_response( array("message" => __("No template found","all-signs-options-pro") ) );
                 }                
             }else{
-                return rest_ensure_response(["message" => __("No data found","ASO")]);
+                return rest_ensure_response(["message" => __("No data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("template ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("template ID invalid","all-signs-options-pro")]);
         }
 
     }
@@ -224,16 +224,16 @@ class ASO_Api_Templates extends WP_REST_Controller {
                 $response = update_post_meta($config_id,'aso-templates',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["success" => true,"message"=>__("Template added successfuly","ASO")]);
+                    return rest_ensure_response(["success" => true,"message"=>__("Template added successfuly","all-signs-options-pro")]);
                 }else{
-                    return rest_ensure_response(["message" => __("Add template failed","ASO")]);
+                    return rest_ensure_response(["message" => __("Add template failed","all-signs-options-pro")]);
                 }
             }
             else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 
@@ -255,31 +255,31 @@ class ASO_Api_Templates extends WP_REST_Controller {
                     
                     if(isset($meta_value[$template_id])){
                         if($meta_value[$template_id] == $template){
-                            return rest_ensure_response(["success" => "same","message"=>__("No change observed in template","ASO")]);
+                            return rest_ensure_response(["success" => "same","message"=>__("No change observed in template","all-signs-options-pro")]);
                         }else{
                             $meta_value[$template_id] = $template;
                             $response = update_post_meta($config_id,'aso-templates',$meta_value);
         
                             if($response){
-                                return rest_ensure_response(["success" => true,"message"=>__("Template updated successfully","ASO")]);
+                                return rest_ensure_response(["success" => true,"message"=>__("Template updated successfully","all-signs-options-pro")]);
                             }else{
-                                return rest_ensure_response(["message" => __("update template failed","ASO")]);
+                                return rest_ensure_response(["message" => __("update template failed","all-signs-options-pro")]);
                             }
                         }
                     }else {
-                        return rest_ensure_response(["message" => __("update template failed","ASO")]);
+                        return rest_ensure_response(["message" => __("update template failed","all-signs-options-pro")]);
                     }
 
 
                 }else {
-                    return rest_ensure_response(["message" => __("No template setting found","ASO")]);
+                    return rest_ensure_response(["message" => __("No template setting found","all-signs-options-pro")]);
                 }
                 
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 
@@ -301,19 +301,19 @@ class ASO_Api_Templates extends WP_REST_Controller {
                     $response = update_post_meta($config_id,'aso-templates',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" => true,"message"=>__("Template deleted successfully","ASO")]);
+                        return rest_ensure_response(["success" => true,"message"=>__("Template deleted successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["message" => __("Delete template failed","ASO")]);
+                        return rest_ensure_response(["message" => __("Delete template failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["message" => __("No template setting found","ASO")]);
+                    return rest_ensure_response(["message" => __("No template setting found","all-signs-options-pro")]);
                 }
                 
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 

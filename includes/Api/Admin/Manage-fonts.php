@@ -97,7 +97,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         }        
         $update = update_option("aso-manages-fonts",$all_fonts);
         if($update){
-            return rest_ensure_response( ["success"=>true,"message"=>__("Font created with success","ASO")] );
+            return rest_ensure_response( ["success"=>true,"message"=>__("Font created with success","all-signs-options-pro")] );
         }else{
             return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
         }
@@ -112,7 +112,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         if(count($all_fonts) != 0){
             return rest_ensure_response($all_fonts);          
         }else{
-            return rest_ensure_response(["message"=>__("No Fonts Found","ASO")]);
+            return rest_ensure_response(["message"=>__("No Fonts Found","all-signs-options-pro")]);
         }
     }
     /**
@@ -126,7 +126,7 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
         if($all_fonts[$font_id]){
             return rest_ensure_response($all_fonts[$font_id]);      
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"all-signs-options-pro")]);
         }
         
     }
@@ -146,16 +146,16 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
                 $all_fonts[$font_id] = $font;
                 $update = update_option("aso-manages-fonts",$all_fonts);
                 if($update){
-                    return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success","ASO") ) );
+                    return rest_ensure_response(array('success' => true, "message" => __("The font has been updated with success","all-signs-options-pro") ) );
                 }
                 else{
-                    return rest_ensure_response(array('success' => false, "message"=>__("Font update failed","ASO") ) );
+                    return rest_ensure_response(array('success' => false, "message"=>__("Font update failed","all-signs-options-pro") ) );
                 } 
             }else{
-                return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in font","ASO") ) );
+                return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in font","all-signs-options-pro") ) );
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"all-signs-options-pro")]);
         }
         
     }
@@ -173,12 +173,12 @@ class ASO_Api_Manage_fonts extends WP_REST_Controller {
             array_splice($all_fonts,$font_id,1);
             $update = update_option("aso-manages-fonts",$all_fonts);
             if($update){
-                return rest_ensure_response(["success"=>true,"message"=>__("The font was well removed","ASO")]);
+                return rest_ensure_response(["success"=>true,"message"=>__("The font was well removed","all-signs-options-pro")]);
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the font failed","ASO")]);   
+                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the font failed","all-signs-options-pro")]);   
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Font not found',"all-signs-options-pro")]);
         }
     }
 

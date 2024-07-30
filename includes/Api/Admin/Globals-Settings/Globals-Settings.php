@@ -217,9 +217,9 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       if( $product != $data["product"]){
         $option = update_option("aso_product_pro",$data["product"]);
         if($option){
-          return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","ASO")]);
+          return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","all-signs-options-pro")]);
         }else{
-          return rest_ensure_response(["message" => __("Saving ASO Product Pro failed","ASO")]);
+          return rest_ensure_response(["message" => __("Saving ASO Product Pro failed","all-signs-options-pro")]);
         }
       }else{
         if(isset($data["valid"])){
@@ -229,10 +229,10 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
           update_option('aso_health-state', false);
           set_transient('aso_health-state-checking', 'notvalid',0);
         }
-        return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","ASO")]); 
+        return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","all-signs-options-pro")]); 
       }      
     }
-    return rest_ensure_response(["message" => __("ASO Product Pro not found","ASO")]);
+    return rest_ensure_response(["message" => __("ASO Product Pro not found","all-signs-options-pro")]);
   }
 
   /**
@@ -287,7 +287,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     $option = get_option("aso_product_pro");
   
     if($option==false || empty($option) ){
-      return rest_ensure_response(["message" => __("No ASO Product Pro available","ASO")]);
+      return rest_ensure_response(["message" => __("No ASO Product Pro available","all-signs-options-pro")]);
     }else{
       return rest_ensure_response(['product'=>$option]);
     }
@@ -306,12 +306,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         
         if($config_page != $data){
           update_option("aso_config_page",$data);
-          return rest_ensure_response(["success" =>true, "message"=> __("Data updated successfully","ASO")]);
+          return rest_ensure_response(["success" =>true, "message"=> __("Data updated successfully","all-signs-options-pro")]);
         }else{
-          return rest_ensure_response(["success"=>"same","message" => __("No change observed","ASO")]);        
+          return rest_ensure_response(["success"=>"same","message" => __("No change observed","all-signs-options-pro")]);        
         }
     }
-    return rest_ensure_response(["message" => __("Config page not found","ASO")]);
+    return rest_ensure_response(["message" => __("Config page not found","all-signs-options-pro")]);
   }
 
   /**
@@ -325,7 +325,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     $option = get_option("aso_config_page");
     
     if($option == false || empty($option) ){
-        return rest_ensure_response(["message" => __("Config page not found","ASO")]);
+        return rest_ensure_response(["message" => __("Config page not found","all-signs-options-pro")]);
     }else{
         return rest_ensure_response($option);
     }
@@ -345,7 +345,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 
     $existing_pages = get_posts($args);
     $pages = [];
-    $pages[] = ["id"=>0,"title"=>esc_html_x("None","ASO")];
+    $pages[] = ["id"=>0,"title"=>esc_html_x("None","all-signs-options-pro")];
     
     foreach ($existing_pages as $page) {
         $pages[] = ["id"=>$page->ID,"title"=>$page->post_title];
@@ -373,13 +373,13 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       $page_id = wp_insert_post($new_page);
       
       if(!is_wp_error($page_id)){
-        return rest_ensure_response(["id"=>$page_id,"message"=>__("Page created successfully","ASO")]);
+        return rest_ensure_response(["id"=>$page_id,"message"=>__("Page created successfully","all-signs-options-pro")]);
       }else{
-        return rest_ensure_response(["message"=>__("Page was not created","ASO")]);
+        return rest_ensure_response(["message"=>__("Page was not created","all-signs-options-pro")]);
       }
 
     }else{
-      return rest_ensure_response(["message"=>__("Page was not created","ASO")]);
+      return rest_ensure_response(["message"=>__("Page was not created","all-signs-options-pro")]);
     } 
   }
   /**
@@ -393,7 +393,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     if(count($outputOptions)>0)
 		  return rest_ensure_response($outputOptions);  
     else
-      return rest_ensure_response(["message"=>__("No output options found","ASO")]);
+      return rest_ensure_response(["message"=>__("No output options found","all-signs-options-pro")]);
   }
    public function update_output_options_globals_settings($request){
     $data=json_decode($request->get_body(),true);
@@ -401,13 +401,13 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     if($data != $outputOptions){
       $update = update_option("aso_output_options",$data);
       if($update){
-        return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success","ASO") ) );
+        return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success","all-signs-options-pro") ) );
       }
       else{
-        return rest_ensure_response(array('success' => false, "message"=>__("The ouput settings update failed","ASO") ) );
+        return rest_ensure_response(array('success' => false, "message"=>__("The ouput settings update failed","all-signs-options-pro") ) );
       } 
     }else{
-      return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in the ouput settings","ASO") ) );
+      return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in the ouput settings","all-signs-options-pro") ) );
 
     }
   }
@@ -436,17 +436,17 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         $all_shapes[$shape_id] = $shape;
         $update = update_option("aso_all_shapes",$all_shapes);
         if($update){
-          return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","ASO") ) );
+          return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","all-signs-options-pro") ) );
         }
         else{
-          return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","ASO") ) );
+          return rest_ensure_response(array('success' => false, "message"=>__("Shape update failed","all-signs-options-pro") ) );
         } 
       }else{
-        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in shape","ASO") ) );
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in shape","all-signs-options-pro") ) );
 
       }
 		}else{
-			return rest_ensure_response(["success"=>false,"message"=>__('Shape not found',"ASO")]);
+			return rest_ensure_response(["success"=>false,"message"=>__('Shape not found',"all-signs-options-pro")]);
 		}
 	}
    /**
@@ -474,16 +474,16 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
         $update = update_option("aso_all_fixingMethods",$all_fixingMethods);
         if($update){
-          return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","ASO") ) );
+          return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","all-signs-options-pro") ) );
         }
         else{
-          return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","ASO") ) );
+          return rest_ensure_response(array('success' => false, "message"=>__("FixingMethod update failed","all-signs-options-pro") ) );
         }
       }else{
-        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in fixing Method","ASO") ) );
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in fixing Method","all-signs-options-pro") ) );
       } 
 		}else{
-			return rest_ensure_response(["success"=>false,"message"=>__('FixingMethod not found',"ASO")]);
+			return rest_ensure_response(["success"=>false,"message"=>__('FixingMethod not found',"all-signs-options-pro")]);
 		}
 	}
 	/**
@@ -511,16 +511,16 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         $all_borders[$border_id] = $border;
         $update = update_option("aso_all_borders",$all_borders);
         if($update){
-          return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","ASO") ) );
+          return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","all-signs-options-pro") ) );
         }
         else{
-          return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","ASO") ) );
+          return rest_ensure_response(array('success' => false, "message"=>__("Border update failed","all-signs-options-pro") ) );
         }
       }else{
-        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in border","ASO") ) );
+        return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in border","all-signs-options-pro") ) );
       }   
 		}else{
-			return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"ASO")]);
+			return rest_ensure_response(["success"=>false,"message"=>__('Border not found',"all-signs-options-pro")]);
 		}
 	}
   /**

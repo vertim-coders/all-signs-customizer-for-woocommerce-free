@@ -122,19 +122,19 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 if(empty($meta_value)){
-                    return rest_ensure_response(["success"=>false,"message" => __("No Settings found","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("No Settings found","all-signs-options-pro")]);
                 }else{
                     if(isset($meta_value["data"]["settings"]["customizerSign"])){
 
                         return rest_ensure_response($meta_value["data"]["settings"]["customizerSign"]);
                     }
-                    return rest_ensure_response(["success"=>false,"message" => __("No Customizer Sign Settings found","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("No Customizer Sign Settings found","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Customizer ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Customizer ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message" => __("Customizer ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Customizer ID invalid","all-signs-options-pro")]);
         }
     }
     /**
@@ -154,15 +154,15 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                 $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["success"=>true,"message" => __("customizer in customizer sign settings upadted successfully","ASO")]);
+                    return rest_ensure_response(["success"=>true,"message" => __("customizer in customizer sign settings upadted successfully","all-signs-options-pro")]);
                 }else{
-                    return rest_ensure_response(["success"=>false,"message" => __("Update customizer in customizer sign settings failed","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("Update customizer in customizer sign settings failed","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     /**
@@ -183,18 +183,18 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                     
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
                     if($response){
-                        return rest_ensure_response(["success"=>true,"message" => __("Sign part in customizer sign settings upadted successfully","ASO")]);
+                        return rest_ensure_response(["success"=>true,"message" => __("Sign part in customizer sign settings upadted successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success"=>false,"message" => __("Update Sign part in customizer sign settings failed","ASO")]);
+                        return rest_ensure_response(["success"=>false,"message" => __("Update Sign part in customizer sign settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Sign part in customizer sign settings ","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" => __("No change observed in Sign part in customizer sign settings ","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{  
-            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     /**
@@ -215,19 +215,19 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                     
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
                     if($response){
-                        return rest_ensure_response(["success"=>true,"message"=>__("Text in customizer sign settings upadted successfully","ASO")]);
+                        return rest_ensure_response(["success"=>true,"message"=>__("Text in customizer sign settings upadted successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success"=>false,"message"=>__("Update Text in customizer sign settings failed","ASO")]);
+                        return rest_ensure_response(["success"=>false,"message"=>__("Update Text in customizer sign settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message"=>__("No change observed in Text in customizer sign settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message"=>__("No change observed in Text in customizer sign settings","all-signs-options-pro")]);
 
                 }
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{  
-            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     /**
@@ -247,19 +247,19 @@ class ASO_Api_Customizer_Sign_Settings extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success"=>true,"message" => __("image in Customizer sign settings upadted successfully","ASO")]);
+                        return rest_ensure_response(["success"=>true,"message" => __("image in Customizer sign settings upadted successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["success"=>false,"message" =>__( "Update image in Customizer sign settings failed","ASO")]);
+                        return rest_ensure_response(["success"=>false,"message" =>__( "Update image in Customizer sign settings failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["success"=>"same","message" =>__( "No change observed in image in Customizer sign settings","ASO")]);
+                    return rest_ensure_response(["success"=>"same","message" =>__( "No change observed in image in Customizer sign settings","all-signs-options-pro")]);
 
                 }
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Custom ID invalid","all-signs-options-pro")]);
         }  
     }
     /**

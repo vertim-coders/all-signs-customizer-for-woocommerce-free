@@ -92,7 +92,7 @@ class ASO_Api_Templates_Categories extends WP_REST_Controller {
         $all_categories[$key]=$data;
         $update = update_option("aso-templates-categories",$all_categories);
         if($update){
-            return rest_ensure_response( ["success"=>true,"message"=>__("Category created with success","ASO"),"categories"=>$all_categories,"key"=>$key] );
+            return rest_ensure_response( ["success"=>true,"message"=>__("Category created with success","all-signs-options-pro"),"categories"=>$all_categories,"key"=>$key] );
         }else{
             return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
         }
@@ -109,7 +109,7 @@ class ASO_Api_Templates_Categories extends WP_REST_Controller {
         if(count($all_categories) != 0){
             return rest_ensure_response($all_categories);          
         }else{
-            return rest_ensure_response(["message"=>__("No Category Found","ASO")]);
+            return rest_ensure_response(["message"=>__("No Category Found","all-signs-options-pro")]);
         }
     }
     /**
@@ -123,7 +123,7 @@ class ASO_Api_Templates_Categories extends WP_REST_Controller {
         if(isset($all_categories[$category_id])){
             return rest_ensure_response($all_categories[$category_id]);      
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Category not found',"ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Category not found',"all-signs-options-pro")]);
         }
         
     }
@@ -143,16 +143,16 @@ class ASO_Api_Templates_Categories extends WP_REST_Controller {
                 $all_categories[$category_id] = $category;
                 $update = update_option("aso-templates-categories",$all_categories);
                 if($update){
-                    return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success","ASO"),"categories"=>$all_categories ) );
+                    return rest_ensure_response(array('success' => true, "message" => __("The category has been updated with success","all-signs-options-pro"),"categories"=>$all_categories ) );
                 }
                 else{
-                    return rest_ensure_response(array('success' => false, "message"=>__("Category update failed","ASO") ) );
+                    return rest_ensure_response(array('success' => false, "message"=>__("Category update failed","all-signs-options-pro") ) );
                 } 
             }else{
-                return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in category","ASO"),"categories"=>$all_categories ) );
+                return rest_ensure_response(array('success' => "same", "message"=>__("No change observed in category","all-signs-options-pro"),"categories"=>$all_categories ) );
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Category not found',"ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Category not found',"all-signs-options-pro")]);
         }
         
     }
@@ -170,12 +170,12 @@ class ASO_Api_Templates_Categories extends WP_REST_Controller {
             unset($all_categories[$category_id]);
             $update = update_option("aso-templates-categories",$all_categories);
             if($update){
-                return rest_ensure_response(["success"=>true,"message"=>__("The category was well removed","ASO"),"categories"=>$all_categories]);
+                return rest_ensure_response(["success"=>true,"message"=>__("The category was well removed","all-signs-options-pro"),"categories"=>$all_categories]);
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the category failed","ASO")]);   
+                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the category failed","all-signs-options-pro")]);   
             }
         }else{
-            return rest_ensure_response(["success"=>false,"message"=>__('Category not found',"ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__('Category not found',"all-signs-options-pro")]);
         }
     }
 

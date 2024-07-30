@@ -25,12 +25,12 @@ class ASO_Admin {
         $capability = 'manage_options';
         $slug       = 'aso';
 
-        $hook = add_menu_page( __( 'All Signs Options', 'ASO' ), __( 'All Signs Options', 'ASO' ), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_icon_aso.png' );
+        $hook = add_menu_page( __( 'All Signs Options', "all-signs-options-pro"), __( 'All Signs Options', "all-signs-options-pro"), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_icon_aso.png' );
 
         if ( current_user_can( $capability ) ) {
-            $submenu[ $slug ][] = array( __( 'Home', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/' );
-            $submenu[ $slug ][] = array( __( 'Configurations', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/configurations' );
-            $submenu[ $slug ][] = array( __( 'Global Settings', 'ASO' ), $capability, 'admin.php?page=' . $slug . '#/global-settings/license' );
+            $submenu[ $slug ][] = array( __( 'Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/' );
+            $submenu[ $slug ][] = array( __( 'Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configurations' );
+            $submenu[ $slug ][] = array( __( 'Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/global-settings/license' );
         }
 
         add_action( 'load-' . $hook, [ $this, 'init_hooks'] );

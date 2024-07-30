@@ -130,7 +130,7 @@ class ASO_Api_Configs extends WP_REST_Controller {
                 ];
                 update_post_meta($post_id,'aso-configs-meta',$data);
                 update_post_meta($post_id,"aso-templates",[]);
-                return rest_ensure_response( ["success"=>true,"message"=>__("Configuration created with success","ASO"),"post_id"=>$post_id] );
+                return rest_ensure_response( ["success"=>true,"message"=>__("Configuration created with success","all-signs-options-pro"),"post_id"=>$post_id] );
             }else{
                 return rest_ensure_response(["success"=>false,"message" => "Registration failed"]);
             }            
@@ -159,11 +159,11 @@ class ASO_Api_Configs extends WP_REST_Controller {
                 );
                 return rest_ensure_response($post_data);
             }else{
-                return rest_ensure_response(["message" => __("Not ASO Config Post",'ASO')]);
+                return rest_ensure_response(["message" => __("Not ASO Config Post","all-signs-options-pro")]);
             }
 
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
         
         
@@ -253,10 +253,10 @@ class ASO_Api_Configs extends WP_REST_Controller {
                 "data" => $meta['data']
             ];
             update_post_meta($post_id,'aso-configs-meta',$data);
-            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","ASO") ) );
+            return rest_ensure_response(array('success' => true, "message" => __("The configuration has been updated with success","all-signs-options-pro") ) );
         }
         else{
-            return rest_ensure_response(array('success' => false, "message"=>__("Configuration update failed","ASO") ) );
+            return rest_ensure_response(array('success' => false, "message"=>__("Configuration update failed","all-signs-options-pro") ) );
         }
         
     }
@@ -274,13 +274,13 @@ class ASO_Api_Configs extends WP_REST_Controller {
         if($id!=0){
             $deletePost = wp_delete_post( $id, true );
             if($deletePost != null && $deletePost != false ) {
-                return rest_ensure_response(["success"=>true,"message"=>__("The configuration was well removed","ASO")]);
+                return rest_ensure_response(["success"=>true,"message"=>__("The configuration was well removed","all-signs-options-pro")]);
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);   
+                return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","all-signs-options-pro")]);   
             }
         }
         else{
-            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","ASO")]);
+            return rest_ensure_response(["success"=>false,"message"=>__("Deleting the configuration failed","all-signs-options-pro")]);
         }
     }
 
