@@ -141,12 +141,12 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
                     $custom_additionals_options = $meta_value["data"]["additionalOptions"];
                     return rest_ensure_response( $custom_additionals_options );
                 }
-                return rest_ensure_response(["message" => __("No Additonal Options found","ASO")]);
+                return rest_ensure_response(["message" => __("No Additonal Options found","all-signs-options-pro")]);
             }else{
-                return rest_ensure_response(["message" => __("No Additonal Options found","ASO")]);
+                return rest_ensure_response(["message" => __("No Additonal Options found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
 
     }
@@ -171,17 +171,17 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
                     if(isset($custom_additionals[$custom_additional_id])){
                         return rest_ensure_response( $custom_additionals[$custom_additional_id] );
                     }
-                    return rest_ensure_response(array("message" => __("No custom found","ASO") ) );
+                    return rest_ensure_response(array("message" => __("No custom found","all-signs-options-pro") ) );
                 }else{
-                    return rest_ensure_response( array("message" => __("No custom found","ASO") ) );
+                    return rest_ensure_response( array("message" => __("No custom found","all-signs-options-pro") ) );
                 }
                 
                 
             }else{
-                return rest_ensure_response(["message" => __("No data found","ASO")]);
+                return rest_ensure_response(["message" => __("No data found","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
 
     }
@@ -217,16 +217,16 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
                 $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                 if($response){
-                    return rest_ensure_response(["success" => true,"message"=>__("Option added successfuly","ASO")]);
+                    return rest_ensure_response(["success" => true,"message"=>__("Option added successfuly","all-signs-options-pro")]);
                 }else{
-                    return rest_ensure_response(["message" => __("Add option failed","ASO")]);
+                    return rest_ensure_response(["message" => __("Add option failed","all-signs-options-pro")]);
                 }
             }
             else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
     public function update_custom_additionals($request){
@@ -239,24 +239,24 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
             if($post){
                 $meta_value = get_post_meta($id, 'aso-configs-meta', true);
                 if($meta_value["data"]["additionalOptions"] == $custom_additionals){
-                    return rest_ensure_response(["success" => "same","message"=>__("No change observe on additionnals options","ASO")]);
+                    return rest_ensure_response(["success" => "same","message"=>__("No change observe on additionnals options","all-signs-options-pro")]);
                 }else{
                     $meta_value["data"]["additionalOptions"]=$custom_additionals;
                     
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
     
                     if($response){
-                        return rest_ensure_response(["success" => true, "message"=>__("Additonnals Option successfully sorted","ASO")]);
+                        return rest_ensure_response(["success" => true, "message"=>__("Additonnals Option successfully sorted","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["message" => __("Additonnals Option sort failed","ASO")]);
+                        return rest_ensure_response(["message" => __("Additonnals Option sort failed","all-signs-options-pro")]);
                     }
                 }
             }
             else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 
@@ -279,32 +279,32 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
                     
                     if(isset($custom_additionals[$custom_additional_id])){
                         if($custom_additionals[$custom_additional_id] == $custom_additional){
-                            return rest_ensure_response(["success" => true,"message"=>__("No change observed in option","ASO")]);
+                            return rest_ensure_response(["success" => true,"message"=>__("No change observed in option","all-signs-options-pro")]);
                         }else{
                             $custom_additionals[$custom_additional_id] = $custom_additional;
                             $meta_value["data"]["additionalOptions"] = $custom_additionals;
                             $response = update_post_meta($id,'aso-configs-meta',$meta_value);
         
                             if($response){
-                                return rest_ensure_response(["success" => true,"message"=>__("Option updated successfully","ASO")]);
+                                return rest_ensure_response(["success" => true,"message"=>__("Option updated successfully","all-signs-options-pro")]);
                             }else{
-                                return rest_ensure_response(["message" => __("update custom additional failed","ASO")]);
+                                return rest_ensure_response(["message" => __("update custom additional failed","all-signs-options-pro")]);
                             }
                         }
                     }else {
-                        return rest_ensure_response(["message" => __("update custom additional failed","ASO")]);
+                        return rest_ensure_response(["message" => __("update custom additional failed","all-signs-options-pro")]);
                     }
 
 
                 }else {
-                    return rest_ensure_response(["message" => __("No custom additional setting found","ASO")]);
+                    return rest_ensure_response(["message" => __("No custom additional setting found","all-signs-options-pro")]);
                 }
                 
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 
@@ -330,19 +330,19 @@ class ASO_Api_Customs_Additionals extends WP_REST_Controller {
                     $response = update_post_meta($id,'aso-configs-meta',$meta_value);
 
                     if($response){
-                        return rest_ensure_response(["success" => true,"message"=>__("Option deleted successfully","ASO")]);
+                        return rest_ensure_response(["success" => true,"message"=>__("Option deleted successfully","all-signs-options-pro")]);
                     }else{
-                        return rest_ensure_response(["message" => __("delete custom additional failed","ASO")]);
+                        return rest_ensure_response(["message" => __("delete custom additional failed","all-signs-options-pro")]);
                     }
                 }else{
-                    return rest_ensure_response(["message" => __("No custom setting found","ASO")]);
+                    return rest_ensure_response(["message" => __("No custom setting found","all-signs-options-pro")]);
                 }
                 
             }else{
-                return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+                return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["message" => __("Custom ID invalid","ASO")]);
+            return rest_ensure_response(["message" => __("Custom ID invalid","all-signs-options-pro")]);
         }
     }
 

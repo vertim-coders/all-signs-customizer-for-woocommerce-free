@@ -133,10 +133,7 @@
             </div>
             <div class="aso-space-x-2 -aso-translate-y-6 aso-py-12" v-if="!font.isGoogleFont">
                 <div :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500':''} aso-flex aso-justify-between aso-px-6`">
-                    <div class="aso-space-y-3 aso-w-2/5">
-                        <label class="aso-text-md aso-font-medium aso-text-black aso-flex aso-flex-col">Label Font</label>
-                        <input type="text" v-model="font.label" :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid':''} aso-w-full aso-h-[39px]`"/>
-                    </div>
+                    
                     <div class="aso-w-2/5 aso-space-y-3">
                         <label for="file_input" :class="`aso-text-md aso-font-medium aso-text-black ${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid ':''}`">Upload here your own font</label>
                         <div class="aso-flex aso-space-x-2">
@@ -145,6 +142,10 @@
                             </button>
                             <input type="text" name="" id="" class="aso-text-white aso-w-full aso-h-[39px]" readonly v-model="font.url">
                         </div>
+                    </div>
+                    <div class="aso-space-y-3 aso-w-2/5">
+                        <label class="aso-text-md aso-font-medium aso-text-black aso-flex aso-flex-col">Label Font</label>
+                        <input type="text" v-model="font.label" :class="`${emptyFontLabel?'aso-border-red-500 aso-text-red-500 aso-border-solid':''} aso-w-full aso-h-[39px]`"/>
                     </div>
                     
                 </div>

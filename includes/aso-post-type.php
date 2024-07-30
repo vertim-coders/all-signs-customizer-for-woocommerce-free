@@ -19,17 +19,17 @@ class ASO_Post_Type
     public function register_aso_post_type() {
 
 		$labels = array(
-			'name'               => _x( 'ASO Configurations', 'ASO' ),
-			'singular_name'      => _x( 'ASO Configurations', 'ASO' ),
-			'add_new'            => _x( 'New ASO configuration', 'ASO' ),
-			'add_new_item'       => _x( 'New ASO configuration', 'ASO' ),
-			'edit_item'          => _x( 'Edit ASO configuration', 'ASO' ),
-			'new_item'           => _x( 'New ASO configuration', 'ASO' ),
-			'view_item'          => _x( 'View ASO configuration', 'ASO' ),
-			'not_found'          => _x( 'No ASO configuration found', 'ASO' ),
-			'not_found_in_trash' => _x( 'No ASO configuration in the trash', 'ASO' ),
-			'menu_name'          => _x( 'All Signs Options', 'ASO' ),
-			'all_items'          => _x( 'ASO Configurations', 'ASO' ),
+			'name'               => _x( 'ASO Configurations', "all-signs-options-pro"),
+			'singular_name'      => _x( 'ASO Configurations', "all-signs-options-pro"),
+			'add_new'            => _x( 'New ASO configuration', "all-signs-options-pro"),
+			'add_new_item'       => _x( 'New ASO configuration', "all-signs-options-pro"),
+			'edit_item'          => _x( 'Edit ASO configuration', "all-signs-options-pro"),
+			'new_item'           => _x( 'New ASO configuration', "all-signs-options-pro"),
+			'view_item'          => _x( 'View ASO configuration', "all-signs-options-pro"),
+			'not_found'          => _x( 'No ASO configuration found', "all-signs-options-pro"),
+			'not_found_in_trash' => _x( 'No ASO configuration in the trash', "all-signs-options-pro"),
+			'menu_name'          => _x( 'All Signs Options', "all-signs-options-pro"),
+			'all_items'          => _x( 'ASO Configurations', "all-signs-options-pro"),
 		);
 
 		$args = array(
@@ -115,12 +115,12 @@ class ASO_Post_Type
 				?>
 				<div class="aso-config-page-error">
 					<div class="aso-config-page-error-title">
-						<?php echo esc_html__("All Signs Options Warning","ASO") ?>
+						<?php echo esc_html__("All Signs Options Warning","all-signs-options-pro") ?>
 					</div>
 					<div>				
 						<p><?php echo esc_html__( "You are trying to access the personalization page without the personalized button of a product to be personalized. 
 						This page should only be accessible using one of the customization buttons. 
-						If you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator.", 'ASO' );?></p>
+						If you don't like this procedure, don't define this page as a personalization page and use the short code to display the configurator.", "all-signs-options-pro");?></p>
 					</div>
 				</div>
 				<?php
@@ -138,12 +138,12 @@ class ASO_Post_Type
 				?>
 				<div class="aso-config-page-error">
 					<div class="aso-config-page-error-title">
-						<?php echo esc_html__("All Signs Options Warning","ASO") ?>
+						<?php echo esc_html__("All Signs Options Warning","all-signs-options-pro") ?>
 					</div>
 					<div>				
 						<p><?php echo esc_html__( "You are trying to access the template page without a product to customize. 
 						This page should only be accessible by using one of the template buttons. 
-						If you don't like this procedure, don't define this page as a template page and use the short code for template.", 'ASO' );?></p>
+						If you don't like this procedure, don't define this page as a template page and use the short code for template.", "all-signs-options-pro");?></p>
 					</div>
 				</div>
 				<?php

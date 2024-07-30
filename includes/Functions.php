@@ -114,7 +114,7 @@
                     $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$aso_previews,$quantity);
 
                     if ( $newly_added_cart_item_key ) {
-                        $message =  __( 'Product successfully added to cart.', 'ASO' );
+                        $message =  __( 'Product successfully added to cart.', "all-signs-options-pro");
                         if($redirectToCheckOut === "true" || $redirectToCheckOut === true){
                             $url = wc_get_checkout_url();
                         }else{
@@ -129,7 +129,7 @@
             
                         ));
                     } else {
-                        $message = __( 'A problem occured while adding the product to the cart. Please try again.', 'ASO' );
+                        $message = __( 'A problem occured while adding the product to the cart. Please try again.', "all-signs-options-pro");
                         wp_send_json(array(
                             'success'     => false,
                             'message'     => $message,
@@ -139,7 +139,7 @@
                 
                 }
             } else {
-                wp_send_json(array('message' => __("Missing product ID","ASO")));
+                wp_send_json(array('message' => __("Missing product ID","all-signs-options-pro")));
             }
         }else{
             wp_send_json(array('message' => 'nonce invalid.'));

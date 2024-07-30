@@ -268,7 +268,7 @@ class ASO_Design {
 							<?php foreach ($face as $image) {?>
 								<div class="aso-custom-options-info-infos" style="display: block !important;">
 									<div>
-										<p><?php echo __("file","ASO") . " : ". $image["infos"]["name"] ?></p>
+										<p><?php echo __("file","all-signs-options-pro") . " : ". $image["infos"]["name"] ?></p>
 									</div>
 									<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
 										<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
@@ -282,7 +282,7 @@ class ASO_Design {
 						<?php foreach ($recaps["images"]["value"] as $key => $image) {?>
 							<div class="aso-custom-options-info-infos" style="display: block !important;">
 								<div>
-									<p><?php echo __("file","ASO") . " : ". $image["infos"]["name"] ?></p>
+									<p><?php echo __("file","all-signs-options-pro") . " : ". $image["infos"]["name"] ?></p>
 								</div>
 								<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
 									<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
@@ -311,7 +311,7 @@ class ASO_Design {
 			<?php } ?>			
 			<?php if ($admin) {?>
 			<div class="aso-custom-options-info">
-				<label for=""><?php echo esc_html__("Previews","ASO")?>: </label>
+				<label for=""><?php echo esc_html__("Previews","all-signs-options-pro")?>: </label>
 				<div>
 					<?php if(!isset($recaps["designImages"]["face1"])) { ?>
 						<?php foreach ($recaps["designImages"] as $key => $image) {?>
@@ -320,7 +320,7 @@ class ASO_Design {
 									<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
 								</div>
 								<div style="margin:10px 0">
-									<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
+									<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', "all-signs-options-pro")?></a>
 								</div> 
 							</div>
 						<?php } ?>
@@ -332,7 +332,7 @@ class ASO_Design {
 										<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
 									</div>
 									<div style="margin:10px 0">
-										<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', 'ASO' )?></a>
+										<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', "all-signs-options-pro")?></a>
 									</div> 
 								</div>
 							<?php }
@@ -411,7 +411,7 @@ class ASO_Design {
 			echo $this->display_custom_recaps($order_data["recaps"],true);
 			if(isset($order_data["zip"])){?>
 				<div style="margin:10px 0">
-					<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data["zip"])?>" download><?php echo __( 'Download Order Zip file', 'ASO' )?></a>
+					<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data["zip"])?>" download><?php echo __( 'Download Order Zip file', "all-signs-options-pro")?></a>
 				</div> <?php 
 			}
 			/* $product_id = $_product->get_id();
@@ -425,7 +425,7 @@ class ASO_Design {
 						if(isset($email_data["sendDesignByEmail"]) && $email_data["sendDesignByEmail"] && isset($email_data["receiverEmail"]) && !empty($email_data["receiverEmail"])){
 							?>
 							<div>
-								<button class="button aso-send-email" data-product-id="<?php echo esc_attr($product_id)?>" data-order='<?php echo wp_json_encode(["recaps"=>$order_data,"order_id"=>$order_id])?>'><?php echo __("Send Manufacturer mail","aso")?></button>
+								<button class="button aso-send-email" data-product-id="<?php echo esc_attr($product_id)?>" data-order='<?php echo wp_json_encode(["recaps"=>$order_data,"order_id"=>$order_id])?>'><?php echo __("Send Manufacturer mail","all-signs-options-pro")?></button>
 							</div>
 					<?php }
 					}

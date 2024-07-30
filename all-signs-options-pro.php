@@ -12,7 +12,7 @@ Author: Vertim Coders
 Author URI: https://vertimcoders.com
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: ASO
+Text Domain: all-signs-options-pro
 Domain Path: /languages
 */
 
@@ -648,7 +648,7 @@ final class ASO_All_Signs_Options
      */
     public function localization_setup()
     {
-        load_plugin_textdomain('ASO', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain("all-signs-options-pro", false, dirname(plugin_basename(__FILE__)) . '/languages/');
     }
 
     /**
@@ -689,8 +689,8 @@ final class ASO_All_Signs_Options
                         <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e("Customization Page not found", 'ASO') ?></h2>
-                        <p><?php _e('To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO'); ?></p>
+                        <h2><?php esc_html_e("Customization Page not found", "all-signs-options-pro") ?></h2>
+                        <p><?php _e('To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', "all-signs-options-pro"); ?></p>
                     </div>
                 </div>
                 <?php
@@ -703,8 +703,8 @@ final class ASO_All_Signs_Options
                             <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                         </span>
                         <div>
-                            <h2><?php esc_html_e("Customization Page not found", 'ASO') ?></h2>
-                            <p><?php _e('Configuration page is not defined for ASO plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', 'ASO'); ?></p>
+                            <h2><?php esc_html_e("Customization Page not found", "all-signs-options-pro") ?></h2>
+                            <p><?php _e('Configuration page is not defined for ASO plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', "all-signs-options-pro"); ?></p>
                         </div>
                     </div>
                 <?php
@@ -726,9 +726,9 @@ final class ASO_All_Signs_Options
                         <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
-                        <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", 'ASO') ?></h2>
-                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', 'ASO'); ?></p>
-                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', 'ASO'), __('Activate WooCommerce', 'ASO'), __('Install WooCommerce', 'ASO')); ?></p>
+                        <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
+                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-options-pro"); ?></p>
+                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-options-pro"), __('Activate WooCommerce', "all-signs-options-pro"), __('Install WooCommerce', "all-signs-options-pro")); ?></p>
                     </div>
                 </div>
             <?php
@@ -740,9 +740,9 @@ final class ASO_All_Signs_Options
                     <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                 </span>
                 <div>
-                    <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", 'ASO') ?></h2>
-                    <p><?php esc_html_e('To enable eCommerce features you need to install or activate the WooCommerce plugin.', 'ASO'); ?></p>
-                    <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', 'ASO'), __('Activate WooCommerce', 'ASO'), __('Install WooCommerce', 'ASO')); ?></p>
+                    <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
+                    <p><?php esc_html_e('To enable eCommerce features you need to install or activate the WooCommerce plugin.', "all-signs-options-pro"); ?></p>
+                    <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-options-pro"), __('Activate WooCommerce', "all-signs-options-pro"), __('Install WooCommerce', "all-signs-options-pro")); ?></p>
                 </div>
             </div>
             <?php
@@ -767,7 +767,7 @@ final class ASO_All_Signs_Options
             if (is_plugin_active($plugin_slug . '/' . $plugin_file)) {
                 // The plugin is already active.
                 $button = array(
-                    'message' => esc_attr__('Activated', 'ASO'),
+                    'message' => esc_attr__('Activated', "all-signs-options-pro"),
                     'url'     => '#',
                     'classes' => array('storefront-button', 'disabled'),
                 );
@@ -780,7 +780,7 @@ final class ASO_All_Signs_Options
 
                 // The plugin exists but isn't activated yet.
                 $button = array(
-                    'message' => esc_attr__('Activate', 'ASO'),
+                    'message' => esc_attr__('Activate', "all-signs-options-pro"),
                     'url'     => $url,
                     'classes' => array('activate-now'),
                 );
@@ -800,8 +800,8 @@ final class ASO_All_Signs_Options
             ?>
                 <span class="plugin-card-<?php echo esc_attr($plugin_slug); ?>">
                     <a href="<?php echo esc_url($button['url']); ?>" class="<?php echo esc_attr($button['classes']); ?>" data-originaltext="<?php echo esc_attr($button['message']); ?>" data-name="<?php echo esc_attr($plugin_name); ?>" data-slug="<?php echo esc_attr($plugin_slug); ?>" aria-label="<?php echo esc_attr($button['message']); ?>"><?php echo esc_html($button['message']); ?></a>
-                </span> <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', 'ASO'); ?>
-                <a href="https://docs.signsdesigner.us" target="_blank"><?php esc_html_e('learn more', 'ASO'); ?></a>
+                </span> <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', "all-signs-options-pro"); ?>
+                <a href="https://docs.signsdesigner.us" target="_blank"><?php esc_html_e('learn more', "all-signs-options-pro"); ?></a>
             <?php
             }
         }
@@ -845,8 +845,8 @@ final class ASO_All_Signs_Options
                     <img src='<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>' alt="" width="250" />
                 </span>
                 <div>
-                    <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', 'ASO') ?></h2>
-                    <p><?php esc_html_e('To do this, go to', "ASO") ?> <a href="<?php echo admin_url('options-permalink.php') ?>"><?php echo esc_html_e("Settings > Permanent links", "ASO") ?></a></p>
+                    <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-options-pro") ?></h2>
+                    <p><?php esc_html_e('To do this, go to', "all-signs-options-pro"), ?> <a href="<?php echo admin_url('options-permalink.php') ?>"><?php echo esc_html_e("Settings > Permanent links", "all-signs-options-pro"), ?></a></p>
                 </div>
             </div>
             <?php  }
@@ -867,14 +867,14 @@ final class ASO_All_Signs_Options
             if (empty($aso_settings)) {
             ?>
                 <div class="notice notice-warning aso-product-warning">
-                    <p><b>All Signs Options Pro: </b><?php _e("No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", 'ASO'); ?></p>
+                    <p><b>All Signs Options Pro: </b><?php _e("No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", "all-signs-options-pro"); ?></p>
                 </div>
                 <?php
             } else {
                 if (empty(get_option('aso_health-state')) || get_option('aso_health-state') == false) { ?>
                     <div class="notice notice-error aso-product-warning" style="display:none!important">
-                        <p><b>All Signs Options Pro: </b><?php _e('You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', 'ASO'); ?></p>
-                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate", "ASO") ?></a>
+                        <p><b>All Signs Options Pro: </b><?php _e('You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', "all-signs-options-pro"); ?></p>
+                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate", "all-signs-options-pro"), ?></a>
                         <div id="aso-license-message"></div>
                     </div>
 <?php }

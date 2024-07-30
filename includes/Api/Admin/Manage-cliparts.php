@@ -178,9 +178,9 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         array_push($all_groups,$clipartsGroup);
         $update = update_option("aso-manages-cliparts",$all_groups);
         if($update){
-            return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group created with success","ASO")] );
+            return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group created with success","all-signs-options-pro")] );
         }else{
-            return rest_ensure_response(["success"=>false,"message" => __("Registration failed","ASO")]);
+            return rest_ensure_response(["success"=>false,"message" => __("Registration failed","all-signs-options-pro")]);
         }   
     }
     /**
@@ -194,7 +194,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         if(isset($all_groups[$id])) {
             return rest_ensure_response($all_groups[$id]);
         }else{
-            return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
+            return rest_ensure_response(["message" => __("Not Cliparts data found","all-signs-options-pro")]);
         }
     }
     /**
@@ -213,16 +213,16 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                 $all_groups[$id]['description']=$req_data["description"];
                 $update = update_option("aso-manages-cliparts",$all_groups);
                 if($update){
-                    return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group updated with success","ASO")] );
+                    return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group updated with success","all-signs-options-pro")] );
                 }else{
-                    return rest_ensure_response(["success"=>false,"message" => __("Update failed","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message" => __("Update failed","all-signs-options-pro")]);
                 }
             }else{
-                return rest_ensure_response(["success"=>"same","message" => __("No change observed in clipart group","ASO")]);
+                return rest_ensure_response(["success"=>"same","message" => __("No change observed in clipart group","all-signs-options-pro")]);
 
             }
         }else{
-            return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
+            return rest_ensure_response(["message" => __("Not Cliparts data found","all-signs-options-pro")]);
         }
         
     }
@@ -241,12 +241,12 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
             array_splice($all_groups,$id,1);
             $update = update_option("aso-manages-cliparts",$all_groups);
             if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group deleted with success","ASO")] );
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts group deleted with success","all-signs-options-pro")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message" => __("Delete Cliparts group failed","ASO")]);
+                return rest_ensure_response(["success"=>false,"message" => __("Delete Cliparts group failed","all-signs-options-pro")]);
             }  
         }else{
-            return rest_ensure_response(["message" => __("Not Cliparts data found",'ASO')]);
+            return rest_ensure_response(["message" => __("Not Cliparts data found","all-signs-options-pro")]);
         }
     }
 
@@ -262,7 +262,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         $all_groups = get_option("aso-manages-cliparts",[]);
         // Check the results and return the response
         $groups = array(
-            "noGroupsFound"      => __("No Cliparts Group Found","ASO"),
+            "noGroupsFound"      => __("No Cliparts Group Found","all-signs-options-pro"),
             "data"               => $all_groups,
         );
           
@@ -298,12 +298,12 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
             }
             $update = update_option("aso-manages-cliparts",$all_groups);
             if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  added with success","ASO")] );
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  added with success","all-signs-options-pro")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been added","ASO")]);
+                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been added","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been added","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been added","all-signs-options-pro")]);
         }
     }
     /**
@@ -321,7 +321,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         if(isset($all_groups[$group_id]["cliparts"][$clipart_id])) {
             return rest_ensure_response( $all_groups[$group_id]["cliparts"][$clipart_id] );
         }else{
-            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been added","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been added","all-signs-options-pro")]);
         }
     }
     /**
@@ -337,7 +337,7 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
         if(count($all_groups[ $group_id]["cliparts"])>0) {
             return rest_ensure_response(["groupTitle"=>$all_groups[ $group_id]["title"], "cliparts"=> $all_groups[$group_id]["cliparts"]]);
         }else{
-            return rest_ensure_response(["groupTitle"=>$all_groups[ $group_id]["title"],"notFoundMessage"=>__("No cliparts found","ASO")]);
+            return rest_ensure_response(["groupTitle"=>$all_groups[ $group_id]["title"],"notFoundMessage"=>__("No cliparts found","all-signs-options-pro")]);
         }
     }
 
@@ -359,15 +359,15 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
                 $all_groups[$group_id]["cliparts"][$clipart_id] = $update_clipart;
                 $update = update_option("aso-manages-cliparts",$all_groups);
                 if($update){
-                    return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  updated with success","ASO")] );
+                    return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  updated with success","all-signs-options-pro")] );
                 }else{
-                    return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been updated","ASO")]);
+                    return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been updated","all-signs-options-pro")]);
                 }
             }else{                
-                return rest_ensure_response(["success"=>"same","message"=>__("No change observed in clipart","ASO")]);
+                return rest_ensure_response(["success"=>"same","message"=>__("No change observed in clipart","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been updated","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been updated","all-signs-options-pro")]);
         }
     }
 
@@ -387,12 +387,12 @@ class ASO_Api_Manage_cliparts extends WP_REST_Controller {
             array_splice($all_groups[$group_id]["cliparts"],$clipart_id,1);
             $update = update_option("aso-manages-cliparts",$all_groups);
             if($update){
-                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  deleted with success","ASO")] );
+                return rest_ensure_response( ["success"=>true,"message"=>__("Cliparts  deleted with success","all-signs-options-pro")] );
             }else{
-                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been deleted","ASO")]);
+                return rest_ensure_response(["success"=>false,"message"=>__("Clipart has not been deleted","all-signs-options-pro")]);
             }
         }else{
-            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been deleted","ASO")]);
+            return rest_ensure_response(["success"=>false, "message"=>__("Clipart has not been deleted","all-signs-options-pro")]);
         }
     }
 
