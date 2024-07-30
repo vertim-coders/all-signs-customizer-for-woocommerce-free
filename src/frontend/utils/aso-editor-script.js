@@ -11,6 +11,13 @@ var canvasBackground = "";
 var backCanvas = null;
 var activeCanvas = canvas;
 var doubleFace = false;
+var defaultShadow = new fabric.Shadow({
+  color: 'black',
+  offsetX: 3,
+  offsetY: 3,
+  blur: 30,
+  isActive: true
+})
 function handleGetCanvas(canvas1, canvas2, statut) {
   // console.log('canvas getted', statut)
   canvas = canvas1;
@@ -1491,24 +1498,11 @@ var firstBorderCheck = true;
 function removeBorder(canva) {
   var Objects = canva.getObjects();
   Objects.forEach(function (object) {
-    if (object.type !== "line") {
-      if (object.name == "safeObject") {
-        object.set("strokeWidth", 0);
-        object.set("stroke", "transparent");
-      }
-      if (object.name == "old-world-border") {
-        canva.remove(object);
-      }
-      if (object.name == "rounded-corners-border") {
-        canva.remove(object);
-      }
-      // var oldWorld = handleGetObjectByName('old-world-border')
-      // var roundedCorner = handleGetObjectByName('rounded-corners-border')
-      // if(oldWorld != null){
-      // }
-      // if(roundedCorner != null){
-      //     canva.remove(roundedCorner)
-      // }
+    if (object.name == "old-world-border" || object.name == "rounded-corners-border") {
+      canva.remove(object);
+    }else if(object.name == "normal-border"){
+      canva.remove(object);
+      // console.log(canvas, "normal-border")
     }
   });
   canva.renderAll();
@@ -1526,6 +1520,225 @@ function handleGetBorderData(face, data) {
     activeBorder2 = data.border;
     activeBorderColor2 = data.color;
   }
+}
+
+function setNormalBorber(canva, size, color) {
+  var sign = handleGetObjectByName('safeObject', canva);
+  var border;
+
+  switch (selectedShape) {
+    case "square":
+      border = new fabric.Rect({
+        height: sign.height + (size*2),
+        width: sign.width + (size*2),
+        top: sign.top - size,
+        left: sign.left - size,
+        name: 'normal-border',
+        fill: color,
+        selectable: false,
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "rounded-square":
+      border = new fabric.Rect({
+        height: sign.height + (size*2),
+        width: sign.width + (size*2),
+        top: sign.top - size,
+        left: sign.left - size,
+        name: 'normal-border',
+        fill: color,
+        rx: 35,
+        ry: 35,
+        selectable: false,
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "oval":
+      border = new fabric.Ellipse({
+        ry: (sign.height + (size*2)) / 2,
+        rx: (sign.width + (size*2)) / 2,
+        top: sign.top - size,
+        left: sign.left - size,
+        name: 'normal-border',
+        fill: color,
+        selectable: false,
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "triangle":
+      border = new fabric.Triangle({
+        height: sign.height + (size*2),
+        width: sign.width + (size*2),
+        top: sign.top - (size*1.5),
+        left: sign.left - size,
+        name: 'normal-border',
+        fill: color,
+        selectable: false,
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "rotated-square":
+      border = new fabric.Polygon(
+        [
+          { x: (sign.width + (size*2)) / 2, y: 0 },
+          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 2 },
+          { x: (sign.width + (size*2)) / 2, y: (sign.height + (size*2)) },
+          { x: 0, y: (sign.height + (size*2)) / 2 },
+        ],
+        {
+          top: sign.top - size,
+          left: sign.left - size,
+          name: 'normal-border',
+          fill: color,
+          selectable: false,
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "turn-left":
+      border = new fabric.Polygon(
+        [
+          { x: 0, y: (sign.height + (size*2)) / 2 },
+          { x: (sign.width + (size*2)) / 2, y: 0 },
+          { x: (sign.width + (size*2)), y: 0 },
+          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) },
+          { x: (sign.width + (size*2)) / 2, y: (sign.height + (size*2)) },
+        ],
+        {
+          top: sign.top - size,
+          left: sign.left - (size*1.2),
+          name: 'normal-border',
+          fill: color,
+          selectable: false,
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "turn-right":
+      border = new fabric.Polygon(
+        [
+          { x: 0, y: 0 },
+          { x: (sign.width + (size*2)) / 2, y: 0 },
+          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 2 },
+          { x: (sign.width + (size*2)) / 2, y: (sign.height + (size*2)) },
+          { x: 0, y: (sign.height + (size*2)) },
+        ],
+        {
+          top: sign.top - size,
+          left: sign.left - (size/1.5),
+          name: 'normal-border',
+          fill: color,
+          selectable: false,
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "arrow-right":
+      border = new fabric.Polyline(
+        [
+          { x: 0, y: ((sign.height + (size*2)) / 5) * 4 },
+          { x: ((sign.width + (size*2)) / 2)/1.05, y: ((sign.height + (size*2)) / 5) * 4 },
+          { x: ((sign.width + (size*2)) / 2)/1.05, y: (sign.height + (size*2)) },
+          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 2 },
+          { x: ((sign.width + (size*2)) / 2)/1.05, y: 0 },
+          { x: ((sign.width + (size*2)) / 2)/1.05, y: (sign.height + (size*2)) / 5 },
+          { x: 0, y: (sign.height + (size*2)) / 5 },
+        ],
+        {
+          top: sign.top - size,
+          left: sign.left - (size/1.5),
+          name: 'normal-border',
+          fill: color,
+          selectable: false,
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "arrow-left":
+      border = new fabric.Polygon(
+        [
+          { x: 0, y: (sign.height + (size*2)) / 2 },
+          { x: ((sign.width + (size*2)) / 2)*1.05, y: 0 },
+          { x: ((sign.width + (size*2)) / 2)*1.05, y: (sign.height + (size*2)) / 5 },
+          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 5 },
+          { x: (sign.width + (size*2)), y: ((sign.height + (size*2)) / 5) * 4 },
+          { x: ((sign.width + (size*2)) / 2)*1.05, y: ((sign.height + (size*2)) / 5) * 4 },
+          { x: ((sign.width + (size*2)) / 2)*1.05, y: (sign.height + (size*2)) },
+        ],
+        {
+          top: sign.top - size,
+          left: sign.left - (size*1.2),
+          name: 'normal-border',
+          fill: color,
+          selectable: false,
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "stop":
+      border = new fabric.Polygon(
+        [
+          { x: 0, y: ((sign.height + (size*2)) / 3) * 2 },
+          { x: (sign.width + (size*2)) / 3, y: (sign.height + (size*2)) },
+          { x: ((sign.width + (size*2)) / 3) * 2, y: (sign.height + (size*2)) },
+          { x: (sign.width + (size*2)), y: ((sign.height + (size*2)) / 3) * 2 },
+          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 3 },
+          { x: ((sign.width + (size*2)) / 3) * 2, y: 0 },
+          { x: (sign.width + (size*2)) / 3, y: 0 },
+          { x: 0, y: (sign.height + (size*2)) / 3 },
+        ],
+        {
+          top: sign.top - size,
+          left: sign.left - size,
+          name: 'normal-border',
+          fill: color,
+          selectable: false,
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "rounded-top":
+      border = new fabric.Rect({
+        height: sign.height + (size*2),
+        width: sign.width + (size*2),
+        top: sign.top - size,
+        left: sign.left - size,
+        rx: sign.width + (size*2),
+        ry: 10,
+        name: 'normal-border',
+        fill: color,
+        selectable: false,
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "rounded-sides":
+      border = new fabric.Rect({
+        height: sign.height + (size*2),
+        width: sign.width + (size*2),
+        top: sign.top - size,
+        left: sign.left - size,
+        rx: 10,
+        ry: sign.height + (size*2),
+        name: 'normal-border',
+        fill: color,
+        selectable: false,
+        shadow: defaultShadow,
+      });
+      break;
+  }
+  
+  return border;
 }
 
 function handleSelectBorder(border, color) {
@@ -1559,68 +1772,39 @@ function handleSelectBorder(border, color) {
   }
   function setBorder(canva, currBorder, activeColor) {
     // console.log(currBorder, activeColor, "setBorder")
+    removeBorder(canva);
     var Objects = canva.getObjects();
     Objects.forEach(async function (object, index) {
       if (object.type !== "line") {
         if (object.name === "safeObject") {
           if (currBorder === "none") {
             removeBorder(canva);
+            object.shadow = defaultShadow
           }
           if (currBorder === "normal") {
             removeBorder(canva);
             if (sizeRatio == "small") {
-              object.set("strokeWidth", 11);
+              var border = setNormalBorber(canva, 10, activeColor)
+              canva.add(border)
+              border.sendToBack()
             }
             if (sizeRatio == "big") {
-              object.set("strokeWidth", 16);
+              var border = setNormalBorber(canva, 12, activeColor)
+              canva.add(border)
+              border.sendToBack() 
             }
-            if (activeColor) {
-              object.set("stroke", activeColor);
-            } else {
-              object.set("stroke", activeColor);
-            }
+            object.shadow = null
           }
           if (currBorder === "old-world") {
-            // fabric.util.loadImage('../../old-world-border.png', function(img) {
-            //     var scaleX = object.width / img.width;
-            //     var scaleY = object.height / img.height;
-            //     var pattern = new fabric.Pattern({
-            //         source: img,
-            //         repeat: 'no-repeat',
-            //         patternTransform: [scaleX, 0, 0, scaleY, 0, 0]
-            //     });
-
-            //     console.log(pattern)
-
-            //     // object.set('fill', pattern);
-            //     canvas.add(pattern);
-            //     canvas.renderAll();
-            // });
-
+            object.shadow = defaultShadow
             removeBorder(canva);
             if (
               selectedShape === "square" ||
               selectedShape === "rounded-square"
             ) {
-              if (sizeRatio === "small") {
-                // fabric.util.loadImage( borderUrl+'/im_old-world.svg', function(img) {
-                //     var scaleX = object.width / img.width;
-                //     var scaleY = object.height / img.height;
-                //     var imageOverlay = new fabric.Image(img, {
-                //         left: object.left,
-                //         top: object.top,
-                //         scaleX: scaleX,
-                //         scaleY: scaleY,
-                //         name: 'old-world-border',
-                //         selectable: false,
-                //     });
-
-                //     canva.add(imageOverlay);
-                //     imageOverlay.moveTo(canva.getObjects().length); // Déplacer l'image au-dessus du rectangle
-                //     canva.renderAll();
-                // });
-                await fabric.loadSVGFromURL(
-                  borderUrl + "/im_old-world.svg",
+              if (object.width == object.height) {
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_old_world.svg",
                   (objects, options) => {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
@@ -1631,20 +1815,41 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("top", object.top);
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
-                    (svgGroup.name = "old-world-border"),
-                      (svgGroup.selectable = false),
-                      // console.log("svg", svgGroup);
-
-                      canva.add(svgGroup);
+                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.selectable = false,
+                    canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
-                    // canva.renderAll();
+                    canva.renderAll();
                   }
                 );
-                // console.log(canva.getObjects())
-              }
-              if (sizeRatio === "big") {
+              }else if(object.width >= (2*object.height)){
                 fabric.loadSVGFromURL(
-                  borderUrl + "/im_old-world.svg",
+                  borderUrl + "/im_old_world_longW.svg",
+                  (objects, options) => {
+                    var scaleX = object.width / objects[0].width;
+                    var scaleY = object.height / objects[0].height;
+
+                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+
+                    const svgGroup = fabric.util.groupSVGElements(objects);
+                    svgGroup.set("fill", activeColor);
+                    svgGroup.set("left", object.left);
+                    svgGroup.set("top", object.top);
+
+                    svgGroup.scaleX = scaleX;
+                    svgGroup.scaleY = scaleY
+
+                    svgGroup.name = "old-world-border",
+                    svgGroup.selectable = false,
+                    canva.add(svgGroup);
+                    canva.moveTo(svgGroup, index + 1);
+                    canva.renderAll();
+                    console.log("svg", svgGroup, object);
+                  }
+                );
+              }else if(object.width > object.height && object.width < (2*object.height)){
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_old_world_mediumW.svg",
                   (objects, options) => {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
@@ -1655,66 +1860,180 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("top", object.top);
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
-                    (svgGroup.name = "old-world-border"),
-                      (svgGroup.selectable = false),
+
+                    svgGroup.name = "old-world-border",
+                    svgGroup.selectable = false,
                       // console.log("svg", svgGroup);
-                      canva.add(svgGroup);
+                    canva.add(svgGroup);
+                    canva.moveTo(svgGroup, index + 1);
+                    canva.renderAll();
+                  }
+                );
+              }else if(object.height >= (2*object.width)){
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_old_world_longH.svg",
+                  (objects, options) => {
+                    var scaleX = object.width / objects[0].width;
+                    var scaleY = object.height / objects[0].height;
+
+                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+
+                    const svgGroup = fabric.util.groupSVGElements(objects);
+                    svgGroup.set("fill", activeColor);
+                    svgGroup.set("left", object.left);
+                    svgGroup.set("top", object.top);
+
+                    svgGroup.scaleX = scaleX;
+                    svgGroup.scaleY = scaleY;
+
+                    svgGroup.name = "old-world-border",
+                    svgGroup.selectable = false,
+                    canva.add(svgGroup);
+                    canva.moveTo(svgGroup, index + 1);
+                    canva.renderAll();
+                    console.log("svg", svgGroup, object);
+                  }
+                );
+              }else if(object.height > object.width && object.height < (2*object.width)){
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_old_world_mediumH.svg",
+                  (objects, options) => {
+                    var scaleX = object.width / objects[0].width;
+                    var scaleY = object.height / objects[0].height;
+
+                    const svgGroup = fabric.util.groupSVGElements(objects);
+                    svgGroup.set("fill", activeColor);
+                    svgGroup.set("left", object.left);
+                    svgGroup.set("top", object.top);
+                    svgGroup.scaleX = scaleX;
+                    svgGroup.scaleY = scaleY;
+
+                    svgGroup.name = "old-world-border",
+                    svgGroup.selectable = false,
+                      // console.log("svg", svgGroup);
+                    canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
                 );
               }
-            } else {
-              object.set("strokeWidth", 0);
-              object.set("stroke", "transparent");
             }
           }
           if (currBorder === "rounded-corners") {
+            object.shadow = defaultShadow
             removeBorder(canva);
-
-            if (
-              selectedShape === "square" ||
-              selectedShape === "rounded-square"
-            ) {
-              if (sizeRatio === "small") {
+            if (selectedShape === "square" || selectedShape === "rounded-square") {
+              if (object.width == object.height) {
                 fabric.loadSVGFromURL(
-                  borderUrl + "/im_rounded-corner.svg",
+                  borderUrl + "/im_rounded_corners.svg",
                   (objects, options) => {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
 
                     const svgGroup = fabric.util.groupSVGElements(objects);
-                    svgGroup.set("fill", activeColor);
+                    svgGroup.set("stroke", activeColor);
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
-                    svgGroup.scaleX = scaleX;
-                    svgGroup.scaleY = scaleY;
-                    (svgGroup.name = "rounded-corners-border"),
-                      (svgGroup.selectable = false),
+                    svgGroup.scaleX = scaleX-0.009;
+                    svgGroup.scaleY = scaleY-0.01;
+                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.selectable = false,
                       // console.log("svg", svgGroup);
                       canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
                 );
-              }
-              if (sizeRatio === "big") {
+              }else if(object.width >= (2*object.height)){
                 fabric.loadSVGFromURL(
-                  borderUrl + "/im_rounded-corner.svg",
+                  borderUrl + "/im_rounded_corners_longW.svg",
+                  (objects, options) => {
+                    var scaleX = object.width / objects[0].width;
+                    var scaleY = object.height / objects[0].height;
+
+                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+
+                    const svgGroup = fabric.util.groupSVGElements(objects);
+                    svgGroup.set("stroke", activeColor);
+                    svgGroup.set("left", object.left);
+                    svgGroup.set("top", object.top);
+
+                    svgGroup.scaleX = scaleX-0.009;
+                    svgGroup.scaleY = scaleY-0.01;
+
+                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.selectable = false,
+                    canva.add(svgGroup);
+                    canva.moveTo(svgGroup, index + 1);
+                    canva.renderAll();
+                    console.log("svg", svgGroup, object);
+                  }
+                );
+              }else if(object.width > object.height && object.width < (2*object.height)){
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_rounded_corners_mediumW.svg",
                   (objects, options) => {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
 
                     const svgGroup = fabric.util.groupSVGElements(objects);
-                    svgGroup.set("fill", activeColor);
+                    svgGroup.set("stroke", activeColor);
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
-                    svgGroup.scaleX = scaleX;
-                    svgGroup.scaleY = scaleY;
-                    (svgGroup.name = "rounded-corners-border"),
-                      (svgGroup.selectable = false),
+                    svgGroup.scaleX = scaleX-0.009;
+                    svgGroup.scaleY = scaleY-0.01;
+
+                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.selectable = false,
                       // console.log("svg", svgGroup);
-                      canva.add(svgGroup);
+                    canva.add(svgGroup);
+                    canva.moveTo(svgGroup, index + 1);
+                    canva.renderAll();
+                  }
+                );
+              }else if(object.height >= (2*object.width)){
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_rounded_corners_longH.svg",
+                  (objects, options) => {
+                    var scaleX = object.width / objects[0].width;
+                    var scaleY = object.height / objects[0].height;
+
+                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+
+                    const svgGroup = fabric.util.groupSVGElements(objects);
+                    svgGroup.set("stroke", activeColor);
+                    svgGroup.set("left", object.left);
+                    svgGroup.set("top", object.top);
+
+                    svgGroup.scaleX = scaleX-0.009;
+                    svgGroup.scaleY = scaleY-0.005;
+
+                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.selectable = false,
+                    canva.add(svgGroup);
+                    canva.moveTo(svgGroup, index + 1);
+                    canva.renderAll();
+                    console.log("svg", svgGroup, object);
+                  }
+                );
+              }else if(object.height > object.width && object.height < (2*object.width)){
+                fabric.loadSVGFromURL(
+                  borderUrl + "/im_rounded_corners_mediumH.svg",
+                  (objects, options) => {
+                    var scaleX = object.width / objects[0].width;
+                    var scaleY = object.height / objects[0].height;
+
+                    const svgGroup = fabric.util.groupSVGElements(objects);
+                    svgGroup.set("stroke", activeColor);
+                    svgGroup.set("left", object.left);
+                    svgGroup.set("top", object.top);
+                    svgGroup.scaleX = scaleX-0.009;
+                    svgGroup.scaleY = scaleY-0.008;
+
+                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.selectable = false,
+                      // console.log("svg", svgGroup);
+                    canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
@@ -1759,39 +2078,38 @@ function handlechangeBorderColor(color, position) {
   }
 
   function setBorderColor(border, color, canva) {
-    if (border === "normal") {
-      var Objects = canva.getObjects();
-      Objects.forEach(function (object) {
-        if (object.name === "safeObject") {
+    var Objects = canva.getObjects();
+    Objects.forEach(function (object){
+      if (border === "normal") {
+        if(object.name == 'normal-border'){
+          canva.remove(object);
           if (sizeRatio == "small") {
-            object.set("strokeWidth", 11);
+            var borderNormal = setNormalBorber(canva, 10, color)
+            canva.add(borderNormal)
+            borderNormal.sendToBack()
           }
           if (sizeRatio == "big") {
-            object.set("strokeWidth", 6);
+            var borderNormal = setNormalBorber(canva, 12, color)
+            canva.add(borderNormal)
+            borderNormal.sendToBack() 
           }
+        }
+      }
+      if (border === "old-world") {
+        if (object.name === "old-world-border") {
+          object.set("fill", color);
+          console.log(object, "old-world-border")
+          canva.renderAll();
+        }  
+        canva.renderAll();
+      }
+      if (border === "rounded-corners") { 
+        if (object.name === "rounded-corners-border") {
           object.set("stroke", color);
         }
-      });
-      canva.renderAll();
-    }
-    if (border === "old-world") {
-      canva.getObjects().forEach((objet) => {
-        if (objet.name === "old-world-border") {
-          objet.set("fill", color);
-        }
-      });
-
-      canva.renderAll();
-    }
-    if (border === "rounded-corners") {
-      canva.getObjects().forEach((objet) => {
-        if (objet.name === "rounded-corners-border") {
-          objet.set("fill", color);
-        }
-      });
-
-      canva.renderAll();
-    }
+        canva.renderAll();
+      }
+    })
   }
 
   if (readyToSave) {
@@ -5554,7 +5872,6 @@ function handleChangeTextSize(size, minSize, maxSize) {
 var currenTextFontFam = "";
 var currenTextFontFamUrl = "";
 function handleChangeTextFontFam(font, url) {
-  console.log(font, url, "changed");
   var currentText = selectedText.object;
   currentText.set("fontFamily", font);
   currentText.set("fontFamilyUrl", url);
@@ -6371,6 +6688,241 @@ function handleClipAddedObject(canva) {
   }
 
   return clipPath;
+}
+function handleSetShadow(canva) {
+  var sign;
+  var shadowObject;
+  canva.getObjects().forEach(function (object) {
+    if (object.name === "safeObject") {
+      sign = object;
+    }
+  });
+
+  switch (selectedShape) {
+    case "square":
+      shadowObject = new fabric.Rect({
+        height: sign.height,
+        width: sign.width,
+        top: sign.top,
+        left: sign.left,
+        absolutePositioned: true,
+        selectable: false,
+        fill: '#313131',
+        name: 'aso-signPattern',
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "rounded-square":
+      shadowObject = new fabric.Rect({
+        height: sign.height,
+        width: sign.width,
+        top: sign.top,
+        left: sign.left,
+        absolutePositioned: true,
+        rx: 35,
+        ry: 35,
+        selectable: false,
+        fill: '#313131',
+        name: 'aso-signPattern',
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "oval":
+      shadowObject = new fabric.Ellipse({
+        ry: sign.height / 2,
+        rx: sign.width / 2,
+        top: sign.top,
+        left: sign.left,
+        absolutePositioned: true,
+        selectable: false,
+        fill: '#313131',
+        name: 'aso-signPattern',
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "triangle":
+      shadowObject = new fabric.Triangle({
+        height: sign.height,
+        width: sign.width,
+        top: sign.top,
+        left: sign.left,
+        absolutePositioned: true,
+        selectable: false,
+        fill: '#313131',
+        name: 'aso-signPattern',
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "rotated-square":
+      shadowObject = new fabric.Polygon(
+        [
+          { x: sign.width / 2, y: 0 },
+          { x: sign.width, y: sign.height / 2 },
+          { x: sign.width / 2, y: sign.height },
+          { x: 0, y: sign.height / 2 },
+        ],
+        {
+          top: sign.top,
+          left: sign.left,
+          absolutePositioned: true,
+          selectable: false,
+          fill: '#313131',
+          name: 'aso-signPattern',
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "turn-left":
+      shadowObject = new fabric.Polygon(
+        [
+          { x: 0, y: sign.height / 2 },
+          { x: sign.width / 2, y: 0 },
+          { x: sign.width, y: 0 },
+          { x: sign.width, y: sign.height },
+          { x: sign.width / 2, y: sign.height },
+        ],
+        {
+          top: sign.top,
+          left: sign.left,
+          absolutePositioned: true,
+          selectable: false,
+          fill: '#313131',
+          name: 'aso-signPattern',
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "turn-right":
+      shadowObject = new fabric.Polygon(
+        [
+          { x: 0, y: 0 },
+          { x: sign.width / 2, y: 0 },
+          { x: sign.width, y: sign.height / 2 },
+          { x: sign.width / 2, y: sign.height },
+          { x: 0, y: sign.height },
+        ],
+        {
+          top: sign.top,
+          left: sign.left,
+          absolutePositioned: true,
+          selectable: false,
+          fill: '#313131',
+          name: 'aso-signPattern',
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "arrow-right":
+      shadowObject = new fabric.Polyline(
+        [
+          { x: 0, y: (sign.height / 5) * 4 },
+          { x: sign.width / 2, y: (sign.height / 5) * 4 },
+          { x: sign.width / 2, y: sign.height },
+          { x: sign.width, y: sign.height / 2 },
+          { x: sign.width / 2, y: 0 },
+          { x: sign.width / 2, y: sign.height / 5 },
+          { x: 0, y: sign.height / 5 },
+        ],
+        {
+          top: sign.top,
+          left: sign.left,
+          absolutePositioned: true,
+          selectable: false,
+          fill: '#313131',
+          name: 'aso-signPattern',
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "arrow-left":
+      shadowObject = new fabric.Polygon(
+        [
+          { x: 0, y: sign.height / 2 },
+          { x: sign.width / 2, y: 0 },
+          { x: sign.width / 2, y: sign.height / 5 },
+          { x: sign.width, y: sign.height / 5 },
+          { x: sign.width, y: (sign.height / 5) * 4 },
+          { x: sign.width / 2, y: (sign.height / 5) * 4 },
+          { x: sign.width / 2, y: sign.height },
+        ],
+        {
+          top: sign.top,
+          left: sign.left,
+          absolutePositioned: true,
+          selectable: false,
+          fill: '#313131',
+          name: 'aso-signPattern',
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "stop":
+      shadowObject = new fabric.Polygon(
+        [
+          { x: 0, y: (sign.height / 3) * 2 },
+          { x: sign.width / 3, y: sign.height },
+          { x: (sign.width / 3) * 2, y: sign.height },
+          { x: sign.width, y: (sign.height / 3) * 2 },
+          { x: sign.width, y: sign.height / 3 },
+          { x: (sign.width / 3) * 2, y: 0 },
+          { x: sign.width / 3, y: 0 },
+          { x: 0, y: sign.height / 3 },
+        ],
+        {
+          top: sign.top,
+          left: sign.left,
+          absolutePositioned: true,
+          selectable: false,
+          fill: '#313131',
+          name: 'aso-signPattern',
+          shadow: defaultShadow,
+        }
+      );
+      break;
+
+    case "rounded-top":
+      shadowObject = new fabric.Rect({
+        height: sign.height,
+        width: sign.width,
+        top: sign.top,
+        left: sign.left,
+        absolutePositioned: true,
+        rx: sign.width,
+        ry: 10,
+        selectable: false,
+        fill: '#313131',
+        name: 'aso-signPattern',
+        shadow: defaultShadow,
+      });
+      break;
+
+    case "rounded-sides":
+      shadowObject = new fabric.Rect({
+        height: sign.height,
+        width: sign.width,
+        top: sign.top,
+        left: sign.left,
+        absolutePositioned: true,
+        rx: 10,
+        ry: sign.height,
+        selectable: false,
+        fill: '#313131',
+        name: 'aso-signPattern',
+        shadow: defaultShadow,
+      });
+      break;
+  }
+
+  return shadowObject;
 }
 
 function handleMoveobject(to) {
@@ -7937,4 +8489,5 @@ export {
   handleAddTemplateText,
   handleMoveobject,
   handleChangeAddedSvgColor,
+  handleSetShadow,
 };

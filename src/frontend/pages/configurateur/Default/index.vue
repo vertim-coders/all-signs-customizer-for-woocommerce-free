@@ -1630,15 +1630,40 @@
         </div>
 
         <div v-if="showImg" :class="`aso-absolute aso-z-20 aso-top-0 aso-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso aso-w-full aso-h-full aso-flex aso-full-center`">
-            <div :class="`aso-relative aso-w-[90%] lg:aso-h-[80%] aso-flex aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2 aso-overflow-hidden`">
-                <span @click="closeprevImg" :class="`aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-10`">
+            <div :class="`aso-relative aso-w-[90%] lg:aso-h-[80%] aso-flex aso-flex-col aso-full-center aso-bg-[${configColors.canvas.backgroundColor}] aso-border-solid aso-p-2 aso-overflow-hidden`">
+                <span @click="closeprevImg" :class="`aso-absolute aso-top-0 aso-right-0 aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-z-20`">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="aso-w-6 aso-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </span>
+
+                <div v-if="configImageSettings.scenes.length > 0" class="aso-z-20">
+                    <span @click="slideSceneImage('left')" :class="`aso-absolute aso-top-[50%] aso-translate-y-[-50%] aso-left-[4%] aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-rounded-sm aso-z-10`">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 lg:aso-w-7 lg:aso-h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+                    </span>
+                    <span @click="slideSceneImage('right')" :class="`aso-absolute aso-top-[50%] aso-translate-y-[-50%] aso-right-[4%] aso-flex aso-full-centeraso-flex aso-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] aso-p-0.5 aso-base-animation aso-cursor-pointer aso-rounded-sm aso-z-10`">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6 lg:aso-w-7 lg:aso-h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </span>
+                </div>
     
                 <!-- <img ref="showPreview" :src="prevImg" class="aso-w-full aso-h-auto" /> -->
-                <div id="showPreview" class="aso-w-full aso-h-full aso-flex"></div>
+                <div id="showPreview" :class="`aso-w-full aso-h-[88%] aso-flex aso-rounded aso-relative aso-overflow-hidden`"></div>
+                
+                <div v-if="configImageSettings.scenes.length > 0" class="aso-w-full aso-h-[10%] aso-flex">
+                    <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-center aso-space-x-2">
+                        <div id="aso-miniPreview" @click="setPreviewScene('none', -1)" :class="`${currentSceneUrl == 'none' && currentSceneId == -1 ? `aso-ring aso-ring-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]` : `` } aso-flex aso-w-[60px] aso-h-[40px] aso-rounded aso-overflow-hidden aso-cursor-pointer`">
+                            <!-- <img :src="scene" class="aso-w-full aso-h-full" > -->
+                        </div>
+                        <div @click="setPreviewScene(scene, index)" v-for="(scene, index) in configImageSettings.scenes" :class="`${currentSceneUrl == scene && currentSceneId == index ? `aso-ring aso-ring-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]` : `` } aso-flex aso-w-auto aso-h-[40px] aso-rounded aso-overflow-hidden aso-cursor-pointer`">
+                            <img :src="scene" class="aso-w-full aso-h-full" >
+                        </div>
+                    </div>
+                </div>
+                
                 <canvas  ref="imageCanvasRef"  class="aso-w-[90%] aso-hidden" style="display: none"></canvas>
             </div>
         </div>
@@ -2058,6 +2083,7 @@
         handleAddTemplateText,
         handleMoveobject,
         handleChangeAddedSvgColor,
+        handleSetShadow,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -2574,7 +2600,9 @@
                 canvas.on('selection:updated', function(e) {
                     var object = e.selected[0]
                     updateInfoDiv(object)
-                    checkTemplateObjectLockMoving(object)
+                    if(route.name == 'template-maker'){
+                        checkTemplateObjectLockMoving(object)
+                    }
                 });
                 canvas.on('selection:cleared', closeObjectValues);
                 canvas.on('mouse:down', function(options) {
@@ -2640,7 +2668,9 @@
                 });
                 canvasBack.on('selection:updated', function(e) {
                     var object = e.selected[0]
-                    checkTemplateObjectLockMoving(object)
+                    if(route.name == 'template-maker'){
+                        checkTemplateObjectLockMoving(object)
+                    }
                 });
                 canvasBack.on('selection:cleared', closeObjectValues);
                 canvasBack.on('mouse:down', function(options) {
@@ -6094,7 +6124,7 @@
 
 
 
-        console.log(configData.value, "Added")
+        // console.log(configData.value, "Added")
         finish.value = true
         genImage(canvas, 'svg', 'finish-1')
         if(configDoublePart.value.active){
@@ -6107,6 +6137,8 @@
     var prevImg = ref("")
     function closeprevImg(){
         showImg.value = false
+        currentSceneId.value = -1
+        currentSceneUrl.value = 'none'
     }
     const showPreview = ref(null)
     async function showConfigRender(){
@@ -6150,6 +6182,65 @@
             }else{
                 await genImage(canvas, 'svg', 'download');
             }
+        }
+    }
+    var currentSceneId = ref(-1)
+    var currentSceneUrl = ref('none')
+    function slideSceneImage(to){
+        var previewDiv = document.getElementById('showPreview')
+        var scenes = configImageSettings.value.scenes
+        if (scenes.length > 0) {
+            if (to === 'right' && currentSceneId.value < scenes.length - 1) {
+                currentSceneId.value += 1;
+                currentSceneUrl.value = scenes[currentSceneId.value]
+                setPreviewScene(scenes[currentSceneId.value], currentSceneId.value);
+            } else if (to === 'left' && currentSceneId.value > -1) {
+                currentSceneId.value -= 1;
+                currentSceneUrl.value = scenes[currentSceneId.value]
+                if (currentSceneId.value === -1) {
+                    // Condition particulière pour l'indice -1
+                    setPreviewScene('none', -1)
+                } else {
+                    setPreviewScene(scenes[currentSceneId.value], currentSceneId.value);
+                }
+            }
+        }
+        
+    }
+    function setPreviewScene(url, index){
+        var previewDiv = document.getElementById('showPreview')
+
+        if (previewDiv) {
+            if(url == 'none'){
+                var removableDiv = previewDiv.querySelector('div');
+                if(removableDiv){
+                    previewDiv.removeChild(removableDiv);
+                }
+
+                currentSceneId.value = -1
+                currentSceneUrl.value = 'none'
+            }else{
+                var removableDiv = previewDiv.querySelector('div');
+                if(removableDiv){
+                    previewDiv.removeChild(removableDiv);
+                }
+    
+                var sceneClass = 'animated-bg aso-w-full aso-h-full aso-absolute aso-z-0 aso-animate-slideToleft aso-duration-300'
+                currentSceneId.value = index
+                currentSceneUrl.value = url
+    
+                // Définir l'image en arrière-plan dans une nouvelle div
+                const imgDiv = document.createElement('div');
+                imgDiv.className = sceneClass;
+                imgDiv.style.backgroundImage = `url(${url})`;
+                imgDiv.style.backgroundSize = 'cover'; // Pour couvrir toute la div
+                imgDiv.style.backgroundPosition = 'center'; // Centrer l'image
+                imgDiv.style.backgroundRepeat = 'no-repeat'; // Ne pas répéter l'image
+                
+                previewDiv.appendChild(imgDiv);
+            }
+
+            // console.log(imgDiv);
         }
     }
 
@@ -6232,14 +6323,14 @@
 
                                         
                                         lines.forEach(line => {
-                                            console.log(line, lines)
+                                            // console.log(line, lines)
                                             var path = font.getPath(line, x, y, fontSize*object.scaleX);   
 
                                             let xBBox = path.getBoundingBox();
                                             let xHeight = xBBox.y2 - xBBox.y1;
                                             
                                             var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
-                                            console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                                            // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
                                             // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
 
                                             var miniGroup = new fabric.Group([], {
@@ -6261,7 +6352,7 @@
                                                 var objLeft = fabricPath.left
                                                 var objTop = fabricPath.top + fabricPath.height
                                                 var top = (longLetter ? objTop-6 : objTop+4)
-                                                console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
+                                                // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
 
                                                 var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                     stroke: object.fill,
@@ -6288,7 +6379,7 @@
                                                 miniGroup.addWithUpdate(overline);
                                             }
                                             if(object.linethrough){
-                                                console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                // console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                 var objLeft = fabricPath.left
                                                 var objTop = fabricPath.top + fabricPath.height / 2
                                                 var top = (longLetter ? objTop-6 : objTop+4)
@@ -6337,7 +6428,7 @@
                                             img.top = object.top;
 
                                             img.clipPath = handleClipAddedObject(canva);
-                                            object.fill = '#313131';
+                                            // object.fill = '#313131';
                                             
                                             img.name = 'aso-signPattern';
                                             
@@ -6346,10 +6437,13 @@
                                             } else {
                                                 img.scaleToHeight(object.height);
                                             }
-                                            canva.add(img);
-                                            img.moveTo(index + 1);                                                                                        
+                                            var shadowRect = handleSetShadow(canva)
+                                            object.shadow = null
+                                            canva.add(img, shadowRect);
+                                            img.moveTo(index + 1);
+                                            shadowRect.sendToBack()                                                                                        
                                             
-                                            object.fill = patternFill;
+                                            // object.fill = patternFill;
                                             canva.renderAll()
                                             resolve(img);
                                         } catch (error) {
@@ -6392,10 +6486,10 @@
 
                             // img.width = 1900;
                             // img.height = 1080;
-                            img.strokeWidth = 10
-                            img.stroke = 'red'
+                            // img.strokeWidth = 10
+                            // img.stroke = 'red'
 
-                            console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+                            // console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
 
                             tempCanvas.add(img);
                             // img.center();
@@ -6506,12 +6600,25 @@
                     // console.log(object, "watermark")
                     canva.remove(object)
                 }
+                if(object.name === 'safeObject'){
+                    object.shadow = defaultShadow.value
+                }
             });
 
             canva.renderAll();
 
             if(purpose === 'preview'){
                 previewScreen.innerHTML = svgDataPreview;
+
+                const svgElement = previewScreen.querySelector('svg');
+
+                svgElement.classList.add('aso-z-10');
+
+                if(configImageSettings.value.scenes.length > 0){
+                    var miniPreview = document.getElementById('aso-miniPreview')
+                    miniPreview.innerHTML = svgDataPreview;
+
+                }
             }else if(purpose === 'download'){
                 const link = document.createElement('a');
                 link.href = dataURL;
@@ -6668,14 +6775,14 @@
 
                                             
                                             lines.forEach(line => {
-                                                console.log(line, lines)
+                                                // console.log(line, lines)
                                                 var path = font.getPath(line, x, y, fontSize*object.scaleX);   
 
                                                 let xBBox = path.getBoundingBox();
                                                 let xHeight = xBBox.y2 - xBBox.y1;
                                                 
                                                 var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
-                                                console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                                                // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
                                                 // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
 
                                                 var miniGroup = new fabric.Group([], {
@@ -6699,7 +6806,7 @@
                                                     var objLeft = fabricPath.left
                                                     var objTop = fabricPath.top + fabricPath.height
                                                     var top = (longLetter ? objTop-6 : objTop+4)
-                                                    console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
+                                                    // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
 
                                                     var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
                                                         stroke: object.fill,
@@ -6727,7 +6834,7 @@
                                                     miniGroup.addWithUpdate(overline);
                                                 }
                                                 if(object.linethrough){
-                                                    console.log((object.height/object._textLines.length), object._textLines, "underline")
+                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
                                                     var objLeft = fabricPath.left
                                                     var objTop = fabricPath.top + fabricPath.height / 2
                                                     var top = (longLetter ? objTop-6 : objTop+4)
@@ -6776,7 +6883,6 @@
                                                 img.top = object.top;
 
                                                 img.clipPath = handleClipAddedObject(canva);
-                                                object.fill = '#313131';
                                                 
                                                 img.name = 'aso-signPattern';
                                                 
@@ -6785,10 +6891,12 @@
                                                 } else {
                                                     img.scaleToHeight(object.height);
                                                 }
-                                                canva.add(img);
-                                                img.moveTo(index + 1);                                                                                        
+                                                var shadowRect = handleSetShadow(canva)
+                                                object.shadow = null
+                                                canva.add(img, shadowRect);
+                                                img.moveTo(index + 1);
+                                                shadowRect.sendToBack()                                                                                          
                                                 
-                                                object.fill = patternFill;
                                                 canva.renderAll()
                                                 resolve(img);
                                             } catch (error) {
@@ -6929,10 +7037,10 @@
 
                                 // img.width = 1900;
                                 // img.height = 1080;
-                                img.strokeWidth = 10
-                                img.stroke = 'red'
+                                // img.strokeWidth = 10
+                                // img.stroke = 'red'
 
-                                console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+                                // console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
 
                                 tempCanvas.add(img);
                                 // img.center();
@@ -6990,7 +7098,6 @@
                 // const svgData = canva.toSVG(options);
                 const svgDataPreview = canva.toSVG(optionsPreview);
                 var previewScreen = document.getElementById('showPreview')
-                previewScreen.innerHTML = svgDataPreview;
                 var svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
 
                 var dataURL  = ""
@@ -7065,12 +7172,29 @@
                         // console.log(object, "watermark")
                         canva.remove(object)
                     }
+                    if(object.name === 'safeObject'){
+                        object.shadow = defaultShadow.value
+                    }
+                    // if(object.objectType === 'aso-fixingMethods'){
+                    //     object.bringToFront()
+                    // }
                 });
     
                 canva.renderAll();
     
                 if(purpose === 'preview'){
                     previewScreen.innerHTML = svgDataPreview;
+
+                    const svgElement = previewScreen.querySelector('svg');
+
+                    // Ajoutez une classe à l'élément SVG
+                    svgElement.classList.add('aso-z-10');
+
+                    if(configImageSettings.value.scenes.length > 0){
+                        var miniPreview = document.getElementById('aso-miniPreview')
+                        miniPreview.innerHTML = svgDataPreview;
+
+                    }
                 }else{
                     var ink = document.createElement("a");
                     ink.href = dataURL;
