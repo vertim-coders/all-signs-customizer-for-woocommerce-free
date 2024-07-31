@@ -2016,18 +2016,22 @@
                 </div>
             </div>
 
-            <div class="aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
-                <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonEditTextColor}] hover:aso-text-[${configColors.recaps.buttonEditHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
-                    {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
-                </button>
-                <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
-                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
-                    {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
-                </button>
-                <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
-                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isSavingTemplate"/>
-                    Save
-                </button>
+            <div class="aso-h-[15%] aso-flex aso-flex-col aso-text-[16px] aso-leading-normal">
+                <div :class="`aso-h-[40%] aso-flex aso-text-center aso-justify-center aso-items-center aso-text-[${configColors.recaps.optionTextColor}] aso-bg-transparent aso-text-xl aso-font-bold`">{{formatPrice(finalPrices)}} </div>
+                
+                <div class="aso-flex aso-h-[60%]">
+                    <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonEditTextColor}] hover:aso-text-[${configColors.recaps.buttonEditHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                        {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
+                    </button>
+                    <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
+                        {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
+                    </button>
+                    <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isSavingTemplate"/>
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -4524,6 +4528,13 @@
             saveStep('select size')
         }
 
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        getOptionPrice(priceObject)
+
         // let timer;
         // clearTimeout(timer);
         // timer = setTimeout(() => {
@@ -6049,7 +6060,7 @@
                 additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
                 designImages: {
                     face1: designImagesFace1,
-                    face2: generateOutputImage(designImagesFace2, canvasBack),
+                    face2: await generateOutputImage(designImagesFace2, canvasBack),
                 },
                 output:{
                     prefix: (configOutputSettings.value.zipOutputFiles.active ? configOutputSettings.value.zipOutputFiles.zipOutFolderPrefix : ''),
@@ -6157,7 +6168,7 @@
 
 
 
-        // console.log(configData.value, "Added")
+        console.log(configData.value, "Added")
         finish.value = true
         genImage(canvas, 'svg', 'finish-1')
         if(configDoublePart.value.active){

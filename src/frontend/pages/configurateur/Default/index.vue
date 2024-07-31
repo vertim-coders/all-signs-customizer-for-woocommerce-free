@@ -1975,18 +1975,22 @@
                 </div>
             </div>
 
-            <div class="aso-h-[8%] aso-flex aso-text-[16px] aso-leading-normal">
-                <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonEditTextColor}] hover:aso-text-[${configColors.recaps.buttonEditHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
-                    {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
-                </button>
-                <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
-                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
-                    {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
-                </button>
-                <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
-                    <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isSavingTemplate"/>
-                    Save
-                </button>
+            <div class="aso-h-[15%] aso-flex aso-flex-col aso-text-[16px] aso-leading-normal">
+                <div :class="`aso-h-[40%] aso-flex aso-text-center aso-justify-center aso-items-center aso-text-[${configColors.recaps.optionTextColor}] aso-bg-transparent aso-text-xl aso-font-bold`">{{formatPrice(finalPrices)}} </div>
+                
+                <div class="aso-flex aso-h-[60%]">
+                    <button :disabled="isAddingToCart" @click="() => finish = false" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonEditTextColor}] hover:aso-text-[${configColors.recaps.buttonEditHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                        {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
+                    </button>
+                    <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart" @click="addToCart" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isAddingToCart"/>
+                        {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
+                    </button>
+                    <button v-if="route.name == 'template-maker'" :disabled="isSavingTemplate" @click="saveTemplate" :class="`aso-w-1/2 aso-h-full aso-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:aso-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] aso-flex aso-full-center aso-buttons-rad-none aso-base-animation aso-cursor-pointer`" >
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isSavingTemplate"/>
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -2556,6 +2560,7 @@
         
                 if(route.name == 'template-maker'){
                     template.value = await api.getTemplate(template_config_id,template_id);
+                    aso_configurator_data.regularPrice = template.value.basePrice;
                 }
         
                 handleCheckTemplate(props.template.designFromTemplate)
@@ -2571,11 +2576,13 @@
                             selectAdvanceFirstValue()
                         }
                     }else{                    
+                        // console.log(template.value.data, "template")
                         selectTemplate(template.value.data.templateData, 'making')
                     }
                 }else{
                     if(props.template.designFromTemplate === true){
                         selectTemplate(props.template.template.data.templateData)
+                        // console.log(props.template.template.data.templateData, 'template')
                     }else{
                         selectMaterial(props.config.data.materials[0], 0)
                         if(materialType.value === 'simple'){
@@ -2790,6 +2797,7 @@
 
     var isTemplate = ref(false)
     function selectTemplate(data, statut){
+        console.log(data, statut)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -4047,7 +4055,7 @@
             fixinggs.value = material.data.fixingMethods
             colorrs.value = material.data.colors
             borderrs.value = material.data.borders
-        console.log(borderrs.value, "selectMaterial", material)
+        // console.log(borderrs.value, "selectMaterial", material)
 
             additionalComponents.value = material.data.additionalOptions
             addComponentSelected.value = []
@@ -4504,6 +4512,14 @@
                 }
             }
         }
+
+        textsPrices.value = handleSetPrice()
+        var priceObject = {
+            name: 'none',
+            price: 0
+        }
+        console.log(textsPrices.value, "price")
+        getOptionPrice(priceObject)
 
         if(firstSetLoad.value){
             saveStep('select size')
@@ -5751,11 +5767,12 @@
                 color = sign.stroke
             }
             if(border === 'normal'){
-                var sign = handleGetObjectByName('safeObject', canva)
-                color = sign.stroke
+                var sign = handleGetObjectByName('normal-border', canva)
+                color = sign.fill
             }
             if(border === 'old-world'){
                 var borderObject = handleGetObjectByName('old-world-border', canva)
+                console.log(borderObject, "border")
                 color = borderObject.fill
             }
             if(border === 'rounded-corners'){
@@ -6018,7 +6035,7 @@
                 additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
                 designImages: {
                     face1: designImagesFace1,
-                    face2: generateOutputImage(designImagesFace2, canvasBack),
+                    face2: await generateOutputImage(designImagesFace2, canvasBack),
                 },
                 output:{
                     prefix: (configOutputSettings.value.zipOutputFiles.active ? configOutputSettings.value.zipOutputFiles.zipOutFolderPrefix : ''),
@@ -6126,7 +6143,7 @@
 
 
 
-        // console.log(configData.value, "Added")
+        console.log(configData.value, "Added")
         finish.value = true
         genImage(canvas, 'svg', 'finish-1')
         if(configDoublePart.value.active){

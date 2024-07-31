@@ -1815,7 +1815,7 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("top", object.top);
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
-                    svgGroup.name = "rounded-corners-border",
+                    svgGroup.name = "old-world-border",
                     svgGroup.selectable = false,
                     canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
@@ -6962,9 +6962,11 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   function loadFromJSON(canva, canvasJson) {
     var rect;
     canva.clear();
+    // console.log(canvasJson.objects, "loading")
     // ratioScale = templateData.size.ratioScale
     canvasJson.objects.forEach(function (obj) {
       fabric.util.enlivenObjects([obj], function (templateObject) {
+        console.log(templateObject, "rtertertert")
         if (templateObject[0].name === "safeObject") {
           rect = templateObject[0];
           if (typeof templateObject[0].fill !== "string") {
@@ -8293,12 +8295,14 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
     loadFromJSON(backCanvas, canvas2Json);
   }
 
-  var currentSizeValues = handleChangeSize(
-    templateData.size.width,
-    templateData.size.height,
-    "Template",
-    -1
-  );
+  // var currentSizeValues = handleChangeSize(
+  //   templateData.size.width,
+  //   templateData.size.height,
+  //   "Template",
+  //   -1
+  // );
+  var currentSizeValues = handleGetSignPosition() 
+  
   handleGetShape(templateData.shape);
   // console.log(currentSizeValues)
   resetFixing(canvas);
