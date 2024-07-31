@@ -6374,10 +6374,31 @@
                                         
                                         lines.forEach(line => {
                                             // console.log(line, lines)
-                                            var path = font.getPath(line, x, y, fontSize*object.scaleX);   
+                                            var path = font.getPath(line, 0, y, fontSize * object.scaleX);
+                                            var pathBBox = path.getBoundingBox();
+                                            var pathWidth = pathBBox.x2 - pathBBox.x1;
+                                            let xHeight = pathBBox.y2 - pathBBox.y1;
+                                            
+                                            // Calculez le décalage x en fonction de l'alignement
+                                            var xOffset;
 
-                                            let xBBox = path.getBoundingBox();
-                                            let xHeight = xBBox.y2 - xBBox.y1;
+                                            switch(object.textAlign) {
+                                                case 'center':
+                                                    xOffset = (object.width * object.scaleX - pathWidth) / 2;
+                                                    break;
+                                                case 'right':
+                                                    xOffset = object.width * object.scaleX - pathWidth;
+                                                    break;
+                                                default: // 'left'
+                                                    xOffset = 0;
+                                            }
+                                            
+                                            // Appliquez le décalage à tous les points du chemin
+                                            path.commands.forEach(cmd => {
+                                                if (cmd.x !== undefined) cmd.x += xOffset;
+                                                if (cmd.x1 !== undefined) cmd.x1 += xOffset;
+                                                if (cmd.x2 !== undefined) cmd.x2 += xOffset;
+                                            });
                                             
                                             var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
                                             // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
@@ -6390,6 +6411,7 @@
                                                 // top: object.top + y, 
                                                 stroke: object.fill,
                                                 fill: object.fill,
+                                                originX: 'center',
                                             });
                                             if(object.fontWeight == 'bold'){
                                                 fabricPath.strokeWidth = 2.3
@@ -6399,7 +6421,8 @@
                                                 fabricPath.skewX = -3
                                             }
                                             if(object.underline){
-                                                var objLeft = fabricPath.left
+                                                // var objLeft = fabricPath.left
+                                                var objLeft = xOffset;
                                                 var objTop = fabricPath.top + fabricPath.height
                                                 var top = (longLetter ? objTop-6 : objTop+4)
                                                 // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
@@ -6415,7 +6438,7 @@
                                                 miniGroup.addWithUpdate(underline);
                                             }
                                             if(object.overline){
-                                                var objLeft = fabricPath.left
+                                                var objLeft = xOffset;
                                                 var objTop = fabricPath.top - 8
 
                                                 var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
@@ -6429,8 +6452,7 @@
                                                 miniGroup.addWithUpdate(overline);
                                             }
                                             if(object.linethrough){
-                                                // console.log((object.height/object._textLines.length), object._textLines, "underline")
-                                                var objLeft = fabricPath.left
+                                                var objLeft = xOffset;
                                                 var objTop = fabricPath.top + fabricPath.height / 2
                                                 var top = (longLetter ? objTop-6 : objTop+4)
 
@@ -6457,7 +6479,7 @@
                                         group.left = object.left - (group.width / 2);
                                         group.top = object.top - (group.height / 2);
 
-                                        canvas.add(group);
+                                        canva.add(group);
                                         group.moveTo(index)
                                         return group;
                                     } catch (error) {
@@ -6578,13 +6600,23 @@
     
     
             var thickVisibility
-            canva.getObjects().forEach(object => {
+            var borderPositionId
+            var fixingPositionId
+            canva.getObjects().forEach((object, index) => {
                 if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
                     object.set('visible', false);
                 }
                 if(object.name === 'thickness-value'){
                     thickVisibility = object.visible
                     object.set('visible', false);
+                }
+                if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                    borderPositionId = index
+                    object.bringToFront();
+                }
+                if(object.objectType === 'aso-fixingMethods'){
+                    fixingPositionId = index
+                    object.bringToFront();
                 }
             });
             canva.renderAll();
@@ -6649,7 +6681,18 @@
                     canva.remove(object)
                 }
                 if(object.name === 'safeObject'){
-                    object.shadow = defaultShadow.value
+                    if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
+                        object.shadow = defaultShadow.value
+                    }
+                    if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
+                        object.shadow = defaultShadow.value
+                    }
+                }
+                if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                    object.moveTo(borderPositionId);
+                }
+                if(object.objectType === 'aso-fixingMethods'){
+                    object.moveTo(fixingPositionId);
                 }
             });
 
@@ -6825,10 +6868,31 @@
                                             
                                             lines.forEach(line => {
                                                 // console.log(line, lines)
-                                                var path = font.getPath(line, x, y, fontSize*object.scaleX);   
+                                                var path = font.getPath(line, 0, y, fontSize * object.scaleX);
+                                                var pathBBox = path.getBoundingBox();
+                                                var pathWidth = pathBBox.x2 - pathBBox.x1;
+                                                let xHeight = pathBBox.y2 - pathBBox.y1;
+                                                
+                                                // Calculez le décalage x en fonction de l'alignement
+                                                var xOffset;
 
-                                                let xBBox = path.getBoundingBox();
-                                                let xHeight = xBBox.y2 - xBBox.y1;
+                                                switch(object.textAlign) {
+                                                    case 'center':
+                                                        xOffset = (object.width * object.scaleX - pathWidth) / 2;
+                                                        break;
+                                                    case 'right':
+                                                        xOffset = object.width * object.scaleX - pathWidth;
+                                                        break;
+                                                    default: // 'left'
+                                                        xOffset = 0;
+                                                }
+                                                
+                                                // Appliquez le décalage à tous les points du chemin
+                                                path.commands.forEach(cmd => {
+                                                    if (cmd.x !== undefined) cmd.x += xOffset;
+                                                    if (cmd.x1 !== undefined) cmd.x1 += xOffset;
+                                                    if (cmd.x2 !== undefined) cmd.x2 += xOffset;
+                                                });
                                                 
                                                 var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
                                                 // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
@@ -6841,6 +6905,7 @@
                                                     // top: object.top + y, 
                                                     stroke: object.fill,
                                                     fill: object.fill,
+                                                    originX: 'center',
                                                 });
                                                 if(object.fontWeight == 'bold'){
                                                     fabricPath.strokeWidth = 2.3
@@ -6849,10 +6914,9 @@
                                                 if(object.fontStyle == 'italic'){
                                                     fabricPath.skewX = -3
                                                 }
-                                                // console.log(font, path, fabricPath);
                                                 if(object.underline){
-                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
-                                                    var objLeft = fabricPath.left
+                                                    // var objLeft = fabricPath.left
+                                                    var objLeft = xOffset;
                                                     var objTop = fabricPath.top + fabricPath.height
                                                     var top = (longLetter ? objTop-6 : objTop+4)
                                                     // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
@@ -6868,8 +6932,7 @@
                                                     miniGroup.addWithUpdate(underline);
                                                 }
                                                 if(object.overline){
-                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
-                                                    var objLeft = fabricPath.left
+                                                    var objLeft = xOffset;
                                                     var objTop = fabricPath.top - 8
 
                                                     var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
@@ -6883,8 +6946,7 @@
                                                     miniGroup.addWithUpdate(overline);
                                                 }
                                                 if(object.linethrough){
-                                                    // console.log((object.height/object._textLines.length), object._textLines, "underline")
-                                                    var objLeft = fabricPath.left
+                                                    var objLeft = xOffset;
                                                     var objTop = fabricPath.top + fabricPath.height / 2
                                                     var top = (longLetter ? objTop-6 : objTop+4)
 
@@ -6911,7 +6973,7 @@
                                             group.left = object.left - (group.width / 2);
                                             group.top = object.top - (group.height / 2);
 
-                                            canvas.add(group);
+                                            canva.add(group);
                                             group.moveTo(index)
                                             return group;
                                         } catch (error) {
@@ -7131,13 +7193,23 @@
         
         
                 var thickVisibility
-                canva.getObjects().forEach(object => {
+                var borderPositionId
+                var fixingPositionId
+                canva.getObjects().forEach((object, index) => {
                     if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
                         object.set('visible', false);
                     }
                     if(object.name === 'thickness-value'){
                         thickVisibility = object.visible
                         object.set('visible', false);
+                    }
+                    if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                        borderPositionId = index
+                        object.bringToFront();
+                    }
+                    if(object.objectType === 'aso-fixingMethods'){
+                        fixingPositionId = index
+                        object.bringToFront();
                     }
                 });
                 canva.renderAll();
@@ -7223,7 +7295,19 @@
                         canva.remove(object)
                     }
                     if(object.name === 'safeObject'){
-                        object.shadow = defaultShadow.value
+                        if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
+                            object.shadow = defaultShadow.value
+                        }
+                        if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
+                            object.shadow = defaultShadow.value
+                        }
+                    }
+                    if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                    // borderPositionId = index
+                        object.moveTo(borderPositionId);
+                    }
+                    if(object.objectType === 'aso-fixingMethods'){
+                        object.moveTo(fixingPositionId);
                     }
                 });
     

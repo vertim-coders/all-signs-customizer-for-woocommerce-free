@@ -6998,6 +6998,16 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
         if (templateObject[0].name === "aso-SignText") {
           // templateObject[0].dirty = true
           // templateObject[0].set('noScaleCache', false);
+          templateObject[0].setControlsVisibility({
+            mt: false, // Middle top
+            mb: false, // Middle bottom
+            ml: false, // Middle left
+            mr: false, // Middle right
+            bl: true, // Bottom left
+            br: true, // Bottom right
+            tl: true, // Top left
+            tr: true, // Top right
+          });
           if (statut !== "making") {
             if (templateObject[0].lockMoving.x === true) {
               templateObject[0].lockMovementX = true;
@@ -7055,6 +7065,16 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
 
         if (templateObject[0].name === "aso-SignImage") {
           if (statut !== "making") {
+            templateObject[0].setControlsVisibility({
+              mt: false, // Middle top
+              mb: false, // Middle bottom
+              ml: false, // Middle left
+              mr: false, // Middle right
+              bl: true, // Bottom left
+              br: true, // Bottom right
+              tl: true, // Top left
+              tr: true, // Top right
+            });
             if (templateObject[0].lockMoving.x === true) {
               templateObject[0].lockMovementX = true;
             }

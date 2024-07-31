@@ -54,7 +54,7 @@
 		add_action( 'woocommerce_after_add_to_cart_button', array($this, 'get_customize_btn' ));
 		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'hide_or_display_custom_button_or_add_to_cart_button'), 10, 2 );
 		add_action( 'woocommerce_single_product_summary', array($this,'get_button_on_single_product_summary'), 5 );
-		add_action('woocommerce_remove_cart_item', [$this,'delete_product_file_when_delete_product'], 10, 2);
+		add_action('woocommerce_cart_item_removed', [$this,'delete_product_file_when_delete_product'], 10, 2);
 		
 	}
 	
@@ -661,19 +661,21 @@
 		return $product_id;
 	}
 	public function delete_product_file_when_delete_product($cart_item_key, $cart) {
-		if (isset($cart->cart_contents[$cart_item_key]['aso_recaps'])) {
-			$meta_data = $cart->cart_contents[$cart_item_key]['aso_recaps'];
+		$cart_item_content = $cart->removed_cart_contents[$cart_item_key];
+		//error_log('ASO Recaps pour le cart_item_key ' . $cart_item_key . ': ' . print_r($cart_item_content, true));
+		if (!empty($cart_item_content)  && isset($cart_item_content["aso_meta_data"]['recaps'])) {
+			$meta_data = $cart_item_content["aso_meta_data"]['recaps'];
 			$uploads = [];
-			if (isset($meta_data['recaps']['images']["value"]['face1'])) {
-				foreach ($meta_data['recaps']['images']["value"] as $key => $face) {
+			if (isset($meta_data['images']["value"]['face1'])) {
+				foreach ($meta_data['images']["value"] as $key => $face) {
 					foreach ($face as $key => $image) {
 						if (isset($image["infos"])) {
 							$uploads[] = $image["infos"];
 						}
 					}
 				}
-			} elseif (isset($meta_data['recaps']['images']["value"])) {
-				foreach ($meta_data['recaps']['images']["value"] as $key => $image) {
+			} elseif (isset($meta_data['images']["value"])) {
+				foreach ($meta_data['images']["value"] as $key => $image) {
 					if (isset($image["infos"])) {
 						$uploads[] = $image["infos"];
 					}
