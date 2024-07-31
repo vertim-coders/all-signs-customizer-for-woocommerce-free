@@ -219,7 +219,7 @@
                             <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Background Image</label>
                             <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2">
                                 <div class="aso-flex aso-space-x-2">
-                                    <button @click="(e)=>selectColorBackgroundImage" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
+                                    <button @click="(e)=>selectColorBackgroundImage(e)" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
                                     <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
                                         <img v-if="color.pattern.url != ''" :src="color.pattern.url" alt="" class="aso-absolute aso-w-full aso-h-full">
                                         <button v-if="color.pattern.url != ''" @click="()=>{color.pattern.url = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
