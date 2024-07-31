@@ -123,6 +123,10 @@ class Assets
             'aso-tinymce-script' => [
                 'src' => includes_url('/js/tinymce/') . 'tinymce.min.js',
                 'in_footer' => true
+            ],
+            'aso-product-min' => [
+                'src' =>  ASO_ASSETS .'/utilities/aso-product-min.js',
+                'in_footer' => true
             ]
         ];
 

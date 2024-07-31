@@ -19,6 +19,8 @@ class ASO_Design {
 		//admin data
 		add_action( 'woocommerce_after_order_itemmeta',[$this, 'get_order_custom_admin_data'], 10, 3);
 		add_action('woocommerce_checkout_create_order_line_item', [$this,'capture_product_metadata_to_order'], 10, 4);
+		add_action( 'wp_ajax_aso_generate_order_zip_file', [$this,'aso_generate_order_zip_file_ajax'] );
+    add_action( 'wp_ajax_nopriv_aso_generate_order_zip_file', [$this,'aso_generate_order_zip_file_ajax'] );
 		
 		// Emails.
 		//add_action( 'woocommerce_order_item_meta_start', [$this, 'mail_template'],10, 3);
@@ -210,7 +212,7 @@ class ASO_Design {
 							<div class="aso-cart-color-option" style="background:<?php echo esc_attr($color["codeHex"])?>;"></div>
 						<?php }else{?>
 							<div class="aso-cart-color-option" style="position:relative;">
-								<img src="<?php echo esc_url($color["codeHex"])?>" style="position:absolute; width:100%,height:100%;"/>
+								<img src="<?php echo esc_url($color["codeHex"])?>" style="position:absolute; width:100%; height:100;"/>
 							</div>
 						<?php }?>
 					</div>
@@ -404,7 +406,6 @@ class ASO_Design {
 	 * 
 	 */
 	public function get_order_custom_admin_data( $item_id, $item, $_product ) {
-
 		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 		$order_id = $item->get_order_id();
 		if ( $order_id && isset( $order_data ) && !empty( $order_data ) ) {
@@ -412,6 +413,14 @@ class ASO_Design {
 			if(isset($order_data["zip"])){?>
 				<div style="margin:10px 0">
 					<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data["zip"])?>" download><?php echo __( 'Download Order Zip file', "all-signs-options-pro")?></a>
+				</div> <?php 
+			}else{
+				?>
+				<div style="margin:10px 0">
+					<button class="button alt aso_admin_generate_zip_file" data-item-id="<?php echo esc_attr($item_id)?>" data-nonce="<?php echo wp_create_nonce('aso_generate_order_zip_file') ?>">
+						<img src="<?php echo ASO_ASSETS.'/images/im_loading.gif' ?>" style="width:10px !important; display:none;"/>
+						<span><?php echo __( 'Generate Order Item Zip file', "all-signs-options-pro")?></span>
+					</button>
 				</div> <?php 
 			}
 			/* $product_id = $_product->get_id();
@@ -438,6 +447,52 @@ class ASO_Design {
 
 	}
 
+	public function aso_generate_order_zip_file_ajax(){
+		if (wp_verify_nonce(sanitize_text_field( wp_unslash ($_POST['nonce'])), 'aso_generate_order_zip_file')) {
+			if (isset($_POST['item_id'])) {
+				$order_data   = wc_get_order_item_meta( $_POST['item_id'], 'aso_meta_data' );
+				if ( isset( $order_data ) && !empty( $order_data ) ) {
+					
+					$uploads = [];
+
+					if(isset($order_data['recaps']['images']["value"]['face1'])){
+						foreach ($order_data['recaps']['images']["value"] as $key => $face) {
+							foreach ($face as $key => $image) {
+								array_push($uploads,$image["infos"]);
+							}
+						}
+					}else{
+						if(isset($order_data['recaps']['images']["value"])){
+							foreach ($order_data['recaps']['images']["value"] as $key => $image) {							
+								array_push($uploads,$image["infos"]);
+							}
+						}
+					}
+
+					$order_id = wc_get_order_id_by_order_item_id($_POST['item_id']);
+					$aso_zip_file = $this->aso_zip_file($order_id,$_POST['item_id'],$order_data['recaps']["output"],$order_data['recaps']['designImages'],$uploads,$order_data["recaps"]["sign"]["size"]["value"]);
+					$order_data['zip'] = $aso_zip_file;
+					wc_update_order_item_meta($_POST['item_id'], "aso_meta_data", $order_data);
+					wp_send_json(array(
+						'success'     => true,		
+					));
+				}
+				wp_send_json(array(
+					'success'     => false,		
+					"message"=>"No meta data found on item id"
+				));
+			}
+			wp_send_json(array(
+				'success'     => false,		
+				"message"=>"No item id found"
+			));
+		}
+		wp_send_json(array(
+			'success'     => false,		
+			"message"=>"nonce invalid"
+		));
+	}
+
 	/**
 	 * 
 	 */
@@ -459,24 +514,7 @@ class ASO_Design {
 				if (is_account_page()) {
 					echo $this->display_custom_recaps($order_data["recaps"],true);
 				}
-				$uploads = [];
-				if(isset($order_data['recaps']['images']["value"]['face1'])){
-					foreach ($order_data['recaps']['images']["value"] as $key => $face) {
-						foreach ($face as $key => $image) {
-							array_push($uploads,$image["infos"]);
-						}
-					}
-				}else{
-					if(isset($order_data['recaps']['images']["value"])){
-						foreach ($order_data['recaps']['images']["value"] as $key => $image) {							
-							array_push($uploads,$image["infos"]);
-						}
-					}
-				}
-				$order_id = wc_get_order_id_by_order_item_id($item_id);
-				$aso_zip_file = $this->aso_zip_file($order_id,$item_id,$order_data['recaps']["output"],$order_data['recaps']['designImages'],$uploads,$order_data["recaps"]["sign"]["size"]["value"]);
-				$order_data['zip'] = $aso_zip_file;
-				wc_update_order_item_meta($item_id, "aso_meta_data", $order_data);
+				
 			echo ob_get_clean();
 		}
 

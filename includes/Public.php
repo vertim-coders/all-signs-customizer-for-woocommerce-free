@@ -23,8 +23,6 @@ class ASO_Public {
         wp_enqueue_style( 'aso-omodal' );
         wp_enqueue_script('aso-omodal');
         wp_enqueue_script('aso-tinymce-script');
-        wp_enqueue_script('aso-product-min',ASO_ASSETS.'/utilities/aso-product-min.js', array('jquery',"tinymce"), '1.0', true);
-        // Localisez votre script avec les variables nécessaires
-        wp_localize_script('aso-product-min', 'aso_ajax_object', array('ajax_url' => esc_url(admin_url('admin-ajax.php'))));
+        wp_enqueue_script('aso-product-min');
     }
 }

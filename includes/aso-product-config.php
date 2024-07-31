@@ -54,6 +54,7 @@
 		add_action( 'woocommerce_after_add_to_cart_button', array($this, 'get_customize_btn' ));
 		add_filter( 'woocommerce_loop_add_to_cart_link', array($this, 'hide_or_display_custom_button_or_add_to_cart_button'), 10, 2 );
 		add_action( 'woocommerce_single_product_summary', array($this,'get_button_on_single_product_summary'), 5 );
+		add_action('woocommerce_remove_cart_item', [$this,'delete_product_file_when_delete_product'], 10, 2);
 		
 	}
 	
@@ -658,6 +659,62 @@
 		}
 
 		return $product_id;
+	}
+	public function delete_product_file_when_delete_product($cart_item_key, $cart) {
+		if (isset($cart->cart_contents[$cart_item_key]['aso_recaps'])) {
+			$meta_data = $cart->cart_contents[$cart_item_key]['aso_recaps'];
+			$uploads = [];
+			if (isset($meta_data['recaps']['images']["value"]['face1'])) {
+				foreach ($meta_data['recaps']['images']["value"] as $key => $face) {
+					foreach ($face as $key => $image) {
+						if (isset($image["infos"])) {
+							$uploads[] = $image["infos"];
+						}
+					}
+				}
+			} elseif (isset($meta_data['recaps']['images']["value"])) {
+				foreach ($meta_data['recaps']['images']["value"] as $key => $image) {
+					if (isset($image["infos"])) {
+						$uploads[] = $image["infos"];
+					}
+				}
+			}
+	
+			foreach ($uploads as $upload) {
+				if (isset($upload["name"])) {
+					$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $upload["name"];
+					if (file_exists($file)) {
+						unlink($file);
+					}
+				}
+			}
+	
+			if (!isset($meta_data["designImages"]["face1"])) {
+				if (isset($meta_data["designImages"])) {
+					foreach ($meta_data["designImages"] as $key => $image) {
+						$path_parts = pathinfo($image);
+						if (isset($path_parts["filename"], $path_parts['extension'])) {
+							$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
+							if (file_exists($file)) {
+								unlink($file);
+							}
+						}
+					}
+				}
+			} else {
+				foreach ($meta_data["designImages"] as $key => $face) {
+					foreach ($face as $key => $image) {
+						$path_parts = pathinfo($image);
+						if (isset($path_parts["filename"], $path_parts['extension'])) {
+							$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
+							if (file_exists($file)) {
+								unlink($file);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 
