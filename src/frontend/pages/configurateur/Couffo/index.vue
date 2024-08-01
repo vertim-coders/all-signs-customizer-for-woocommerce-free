@@ -3888,72 +3888,32 @@
 
         return transformedCenter;
     }
-    // function centerSign(canva){
-    //     var sign = handleGetObjectByName('safeObject', canva)
-    //     var canvasCenter = getCanvasCenter()
-    //     var allObjects = canva.getObjects();
-    //     var zoom = canva.getZoom()
-
-    //     if (allObjects.length > 0) {
-    //         canva.discardActiveObject();
-    //         var group = new fabric.Group(allObjects);
-    //         // group.center();
-    //         // console.log(group, 'canvas')
-            
-    //         // var newSign = 
-
-    //         var groupLeft = canvasCenter.x - (group.width * group.scaleX) / 2;
-    //         var groupTop = canvasCenter.y - (group.height * group.scaleY) / 2;
-
-    //         // Centrer le groupe
-    //         group.set({
-    //             left: groupLeft,
-    //             top: groupTop
-    //         });
-
-    //         group.setCoords();
-
-    //         // group.set('left', canvasCenter.x - sign.width/2)
-    //         // group.set('top', canvasCenter.y - sign.height/2)
-
-    //         group.setCoords();
-
-    //         currentSizeValues.value.left = canvasCenter.x - sign.width/2
-    //         currentSizeValues.value.top = canvasCenter.y - sign.height/2
-    //         handleGetNewPosition(canvasCenter.x - sign.width/2, canvasCenter.y - sign.height/2)
-
-
-    //         // Dégrouper les objets
-    //         group._restoreObjectsState();
-    //         canva.remove(group);
-    //         canva.getObjects().forEach((obj) => {
-    //             if(obj.name === 'aso-signText'){
-    //                 if(obj.isEditing){
-    //                     obj.exitEditing();
-    //                 }
-    //                 obj.clipPath = handleClipAddedObject(canva);
-
-    //             }
-    //             if (obj.name === 'aso-SignImage') {
-    //                 obj.clipPath = handleClipAddedObject(canva);
-    //             }
-    //             obj.setCoords()
-    //         })
-    //     }
-    //     canva.renderAll()
-    // }
     function centerSign(canva){
         var sign = handleGetObjectByName('safeObject', canva)
         var canvasCenter = getCanvasCenter()
         const allObjects = canva.getObjects();
+        var zoom = canva.getZoom()
 
         if (allObjects.length > 0) {
             const group = new fabric.Group(allObjects);
             canva.discardActiveObject();
 
+            var newRectLeft = canvasCenter.x - sign.width / 2;
+            var newRectTop = canvasCenter.y - sign.height / 2;
+
+            var hLine = handleGetObjectByName('heightLine', canva)
+            var hValue = handleGetObjectByName('height-value', canva)
+
+            var wLine = handleGetObjectByName('widthtLine', canva)
+            var wValue = handleGetObjectByName('width-value', canva)
+
+            var wDiff = group.width - (sign.width + 55 + hValue.height - 15)
+            var hDiff = group.height - (sign.height + 65 + wValue.height)
+
+
             // Centrer le groupe
-            group.set('left', canvasCenter.x - sign.width/2)
-            group.set('top', canvasCenter.y - sign.height/2)
+            group.set('left', newRectLeft - wDiff)
+            group.set('top', newRectTop - hDiff)
 
             group.setCoords();
 
@@ -3981,6 +3941,45 @@
         }
         canva.renderAll()
     }  
+    // function centerSign(canva){
+    //     var sign = handleGetObjectByName('safeObject', canva)
+    //     var canvasCenter = getCanvasCenter()
+    //     const allObjects = canva.getObjects();
+
+    //     if (allObjects.length > 0) {
+    //         const group = new fabric.Group(allObjects);
+    //         canva.discardActiveObject();
+
+    //         // Centrer le groupe
+    //         group.set('left', canvasCenter.x - sign.width/2)
+    //         group.set('top', canvasCenter.y - sign.height/2)
+
+    //         group.setCoords();
+
+    //         currentSizeValues.value.left = canvasCenter.x - sign.width/2
+    //         currentSizeValues.value.top = canvasCenter.y - sign.height/2
+    //         handleGetNewPosition(canvasCenter.x - sign.width/2, canvasCenter.y - sign.height/2)
+
+
+    //         // Dégrouper les objets
+    //         group._restoreObjectsState();
+    //         canva.remove(group);
+    //         canva.getObjects().forEach((obj) => {
+    //             if(obj.name === 'aso-signText'){
+    //                 if(obj.isEditing){
+    //                     obj.exitEditing();
+    //                 }
+    //                 obj.clipPath = handleClipAddedObject(canva);
+
+    //             }
+    //             if (obj.name === 'aso-SignImage') {
+    //                 obj.clipPath = handleClipAddedObject(canva);
+    //             }
+    //             obj.setCoords()
+    //         })
+    //     }
+    //     canva.renderAll()
+    // }  
     
 
     var angleActive = ref(false)

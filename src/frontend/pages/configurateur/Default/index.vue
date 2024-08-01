@@ -2797,7 +2797,6 @@
 
     var isTemplate = ref(false)
     function selectTemplate(data, statut){
-        console.log(data, statut)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -3915,14 +3914,33 @@
         var sign = handleGetObjectByName('safeObject', canva)
         var canvasCenter = getCanvasCenter()
         const allObjects = canva.getObjects();
+        var zoom = canva.getZoom()
 
         if (allObjects.length > 0) {
             const group = new fabric.Group(allObjects);
             canva.discardActiveObject();
 
+            var newRectLeft = canvasCenter.x - sign.width / 2;
+            var newRectTop = canvasCenter.y - sign.height / 2;
+
+            var hLine = handleGetObjectByName('heightLine', canva)
+            var hValue = handleGetObjectByName('height-value', canva)
+
+            var wLine = handleGetObjectByName('widthtLine', canva)
+            var wValue = handleGetObjectByName('width-value', canva)
+
+            var wDiff = group.width - (sign.width + 55 + hValue.height - 15)
+            var hDiff = group.height - (sign.height + 65 + wValue.height)
+
+
+            var widthDiff = group.width - sign.width
+            if(canva.name === 'front-face'){
+                // console.log(group.width, sign.width, hLine.width, hValue.height, "heightLine")
+            }
+
             // Centrer le groupe
-            group.set('left', canvasCenter.x - sign.width/2)
-            group.set('top', canvasCenter.y - sign.height/2)
+            group.set('left', newRectLeft - wDiff)
+            group.set('top', newRectTop - hDiff)
 
             group.setCoords();
 

@@ -6966,7 +6966,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
     // ratioScale = templateData.size.ratioScale
     canvasJson.objects.forEach(function (obj) {
       fabric.util.enlivenObjects([obj], function (templateObject) {
-        console.log(templateObject, "rtertertert")
         if (templateObject[0].name === "safeObject") {
           rect = templateObject[0];
           if (typeof templateObject[0].fill !== "string") {
