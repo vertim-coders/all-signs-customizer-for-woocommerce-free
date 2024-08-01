@@ -2097,7 +2097,6 @@
     
     import opentype from 'opentype.js'
     import { load } from 'opentype.js'
-    const wawoff = require('wawoff2');
 
     const route = useRoute();
     const template_config_id = route.params.configId;

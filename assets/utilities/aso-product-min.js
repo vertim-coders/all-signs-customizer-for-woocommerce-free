@@ -1,26 +1,6 @@
-var aso_ajax_url = ajaxurl;
 (function ($) {
   "use strict";
   $(function () {
-    /* const send_manufactrer_email = function (product_id, data) {
-      $.post(
-        aso_ajax_url,
-        {
-          action: "aso_send_manufactrer_email",
-          product_id: product_id,
-          order_id: data.order_id,
-          recaps: data.recaps,
-        },
-        function (data) {
-          if (data.success) {
-            toastMessage(data.success);
-          } else {
-            toastMessage(data.error, "error");
-          }
-        }
-      );
-    }; */
-
     $(document).on("click", ".aso_admin_generate_zip_file", function (e) {
       e.preventDefault();
       $(this).prop("disabled", true);
@@ -29,7 +9,7 @@ var aso_ajax_url = ajaxurl;
       var nonce = $(this).data("nonce");
       console.log(item_id, nonce);
       $.post(
-        aso_ajax_url,
+        ajaxurl,
         {
           action: "aso_generate_order_zip_file",
           nonce: nonce,

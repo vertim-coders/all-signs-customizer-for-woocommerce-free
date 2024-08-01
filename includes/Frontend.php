@@ -24,7 +24,8 @@ class ASO_Frontend {
     public function render_aso_configurator( $atts, $content = '' ) {
         wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
         wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
-        wp_enqueue_script( 'aso-frontend' );
+        wp_enqueue_script( 'aso-frontend',ASO_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASO_PATH . '/assets/js/frontend.js' ) );
+        wp_enqueue_script( 'aso-frontend');
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
         extract( // phpcs:ignore
@@ -200,13 +201,6 @@ class ASO_Frontend {
                         <?php 
                         $this->includes_config_fonts($visibleFonts);
                         $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
-                        wp_localize_script("aso-product-min","aso_configurator_data",$ASO);
-                        wp_localize_script("aso-product-min","aso_data",[
-                            "rest_url"=>get_rest_url()."aso/v1",
-                            "page"=>"configurator",
-                            "site_url"=>urlencode(get_site_url()),
-                            "author"=>ASO_ID
-                        ]);
 
                         wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-frontend","aso_data",[
@@ -250,7 +244,8 @@ class ASO_Frontend {
     public function render_aso_templates ($atts, $content=''){
         wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
         wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
-        wp_enqueue_script( 'aso-frontend' );
+        wp_enqueue_script( 'aso-frontend',ASO_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASO_PATH . '/assets/js/frontend.js' ) );
+        wp_enqueue_script( 'aso-frontend');
         extract( // phpcs:ignore
 			shortcode_atts(
 				array(
@@ -313,23 +308,6 @@ class ASO_Frontend {
                     if(count($templates)>0){ ?>
                         <div id='aso-frontend-app' class="aso-templates"></div>
                         <?php
-                        wp_localize_script("aso-product-min","aso_templates",[
-                            "data"=>$templates,
-                            "categories"=>$categories,
-                            "productId"=>$productid,
-                            "grid_cols"=>$cols,
-                            "pageConfigs"=>get_option("aso_config_page"),
-                            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
-                            "design_page_url"=>$aso_product->get_design_page_url(),
-                            "currencySymbol"=>html_entity_decode(get_woocommerce_currency_symbol())
-                        ]);
-                        wp_localize_script("aso-product-min","aso_data",[
-                            "rest_url"=>get_rest_url()."aso/v1",
-                            "page"=>"templates",
-                            "site_url"=>urlencode(get_site_url()),
-                            "author"=>ASO_ID
-                        ]);
-
                         wp_localize_script("aso-frontend","aso_templates",[
                             "data"=>$templates,
                             "categories"=>$categories,

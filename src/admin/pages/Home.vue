@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div class="aso-p-4">
-                            <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Get Support</a>
+                            <a href="https://signsdesigner.us/all-signs-options-product/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Get Support</a>
                             <div>
                                 <span>Start the conversation from our site via the chat button and we'll get back to you</span>
                             </div>
@@ -47,7 +47,7 @@
                             </svg>
                         </div>
                         <div class="aso-p-4">
-                            <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Knowledgebase</a>
+                            <a href="https://docs.signsdesigner.us/docs/aso-wp-documentation/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Knowledgebase</a>
                             <div>
                                 <span>Reduce your learning curve and get started with ASO in no time by reading our FAQ!</span>
                             </div>
@@ -61,7 +61,7 @@
 
                         </div>
                         <div class="aso-p-4">
-                            <a href="https://signsdesigner.us/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Suggest a Feature</a>
+                            <a href="https://docs.signsdesigner.us/forums/forum/feedback-suggestions/" class="aso-text-[14px] aso-text-none aso-text-white hover:aso-text-white focus:aso-border-none focus:aso-text-white aso-m-0 aso-mb-2">Suggest a Feature</a>
                             <div>
                                 <span>We're always working to improve ASO, so we'd love to hear how we can do better.</span>
                             </div>
