@@ -2391,7 +2391,7 @@
             handleGetImageSettings(configImageSettings.value)
             // console.log(configImageSettings.value)
     
-            handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'), allFonts.value[0].url)
+            handleGetCurrentUnit(configSettings.value.customizerSign.customizerOptions.measurementUnit, configTextFontSettings.value.defaultFontSize, configTextFontSettings.value.minimumFontSize, configTextFontSettings.value.maximumFontSize, (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial'), (allFonts.value.length > 0 ? allFonts.value[0].url : ''))
             handleGetDefaultText(
                 {
                     width: (configVisualiserTexts.value.textWidth && configVisualiserTexts.value.textWidth.trim() !== '' ? configVisualiserTexts.value.textWidth : 'width'),
@@ -5666,9 +5666,9 @@
     }
     var fontFamSelected = ref("Arial")
     var allFonts = ref([])
-    function changeTextFontFam(font, url, index){
+    async function changeTextFontFam(font, url, index){
         fontFamSelected.value = font
-        handleChangeTextFontFam(font, url)
+        await handleChangeTextFontFam(font, url)
     }
     var customTextColor = ref("#000000")
     function changeTextColor(color){
