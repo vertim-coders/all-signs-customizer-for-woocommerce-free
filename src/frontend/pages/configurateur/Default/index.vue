@@ -2027,7 +2027,7 @@
 
 <script setup>
     import { ref, onMounted, defineProps, onBeforeUnmount } from 'vue';
-    import {handleCheckTemplate, handleReadyToSaveState, 
+    import {getSignInfos, handleCheckTemplate, handleReadyToSaveState, 
         handleGetCanvas, handleGetCurrentUnit,
         handleGetDefaultText,
         handleUndo,
@@ -2796,6 +2796,7 @@
 
     var isTemplate = ref(false)
     function selectTemplate(data, statut){
+        console.log(data)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -2829,6 +2830,8 @@
         var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name)
         selectMaterial(props.config.data.materials[templateMaterialId])
 
+        var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
+
         //selection de border
         if(sign.material.type === 'simple'){
             if(borderrs.value.allBorders.length > 0){
@@ -2840,10 +2843,17 @@
                     })
                 })
             }
-            var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)
-            border1ExcludeShapes.value = matchingBorders.value[currentBorder1Id].borderr.excludeShapes
-            border1ExcludeSizes.value = matchingBorders.value[currentBorder1Id].borderr.excludeSizes
+            var currentBorder1Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face1.type)            
+            var currentBorder = matchingBorders.value[currentBorder1Id]
+
+            border1ExcludeShapes.value = currentBorder.borderr.excludeShapes
+            border1ExcludeSizes.value = currentBorder.borderr.excludeSizes
     
+            borderColors1.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
+            customBorderColor1.value = borderrs.value.settings.enableBorderColor
+
+            selectBorder(currentBorder.border.value, currentBorder.borderr.settings, currentBorder.borderr.additionalPrice, currentBorder.borderr.excludeShapes, currentBorder.borderr.excludeSizes, currentBorder1Id)
+
             activeFace1Border.value = sign.border.face1.type;
             borderColorName1.value = sign.border.face1.color;
             activeFace1BorderColor.value = sign.border.face1.codeHex
@@ -2855,13 +2865,20 @@
             //verification pour la seconde face si existante
             if(sign.doubleFace === true){
                 var currentBorder2Id = matchingBorders.value.findIndex((item, index) => item.border.value === sign.border.face2.type)
+                var currentBorder2 = matchingBorders.value[currentBorder2Id]
+                
                 border2ExcludeShapes.value = matchingBorders.value[currentBorder2Id].borderr.excludeShapes
                 border2ExcludeSizes.value = matchingBorders.value[currentBorder2Id].borderr.excludeSizes
     
+                borderColors2.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
+                customBorderColor2.value = borderrs.value.settings.enableBorderColor
     
                 activeFace2Border.value = sign.border.face2.type;
                 borderColorName2.value = sign.border.face2.color
                 activeFace2BorderColor.value = sign.border.face2.codeHex
+
+                borderColors2.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
+
                 if(sign.border.face2.type !== 'none' && sign.border.face2.codeHex !== ('' || null)){
                     colorForBorder2.value = true
                 }
@@ -2869,8 +2886,6 @@
     
             } 
         }
-
-        var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
 
         //selection de fixing methode
         if(fixinggs.value.length > 0){
@@ -3000,20 +3015,50 @@
 
 
 
-
+        //recuperation des données por le chargement 
         var stopSize = false
         if(sizees.value.length >0){
-            sizees.value.forEach((sizee, id) => {
-                if(sizee.isDefault){
-                    currentSizeId.value = id
-                    stopSize = true
+            var index = 0
+            var haveDefault = false
+            while (index < sizees.value.length && !haveDefault) {
+                if(sizees.value[index].isDefault){
+                    var sizeData = {
+                        label: sizees.value[index].label,
+                        width: sizees.value[index].width,
+                        height: sizees.value[index].height,
+                        // thickness: (sizees.value[index].thickness.active ? sizees.value[index].thickness : {active: false, value: 0}),
+                    };
+                    var settings = {
+                        textNumber: sizees.value[index].textNumber, 
+                        charPrice: sizees.value[index].charPrice,
+                        basePrice: sizees.value[index].basePrice,
+                        maxTextChar: sizees.value[index].maxTextChar,
+                        startPriceAtChar: sizees.value[index].startPriceAtChar,
+                    }
+                    haveDefault = true
+                    getSignInfos(sizeData)
+                    currentSizeId.value = index
+                    break;
                 }
-                // if(!sizee.isDefault && !stopSize){
-                //     // console.log("change")
-                //     changeSize(size, sizee, id)
-                //     stopSize = true
-                // }
-            })
+                index++;
+            }
+            if(!haveDefault){
+                var sizeData = {
+                    label: sizees.value[0].label,
+                    width: sizees.value[0].width,
+                    height: sizees.value[0].height,
+                    // thickness: (sizees.value[0].thickness.active ? sizees.value[0].thickness : {active: false, value: 0}),
+                };
+                var settings = {
+                    textNumber: sizees.value[0].textNumber, 
+                    charPrice: sizees.value[0].charPrice,
+                    basePrice: sizees.value[0].basePrice,
+                    maxTextChar: sizees.value[0].maxTextChar,
+                    startPriceAtChar: sizees.value[0].startPriceAtChar,
+                }
+                getSignInfos(sizeData)
+                currentSizeId.value = 0
+            }
         }else{
             var size ={
                 width: 0,
@@ -3021,6 +3066,32 @@
             }
             changeSize(size)
         }
+        if(shapees.value.length >0){
+            var matchingShapes = []
+            shapees.value.forEach((shapee, id) => {
+                allShapes.value.forEach((shape, index) => {
+                    if(shapee.shapeId == index){
+                        matchingShapes.push({shape, shapee})
+                    }
+                })
+            })
+            let index = 0
+            var haveDefault = false
+            while (index < matchingShapes.length && !haveDefault) {
+                if(matchingShapes[index].shapee.isDefault){
+                    handleGetShape(matchingShapes[index].shape.value)
+                    haveDefault = true
+                    break;
+                }
+                index++;
+            }
+            if(!haveDefault){
+                handleGetShape(matchingShapes[0].shape.value)
+            }
+        }else{
+
+        }
+
         var stopColor = false
         if(colorrs.value.allColors.length > 0){
             var index = 0
@@ -3113,8 +3184,6 @@
                 allBorders.value.forEach((border, index) => {
                     if(borderr.manageBorderId == index){
                         matchingBorders.value.push({border, borderr})
-            // console.log(matchingBorders.value)
-
                     }
                 })
             })
@@ -4535,7 +4604,6 @@
             name: 'none',
             price: 0
         }
-        console.log(textsPrices.value, "price")
         getOptionPrice(priceObject)
 
         if(firstSetLoad.value){
@@ -5794,7 +5862,7 @@
             }
             if(border === 'rounded-corners'){
                 var borderObject = handleGetObjectByName('rounded-corners-border', canva)
-                color = borderObject.fill
+                color = borderObject.stroke
             }
 
             return color
@@ -6067,11 +6135,11 @@
             function supprimerNonChiffres(chaine) {
                 return chaine.replace(/[^0-9]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -6130,6 +6198,7 @@
                     fixingMethod: {
                         type: activeFixingMethode.value,
                         ratio: activeCanvas.fixingRatio,
+                        scale: activeCanvas.fixingScale,
                     },
                 },
                 texts: {

@@ -101,6 +101,7 @@ function handleCloneCanvas() {
     "lockRotate",
     "lockEdition",
     "fixingRatio",
+    "fixingScale",
     "ratioScale",
     "objectType",
     "imageUrl",
@@ -213,6 +214,7 @@ function updateModifications(good, position) {
       "lockRotate",
       "lockEdition",
       "fixingRatio",
+      "fixingScale",
       "ratioScale",
       "objectType",
       "imageUrl",
@@ -234,6 +236,7 @@ function updateModifications(good, position) {
       "lockRotate",
       "lockEdition",
       "fixingRatio",
+      "fixingScale",
       "ratioScale",
       "objectType",
       "imageUrl",
@@ -804,15 +807,27 @@ function handleMiseAEchelle(rW, rH) {
     fixScale = 0.25;
     canvas.fixingRatio = sizeRatio;
     backCanvas.fixingRatio = sizeRatio;
+    canvas.fixingScale = fixScale;
+    backCanvas.fixingScale = fixScale;
   } else {
     fixScale = 0.35;
     canvas.fixingRatio = sizeRatio;
     backCanvas.fixingRatio = sizeRatio;
+    canvas.fixingScale = fixScale;
+    backCanvas.fixingScale = fixScale;
   }
   if (signHPx >= signWPx / 2) {
     sizeRatio = "big";
+    canvas.fixingRatio = sizeRatio;
+    backCanvas.fixingRatio = sizeRatio;
+    canvas.fixingScale = fixScale;
+    backCanvas.fixingScale = fixScale;
   } else {
     sizeRatio = "small";
+    canvas.fixingRatio = sizeRatio;
+    backCanvas.fixingRatio = sizeRatio;
+    canvas.fixingScale = fixScale;
+    backCanvas.fixingScale = fixScale;
   }
 
   if (signWPx > signHPx) {
@@ -1075,15 +1090,16 @@ function handleChangeSize(width, height, name, maxChar) {
           "Thickness" + ": " + currentThickness + " " + currentUnit
         );
       }
-      if (selectedShape == "square") {
-        if (object.name == "old-world-border") {
-          var scaleX = newSignWidth / object.width;
-          var scaleY = newSignHeight / object.height;
-          object.left = newRectLeft;
-          object.top = newRectTop;
-          object.scaleX = scaleX;
-          object.scaleY = scaleY;
-        }
+      if (selectedShape == "square" || selectedShape == "rounded-square") {
+        // if (object.name == "old-world-border") {
+        //   console.log('Please')
+        //   var scaleX = newSignWidth / object.width;
+        //   var scaleY = newSignHeight / object.height;
+        //   object.left = newRectLeft;
+        //   object.top = newRectTop;
+        //   object.scaleX = scaleX;
+        //   object.scaleY = scaleY;
+        // }
       }
     });
     canvas.renderAll();
@@ -1199,15 +1215,7 @@ function handleChangeSize(width, height, name, maxChar) {
   );
 
   handleCalcTextPrice();
-  // if(activeSignFace === 'front' && frontTextCharLength > 0){
-  // }
-  // if(activeSignFace === 'back' && backTextCharLength > 0){
-  //     handleCalcTextPrice(BtextObjects[BtextObjects.length - 1])
-  // }
-
-  // if(!firstLoad){
-  //     updateModifications(true, "selection de la size");
-  // }
+  console.log(handleGetObjectByName("safeObject", backCanvas))
 
   firstLoad = true;
   return {
@@ -1522,9 +1530,34 @@ function handleGetBorderData(face, data) {
   }
 }
 
+var signData = {}
+function getSignInfos(data){
+  signData = data
+}
 function setNormalBorber(canva, size, color) {
-  var sign = handleGetObjectByName('safeObject', canva);
+  var sign
+  if(firstLoad){
+    sign = handleGetObjectByName('safeObject', canva);
+  }else{
+    console.log(signData, "signData")
+
+    var newSignWidth = handleMiseAEchelle(signData.width, signData.height).width;
+    var newSignHeight = handleMiseAEchelle(signData.width, signData.height).height;
+    var canvasCenter = getCanvasCenter();
+    var newRectLeft = canvasCenter.x - newSignWidth / 2;
+    var newRectTop = canvasCenter.y - newSignHeight / 2;
+
+    sign = {
+      width: newSignWidth,
+      height: newSignHeight,
+      left: newRectLeft,
+      top: newRectTop,
+      fill: color,
+    }
+  }
   var border;
+
+  // var selectedShape = 'square'
 
   switch (selectedShape) {
     case "square":
@@ -1742,7 +1775,8 @@ function setNormalBorber(canva, size, color) {
 }
 
 function handleSelectBorder(border, color) {
-  // console.log("handleSelectBorder", border);
+  // console.log("handleSelectBorder", border, color);
+
   if (!firstLoad || restartBorderSet) {
     activeBorder = border;
     activeBorder2 = border;
@@ -1783,16 +1817,10 @@ function handleSelectBorder(border, color) {
           }
           if (currBorder === "normal") {
             removeBorder(canva);
-            if (sizeRatio == "small") {
-              var border = setNormalBorber(canva, 10, activeColor)
-              canva.add(border)
-              border.sendToBack()
-            }
-            if (sizeRatio == "big") {
-              var border = setNormalBorber(canva, 12, activeColor)
-              canva.add(border)
-              border.sendToBack() 
-            }
+            var border = setNormalBorber(canva, 10, activeColor)
+            canva.add(border)
+            border.sendToBack()
+
             object.shadow = null
           }
           if (currBorder === "old-world") {
@@ -1829,7 +1857,7 @@ function handleSelectBorder(border, color) {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
 
-                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+                    // console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
 
                     const svgGroup = fabric.util.groupSVGElements(objects);
                     svgGroup.set("fill", activeColor);
@@ -1844,7 +1872,7 @@ function handleSelectBorder(border, color) {
                     canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
-                    console.log("svg", svgGroup, object);
+                    // console.log("svg", svgGroup, object);
                   }
                 );
               }else if(object.width > object.height && object.width < (2*object.height)){
@@ -1876,7 +1904,7 @@ function handleSelectBorder(border, color) {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
 
-                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+                    // console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
 
                     const svgGroup = fabric.util.groupSVGElements(objects);
                     svgGroup.set("fill", activeColor);
@@ -1891,7 +1919,7 @@ function handleSelectBorder(border, color) {
                     canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
-                    console.log("svg", svgGroup, object);
+                    // console.log("svg", svgGroup, object);
                   }
                 );
               }else if(object.height > object.width && object.height < (2*object.width)){
@@ -1951,7 +1979,7 @@ function handleSelectBorder(border, color) {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
 
-                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+                    // console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
 
                     const svgGroup = fabric.util.groupSVGElements(objects);
                     svgGroup.set("stroke", activeColor);
@@ -1966,7 +1994,7 @@ function handleSelectBorder(border, color) {
                     canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
-                    console.log("svg", svgGroup, object);
+                    // console.log("svg", svgGroup, object);
                   }
                 );
               }else if(object.width > object.height && object.width < (2*object.height)){
@@ -1998,7 +2026,7 @@ function handleSelectBorder(border, color) {
                     var scaleX = object.width / objects[0].width;
                     var scaleY = object.height / objects[0].height;
 
-                    console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
+                    // console.log(object.scaleX, object.scaleY, scaleX, scaleY, "scale")
 
                     const svgGroup = fabric.util.groupSVGElements(objects);
                     svgGroup.set("stroke", activeColor);
@@ -2013,7 +2041,7 @@ function handleSelectBorder(border, color) {
                     canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
-                    console.log("svg", svgGroup, object);
+                    // console.log("svg", svgGroup, object);
                   }
                 );
               }else if(object.height > object.width && object.height < (2*object.width)){
@@ -2059,7 +2087,6 @@ function handleSelectBorder(border, color) {
   return { type: border, color: color };
 }
 function handlechangeBorderColor(color, position) {
-  // console.log(color, position)
   if (!firstLoad) {
     activeBorderColor = color;
     activeBorderColor2 = color;
@@ -2083,16 +2110,10 @@ function handlechangeBorderColor(color, position) {
       if (border === "normal") {
         if(object.name == 'normal-border'){
           canva.remove(object);
-          if (sizeRatio == "small") {
-            var borderNormal = setNormalBorber(canva, 10, color)
-            canva.add(borderNormal)
-            borderNormal.sendToBack()
-          }
-          if (sizeRatio == "big") {
-            var borderNormal = setNormalBorber(canva, 12, color)
-            canva.add(borderNormal)
-            borderNormal.sendToBack() 
-          }
+
+          var borderNormal = setNormalBorber(canva, 10, color)
+          canva.add(borderNormal)
+          borderNormal.sendToBack()
         }
       }
       if (border === "old-world") {
@@ -6960,10 +6981,9 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   }
 
   function loadFromJSON(canva, canvasJson) {
+    // console.log("Loading", canva.name, canva)
     var rect;
     canva.clear();
-    // console.log(canvasJson.objects, "loading")
-    // ratioScale = templateData.size.ratioScale
     canvasJson.objects.forEach(function (obj) {
       fabric.util.enlivenObjects([obj], function (templateObject) {
         if (templateObject[0].name === "safeObject") {
@@ -6973,9 +6993,13 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
             // console.log('WARNING:')
             var image;
             if (canva.name === "front-face") {
+              signBackground1 = "pattern";
+              patternUrl1 = templateData.color.face1.codeHex;
               image = templateData.color.face1.codeHex;
             }
             if (canva.name === "back-face") {
+              signBackground2 = "pattern";
+              patternUrl2 = templateData.color.face2.codeHex;
               image = templateData.color.face2.codeHex;
             }
             fabric.util.loadImage(
@@ -6992,7 +7016,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
                 // canvas.add(pattern);
                 canva.renderAll();
               },
-              { crossOrigin: "anonymous" }
+              // { crossOrigin: "anonymous" }
             );
           }
         }
@@ -8290,22 +8314,22 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   }
 
   loadFromJSON(canvas, canvas1Json);
+  activeBorder = signData.border.face1.type
+  activeBorderColor = signData.border.face1.codeHex
   if (templateData.doubleFace) {
     loadFromJSON(backCanvas, canvas2Json);
+    activeBorder2 = signData.border.face2.type
+    activeBorderColor2 = signData.border.face2.codeHex
   }
 
-  // var currentSizeValues = handleChangeSize(
-  //   templateData.size.width,
-  //   templateData.size.height,
-  //   "Template",
-  //   -1
-  // );
   var currentSizeValues = handleGetSignPosition() 
   
   handleGetShape(templateData.shape);
   // console.log(currentSizeValues)
   resetFixing(canvas);
   handleSelectFixingMethode(templateData.fixingMethod.type);
+  sizeRatio = templateData.fixingMethod.ratio
+  fixScale = templateData.fixingMethod.scale
 
   var sign = handleGetObjectByName("safeObject");
   function setMeasurmentValue(canvas) {
@@ -8360,6 +8384,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   setMeasurmentValue(canvas);
   setMeasurmentValue(backCanvas);
 
+  firstLoad = true
   return {
     size: currentSizeValues,
     texts: addedTexts,
@@ -8454,6 +8479,7 @@ function handleFinishConfiguration(textsTable, imagesTable) {
 }
 
 export {
+  getSignInfos,
   handleCheckTemplate,
   handleReadyToSaveState,
   handleGetCanvas,
