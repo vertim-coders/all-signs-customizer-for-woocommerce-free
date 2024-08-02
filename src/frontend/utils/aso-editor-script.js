@@ -6034,6 +6034,29 @@ function handleGetAddedImageValues(object) {
   );
 }
 var addedImages = [];
+function convertImageToDataURI(imageUrl, callback) {
+    var img = new Image();
+    img.crossOrigin = 'Anonymous'; // Nécessaire pour les images hébergées sur des domaines différents
+
+    img.onload = function() {
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        // Convertir l'image en Data URI
+        var dataURI = canvas.toDataURL('image/png'); // Vous pouvez changer le type MIME si nécessaire
+        callback(dataURI);
+    };
+
+    img.onerror = function() {
+        console.error('Failed to load image at ' + imageUrl);
+    };
+
+    img.src = imageUrl;
+}
 function handleAddImageToSign(image, imageId, price) {
   function isSVGImage(image) {
     var src = image;
@@ -6106,72 +6129,75 @@ function handleAddImageToSign(image, imageId, price) {
         // console.log(img.getSrc(), "image source")
       });
     } else {
-      fabric.Image.fromURL(
-        imgUrl,
-        function (img) {
-          img.scale(0.4);
-
-          img.setCoords();
-          var newWidth = img.width * img.scaleX;
-          var newHeight = img.height * img.scaleY;
-
-          img.top = sign.top + sign.height / 2;
-          img.left = sign.left + sign.width / 2;
-          // img.flipX = true
-          img.uniScaleTransform = true;
-          img.centeredScaling = true;
-          (img.lockScalingFlip = true), (img.originX = "center");
-          img.originY = "center";
-
-          img.id = newId += 1;
-          img.name = "aso-SignImage";
-          img.canvasName = activeCanvas.name;
-          img.priceId = imgId ? imgId : 0;
-          img.price = price ? price : null;
-          img.objectType = "no-svg";
-          img.imageUrl = imgUrl;
-          // img.clipPath = handleClipAddedObject(activeCanvas);
-
-          img.lockMoving = {
-            x: false,
-            y: false,
-          };
-          img.lockScale = false;
-          img.setControlsVisibility({
-            mt: false, // Middle top
-            mb: false, // Middle bottom
-            ml: false, // Middle left
-            mr: false, // Middle right
-            bl: true, // Bottom left
-            br: true, // Bottom right
-            tl: true, // Top left
-            tr: true, // Top right
-          });
-
-          img.on("mousedown", function () {
-            handleGetAddedImageValues(img);
-            // updateModifications(true, "deposer l'image ")
-          });
-          img.on("mouseup", function () {
-            handleGetAddedImageValues(img);
-            // updateModifications(true, "deposer l'image ")
-          });
-
-          activeCanvas.add(img);
-          img.bringToFront();
-          activeCanvas.setActiveObject(img);
-          // lockToCanvas(img)
-
-          handleCenterHorizontally(img);
-          handleCenterVertically(img);
-
-          addedImages.push({ id: img.id, url: imgUrl, object: img });
-
-          updateModifications(true, "==ajout d'image ==");
-          // console.log(img.getSrc(), "image source")
-        },
-        { crossOrigin: "anonymous" }
-      );
+      convertImageToDataURI(imgUrl, function(dataURI) {
+        // console.log(dataURI); // Utiliser le Data URI ici
+        fabric.Image.fromURL(
+          dataURI,
+          function (img) {
+            img.scale(0.4);
+  
+            img.setCoords();
+            var newWidth = img.width * img.scaleX;
+            var newHeight = img.height * img.scaleY;
+  
+            img.top = sign.top + sign.height / 2;
+            img.left = sign.left + sign.width / 2;
+            // img.flipX = true
+            img.uniScaleTransform = true;
+            img.centeredScaling = true;
+            (img.lockScalingFlip = true), (img.originX = "center");
+            img.originY = "center";
+  
+            img.id = newId += 1;
+            img.name = "aso-SignImage";
+            img.canvasName = activeCanvas.name;
+            img.priceId = imgId ? imgId : 0;
+            img.price = price ? price : null;
+            img.objectType = "no-svg";
+            img.imageUrl = imgUrl;
+            // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+            img.lockMoving = {
+              x: false,
+              y: false,
+            };
+            img.lockScale = false;
+            img.setControlsVisibility({
+              mt: false, // Middle top
+              mb: false, // Middle bottom
+              ml: false, // Middle left
+              mr: false, // Middle right
+              bl: true, // Bottom left
+              br: true, // Bottom right
+              tl: true, // Top left
+              tr: true, // Top right
+            });
+  
+            img.on("mousedown", function () {
+              handleGetAddedImageValues(img);
+              // updateModifications(true, "deposer l'image ")
+            });
+            img.on("mouseup", function () {
+              handleGetAddedImageValues(img);
+              // updateModifications(true, "deposer l'image ")
+            });
+  
+            activeCanvas.add(img);
+            img.bringToFront();
+            activeCanvas.setActiveObject(img);
+            // lockToCanvas(img)
+  
+            handleCenterHorizontally(img);
+            handleCenterVertically(img);
+  
+            addedImages.push({ id: img.id, url: imgUrl, object: img });
+  
+            updateModifications(true, "==ajout d'image ==");
+            // console.log(img.getSrc(), "image source")
+          },
+          { crossOrigin: "anonymous" }
+        );
+      });
     }
   }
 
@@ -8433,9 +8459,7 @@ function handleFinishConfiguration(textsTable, imagesTable) {
           arr.push(obj);
         }
       }
-      addTextValues(
-        textsValues,
-        {
+      addTextValues(textsValues, {
           id: text.id,
           values: formatValues(handleGetAddedTextValues(text)),
           textContent: text.text,
