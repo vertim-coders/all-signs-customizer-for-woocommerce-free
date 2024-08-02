@@ -94,7 +94,7 @@ class ASO_Design {
 							<button type="button" class="close" data-dismiss="omodal" aria-hidden="true">&times;</button>
 						</div>
 						<div class="omodal-body">
-							<?php echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false); ?>
+							<?php echo wp_kses_post($this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false)); ?>
 						</div>
 					</div>
 				</div>
@@ -126,7 +126,7 @@ class ASO_Design {
 				</div>
 			</div>
 			<div class="aso-product-links">
-				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo $have_pages_settings["buttons"]["recapsButtonOnCart"] ?></span>
+				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo esc_html($have_pages_settings["buttons"]["recapsButtonOnCart"]) ?></span>
 				<span class="aso-cart-product-preview o-modal-trigger button" data-toggle="o-modal" data-target="#<?php echo esc_attr($preview_modal_id); ?>">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;height: 20px;">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -137,7 +137,7 @@ class ASO_Design {
 			<?php
 			$product_name.=ob_get_clean();		
 		}
-		echo $product_name;
+		echo wp_kses_post($product_name);
 	}
 
 	public function display_recaps_config_on_checkout_page($item_data, $cart_item){
@@ -153,7 +153,7 @@ class ASO_Design {
 						$configId = $product_meta_data[ $product_id ]['config-id'];
                     	$config = get_post_meta($configId,"aso-configs-meta",true);
 						if($config["data"]["settings"]["generals"]["product"]["displayRecapsOnCheckout"]){
-							echo $this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false);
+							echo wp_kses_post($this->display_custom_recaps($cart_item['aso_meta_data']["recaps"],false));
 						}
 					}
 				}
@@ -270,7 +270,7 @@ class ASO_Design {
 							<?php foreach ($face as $image) {?>
 								<div class="aso-custom-options-info-infos" style="display: block !important;">
 									<div>
-										<p><?php echo __("file","all-signs-options-pro") . " : ". $image["infos"]["name"] ?></p>
+										<p><?php echo esc_html__("file","all-signs-options-pro") . " : ". esc_html($image["infos"]["name"]) ?></p>
 									</div>
 									<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
 										<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
@@ -284,7 +284,7 @@ class ASO_Design {
 						<?php foreach ($recaps["images"]["value"] as $key => $image) {?>
 							<div class="aso-custom-options-info-infos" style="display: block !important;">
 								<div>
-									<p><?php echo __("file","all-signs-options-pro") . " : ". $image["infos"]["name"] ?></p>
+									<p><?php echo esc_html__("file","all-signs-options-pro") . " : ". esc_html($image["infos"]["name"]) ?></p>
 								</div>
 								<?php if($admin) { foreach ($image["values"] as $key => $position) {?>
 									<span><?php echo esc_html( $position["label"]). ": " .esc_html( $position["value"]) ;?></span>
@@ -322,7 +322,7 @@ class ASO_Design {
 									<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
 								</div>
 								<div style="margin:10px 0">
-									<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', "all-signs-options-pro")?></a>
+									<a class="button alt aso_admin_download_image" href="<?php echo esc_url($image)?>" download><?php echo esc_html__( 'Download File', "all-signs-options-pro")?></a>
 								</div> 
 							</div>
 						<?php } ?>
@@ -334,7 +334,7 @@ class ASO_Design {
 										<img src="<?php echo esc_url($image)?>" style="width: auto; height: 50px;"/>
 									</div>
 									<div style="margin:10px 0">
-										<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($image)?>" download><?php echo __( 'Download File', "all-signs-options-pro")?></a>
+										<a class="button alt aso_admin_download_image" href="<?php echo esc_url($image)?>" download><?php echo esc_html__( 'Download File', "all-signs-options-pro")?></a>
 									</div> 
 								</div>
 							<?php }
@@ -409,17 +409,17 @@ class ASO_Design {
 		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 		$order_id = $item->get_order_id();
 		if ( $order_id && isset( $order_data ) && !empty( $order_data ) ) {
-			echo $this->display_custom_recaps($order_data["recaps"],true);
+			echo wp_kses_post($this->display_custom_recaps($order_data["recaps"],true));
 			if(isset($order_data["zip"])){?>
 				<div style="margin:10px 0">
-					<a class="button alt aso_admin_download_image" href="<?php echo esc_attr($order_data["zip"])?>" download><?php echo __( 'Download Order Zip file', "all-signs-options-pro")?></a>
+					<a class="button alt aso_admin_download_image" href="<?php echo esc_url($order_data["zip"])?>" download><?php echo esc_html__( 'Download Order Zip file', "all-signs-options-pro")?></a>
 				</div> <?php 
 			}else{
 				?>
 				<div style="margin:10px 0">
 					<button class="button alt aso_admin_generate_zip_file" data-item-id="<?php echo esc_attr($item_id)?>" data-nonce="<?php echo wp_create_nonce('aso_generate_order_zip_file') ?>">
-						<img src="<?php echo ASO_ASSETS.'/images/im_loading.gif' ?>" style="width:10px !important; display:none;"/>
-						<span><?php echo __( 'Generate Order Item Zip file', "all-signs-options-pro")?></span>
+						<img src="<?php echo esc_url(ASO_ASSETS.'/images/im_loading.gif') ?>" style="width:10px !important; display:none;"/>
+						<span><?php echo esc_html__( 'Generate Order Item Zip file', "all-signs-options-pro")?></span>
 					</button>
 				</div> <?php 
 			}
@@ -510,12 +510,9 @@ class ASO_Design {
 		
 		$order_data   = wc_get_order_item_meta( $item_id, 'aso_meta_data' );
 		if ( isset( $order_data ) && !empty( $order_data ) ) {
-			ob_start();
-				if (is_account_page()) {
-					echo $this->display_custom_recaps($order_data["recaps"],true);
-				}
-				
-			echo ob_get_clean();
+			if (is_account_page()) {
+				echo wp_kses_post($this->display_custom_recaps($order_data["recaps"],true));
+			}
 		}
 
 	}
@@ -545,21 +542,18 @@ class ASO_Design {
 					if (file_exists($file)) {
 						$file_content = file_get_contents($file);
 						$zip->addFromString(basename($file), $file_content);
-						unlink($file);
+						wp_delete_file($file);
 					}
 				}
 				preg_match('/^([\d.]+)\s*(\w*)$/', trim($sizes["width"]["value"]), $matches);
-				$unit = isset($matches[2]) ? strtolower($matches[2]) : 'mm';
-				$width = $this->convertToNumber($sizes["width"]["value"]);
-				$height = $this->convertToNumber($sizes["height"]["value"]);
 			
-				$pdfs = $this->save_pdf_output($width, $height, $unit, $previews);
+				$pdfs = $this->save_pdf_output("px", $previews);
 				if(is_array($pdfs) && count($pdfs)>0){
 					foreach ($pdfs as $key => $pdf) {
 						if (file_exists($pdf)) {
 							$pdf_content = file_get_contents($pdf);
 							$zip->addFromString(basename($pdf), $pdf_content);
-							unlink($pdf);
+							wp_delete_file($pdf);
 						}
 					}
 				}
@@ -597,7 +591,7 @@ class ASO_Design {
 	
 	
 	
-	private function save_pdf_output($width, $height, string $unit, array $prevImages) {
+	private function save_pdf_output(string $unit, array $prevImages) {
 
 		if(isset($prevImages["face1"])){
 			$url = [];
@@ -605,6 +599,22 @@ class ASO_Design {
 				$path_parts = pathinfo($face[0]);
 				$ext = $path_parts['extension'];
 				$output_file = $path_parts["filename"];
+				$width = 1080;
+				$height = 800;
+				$response = wp_remote_get($face[0]);
+				if (is_wp_error($response)) {
+					echo "File not found : " . $response->get_error_message();
+				} else {
+					$file_content = wp_remote_retrieve_body($response);
+				
+					if ($file_content !== false) {
+						$image_info = getimagesizefromstring($file_content);
+						if ($image_info !== false) {
+							$width = $image_info[0]*2.5;
+							$height = $image_info[1]*2.5;
+						}
+					}
+				}
 
 				$upload_dirs = ASO_IMAGE_PATH;
 				wp_mkdir_p($upload_dirs);
@@ -679,14 +689,30 @@ class ASO_Design {
 			$ext = $path_parts['extension'];
 			$output_file = $path_parts["filename"];
 
+			$width = 1080;
+			$height = 800;
+			$response = wp_remote_get($prevImages[0]);
+			if (is_wp_error($response)) {
+				error_log("File not found : " . $response->get_error_message());
+			} else {
+				$file_content = wp_remote_retrieve_body($response);
+			
+				if ($file_content !== false) {
+					$image_info = getimagesizefromstring($file_content);
+					if ($image_info !== false) {
+						$width = $image_info[0]*10;
+						$height = $image_info[1]*10;
+					}
+				}
+			}
 			$upload_dirs = ASO_IMAGE_PATH;
 			wp_mkdir_p($upload_dirs);
 			$output_file = $upload_dirs . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.pdf';
 			if ($ext != 'svg') {
 				require_once ASO_INCLUDES . DIRECTORY_SEPARATOR . 'tcpdf' . DIRECTORY_SEPARATOR . 'tcpdf.php';
 				$pdf_orientation = "p";
-				$pdf_margin_lr = 0;
-				$pdf_margin_tb = 0;
+				$pdf_margin_lr = 10;
+				$pdf_margin_tb = 10;
 				define('MILIMETER_VALUE', 0.264583333);
 		
 				//$pdf_unit = PDF_UNIT;
@@ -718,7 +744,7 @@ class ASO_Design {
 				// set image scale factor.
 				$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 		
-				$pdf->AddPage();
+				$pdf->AddPage('L');
 		
 				$pdf->Image(
 					$prevImages[0], // Input file.

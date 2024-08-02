@@ -107,24 +107,46 @@
 	*/
 	private function display_aso_config_on_WC_product_config( $pid, $configs_ids, $title ) {
 		$meta = get_post_meta($pid,'product-aso-metas',true);
-		$container="<div class='bg-black p-4'>".
-			"<h2>".esc_html($title)."</h2>".
-			"<div>
-				<select name='product-aso-metas[".esc_attr($pid)."][config-id]'>";
-				
-					foreach ($configs_ids as $id=>$values) {
-						foreach($values as $value){
-							$container.= "<option value='".esc_attr($id)."' ";
-								if(isset($meta[$pid]["config-id"]) && $meta[$pid]["config-id"]==$id){
-									$container.=' selected';
-								}
-								$container.=">".esc_html($value)."</option>";
-						}
-					}
-				$container.="</select>";
-				$container.="<input type='hidden' name='aso_config_nonce' value='".wp_create_nonce( 'aso_config_nonce' )."'/>
-			</div></div>";
-		echo $container;
+		$container = "<div class='bg-black p-4'>" .
+			"<h2>" . esc_html($title) . "</h2>" .
+			"<div>" .
+			"<select name='product-aso-metas[" . esc_attr($pid) . "][config-id]'>";
+	
+		foreach ($configs_ids as $id => $values) {
+			foreach ($values as $value) {
+				$container .= "<option value='" . esc_attr($id) . "' ";
+				if (isset($meta[$pid]["config-id"]) && $meta[$pid]["config-id"] == $id) {
+					$container .= ' selected';
+				}
+				$container .= ">" . esc_html($value) . "</option>";
+			}
+		}
+	
+		$container .= "</select>";
+		$container .= "<input type='hidden' name='aso_config_nonce' value='" . wp_create_nonce('aso_config_nonce') . "'/>";
+		$container .= "</div></div>";
+	
+		// Définition des balises HTML autorisées et de leurs attributs
+		$allowed_html = array(
+			'div' => array(
+				'class' => array(),
+			),
+			'h2' => array(),
+			'select' => array(
+				'name' => array(),
+			),
+			'option' => array(
+				'value' => array(),
+				'selected' => array(),
+			),
+			'input' => array(
+				'type' => array(),
+				'name' => array(),
+				'value' => array(),
+			),
+		);
+	
+		echo wp_kses($container, $allowed_html);
 	}
 
 	/**
@@ -225,7 +247,7 @@
 				}
 				$aso_product = new aso_Product_Config( $variation['variation_id'] );
 				if( $aso_product->is_aso_customizable() ) {
-					echo $aso_product->get_design_buttons( $with_upload );
+					echo wp_kses_post($aso_product->get_design_buttons( $with_upload ));
 				}
 			}
 			
@@ -276,7 +298,7 @@
 				}
 				$aso_product = new aso_Product_Config( $variation['variation_id'] );
 				if( $aso_product->is_aso_customizable() ) {
-					echo $aso_product->get_templates_buttons( $with_upload );
+					echo wp_kses_post($aso_product->get_templates_buttons( $with_upload ));
 				}
 			}
 			
@@ -686,7 +708,7 @@
 				if (isset($upload["name"])) {
 					$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $upload["name"];
 					if (file_exists($file)) {
-						unlink($file);
+						wp_delete_file($file);
 					}
 				}
 			}
@@ -698,7 +720,7 @@
 						if (isset($path_parts["filename"], $path_parts['extension'])) {
 							$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
 							if (file_exists($file)) {
-								unlink($file);
+								wp_delete_file($file);
 							}
 						}
 					}
@@ -710,7 +732,7 @@
 						if (isset($path_parts["filename"], $path_parts['extension'])) {
 							$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
 							if (file_exists($file)) {
-								unlink($file);
+								wp_delete_file($file);
 							}
 						}
 					}

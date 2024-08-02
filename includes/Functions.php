@@ -31,41 +31,72 @@
         }
         return $preview_img;
 	}
+
 	/**
 	 * save preview image
 	 */
-	function aso_save_upload_images( $images) {
-		$upload_dirs = ASO_IMAGE_PATH;
-		wp_mkdir_p( $upload_dirs );
-		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
-        $preview_imgs=[];
-        if(isset($images['face1'])){
-            foreach ($images as $key=>$face) {
+	function aso_save_upload_images( $images ) {
+        $upload_dirs = ASO_IMAGE_PATH;
+        wp_mkdir_p( $upload_dirs );
+        $upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
+        $preview_imgs = [];
+        
+        if (isset($images['face1'])) {
+            foreach ($images as $key => $face) {
                 foreach ($face as $index => $image) {
-                    $file_data = base64_decode(explode(',', $image["url"])[1]);
-                    $file_extension = explode('/', mime_content_type($image["url"]))[1];
-                    $name                     = uniqid( 'aso-' );
-                    $file_name = $upload_dir ."$name-$key-file_{$index}.{$file_extension}";
-                    $file_extension = explode("+",$file_extension)[0];
-                    file_put_contents( $file_name, $file_data ); // phpcs:ignore
-                    $preview_imgs[$key][] = ["name"=>"$name-$key-file_{$index}.{$file_extension}","url"=>ASO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                    if (preg_match('/^data:image\/(png|jpeg|jpg|gif|svg\+xml);base64,/', $image["url"])) {
+                        // Handle Data URI
+                        $file_data = base64_decode(explode(',', $image["url"])[1]);
+                        $file_extension = explode('/', mime_content_type($image["url"]))[1];
+                        $file_extension = explode("+", $file_extension)[0];
+                        $name = uniqid('aso-');
+                        $file_name = $upload_dir . "$name-$key-file_{$index}.{$file_extension}";
+                        file_put_contents($file_name, $file_data); // phpcs:ignore
+                        $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                    } else {
+                        // Handle URL
+                        $response = wp_remote_get($image["url"]);
+                        if (is_array($response) && !is_wp_error($response)) {
+                            $file_data = wp_remote_retrieve_body($response);
+                            $file_extension = pathinfo($image["url"], PATHINFO_EXTENSION);
+                            $name = uniqid('aso-');
+                            $file_name = $upload_dir . "$name-$key-file_{$index}.{$file_extension}";
+                            file_put_contents($file_name, $file_data); // phpcs:ignore
+                            $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                        }
+                    }
                 }
             }
-        }else{
-            if(isset($images)){
+        } else {
+            if (isset($images)) {
                 foreach ($images as $index => $image) {
-                    $file_data = base64_decode(explode(',', $image["url"])[1]);
-                    $file_extension = explode('/', mime_content_type($image["url"]))[1];
-                    $name                     = uniqid( 'aso-' );
-                    $file_extension = explode("+",$file_extension)[0];
-                    $file_name = $upload_dir ."$name-file_{$index}.{$file_extension}";
-                    file_put_contents( $file_name, $file_data ); // phpcs:ignore
-                    $preview_imgs[] = ["name"=>"$name-file_{$index}.{$file_extension}","url"=>ASO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];                    
+                    if (preg_match('/^data:image\/(png|jpeg|jpg|gif|svg\+xml);base64,/', $image["url"])) {
+                        // Handle Data URI
+                        $file_data = base64_decode(explode(',', $image["url"])[1]);
+                        $file_extension = explode('/', mime_content_type($image["url"]))[1];
+                        $file_extension = explode("+", $file_extension)[0];
+                        $name = uniqid('aso-');
+                        $file_name = $upload_dir . "$name-file_{$index}.{$file_extension}";
+                        file_put_contents($file_name, $file_data); // phpcs:ignore
+                        $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
+                    } else {
+                        // Handle URL
+                        $response = wp_remote_get($image["url"]);
+                        if (is_array($response) && !is_wp_error($response)) {
+                            $file_data = wp_remote_retrieve_body($response);
+                            $file_extension = pathinfo($image["url"], PATHINFO_EXTENSION);
+                            $name = uniqid('aso-');
+                            $file_name = $upload_dir . "$name-file_{$index}.{$file_extension}";
+                            file_put_contents($file_name, $file_data); // phpcs:ignore
+                            $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
+                        }
+                    }
                 }
             }
         }
         return $preview_imgs;
-	}
+    }
+    
 	
 	/**
 	 * add or edit product to cart
