@@ -742,7 +742,9 @@ final class ASO_All_Signs_Options
                 <div>
                     <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
                     <p><?php esc_html_e('To enable eCommerce features you need to install or activate the WooCommerce plugin.', "all-signs-options-pro"); ?></p>
-                    <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-options-pro"), __('Activate WooCommerce', "all-signs-options-pro"), __('Install WooCommerce', "all-signs-options-pro")); ?></p>
+                    <p>
+                        <a href="https://wordpress.org/plugins/woocommerce/" target="_blank"><?php esc_html__('Install WooCommerce', 'all-signs-options-pro'); ?></a>
+                    </p>
                 </div>
             </div>
             <?php

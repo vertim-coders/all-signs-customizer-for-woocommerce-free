@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px] aso-invisible">
+                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
                         <label for="" class="aso-font-bold">Upload Option Backgound Image</label>
                         <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
                             <div class="aso-flex aso-space-x-2">

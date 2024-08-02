@@ -2852,7 +2852,8 @@
             borderColors1.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
             customBorderColor1.value = borderrs.value.settings.enableBorderColor
 
-            selectBorder(currentBorder.border.value, currentBorder.borderr.settings, currentBorder.borderr.additionalPrice, currentBorder.borderr.excludeShapes, currentBorder.borderr.excludeSizes, currentBorder1Id)
+            // selectBorder(currentBorder.border.value, currentBorder.borderr.settings, currentBorder.borderr.additionalPrice, currentBorder.borderr.excludeShapes, currentBorder.borderr.excludeSizes, currentBorder1Id)
+            handleSelectBorder(currentBorder.border.value, sign.border.face1.codeHex)
 
             activeFace1Border.value = sign.border.face1.type;
             borderColorName1.value = sign.border.face1.color;

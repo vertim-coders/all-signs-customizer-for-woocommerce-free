@@ -24,8 +24,6 @@ class ASO_Frontend {
     public function render_aso_configurator( $atts, $content = '' ) {
         wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
         wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
-        wp_enqueue_script( 'aso-frontend',ASO_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASO_PATH . '/assets/js/frontend.js' ) );
-        wp_enqueue_script( 'aso-frontend');
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
         extract( // phpcs:ignore
@@ -45,48 +43,48 @@ class ASO_Frontend {
                 <div
                     style="display: flex; flex-direction: column; width: 92%; height: 100%; margin-left: 10px; margin-right: 10px;">
                     <div style="width: 100%; height: 10%; margin-top: 10px; display: flex; justify-content: space-between;">
-                        <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                        <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
                         </div>
                         <div style="width: 31.33%; height: 100%; display: flex; justify-content: space-between;">
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
                             </div>
                         </div>
-                        <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;">
+                        <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
                         </div>
                     </div>
 
                     <div style="width: 100%; height: 90%; margin-top: 20px;">
                         <div style="width: 100%; height: 80%; display: flex; justify-content: center; align-items: center;">
-                            <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 40%; height: 50%">
+                            <div style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 40%; height: 50%;animation: pulseGradient 1.5s ease infinite;">
                             </div>
                         </div>
 
                         <div
                             style="width: 100%; height: 20%; display: flex; justify-items: center; justify-content: center; align-items: center;">
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;animation: pulseGradient 1.5s ease infinite;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;animation: pulseGradient 1.5s ease infinite;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
                             </div>
                             <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
+                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
                             </div>
                         </div>
                     </div>
@@ -141,6 +139,8 @@ class ASO_Frontend {
                                 $visibleFonts[]=$all_fonts[$font];
                             }
                         }
+                        $this->includes_config_fonts($visibleFonts);
+                        $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
                         $visibleCliparts = [];
                         foreach ( $config_cliparts as $part ) {
                             if(isset($all_cliparts_groups[$part])){
@@ -173,7 +173,7 @@ class ASO_Frontend {
                                 $template = '';
                            }
                         }
-                        $ASO = array(
+                        $ASO = [
                             'skin' => $config["data"]["settings"]['themeColors']['skin'],
                             'productID' => $productid,
                             'product'   => $product,
@@ -194,14 +194,9 @@ class ASO_Frontend {
                                 "template"=>isset($template) && !is_string($template) ?  $template : []
                             ],
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
-                        );
-                        ?>
-                        <div id='aso-frontend-app' class="aso-configurator-container">
-                        </div>
-                        <?php 
-                        $this->includes_config_fonts($visibleFonts);
-                        $this->include_custom_css($config["data"]["settings"]["themeColors"]["customCSS"]);
-
+                        ];
+                        wp_enqueue_script( 'aso-frontend',ASO_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASO_PATH . '/assets/js/frontend.js' ) );
+                        wp_enqueue_script( 'aso-frontend');
                         wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
                         wp_localize_script("aso-frontend","aso_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
@@ -210,6 +205,10 @@ class ASO_Frontend {
                             "site_url"=>urlencode(get_site_url()),
                             "author"=>ASO_ID
                         ]);
+                        ?>
+                        <div id='aso-frontend-app' class="aso-configurator-container">
+                        </div>
+                        <?php 
                     }
                 }
             }

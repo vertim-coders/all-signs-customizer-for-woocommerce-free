@@ -2075,7 +2075,6 @@
         handleGetBorderData,
         handleSelectBorder,
         handleGetBorderRestart,
-        setSignColor,
         handleChangeSignColor,
         handleGetShape,
         handleSelectShape,

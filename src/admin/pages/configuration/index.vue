@@ -8757,12 +8757,86 @@ const includeMetaData = async (state) => {
         }
         await addNewConfig(configuration);
     }else{
+        isLoading.value = true;
         const configuration = {
             ...newConfig.value,
             data:{
                 ...defaultSettings.value,
                 materials:[]
             }
+        }
+        if(manageFonts.value.length>0){
+            configuration.data.settings.customizerSign.text.selectedFonts = manageFonts.value;
+        }else{
+            await api.addManagefont({many:true,fonts:[
+                {
+                    "label": "Abril Fatface",
+                    "url": "https://fonts.gstatic.com/s/abrilfatface/v23/zOL64pLDlL1D99S8g8PtiKchm-BsjOLhZBY.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Bellefair",
+                    "url": "https://fonts.gstatic.com/s/bellefair/v14/kJExBuYY6AAuhiXUxG19__A2pOdvDA.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Dancing Script",
+                    "url": "https://fonts.gstatic.com/s/dancingscript/v25/If2cXTr6YS-zF4S-kcSWSVi_sxjsohD9F50Ruu7BMSoHTeB9ptDqpw.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Poppins",
+                    "url": "https://fonts.gstatic.com/s/poppins/v21/pxiEyp8kv8JHgFVrFJDUc1NECPY.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Playfair Display",
+                    "url": "https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDQZNLo_U2r.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "PT Sans",
+                    "url": "https://fonts.gstatic.com/s/ptsans/v17/jizaRExUiTo99u79P0WOxOGMMDQ.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Slabo",
+                    "url": "https://fonts.gstatic.com/s/slabo13px/v15/11hEGp_azEvXZUdSBzzRcKer2wkYnvI.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Oswald",
+                    "url": "https://fonts.gstatic.com/s/oswald/v53/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvgUFoZAaRliE.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Lato",
+                    "url": "https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHvxk6XweuBCY.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Lobster",
+                    "url": "https://fonts.gstatic.com/s/lobster/v30/neILzCirqoswsqX9_oWsMqEzSJQ.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Great Vibes",
+                    "url": "https://fonts.gstatic.com/s/greatvibes/v19/RWmMoKWR9v4ksMfaWd_JN-XCg6UKDXlq.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Satisfy",
+                    "url": "https://fonts.gstatic.com/s/satisfy/v21/rP2Hp2yn6lkG50LoOZSCHBeHFl0.ttf",
+                    "isGoogleFont": true
+                },
+                {
+                    "label": "Quicksand",
+                    "url": "https://fonts.gstatic.com/s/quicksand/v31/6xK-dSZaM9iE8KbpRA_LJ3z8mH9BOJvgkP8o18G0wx40QDw.ttf",
+                    "isGoogleFont": true
+                }
+            ]});
+            await fetchFonts();
+            configuration.data.settings.customizerSign.text.selectedFonts = manageFonts.value;
         }
         await addNewConfig(configuration);
     }
