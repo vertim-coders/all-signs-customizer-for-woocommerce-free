@@ -2811,6 +2811,7 @@
         //selection du matériel
         var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name)
         selectMaterial(props.config.data.materials[templateMaterialId])
+        getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
         var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
 

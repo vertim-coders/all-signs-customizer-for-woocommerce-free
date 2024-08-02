@@ -1,3 +1,5 @@
+var FontFaceObserver = require('fontfaceobserver'); 
+
 var fixingUrl = "";
 var borderUrl = "";
 
@@ -1229,6 +1231,28 @@ function handleChangeSize(width, height, name, maxChar) {
 
 function handleGetSignPosition() {
   var sign = handleGetObjectByName("safeObject");
+  var width = signData.width
+  var height = signData.height
+  currentSize = { width: width, height: height };
+
+  // console.log('mise à echelle',handleMiseAEchelle(width, height))
+  if (handleMiseAEchelle(width, height).preWidth) {
+    preWidth = handleMiseAEchelle(width, height).preWidth;
+    preHeight = handleMiseAEchelle(width, height).preHeight;
+  }
+  if (handleMiseAEchelle(width, height).firstHeight) {
+    firstWidth = handleMiseAEchelle(width, height).firstWidth;
+    firstHeight = handleMiseAEchelle(width, height).firstHeight;
+  }
+
+  sizeRatio = handleMiseAEchelle(width, height).sizeRatio;
+  fixScale = handleMiseAEchelle(width, height).fixScale;
+  signRatio = handleMiseAEchelle(width, height).signRatio;
+  ratioScale = handleMiseAEchelle(width, height).ratioScale;
+
+  currentWidth = handleMiseAEchelle(width, height).width;
+  currentHeight = handleMiseAEchelle(width, height).height;
+
 
   return {
     width: sign.width,
@@ -5337,17 +5361,11 @@ function getTextValueToUnit(
 
       var left = objLeft * radio;
 
-      var right =
-        currentSize.width -
-        (convertFromPx(left, currentUnit) +
-          convertFromPx(newWidth, currentUnit));
+      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
 
       var top = objTop * radio;
 
-      var bottom =
-        currentSize.height -
-        (convertFromPx(top, currentUnit) +
-          convertFromPx(newHeight, currentUnit));
+      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
 
       textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
       textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
@@ -5458,8 +5476,7 @@ function handleGetAddedTextValues(transform) {
     var objLeftInContainer = obj.left - objWidht / 2 - container.left;
     var objRightInContainer = container.width - (objLeftInContainer + objWidht);
     var objTopInContainer = obj.top - objHeight / 2 - container.top;
-    var objBottomInContainer =
-      container.height - (objTopInContainer + objHeight);
+    var objBottomInContainer = container.height - (objTopInContainer + objHeight);
 
     selectedText.object = obj;
     selectedText.value = obj.text;
@@ -5478,13 +5495,7 @@ function handleGetAddedTextValues(transform) {
     sizeEditor.value = parseInt(selectedText.size * 12);
 
     // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
-    getTextValueToUnit(
-      container,
-      objWidht,
-      objHeight,
-      objLeftInContainer,
-      objTopInContainer
-    );
+    getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer);
 
     handleCalcTextPrice();
   } else {
@@ -5892,13 +5903,22 @@ function handleChangeTextSize(size, minSize, maxSize) {
 }
 var currenTextFontFam = "";
 var currenTextFontFamUrl = "";
-function handleChangeTextFontFam(font, url) {
-  var currentText = selectedText.object;
-  currentText.set("fontFamily", font);
-  currentText.set("fontFamilyUrl", url);
-  activeCanvas.renderAll();
 
-  handleGetAddedTextValues(currentText);
+async function handleChangeTextFontFam(font, url) {
+  try {
+    var currentText = selectedText.object;
+    const myfont = new FontFaceObserver(font);
+    await myfont.load();
+    
+    currentText.set("fontFamily", font);
+    currentText.set("fontFamilyUrl", url);
+    activeCanvas.renderAll();
+
+    handleGetAddedTextValues(currentText);
+  } catch (e) {
+      console.log(e);
+      alert('font loading failed ' + font);
+  }
 }
 function handleChangeTextColor(color) {
   var currentText = selectedText.object;
@@ -7069,20 +7089,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
             reScaleText(templateObject[0]);
           });
 
-          // console.log(templateObject[0])
           addUniqueObject(addedTexts, templateObject[0], "id");
         }
-
-        // if (templateObject[0].type === 'text' || templateObject[0].type === 'i-text') {
-        //   templateObject[0].set('dirty', true);
-        //   if (templateObject[0].text) {
-        //     // Forcer la mise à jour du texte en le réappliquant
-        //     let currentText = templateObject[0].text;
-        //     // console.log(currentText)
-        //     templateObject[0].set('text', '');
-        //     templateObject[0].set('text', currentText);
-        //   }
-        // }
 
         if (templateObject[0].name === "aso-SignImage") {
           if (statut !== "making") {
@@ -8244,7 +8252,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
                 var newRadius = rect.height * 0.05;
 
                 templateObject[0].left = rect.left + rect.width / 2 - newRadius;
-                templateObject[0].top = rect.top + 15;
+      
+                templateObject[0].top = rect.top + 15;          
               }
             }
             if (signData.shape == "rotated-square") {
@@ -8296,8 +8305,9 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
           if (signData.fixingMethod.type == "s-hook") {
           }
         }
-        
+
         canva.add(...templateObject);
+
       });
     });
   }
@@ -8319,6 +8329,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   handleSelectFixingMethode(templateData.fixingMethod.type);
   sizeRatio = templateData.fixingMethod.ratio
   fixScale = templateData.fixingMethod.scale
+  ratioScale = templateData.size.ratioScale
 
   var sign = handleGetObjectByName("safeObject");
   function setMeasurmentValue(canvas) {
