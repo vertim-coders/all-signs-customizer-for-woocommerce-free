@@ -2833,7 +2833,8 @@
             borderColors1.value = (borderrs.value.settings.colors.length > 0 ? borderrs.value.settings.colors : {} )
             customBorderColor1.value = borderrs.value.settings.enableBorderColor
 
-            selectBorder(currentBorder.border.value, currentBorder.borderr.settings, currentBorder.borderr.additionalPrice, currentBorder.borderr.excludeShapes, currentBorder.borderr.excludeSizes, currentBorder1Id)
+            // selectBorder(currentBorder.border.value, currentBorder.borderr.settings, currentBorder.borderr.additionalPrice, currentBorder.borderr.excludeShapes, currentBorder.borderr.excludeSizes, currentBorder1Id)
+            handleSelectBorder(sign.border.face1.type, sign.border.face1.codeHex)
 
             activeFace1Border.value = sign.border.face1.type;
             borderColorName1.value = sign.border.face1.color;
@@ -5863,8 +5864,8 @@
                 color = sign.stroke
             }
             if(border === 'normal'){
-                var sign = handleGetObjectByName('safeObject', canva)
-                color = sign.stroke
+                var sign = handleGetObjectByName('normal-border', canva)
+                color = sign.fill
             }
             if(border === 'old-world'){
                 var borderObject = handleGetObjectByName('old-world-border', canva)
@@ -5872,7 +5873,7 @@
             }
             if(border === 'rounded-corners'){
                 var borderObject = handleGetObjectByName('rounded-corners-border', canva)
-                color = borderObject.fill
+                color = borderObject.stroke
             }
 
             return color
@@ -6234,7 +6235,7 @@
                 },
                 additionalOptions: customAdditionalValues.value,
             }
-            // console.log(templateData.value, "template")
+            console.log(templateData.value, "template")
         }
 
 

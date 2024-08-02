@@ -1215,7 +1215,6 @@ function handleChangeSize(width, height, name, maxChar) {
   );
 
   handleCalcTextPrice();
-  console.log(handleGetObjectByName("safeObject", backCanvas))
 
   firstLoad = true;
   return {
@@ -1556,9 +1555,6 @@ function setNormalBorber(canva, size, color) {
     }
   }
   var border;
-
-  // var selectedShape = 'square'
-
   switch (selectedShape) {
     case "square":
       border = new fabric.Rect({
