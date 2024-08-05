@@ -2,7 +2,7 @@
     <div class="aso-sticky aso-z-[999] aso-w-full aso-top-[83.5px] aso-shadow-md">
         <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4">
             <div class="aso-text-[16px] aso-font-bold">
-                General settings
+                Global settings
             </div>
         </div>
         
