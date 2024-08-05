@@ -126,6 +126,7 @@ to {
   height: 90%;
   display: flex;
   flex-direction: column;
+  width: -moz-fit-content;
 }
 #aso-frontend-app .aso-new-border {
   border: solid 1px !important;

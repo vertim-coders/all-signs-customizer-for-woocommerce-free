@@ -6136,7 +6136,7 @@
 
         if(route.name == 'template-maker'){
             function supprimerNonChiffres(chaine) {
-                return chaine.replace(/[^0-9]/g, '');
+                return chaine.replace(/[^0-9.]/g, '');
             }
             var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
             var canvas1AsJson = JSON.stringify(jsonData1)
@@ -6221,18 +6221,18 @@
                     face2: current2State,
                 },
                 price: {
-                    value: supprimerNonChiffres(formatPrice(finalPrices.value)),
+                    value: parseFloat(aso_configurator_data.regularPrice) + finalPrices.value,
                     array: optionsPrices.value,
                     textAfter: configVisualiserTexts.value.textAfterPrice,
                 },
                 additionalOptions: customAdditionalValues.value,
             }
-            // console.log(templateData.value, "template")
+            console.log(templateData.value, "template")
         }
 
 
 
-        console.log(configData.value, "Added")
+        // console.log(configData.value, "Added")
         finish.value = true
         genImage(canvas, 'svg', 'finish-1')
         if(configDoublePart.value.active){
