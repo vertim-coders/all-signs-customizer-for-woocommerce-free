@@ -257,14 +257,8 @@ class ASO_Frontend {
 		);
         ob_start();
         ?> 
-        <div id="aso-templates-loader" style="width:100%; height:50vh;">
-            <div style="display: grid; 
-                grid-template-columns: repeat(3, 1fr); 
-                grid-gap: 10px; 
-                padding: 10px; 
-                width: 100%; 
-                height: 100%"
-            >
+        <div id="aso-templates-loader">
+            <div class="aso-grid-container" >
                 <div 
                     style="display: flex; flex-direction: column; height: 100%;">
                     <div class="aso-loader-container"
@@ -289,7 +283,7 @@ class ASO_Frontend {
         $product =wc_get_product($productid);
         if($product){
             $meta = get_post_meta($productid,'product-aso-metas',true);
-                
+            $product_price   = $product->get_price(); 
             if(!empty($meta) && isset($meta[$productid]['config-id'])){
                 $configId = $meta[$productid]['config-id'];
                 if($configId !=0){
@@ -312,6 +306,13 @@ class ASO_Frontend {
                             "categories"=>$categories,
                             "productId"=>$productid,
                             "grid_cols"=>$cols,
+                            'regularPrice'       => trim($product_price) != '' ? $product_price : 0 ,
+                            'thousandSep'        => wc_get_price_thousand_separator(),
+                            'decimalSep'         => wc_get_price_decimal_separator(),
+                            'decimals'           => wc_get_price_decimals(),
+                            'nbDecimals'         => wc_get_price_decimals(),
+                            'currencySymbol'     => html_entity_decode(get_woocommerce_currency_symbol()),
+                            'currency_pos'       => get_option('woocommerce_currency_pos'),
                             "pageConfigs"=>get_option("aso_config_page"),
                             "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
                             "design_page_url"=>$aso_product->get_design_page_url(),

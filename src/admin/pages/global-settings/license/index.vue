@@ -63,7 +63,7 @@ const updateGlobalLicenses = async () => {
 }
 const activateLicenseKey = async () => {
     try {
-        const url = 'https://demos.signsdesigner.us/vlc-test/wp-json/vlc/license/?lcde='+ licenses.value.product +"&siteurl="+aso_data.site_url+"&vertim="+productId;
+        const url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde='+ licenses.value.product +"&siteurl="+aso_data.site_url+"&vertim="+productId;
         const response = await axios.get(url);
         if (response.data.key) {
             licenses.value.valid = response.data.key;

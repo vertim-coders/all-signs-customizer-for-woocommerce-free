@@ -2600,6 +2600,7 @@
     
                 if(route.name == 'template-maker'){
                     template.value = await api.getTemplate(template_config_id,template_id);
+                    aso_configurator_data.regularPrice = template.value.basePrice;
                 }
         
                 handleCheckTemplate(props.template.designFromTemplate)

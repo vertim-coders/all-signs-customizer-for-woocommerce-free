@@ -1,12 +1,12 @@
 <template>
     <div class="aso-templates aso-py-6">
         <div class="aso-w-full aso-flex aso-justify-center aso-items-center aso-my-4">
-            <div v-if="categories.length>0" :class="`aso-grid md:aso-grid-cols-4 lg:aso-grid-cols-8 aso-gap-8 aso-templates-categories`">
+            <div v-if="categories.length>0" :class="`aso-grid aso-grid-cols-4 lg:aso-grid-cols-8 aso-gap-8 aso-templates-categories`">
                 <div @click="showTemplateForCategory('')" :class="`${category == '' ? 'aso-border-solid aso-border-x-0 aso-border-y-0 aso-border-b-2 aso-border-[#000000]':''} aso-cursor-pointer aso-text-center`">{{ buttons.allTemplatesText ?? 'All' }}</div>
                 <div v-for="cat in categories" @click="showTemplateForCategory(cat.value)" :class="`${category == cat.value ? 'aso-border-solid aso-border-x-0 aso-border-y-0 aso-border-b-2 aso-border-[#000000]':''} aso-cursor-pointer aso-text-center`">{{ cat.name }}</div>
             </div>
         </div>
-        <div :class="`aso-grid aso-grid-cols-${templates_grid_cols} aso-gap-8 aso-templates-container`">
+        <div :class="`aso-grid md:aso-grid-cols-2 lg:aso-grid-cols-${templates_grid_cols} aso-gap-8 aso-templates-container`">
             <div v-for="(template, index) in templates" class="aso-template-container aso-border-[1px] aso-border-solid aso-border-[#c3cfd6] aso-rounded aso-bg-transparent">
                 <div class="aso-template-image-container aso-flex aso-justify-center aso-items-center pb-2 aso-h-[200px]">
                     <div class="aso-w-full aso-h-full aso-flex aso-items-center aso-justify-center aso-overflow-hidden aso-object-cover">
@@ -17,7 +17,7 @@
                 <div class="aso-template-details-container aso-border-[1px] aso-border-solid aso-border-l-0 aso-border-b-0 aso-border-r-0 aso-border-[#c3cfd6] aso-p-4">
                     <span class="aso-template-title aso-font-bold">{{template.name}}</span>
                     <div class="aso-template-size">{{template.data.templateData.sign ? template.data.templateData.sign.size.width + ' ' +template.data.templateData.sign.size.unit : 0}} x {{template.data.templateData.sign? template.data.templateData.sign.size.height + ' ' +template.data.templateData.sign.size.unit : 0}}</div>
-                    <div><span class="aso-font-bold aso-template-price">{{currencySumbol}} {{ template.data.templateData.price ?template.data.templateData.price.value : template.basePrice}}</span> {{ template.data.templateData.price ?template.data.templateData.price.textAfter :''}}</div>
+                    <div><span class="aso-font-bold aso-template-price">{{ template.data.templateData.price ? formatPrice(parseFloat(template.data.templateData.price.value),0)  : formatPrice(0, template.basePrice) }}</span> {{ template.data.templateData.price ?template.data.templateData.price.textAfter :''}}</div>
                     <div class="aso-space-y-3 aso-py-3 aso-template-details-buttons" v-if="template.data.templateData.sign">
                         <button @click="addToCart(template)" :class="`${template.enableAddToCart ? 'aso-visible' : 'aso-invisible'}`" class="aso-templates-add_to_cart_button aso-flex aso-justify-center aso-items-center aso-bg-[#0374e3] aso-rounded-[5px] aso-w-full aso-p-2.5">
                             <svg v-if="!isAddingToCart" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
@@ -51,7 +51,7 @@ const templates = ref(aso_templates.data);
 const allTemplates = aso_templates.data;
 const categories = aso_templates.categories;
 const category = ref('');
-const currencySumbol = aso_templates.currencySymbol;
+const regularPrice = aso_templates.regularPrice;
 const templates_grid_cols = aso_templates.grid_cols;
 const design_page_url = aso_templates.design_page_url;
 const productId = aso_templates.productId;
@@ -63,22 +63,55 @@ onMounted(()=>{
     }
 })
 const addToCart = async (template)=>{
-        isAddingToCart.value = true
-    //if(Object.keys(template.data.cartData).length > 0){
-        const cart_data = {
-            recaps:{...template.data.cartData},
-            variation_id:productId,
-            quantity:1
-        }
-        var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_templates.frontend_nonce, false);
-        if(!add.success){
-            toastMessage(add.message,"error");
-            isAddingToCart.value = false
-        }
-    /* }else{
-
-    } */
+    isAddingToCart.value = true
+    const cart_data = {
+        recaps:{...template.data.cartData
+        },
+        variation_id:productId,
+        quantity:1
+    }
+    var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_templates.frontend_nonce, false);
+    if(!add.success){
+        toastMessage(add.message,"error");
+        isAddingToCart.value = false
+    }
 }
+
+function formatPrice(price,regularPrice) {
+  let formattedPrice = parseFloat(
+    price + parseFloat(regularPrice)
+  ).toFixed(aso_templates.decimals);
+
+  switch (aso_templates.currency_pos) {
+    case "left":
+      formattedPrice = aso_templates.currencySymbol + formattedPrice;
+      break;
+    case "right":
+      formattedPrice = formattedPrice + aso_templates.currencySymbol;
+      break;
+    case "left_space":
+      formattedPrice =
+        aso_templates.currencySymbol + " " + formattedPrice;
+      break;
+    case "right_space":
+      formattedPrice =
+        formattedPrice + " " + aso_templates.currencySymbol;
+      break;
+  }
+
+  // Remplacez le séparateur décimal et des milliers
+  formattedPrice = formattedPrice.replace(
+    ".",
+    aso_templates.decimalSep
+  );
+  formattedPrice = formattedPrice.replace(
+    /(\d)(?=(\d{3})+(?!\d))/g,
+    "$1" + aso_templates.thousandSep
+  );
+
+  return formattedPrice;
+}
+
 const showTemplateForCategory = (key)=> {
     category.value = key
     if(key!=''){
