@@ -2088,6 +2088,7 @@
         handleMoveobject,
         handleChangeAddedSvgColor,
         handleSetShadow,
+        handleConvertImageToDataURI,
     } from '@/frontend/utils/aso-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -6551,33 +6552,35 @@
                             if (typeof object.fill !== 'string') {
                                 var patternFill = object.fill
                                 let promise = new Promise((resolve, reject) => {
-                                    fabric.Image.fromURL(object.fill.source.src, (img) => {
-                                        try {
-                                            img.left = object.left;
-                                            img.top = object.top;
+                                    handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
+                                        fabric.Image.fromURL(dataURI, (img) => {
+                                            try {
+                                                img.left = object.left;
+                                                img.top = object.top;
 
-                                            img.clipPath = handleClipAddedObject(canva);
-                                            // object.fill = '#313131';
-                                            
-                                            img.name = 'aso-signPattern';
-                                            
-                                            if (object.width > object.height) {
-                                                img.scaleToWidth(object.width);
-                                            } else {
-                                                img.scaleToHeight(object.height);
+                                                img.clipPath = handleClipAddedObject(canva);
+                                                // object.fill = '#313131';
+                                                
+                                                img.name = 'aso-signPattern';
+                                                
+                                                if (object.width > object.height) {
+                                                    img.scaleToWidth(object.width);
+                                                } else {
+                                                    img.scaleToHeight(object.height);
+                                                }
+                                                var shadowRect = handleSetShadow(canva)
+                                                object.shadow = null
+                                                canva.add(img, shadowRect);
+                                                img.moveTo(index + 1);
+                                                shadowRect.sendToBack()                                                                                        
+                                                
+                                                // object.fill = patternFill;
+                                                canva.renderAll()
+                                                resolve(img);
+                                            } catch (error) {
+                                                reject(error);
                                             }
-                                            var shadowRect = handleSetShadow(canva)
-                                            object.shadow = null
-                                            canva.add(img, shadowRect);
-                                            img.moveTo(index + 1);
-                                            shadowRect.sendToBack()                                                                                        
-                                            
-                                            // object.fill = patternFill;
-                                            canva.renderAll()
-                                            resolve(img);
-                                        } catch (error) {
-                                            reject(error);
-                                        }
+                                        });
                                     });
                                 });
                                 promises.push(promise);
@@ -7048,31 +7051,33 @@
                                 if (typeof object.fill !== 'string') {
                                     var patternFill = object.fill
                                     let promise = new Promise((resolve, reject) => {
-                                        fabric.Image.fromURL(object.fill.source.src, (img) => {
-                                            try {
-                                                img.left = object.left;
-                                                img.top = object.top;
+                                        handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
+                                            fabric.Image.fromURL(dataURI, (img) => {
+                                                try {
+                                                    img.left = object.left;
+                                                    img.top = object.top;
 
-                                                img.clipPath = handleClipAddedObject(canva);
-                                                
-                                                img.name = 'aso-signPattern';
-                                                
-                                                if (object.width > object.height) {
-                                                    img.scaleToWidth(object.width);
-                                                } else {
-                                                    img.scaleToHeight(object.height);
+                                                    img.clipPath = handleClipAddedObject(canva);
+                                                    
+                                                    img.name = 'aso-signPattern';
+                                                    
+                                                    if (object.width > object.height) {
+                                                        img.scaleToWidth(object.width);
+                                                    } else {
+                                                        img.scaleToHeight(object.height);
+                                                    }
+                                                    var shadowRect = handleSetShadow(canva)
+                                                    object.shadow = null
+                                                    canva.add(img, shadowRect);
+                                                    img.moveTo(index + 1);
+                                                    shadowRect.sendToBack()                                                                                          
+                                                    
+                                                    canva.renderAll()
+                                                    resolve(img);
+                                                } catch (error) {
+                                                    reject(error);
                                                 }
-                                                var shadowRect = handleSetShadow(canva)
-                                                object.shadow = null
-                                                canva.add(img, shadowRect);
-                                                img.moveTo(index + 1);
-                                                shadowRect.sendToBack()                                                                                          
-                                                
-                                                canva.renderAll()
-                                                resolve(img);
-                                            } catch (error) {
-                                                reject(error);
-                                            }
+                                            });
                                         });
                                     });
                                     promises.push(promise);
