@@ -147,7 +147,7 @@ final class ASO_All_Signs_Options
     public function define_constants()
     {
         define('ASO_VERSION', $this->version);
-        define('ASO_ID', 3107);
+        define('ASO_ID', 7326);
         define('ASO_FILE', __FILE__);
         define('ASO_PATH', dirname(ASO_FILE));
         define('ASO_INCLUDES', ASO_PATH . '/includes');
