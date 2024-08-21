@@ -267,7 +267,7 @@
                             </div>
         
                             <div class="aso-w-1/4 aso-h-full aso-flex aso-justify-end">
-                                <button v-show="!isLoaded" @click="finishConfig()" :class="`aso-hidden lg:aso-flex aso-full-center aso-w-[80%] aso-h-full aso-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonFinishTextColor}] hover:aso-text-[${configColors.recaps.buttonFinishHoverTextColor}] aso-font-semibold aso-p-2 aso-px-3 aso-base-animation aso-cursor-pointer aso-buttons-rad-none`">
+                                <button :disabled="currentSizeData.width <= 0 || currentSizeData.height <= 0" v-show="!isLoaded" @click="finishConfig()" :class="`aso-hidden lg:aso-flex aso-full-center aso-w-[80%] aso-h-full aso-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonFinishTextColor}] hover:aso-text-[${configColors.recaps.buttonFinishHoverTextColor}] aso-font-semibold aso-p-2 aso-px-3 aso-base-animation aso-cursor-pointer disabled:aso-cursor-not-allowed aso-buttons-rad-none`">
                                     {{ configVisualiserTexts.textButtonFinish && configVisualiserTexts.textButtonFinish.trim() !== '' ? configVisualiserTexts.textButtonFinish : 'Finish' }}
                                 </button>
                             </div>
@@ -327,7 +327,7 @@
                     </div>
                     
                     <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="aso-w-[80%]" >
-                        <div @click="showOptions('component', component, id)" :class="`${step === 'component' && advancedComponentId === id ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
+                        <div v-if="component.options.length > 0" @click="showOptions('component', component, id)" :class="`${step === 'component' && advancedComponentId === id ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
                             <svg v-if="component.icon === '' " class="aso-w-6 aso-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <g id="fluent-mdl2:product-release">
                                 <path id="Vector" d="M21.875 37.5244V22.8516L6.25 15.0391V36.5234L19.5312 43.1885L18.7744 46.2891L3.125 38.4766V11.5234L23.4375 1.3916L43.75 11.5234V18.1152C42.6107 18.2943 41.569 18.6605 40.625 19.2139V15.0391L25 22.8516V34.3994L21.875 37.5244ZM18.4082 7.37305L32.666 15.5273L38.6963 12.5L23.4375 4.8584L18.4082 7.37305ZM23.4375 20.1416L29.2969 17.2119L15.0391 9.05762L8.17871 12.5L23.4375 20.1416ZM45.1172 21.875C45.8008 21.875 46.4355 21.9971 47.0215 22.2412C47.6074 22.4854 48.1283 22.819 48.584 23.2422C49.0397 23.6654 49.3815 24.1781 49.6094 24.7803C49.8372 25.3825 49.9674 26.0254 50 26.709C50 27.3438 49.8779 27.9622 49.6338 28.5645C49.3896 29.1667 49.0397 29.6956 48.584 30.1514L31.0791 47.6562L21.875 49.9512L24.1699 40.7471L41.6748 23.2666C42.1468 22.7946 42.6758 22.4447 43.2617 22.2168C43.8477 21.9889 44.4661 21.875 45.1172 21.875ZM46.3623 27.9541C46.7041 27.6123 46.875 27.1973 46.875 26.709C46.875 26.2044 46.7122 25.7975 46.3867 25.4883C46.0612 25.179 45.638 25.0163 45.1172 25C44.8893 25 44.6696 25.0326 44.458 25.0977C44.2464 25.1628 44.0592 25.2848 43.8965 25.4639L27.002 42.3584L26.1719 45.6543L29.4678 44.8242L46.3623 27.9541Z" fill="currentColor"/>
@@ -394,7 +394,7 @@
                         </div>
                     </div>
     
-                    <div v-if="materialType == 'simple' || materialType == 'advance'" @click="showOptions('color')" :class="`aso-w-[80%]`">
+                    <div v-if="materialType == 'simple' && (sizees.length > 0 || customSizeActive) || (materialType == 'advance' && advancedComponent.options.length > 0)" @click="showOptions('color')" :class="`aso-w-[80%]`">
                         <div :class="`${step === 'color' ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
                             <svg v-if="configSectionIcons.changeIconColor === '' " class="aso-w-6 aso-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="tdesign:fill-color-1">
@@ -408,7 +408,7 @@
                         </div>
                     </div>
     
-                    <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableText && sizees.length > 0 ) || materialType == 'advance'" @click="showOptions('text')" :class="`aso-w-[80%]`">
+                    <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableText && (sizees.length > 0 || customSizeActive) ) || materialType == 'advance' && advancedComponent.options.length > 0" @click="showOptions('text')" :class="`aso-w-[80%]`">
                         <div :class="`${step === 'text' ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
                             <svg v-if="configSectionIcons.changeIconText === '' " class="aso-w-6 aso-h-6" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
@@ -428,7 +428,7 @@
                         </div>
                     </div>
     
-                    <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableImage && sizees.length > 0 ) || materialType == 'advance'" @click="showOptions('image')" :class="`aso-w-[80%]`">
+                    <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableImage && (sizees.length > 0 || customSizeActive) ) || materialType == 'advance' && advancedComponent.options.length > 0" @click="showOptions('image')" :class="`aso-w-[80%]`">
                         <div :class="`${step === 'image' && addComponentId === id ? `aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} aso-h-fit aso-flex aso-flex-col aso-full-center aso-space-y-1 aso-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:aso-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] aso-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:aso-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] aso-px-4 aso-py-1 aso-rounded-lg aso-base-animation aso-cursor-pointer`">
                             <svg v-if="configSectionIcons.changeIconImage === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -795,7 +795,7 @@
                             </div>
                         </div>
     
-                        <div v-if="materialType === 'advance'" class="aso-w-full aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
+                        <div v-if="materialType === 'advance' && advancedComponent.options.length > 0" class="aso-w-full aso-h-full aso-p-3 aso-overflow-auto aso-scrollBar">
                             <div class="aso-flex aso-flex-wrap aso-gap-2 aso-p-1">
                                 <div v-for="(colorr, id) in colorrs" class="aso-flex aso-flex-col aso-space-y-2 aso-full-center">
                                     <div class="aso-w-16 aso-h-16 aso-rounded-full aso-overflow-hidden">
@@ -1639,7 +1639,7 @@
                     <div :class="`aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonEditTextColor}] hover:aso-text-[${configColors.recaps.buttonEditHoverTextColor}] aso-buttons-rad-none`">
                         {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
                     </div>
-                    <button @click="finishConfig()" :class="`aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonFinishTextColor}] hover:aso-text-[${configColors.recaps.buttonFinishHoverTextColor}] aso-buttons-rad-none`">
+                    <button :disabled="currentSizeData.width <= 0 || currentSizeData.height <= 0" @click="finishConfig()" :class="`aso-w-1/2 aso-h-full aso-flex aso-full-center aso-bg-[${configColors.recaps.buttonFinishBackgroundColor}] hover:aso-bg-[${configColors.recaps.buttonFinishHoverBackgroundColor}] aso-text-[${configColors.recaps.buttonFinishTextColor}] hover:aso-text-[${configColors.recaps.buttonFinishHoverTextColor}] aso-buttons-rad-none`">
                         {{ configVisualiserTexts.textButtonFinish && configVisualiserTexts.textButtonFinish.trim() !== '' ? configVisualiserTexts.textButtonFinish : 'Finish' }}
                     </button>
                 </div>
@@ -2607,7 +2607,11 @@
                 if(route.name === 'template-maker'){
                     if(template.value.data.templateData.length == 0){
                         // console.log(template.value.data.templateData, "template-maker")
-                        selectMaterial(props.config.data.materials[0], 0)
+                        if(props.config.data.materials.length > 0){
+                            selectMaterial(props.config.data.materials[0], 0)
+                        }else{
+                            hideCanvasElements()
+                        }
                         if(materialType.value === 'simple'){
                             selectSimpleFirstValue()
                         }
@@ -2621,7 +2625,11 @@
                     if(props.template.designFromTemplate === true){
                         selectTemplate(props.template.template.data.templateData)
                     }else{
-                        selectMaterial(props.config.data.materials[0], 0)
+                        if(props.config.data.materials.length > 0){
+                            selectMaterial(props.config.data.materials[0], 0)
+                        }else{
+                            hideCanvasElements()
+                        }
                         if(materialType.value === 'simple'){
                             selectSimpleFirstValue()
                         }
@@ -2757,6 +2765,14 @@
 
         
     });
+
+    function hideCanvasElements(){
+        var objects = canvas.getObjects()
+        objects.forEach(object =>{
+            object.visible = false
+        })
+        canvas.renderAll();
+    }
 
     function zoomCanvas(to){
         var canvasCenter = getCanvasCenter(activeCanvas)
@@ -3075,7 +3091,7 @@
                 handleGetShape(matchingShapes[0].shape.value)
             }
         }else{
-
+            handleGetShape('square')
         }
 
         var stopColor = false
@@ -3161,6 +3177,8 @@
             }
         }else{
             // changeSignColor(color, colorr)
+            colorForBorder1.value = true
+            colorForBorder2.value = true
         }
 
         var stopBorder = false
@@ -3356,6 +3374,9 @@
                 height: 0
             }
             changeSize(size)
+            if(!customSizeActive.value){
+                hideCanvasElements()
+            }
         }
 
         if(additionalComponents.value.length > 0){
@@ -3394,27 +3415,35 @@
         var stopDefOption = false
         var stopOption = false
 
-        currentMaterial.value.data.forEach(component => {
-            if(!stop){
-                showOptions('component', component)
-                stop = true
-            }
-        })
-        advancedComponent.value.options.forEach( (option, index) => {
-            if(!stopDefOption){
-                if(option.isDefault){
-                    // console.log('default')
-                    selectSignModel(option, index)
-                    stopDefOption = true
+        if(currentMaterial.value.data.length > 0){
+            currentMaterial.value.data.forEach(component => {
+                if(!stop){
+                    advancedComponent.value = component
+                    stop = true
                 }
-                if(!option.isDefault && stopDefOption && !stopOption){
-                    // console.log('first')
-                    selectSignModel(option, index)
-                    stopDefOption = true
-                    stopOption = true
-                }
+            })
+            if(advancedComponent.value.options.length > 0){
+                advancedComponent.value.options.forEach( (option, index) => {
+                    if(!stopDefOption){
+                        if(option.isDefault){
+                            // console.log('default')
+                            selectSignModel(option, index)
+                            stopDefOption = true
+                        }
+                        if(!option.isDefault && stopDefOption && !stopOption){
+                            // console.log('first')
+                            selectSignModel(option, index)
+                            stopDefOption = true
+                            stopOption = true
+                        }
+                    }
+                })
+            }else{
+                hideCanvasElements()
             }
-        })
+        }else{
+            hideCanvasElements()
+        }
         selectAdditionnalsOption()
     }
     function selectAdditionnalsOption(){
@@ -4109,6 +4138,8 @@
     var materialType = ref('')
     var firstLoad = ref(false)
     function selectMaterial(material, id){
+        console.log(material, "selected material")
+
         currentMaterial.value = material
         currentMaterialId.value = id
         currentMaterialTextImages.value = material.data.textImages
@@ -4555,17 +4586,19 @@
 
         if(sizeId != undefined){
             // desactivation du fixingMethode si il n'est pas actif pour la size selectionné
-            if(fixingExcludeSizes.value.includes(sizeId)){
-                // if(activeFixingId.value == matchingFixings.value.length-1){
-                //     selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
-                // }
-                // selectFixingMethode(matchingFixings.value[activeFixingId.value+1].fixing.type, matchingFixings.value[activeFixingId.value+1].fixingg, activeFixingId.value+1)
-                selectFixingMethode('none')
-                var fixingPriceObject = {
-                    name: "fixing",
-                    price: 0
+            if(matchingFixings.value.length > 0){
+                if(fixingExcludeSizes.value.includes(sizeId)){
+                    // if(activeFixingId.value == matchingFixings.value.length-1){
+                    //     selectFixingMethode(matchingFixings.value[0].fixing.type, matchingFixings.value[0].fixingg, 0)
+                    // }
+                    // selectFixingMethode(matchingFixings.value[activeFixingId.value+1].fixing.type, matchingFixings.value[activeFixingId.value+1].fixingg, activeFixingId.value+1)
+                    selectFixingMethode('none')
+                    var fixingPriceObject = {
+                        name: "fixing",
+                        price: 0
+                    }
+                    getOptionPrice(fixingPriceObject)
                 }
-                getOptionPrice(fixingPriceObject)
             }
 
             // desactivation du border si il n'est pas actif pour la size selectionné
@@ -6688,11 +6721,21 @@
             }
     
     
+            var widthVisibility
+            var heightVisibility
             var thickVisibility
             var borderPositionId
             var fixingPositionId
             canva.getObjects().forEach((object, index) => {
-                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                if(object.name === 'widthLine' || object.name === 'width-value'){
+                    widthVisibility = object.visible
+                    object.set('visible', false);
+                }
+                if(object.name === 'heightLine' || object.name === 'height-value'){
+                    heightVisibility = object.visible
+                    object.set('visible', false);
+                }
+                if(object.name === 'aso-SignText'){
                     object.set('visible', false);
                 }
                 if(object.name === 'thickness-value'){
@@ -6759,7 +6802,13 @@
             // Restaure les dimensions et l'affichage originales du canvas
             canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
             canva.getObjects().forEach(object => {
-                if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                if(object.name === 'widthLine' || object.name === 'width-value'){
+                    object.set('visible', widthVisibility);
+                }
+                if(object.name === 'heightLine' || object.name === 'height-value'){
+                    object.set('visible', heightVisibility);
+                }
+                if(object.name === 'aso-SignText'){
                     object.set('visible', true);
                 }
                 if(object.name === 'thickness-value'){
@@ -7283,12 +7332,25 @@
                 }
         
         
+                var widthVisibility
+                var heightVisibility
                 var thickVisibility
                 var borderPositionId
                 var fixingPositionId
                 canva.getObjects().forEach((object, index) => {
-                    if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                    // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                    //     object.set('visible', false);
+                    // }
+                    if(object.name === 'widthLine' || object.name === 'width-value'){
+                        widthVisibility = object.visible
                         object.set('visible', false);
+                    }
+                    if(object.name === 'heightLine' || object.name === 'height-value'){
+                        heightVisibility = object.visible
+                        object.set('visible', false);
+                    }
+                    if(object.name === 'aso-SignText'){
+                        object.set('visible', true);
                     }
                     if(object.name === 'thickness-value'){
                         thickVisibility = object.visible
@@ -7375,8 +7437,17 @@
                 // Restaure les dimensions et l'affichage originales du canvas
                 canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
                 canva.getObjects().forEach(object => {
-                    if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
-                        object.set('visible', true);
+                    // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'aso-SignText'){
+                    //     object.set('visible', true);
+                    // }
+                    if(object.name === 'widthLine' || object.name === 'width-value'){
+                        object.set('visible', widthVisibility);
+                    }
+                    if(object.name === 'heightLine' || object.name === 'height-value'){
+                        object.set('visible', heightVisibility);
+                    }
+                    if(object.name === 'aso-SignText'){
+                        object.set('visible', false);
                     }
                     if(object.name === 'thickness-value'){
                         object.set('visible', thickVisibility);
