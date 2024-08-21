@@ -662,8 +662,10 @@ function handleClearAll() {
       });
     });
   }
-  recreateState(canvas, currentConfig.canvasState[0].front);
-  recreateState(backCanvas, currentConfig.canvasState[0].back);
+  if(currentConfig.canvasState.length > 0) {
+    recreateState(canvas, currentConfig.canvasState[0].front);
+    recreateState(backCanvas, currentConfig.canvasState[0].back);
+  }
 
   currentConfig.undoStatus = false;
   // currentConfig.undoButton.removeAttribute("disabled");

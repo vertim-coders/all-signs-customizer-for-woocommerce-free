@@ -3900,7 +3900,9 @@
         stepArray.value.currentStateIndex = -1
         stepArray.value.undoFinishedStatus = 1;
         firstSetLoad.value = false
-        selectMaterial(props.config.data.materials[0], 0)
+        if(props.config.data.materials.length > 0){
+            selectMaterial(props.config.data.materials[0], 0)
+        }
     }
 
 
