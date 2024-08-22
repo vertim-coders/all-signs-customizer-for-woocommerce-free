@@ -2984,6 +2984,7 @@
         }
         currentSizeData.value = templateSize
         currentSizeValues.value = loadedTemplate.size
+        maxTextCharForSize.value = sign.size.maxChars
         //selection du thickness
         if(sign.size.thickness.active){
             currentSizeThickness.value = true
@@ -4564,10 +4565,12 @@
             currentSizeSetting.value = sizeSetting
             textNumberForSize.value = sizeSetting.textNumber
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, sizeSetting.maxTextChar)
+            maxTextCharForSize.value = sizeSetting.maxTextChar
             // console.log(currentSizeValues.value, "1")
         }else{
             currentSizeSetting.value = {}
             currentSizeValues.value = handleChangeSize(sizeData.width, sizeData.height, sizeData.name, -1)
+            maxTextCharForSize.value = -1
         }
 
         currentSizeName.value = sizeData.label;
@@ -5663,6 +5666,7 @@
         selectText.value = false
     }
 
+    var maxTextCharForSize = ref(0)
     function changeTextValue(event){
         handleChangeTextValue(event)
 
@@ -6211,6 +6215,7 @@
                     size: {
                         width: supprimerNonChiffres(widthValue.text),
                         height: supprimerNonChiffres(heightValue.text),
+                        maxChars: maxTextCharForSize.value,
                         thickness: {
                             avtive: currentSizeThickness.value,
                             value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),

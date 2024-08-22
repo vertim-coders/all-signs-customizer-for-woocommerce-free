@@ -1215,7 +1215,8 @@ function handleChangeSize(width, height, name, maxChar) {
     newSignWidth,
     newSignHeight,
     newRectTop,
-    newRectLeft
+    newRectLeft,
+    maxTextCharForSize
   );
 
   handleCalcTextPrice();
@@ -8375,6 +8376,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   }
 
   var currentSizeValues = handleGetSignPosition() 
+  maxTextCharForSize = signData.size.maxChars
   
   handleGetShape(templateData.shape);
   // console.log(currentSizeValues)
