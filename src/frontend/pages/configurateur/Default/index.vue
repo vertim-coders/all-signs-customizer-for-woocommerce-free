@@ -3012,6 +3012,17 @@
             currentThickValue.value = 0
         }
 
+        if(sign.material.type == 'advance'){
+            advancedComponent.value = sign.material.advanceComponent.component
+
+            activeSignModel.value = sign.material.advanceComponent.option.data
+            activeSignModelName.value = sign.material.advanceComponent.option.data.name
+            activeSignModelId.value = sign.material.advanceComponent.option.id
+
+            fixinggs.value = sign.material.advanceComponent.option.data.fixingMethods
+            handleSelectFixingMethode(sign.fixingMethod.type)
+        }
+
         //recupération des texts du template
         addedTexts.value = loadedTemplate.texts
 
@@ -4225,6 +4236,7 @@
         firstLoad.value = true
     }
 
+    var activeSignModel = ref()
     var activeSignModelName = ref('')
     var activeSignModelId = ref(0)
     function selectSignModel(model, id){
@@ -4232,6 +4244,7 @@
 
         firstSetLoad.value = false
 
+        activeSignModel.value = model
         activeSignModelName.value = model.name
         activeSignModelId.value = id
 
@@ -6197,6 +6210,13 @@
                         name: selectedMaterial.value,
                         id: currentMaterialId.value,
                         type: materialType.value,
+                        advanceComponent: {
+                            component: (materialType.value == 'advance' ? advancedComponent.value : null),
+                            option: {
+                                data: activeSignModel.value,
+                                id: activeSignModelId.value
+                            }
+                        }
                     },
                     size: {
                         width: supprimerNonChiffres(widthValue.text),

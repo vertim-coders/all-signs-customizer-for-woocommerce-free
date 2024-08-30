@@ -7197,7 +7197,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
           );
         }
 
-        if (templateData) {
+        if (templateData && templateData.material.type == "simple") {
           if (signData.fixingMethod.type == "screw") {
             if (
               signData.shape == "square" ||
