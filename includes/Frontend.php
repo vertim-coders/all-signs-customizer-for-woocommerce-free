@@ -1,16 +1,16 @@
 <?php
-namespace ASO;
+namespace ASOWP;
 
-use ASO_Product_Config;
+use ASOWP_Product_Config;
 
 /**
  * Frontend Pages Handler
  */
-class ASO_Frontend {
+class ASOWP_Frontend {
 
     public function __construct() {
-        add_shortcode( 'aso-configurator', [ $this, 'render_aso_configurator' ] );
-        add_shortcode( 'aso-templates', [ $this, 'render_aso_templates' ] );
+        add_shortcode( 'aso-configurator', [ $this, 'render_asowp_configurator' ] );
+        add_shortcode( 'aso-templates', [ $this, 'render_asowp_templates' ] );
     }
 
     /**
@@ -21,9 +21,9 @@ class ASO_Frontend {
      *
      * @return string
      */
-    public function render_aso_configurator( $atts, $content = '' ) {
-        wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
-        wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
+    public function render_asowp_configurator( $atts, $content = '' ) {
+        wp_enqueue_style( 'aso-frontend', ASOWP_ASSETS . '/css/frontend.css',false,asowp_VERSION);
+        wp_enqueue_style( 'aso-style',ASOWP_ASSETS . '/css/style.css',false,asowp_VERSION );
         wp_enqueue_style('aso-toast');
         wp_enqueue_script('aso-toast');
         extract( // phpcs:ignore
@@ -110,13 +110,13 @@ class ASO_Frontend {
                 $configId = $meta[$productid]['config-id'];
                 if($configId !=0){
                     $config = get_post_meta($configId,"aso-configs-meta",true);
-                    $pageSettings = get_option("aso_config_page",[])["others"];
+                    $pageSettings = get_option("asowp_config_page",[])["others"];
                     $all_cliparts_groups = get_option("aso-manages-cliparts",[]);
                     $all_fonts = get_option("aso-manages-fonts",[]);
-                    $all_shapes = get_option("aso_all_shapes",[]);
-                    $all_fixingMethods = get_option("aso_all_fixingMethods",[]);
-                    $all_borders = get_option("aso_all_borders",[]);
-                    $outputOptions = get_option("aso_output_options",[]);
+                    $all_shapes = get_option("asowp_all_shapes",[]);
+                    $all_fixingMethods = get_option("asowp_all_fixingMethods",[]);
+                    $all_borders = get_option("asowp_all_borders",[]);
+                    $outputOptions = get_option("asowp_output_options",[]);
                     
                     if(is_array($config) && !empty($config)){
                         $configData = [
@@ -183,23 +183,22 @@ class ASO_Frontend {
                             'currencySymbol'     => html_entity_decode(get_woocommerce_currency_symbol()),
                             'currency_pos'       => get_option('woocommerce_currency_pos'),
                             'variations'          => $available_variations,
-                            "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
-                            "borders_url"  => ASO_ASSETS.'/images/borders',
+                            "fixing_methods_url"  => ASOWP_ASSETS.'/images/fixing-methodes',
+                            "borders_url"  => ASOWP_ASSETS.'/images/borders',
                             "templates"    =>[
                                 "designFromTemplate"=>isset($template) && !is_string($template) ? true : false,
                                 "template"=>isset($template) && !is_string($template) ?  $template : []
                             ],
-                            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
+                            "frontend_nonce"      => wp_create_nonce('asowp_add_to_cart_after_custom')
                         ];
-                        wp_enqueue_script( 'aso-frontend',ASO_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASO_PATH . '/assets/js/frontend.js' ) );
-                        wp_enqueue_script( 'aso-frontend');
-                        wp_localize_script("aso-frontend","aso_configurator_data",$ASO);
-                        wp_localize_script("aso-frontend","aso_data",[
+                        wp_enqueue_script( 'aso-frontend',ASOWP_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASOWP_PATH . '/assets/js/frontend.js' ) );
+                        wp_localize_script("aso-frontend","asowp_configurator_data",$ASO);
+                        wp_localize_script("aso-frontend","asowp_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
                             "page"=>"configurator",
                             "site_url"=>urlencode(get_site_url()),
-                            "author"=>ASO_ID
+                            "author"=>ASOWP_ID
                         ]);
                         ?>
                         <div id='aso-frontend-app' class="aso-configurator-container">
@@ -236,10 +235,10 @@ class ASO_Frontend {
         <?php
     }
 
-    public function render_aso_templates ($atts, $content=''){
-        wp_enqueue_style( 'aso-frontend', ASO_ASSETS . '/css/frontend.css',false,ASO_VERSION);
-        wp_enqueue_style( 'aso-style',ASO_ASSETS . '/css/style.css',false,ASO_VERSION );
-        wp_enqueue_script( 'aso-frontend',ASO_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASO_PATH . '/assets/js/frontend.js' ) );
+    public function render_asowp_templates ($atts, $content=''){
+        wp_enqueue_style( 'aso-frontend', ASOWP_ASSETS . '/css/frontend.css',false,ASOWP_VERSION);
+        wp_enqueue_style( 'aso-style',ASOWP_ASSETS . '/css/style.css',false,ASOWP_VERSION );
+        wp_enqueue_script( 'aso-frontend',ASOWP_ASSETS . '/js/frontend.js',[ 'jquery', 'aso-vendor', 'aso-runtime' ],true,filemtime( ASOWP_PATH . '/assets/js/frontend.js' ) );
         wp_enqueue_script( 'aso-frontend');
         extract( // phpcs:ignore
 			shortcode_atts(
@@ -293,11 +292,11 @@ class ASO_Frontend {
                             }
                         }
                     }
-                    $aso_product = new ASO_Product_Config($productid);
+                    $asowp_product = new ASOWP_Product_Config($productid);
                     if(count($templates)>0){ ?>
                         <div id='aso-frontend-app' class="aso-templates"></div>
                         <?php
-                        wp_localize_script("aso-frontend","aso_templates",[
+                        wp_localize_script("aso-frontend","asowp_templates",[
                             "data"=>$templates,
                             "categories"=>$categories,
                             "productId"=>$productid,
@@ -309,17 +308,17 @@ class ASO_Frontend {
                             'nbDecimals'         => wc_get_price_decimals(),
                             'currencySymbol'     => html_entity_decode(get_woocommerce_currency_symbol()),
                             'currency_pos'       => get_option('woocommerce_currency_pos'),
-                            "pageConfigs"=>get_option("aso_config_page"),
-                            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom'),
-                            "design_page_url"=>$aso_product->get_design_page_url(),
+                            "pageConfigs"=>get_option("asowp_config_page"),
+                            "frontend_nonce"      => wp_create_nonce('asowp_add_to_cart_after_custom'),
+                            "design_page_url"=>$asowp_product->get_design_page_url(),
                             "currencySymbol"=>html_entity_decode(get_woocommerce_currency_symbol())
                         ]);
-                        wp_localize_script("aso-frontend","aso_data",[
+                        wp_localize_script("aso-frontend","asowp_data",[
                             "rest_url"=>get_rest_url()."aso/v1",
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
                             "page"=>"templates",
                             "site_url"=>urlencode(get_site_url()),
-                            "author"=>ASO_ID
+                            "author"=>ASOWP_ID
                         ]);
                     }
                 }
@@ -331,6 +330,5 @@ class ASO_Frontend {
 
     private function include_custom_css( $css){
         wp_add_inline_style( 'aso-frontend', $css );
-        wp_add_inline_style( 'aso-style', $css );
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\Globals_Settings;
+namespace ASOWP\Api\Admin\Globals_Settings;
 
 use WP_Error;
 use WP_Poste;
@@ -11,7 +11,7 @@ use WP_REST_Controller;
  * class for api routes reaching generals settings
 */
 
-class ASO_Api_Globals_Settings extends WP_REST_Controller {
+class ASOWP_Api_Globals_Settings extends WP_REST_Controller {
    
   /**
    * [__construct description]
@@ -33,12 +33,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
       array(
         array(
           'methods'             => \WP_REST_Server::CREATABLE,
-          'callback'            => array( $this, 'save_aso_product' ),
+          'callback'            => array( $this, 'save_asowp_product' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
         array(
           'methods'             => \WP_REST_Server::READABLE,
-          'callback'            => array( $this, 'get_aso_product' ),
+          'callback'            => array( $this, 'get_asowp_product' ),
           'permission_callback' => array( $this, 'get_config_permissions_check' ),
         ),
       )
@@ -210,12 +210,12 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    *
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function save_aso_product( $request ) {
+  public function save_asowp_product( $request ) {
     $data=json_decode($request->get_body(),true);
     if(isset($data["product"]) && !empty($data["product"])){
-      $product = get_option("aso_product_pro",false);
+      $product = get_option("asowp_product_pro",false);
       if( $product != $data["product"]){
-        $option = update_option("aso_product_pro",$data["product"]);
+        $option = update_option("asowp_product_pro",$data["product"]);
         if($option){
           return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","all-signs-options-pro")]);
         }else{
@@ -223,11 +223,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
         }
       }else{
         if(isset($data["valid"])){
-          update_option('aso_health-state', $data['valid']);
-          set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
+          update_option('asowp_health-state', $data['valid']);
+          set_transient('asowp_health-state-checking', 'valid', WEEK_IN_SECONDS);
         }else{
-          update_option('aso_health-state', false);
-          set_transient('aso_health-state-checking', 'notvalid',0);
+          update_option('asowp_health-state', false);
+          set_transient('asowp_health-state-checking', 'notvalid',0);
         }
         return rest_ensure_response(["success" => __("ASO Product Pro saved successfully","all-signs-options-pro")]); 
       }      
@@ -242,38 +242,38 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	 */
 	public function check_product_health() {
     
-    $aso_health_check = get_transient('aso_health-state-checking');
-    if ($aso_health_check === 'valid') {
-      return rest_ensure_response(['aso_health' => true]);
+    $asowp_health_check = get_transient('asowp_health-state-checking');
+    if ($asowp_health_check === 'valid') {
+      return rest_ensure_response(['asowp_health' => true]);
     }
 
-    $aso_product = get_option("aso_product_pro");
-    $aso_health = get_option('aso_health-state');
+    $asowp_product = get_option("asowp_product_pro");
+    $asowp_health = get_option('asowp_health-state');
 
-    if (empty($aso_product)) {
-      delete_option('aso_health-state');
-      return rest_ensure_response(['aso_health' => false]);;
+    if (empty($asowp_product)) {
+      delete_option('asowp_health-state');
+      return rest_ensure_response(['asowp_health' => false]);;
     }
 
     $site_url = get_site_url();
-    $url      = 'https://signsdesigner.us/wp-json/vlc/checking/?lcde=' . $aso_product . '&siteurl=' . urlencode( $site_url )."&vertim=".ASO_ID;
+    $url      = 'https://signsdesigner.us/wp-json/vlc/checking/?lcde=' . $asowp_product . '&siteurl=' . urlencode( $site_url )."&vertim=".asowp_ID;
     $args = ['timeout' => 60];
     $response = wp_remote_get($url, $args);
 
     if (is_wp_error($response)) {
-      $activate = !empty($aso_health);
-      return rest_ensure_response(['aso_health' => $activate]);
+      $activate = !empty($asowp_health);
+      return rest_ensure_response(['asowp_health' => $activate]);
     }
 
     $data = json_decode($response['body'], true);
     
     if ($data && isset($data['key']) && !empty($data['key'])) {
-      update_option( 'aso_health-state',$data['key']);
-      set_transient('aso_health-state-checking', 'valid', WEEK_IN_SECONDS);
-      return rest_ensure_response(['aso_health' => true]);
+      update_option( 'asowp_health-state',$data['key']);
+      set_transient('asowp_health-state-checking', 'valid', WEEK_IN_SECONDS);
+      return rest_ensure_response(['asowp_health' => true]);
     } else {
-      update_option( 'aso_health-state',false);
-      return rest_ensure_response(['aso_health' => false]);
+      update_option( 'asowp_health-state',false);
+      return rest_ensure_response(['asowp_health' => false]);
     }
   }
 
@@ -283,8 +283,8 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    *
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
-  public function get_aso_product( $request ) {
-    $option = get_option("aso_product_pro");
+  public function get_asowp_product( $request ) {
+    $option = get_option("asowp_product_pro");
   
     if($option==false || empty($option) ){
       return rest_ensure_response(["message" => __("No ASO Product Pro available","all-signs-options-pro")]);
@@ -302,10 +302,10 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
     $data=json_decode($request->get_body(),true);
     if(isset($data['configuratorPage'])){
         
-        $config_page = get_option("aso_config_page",[]);
+        $config_page = get_option("asowp_config_page",[]);
         
         if($config_page != $data){
-          update_option("aso_config_page",$data);
+          update_option("asowp_config_page",$data);
           return rest_ensure_response(["success" =>true, "message"=> __("Data updated successfully","all-signs-options-pro")]);
         }else{
           return rest_ensure_response(["success"=>"same","message" => __("No change observed","all-signs-options-pro")]);        
@@ -322,7 +322,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    */
   public function get_config_pages() {
 
-    $option = get_option("aso_config_page");
+    $option = get_option("asowp_config_page");
     
     if($option == false || empty($option) ){
         return rest_ensure_response(["message" => __("Config page not found","all-signs-options-pro")]);
@@ -389,7 +389,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
   public function get_output_options_globals_settings($request){
-    $outputOptions = get_option("aso_output_options",[]);
+    $outputOptions = get_option("asowp_output_options",[]);
     if(count($outputOptions)>0)
 		  return rest_ensure_response($outputOptions);  
     else
@@ -397,9 +397,9 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
   }
    public function update_output_options_globals_settings($request){
     $data=json_decode($request->get_body(),true);
-    $outputOptions = get_option("aso_output_options",[]);
+    $outputOptions = get_option("asowp_output_options",[]);
     if($data != $outputOptions){
-      $update = update_option("aso_output_options",$data);
+      $update = update_option("asowp_output_options",$data);
       if($update){
         return rest_ensure_response(array('success' => true, "message" => __("The ouput settings has been updated with success","all-signs-options-pro") ) );
       }
@@ -418,7 +418,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
 	public function get_shapes_options_globals_settings($request){
-		$all_shapes = get_option("aso_all_shapes",[]);
+		$all_shapes = get_option("asowp_all_shapes",[]);
 		return rest_ensure_response($all_shapes);  
 	}
     /**
@@ -430,11 +430,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	public function update_shapes_options_globals_settings($request){
 		$shape=json_decode($request->get_body(),true);
 		$shape_id=$request->get_param('shape_id');
-		$all_shapes= get_option("aso_all_shapes",[]); ;
+		$all_shapes= get_option("asowp_all_shapes",[]); ;
 		if($all_shapes[$shape_id]){
       if($all_shapes[$shape_id] != $shape){
         $all_shapes[$shape_id] = $shape;
-        $update = update_option("aso_all_shapes",$all_shapes);
+        $update = update_option("asowp_all_shapes",$all_shapes);
         if($update){
           return rest_ensure_response(array('success' => true, "message" => __("The Shape has been updated with success","all-signs-options-pro") ) );
         }
@@ -456,7 +456,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
    * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
    */
 	public function get_fixing_methods_options_globals_settings($request){
-		$all_fixingMethods = get_option("aso_all_fixingMethods",[]);
+		$all_fixingMethods = get_option("asowp_all_fixingMethods",[]);
 		return rest_ensure_response($all_fixingMethods);   
 	}
     /**
@@ -468,11 +468,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	public function update_fixing_methods_options_globals_settings($request){
 		$fixingMethod=json_decode($request->get_body(),true);
 		$fixingMethod_id=$request->get_param('fixingMethod_id');
-		$all_fixingMethods= get_option("aso_all_fixingMethods",[]);
+		$all_fixingMethods= get_option("asowp_all_fixingMethods",[]);
 		if($all_fixingMethods[$fixingMethod_id]){
       if($all_fixingMethods[$fixingMethod_id] != $fixingMethod){
         $all_fixingMethods[$fixingMethod_id] = $fixingMethod;
-        $update = update_option("aso_all_fixingMethods",$all_fixingMethods);
+        $update = update_option("asowp_all_fixingMethods",$all_fixingMethods);
         if($update){
           return rest_ensure_response(array('success' => true, "message" => __("The Fixing Method has been updated with success","all-signs-options-pro") ) );
         }
@@ -493,7 +493,7 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	 * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_borders_options_globals_settings($request){
-		$all_borders = get_option("aso_all_borders",[]);
+		$all_borders = get_option("asowp_all_borders",[]);
 		return rest_ensure_response($all_borders);     
 	}
     /**
@@ -505,11 +505,11 @@ class ASO_Api_Globals_Settings extends WP_REST_Controller {
 	public function update_borders_options_globals_settings($request){
 		$border=json_decode($request->get_body(),true);
 		$border_id=$request->get_param('border_id');
-		$all_borders= get_option("aso_all_borders",[]); ;
+		$all_borders= get_option("asowp_all_borders",[]); ;
 		if($all_borders[$border_id]){
       if($all_borders[$border_id] != $border){
         $all_borders[$border_id] = $border;
-        $update = update_option("aso_all_borders",$all_borders);
+        $update = update_option("asowp_all_borders",$all_borders);
         if($update){
           return rest_ensure_response(array('success' => true, "message" => __("The Border has been updated with success","all-signs-options-pro") ) );
         }

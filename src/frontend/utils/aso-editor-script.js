@@ -1,11 +1,11 @@
-var FontFaceObserver = require('fontfaceobserver'); 
+var FontFaceObserver = require("fontfaceobserver");
 
 var fixingUrl = "";
 var borderUrl = "";
 
-if (aso_data.page == "configurator" || aso_data.page == "admin") {
-  fixingUrl = aso_configurator_data.fixing_methods_url;
-  borderUrl = aso_configurator_data.borders_url;
+if (asowp_data.page == "configurator" || asowp_data.page == "admin") {
+  fixingUrl = asowp_configurator_data.fixing_methods_url;
+  borderUrl = asowp_configurator_data.borders_url;
 }
 
 var canvas = null;
@@ -14,12 +14,12 @@ var backCanvas = null;
 var activeCanvas = canvas;
 var doubleFace = false;
 var defaultShadow = new fabric.Shadow({
-  color: 'black',
+  color: "black",
   offsetX: 3,
   offsetY: 3,
   blur: 30,
-  isActive: true
-})
+  isActive: true,
+});
 function handleGetCanvas(canvas1, canvas2, statut) {
   // console.log('canvas getted', statut)
   canvas = canvas1;
@@ -1231,8 +1231,8 @@ function handleChangeSize(width, height, name, maxChar) {
 
 function handleGetSignPosition() {
   var sign = handleGetObjectByName("safeObject");
-  var width = signData.width
-  var height = signData.height
+  var width = signData.width;
+  var height = signData.height;
   currentSize = { width: width, height: height };
 
   // console.log('mise à echelle',handleMiseAEchelle(width, height))
@@ -1252,7 +1252,6 @@ function handleGetSignPosition() {
 
   currentWidth = handleMiseAEchelle(width, height).width;
   currentHeight = handleMiseAEchelle(width, height).height;
-
 
   return {
     width: sign.width,
@@ -1529,9 +1528,12 @@ var firstBorderCheck = true;
 function removeBorder(canva) {
   var Objects = canva.getObjects();
   Objects.forEach(function (object) {
-    if (object.name == "old-world-border" || object.name == "rounded-corners-border") {
+    if (
+      object.name == "old-world-border" ||
+      object.name == "rounded-corners-border"
+    ) {
       canva.remove(object);
-    }else if(object.name == "normal-border"){
+    } else if (object.name == "normal-border") {
       canva.remove(object);
       // console.log(canvas, "normal-border")
     }
@@ -1553,19 +1555,25 @@ function handleGetBorderData(face, data) {
   }
 }
 
-var signData = {}
-function getSignInfos(data){
-  signData = data
+var signData = {};
+function getSignInfos(data) {
+  signData = data;
 }
 function setNormalBorber(canva, size, color) {
-  var sign
-  if(firstLoad){
-    sign = handleGetObjectByName('safeObject', canva);
-  }else{
-    console.log(signData, "signData")
+  var sign;
+  if (firstLoad) {
+    sign = handleGetObjectByName("safeObject", canva);
+  } else {
+    console.log(signData, "signData");
 
-    var newSignWidth = handleMiseAEchelle(signData.width, signData.height).width;
-    var newSignHeight = handleMiseAEchelle(signData.width, signData.height).height;
+    var newSignWidth = handleMiseAEchelle(
+      signData.width,
+      signData.height
+    ).width;
+    var newSignHeight = handleMiseAEchelle(
+      signData.width,
+      signData.height
+    ).height;
     var canvasCenter = getCanvasCenter();
     var newRectLeft = canvasCenter.x - newSignWidth / 2;
     var newRectTop = canvasCenter.y - newSignHeight / 2;
@@ -1576,17 +1584,17 @@ function setNormalBorber(canva, size, color) {
       left: newRectLeft,
       top: newRectTop,
       fill: color,
-    }
+    };
   }
   var border;
   switch (selectedShape) {
     case "square":
       border = new fabric.Rect({
-        height: sign.height + (size*2),
-        width: sign.width + (size*2),
+        height: sign.height + size * 2,
+        width: sign.width + size * 2,
         top: sign.top - size,
         left: sign.left - size,
-        name: 'normal-border',
+        name: "normal-border",
         fill: color,
         selectable: false,
         shadow: defaultShadow,
@@ -1595,11 +1603,11 @@ function setNormalBorber(canva, size, color) {
 
     case "rounded-square":
       border = new fabric.Rect({
-        height: sign.height + (size*2),
-        width: sign.width + (size*2),
+        height: sign.height + size * 2,
+        width: sign.width + size * 2,
         top: sign.top - size,
         left: sign.left - size,
-        name: 'normal-border',
+        name: "normal-border",
         fill: color,
         rx: 35,
         ry: 35,
@@ -1610,11 +1618,11 @@ function setNormalBorber(canva, size, color) {
 
     case "oval":
       border = new fabric.Ellipse({
-        ry: (sign.height + (size*2)) / 2,
-        rx: (sign.width + (size*2)) / 2,
+        ry: (sign.height + size * 2) / 2,
+        rx: (sign.width + size * 2) / 2,
         top: sign.top - size,
         left: sign.left - size,
-        name: 'normal-border',
+        name: "normal-border",
         fill: color,
         selectable: false,
         shadow: defaultShadow,
@@ -1623,11 +1631,11 @@ function setNormalBorber(canva, size, color) {
 
     case "triangle":
       border = new fabric.Triangle({
-        height: sign.height + (size*2),
-        width: sign.width + (size*2),
-        top: sign.top - (size*1.5),
+        height: sign.height + size * 2,
+        width: sign.width + size * 2,
+        top: sign.top - size * 1.5,
         left: sign.left - size,
-        name: 'normal-border',
+        name: "normal-border",
         fill: color,
         selectable: false,
         shadow: defaultShadow,
@@ -1637,15 +1645,15 @@ function setNormalBorber(canva, size, color) {
     case "rotated-square":
       border = new fabric.Polygon(
         [
-          { x: (sign.width + (size*2)) / 2, y: 0 },
-          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 2 },
-          { x: (sign.width + (size*2)) / 2, y: (sign.height + (size*2)) },
-          { x: 0, y: (sign.height + (size*2)) / 2 },
+          { x: (sign.width + size * 2) / 2, y: 0 },
+          { x: sign.width + size * 2, y: (sign.height + size * 2) / 2 },
+          { x: (sign.width + size * 2) / 2, y: sign.height + size * 2 },
+          { x: 0, y: (sign.height + size * 2) / 2 },
         ],
         {
           top: sign.top - size,
           left: sign.left - size,
-          name: 'normal-border',
+          name: "normal-border",
           fill: color,
           selectable: false,
           shadow: defaultShadow,
@@ -1656,16 +1664,16 @@ function setNormalBorber(canva, size, color) {
     case "turn-left":
       border = new fabric.Polygon(
         [
-          { x: 0, y: (sign.height + (size*2)) / 2 },
-          { x: (sign.width + (size*2)) / 2, y: 0 },
-          { x: (sign.width + (size*2)), y: 0 },
-          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) },
-          { x: (sign.width + (size*2)) / 2, y: (sign.height + (size*2)) },
+          { x: 0, y: (sign.height + size * 2) / 2 },
+          { x: (sign.width + size * 2) / 2, y: 0 },
+          { x: sign.width + size * 2, y: 0 },
+          { x: sign.width + size * 2, y: sign.height + size * 2 },
+          { x: (sign.width + size * 2) / 2, y: sign.height + size * 2 },
         ],
         {
           top: sign.top - size,
-          left: sign.left - (size*1.2),
-          name: 'normal-border',
+          left: sign.left - size * 1.2,
+          name: "normal-border",
           fill: color,
           selectable: false,
           shadow: defaultShadow,
@@ -1677,15 +1685,15 @@ function setNormalBorber(canva, size, color) {
       border = new fabric.Polygon(
         [
           { x: 0, y: 0 },
-          { x: (sign.width + (size*2)) / 2, y: 0 },
-          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 2 },
-          { x: (sign.width + (size*2)) / 2, y: (sign.height + (size*2)) },
-          { x: 0, y: (sign.height + (size*2)) },
+          { x: (sign.width + size * 2) / 2, y: 0 },
+          { x: sign.width + size * 2, y: (sign.height + size * 2) / 2 },
+          { x: (sign.width + size * 2) / 2, y: sign.height + size * 2 },
+          { x: 0, y: sign.height + size * 2 },
         ],
         {
           top: sign.top - size,
-          left: sign.left - (size/1.5),
-          name: 'normal-border',
+          left: sign.left - size / 1.5,
+          name: "normal-border",
           fill: color,
           selectable: false,
           shadow: defaultShadow,
@@ -1696,18 +1704,24 @@ function setNormalBorber(canva, size, color) {
     case "arrow-right":
       border = new fabric.Polyline(
         [
-          { x: 0, y: ((sign.height + (size*2)) / 5) * 4 },
-          { x: ((sign.width + (size*2)) / 2)/1.05, y: ((sign.height + (size*2)) / 5) * 4 },
-          { x: ((sign.width + (size*2)) / 2)/1.05, y: (sign.height + (size*2)) },
-          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 2 },
-          { x: ((sign.width + (size*2)) / 2)/1.05, y: 0 },
-          { x: ((sign.width + (size*2)) / 2)/1.05, y: (sign.height + (size*2)) / 5 },
-          { x: 0, y: (sign.height + (size*2)) / 5 },
+          { x: 0, y: ((sign.height + size * 2) / 5) * 4 },
+          {
+            x: (sign.width + size * 2) / 2 / 1.05,
+            y: ((sign.height + size * 2) / 5) * 4,
+          },
+          { x: (sign.width + size * 2) / 2 / 1.05, y: sign.height + size * 2 },
+          { x: sign.width + size * 2, y: (sign.height + size * 2) / 2 },
+          { x: (sign.width + size * 2) / 2 / 1.05, y: 0 },
+          {
+            x: (sign.width + size * 2) / 2 / 1.05,
+            y: (sign.height + size * 2) / 5,
+          },
+          { x: 0, y: (sign.height + size * 2) / 5 },
         ],
         {
           top: sign.top - size,
-          left: sign.left - (size/1.5),
-          name: 'normal-border',
+          left: sign.left - size / 1.5,
+          name: "normal-border",
           fill: color,
           selectable: false,
           shadow: defaultShadow,
@@ -1718,18 +1732,27 @@ function setNormalBorber(canva, size, color) {
     case "arrow-left":
       border = new fabric.Polygon(
         [
-          { x: 0, y: (sign.height + (size*2)) / 2 },
-          { x: ((sign.width + (size*2)) / 2)*1.05, y: 0 },
-          { x: ((sign.width + (size*2)) / 2)*1.05, y: (sign.height + (size*2)) / 5 },
-          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 5 },
-          { x: (sign.width + (size*2)), y: ((sign.height + (size*2)) / 5) * 4 },
-          { x: ((sign.width + (size*2)) / 2)*1.05, y: ((sign.height + (size*2)) / 5) * 4 },
-          { x: ((sign.width + (size*2)) / 2)*1.05, y: (sign.height + (size*2)) },
+          { x: 0, y: (sign.height + size * 2) / 2 },
+          { x: ((sign.width + size * 2) / 2) * 1.05, y: 0 },
+          {
+            x: ((sign.width + size * 2) / 2) * 1.05,
+            y: (sign.height + size * 2) / 5,
+          },
+          { x: sign.width + size * 2, y: (sign.height + size * 2) / 5 },
+          { x: sign.width + size * 2, y: ((sign.height + size * 2) / 5) * 4 },
+          {
+            x: ((sign.width + size * 2) / 2) * 1.05,
+            y: ((sign.height + size * 2) / 5) * 4,
+          },
+          {
+            x: ((sign.width + size * 2) / 2) * 1.05,
+            y: sign.height + size * 2,
+          },
         ],
         {
           top: sign.top - size,
-          left: sign.left - (size*1.2),
-          name: 'normal-border',
+          left: sign.left - size * 1.2,
+          name: "normal-border",
           fill: color,
           selectable: false,
           shadow: defaultShadow,
@@ -1740,19 +1763,19 @@ function setNormalBorber(canva, size, color) {
     case "stop":
       border = new fabric.Polygon(
         [
-          { x: 0, y: ((sign.height + (size*2)) / 3) * 2 },
-          { x: (sign.width + (size*2)) / 3, y: (sign.height + (size*2)) },
-          { x: ((sign.width + (size*2)) / 3) * 2, y: (sign.height + (size*2)) },
-          { x: (sign.width + (size*2)), y: ((sign.height + (size*2)) / 3) * 2 },
-          { x: (sign.width + (size*2)), y: (sign.height + (size*2)) / 3 },
-          { x: ((sign.width + (size*2)) / 3) * 2, y: 0 },
-          { x: (sign.width + (size*2)) / 3, y: 0 },
-          { x: 0, y: (sign.height + (size*2)) / 3 },
+          { x: 0, y: ((sign.height + size * 2) / 3) * 2 },
+          { x: (sign.width + size * 2) / 3, y: sign.height + size * 2 },
+          { x: ((sign.width + size * 2) / 3) * 2, y: sign.height + size * 2 },
+          { x: sign.width + size * 2, y: ((sign.height + size * 2) / 3) * 2 },
+          { x: sign.width + size * 2, y: (sign.height + size * 2) / 3 },
+          { x: ((sign.width + size * 2) / 3) * 2, y: 0 },
+          { x: (sign.width + size * 2) / 3, y: 0 },
+          { x: 0, y: (sign.height + size * 2) / 3 },
         ],
         {
           top: sign.top - size,
           left: sign.left - size,
-          name: 'normal-border',
+          name: "normal-border",
           fill: color,
           selectable: false,
           shadow: defaultShadow,
@@ -1762,13 +1785,13 @@ function setNormalBorber(canva, size, color) {
 
     case "rounded-top":
       border = new fabric.Rect({
-        height: sign.height + (size*2),
-        width: sign.width + (size*2),
+        height: sign.height + size * 2,
+        width: sign.width + size * 2,
         top: sign.top - size,
         left: sign.left - size,
-        rx: sign.width + (size*2),
+        rx: sign.width + size * 2,
         ry: 10,
-        name: 'normal-border',
+        name: "normal-border",
         fill: color,
         selectable: false,
         shadow: defaultShadow,
@@ -1777,20 +1800,20 @@ function setNormalBorber(canva, size, color) {
 
     case "rounded-sides":
       border = new fabric.Rect({
-        height: sign.height + (size*2),
-        width: sign.width + (size*2),
+        height: sign.height + size * 2,
+        width: sign.width + size * 2,
         top: sign.top - size,
         left: sign.left - size,
         rx: 10,
-        ry: sign.height + (size*2),
-        name: 'normal-border',
+        ry: sign.height + size * 2,
+        name: "normal-border",
         fill: color,
         selectable: false,
         shadow: defaultShadow,
       });
       break;
   }
-  
+
   return border;
 }
 
@@ -1833,18 +1856,18 @@ function handleSelectBorder(border, color) {
         if (object.name === "safeObject") {
           if (currBorder === "none") {
             removeBorder(canva);
-            object.shadow = defaultShadow
+            object.shadow = defaultShadow;
           }
           if (currBorder === "normal") {
             removeBorder(canva);
-            var border = setNormalBorber(canva, 10, activeColor)
-            canva.add(border)
-            border.sendToBack()
+            var border = setNormalBorber(canva, 10, activeColor);
+            canva.add(border);
+            border.sendToBack();
 
-            object.shadow = null
+            object.shadow = null;
           }
           if (currBorder === "old-world") {
-            object.shadow = defaultShadow
+            object.shadow = defaultShadow;
             removeBorder(canva);
             if (
               selectedShape === "square" ||
@@ -1863,14 +1886,14 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("top", object.top);
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
-                    svgGroup.name = "old-world-border",
-                    svgGroup.selectable = false,
-                    canva.add(svgGroup);
+                    (svgGroup.name = "old-world-border"),
+                      (svgGroup.selectable = false),
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
                 );
-              }else if(object.width >= (2*object.height)){
+              } else if (object.width >= 2 * object.height) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_old_world_longW.svg",
                   (objects, options) => {
@@ -1885,17 +1908,20 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("top", object.top);
 
                     svgGroup.scaleX = scaleX;
-                    svgGroup.scaleY = scaleY
+                    svgGroup.scaleY = scaleY;
 
-                    svgGroup.name = "old-world-border",
-                    svgGroup.selectable = false,
-                    canva.add(svgGroup);
+                    (svgGroup.name = "old-world-border"),
+                      (svgGroup.selectable = false),
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                     // console.log("svg", svgGroup, object);
                   }
                 );
-              }else if(object.width > object.height && object.width < (2*object.height)){
+              } else if (
+                object.width > object.height &&
+                object.width < 2 * object.height
+              ) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_old_world_mediumW.svg",
                   (objects, options) => {
@@ -1909,15 +1935,15 @@ function handleSelectBorder(border, color) {
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
 
-                    svgGroup.name = "old-world-border",
-                    svgGroup.selectable = false,
+                    (svgGroup.name = "old-world-border"),
+                      (svgGroup.selectable = false),
                       // console.log("svg", svgGroup);
-                    canva.add(svgGroup);
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
                 );
-              }else if(object.height >= (2*object.width)){
+              } else if (object.height >= 2 * object.width) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_old_world_longH.svg",
                   (objects, options) => {
@@ -1934,15 +1960,18 @@ function handleSelectBorder(border, color) {
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
 
-                    svgGroup.name = "old-world-border",
-                    svgGroup.selectable = false,
-                    canva.add(svgGroup);
+                    (svgGroup.name = "old-world-border"),
+                      (svgGroup.selectable = false),
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                     // console.log("svg", svgGroup, object);
                   }
                 );
-              }else if(object.height > object.width && object.height < (2*object.width)){
+              } else if (
+                object.height > object.width &&
+                object.height < 2 * object.width
+              ) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_old_world_mediumH.svg",
                   (objects, options) => {
@@ -1956,10 +1985,10 @@ function handleSelectBorder(border, color) {
                     svgGroup.scaleX = scaleX;
                     svgGroup.scaleY = scaleY;
 
-                    svgGroup.name = "old-world-border",
-                    svgGroup.selectable = false,
+                    (svgGroup.name = "old-world-border"),
+                      (svgGroup.selectable = false),
                       // console.log("svg", svgGroup);
-                    canva.add(svgGroup);
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
@@ -1968,9 +1997,12 @@ function handleSelectBorder(border, color) {
             }
           }
           if (currBorder === "rounded-corners") {
-            object.shadow = defaultShadow
+            object.shadow = defaultShadow;
             removeBorder(canva);
-            if (selectedShape === "square" || selectedShape === "rounded-square") {
+            if (
+              selectedShape === "square" ||
+              selectedShape === "rounded-square"
+            ) {
               if (object.width == object.height) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_rounded_corners.svg",
@@ -1982,17 +2014,17 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("stroke", activeColor);
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
-                    svgGroup.scaleX = scaleX-0.009;
-                    svgGroup.scaleY = scaleY-0.01;
-                    svgGroup.name = "rounded-corners-border",
-                    svgGroup.selectable = false,
+                    svgGroup.scaleX = scaleX - 0.009;
+                    svgGroup.scaleY = scaleY - 0.01;
+                    (svgGroup.name = "rounded-corners-border"),
+                      (svgGroup.selectable = false),
                       // console.log("svg", svgGroup);
                       canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
                 );
-              }else if(object.width >= (2*object.height)){
+              } else if (object.width >= 2 * object.height) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_rounded_corners_longW.svg",
                   (objects, options) => {
@@ -2006,18 +2038,21 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
 
-                    svgGroup.scaleX = scaleX-0.009;
-                    svgGroup.scaleY = scaleY-0.01;
+                    svgGroup.scaleX = scaleX - 0.009;
+                    svgGroup.scaleY = scaleY - 0.01;
 
-                    svgGroup.name = "rounded-corners-border",
-                    svgGroup.selectable = false,
-                    canva.add(svgGroup);
+                    (svgGroup.name = "rounded-corners-border"),
+                      (svgGroup.selectable = false),
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                     // console.log("svg", svgGroup, object);
                   }
                 );
-              }else if(object.width > object.height && object.width < (2*object.height)){
+              } else if (
+                object.width > object.height &&
+                object.width < 2 * object.height
+              ) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_rounded_corners_mediumW.svg",
                   (objects, options) => {
@@ -2028,18 +2063,18 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("stroke", activeColor);
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
-                    svgGroup.scaleX = scaleX-0.009;
-                    svgGroup.scaleY = scaleY-0.01;
+                    svgGroup.scaleX = scaleX - 0.009;
+                    svgGroup.scaleY = scaleY - 0.01;
 
-                    svgGroup.name = "rounded-corners-border",
-                    svgGroup.selectable = false,
+                    (svgGroup.name = "rounded-corners-border"),
+                      (svgGroup.selectable = false),
                       // console.log("svg", svgGroup);
-                    canva.add(svgGroup);
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
                 );
-              }else if(object.height >= (2*object.width)){
+              } else if (object.height >= 2 * object.width) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_rounded_corners_longH.svg",
                   (objects, options) => {
@@ -2053,18 +2088,21 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
 
-                    svgGroup.scaleX = scaleX-0.009;
-                    svgGroup.scaleY = scaleY-0.005;
+                    svgGroup.scaleX = scaleX - 0.009;
+                    svgGroup.scaleY = scaleY - 0.005;
 
-                    svgGroup.name = "rounded-corners-border",
-                    svgGroup.selectable = false,
-                    canva.add(svgGroup);
+                    (svgGroup.name = "rounded-corners-border"),
+                      (svgGroup.selectable = false),
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                     // console.log("svg", svgGroup, object);
                   }
                 );
-              }else if(object.height > object.width && object.height < (2*object.width)){
+              } else if (
+                object.height > object.width &&
+                object.height < 2 * object.width
+              ) {
                 fabric.loadSVGFromURL(
                   borderUrl + "/im_rounded_corners_mediumH.svg",
                   (objects, options) => {
@@ -2075,13 +2113,13 @@ function handleSelectBorder(border, color) {
                     svgGroup.set("stroke", activeColor);
                     svgGroup.set("left", object.left);
                     svgGroup.set("top", object.top);
-                    svgGroup.scaleX = scaleX-0.009;
-                    svgGroup.scaleY = scaleY-0.008;
+                    svgGroup.scaleX = scaleX - 0.009;
+                    svgGroup.scaleY = scaleY - 0.008;
 
-                    svgGroup.name = "rounded-corners-border",
-                    svgGroup.selectable = false,
+                    (svgGroup.name = "rounded-corners-border"),
+                      (svgGroup.selectable = false),
                       // console.log("svg", svgGroup);
-                    canva.add(svgGroup);
+                      canva.add(svgGroup);
                     canva.moveTo(svgGroup, index + 1);
                     canva.renderAll();
                   }
@@ -2126,31 +2164,31 @@ function handlechangeBorderColor(color, position) {
 
   function setBorderColor(border, color, canva) {
     var Objects = canva.getObjects();
-    Objects.forEach(function (object){
+    Objects.forEach(function (object) {
       if (border === "normal") {
-        if(object.name == 'normal-border'){
+        if (object.name == "normal-border") {
           canva.remove(object);
 
-          var borderNormal = setNormalBorber(canva, 10, color)
-          canva.add(borderNormal)
-          borderNormal.sendToBack()
+          var borderNormal = setNormalBorber(canva, 10, color);
+          canva.add(borderNormal);
+          borderNormal.sendToBack();
         }
       }
       if (border === "old-world") {
         if (object.name === "old-world-border") {
           object.set("fill", color);
-          console.log(object, "old-world-border")
+          console.log(object, "old-world-border");
           canva.renderAll();
-        }  
+        }
         canva.renderAll();
       }
-      if (border === "rounded-corners") { 
+      if (border === "rounded-corners") {
         if (object.name === "rounded-corners-border") {
           object.set("stroke", color);
         }
         canva.renderAll();
       }
-    })
+    });
   }
 
   if (readyToSave) {
@@ -2243,8 +2281,10 @@ function setPattern(canva, image) {
   // var object = handleGetObjectByName('safeObject', canvas)
   canva.getObjects().forEach((object, index) => {
     if (object.name === "safeObject") {
-      handleConvertImageToDataURI( image, function(dataURI) {
-        fabric.util.loadImage( dataURI, function (img) {
+      handleConvertImageToDataURI(image, function (dataURI) {
+        fabric.util.loadImage(
+          dataURI,
+          function (img) {
             var scaleX = object.width / img.width;
             var scaleY = object.height / img.height;
             var pattern = new fabric.Pattern({
@@ -2686,17 +2726,25 @@ function handleSelectFixingMethode(methode) {
         if (object.name == "safeObject") {
           if (methode == "screw") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
               if (sizeRatio == "small") {
-                handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left;
                       img.set("name", "screw1");
                       img.id = 7;
@@ -2704,19 +2752,22 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left + (object.width - newWidth);
                       img.set("name", "screw2");
                       img.id = 8;
@@ -2724,13 +2775,15 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
               if (sizeRatio == "big") {
-                handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -2745,12 +2798,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -2765,12 +2820,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -2785,12 +2842,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -2805,239 +2864,282 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
             }
             if (selectedShape == "triangle") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + newHeight / 2;
-                  img.left = object.left + (object.width / 2 - newWidth / 2);
-                  img.set("name", "screw1");
-                  img.id = 7;
+                    img.top = object.top + newHeight / 2;
+                    img.left = object.left + (object.width / 2 - newWidth / 2);
+                    img.set("name", "screw1");
+                    img.id = 7;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height - newHeight);
-                  img.left = object.left + newWidth / 2;
-                  img.set("name", "screw2");
-                  img.id = 8;
+                    img.top = object.top + (object.height - newHeight);
+                    img.left = object.left + newWidth / 2;
+                    img.set("name", "screw2");
+                    img.id = 8;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height - newHeight);
-                  img.left =
-                    object.left + (object.width - newWidth) - newWidth / 2;
-                  img.set("name", "screw3");
-                  img.id = 9;
+                    img.top = object.top + (object.height - newHeight);
+                    img.left =
+                      object.left + (object.width - newWidth) - newWidth / 2;
+                    img.set("name", "screw3");
+                    img.id = 9;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
             }
             if (selectedShape == "oval" || selectedShape == "rotated-square") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  // img.scaleToWidth(object.width);
-                  // img.scaleToHeight(object.height);
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    // img.scaleToWidth(object.width);
+                    // img.scaleToHeight(object.height);
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left + newWidth / 2;
-                  img.set("name", "screw1");
-                  img.id = 7;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left + newWidth / 2;
+                    img.set("name", "screw1");
+                    img.id = 7;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left =
-                    object.left + (object.width - newWidth) - newWidth / 2;
-                  img.set("name", "screw2");
-                  img.id = 8;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left =
+                      object.left + (object.width - newWidth) - newWidth / 2;
+                    img.set("name", "screw2");
+                    img.id = 8;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-left" || selectedShape == "arrow-left") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  // img.scaleToWidth(object.width);
-                  // img.scaleToHeight(object.height);
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    // img.scaleToWidth(object.width);
+                    // img.scaleToHeight(object.height);
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left + newWidth / 2;
-                  img.set("name", "screw1");
-                  img.id = 7;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left + newWidth / 2;
+                    img.set("name", "screw1");
+                    img.id = 7;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left + (object.width - newWidth);
-                  img.set("name", "screw2");
-                  img.id = 8;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left + (object.width - newWidth);
+                    img.set("name", "screw2");
+                    img.id = 8;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
             }
-            if ( selectedShape == "turn-right" || selectedShape == "arrow-right") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+            if (
+              selectedShape == "turn-right" ||
+              selectedShape == "arrow-right"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left;
-                  img.set("name", "screw1");
-                  img.id = 7;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left;
+                    img.set("name", "screw1");
+                    img.id = 7;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left =
-                    object.left + (object.width - newWidth) - newWidth / 2;
-                  img.set("name", "screw2");
-                  img.id = 8;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left =
+                      object.left + (object.width - newWidth) - newWidth / 2;
+                    img.set("name", "screw2");
+                    img.id = 8;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
             }
             if (selectedShape == "stop") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left;
-                  img.set("name", "screw1");
-                  img.id = 7;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left;
+                    img.set("name", "screw1");
+                    img.id = 7;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw.png", function(dataURI) {
-                fabric.Image.fromURL(dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left + (object.width - newWidth);
-                  img.set("name", "screw2");
-                  img.id = 8;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left + (object.width - newWidth);
+                    img.set("name", "screw2");
+                    img.id = 8;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                  });
+                }
+              );
             }
           }
           if (methode == "screw-cap") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides" ) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
               if (sizeRatio == "small") {
-                handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw-cap.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       // img.scaleToWidth(object.width);
                       // img.scaleToHeight(object.height);
                       img.scale(fixScale);
@@ -3046,7 +3148,8 @@ function handleSelectFixingMethode(methode) {
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left;
                       img.set("name", "screw-cap1");
                       img.id = 11;
@@ -3054,19 +3157,22 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw-cap.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left + (object.width - newWidth);
                       img.set("name", "screw-cap2");
                       img.id = 12;
@@ -3074,13 +3180,15 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
               if (sizeRatio == "big") {
-                handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw-cap.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3095,12 +3203,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw-cap.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3115,12 +3225,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw-cap.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3135,12 +3247,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_screw-cap.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3155,14 +3269,16 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
             }
             if (selectedShape == "triangle") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3177,12 +3293,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3197,12 +3315,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3218,13 +3338,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "oval" || selectedShape == "rotated-square") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     // img.scaleToWidth(object.width);
                     // img.scaleToHeight(object.height);
                     img.scale(fixScale);
@@ -3241,12 +3363,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3262,13 +3386,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-left" || selectedShape == "arrow-left") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     // img.scaleToWidth(object.width);
                     // img.scaleToHeight(object.height);
                     img.scale(fixScale);
@@ -3285,12 +3411,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3305,13 +3433,18 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
-            if (selectedShape == "turn-right" || selectedShape == "arrow-right") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+            if (
+              selectedShape == "turn-right" ||
+              selectedShape == "arrow-right"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3326,12 +3459,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3347,13 +3482,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "stop") {
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3368,12 +3505,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_screw-cap.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_screw-cap.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3388,24 +3527,32 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "suction-cup") {
             resetFixing(canva);
-            if ( selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides" ) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
               if (sizeRatio == "small") {
-                handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_suction-cup.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left;
                       img.set("name", "suction-cup1");
                       img.id = 15;
@@ -3413,19 +3560,22 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_suction-cup.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left + (object.width - newWidth);
                       img.set("name", "suction-cup2");
                       img.id = 16;
@@ -3433,13 +3583,15 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
               if (sizeRatio == "big") {
-                handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_suction-cup.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3453,12 +3605,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_suction-cup.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3473,12 +3627,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_suction-cup.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3493,12 +3649,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_suction-cup.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3513,14 +3671,16 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
             }
             if (selectedShape == "triangle") {
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3535,12 +3695,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3555,12 +3717,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3576,13 +3740,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "oval" || selectedShape == "rotated-square") {
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     // img.scaleToWidth(object.width);
                     // img.scaleToHeight(object.height);
                     img.scale(fixScale);
@@ -3599,12 +3765,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3620,13 +3788,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-left" || selectedShape == "arrow-left") {
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     // img.scaleToWidth(object.width);
                     // img.scaleToHeight(object.height);
                     img.scale(fixScale);
@@ -3643,12 +3813,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3663,13 +3835,18 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
-            if ( selectedShape == "turn-right" || selectedShape == "arrow-right" ) {
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+            if (
+              selectedShape == "turn-right" ||
+              selectedShape == "arrow-right"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3684,12 +3861,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3705,13 +3884,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "stop") {
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3726,12 +3907,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_suction-cup.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_suction-cup.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3746,24 +3929,32 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "standoff") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
               if (sizeRatio == "small") {
-                handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_standoff.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left;
                       img.set("name", "standoff1");
                       img.id = 19;
@@ -3771,19 +3962,22 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_standoff.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left + (object.width - newWidth);
                       img.set("name", "standoff2");
                       img.id = 20;
@@ -3791,13 +3985,15 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
               if (sizeRatio == "big") {
-                handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_standoff.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3811,12 +4007,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_standoff.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3831,12 +4029,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_standoff.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3851,12 +4051,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                  fabric.Image.fromURL( dataURI, function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_standoff.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -3871,16 +4073,16 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
             }
             if (selectedShape == "triangle") {
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3895,14 +4097,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3917,14 +4119,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3940,15 +4142,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "oval" || selectedShape == "rotated-square") {
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     // img.scaleToWidth(object.width);
                     // img.scaleToHeight(object.height);
                     img.scale(fixScale);
@@ -3965,14 +4167,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -3988,15 +4190,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-left" || selectedShape == "arrow-left") {
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     // img.scaleToWidth(object.width);
                     // img.scaleToHeight(object.height);
                     img.scale(fixScale);
@@ -4013,14 +4215,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4035,15 +4237,18 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
-            if (selectedShape == "turn-right" || selectedShape == "arrow-right") {
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+            if (
+              selectedShape == "turn-right" ||
+              selectedShape == "arrow-right"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4058,14 +4263,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4081,15 +4286,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "stop") {
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4104,14 +4309,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI(fixingUrl + "/im_standoff.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_standoff.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4126,26 +4331,34 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "flag") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides" || selectedShape == "turn-right" || selectedShape == "turn-left") {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides" ||
+              selectedShape == "turn-right" ||
+              selectedShape == "turn-left"
+            ) {
               if (sizeRatio == "small") {
-                handleConvertImageToDataURI( fixingUrl + "/im_flag.png", function(dataURI) {
-                  fabric.Image.fromURL(
-                    dataURI,
-                    function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_flag.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left - newWidth / 2;
                       img.set("name", "flag1");
                       img.id = 23;
@@ -4154,22 +4367,23 @@ function handleSelectFixingMethode(methode) {
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
                       img.bringToFront();
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
               if (sizeRatio == "big") {
-                handleConvertImageToDataURI( fixingUrl + "/im_flag.png", function(dataURI) {
-                  fabric.Image.fromURL(
-                    dataURI,
-                    function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_flag.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 4 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 4 - newHeight / 2);
                       img.left = object.left - newWidth / 2;
                       img.set("name", "flag1");
                       img.id = 23;
@@ -4177,14 +4391,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI( fixingUrl + "/im_flag.png", function(dataURI) {
-                  fabric.Image.fromURL(
-                    dataURI,
-                    function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_flag.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -4200,45 +4414,49 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
             }
             if (selectedShape == "oval" || selectedShape == "stop") {
-              handleConvertImageToDataURI( fixingUrl + "/im_flag.png", function(dataURI) {
-                fabric.Image.fromURL( dataURI, function (img) {
-                  img.scale(fixScale);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_flag.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
+                    img.scale(fixScale);
 
-                  img.setCoords();
-                  var newWidth = img.width * img.scaleX;
-                  var newHeight = img.height * img.scaleY;
+                    img.setCoords();
+                    var newWidth = img.width * img.scaleX;
+                    var newHeight = img.height * img.scaleY;
 
-                  img.top = object.top + (object.height / 2 - newHeight / 2);
-                  img.left = object.left - newWidth / 2;
-                  img.set("name", "flag1");
-                  img.id = 23;
+                    img.top = object.top + (object.height / 2 - newHeight / 2);
+                    img.left = object.left - newWidth / 2;
+                    img.set("name", "flag1");
+                    img.id = 23;
 
-                  img.selectable = false;
-                  img.objectType = "aso-fixingMethods";
-                  canva.add(img);
-                  img.bringToFront();
-                });
-              });
+                    img.selectable = false;
+                    img.objectType = "aso-fixingMethods";
+                    canva.add(img);
+                    img.bringToFront();
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-left") {
               if (sizeRatio == "small") {
-                handleConvertImageToDataURI( fixingUrl + "/im_flag-left.png", function(dataURI) {
-                  fabric.Image.fromURL(
-                    dataURI,
-                    function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_flag-left.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 2 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 2 - newHeight / 2);
                       img.left = object.left + object.width - newWidth / 2;
                       img.set("name", "flag");
                       img.id = 23;
@@ -4247,22 +4465,23 @@ function handleSelectFixingMethode(methode) {
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
                       img.bringToFront();
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
               if (sizeRatio == "big") {
-                handleConvertImageToDataURI( fixingUrl + "/im_flag-left.png", function(dataURI) {
-                  fabric.Image.fromURL(
-                    dataURI,
-                    function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_flag-left.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
                       var newWidth = img.width * img.scaleX;
                       var newHeight = img.height * img.scaleY;
 
-                      img.top = object.top + (object.height / 4 - newHeight / 2);
+                      img.top =
+                        object.top + (object.height / 4 - newHeight / 2);
                       img.left = object.left + object.width - newWidth / 2;
                       img.set("name", "flag1");
                       img.id = 23;
@@ -4270,14 +4489,14 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
 
-                handleConvertImageToDataURI( fixingUrl + "/im_flag-left.png", function(dataURI) {
-                  fabric.Image.fromURL(
-                    dataURI,
-                    function (img) {
+                handleConvertImageToDataURI(
+                  fixingUrl + "/im_flag-left.png",
+                  function (dataURI) {
+                    fabric.Image.fromURL(dataURI, function (img) {
                       img.scale(fixScale);
 
                       img.setCoords();
@@ -4293,15 +4512,18 @@ function handleSelectFixingMethode(methode) {
                       img.selectable = false;
                       img.objectType = "aso-fixingMethods";
                       canva.add(img);
-                    }
-                  );
-                });
+                    });
+                  }
+                );
               }
             }
           }
           if (methode == "table-stand") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square") {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square"
+            ) {
               var points = [
                 { x: 0, y: 0 },
                 { x: -10, y: object.height / 10 },
@@ -4335,11 +4557,16 @@ function handleSelectFixingMethode(methode) {
           }
           if (methode == "ceiling") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4354,14 +4581,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4376,15 +4603,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "oval" || selectedShape == "stop") {
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4399,15 +4626,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-left") {
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4415,21 +4642,22 @@ function handleSelectFixingMethode(methode) {
                     var newHeight = img.height * img.scaleY;
 
                     img.top = object.top - newHeight / 2;
-                    img.left = object.left + (object.width / 5) * 3.5 - newWidth;
+                    img.left =
+                      object.left + (object.width / 5) * 3.5 - newWidth;
                     img.set("name", "ceiling1");
                     img.id = 26;
 
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4444,15 +4672,15 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
             if (selectedShape == "turn-right") {
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4467,14 +4695,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_ceiling.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_ceiling.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4489,14 +4717,19 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "hanging") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
               if (sizeRatio == "small") {
                 var hangingHole = new fabric.Circle({
                   id: 28,
@@ -4537,7 +4770,12 @@ function handleSelectFixingMethode(methode) {
                 canva.add(hangingHole1, hangingHole2);
               }
             }
-            if (selectedShape == "oval" || selectedShape == "stop" || selectedShape == "triangle" || selectedShape == "rotated-square") {
+            if (
+              selectedShape == "oval" ||
+              selectedShape == "stop" ||
+              selectedShape == "triangle" ||
+              selectedShape == "rotated-square"
+            ) {
               var hangingHole = new fabric.Circle({
                 id: 28,
                 radius: object.height * 0.04,
@@ -4571,7 +4809,12 @@ function handleSelectFixingMethode(methode) {
           }
           if (methode == "cable-labeling") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
               var cableHole1 = new fabric.Rect({
                 id: 31,
                 width: object.width * 0.07,
@@ -4656,11 +4899,16 @@ function handleSelectFixingMethode(methode) {
           }
           if (methode == "table-clamp") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
-              handleConvertImageToDataURI( fixingUrl + "/im_table-clamp.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_table-clamp.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4675,14 +4923,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_table-clamp.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_table-clamp.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4697,18 +4945,23 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "base-support") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
-              handleConvertImageToDataURI( fixingUrl + "/im_base-support-left.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_base-support-left.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4724,14 +4977,14 @@ function handleSelectFixingMethode(methode) {
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
                     // img.sendToBack()
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_base-support-right.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_base-support-right.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(fixScale);
 
                     img.setCoords();
@@ -4747,18 +5000,21 @@ function handleSelectFixingMethode(methode) {
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
                     // img.sendToBack()
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "eyelets") {
             resetFixing(canva);
-            if (selectedShape == "square" || selectedShape == "rounded-square") {
-              handleConvertImageToDataURI( fixingUrl + "/im_eyelets.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_eyelets.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.15);
 
                     img.setCoords();
@@ -4774,14 +5030,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_eyelets.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_eyelets.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.15);
 
                     img.setCoords();
@@ -4796,14 +5052,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_eyelets.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_eyelets.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.15);
 
                     img.setCoords();
@@ -4820,14 +5076,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_eyelets.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_eyelets.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.15);
 
                     img.setCoords();
@@ -4843,36 +5099,44 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "keyring") {
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides") {
-              handleConvertImageToDataURI( fixingUrl + "/im_keyring.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
-                    img.scale(0.25);
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_keyring.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(
+                    dataURI,
+                    function (img) {
+                      img.scale(0.25);
 
-                    img.setCoords();
-                    var newWidth = img.width * img.scaleX;
-                    var newHeight = img.height * img.scaleY;
+                      img.setCoords();
+                      var newWidth = img.width * img.scaleX;
+                      var newHeight = img.height * img.scaleY;
 
-                    img.top = object.top - newHeight / 1.4;
-                    (img.left = object.left - newWidth / 2.5),
-                      // img.flipX = true
-                      img.set("name", "keyring");
-                    img.id = 44;
+                      img.top = object.top - newHeight / 1.4;
+                      (img.left = object.left - newWidth / 2.5),
+                        // img.flipX = true
+                        img.set("name", "keyring");
+                      img.id = 44;
 
-                    img.selectable = false;
-                    img.objectType = "aso-fixingMethods";
-                    canva.add(img);
-                  },
-                  { crossOrigin: "anonymous" }
-                );
-              });
+                      img.selectable = false;
+                      img.objectType = "aso-fixingMethods";
+                      canva.add(img);
+                    },
+                    { crossOrigin: "anonymous" }
+                  );
+                }
+              );
 
               var keyringHole = new fabric.Circle({
                 id: 43,
@@ -4888,28 +5152,32 @@ function handleSelectFixingMethode(methode) {
               canva.add(keyringHole);
             }
             if (selectedShape == "oval" || selectedShape == "stop") {
-                handleConvertImageToDataURI( fixingUrl + "/im_keyring_oval.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  fixingUrl + "/im_keyring_oval.png",
-                  function (img) {
-                    img.scale(0.25);
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_keyring_oval.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(
+                    fixingUrl + "/im_keyring_oval.png",
+                    function (img) {
+                      img.scale(0.25);
 
-                    img.setCoords();
-                    var newWidth = img.width * img.scaleX;
-                    var newHeight = img.height * img.scaleY;
+                      img.setCoords();
+                      var newWidth = img.width * img.scaleX;
+                      var newHeight = img.height * img.scaleY;
 
-                    img.top = object.top - newHeight / 1.4;
-                    (img.left = object.left + object.width / 2 - newWidth / 2),
-                      // img.flipX = true
-                      img.set("name", "keyring");
-                    img.id = 44;
+                      img.top = object.top - newHeight / 1.4;
+                      (img.left =
+                        object.left + object.width / 2 - newWidth / 2),
+                        // img.flipX = true
+                        img.set("name", "keyring");
+                      img.id = 44;
 
-                    img.selectable = false;
-                    img.objectType = "aso-fixingMethods";
-                    canva.add(img);
-                  }
-                );
-              });
+                      img.selectable = false;
+                      img.objectType = "aso-fixingMethods";
+                      canva.add(img);
+                    }
+                  );
+                }
+              );
 
               var newRadius = object.height * 0.05;
               var keyringHole = new fabric.Circle({
@@ -4926,10 +5194,10 @@ function handleSelectFixingMethode(methode) {
               canva.add(keyringHole);
             }
             if (selectedShape == "rotated-square") {
-              handleConvertImageToDataURI( fixingUrl + "/im_keyring_losange.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_keyring_losange.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.25);
 
                     img.setCoords();
@@ -4945,9 +5213,9 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
               var newRadius = object.height * 0.05;
               var keyringHole = new fabric.Circle({
@@ -4964,10 +5232,10 @@ function handleSelectFixingMethode(methode) {
               canva.add(keyringHole);
             }
             if (selectedShape == "triangle") {
-              handleConvertImageToDataURI( fixingUrl + "/im_keyring_triangle.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_keyring_triangle.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.25);
 
                     img.setCoords();
@@ -4983,9 +5251,9 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
               var newRadius = object.height * 0.05;
               var keyringHole = new fabric.Circle({
@@ -5003,11 +5271,18 @@ function handleSelectFixingMethode(methode) {
             }
           }
           if (methode == "s-hook") {
-            if (selectedShape == "square" || selectedShape == "rounded-square" || selectedShape == "rounded-top" || selectedShape == "rounded-sides" || selectedShape == "oval" || selectedShape == "stop") {
-              handleConvertImageToDataURI( fixingUrl + "/im_s-hook.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+            if (
+              selectedShape == "square" ||
+              selectedShape == "rounded-square" ||
+              selectedShape == "rounded-top" ||
+              selectedShape == "rounded-sides" ||
+              selectedShape == "oval" ||
+              selectedShape == "stop"
+            ) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_s-hook.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.6);
 
                     img.setCoords();
@@ -5023,9 +5298,9 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
               var newRadius = object.height * 0.05;
               var keyringHole = new fabric.Circle({
@@ -5042,10 +5317,10 @@ function handleSelectFixingMethode(methode) {
               canva.add(keyringHole);
             }
             if (selectedShape == "rotated-square") {
-              handleConvertImageToDataURI( fixingUrl + "/im_s-hook_losange.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_s-hook_losange.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.6);
 
                     img.setCoords();
@@ -5053,7 +5328,8 @@ function handleSelectFixingMethode(methode) {
                     var newHeight = img.height * img.scaleY;
 
                     img.top = object.top - newHeight / 1.5;
-                    (img.left = object.left + object.width / 2 - newWidth / 1.9),
+                    (img.left =
+                      object.left + object.width / 2 - newWidth / 1.9),
                       // img.flipX = true
                       img.set("name", "s-hook");
                     img.id = 45;
@@ -5061,9 +5337,9 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
               var newRadius = object.height * 0.05;
               var keyringHole = new fabric.Circle({
@@ -5080,10 +5356,10 @@ function handleSelectFixingMethode(methode) {
               canva.add(keyringHole);
             }
             if (selectedShape == "triangle") {
-              handleConvertImageToDataURI( fixingUrl + "/im_s-hook_triangle.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_s-hook_triangle.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     img.scale(0.6);
 
                     img.setCoords();
@@ -5091,7 +5367,8 @@ function handleSelectFixingMethode(methode) {
                     var newHeight = img.height * img.scaleY;
 
                     img.top = object.top - newHeight / 1.6;
-                    (img.left = object.left + object.width / 2 - newWidth / 1.9),
+                    (img.left =
+                      object.left + object.width / 2 - newWidth / 1.9),
                       // img.flipX = true
                       img.set("name", "s-hook");
                     img.id = 45;
@@ -5099,9 +5376,9 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
               var newRadius = object.height * 0.05;
               var keyringHole = new fabric.Circle({
@@ -5120,10 +5397,10 @@ function handleSelectFixingMethode(methode) {
           }
           if (methode == "roll-up") {
             if (selectedShape == "square") {
-              handleConvertImageToDataURI( fixingUrl + "/im_roll-up_top.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_roll-up_top.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     var scaleX = object.width / img.width;
                     img.scaleX = scaleX;
 
@@ -5139,14 +5416,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
 
-              handleConvertImageToDataURI( fixingUrl + "/im_roll-up_bottom.jpg", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_roll-up_bottom.jpg",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     var scaleX = object.width / img.width;
                     img.scaleX = scaleX;
 
@@ -5162,17 +5439,17 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
           if (methode == "sign-holder") {
             if (selectedShape == "square") {
-              handleConvertImageToDataURI( fixingUrl + "/im_sign-holder.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_sign-holder.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     var scaleX = object.width / img.width;
                     img.scaleX = scaleX;
 
@@ -5188,14 +5465,14 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
-              
-              handleConvertImageToDataURI( fixingUrl + "/im_sign-holder.png", function(dataURI) {
-                fabric.Image.fromURL(
-                  dataURI,
-                  function (img) {
+                  });
+                }
+              );
+
+              handleConvertImageToDataURI(
+                fixingUrl + "/im_sign-holder.png",
+                function (dataURI) {
+                  fabric.Image.fromURL(dataURI, function (img) {
                     var scaleX = object.width / img.width;
                     img.scaleX = scaleX;
 
@@ -5212,9 +5489,9 @@ function handleSelectFixingMethode(methode) {
                     img.selectable = false;
                     img.objectType = "aso-fixingMethods";
                     canva.add(img);
-                  }
-                );
-              });
+                  });
+                }
+              );
             }
           }
         }
@@ -5386,11 +5663,17 @@ function getTextValueToUnit(
 
       var left = objLeft * radio;
 
-      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
+      var right =
+        currentSize.width -
+        (convertFromPx(left, currentUnit) +
+          convertFromPx(newWidth, currentUnit));
 
       var top = objTop * radio;
 
-      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
+      var bottom =
+        currentSize.height -
+        (convertFromPx(top, currentUnit) +
+          convertFromPx(newHeight, currentUnit));
 
       textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
       textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
@@ -5501,7 +5784,8 @@ function handleGetAddedTextValues(transform) {
     var objLeftInContainer = obj.left - objWidht / 2 - container.left;
     var objRightInContainer = container.width - (objLeftInContainer + objWidht);
     var objTopInContainer = obj.top - objHeight / 2 - container.top;
-    var objBottomInContainer = container.height - (objTopInContainer + objHeight);
+    var objBottomInContainer =
+      container.height - (objTopInContainer + objHeight);
 
     selectedText.object = obj;
     selectedText.value = obj.text;
@@ -5520,7 +5804,13 @@ function handleGetAddedTextValues(transform) {
     sizeEditor.value = parseInt(selectedText.size * 12);
 
     // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
-    getTextValueToUnit(container, objWidht, objHeight, objLeftInContainer, objTopInContainer);
+    getTextValueToUnit(
+      container,
+      objWidht,
+      objHeight,
+      objLeftInContainer,
+      objTopInContainer
+    );
 
     handleCalcTextPrice();
   } else {
@@ -5934,15 +6224,15 @@ async function handleChangeTextFontFam(font, url) {
     var currentText = selectedText.object;
     const myfont = new FontFaceObserver(font);
     await myfont.load();
-    
+
     currentText.set("fontFamily", font);
     currentText.set("fontFamilyUrl", url);
     activeCanvas.renderAll();
 
     handleGetAddedTextValues(currentText);
   } catch (e) {
-      console.log(e);
-      alert('font loading failed ' + font);
+    console.log(e);
+    alert("font loading failed " + font);
   }
 }
 function handleChangeTextColor(color) {
@@ -6060,27 +6350,27 @@ function handleGetAddedImageValues(object) {
 }
 var addedImages = [];
 function handleConvertImageToDataURI(imageUrl, callback) {
-    var img = new Image();
-    img.crossOrigin = 'Anonymous'; // Nécessaire pour les images hébergées sur des domaines différents
+  var img = new Image();
+  img.crossOrigin = "Anonymous"; // Nécessaire pour les images hébergées sur des domaines différents
 
-    img.onload = function() {
-        var canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
+  img.onload = function () {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
 
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
 
-        // Convertir l'image en Data URI
-        var dataURI = canvas.toDataURL('image/png'); // Vous pouvez changer le type MIME si nécessaire
-        callback(dataURI);
-    };
+    // Convertir l'image en Data URI
+    var dataURI = canvas.toDataURL("image/png"); // Vous pouvez changer le type MIME si nécessaire
+    callback(dataURI);
+  };
 
-    img.onerror = function() {
-        console.error('Failed to load image at ' + imageUrl);
-    };
+  img.onerror = function () {
+    console.error("Failed to load image at " + imageUrl);
+  };
 
-    img.src = imageUrl;
+  img.src = imageUrl;
 }
 function handleAddImageToSign(image, imageId, price) {
   function isSVGImage(image) {
@@ -6154,17 +6444,17 @@ function handleAddImageToSign(image, imageId, price) {
         // console.log(img.getSrc(), "image source")
       });
     } else {
-      handleConvertImageToDataURI(imgUrl, function(dataURI) {
+      handleConvertImageToDataURI(imgUrl, function (dataURI) {
         // console.log(dataURI); // Utiliser le Data URI ici
         fabric.Image.fromURL(
           dataURI,
           function (img) {
             img.scale(0.4);
-  
+
             img.setCoords();
             var newWidth = img.width * img.scaleX;
             var newHeight = img.height * img.scaleY;
-  
+
             img.top = sign.top + sign.height / 2;
             img.left = sign.left + sign.width / 2;
             // img.flipX = true
@@ -6172,7 +6462,7 @@ function handleAddImageToSign(image, imageId, price) {
             img.centeredScaling = true;
             (img.lockScalingFlip = true), (img.originX = "center");
             img.originY = "center";
-  
+
             img.id = newId += 1;
             img.name = "aso-SignImage";
             img.canvasName = activeCanvas.name;
@@ -6181,7 +6471,7 @@ function handleAddImageToSign(image, imageId, price) {
             img.objectType = "no-svg";
             img.imageUrl = imgUrl;
             // img.clipPath = handleClipAddedObject(activeCanvas);
-  
+
             img.lockMoving = {
               x: false,
               y: false,
@@ -6197,7 +6487,7 @@ function handleAddImageToSign(image, imageId, price) {
               tl: true, // Top left
               tr: true, // Top right
             });
-  
+
             img.on("mousedown", function () {
               handleGetAddedImageValues(img);
               // updateModifications(true, "deposer l'image ")
@@ -6206,17 +6496,17 @@ function handleAddImageToSign(image, imageId, price) {
               handleGetAddedImageValues(img);
               // updateModifications(true, "deposer l'image ")
             });
-  
+
             activeCanvas.add(img);
             img.bringToFront();
             activeCanvas.setActiveObject(img);
             // lockToCanvas(img)
-  
+
             handleCenterHorizontally(img);
             handleCenterVertically(img);
-  
+
             addedImages.push({ id: img.id, url: imgUrl, object: img });
-  
+
             updateModifications(true, "==ajout d'image ==");
             // console.log(img.getSrc(), "image source")
           },
@@ -6799,8 +7089,8 @@ function handleSetShadow(canva) {
         left: sign.left,
         absolutePositioned: true,
         selectable: false,
-        fill: '#313131',
-        name: 'aso-signPattern',
+        fill: "#313131",
+        name: "aso-signPattern",
         shadow: defaultShadow,
       });
       break;
@@ -6815,8 +7105,8 @@ function handleSetShadow(canva) {
         rx: 35,
         ry: 35,
         selectable: false,
-        fill: '#313131',
-        name: 'aso-signPattern',
+        fill: "#313131",
+        name: "aso-signPattern",
         shadow: defaultShadow,
       });
       break;
@@ -6829,8 +7119,8 @@ function handleSetShadow(canva) {
         left: sign.left,
         absolutePositioned: true,
         selectable: false,
-        fill: '#313131',
-        name: 'aso-signPattern',
+        fill: "#313131",
+        name: "aso-signPattern",
         shadow: defaultShadow,
       });
       break;
@@ -6843,8 +7133,8 @@ function handleSetShadow(canva) {
         left: sign.left,
         absolutePositioned: true,
         selectable: false,
-        fill: '#313131',
-        name: 'aso-signPattern',
+        fill: "#313131",
+        name: "aso-signPattern",
         shadow: defaultShadow,
       });
       break;
@@ -6862,8 +7152,8 @@ function handleSetShadow(canva) {
           left: sign.left,
           absolutePositioned: true,
           selectable: false,
-          fill: '#313131',
-          name: 'aso-signPattern',
+          fill: "#313131",
+          name: "aso-signPattern",
           shadow: defaultShadow,
         }
       );
@@ -6883,8 +7173,8 @@ function handleSetShadow(canva) {
           left: sign.left,
           absolutePositioned: true,
           selectable: false,
-          fill: '#313131',
-          name: 'aso-signPattern',
+          fill: "#313131",
+          name: "aso-signPattern",
           shadow: defaultShadow,
         }
       );
@@ -6904,8 +7194,8 @@ function handleSetShadow(canva) {
           left: sign.left,
           absolutePositioned: true,
           selectable: false,
-          fill: '#313131',
-          name: 'aso-signPattern',
+          fill: "#313131",
+          name: "aso-signPattern",
           shadow: defaultShadow,
         }
       );
@@ -6927,8 +7217,8 @@ function handleSetShadow(canva) {
           left: sign.left,
           absolutePositioned: true,
           selectable: false,
-          fill: '#313131',
-          name: 'aso-signPattern',
+          fill: "#313131",
+          name: "aso-signPattern",
           shadow: defaultShadow,
         }
       );
@@ -6950,8 +7240,8 @@ function handleSetShadow(canva) {
           left: sign.left,
           absolutePositioned: true,
           selectable: false,
-          fill: '#313131',
-          name: 'aso-signPattern',
+          fill: "#313131",
+          name: "aso-signPattern",
           shadow: defaultShadow,
         }
       );
@@ -6974,8 +7264,8 @@ function handleSetShadow(canva) {
           left: sign.left,
           absolutePositioned: true,
           selectable: false,
-          fill: '#313131',
-          name: 'aso-signPattern',
+          fill: "#313131",
+          name: "aso-signPattern",
           shadow: defaultShadow,
         }
       );
@@ -6991,8 +7281,8 @@ function handleSetShadow(canva) {
         rx: sign.width,
         ry: 10,
         selectable: false,
-        fill: '#313131',
-        name: 'aso-signPattern',
+        fill: "#313131",
+        name: "aso-signPattern",
         shadow: defaultShadow,
       });
       break;
@@ -7007,8 +7297,8 @@ function handleSetShadow(canva) {
         rx: 10,
         ry: sign.height,
         selectable: false,
-        fill: '#313131',
-        name: 'aso-signPattern',
+        fill: "#313131",
+        name: "aso-signPattern",
         shadow: defaultShadow,
       });
       break;
@@ -7082,7 +7372,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
                 templateObject[0].set("fill", pattern);
                 // canvas.add(pattern);
                 canva.renderAll();
-              },
+              }
               // { crossOrigin: "anonymous" }
             );
           }
@@ -8303,8 +8593,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
                 var newRadius = rect.height * 0.05;
 
                 templateObject[0].left = rect.left + rect.width / 2 - newRadius;
-      
-                templateObject[0].top = rect.top + 15;          
+
+                templateObject[0].top = rect.top + 15;
               }
             }
             if (signData.shape == "rotated-square") {
@@ -8358,29 +8648,28 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
         }
 
         canva.add(...templateObject);
-
       });
     });
   }
 
   loadFromJSON(canvas, canvas1Json);
-  activeBorder = signData.border.face1.type
-  activeBorderColor = signData.border.face1.codeHex
+  activeBorder = signData.border.face1.type;
+  activeBorderColor = signData.border.face1.codeHex;
   if (templateData.doubleFace) {
     loadFromJSON(backCanvas, canvas2Json);
-    activeBorder2 = signData.border.face2.type
-    activeBorderColor2 = signData.border.face2.codeHex
+    activeBorder2 = signData.border.face2.type;
+    activeBorderColor2 = signData.border.face2.codeHex;
   }
 
-  var currentSizeValues = handleGetSignPosition() 
-  
+  var currentSizeValues = handleGetSignPosition();
+
   handleGetShape(templateData.shape);
   // console.log(currentSizeValues)
   resetFixing(canvas);
   handleSelectFixingMethode(templateData.fixingMethod.type);
-  sizeRatio = templateData.fixingMethod.ratio
-  fixScale = templateData.fixingMethod.scale
-  ratioScale = templateData.size.ratioScale
+  sizeRatio = templateData.fixingMethod.ratio;
+  fixScale = templateData.fixingMethod.scale;
+  ratioScale = templateData.size.ratioScale;
 
   var sign = handleGetObjectByName("safeObject");
   function setMeasurmentValue(canvas) {
@@ -8435,7 +8724,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   setMeasurmentValue(canvas);
   setMeasurmentValue(backCanvas);
 
-  firstLoad = true
+  firstLoad = true;
   return {
     size: currentSizeValues,
     texts: addedTexts,
@@ -8484,7 +8773,9 @@ function handleFinishConfiguration(textsTable, imagesTable) {
           arr.push(obj);
         }
       }
-      addTextValues(textsValues, {
+      addTextValues(
+        textsValues,
+        {
           id: text.id,
           values: formatValues(handleGetAddedTextValues(text)),
           textContent: text.text,
@@ -8592,5 +8883,5 @@ export {
   handleMoveobject,
   handleChangeAddedSvgColor,
   handleSetShadow,
-  handleConvertImageToDataURI
+  handleConvertImageToDataURI,
 };

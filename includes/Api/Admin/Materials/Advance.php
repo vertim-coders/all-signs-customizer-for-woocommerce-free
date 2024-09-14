@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\Materials;
+namespace ASOWP\Api\Admin\Materials;
 
 use WP_Error;
 use WP_REST_Controller;
@@ -9,7 +9,7 @@ use WP_REST_Response;
 /**
  * REST_API Handler
  */
-class ASO_Materials_Advance extends WP_REST_Controller {
+class ASOWP_Materials_Advance extends WP_REST_Controller {
 
     /**
      * [__construct description]
@@ -310,8 +310,8 @@ class ASO_Materials_Advance extends WP_REST_Controller {
         $config_id = $request->get_param('config_id');
         $material_id = $request->get_param('material_id');
         $component_id = $request->get_param('component_id');
-        $have_fixingMethods = get_option("aso_all_fixingMethods");
-        $have_shapes = get_option("aso_all_shapes");
+        $have_fixingMethods = get_option("asowp_all_fixingMethods");
+        $have_shapes = get_option("asowp_all_shapes");
         if($config_id != 0){
             $meta = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta) && !empty($meta)){

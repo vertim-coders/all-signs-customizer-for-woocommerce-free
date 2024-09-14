@@ -238,7 +238,7 @@ const template = ref({
 });
 const isEmptyName = ref(false);
 const isEmptyConfig = ref(false);
-const currencySumbol = aso_data.currencySymbol;
+const currencySumbol = asowp_data.currencySymbol;
 const templates = ref([]);
 const template_id = ref(null);
 const categories = ref({});

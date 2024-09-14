@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\Additionals_Options;
+namespace ASOWP\Api\Admin\Additionals_Options;
 
 use WP_Error;
 use WP_Post;
@@ -9,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching custom additionals
  */
-class ASO_Api_Customs_Additionals extends WP_REST_Controller {
+class ASOWP_Api_Customs_Additionals extends WP_REST_Controller {
      /**
      * [__construct description]
      */

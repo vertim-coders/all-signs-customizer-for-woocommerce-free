@@ -3,7 +3,7 @@
  /**
  * the class summarizing the actions of aso on a product
  */
- class ASO_Product_Config {
+ class ASOWP_Product_Config {
 
     //ID of a product variant or not
     public $variation_id;
@@ -94,9 +94,9 @@
 			$configs_ids[ $config->ID ] = ['title'=>$config->post_title];
 		}
 		?>
-		<div class="aso_config_data show_if_simple">
+		<div class="asowp_config_data show_if_simple">
 			<?php
-			$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"all-signs-options-pro") );
+			$this->display_asowp_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"all-signs-options-pro") );
 			?>
 		</div>
 		<?php
@@ -105,7 +105,7 @@
 	/**
 	* Assign configuration to product
 	*/
-	private function display_aso_config_on_WC_product_config( $pid, $configs_ids, $title ) {
+	private function display_asowp_config_on_WC_product_config( $pid, $configs_ids, $title ) {
 		$meta = get_post_meta($pid,'product-aso-metas',true);
 		$container = "<div class='bg-black p-4'>" .
 			"<h2>" . esc_html($title) . "</h2>" .
@@ -123,7 +123,7 @@
 		}
 	
 		$container .= "</select>";
-		$container .= "<input type='hidden' name='aso_config_nonce' value='" . wp_create_nonce('aso_config_nonce') . "'/>";
+		$container .= "<input type='hidden' name='asowp_config_nonce' value='" . wp_create_nonce('asowp_config_nonce') . "'/>";
 		$container .= "</div></div>";
 	
 		// Définition des balises HTML autorisées et de leurs attributs
@@ -171,9 +171,9 @@
 		?>
 		<tr>
 			<td>
-				<div class="aso_config_data show_if_simple">
+				<div class="asowp_config_data show_if_simple">
 				<?php
-				$this->display_aso_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"all-signs-options-pro") );
+				$this->display_asowp_config_on_WC_product_config( $id, $configs_ids, __('Attach this product to All Signs Options configuration',"all-signs-options-pro") );
 				?>
 				</div>
 			</td>
@@ -186,7 +186,7 @@
 	 */
 	public function save_config( $post_id ) {
 		$meta_key = 'product-aso-metas';
-		if ( isset($_POST['aso_config_nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['aso_config_nonce'] ) ) , 'aso_config_nonce' ) && isset( $_POST[ $meta_key ] ) ) {
+		if ( isset($_POST['asowp_config_nonce']) && wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['asowp_config_nonce'] ) ) , 'asowp_config_nonce' ) && isset( $_POST[ $meta_key ] ) ) {
 			$meta_value = map_deep( $_POST[ $meta_key ], 'sanitize_text_field' );
 			update_post_meta( $post_id, $meta_key, $meta_value );
 		}
@@ -199,7 +199,7 @@
 	 * @return array $defaults result
 	 */
 	function get_product_columns( $defaults ) {
-		$defaults['is_aso_customizable'] = __( "All Signs Options", "all-signs-options-pro");
+		$defaults['is_asowp_customizable'] = __( "All Signs Options", "all-signs-options-pro");
 		return $defaults;
 	}
 	/**
@@ -209,10 +209,10 @@
 	 * @param int $id Product ID
 	 */
 	public function get_products_columns_values( $column_name, $id ) {
-		if ( $column_name === 'is_aso_customizable' ) {
-			$aso_metas = get_post_meta( $id, 'product-aso-metas', true );
-			if ( isset( $aso_metas[ $id ]['config-id'] ) && get_post($aso_metas[ $id ]['config-id'])) {
-				if ( empty( $aso_metas[ $id ]['config-id'] ) ) {
+		if ( $column_name === 'is_asowp_customizable' ) {
+			$asowp_metas = get_post_meta( $id, 'product-asowp-metas', true );
+			if ( isset( $asowp_metas[ $id ]['config-id'] ) && get_post($asowp_metas[ $id ]['config-id'])) {
+				if ( empty( $asowp_metas[ $id ]['config-id'] ) ) {
 					esc_attr_e( 'No', "all-signs-options-pro");
 				} else {
 					esc_attr_e( "Yes", "all-signs-options-pro");
@@ -223,7 +223,7 @@
 		}
 	}
 
-	public function is_aso_customizable() {
+	public function is_asowp_customizable() {
 		return ( ! empty( $this->settings ) );
 	}
 
@@ -245,9 +245,9 @@
 				if ( ! $variation['is_purchasable'] || ! $variation['is_in_stock'] ) {
 					continue;
 				}
-				$aso_product = new aso_Product_Config( $variation['variation_id'] );
-				if( $aso_product->is_aso_customizable() ) {
-					echo wp_kses_post($aso_product->get_design_buttons( $with_upload ));
+				$asowp_product = new ASOWP_Product_Config( $variation['variation_id'] );
+				if( $asowp_product->is_asowp_customizable() ) {
+					echo wp_kses_post($asowp_product->get_design_buttons( $with_upload ));
 				}
 			}
 			
@@ -260,7 +260,7 @@
 
 			
 			$default_design_btn_url = $this->get_design_page_url();
-			$have_pages_settings = get_option("aso_config_page");
+			$have_pages_settings = get_option("asowp_config_page");
 			$content               .= '<a  href="' . $default_design_btn_url . '" class="button aso-design-product">' . $have_pages_settings["buttons"]["productDesignButton"] . '</a>';
 
 			if ( ! isset( $item_id ) ) {
@@ -269,7 +269,7 @@
 			if ( ! isset( $default_design_btn_url ) ) {
 				$default_design_btn_url = '';
 			}
-			echo wp_kses_post(apply_filters( 'aso_show_customization_buttons_in_modal', wp_kses_post($content), $item_id, $default_design_btn_url, $product->get_type() ));
+			echo wp_kses_post(apply_filters( 'asowp_show_customization_buttons_in_modal', wp_kses_post($content), $item_id, $default_design_btn_url, $product->get_type() ));
 			?>
 			</div>
 			<?php
@@ -296,9 +296,9 @@
 				if ( ! $variation['is_purchasable'] || ! $variation['is_in_stock'] ) {
 					continue;
 				}
-				$aso_product = new aso_Product_Config( $variation['variation_id'] );
-				if( $aso_product->is_aso_customizable() ) {
-					echo wp_kses_post($aso_product->get_templates_buttons( $with_upload ));
+				$asowp_product = new ASOWP_Product_Config( $variation['variation_id'] );
+				if( $asowp_product->is_asowp_customizable() ) {
+					echo wp_kses_post($asowp_product->get_templates_buttons( $with_upload ));
 				}
 			}
 			
@@ -311,7 +311,7 @@
 
 			
 			$default_template_btn_url = $this->get_templates_page_url();
-			$have_pages_settings = get_option("aso_config_page");
+			$have_pages_settings = get_option("asowp_config_page");
 
 			$content               .= '<a  href="' . $default_template_btn_url . '" class="button aso-template-product">' . $have_pages_settings["buttons"]["productTemplateButton"] . '</a>';
 
@@ -321,7 +321,7 @@
 			if ( ! isset( $default_template_btn_url ) ) {
 				$default_template_btn_url = '';
 			}
-			echo wp_kses_post(apply_filters( 'aso_show_templates_buttons_in_modal', wp_kses_post($content), $item_id, $default_template_btn_url, $product->get_type() ));
+			echo wp_kses_post(apply_filters( 'asowp_show_templates_buttons_in_modal', wp_kses_post($content), $item_id, $default_template_btn_url, $product->get_type() ));
 			?>
 			</div>
 			<?php
@@ -334,7 +334,7 @@
 	/**
 	 * Returns the customization page URL
 	 *
-	 * @global array $aso_settings
+	 * @global array $asowp_settings
 	 * @param int   $design_index Saved design index to load
 	 * @param mixed $cart_item_key Cart item key to edit
 	 * @param int   $order_item_id Order item ID to load
@@ -351,68 +351,68 @@
 		}
 
 
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if ( !empty($page_settings) && $page_settings != false ) {
 			$configPage = $page_settings["configuratorPage"];
 			if($configPage != 0){
-				$aso_page_id = $configPage;
+				$asowp_page_id = $configPage;
 			}
 			else {
-				$aso_page_id = false;
+				$asowp_page_id = false;
 			}
 		} else {
-			$aso_page_id = false;
+			$asowp_page_id = false;
 		}
 		
 
 
-		$aso_page_url = '';
-		if ( $aso_page_id ) {
+		$asowp_page_url = '';
+		if ( $asowp_page_id ) {
 
-			$aso_page_url = get_permalink( $aso_page_id );
+			$asowp_page_url = get_permalink( $asowp_page_id );
 
 			if ( $item_id ) {
-				$query = wp_parse_url( $aso_page_url, PHP_URL_QUERY );
+				$query = wp_parse_url( $asowp_page_url, PHP_URL_QUERY );
 				// Returns a string if the URL has parameters or NULL if not
 				if ( get_option( 'permalink_structure' ) ) {
-					if ( substr( $aso_page_url, -1 ) !== '/' ) {
-						$aso_page_url .= '/';
+					if ( substr( $asowp_page_url, -1 ) !== '/' ) {
+						$asowp_page_url .= '/';
 					}elseif ( $cart_item_key ) {
 						$qty_key       = 'qty_' . $cart_item_key . '_' . $item_id;
-						$aso_page_url .= "edit/$item_id/$cart_item_key/" . '?custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
+						$asowp_page_url .= "edit/$item_id/$cart_item_key/" . '?custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
 					} elseif ( $order_item_id ) {
-						$aso_page_url .= "ordered-design/$item_id/$order_item_id/";
-						$aso_page_url  = apply_filters( 'aso_customized_order_page_url', $aso_page_url );
+						$asowp_page_url .= "ordered-design/$item_id/$order_item_id/";
+						$asowp_page_url  = apply_filters( 'asowp_customized_order_page_url', $asowp_page_url );
 					} else {
-						$aso_page_url .= 'aso-design/' . $item_id . '/';
+						$asowp_page_url .= 'aso-design/' . $item_id . '/';
 						if ( $tpl_id ) {
-							$aso_page_url .= "$tpl_id/";
+							$asowp_page_url .= "$tpl_id/";
 						}
 					}
 				} else {
 					if ( $design_index !== false ) {
-						$aso_page_url .= '&aso-product-id' . $item_id . '&design_index=' . $design_index;
+						$asowp_page_url .= '&aso-product-id' . $item_id . '&design_index=' . $design_index;
 					} elseif ( $cart_item_key ) {
 						$qty_key       = 'qty_' . $cart_item_key . '_' . $item_id;
-						$aso_page_url .= '&aso-product-id' . $item_id . '&edit=' . $cart_item_key . '&custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
+						$asowp_page_url .= '&aso-product-id' . $item_id . '&edit=' . $cart_item_key . '&custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
 					} elseif ( $order_item_id ) {
-						$aso_page_url .= '&aso-product-id' . $item_id . '&vcid=' . $order_item_id;
+						$asowp_page_url .= '&aso-product-id' . $item_id . '&vcid=' . $order_item_id;
 					} else {
-						$aso_page_url .= '&aso-product-id' . $item_id;
+						$asowp_page_url .= '&aso-product-id' . $item_id;
 						if ( $tpl_id ) {
-							$aso_page_url .= "&tpl=$tpl_id";
+							$asowp_page_url .= "&tpl=$tpl_id";
 						}
 					}
 				}
 			}
 		}
 
-		return $aso_page_url;
+		return $asowp_page_url;
 	}
 	/**
 	 * Returns the customization page URL
 	 *
-	 * @global array $aso_settings
+	 * @global array $asowp_settings
 	 * @param int   $design_index Saved design index to load
 	 * @param mixed $cart_item_key Cart item key to edit
 	 * @param int   $order_item_id Order item ID to load
@@ -429,57 +429,57 @@
 		}
 
 
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if ( !empty($page_settings) && $page_settings != false ) {
 			$configPage = $page_settings["templatePage"];
 			if($configPage != 0){
-				$aso_page_id = $configPage;
+				$asowp_page_id = $configPage;
 			}
 			else {
-				$aso_page_id = false;
+				$asowp_page_id = false;
 			}
 		} else {
-			$aso_page_id = false;
+			$asowp_page_id = false;
 		}
 		
 
 
-		$aso_page_url = '';
-		if ( $aso_page_id ) {
+		$asowp_page_url = '';
+		if ( $asowp_page_id ) {
 
-			$aso_page_url = get_permalink( $aso_page_id );
+			$asowp_page_url = get_permalink( $asowp_page_id );
 
 			if ( $item_id ) {
-				$query = wp_parse_url( $aso_page_url, PHP_URL_QUERY );
+				$query = wp_parse_url( $asowp_page_url, PHP_URL_QUERY );
 				// Returns a string if the URL has parameters or NULL if not
 				if ( get_option( 'permalink_structure' ) ) {
-					if ( substr( $aso_page_url, -1 ) !== '/' ) {
-						$aso_page_url .= '/';
+					if ( substr( $asowp_page_url, -1 ) !== '/' ) {
+						$asowp_page_url .= '/';
 					}else {
-						$aso_page_url .= 'aso-templates/' . $item_id . '/';
+						$asowp_page_url .= 'aso-templates/' . $item_id . '/';
 						if ( $tpl_id ) {
-							$aso_page_url .= "$tpl_id/";
+							$asowp_page_url .= "$tpl_id/";
 						}
 					}
 				} else {
 					if ( $design_index !== false ) {
-						$aso_page_url .= '&aso-product-id' . $item_id . '&design_index=' . $design_index;
+						$asowp_page_url .= '&aso-product-id' . $item_id . '&design_index=' . $design_index;
 					} elseif ( $cart_item_key ) {
 						$qty_key       = 'qty_' . $cart_item_key . '_' . $item_id;
-						$aso_page_url .= '&aso-product-id' . $item_id . '&edit=' . $cart_item_key . '&custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
+						$asowp_page_url .= '&aso-product-id' . $item_id . '&edit=' . $cart_item_key . '&custom_qty=' . get_option( $qty_key, $this->get_purchase_properties()['min_to_purchase'] );
 					} elseif ( $order_item_id ) {
-						$aso_page_url .= '&aso-product-id' . $item_id . '&vcid=' . $order_item_id;
+						$asowp_page_url .= '&aso-product-id' . $item_id . '&vcid=' . $order_item_id;
 					} else {
-						$aso_page_url .= '&aso-product-id' . $item_id;
+						$asowp_page_url .= '&aso-product-id' . $item_id;
 						if ( $tpl_id ) {
-							$aso_page_url .= "&tpl=$tpl_id";
+							$asowp_page_url .= "&tpl=$tpl_id";
 						}
 					}
 				}
 			}
 		}
 
-		return $aso_page_url;
+		return $asowp_page_url;
 	}
 	/**
 	 * Returns the minimum and maximum order quantities
@@ -545,20 +545,17 @@
 			$config_id = $configs[$pid];
 			$meta_value = get_post_meta((int)$config_id['config-id'],"aso-configs-meta",true);
 			$general_options  = $meta_value["data"]["settings"]["generals"]["product"]??null;
-			$custom_products     = aso_get_custom_products();
-			$anonymous_function  = function ( $vc ) {
-				return $vc->id;
-			};
+			$custom_products_ids     = asowp_get_custom_products();
 			$custom_products_ids = array_map( $anonymous_function, $custom_products );
 			if ( in_array( $pid, $custom_products_ids ) && $general_options!=null && $general_options['hideAddToCartButtonOnDetailPage'] ) {
 				wp_localize_script("aso-product-min","cart_hide_button",[
 					"hide_cart_button"=>$general_options['hideAddToCartButtonOnDetailPage']
 				]);
-				add_action( 'wp_footer', [$this,'aso_product_page_script_init'] );
+				add_action( 'wp_footer', [$this,'asowp_product_page_script_init'] );
 			}
 		}
 	}
-	public function aso_product_page_script_init() { 
+	public function asowp_product_page_script_init() { 
 		global $product;
 		$pid                 = $product->get_id();
 		
@@ -574,10 +571,10 @@
 	 */
 	public function get_customize_btn() {
 		$product_id  = get_the_ID();
-		$aso_product = new aso_Product_Config( $product_id );
+		$asowp_product = new ASOWP_Product_Config( $product_id );
 		$product     = wc_get_product( $product_id );
 		
-		if($aso_product->is_aso_customizable()){
+		if($asowp_product->is_asowp_customizable()){
 			$configs = get_post_meta($product_id,"product-aso-metas",true);
 			$meta_templates = get_post_meta($configs[$product_id]['config-id'],'aso-templates',true);
 			$meta_design = get_post_meta($configs[$product_id]['config-id'],'aso-configs-meta',true);
@@ -587,10 +584,10 @@
 				<?php
 					$general_product_options  = $meta_design["data"]["settings"]["generals"]["product"] ?? null;
 					if($general_product_options != null && $general_product_options["designFromScratch"]===true){
-						echo wp_kses_post($aso_product->get_design_buttons( true ));
+						echo wp_kses_post($asowp_product->get_design_buttons( true ));
 					}
 					if( is_array($meta_templates) && count($meta_templates)>0){
-						echo wp_kses_post($aso_product->get_templates_buttons());
+						echo wp_kses_post($asowp_product->get_templates_buttons());
 					}
 				?>
 				</div>
@@ -611,14 +608,14 @@
 			if ( !$general_options["hideDesignButtonsOnShopPage"]) {
 				$product_class = get_class( $product );
 				if ( $product_class == 'WC_Product_Simple' ) {
-					$aso_product = new ASO_Product_Config( $productId );
-					if ( $aso_product->is_aso_customizable() ) {
+					$asowp_product = new ASOWP_Product_Config( $productId );
+					if ( $asowp_product->is_asowp_customizable() ) {
 						if($general_options["designFromScratch"]){
-							$html .= wp_kses_post($aso_product->get_design_buttons());
+							$html .= wp_kses_post($asowp_product->get_design_buttons());
 						}
 						$meta_value = get_post_meta($configs[$productId]['config-id'],'aso-templates',true);
 						if(is_array($meta_value) && count($meta_value)>0){
-							$html .= wp_kses_post($aso_product->get_templates_buttons());
+							$html .= wp_kses_post($asowp_product->get_templates_buttons());
 						}
 					}			
 				}
@@ -648,16 +645,13 @@
 			//$meta_value = get_post_meta($config_id,"aso-configs-meta",true);
 			
 			//$general_options  = $meta_value["data"]["settings"]["generals"]["product"] ?? null;
-			$custom_products     = aso_get_custom_products();
-			$anonymous_function  = function ( $vc ) {
-				return $vc->id;
-			};
-			$custom_products_ids = array_map( $anonymous_function, $custom_products );
+			$custom_products_ids     = asowp_get_custom_products();
+			
 			
 			if ( in_array( $pid, $custom_products_ids ) ) {	
-				$aso_product = new aso_Product_Config( $product->get_id() );
-				if ( $aso_product->is_aso_customizable() ) {
-					echo wp_kses_post($aso_product->get_design_buttons());
+				$asowp_product = new ASOWP_Product_Config( $product->get_id() );
+				if ( $asowp_product->is_asowp_customizable() ) {
+					echo wp_kses_post($asowp_product->get_design_buttons());
 				}
 			}
 		}
@@ -685,8 +679,8 @@
 	public function delete_product_file_when_delete_product($cart_item_key, $cart) {
 		$cart_item_content = $cart->removed_cart_contents[$cart_item_key];
 		//error_log('ASO Recaps pour le cart_item_key ' . $cart_item_key . ': ' . print_r($cart_item_content, true));
-		if (!empty($cart_item_content)  && isset($cart_item_content["aso_meta_data"]['recaps'])) {
-			$meta_data = $cart_item_content["aso_meta_data"]['recaps'];
+		if (!empty($cart_item_content)  && isset($cart_item_content["asowp_meta_data"]['recaps'])) {
+			$meta_data = $cart_item_content["asowp_meta_data"]['recaps'];
 			$uploads = [];
 			if (isset($meta_data['images']["value"]['face1'])) {
 				foreach ($meta_data['images']["value"] as $key => $face) {
@@ -706,7 +700,7 @@
 	
 			foreach ($uploads as $upload) {
 				if (isset($upload["name"])) {
-					$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $upload["name"];
+					$file = ASOWP_IMAGE_PATH . DIRECTORY_SEPARATOR . $upload["name"];
 					if (file_exists($file)) {
 						wp_delete_file($file);
 					}
@@ -718,7 +712,7 @@
 					foreach ($meta_data["designImages"] as $key => $image) {
 						$path_parts = pathinfo($image);
 						if (isset($path_parts["filename"], $path_parts['extension'])) {
-							$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
+							$file = ASOWP_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
 							if (file_exists($file)) {
 								wp_delete_file($file);
 							}
@@ -730,7 +724,7 @@
 					foreach ($face as $key => $image) {
 						$path_parts = pathinfo($image);
 						if (isset($path_parts["filename"], $path_parts['extension'])) {
-							$file = ASO_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
+							$file = ASOWP_IMAGE_PATH . DIRECTORY_SEPARATOR . $path_parts["filename"] . '.' . $path_parts['extension'];
 							if (file_exists($file)) {
 								wp_delete_file($file);
 							}

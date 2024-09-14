@@ -2560,7 +2560,7 @@
         
                 if(route.name == 'template-maker'){
                     template.value = await api.getTemplate(template_config_id,template_id);
-                    aso_configurator_data.regularPrice = template.value.basePrice;
+                    asowp_p_configurator_data.regularPrice = template.value.basePrice;
                 }
         
                 handleCheckTemplate(props.template.designFromTemplate)
@@ -6221,7 +6221,7 @@
                     face2: current2State,
                 },
                 price: {
-                    value: parseFloat(aso_configurator_data.regularPrice) + finalPrices.value,
+                    value: parseFloat(asowp_configurator_data.regularPrice) + finalPrices.value,
                     array: optionsPrices.value,
                     textAfter: configVisualiserTexts.value.textAfterPrice,
                 },
@@ -7670,13 +7670,13 @@
             recaps:{
                 ...configData.value,
                 custom_price: parseFloat(
-                    finalPrices.value + parseFloat(aso_configurator_data.regularPrice)
-                ).toFixed(aso_configurator_data.decimals)
+                    finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
+                ).toFixed(asowp_p_configurator_data.decimals)
             },
-            variation_id:aso_configurator_data.productID,
+            variation_id:asowp_configurator_data.productID,
             quantity:1
         }
-        var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
+        var add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
         if(!add.success){
             toastMessage(add.message,"error");
             isAddingToCart.value = false

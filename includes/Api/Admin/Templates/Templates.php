@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\Templates;
+namespace ASOWP\Api\Admin\Templates;
 
 use WP_Error;
 use WP_Post;
@@ -9,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching templates
  */
-class ASO_Api_Templates extends WP_REST_Controller {
+class ASOWP_Api_Templates extends WP_REST_Controller {
      /**
      * [__construct description]
      */

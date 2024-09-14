@@ -47,15 +47,15 @@
 import { add_to_cart } from '@/frontend/utils/functions';
 import { onMounted, ref } from 'vue';
 
-const templates = ref(aso_templates.data);
-const allTemplates = aso_templates.data;
-const categories = aso_templates.categories;
+const templates = ref(asowp_templates.data);
+const allTemplates = asowp_templates.data;
+const categories = asowp_templates.categories;
 const category = ref('');
-const regularPrice = aso_templates.regularPrice;
-const templates_grid_cols = aso_templates.grid_cols;
-const design_page_url = aso_templates.design_page_url;
-const productId = aso_templates.productId;
-const buttons = aso_templates.pageConfigs.buttons;
+const regularPrice = asowp_templates.regularPrice;
+const templates_grid_cols = asowp_templates.grid_cols;
+const design_page_url = asowp_templates.design_page_url;
+const productId = asowp_templates.productId;
+const buttons = asowp_templates.pageConfigs.buttons;
 const isAddingToCart = ref(false);
 onMounted(()=>{
     if(document.querySelector("#aso-templates-loader")){
@@ -70,7 +70,7 @@ const addToCart = async (template)=>{
         variation_id:productId,
         quantity:1
     }
-    var add = await add_to_cart(aso_data.ajax_url, cart_data,aso_templates.frontend_nonce, false);
+    var add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_templates.frontend_nonce, false);
     if(!add.success){
         toastMessage(add.message,"error");
         isAddingToCart.value = false
@@ -80,33 +80,33 @@ const addToCart = async (template)=>{
 function formatPrice(price,regularPrice) {
   let formattedPrice = parseFloat(
     price + parseFloat(regularPrice)
-  ).toFixed(aso_templates.decimals);
+  ).toFixed(asowp_templates.decimals);
 
-  switch (aso_templates.currency_pos) {
+  switch (asowp_templates.currency_pos) {
     case "left":
-      formattedPrice = aso_templates.currencySymbol + formattedPrice;
+      formattedPrice = asowp_templates.currencySymbol + formattedPrice;
       break;
     case "right":
-      formattedPrice = formattedPrice + aso_templates.currencySymbol;
+      formattedPrice = formattedPrice + asowp_templates.currencySymbol;
       break;
     case "left_space":
       formattedPrice =
-        aso_templates.currencySymbol + " " + formattedPrice;
+        asowp_templates.currencySymbol + " " + formattedPrice;
       break;
     case "right_space":
       formattedPrice =
-        formattedPrice + " " + aso_templates.currencySymbol;
+        formattedPrice + " " + asowp_templates.currencySymbol;
       break;
   }
 
   // Remplacez le séparateur décimal et des milliers
   formattedPrice = formattedPrice.replace(
     ".",
-    aso_templates.decimalSep
+    asowp_templates.decimalSep
   );
   formattedPrice = formattedPrice.replace(
     /(\d)(?=(\d{3})+(?!\d))/g,
-    "$1" + aso_templates.thousandSep
+    "$1" + asowp_templates.thousandSep
   );
 
   return formattedPrice;

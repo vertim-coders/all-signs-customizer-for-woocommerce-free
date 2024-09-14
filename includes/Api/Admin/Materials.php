@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin;
+namespace ASOWP\Api\Admin;
 
 use WP_Error;
 use WP_REST_Controller;
@@ -9,7 +9,7 @@ use WP_REST_Response;
 /**
  * REST_API Handler
  */
-class ASO_Api_Materials extends WP_REST_Controller {
+class ASOWP_Api_Materials extends WP_REST_Controller {
 
     /**
      * [__construct description]

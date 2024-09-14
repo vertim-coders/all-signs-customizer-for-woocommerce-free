@@ -1,10 +1,10 @@
 <?php
-namespace ASO;
+namespace ASOWP;
 
 /**
  * public Pages Handler
  */
-class ASO_Public {
+class ASOWP_Public {
 
     public function __construct() {
         $this->render_public();
@@ -19,10 +19,10 @@ class ASO_Public {
      * @return string
      */
     public function render_public() {
-        wp_enqueue_style( 'aso-style' );
-        wp_enqueue_style( 'aso-omodal' );
-        wp_enqueue_script('aso-omodal');
-        wp_enqueue_script('aso-tinymce-script');
-        wp_enqueue_script('aso-product-min');
+        wp_enqueue_style( 'aso-style',ASOWP_ASSETS . '/css/style.css',false,ASOWP_VERSION );
+        wp_enqueue_style( 'aso-omodal',ASOWP_ASSETS . '/utilities/modal.min.css',false,ASOWP_VERSION );
+        wp_enqueue_script('aso-omodal',ASOWP_ASSETS . '/utilities/modal.min.js',[],ASOWP_VERSION,true);
+        wp_enqueue_script('aso-tinymce-script',includes_url('/js/tinymce/') . 'tinymce.min.js',[],ASOWP_VERSION,true);
+        wp_enqueue_script('aso-product-min',ASOWP_ASSETS .'/utilities/aso-product-min.js',["jquery"],ASOWP_VERSION,true);
     }
 }

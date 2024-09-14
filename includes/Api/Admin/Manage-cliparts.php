@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin;
+namespace ASOWP\Api\Admin;
 
 use WP_Error;
 use WP_Post;
@@ -8,7 +8,7 @@ use WP_REST_Controller;
 
 
 
-class ASO_Api_Manage_cliparts extends WP_REST_Controller {
+class ASOWP_Api_Manage_cliparts extends WP_REST_Controller {
 
     /**
      * [__construct description]

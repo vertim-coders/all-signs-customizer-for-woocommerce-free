@@ -1,7 +1,7 @@
 (function ($) {
   "use strict";
   $(function () {
-    $(document).on("click", ".aso_admin_generate_zip_file", function (e) {
+    $(document).on("click", ".asowp_admin_generate_zip_file", function (e) {
       e.preventDefault();
       $(this).prop("disabled", true);
       $(this).find("img").show();
@@ -11,7 +11,7 @@
       $.post(
         ajaxurl,
         {
-          action: "aso_generate_order_zip_file",
+          action: "asowp_generate_order_zip_file",
           nonce: nonce,
           item_id: item_id,
         },

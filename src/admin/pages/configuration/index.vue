@@ -391,14 +391,14 @@ const deleteConfig = ref({
 })
 
 const demosList = ref([
-    {name:'Acrylic Sign', value:'acrylic',icon:aso_data.assets_url+'/images/demos/im_acrylic_sign.webp',description:" An acrylic sign (perspex sign) is a popular choice for any office, professional setting or home due to it's professional and modern look."},
-    {name:'Aluminium Sign', value:'aluminium',icon:aso_data.assets_url+'/images/demos/im_aluminium_sign.webp',description:"Create and order aluminium signs, perfect for indoor and outdoor use."},
-    {name:'Brass Sign', value:'brass-sign',icon:aso_data.assets_url+'/images/demos/im_brass_sign.webp',description:"Create stylish brass signs for your home or business with our easy-to-use design tool."},
-    {name:'Double-Sided Sign', value:'double-side',icon:aso_data.assets_url+'/images/demos/im_double_side_sign.gif',description:"Double-sided signs are perfect for those want the information to be able to read from both sides. Examples of double-sided signs are ''we are open'' and ''we are closed''."},
-    {name:'Plastic Sign', value:'plastic',icon:aso_data.assets_url+'/images/demos/im_plastic_sign.webp',description:"Create bespoke plastic signs with high quality print or engra"},
-    {name:'Rollup Sign', value:'rollup',icon:aso_data.assets_url+'/images/demos/im_rollup_sign.webp',description:"If you’re looking for an easy-to-use, portable advertising stand or display stand, then we recommend our roll-ups."},
-    {name:'Stainless Stell Sign', value:'stainlessStell',icon:aso_data.assets_url+'/images/demos/im_stainlessSteel_sign.webp',description:"You can add numbers, letters, a certification or a logo to label plates. With us, you can order a complete number series with signs, or a single label plate."},
-    {name:'Woods Sign', value:'woods-sign',icon:aso_data.assets_url+'/images/demos/im_wood_sign.webp',description:"Create custom wooden signs for indoor use with our easy-to-use design page. Communicate a warm and old fashioned feeling with a bespoke wood sign in birch or oak made from MDF."}
+    {name:'Acrylic Sign', value:'acrylic',icon:asowp_data.assets_url+'/images/demos/im_acrylic_sign.webp',description:" An acrylic sign (perspex sign) is a popular choice for any office, professional setting or home due to it's professional and modern look."},
+    {name:'Aluminium Sign', value:'aluminium',icon:asowp_data.assets_url+'/images/demos/im_aluminium_sign.webp',description:"Create and order aluminium signs, perfect for indoor and outdoor use."},
+    {name:'Brass Sign', value:'brass-sign',icon:asowp_data.assets_url+'/images/demos/im_brass_sign.webp',description:"Create stylish brass signs for your home or business with our easy-to-use design tool."},
+    {name:'Double-Sided Sign', value:'double-side',icon:asowp_data.assets_url+'/images/demos/im_double_side_sign.gif',description:"Double-sided signs are perfect for those want the information to be able to read from both sides. Examples of double-sided signs are ''we are open'' and ''we are closed''."},
+    {name:'Plastic Sign', value:'plastic',icon:asowp_data.assets_url+'/images/demos/im_plastic_sign.webp',description:"Create bespoke plastic signs with high quality print or engra"},
+    {name:'Rollup Sign', value:'rollup',icon:asowp_data.assets_url+'/images/demos/im_rollup_sign.webp',description:"If you’re looking for an easy-to-use, portable advertising stand or display stand, then we recommend our roll-ups."},
+    {name:'Stainless Stell Sign', value:'stainlessStell',icon:asowp_data.assets_url+'/images/demos/im_stainlessSteel_sign.webp',description:"You can add numbers, letters, a certification or a logo to label plates. With us, you can order a complete number series with signs, or a single label plate."},
+    {name:'Woods Sign', value:'woods-sign',icon:asowp_data.assets_url+'/images/demos/im_wood_sign.webp',description:"Create custom wooden signs for indoor use with our easy-to-use design page. Communicate a warm and old fashioned feeling with a bespoke wood sign in birch or oak made from MDF."}
 ]);
 const selectedDemo= ref('acrylic');
 const defaultSettings = ref({
@@ -414,7 +414,7 @@ const defaultSettings = ref({
             waterMark:'',
             zipOutputFiles:{
                 active:true,
-                zipOutFolderPrefix:'aso_',
+                zipOutFolderPrefix:'asowp_',
             },
             designComposition:true
         },
@@ -1062,7 +1062,7 @@ const metaConfigs = ref({
 								pattern: {
 									active: true,
 									codeHex: "#f0f0f0",
-									url: aso_data.assets_url+'/images/im_transparent-acrylic-sign.png'
+									url: asowp_data.assets_url+'/images/im_transparent-acrylic-sign.png'
 								},
 								prevImg: "",
 								additionalPrice: 0
@@ -1506,7 +1506,7 @@ const metaConfigs = ref({
 								{
 									title: "Standard",
 									description: "",
-									icon: aso_data.assets_url+'/images/demos/ic_none.svg',
+									icon: asowp_data.assets_url+'/images/demos/ic_none.svg',
 									image: "",
                                     popImg:"",
 									excludeColors: [],
@@ -2340,7 +2340,7 @@ const metaConfigs = ref({
                                 {
                                     title: "Standard",
                                     description: "",
-                                    icon: aso_data.assets_url+'/images/demos/ic_none.svg',
+                                    icon: asowp_data.assets_url+'/images/demos/ic_none.svg',
                                     image: "",
                                     popImg:"",
                                     excludeColors: [
@@ -2392,11 +2392,11 @@ const metaConfigs = ref({
                                 name: "London",
                                 description: "Chrome-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london1.png",
-                                image: aso_data.assets_url+'/images/london1-prev.png',
+                                image: asowp_data.assets_url+'/images/london1-prev.png',
                                 color: {
                                     name: "London",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+'/images/london1-prev.png'
+                                    prevImg: asowp_data.assets_url+'/images/london1-prev.png'
                                 },
                                 fixingMethods: [2],
                                 shapeId: 0,
@@ -2416,11 +2416,11 @@ const metaConfigs = ref({
                                 name: "London",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london2.png",
-                                image: aso_data.assets_url+'/images/london2-prev.png',
+                                image: asowp_data.assets_url+'/images/london2-prev.png',
                                 color: {
                                     name: "London",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+'/images/london2-prev.png'
+                                    prevImg: asowp_data.assets_url+'/images/london2-prev.png'
                                 },
                                 fixingMethods: [2],
                                 shapeId: 0,
@@ -2440,11 +2440,11 @@ const metaConfigs = ref({
                                 name: "London",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london3.png",
-                                image: aso_data.assets_url+'/images/london3-prev.png',
+                                image: asowp_data.assets_url+'/images/london3-prev.png',
                                 color: {
                                     name: "London",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+'/images/london3-prev.png'
+                                    prevImg: asowp_data.assets_url+'/images/london3-prev.png'
                                 },
                                 fixingMethods: [
                                     2
@@ -2466,11 +2466,11 @@ const metaConfigs = ref({
                                 name: "Oslo",
                                 description: "Matte brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/oslo.png",
-                                image: aso_data.assets_url+'/images/oslo-prev.png',
+                                image: asowp_data.assets_url+'/images/oslo-prev.png',
                                 color: {
                                     name: "Oslo",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+'/images/oslo-prev.png'
+                                    prevImg: asowp_data.assets_url+'/images/oslo-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2492,11 +2492,11 @@ const metaConfigs = ref({
                                 name: "Paris",
                                 description: "Matte brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris1.png",
-                                image: aso_data.assets_url+'/images/paris1-prev.png',
+                                image: asowp_data.assets_url+'/images/paris1-prev.png',
                                 color: {
                                 name: "Paris",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/paris1-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/paris1-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2518,11 +2518,11 @@ const metaConfigs = ref({
                                 name: "Paris",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris2.png",
-                                image: aso_data.assets_url+'/images/paris2-prev.png',
+                                image: asowp_data.assets_url+'/images/paris2-prev.png',
                                 color: {
                                     name: "Paris",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+'/images/paris2-prev.png'
+                                    prevImg: asowp_data.assets_url+'/images/paris2-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2544,11 +2544,11 @@ const metaConfigs = ref({
                                 name: "Paris",
                                 description: "Black/oxide brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris3.png",
-                                image: aso_data.assets_url+'/images/paris3-prev.png',
+                                image: asowp_data.assets_url+'/images/paris3-prev.png',
                                 color: {
                                 name: "Paris",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/paris3-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/paris3-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2570,11 +2570,11 @@ const metaConfigs = ref({
                                 name: "Berlin",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1.png",
-                                image: aso_data.assets_url+'/images/berlin1-prev.png',
+                                image: asowp_data.assets_url+'/images/berlin1-prev.png',
                                 color: {
                                 name: "Berlin",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/berlin1-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/berlin1-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2596,11 +2596,11 @@ const metaConfigs = ref({
                                 name: "Berlin",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin2.png",
-                                image: aso_data.assets_url+'/images/berlin2-prev.png',
+                                image: asowp_data.assets_url+'/images/berlin2-prev.png',
                                 color: {
                                 name: "Berlin",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/berlin2-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/berlin2-prev.png'
                                 },
                                 fixingMethods: [
                                 2
@@ -2622,11 +2622,11 @@ const metaConfigs = ref({
                                 name: "Copenhagen",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/copenhagen.png",
-                                image: aso_data.assets_url+"/images/copenhagen-prev.png",
+                                image: asowp_data.assets_url+"/images/copenhagen-prev.png",
                                 color: {
                                 name: "Copenhagen",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/copenhagen-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/copenhagen-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2648,11 +2648,11 @@ const metaConfigs = ref({
                                 name: "Athens",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/athens.png",
-                                image: aso_data.assets_url+"/images/athens-prev.png",
+                                image: asowp_data.assets_url+"/images/athens-prev.png",
                                 color: {
                                 name: "Athens",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/athens-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/athens-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2674,11 +2674,11 @@ const metaConfigs = ref({
                                 name: "Amsterdam",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/amsterdam.png",
-                                image: aso_data.assets_url+"/images/amsterdam-prev.png",
+                                image: asowp_data.assets_url+"/images/amsterdam-prev.png",
                                 color: {
                                 name: "Amsterdam",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/amsterdam-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/amsterdam-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2700,11 +2700,11 @@ const metaConfigs = ref({
                                 name: "Tallinn",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/tallinn.png",
-                                image: aso_data.assets_url+"/images/tallinn-prev.png",
+                                image: asowp_data.assets_url+"/images/tallinn-prev.png",
                                 color: {
                                 name: "Tallinn",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/tallinn-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/tallinn-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2726,11 +2726,11 @@ const metaConfigs = ref({
                                 name: "Rome",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome1.png",
-                                image: aso_data.assets_url+"/images/rome1-prev.png",
+                                image: asowp_data.assets_url+"/images/rome1-prev.png",
                                 color: {
                                 name: "Rome",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/rome1-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/rome1-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2752,11 +2752,11 @@ const metaConfigs = ref({
                                 name: "Rome",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome2.png",
-                                image: aso_data.assets_url+"/images/rome2-prev.png",
+                                image: asowp_data.assets_url+"/images/rome2-prev.png",
                                 color: {
                                 name: "Rome",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/rome2-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/rome2-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2778,11 +2778,11 @@ const metaConfigs = ref({
                                 name: "Rome",
                                 description: "Brushed brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome3-prev.png",
-                                image: aso_data.assets_url+"/images/rome3-prev.png",
+                                image: asowp_data.assets_url+"/images/rome3-prev.png",
                                 color: {
                                 name: "Rome",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/rome3-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/rome3-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2804,11 +2804,11 @@ const metaConfigs = ref({
                                 name: "Sydney",
                                 description: "Brushed brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney1.png",
-                                image: aso_data.assets_url+"/images/sydney-prev.png",
+                                image: asowp_data.assets_url+"/images/sydney-prev.png",
                                 color: {
                                 name: "Sydney",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/sydney-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/sydney-prev.png"
                                 },
                                 fixingMethods: [
                                 2
@@ -2830,11 +2830,11 @@ const metaConfigs = ref({
                                 name: "Prague",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/prague.png",
-                                image: aso_data.assets_url+"/images/prague-prev.png",
+                                image: asowp_data.assets_url+"/images/prague-prev.png",
                                 color: {
                                 name: "Prague",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/prague-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/prague-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2857,11 +2857,11 @@ const metaConfigs = ref({
                                 name: "Dublin",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/dublin.png",
-                                image: aso_data.assets_url+"/images/dublin-prev.png",
+                                image: asowp_data.assets_url+"/images/dublin-prev.png",
                                 color: {
                                 name: "Dublin",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/dublin-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/dublin-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2884,11 +2884,11 @@ const metaConfigs = ref({
                                 name: "Lisbon",
                                 description: "Shiny brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon1.png",
-                                image: aso_data.assets_url+"/images/lisbon1-prev.png",
+                                image: asowp_data.assets_url+"/images/lisbon1-prev.png",
                                 color: {
                                 name: "Lisbon",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/lisbon1-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/lisbon1-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2911,11 +2911,11 @@ const metaConfigs = ref({
                                 name: "Lisbon",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon2.png",
-                                image: aso_data.assets_url+"/images/lisbon2-prev.png",
+                                image: asowp_data.assets_url+"/images/lisbon2-prev.png",
                                 color: {
                                 name: "Lisbon",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/lisbon2-prev.png"
+                                prevImg: asowp_data.assets_url+"/images/lisbon2-prev.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -2945,11 +2945,11 @@ const metaConfigs = ref({
                                 name: "Madrid",
                                 description: "Brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/madrid1.png",
-                                image: aso_data.assets_url+"/images/laiton-pattern.png",
+                                image: asowp_data.assets_url+"/images/laiton-pattern.png",
                                 color: {
                                     name: "Madrid",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+"/images/laiton-pattern.png"
+                                    prevImg: asowp_data.assets_url+"/images/laiton-pattern.png"
                                 },
                                 fixingMethods: [
                                     0,
@@ -2974,11 +2974,11 @@ const metaConfigs = ref({
                                 name: "Madrid",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/madrid2.png",
-                                image: aso_data.assets_url+"/images/nickel-pattern.png",
+                                image: asowp_data.assets_url+"/images/nickel-pattern.png",
                                 color: {
                                 name: "Madrid",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/nickel-pattern.png"
+                                prevImg: asowp_data.assets_url+"/images/nickel-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -3003,11 +3003,11 @@ const metaConfigs = ref({
                                 name: "Kiev",
                                 description: "Brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/kiev1.png",
-                                image: aso_data.assets_url+"/images/laiton-pattern.png",
+                                image: asowp_data.assets_url+"/images/laiton-pattern.png",
                                 color: {
                                 name: "Kiev",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/laiton-pattern.png"
+                                prevImg: asowp_data.assets_url+"/images/laiton-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -3031,11 +3031,11 @@ const metaConfigs = ref({
                                 name: "Kiev",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/kiev2.png",
-                                image: aso_data.assets_url+"/images/nickel-pattern.png",
+                                image: asowp_data.assets_url+"/images/nickel-pattern.png",
                                 color: {
                                 name: "Kiev",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/nickel-pattern.png"
+                                prevImg: asowp_data.assets_url+"/images/nickel-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -3059,11 +3059,11 @@ const metaConfigs = ref({
                                 name: "Budapest",
                                 description: "Brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/budapest1.png",
-                                image: aso_data.assets_url+"/images/laiton-pattern.png",
+                                image: asowp_data.assets_url+"/images/laiton-pattern.png",
                                 color: {
                                 name: "Budapest",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/laiton-pattern.png"
+                                prevImg: asowp_data.assets_url+"/images/laiton-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -3087,11 +3087,11 @@ const metaConfigs = ref({
                                 name: "Budapest",
                                 description: "Brushed nickel-plated brass",
                                 icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/budapest2.png",
-                                image: aso_data.assets_url+"/images/nickel-pattern.png",
+                                image: asowp_data.assets_url+"/images/nickel-pattern.png",
                                 color: {
                                 name: "Budapest",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+"/images/nickel-pattern.png"
+                                prevImg: asowp_data.assets_url+"/images/nickel-pattern.png"
                                 },
                                 fixingMethods: [
                                 0,
@@ -5062,11 +5062,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel1.png",
-                                image: aso_data.assets_url+'/images/stainless_steel1-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel1-prev.png',
                                 color: {
                                     name: "Stainless steel",
                                     codeHex: "",
-                                    prevImg: aso_data.assets_url+'/images/stainless_steel1-prev.png'
+                                    prevImg: asowp_data.assets_url+'/images/stainless_steel1-prev.png'
                                 },
                                 fixingMethods: [
                                 5,
@@ -5091,11 +5091,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel2.png",
-                                image: aso_data.assets_url+'/images/stainless_steel2-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel2-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel2-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel2-prev.png'
                                 },
                                 fixingMethods: [
                                 5,
@@ -5120,11 +5120,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel3.png",
-                                image: aso_data.assets_url+'/images/stainless_steel3-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel3-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel3-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel3-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5148,11 +5148,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel4.png",
-                                image: aso_data.assets_url+'/images/stainless_steel4-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel4-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel4-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel4-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5176,11 +5176,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel5.png",
-                                image: aso_data.assets_url+'/images/stainless_steel5-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel5-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel5-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel5-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5204,11 +5204,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel6.png",
-                                image: aso_data.assets_url+'/images/stainless_steel6-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel6-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel6-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel6-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5232,11 +5232,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel7.png",
-                                image: aso_data.assets_url+'/images/stainless_steel7-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel7-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel7-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel7-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5260,11 +5260,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel8.png",
-                                image: aso_data.assets_url+'/images/stainless_steel8-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel8-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel8-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel8-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5288,11 +5288,11 @@ const metaConfigs = ref({
                                 name: "Stainless steel",
                                 description: "Stainless steel",
                                 icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel9.png",
-                                image: aso_data.assets_url+'/images/stainless_steel9-prev.png',
+                                image: asowp_data.assets_url+'/images/stainless_steel9-prev.png',
                                 color: {
                                 name: "Stainless steel",
                                 codeHex: "",
-                                prevImg: aso_data.assets_url+'/images/stainless_steel9-prev.png'
+                                prevImg: asowp_data.assets_url+'/images/stainless_steel9-prev.png'
                                 },
                                 fixingMethods: [
                                 0,
@@ -5599,7 +5599,7 @@ const metaConfigs = ref({
 								pattern: {
 									active: true,
 									codeHex: "#FF8C00",
-									url: aso_data.assets_url+'/images/im_wood-birch.png'
+									url: asowp_data.assets_url+'/images/im_wood-birch.png'
 								},
 								prevImg: "https://signsdesigner.us/app/demos/wood-signs/wood-birch.png",
 								additionalPrice: 9.19
@@ -6158,7 +6158,7 @@ const metaConfigs = ref({
 								pattern: {
 									active: true,
 									codeHex: "#FF6600",
-									url: aso_data.assets_url+'/images/im_wood-oak.png'
+									url: asowp_data.assets_url+'/images/im_wood-oak.png'
 								},
 								prevImg: "https://signsdesigner.us/app/demos/wood-signs/wood-oak.png",
 								additionalPrice: 9.19

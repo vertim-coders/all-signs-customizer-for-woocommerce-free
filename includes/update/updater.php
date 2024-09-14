@@ -3,7 +3,7 @@
 /**
  * REST_API Handler
  */
-class ASO_Updater
+class ASOWP_Updater
 {
 
 	/**
@@ -16,32 +16,32 @@ class ASO_Updater
 	public function init_hooks()
 	{
 		// Define the alternative response for information checking
-		add_filter('plugins_api', [$this, 'aso_plugin_info'], 20, 3);
+		add_filter('plugins_api', [$this, 'asowp_plugin_info'], 20, 3);
 		// define the alternative API for updating checking
-		add_filter('site_transient_update_plugins', [$this, 'aso_push_update']);
+		add_filter('site_transient_update_plugins', [$this, 'asowp_push_update']);
 	}
 
-	public function aso_plugin_info($res, $action, $args)
+	public function asowp_plugin_info($res, $action, $args)
 	{
 		// do nothing if this is not about getting plugin information
 		if ('plugin_information' !== $action) {
 			return $res;
 		}
-		$plugin_slug = explode('/', plugin_basename(ASO_FILE))[0];
+		$plugin_slug = explode('/', plugin_basename(ASOWP_FILE))[0];
 		
 		// do nothing if it is not our plugin
 		if ($plugin_slug !== $args->slug) {
 			return $res;
 		}
-		$checkPluginTransient = get_transient(ASO_CHECK_TRANSIENT_NAME);
+		$checkPluginTransient = get_transient(ASOWP_CHECK_TRANSIENT_NAME);
 		
-		$remote = $checkPluginTransient ?: $this->check_aso_other_version();
+		$remote = $checkPluginTransient ?: $this->check_asowp_other_version();
 		
 		if (!$checkPluginTransient) {
 			set_transient(
-				ASO_CHECK_TRANSIENT_NAME,
+				ASOWP_CHECK_TRANSIENT_NAME,
 				$remote,
-				ASO_CHECK_TRANSIENT_EXPIRATION
+				ASOWP_CHECK_TRANSIENT_EXPIRATION
 			);
 		}
 		
@@ -53,20 +53,20 @@ class ASO_Updater
 
 		return $res;
 	}
-	public function aso_push_update($transient)
+	public function asowp_push_update($transient)
 	{
-		$checkPluginTransient = get_transient(ASO_CHECK_TRANSIENT_NAME);
+		$checkPluginTransient = get_transient(ASOWP_CHECK_TRANSIENT_NAME);
 		
-		$remote = $checkPluginTransient ?: $this->check_aso_other_version();
+		$remote = $checkPluginTransient ?: $this->check_asowp_other_version();
 
 		if (!$checkPluginTransient) {
 			set_transient(
-				ASO_CHECK_TRANSIENT_NAME,
+				ASOWP_CHECK_TRANSIENT_NAME,
 				$remote,
-				ASO_CHECK_TRANSIENT_EXPIRATION
+				ASOWP_CHECK_TRANSIENT_EXPIRATION
 			);
 		}
-		$plugin = plugin_basename(ASO_FILE);
+		$plugin = plugin_basename(ASOWP_FILE);
 		if (is_object($remote)) {
 			$res = new stdClass();
 			$res->slug = explode('/', $plugin)[0];
@@ -76,7 +76,7 @@ class ASO_Updater
 			$res->package = $remote->download_link;
 			if (
 				$remote
-				&& version_compare(ASO_VERSION, $remote->version, '<')
+				&& version_compare(ASOWP_VERSION, $remote->version, '<')
 				&& version_compare($remote->requires, get_bloginfo('version'), '<')
 				&& version_compare($remote->requires_php, PHP_VERSION, '<')
 			) {
@@ -88,11 +88,11 @@ class ASO_Updater
 		return $transient;
 
 	}
-	private function check_aso_other_version()
+	private function check_asowp_other_version()
 	{
 		$site_url = get_site_url();
-		$purchase_code = get_option("aso_product_pro");
-		$url = 'https://signsdesigner.us/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode($site_url) . "&vertim=" . ASO_ID;
+		$purchase_code = get_option("asowp_product_pro");
+		$url = 'https://signsdesigner.us/wp-json/vlc/update/?lcde=' . $purchase_code . '&siteurl=' . urlencode($site_url) . "&vertim=" . ASOWP_ID;
 
 		$args = array('timeout' => 60);
 		$response = wp_remote_get($url, $args);
@@ -103,7 +103,7 @@ class ASO_Updater
 		$remote = json_decode($response['body']);
 		if (is_object($remote)) {
 			if (isset($remote->version) && isset($remote->download_url)) {
-				$plugin_slug = explode('/', plugin_basename(ASO_FILE))[0];
+				$plugin_slug = explode('/', plugin_basename(ASOWP_FILE))[0];
 				$res = new stdClass();
 				$res->name = $remote->name;
 				$res->slug = $plugin_slug;
@@ -129,8 +129,8 @@ class ASO_Updater
 							} */
 
 				$res->banners = array(
-					'low' => ASO_ASSETS . '/images/home/im_home-skin-vue.png',
-					'high' => ASO_ASSETS . '/images/home/im_home-skin-vue.png'
+					'low' => ASOWP_ASSETS . '/images/home/im_home-skin-vue.png',
+					'high' => ASOWP_ASSETS . '/images/home/im_home-skin-vue.png'
 				);
 				return $res;
 			} else {

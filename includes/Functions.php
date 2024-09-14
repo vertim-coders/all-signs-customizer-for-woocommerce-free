@@ -4,8 +4,8 @@
 	/**
 	 * save preview image
 	 */
-	function aso_save_prev_images( $images) {
-		$upload_dirs = ASO_IMAGE_PATH;
+	function asowp_save_prev_images( $images) {
+		$upload_dirs = ASOWP_IMAGE_PATH;
 		wp_mkdir_p( $upload_dirs );
 		$upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
         $name                     = uniqid( 'aso-' );
@@ -15,7 +15,7 @@
                 $file        = base64_decode(explode(',', $image["url"])[1]);
                 $file_name       = $upload_dir . $name . ".".$image['format'];
                 file_put_contents( $file_name, $file ); // phpcs:ignore
-                $preview_img[] = ASO_IMAGE_URL . '/'.$name . '.'. $image['format'];
+                $preview_img[] = ASOWP_IMAGE_URL . '/'.$name . '.'. $image['format'];
             }
             
         }else{
@@ -25,7 +25,7 @@
                     $file        = base64_decode(explode(',', $image["url"])[1]);
                     $file_name       = $upload_dir. $name. $key. ".". $image['format'];
                     file_put_contents( $file_name, $file ); // phpcs:ignore
-                    $preview_img[$key][] = ASO_IMAGE_URL . '/'.$name. $key. ".". $image['format'];
+                    $preview_img[$key][] = ASOWP_IMAGE_URL . '/'.$name. $key. ".". $image['format'];
                 }
             }
         }
@@ -35,8 +35,8 @@
 	/**
 	 * save preview image
 	 */
-	function aso_save_upload_images( $images ) {
-        $upload_dirs = ASO_IMAGE_PATH;
+	function asowp_save_upload_images( $images ) {
+        $upload_dirs = ASOWP_IMAGE_PATH;
         wp_mkdir_p( $upload_dirs );
         $upload_dir = $upload_dirs . DIRECTORY_SEPARATOR;
         $preview_imgs = [];
@@ -52,7 +52,7 @@
                         $name = uniqid('aso-');
                         $file_name = $upload_dir . "$name-$key-file_{$index}.{$file_extension}";
                         file_put_contents($file_name, $file_data); // phpcs:ignore
-                        $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                        $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
                     } else {
                         // Handle URL
                         $response = wp_remote_get($image["url"]);
@@ -62,7 +62,7 @@
                             $name = uniqid('aso-');
                             $file_name = $upload_dir . "$name-$key-file_{$index}.{$file_extension}";
                             file_put_contents($file_name, $file_data); // phpcs:ignore
-                            $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
+                            $preview_imgs[$key][] = ["name" => "$name-$key-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-$key-file_{$index}.{$file_extension}"];
                         }
                     }
                 }
@@ -78,7 +78,7 @@
                         $name = uniqid('aso-');
                         $file_name = $upload_dir . "$name-file_{$index}.{$file_extension}";
                         file_put_contents($file_name, $file_data); // phpcs:ignore
-                        $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
+                        $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
                     } else {
                         // Handle URL
                         $response = wp_remote_get($image["url"]);
@@ -88,7 +88,7 @@
                             $name = uniqid('aso-');
                             $file_name = $upload_dir . "$name-file_{$index}.{$file_extension}";
                             file_put_contents($file_name, $file_data); // phpcs:ignore
-                            $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASO_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
+                            $preview_imgs[] = ["name" => "$name-file_{$index}.{$file_extension}", "url" => ASOWP_IMAGE_URL . "/$name-file_{$index}.{$file_extension}"];
                         }
                     }
                 }
@@ -101,8 +101,8 @@
 	/**
 	 * add or edit product to cart
 	 */
-	function aso_add_custom_design_to_cart_ajax() {
-        if (wp_verify_nonce(sanitize_text_field( wp_unslash ($_POST['nonce'])), 'aso_add_to_cart_after_custom')) {
+	function asowp_add_custom_design_to_cart_ajax() {
+        if (isset($_POST['nonce']) && wp_verify_nonce(sanitize_text_field( wp_unslash ($_POST['nonce'])), 'asowp_add_to_cart_after_custom')) {
 
             if (isset($_POST['data']['variation_id'])) {
                 $redirectToCheckOut = isset($_POST['redirectToCheckOut']) ? $_POST['redirectToCheckOut'] : false;
@@ -112,15 +112,9 @@
                 $recaps = isset($_POST['data']['recaps']) ? map_deep( $_POST['data']['recaps'], 'sanitize_text_field' ) : [];
                 $message = '';
                 
-                /* if ( session_status() !== 2 ) {
-                    session_start();
-                }
-                
-                $_SESSION['aso_calculated_totals'] = false; */
-                
                 $newly_added_cart_item_key = false;
-                $aso_previews = aso_save_prev_images( $recaps["designImages"]);
-                $uploads= aso_save_upload_images($recaps['images']["value"]);
+                $asowp_previews = asowp_save_prev_images( $recaps["designImages"]);
+                $uploads= asowp_save_upload_images($recaps['images']["value"]);
                 if(isset($uploads["face1"])){
                     foreach ($uploads as $key => $face) {
                         foreach($face as $index=>$upload){
@@ -134,15 +128,15 @@
                         $recaps['images']["value"][$key]["infos"] = $upload;
                     }
                 }
-                //$preview_img = ASO_IMAGE_URL . '/' . $file_name . '.png';
+                //$preview_img = ASOWP_IMAGE_URL . '/' . $file_name . '.png';
                 if ( $cart_item_key ) {
-                    WC()->cart->cart_contents[ $cart_item_key ]['aso_recaps'] = $recaps;
+                    WC()->cart->cart_contents[ $cart_item_key ]['asowp_recaps'] = $recaps;
                     WC()->cart->calculate_totals();
                     wp_send_json(array(
                         'success'     => true
                     ));
                 } else {
-                    $newly_added_cart_item_key = aso_add_designs_to_cart($main_variation_id, $recaps,$aso_previews,$quantity);
+                    $newly_added_cart_item_key = asowp_add_designs_to_cart($main_variation_id, $recaps,$asowp_previews,$quantity);
 
                     if ( $newly_added_cart_item_key ) {
                         $message =  __( 'Product successfully added to cart.', "all-signs-options-pro");
@@ -180,7 +174,7 @@
 	/**
 	 *  add product to cart
 	 */
-	function aso_add_designs_to_cart( int $product_id,array $recaps,$images,int $quantity=1) {
+	function asowp_add_designs_to_cart( int $product_id,array $recaps,$images,int $quantity=1) {
 		$newly_added_cart_item_key = false;
         $product = wc_get_product( $product_id );
         $parent_id = $product->get_parent_id();
@@ -192,7 +186,7 @@
                 0,
                 array(),
                 array(
-                    'aso_meta_data' => [
+                    'asowp_meta_data' => [
                         "recaps"=>$recaps
                     ]
                 )
@@ -205,7 +199,7 @@
                 0,
                 $variation,
                 array(
-                    'aso_meta_data' => [
+                    'asowp_meta_data' => [
                         "recaps"=>$recaps
                     ]
                 )
@@ -235,9 +229,9 @@
     /**
      *  includes ajax in plugin 
      */
-    add_action( 'wp_ajax_aso_add_custom_design_to_cart', 'aso_add_custom_design_to_cart_ajax' );
-    add_action( 'wp_ajax_nopriv_aso_add_custom_design_to_cart', 'aso_add_custom_design_to_cart_ajax' );
-    function aso_get_price_format() {
+    add_action( 'wp_ajax_asowp_add_custom_design_to_cart', 'asowp_add_custom_design_to_cart_ajax' );
+    add_action( 'wp_ajax_nopriv_asowp_add_custom_design_to_cart', 'asowp_add_custom_design_to_cart_ajax' );
+    function asowp_get_price_format() {
         $currency_pos = get_option( 'woocommerce_currency_pos' );
         $format       = '%s%v';
 
@@ -260,26 +254,25 @@
         }
         return $format;
     } 
-    function aso_get_custom_products() {
-        global $wpdb;
-        $query = "SELECT p.id FROM {$wpdb->posts} p JOIN {$wpdb->postmeta} pm ON pm.post_id = p.id WHERE p.post_type = 'product' AND pm.meta_key = %s";
-        $params = ['product-aso-metas'];
-        $conditions = [];
-        for ($i = 1; $i <= 9; $i++) {
-            $conditions[] = "pm.meta_value LIKE %s";
-            $params[] = '%config-id";s:' . $i . ':%';
-        }
-        if (!empty($conditions)) {
-            $query .= " AND (" . implode(' OR ', $conditions) . ")";
-        }
+    function asowp_get_custom_products() {
+        $args = [
+            'post_type'      => 'product', 
+            'posts_per_page' => -1,
+            'fields'         => 'ids',
+            'meta_query'     => [
+                [
+                    'key'     => 'product-asowp-metas',
+                    'value'   => 'config-id";s:1:"0"',
+                    'compare' => 'NOT LIKE',
+                ],
+            ],
+        ];
+
+        $product_ids = get_posts($args);
         
-        $products = $wpdb->get_results(
-            $wpdb->prepare(
-                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-                $query, 
-                $params
-            )
-        );
-        
-        return $products;
+        if (is_array($product_ids) && count($product_ids)>0) {
+           return $product_ids;
+        } else {
+            return [];
+        }
     }

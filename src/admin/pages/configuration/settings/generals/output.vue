@@ -92,7 +92,7 @@ const Output = ref({
     waterMark:'',
     zipOutputFiles:{
         active:true,
-        zipOutFolderPrefix:'aso_',
+        zipOutFolderPrefix:'asowp_',
     },
     designComposition:true
 });

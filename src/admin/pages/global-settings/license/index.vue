@@ -37,7 +37,7 @@ const isLoading = ref(false);
 const licenses = ref({
     product:"",
 });
-const productId = aso_data.author;
+const productId = asowp_data.author;
 onMounted(async() => {
     isFetching.value = true;
     await fetchLicenses();
@@ -63,7 +63,7 @@ const updateGlobalLicenses = async () => {
 }
 const activateLicenseKey = async () => {
     try {
-        const url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde='+ licenses.value.product +"&siteurl="+aso_data.site_url+"&vertim="+productId;
+        const url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde='+ licenses.value.product +"&siteurl="+asowp_data.site_url+"&vertim="+productId;
         const response = await axios.get(url);
         if (response.data.key) {
             licenses.value.valid = response.data.key;

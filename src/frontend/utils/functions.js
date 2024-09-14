@@ -5,7 +5,7 @@ async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
     const response = await axios.post(
       ajax_url,
       {
-        action: "aso_add_custom_design_to_cart",
+        action: "asowp_add_custom_design_to_cart",
         data: cart_data,
         redirectToCheckOut: redirectToCheckOut,
         nonce: nonce,
@@ -26,34 +26,34 @@ async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
 }
 function formatPrice(price) {
   let formattedPrice = parseFloat(
-    price + parseFloat(aso_configurator_data.regularPrice)
-  ).toFixed(aso_configurator_data.decimals);
+    price + parseFloat(asowp_configurator_data.regularPrice)
+  ).toFixed(asowp_configurator_data.decimals);
 
-  switch (aso_configurator_data.currency_pos) {
+  switch (asowp_configurator_data.currency_pos) {
     case "left":
-      formattedPrice = aso_configurator_data.currencySymbol + formattedPrice;
+      formattedPrice = asowp_configurator_data.currencySymbol + formattedPrice;
       break;
     case "right":
-      formattedPrice = formattedPrice + aso_configurator_data.currencySymbol;
+      formattedPrice = formattedPrice + asowp_configurator_data.currencySymbol;
       break;
     case "left_space":
       formattedPrice =
-        aso_configurator_data.currencySymbol + " " + formattedPrice;
+        asowp_configurator_data.currencySymbol + " " + formattedPrice;
       break;
     case "right_space":
       formattedPrice =
-        formattedPrice + " " + aso_configurator_data.currencySymbol;
+        formattedPrice + " " + asowp_configurator_data.currencySymbol;
       break;
   }
 
   // Remplacez le séparateur décimal et des milliers
   formattedPrice = formattedPrice.replace(
     ".",
-    aso_configurator_data.decimalSep
+    asowp_configurator_data.decimalSep
   );
   formattedPrice = formattedPrice.replace(
     /(\d)(?=(\d{3})+(?!\d))/g,
-    "$1" + aso_configurator_data.thousandSep
+    "$1" + asowp_configurator_data.thousandSep
   );
 
   return formattedPrice;

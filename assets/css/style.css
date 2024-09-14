@@ -2,11 +2,11 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/global/scss/style.scss ***!
   \*********************************************************************************************************************/
 @charset "UTF-8";
-table.wp-list-table #is_aso_customizable {
+table.wp-list-table #is_asowp_customizable {
   width: 90px;
 }
 
-td.is_aso_customizable.column-is_aso_customizable {
+td.is_asowp_customizable.column-is_asowp_customizable {
   font-weight: 600;
   font-size: 15px;
 }
@@ -136,7 +136,7 @@ td.is_aso_customizable.column-is_aso_customizable {
   border-radius: 50%;
 }
 
-.aso_config_data div {
+.asowp_config_data div {
   padding: 5px !important;
   display: flex !important;
   justify-content: center !important;
@@ -144,12 +144,12 @@ td.is_aso_customizable.column-is_aso_customizable {
   align-items: center !important;
 }
 
-.aso_config_data div h2 {
+.asowp_config_data div h2 {
   color: rgb(20, 20, 20) !important;
   font-weight: 500 !important;
 }
 
-.aso_config_data div select {
+.asowp_config_data div select {
   background-color: rgba(238, 237, 240, 0.872) !important;
   padding: 5px !important;
 }
@@ -181,7 +181,8 @@ td.is_aso_customizable.column-is_aso_customizable {
 }
 
 @keyframes pulseGradient {
-  0%, 100% {
+  0%,
+  100% {
     background-size: 200% 100%;
     background-position: 200% 50%;
     opacity: 0.5; /* Plus transparent */

@@ -165,7 +165,7 @@ import api from "@/admin/Api/api";
 import toastMessage from '@/admin/utils/functions';
 //import Editor from '@tinymce/tinymce-vue'
 
-//const tinymceSrc = aso_data.assets_url+'/utilities/aso-tinymce.js';
+//const tinymceSrc = asowp_data.assets_url+'/utilities/aso-tinymce.js';
 const isFetching = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);

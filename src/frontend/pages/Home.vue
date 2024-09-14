@@ -21,7 +21,7 @@ const isTemplates = ref(false);
 onMounted(async() => {
   if(route.name == 'preview-back' || route.name == 'template-maker'){
     const result = await api.getPreviewConfig(route.params.configId);
-    aso_configurator_data = result;
+    asowp_configurator_data = result;
     skin.value = result.skin;
     configData.value = result.currentConfig;
     manageData.value = result.managesData;
@@ -39,13 +39,13 @@ onMounted(async() => {
     document.head.appendChild(style);
     
   }else{
-    if(aso_data.page == 'configurator'){
-      skin.value = aso_configurator_data.skin;
-      // console.log(aso_configurator_data, 'skin actif');
-      configData.value = aso_configurator_data.currentConfig;
-      manageData.value = aso_configurator_data.managesData;
-      currencySymbol.value = aso_configurator_data.currencySymbol
-      templateData.value = aso_configurator_data.templates
+    if(asowp_data.page == 'configurator'){
+      skin.value = asowp_configurator_data.skin;
+      // console.log(asowp_configurator_data, 'skin actif');
+      configData.value = asowp_configurator_data.currentConfig;
+      manageData.value = asowp_configurator_data.managesData;
+      currencySymbol.value = asowp_configurator_data.currencySymbol
+      templateData.value = asowp_configurator_data.templates
     }else {
       isTemplates.value = true;
     }

@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin;
+namespace ASOWP\Api\Admin;
 
 use WP_Error;
 use WP_Post;
@@ -9,7 +9,7 @@ use WP_REST_Controller;
 /**
  * REST_API Handler
  */
-class ASO_Api_Configs extends WP_REST_Controller {
+class ASOWP_Api_Configs extends WP_REST_Controller {
 
     /**
      * [__construct description]
@@ -172,13 +172,13 @@ class ASO_Api_Configs extends WP_REST_Controller {
     public function get_preview_config_data($request){
         $configId=$request->get_param('config_id');
         $config = get_post_meta($configId,"aso-configs-meta",true);
-        $pageSettings = get_option("aso_config_page",[])["others"];
+        $pageSettings = get_option("asowp_config_page",[])["others"];
         $all_cliparts_groups = get_option("aso-manages-cliparts",[]);
         $all_fonts = get_option("aso-manages-fonts",[]);
-        $all_shapes = get_option("aso_all_shapes",[]);
-        $all_fixingMethods = get_option("aso_all_fixingMethods",[]);
-        $all_borders = get_option("aso_all_borders",[]);
-        $outputOptions = get_option("aso_output_options",[]);
+        $all_shapes = get_option("asowp_all_shapes",[]);
+        $all_fixingMethods = get_option("asowp_all_fixingMethods",[]);
+        $all_borders = get_option("asowp_all_borders",[]);
+        $outputOptions = get_option("asowp_output_options",[]);
         $configData = [
             'name'       => get_post_field('post_title', $configId),
             "description" => get_post_field('post_content', $configId),
@@ -223,9 +223,9 @@ class ASO_Api_Configs extends WP_REST_Controller {
             'nbDecimals'         => wc_get_price_decimals(),
             'currencySymbol'     => html_entity_decode(get_woocommerce_currency_symbol()),
             'currency_pos'       => get_option('woocommerce_currency_pos'),
-            "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
-            "borders_url"  => ASO_ASSETS.'/images/borders',
-            "frontend_nonce"      => wp_create_nonce('aso_add_to_cart_after_custom')
+            "fixing_methods_url"  => ASOWP_ASSETS.'/images/fixing-methodes',
+            "borders_url"  => ASOWP_ASSETS.'/images/borders',
+            "frontend_nonce"      => wp_create_nonce('asowp_add_to_cart_after_custom')
         );
         return rest_ensure_response($preview_data);
     }

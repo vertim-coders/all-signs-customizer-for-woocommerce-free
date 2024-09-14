@@ -1,6 +1,6 @@
 <?php
 
-use ASO\ASO_Post_Type;
+use ASOWP\ASOWP_Post_Type;
 
 /*
 Plugin Name: All Signs Options Pro
@@ -52,7 +52,7 @@ if (!defined('ABSPATH')) exit;
  *
  * @class All_Signs_Options The class that holds the entire All_Signs_Options plugin
  */
-final class ASO_All_Signs_Options
+final class ASOWP_All_Signs_Options_Pro
 {
 
     /**
@@ -79,11 +79,11 @@ final class ASO_All_Signs_Options
     {
 
         $this->define_constants();
-        $this->aso_save_output_settings();
-        $this->aso_save_pages_settings();
-        $this->aso_define_borders();
-        $this->aso_define_shapes();
-        $this->aso_define_fixingMethods();
+        $this->asowp_save_output_settings();
+        $this->asowp_save_pages_settings();
+        $this->asowp_define_borders();
+        $this->asowp_define_shapes();
+        $this->asowp_define_fixingMethods();
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
 
@@ -105,7 +105,7 @@ final class ASO_All_Signs_Options
         static $instance = false;
 
         if (!$instance) {
-            $instance = new ASO_All_Signs_Options();
+            $instance = new ASOWP_All_Signs_Options_Pro();
         }
 
         return $instance;
@@ -146,40 +146,40 @@ final class ASO_All_Signs_Options
      */
     public function define_constants()
     {
-        define('ASO_VERSION', $this->version);
-        define('ASO_ID', 7326);
-        define('ASO_FILE', __FILE__);
-        define('ASO_PATH', dirname(ASO_FILE));
-        define('ASO_INCLUDES', ASO_PATH . '/includes');
-        define('ASO_URL', plugins_url('', ASO_FILE));
-        define('ASO_ASSETS', ASO_URL . '/assets');
+        define('ASOWP_VERSION', $this->version);
+        define('ASOWP_ID', 7326);
+        define('ASOWP_FILE', __FILE__);
+        define('ASOWP_PATH', dirname(ASOWP_FILE));
+        define('ASOWP_INCLUDES', ASOWP_PATH . '/includes');
+        define('ASOWP_URL', plugins_url('', ASOWP_FILE));
+        define('ASOWP_ASSETS', ASOWP_URL . '/assets');
 
-        define("ASO_CHECK_TRANSIENT_EXPIRATION", 12 * HOUR_IN_SECONDS); // 12 hours
-        define("ASO_CHECK_TRANSIENT_NAME", "wp_update_check_aso_pro");
+        define("ASOWP_CHECK_TRANSIENT_EXPIRATION", 12 * HOUR_IN_SECONDS); // 12 hours
+        define("ASOWP_CHECK_TRANSIENT_NAME", "wp_update_check_asowp_pro");
 
         $upload_dir = wp_upload_dir();
         $generation_path = $upload_dir['basedir'] . "/ASO/";
         $generation_url = $upload_dir['baseurl'] . "/ASO/";
 
-        define('ASO_IMAGE_PATH', $generation_path . "images");
-        define('ASO_IMAGE_URL', $generation_url . "images");
+        define('ASOWP_IMAGE_PATH', $generation_path . "images");
+        define('ASOWP_IMAGE_URL', $generation_url . "images");
 
-        define('ASO_ORDER_PATH', $generation_path . "ORDERS");
-        define('ASO_ORDER_URL', $generation_url . "ORDERS");
+        define('ASOWP_ORDER_PATH', $generation_path . "ORDERS");
+        define('ASOWP_ORDER_URL', $generation_url . "ORDERS");
     }
 
-    private function aso_save_output_settings()
+    private function asowp_save_output_settings()
     {
         $output_settings = [
             "zipName" => true,
             "calculateOutput" => true
         ];
-        $have_output_settings = get_option("aso_output_options");
+        $have_output_settings = get_option("asowp_output_options");
         if ($have_output_settings == false) {
-            update_option("aso_output_options", $output_settings);
+            update_option("asowp_output_options", $output_settings);
         }
     }
-    private function aso_save_pages_settings()
+    private function asowp_save_pages_settings()
     {
         $pages_settings = [
             "configuratorPage" => 0,
@@ -196,46 +196,46 @@ final class ASO_All_Signs_Options
                 "titleBalise" => 'h1'
             ],
         ];
-        $have_pages_settings = get_option("aso_config_page");
+        $have_pages_settings = get_option("asowp_config_page");
         if ($have_pages_settings == false) {
-            update_option("aso_config_page", $pages_settings);
+            update_option("asowp_config_page", $pages_settings);
         }else{
             $differenceCles = array_diff_key($pages_settings, $have_pages_settings);
             if (count($differenceCles) > 0) {
                 foreach ($differenceCles as $key => $value) {
                     $have_pages_settings[$key] = $value;
                 }
-                update_option("aso_config_page", $have_pages_settings);
+                update_option("asowp_config_page", $have_pages_settings);
             }
         }
     }
-    private function aso_define_borders()
+    private function asowp_define_borders()
     {
         $borders = [
             [
                 'name' => 'None',
-                "icon" => ASO_ASSETS . '/images/borders/ic_border_none.svg',
+                "icon" => ASOWP_ASSETS . '/images/borders/ic_border_none.svg',
                 'value' => 'none'
             ],
             [
                 'name' => 'Normal',
-                "icon" => ASO_ASSETS . '/images/borders/ic_border_thin.svg',
+                "icon" => ASOWP_ASSETS . '/images/borders/ic_border_thin.svg',
                 'value' => 'normal'
             ],
             [
                 'name' => 'Rounded Corners',
-                "icon" => ASO_ASSETS . '/images/borders/ic_border_rounded_corners.svg',
+                "icon" => ASOWP_ASSETS . '/images/borders/ic_border_rounded_corners.svg',
                 'value' => 'rounded-corners'
             ],
             [
                 'name' => 'Old World',
-                "icon" => ASO_ASSETS . '/images/borders/ic_border_old_world.svg',
+                "icon" => ASOWP_ASSETS . '/images/borders/ic_border_old_world.svg',
                 'value' => 'old-world'
             ]
         ];
-        $have_borders = get_option("aso_all_borders");
+        $have_borders = get_option("asowp_all_borders");
         if ($have_borders == false) {
-            update_option("aso_all_borders", $borders);
+            update_option("asowp_all_borders", $borders);
         } else {
             for ($i=0; $i < count($have_borders); $i++) { 
                 $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
@@ -250,7 +250,7 @@ final class ASO_All_Signs_Options
 
                 if ($found) {
                     $have_borders[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_borders[$i]["icon"]);
-                    update_option("aso_all_borders", $have_borders);
+                    update_option("asowp_all_borders", $have_borders);
                 }
             }
             $differenceCles = array_diff_key($borders, $have_borders);
@@ -258,77 +258,77 @@ final class ASO_All_Signs_Options
                 foreach ($differenceCles as $key => $value) {
                     $have_borders[$key] = $value;
                 }
-                update_option("aso_all_borders", $have_borders);
+                update_option("asowp_all_borders", $have_borders);
             }
         }
     }
-    private function aso_define_shapes()
+    private function asowp_define_shapes()
     {
         $shapes = [
             [
                 'name' => 'Oval',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_oval.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_oval.svg',
                 'value' => 'oval'
             ],
             [
                 'name' => 'Square',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_square.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_square.svg',
                 'value' => 'square'
             ],
             [
                 'name' => 'Triangle',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_triangle.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_triangle.svg',
                 'value' => 'triangle'
             ],
             [
                 'name' => 'Rounded Square',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_rounded.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_rounded.svg',
                 'value' => 'rounded-square'
             ],
             [
                 'name' => 'Rotated Square',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_rotated_square.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_rotated_square.svg',
                 'value' => 'rotated-square'
             ],
             [
                 'name' => 'Turn Left',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_turn_left.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_turn_left.svg',
                 'value' => 'turn-left'
             ],
             [
                 'name' => 'Turn Right',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_turn_right.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_turn_right.svg',
                 'value' => 'turn-right'
             ],
             [
                 'name' => 'Arrow Left',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_arrow_left.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_arrow_left.svg',
                 'value' => 'arrow-left'
             ],
             [
                 'name' => 'Arrow Right',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_arrow_right.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_arrow_right.svg',
                 'value' => 'arrow-right'
             ],
             [
                 'name' => 'Stop',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_stop.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_stop.svg',
                 'value' => 'stop'
             ],
             [
                 'name' => 'Rounded Top',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_rounded_top.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_rounded_top.svg',
                 'value' => 'rounded-top'
             ],
             [
                 'name' => 'Rounded Sides',
-                "icon" => ASO_ASSETS . '/images/shapes/ic_shape_rounded_sides.svg',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_rounded_sides.svg',
                 'value' => 'rounded-sides'
             ]
         ];
-        $have_shapes = get_option("aso_all_shapes");
+        $have_shapes = get_option("asowp_all_shapes");
         if ($have_shapes == false) {
-            update_option("aso_all_shapes", $shapes);
+            update_option("asowp_all_shapes", $shapes);
         } else {
             for ($i=0; $i < count($have_shapes); $i++) { 
                 $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
@@ -343,7 +343,7 @@ final class ASO_All_Signs_Options
 
                 if ($found) {
                     $have_shapes[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_shapes[$i]["icon"]);
-                    update_option("aso_all_shapes", $have_shapes);
+                    update_option("asowp_all_shapes", $have_shapes);
                 }
             }
             $differenceCles = array_diff_key($shapes, $have_shapes);
@@ -351,157 +351,157 @@ final class ASO_All_Signs_Options
                 foreach ($differenceCles as $key => $value) {
                     $have_shapes[$key] = $value;
                 }
-                update_option("aso_all_shapes", $have_shapes);
+                update_option("asowp_all_shapes", $have_shapes);
             }
         }
     }
-    private function aso_define_fixingMethods()
+    private function asowp_define_fixingMethods()
     {
         $fixingMethods = [
             [
                 'name' => 'None',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_none.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_none.svg',
                 "popImg" => "",
                 'type' => 'none'
             ],
             [
                 'name' => 'Adhesive Tape',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_adhesive_tape.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_adhesive_tape.svg',
                 "popImg" => "",
                 'type' => 'adhesive-tape'
             ],
             [
                 'name' => 'Screw',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_screw.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_screw.svg',
                 "popImg" => "",
                 'type' => 'screw'
             ],
             [
                 'name' => 'Screw Cap',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_screw_cap.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_screw_cap.svg',
                 "popImg" => "",
                 'type' => 'screw-cap'
             ],
             [
                 'name' => 'Stand Off',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_standoff.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_standoff.svg',
                 "popImg" => "",
                 'type' => 'standoff'
             ],
             [
                 'name' => 'Hanging',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_hanging.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_hanging.svg',
                 "popImg" => "",
                 'type' => 'hanging'
             ],
             [
                 'name' => 'Flag',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_flag.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_flag.svg',
                 "popImg" => "",
                 'type' => 'flag'
             ],
             [
                 'name' => 'Suction Cup',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_suction_cup.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_suction_cup.svg',
                 "popImg" => "",
                 'type' => 'suction-cup'
             ],
             [
                 'name' => 'Table Stand',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_table_stand.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_table_stand.svg',
                 "popImg" => "",
                 'type' => 'table-stand'
             ],
             [
                 'name' => 'Ceiling',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_ceiling.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_ceiling.svg',
                 "popImg" => "",
                 'type' => 'ceiling'
             ],
             [
                 'name' => 'Pole Attachment',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_pole_attachment.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_pole_attachment.svg',
                 "popImg" => "",
                 'type' => 'pole-attachment'
             ],
             [
                 'name' => 'Cable Labeling',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_cable_label.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_cable_label.svg',
                 "popImg" => "",
                 'type' => 'cable-labeling'
             ],
             [
                 'name' => 'Table Clamp',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_table_clamp.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_table_clamp.svg',
                 "popImg" => "",
                 'type' => 'table-clamp'
             ],
             [
                 'name' => 'Base Support',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_base_support.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_base_support.svg',
                 "popImg" => "",
                 'type' => 'base-support'
             ],
             [
                 'name' => 'Magnetic Strip',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_magnetic_strip.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_magnetic_strip.svg',
                 "popImg" => "",
                 'type' => 'magnetic-strip'
             ],
             [
                 'name' => 'Keyring',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_keyring.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_keyring.svg',
                 "popImg" => "",
                 'type' => 'keyring'
             ],
             [
                 'name' => 'Sign Holder',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_sign_holder.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_sign_holder.svg',
                 "popImg" => "",
                 'type' => 'sign-holder'
             ],
             [
                 'name' => 'Eyelets',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_eyelets.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_eyelets.svg',
                 "popImg" => "",
                 'type' => 'eyelets'
             ],
             [
                 'name' => 'S Hook',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_s_hook.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_s_hook.svg',
                 "popImg" => "",
                 'type' => 's-hook'
             ],
             [
                 'name' => 'Roll Up',
                 "description" => "",
-                "icon" => ASO_ASSETS . '/images/fixing-methodes/ic_fixmethod_roll_up.svg',
+                "icon" => ASOWP_ASSETS . '/images/fixing-methodes/ic_fixmethod_roll_up.svg',
                 "popImg" => "",
                 'type' => 'roll-up'
             ],
         ];
-        $have_fixingMethods = get_option("aso_all_fixingMethods");
+        $have_fixingMethods = get_option("asowp_all_fixingMethods");
         if ($have_fixingMethods == false) {
-            update_option("aso_all_fixingMethods", $fixingMethods);
+            update_option("asowp_all_fixingMethods", $fixingMethods);
         } else {
             for ($i=0; $i < count($have_fixingMethods); $i++) { 
                 $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
@@ -516,7 +516,7 @@ final class ASO_All_Signs_Options
 
                 if ($found) {
                     $have_fixingMethods[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_fixingMethods[$i]["icon"]);
-                    update_option("aso_all_fixingMethods", $have_fixingMethods);
+                    update_option("asowpWP_all_fixingMethods", $have_fixingMethods);
                 }
             }
             $differenceCles = array_diff_key($fixingMethods, $have_fixingMethods);
@@ -524,7 +524,7 @@ final class ASO_All_Signs_Options
                 foreach ($differenceCles as $key => $value) {
                     $have_fixingMethods[$key] = $value;
                 }
-                update_option("aso_all_fixingMethods", $have_fixingMethods);
+                update_option("asowpWP_all_fixingMethods", $have_fixingMethods);
             }
         }
     }
@@ -548,13 +548,13 @@ final class ASO_All_Signs_Options
     public function activate()
     {
 
-        $installed = get_option('ASO_installed');
+        $installed = get_option('ASOWP_installed');
 
         if (!$installed) {
-            update_option('ASO_installed', time());
+            update_option('ASOWP_installed', time());
         }
 
-        update_option('ASO_version', ASO_VERSION);
+        update_option('ASOWP_version', ASOWP_VERSION);
     }
 
     /**
@@ -574,27 +574,27 @@ final class ASO_All_Signs_Options
     public function includes()
     {
 
-        require_once ASO_INCLUDES . '/Assets.php';
+        require_once ASOWP_INCLUDES . '/Assets.php';
 
         if ($this->is_request('admin')) {
-            require_once ASO_INCLUDES . '/Admin.php';
+            require_once ASOWP_INCLUDES . '/Admin.php';
         }
 
         if ($this->is_request('frontend')) {
-            require_once ASO_INCLUDES . '/Frontend.php';
+            require_once ASOWP_INCLUDES . '/Frontend.php';
         }
 
         if ($this->is_request('ajax')) {
-            // require_once ASO_INCLUDES . '/class-ajax.php';
+            // require_once ASOWP_INCLUDES . '/class-ajax.php';
         }
 
-        require_once ASO_INCLUDES . '/Api.php';
-        require_once ASO_INCLUDES . '/update/updater.php';
-        require_once ASO_INCLUDES . '/aso-post-type.php';
-        require_once ASO_INCLUDES . '/aso-design.php';
-        require_once ASO_INCLUDES . '/aso-product-config.php';
-        require_once ASO_INCLUDES . '/Functions.php';
-        require_once ASO_INCLUDES . '/Public.php';
+        require_once ASOWP_INCLUDES . '/Api.php';
+        require_once ASOWP_INCLUDES . '/update/updater.php';
+        require_once ASOWP_INCLUDES . '/aso-post-type.php';
+        require_once ASOWP_INCLUDES . '/aso-design.php';
+        require_once ASOWP_INCLUDES . '/aso-product-config.php';
+        require_once ASOWP_INCLUDES . '/Functions.php';
+        require_once ASOWP_INCLUDES . '/Public.php';
     }
 
     /**
@@ -607,10 +607,10 @@ final class ASO_All_Signs_Options
 
         add_action('init', array($this, 'init_classes'));
 
-        (new ASO_Post_Type())->init_hooks();
-        (new ASO_Updater())->init_hooks();
-        (new ASO_Product_Config())->init_hooks();
-        (new ASO_Design())->init_hooks();
+        (new ASOWP_Post_Type())->init_hooks();
+        (new ASOWP_Updater())->init_hooks();
+        (new ASOWP_Product_Config())->init_hooks();
+        (new ASOWP_Design())->init_hooks();
 
         // Localize our plugin
         add_action('init', array($this, 'localization_setup'));
@@ -625,20 +625,20 @@ final class ASO_All_Signs_Options
     {
 
         if ($this->is_request('admin')) {
-            $this->container['admin'] = new ASO\ASO_Admin();
+            $this->container['admin'] = new ASOWP\ASOWP_Admin();
         }
 
         if ($this->is_request('frontend')) {
-            $this->container['frontend'] = new ASO\ASO_Frontend();
+            $this->container['frontend'] = new ASOWP\ASOWP_Frontend();
         }
 
         if ($this->is_request('ajax')) {
-            // $this->container['ajax'] =  new ASO\Ajax();
+            // $this->container['ajax'] =  new ASOWP\Ajax();
         }
 
-        $this->container['api'] = new ASO\Api();
-        $this->container['public'] = new ASO\ASO_Public();
-        $this->container['assets'] = new ASO\Assets();
+        $this->container['api'] = new ASOWP\Api();
+        $this->container['public'] = new ASOWP\ASOWP_Public();
+        //$this->container['assets'] = new ASOWP\Assets();
     }
 
     /**
@@ -681,12 +681,12 @@ final class ASO_All_Signs_Options
     public function check_config_pageselected()
     {
         if (class_exists('WooCommerce')) {
-            $PageSettings = get_option('aso_config_page', []);
+            $PageSettings = get_option('asowp_config_page', []);
             if (count($PageSettings) == 0) {
 ?>
                 <div class="notice notice-warning aso-notice-nux is-dismissible">
                     <span class="aso-icon">
-                        <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                        <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
                         <h2><?php esc_html_e("Customization Page not found", "all-signs-options-pro") ?></h2>
@@ -700,7 +700,7 @@ final class ASO_All_Signs_Options
                 ?>
                     <div class="notice notice-warning aso-notice-nux is-dismissible">
                         <span class="aso-icon">
-                            <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                            <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                         </span>
                         <div>
                             <h2><?php esc_html_e("Customization Page not found", "all-signs-options-pro") ?></h2>
@@ -723,7 +723,7 @@ final class ASO_All_Signs_Options
                 ?>
                 <div class="notice notice-info aso-notice-nux is-dismissible">
                     <span class="aso-icon">
-                        <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                        <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
                         <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
@@ -737,7 +737,7 @@ final class ASO_All_Signs_Options
             ?>
             <div class="notice notice-info aso-notice-nux is-dismissible">
                 <span class="aso-icon">
-                    <img src="<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                    <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
                 </span>
                 <div>
                     <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
@@ -844,7 +844,7 @@ final class ASO_All_Signs_Options
 
             <div class="notice notice-warning aso-notice-nux is-dismissible">
                 <span class="aso-icon">
-                    <img src='<?php echo esc_url(ASO_ASSETS . '/images/im_aso-icon2.png') ?>' alt="" width="250" />
+                    <img src='<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>' alt="" width="250" />
                 </span>
                 <div>
                     <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-options-pro") ?></h2>
@@ -863,17 +863,17 @@ final class ASO_All_Signs_Options
     {
 
         if (class_exists('WooCommerce')) {
-            $aso_settings = get_option("aso_product_pro");
+            $asowp_settings = get_option("asowp_product_pro");
 
 
-            if (empty($aso_settings)) {
+            if (empty($asowp_settings)) {
             ?>
                 <div class="notice notice-warning aso-product-warning">
                     <p><b>All Signs Options Pro: </b><?php _e("No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", "all-signs-options-pro"); ?></p>
                 </div>
                 <?php
             } else {
-                if (empty(get_option('aso_health-state')) || get_option('aso_health-state') == false) { ?>
+                if (empty(get_option('asowp_health-state')) || get_option('asowp_health-state') == false) { ?>
                     <div class="notice notice-error aso-product-warning" style="display:none!important">
                         <p><b>All Signs Options Pro: </b><?php _e('You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', "all-signs-options-pro"); ?></p>
                         <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate", "all-signs-options-pro") ?></a>
@@ -885,4 +885,4 @@ final class ASO_All_Signs_Options
     }
 } // All_Signs_Options
 
-$ASO = ASO_All_Signs_Options::init();
+$ASO = ASOWP_All_Signs_Options_Pro::init();

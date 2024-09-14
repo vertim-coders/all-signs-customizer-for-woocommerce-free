@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\Materials;
+namespace ASOWP\Api\Admin\Materials;
 
 use WP_Error;
 use WP_REST_Controller;
@@ -9,7 +9,7 @@ use WP_REST_Response;
 /**
  * REST_API Handler
  */
-class ASO_Materials_Simple extends WP_REST_Controller {
+class ASOWP_Materials_Simple extends WP_REST_Controller {
 
     /**
      * [__construct description]
@@ -493,7 +493,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
-                    $all_manages_shapes = get_option("aso_all_shapes",[]);
+                    $all_manages_shapes = get_option("asowp_all_shapes",[]);
                     if(isset($meta_value['data']['materials'][$material_id]['data']['shapes']) && count($meta_value['data']['materials'][$material_id]['data']['shapes']) > 0){
                         return rest_ensure_response(["materialShapes"=>$meta_value['data']['materials'][$material_id]['data']['shapes'],"manageShapes"=>$all_manages_shapes]);
                     }else{
@@ -632,7 +632,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
-                    $all_manage_borders = get_option("aso_all_borders",[]);
+                    $all_manage_borders = get_option("asowp_all_borders",[]);
                     if(count($meta_value['data']['materials'][$material_id]['data']['borders']["allBorders"])>0){
                         return rest_ensure_response(["materialBorders"=>$meta_value['data']['materials'][$material_id]['data']['borders'],"manageBorders"=>$all_manage_borders,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
                     }else{
@@ -838,7 +838,7 @@ class ASO_Materials_Simple extends WP_REST_Controller {
             $meta_value = get_post_meta($config_id,'aso-configs-meta',true);
             if(is_array($meta_value) && !empty($meta_value)){
                 if(isset($meta_value['data']['materials'][$material_id])){
-                    $all_manage_fixingMethods = get_option("aso_all_fixingMethods",[]);
+                    $all_manage_fixingMethods = get_option("asowp_all_fixingMethods",[]);
                     if(count($meta_value['data']['materials'][$material_id]['data']['fixingMethods'])>0){
                         return rest_ensure_response(["materialFixingMethods"=>$meta_value['data']['materials'][$material_id]['data']['fixingMethods'],"manageFixingMethods"=>$all_manage_fixingMethods,'materialSizes'=>$meta_value['data']['materials'][$material_id]['data']['sizes']["allSizes"]]);
                     }else{

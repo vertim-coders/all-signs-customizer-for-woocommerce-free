@@ -40,7 +40,7 @@
             </div>
             <div class="aso-pr-[40px]">
                 <span class="aso-text-[20px] aso-font-bold">
-                    V{{ ASO_VERSION }}
+                    V{{ ASOWP_VERSION }}
                 </span>
             </div>
         </div>
@@ -49,7 +49,7 @@
 <script setup>
 import router from '@/admin/router';
 import {ref} from 'vue';
-const ASO_VERSION = ref(aso_data.version);
+const ASOWP_VERSION = ref(asowp_data.version);
 const goToPreview = ()=>{
     router.push('/configs/'+router.currentRoute.value.params.config+'/preview/'+router.currentRoute.value.params.configId)
     .then(() => {

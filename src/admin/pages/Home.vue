@@ -74,7 +74,7 @@
 </template>
 <script setup>
 import { RouterLink } from 'vue-router';
-    const statisticImage = aso_data.assets_url+'/images/home/im_statistic.png'
+    const statisticImage = asowp_data.assets_url+'/images/home/im_statistic.png'
 </script>
 <style>
     

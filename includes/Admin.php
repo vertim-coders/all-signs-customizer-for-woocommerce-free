@@ -1,17 +1,17 @@
 <?php
-namespace ASO;
+namespace ASOWP;
 
 /**
  * Admin Pages Handler
  */
-class ASO_Admin {
+class ASOWP_Admin {
 
     public function __construct() {
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
-        add_filter( 'upload_mimes', [$this, 'aso_add_custom_mime_types'] );
-        add_filter( 'wp_check_filetype_and_ext', [$this, 'aso_check_filetype_and_ext'], 99, 5 );
-		add_action( 'wp_ajax_aso_check_product_health', [$this, 'check_product_health' ]);
-		add_action( 'wp_ajax_nopriv_aso_check_product_health', [$this, 'check_product_health' ]);
+        add_filter( 'upload_mimes', [$this, 'asowp_add_custom_mime_types'] );
+        add_filter( 'wp_check_filetype_and_ext', [$this, 'asowp_check_filetype_and_ext'], 99, 5 );
+		add_action( 'wp_ajax_asowp_check_product_health', [$this, 'check_product_health' ]);
+		add_action( 'wp_ajax_nopriv_asowp_check_product_health', [$this, 'check_product_health' ]);
     }
 
     /**
@@ -25,7 +25,7 @@ class ASO_Admin {
         $capability = 'manage_options';
         $slug       = 'aso';
 
-        $hook = add_menu_page( __( 'All Signs Options', "all-signs-options-pro"), __( 'All Signs Options', "all-signs-options-pro"), $capability, $slug, [ $this, 'plugin_page' ], ASO_ASSETS.'/images/im_icon_aso.png' );
+        $hook = add_menu_page( __( 'All Signs Options', "all-signs-options-pro"), __( 'All Signs Options', "all-signs-options-pro"), $capability, $slug, [ $this, 'plugin_page' ], ASOWP_ASSETS.'/images/im_icon_aso.png' );
 
         if ( current_user_can( $capability ) ) {
             $submenu[ $slug ][] = array( __( 'Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/' );
@@ -71,24 +71,24 @@ class ASO_Admin {
         <div class="wrap">
             <div id="aso-admin-app"></div>
         </div>
-        <?php wp_localize_script("aso-admin","aso_data",[
+        <?php wp_localize_script("aso-admin","asowp_data",[
             "rest_url"=>$api_url."aso/v1",
             "ajax_url"=>esc_url(admin_url('admin-ajax.php')),
             "site_url"=>urlencode(get_site_url()),
-            "author"=>ASO_ID,
-            "assets_url"=>ASO_ASSETS,
+            "author"=>ASOWP_ID,
+            "assets_url"=>ASOWP_ASSETS,
             "page"=>"admin",
-            "version"=> ASO_VERSION,
+            "version"=> ASOWP_VERSION,
             'currencySymbol'     => class_exists( 'WooCommerce' ) ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
             'currency_pos'       => class_exists( 'WooCommerce' ) ? get_option('woocommerce_currency_pos') : ''
         ]);
-        wp_localize_script("aso-admin","aso_configurator_data",array(
-            "fixing_methods_url"  => ASO_ASSETS.'/images/fixing-methodes',
-            "borders_url"  => ASO_ASSETS.'/images/borders',
+        wp_localize_script("aso-admin","asowp_configurator_data",array(
+            "fixing_methods_url"  => ASOWP_ASSETS.'/images/fixing-methodes',
+            "borders_url"  => ASOWP_ASSETS.'/images/borders',
         ));
     }
 
-    public function aso_add_custom_mime_types( $mimes ) {
+    public function asowp_add_custom_mime_types( $mimes ) {
 		return array_merge(
 			$mimes,
 			array(
@@ -112,7 +112,7 @@ class ASO_Admin {
 	 * @param string $real_mime The real mimes.
 	 * @return array
 	 */
-	public function aso_check_filetype_and_ext( $data, $file, $filename, $mimes, $real_mime ) {
+	public function asowp_check_filetype_and_ext( $data, $file, $filename, $mimes, $real_mime ) {
 		if ( ! empty( $data['ext'] ) && ! empty( $data['type'] ) ) {
 			return $data;
 		}

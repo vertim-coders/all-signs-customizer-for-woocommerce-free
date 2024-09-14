@@ -1,5 +1,5 @@
 <?php
-namespace ASO;
+namespace ASOWP;
 
 /**
  * Scripts and Styles Class
@@ -38,14 +38,14 @@ class Assets
     private function register_scripts($scripts)
     {
         // Return if JS folder not exists
-        if (!is_dir(ASO_PATH . '/assets/js')) {
+        if (!is_dir(ASOWP_PATH . '/assets/js')) {
             return;
         }
 
         foreach ($scripts as $handle => $script) {
             $deps = isset($script['deps']) ? $script['deps'] : false;
             $in_footer = isset($script['in_footer']) ? $script['in_footer'] : false;
-            $version = isset($script['version']) ? $script['version'] : ASO_VERSION;
+            $version = isset($script['version']) ? $script['version'] : ASOWP_VERSION;
 
             wp_register_script($handle, $script['src'], $deps, $version, $in_footer);
         }
@@ -63,7 +63,7 @@ class Assets
         foreach ($styles as $handle => $style) {
             $deps = isset($style['deps']) ? $style['deps'] : false;
 
-            wp_register_style($handle, $style['src'], $deps, ASO_VERSION);
+            wp_register_style($handle, $style['src'], $deps, ASOWP_VERSION);
         }
     }
 
@@ -75,7 +75,7 @@ class Assets
     public function get_scripts()
     {
         // Return if JS folder not exists
-        if (!is_dir(ASO_PATH . '/assets/js')) {
+        if (!is_dir(ASOWP_PATH . '/assets/js')) {
             return;
         }
 
@@ -83,41 +83,41 @@ class Assets
 
         $scripts = [
             'aso-runtime' => [
-                'src' => ASO_ASSETS . '/js/runtime.js',
-                'version' => filemtime(ASO_PATH . '/assets/js/runtime.js'),
+                'src' => ASOWP_ASSETS . '/js/runtime.js',
+                'version' => filemtime(ASOWP_PATH . '/assets/js/runtime.js'),
                 'in_footer' => true
             ],
             'aso-vendor' => [
-                'src' => ASO_ASSETS . '/js/vendors.js',
-                'version' => filemtime(ASO_PATH . '/assets/js/vendors.js'),
+                'src' => ASOWP_ASSETS . '/js/vendors.js',
+                'version' => filemtime(ASOWP_PATH . '/assets/js/vendors.js'),
                 'in_footer' => true
             ],
             'aso-frontend' => [
-                'src' => ASO_ASSETS . '/js/frontend.js',
+                'src' => ASOWP_ASSETS . '/js/frontend.js',
                 'deps' => ['jquery', 'aso-vendor', 'aso-runtime'],
-                'version' => filemtime(ASO_PATH . '/assets/js/frontend.js'),
+                'version' => filemtime(ASOWP_PATH . '/assets/js/frontend.js'),
                 'in_footer' => true
             ],
             'aso-admin' => [
-                'src' => ASO_ASSETS . '/js/admin.js',
+                'src' => ASOWP_ASSETS . '/js/admin.js',
                 'deps' => ['jquery', 'aso-vendor', 'aso-runtime'],
-                'version' => filemtime(ASO_PATH . '/assets/js/admin.js'),
+                'version' => filemtime(ASOWP_PATH . '/assets/js/admin.js'),
                 'in_footer' => true
             ],
             'aso-omodal' => [
-                'src' => ASO_ASSETS . '/utilities/modal.min.js',
+                'src' => ASOWP_ASSETS . '/utilities/modal.min.js',
                 'in_footer' => true
             ],
             'aso-fabric' => [
-                'src' => ASO_ASSETS . '/utilities/fabric.min.js',
+                'src' => ASOWP_ASSETS . '/utilities/fabric.min.js',
                 'in_footer' => true
             ],
             'aso-sortable' => [
-                'src' => ASO_ASSETS . '/utilities/sortable.js',
+                'src' => ASOWP_ASSETS . '/utilities/sortable.js',
                 'in_footer' => true
             ],
             'aso-toast' => [
-                'src' => ASO_ASSETS . '/utilities/toast.min.js',
+                'src' => ASOWP_ASSETS . '/utilities/toast.min.js',
                 'in_footer' => true
             ],
             'aso-tinymce-script' => [
@@ -125,7 +125,7 @@ class Assets
                 'in_footer' => true
             ],
             'aso-product-min' => [
-                'src' =>  ASO_ASSETS .'/utilities/aso-product-min.js',
+                'src' =>  ASOWP_ASSETS .'/utilities/aso-product-min.js',
                 'in_footer' => true
             ]
         ];
@@ -143,19 +143,19 @@ class Assets
 
         $styles = [
             'aso-style' => [
-                'src' => ASO_ASSETS . '/css/style.css'
+                'src' => ASOWP_ASSETS . '/css/style.css'
             ],
             'aso-frontend' => [
-                'src' => ASO_ASSETS . '/css/frontend.css'
+                'src' => ASOWP_ASSETS . '/css/frontend.css'
             ],
             'aso-admin' => [
-                'src' => ASO_ASSETS . '/css/admin.css'
+                'src' => ASOWP_ASSETS . '/css/admin.css'
             ],
             'aso-omodal' => [
-                'src' => ASO_ASSETS . '/utilities/modal.min.css'
+                'src' => ASOWP_ASSETS . '/utilities/modal.min.css'
             ],
             'aso-toast' => [
-                'src' => ASO_ASSETS . '/utilities/toast.min.css'
+                'src' => ASOWP_ASSETS . '/utilities/toast.min.css'
             ],
         ];
 

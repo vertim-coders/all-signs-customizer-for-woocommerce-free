@@ -1,5 +1,5 @@
 <?php
-namespace ASO\Api\Admin\Settings;
+namespace ASOWP\Api\Admin\Settings;
 
 use WP_Error;
 use WP_Post;
@@ -9,7 +9,7 @@ use WP_REST_Controller;
 /**
  * class for api routes reaching custom design settings
  */
-class ASO_Api_Theme_color_Settings extends WP_REST_Controller {
+class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller {
     
     /**
      * [__construct description]

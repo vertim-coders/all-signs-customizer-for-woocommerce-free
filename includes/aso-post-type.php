@@ -1,22 +1,22 @@
 <?php
-namespace ASO;
-class ASO_Post_Type
+namespace ASOWP;
+class ASOWP_Post_Type
 {
     public function init_hooks(){
-        add_action('init',array($this,'register_aso_post_type'));
-        add_action('init',array($this,'register_aso_config_meta'));
-        add_action('init',array($this,'register_aso_config_templates'));
+        add_action('init',array($this,'register_asowp_post_type'));
+        add_action('init',array($this,'register_asowp_config_meta'));
+        add_action('init',array($this,'register_asowp_config_templates'));
 
         add_filter( 'the_content', array($this,'get_editor_shortcode_handler'));
-		add_filter( 'init', array($this,'aso_add_design_page_rewrite_rules'), 99 );
-		add_filter( 'init', array($this,'aso_add_template_page_rewrite_rules'), 99 );
-		add_filter( 'query_vars', array($this, 'aso_add_query_vars' ));
+		add_filter( 'init', array($this,'asowp_add_design_page_rewrite_rules'), 99 );
+		add_filter( 'init', array($this,'asowp_add_template_page_rewrite_rules'), 99 );
+		add_filter( 'query_vars', array($this, 'asowp_add_query_vars' ));
     }
 
 	/**
 	 * create post type 
 	 */
-    public function register_aso_post_type() {
+    public function register_asowp_post_type() {
 
 		$labels = array(
 			'name'               => _x( 'ASO Configurations', "all-signs-options-pro"),
@@ -55,7 +55,7 @@ class ASO_Post_Type
     /**
 	 * Create meta data of aso-configs-meta
 	*/
-	public function register_aso_config_meta(){
+	public function register_asowp_config_meta(){
 		register_meta(
 			'aso-configs',
 			'aso-configs-meta',
@@ -80,7 +80,7 @@ class ASO_Post_Type
 	/**
 	 * Create meta data of aso-configs-meta
 	*/
-	public function register_aso_config_templates(){
+	public function register_asowp_config_templates(){
 		register_meta(
 			'aso-configs',
 			'aso-configs-templates',
@@ -108,7 +108,7 @@ class ASO_Post_Type
 
 	public function get_editor_shortcode_handler( $content ) {
 		global $wp_query;
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if ( (get_the_ID() == $page_settings["configuratorPage"]) && is_page($page_settings["configuratorPage"]) ){
 			if(!isset( $wp_query->query_vars['aso-product-id'] )){
 				ob_start();
@@ -154,7 +154,7 @@ class ASO_Post_Type
 		}
 		return $content;
 	}
-	public function aso_add_query_vars( $a_vars ) {
+	public function asowp_add_query_vars( $a_vars ) {
 		$a_vars[] = 'aso-product-id';
 		$a_vars[] = 'aso-tplid';
 		$a_vars[] = 'edit';
@@ -162,22 +162,22 @@ class ASO_Post_Type
 		$a_vars[] = 'vcid';
 		return $a_vars;
 	}
-	/*public function aso_add_design_page_rewrite_rules( $param ) {
+	/*public function asowp_add_design_page_rewrite_rules( $param ) {
 		
 		global $wp_rewrite;
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if ( !empty($page_settings) && $page_settings != false ) {
-			$aso_page_id = $page_settings["configuratorPage"];
+			$asowp_page_id = $page_settings["configuratorPage"];
 		} else {
-			$aso_page_id = false;
+			$asowp_page_id = false;
 		}
 
 		// if ( function_exists( 'icl_object_id' ) ) {
-		// 	$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
+		// 	$asowp_page_id = icl_object_id( $asowp_page_id, 'page', false, ICL_LANGUAGE_CODE );
 		// } 
-		$aso_page = get_post( $aso_page_id );
-		if ( is_object( $aso_page ) ) {
-			$raw_slug = get_permalink( $aso_page->ID );
+		$asowp_page = get_post( $asowp_page_id );
+		if ( is_object( $asowp_page ) ) {
+			$raw_slug = get_permalink( $asowp_page->ID );
 			$home_url = home_url( '/' );
 			$slug     = str_replace( $home_url, '', $raw_slug );
 			// If the slug does not have the trailing slash, we get 404 (ex postname = /%postname%)
@@ -234,22 +234,22 @@ class ASO_Post_Type
 		}
 	}*/
 
-	/*public function aso_add_template_page_rewrite_rules( $param ) {
+	/*public function asowp_add_template_page_rewrite_rules( $param ) {
 		
 		global $wp_rewrite;
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if ( !empty($page_settings) && $page_settings != false ) {
-			$aso_page_id = $page_settings["templatePage"];
+			$asowp_page_id = $page_settings["templatePage"];
 		} else {
-			$aso_page_id = false;
+			$asowp_page_id = false;
 		}
 
 		// if ( function_exists( 'icl_object_id' ) ) {
-		// 	$aso_page_id = icl_object_id( $aso_page_id, 'page', false, ICL_LANGUAGE_CODE );
+		// 	$asowp_page_id = icl_object_id( $asowp_page_id, 'page', false, ICL_LANGUAGE_CODE );
 		// }
-		$aso_page = get_post( $aso_page_id );
-		if ( is_object( $aso_page ) ) {
-			$raw_slug = get_permalink( $aso_page->ID );
+		$asowp_page = get_post( $asowp_page_id );
+		if ( is_object( $asowp_page ) ) {
+			$raw_slug = get_permalink( $asowp_page->ID );
 			$home_url = home_url( '/' );
 			$slug     = str_replace( $home_url, '', $raw_slug );
 			// If the slug does not have the trailing slash, we get 404 (ex postname = /%postname%)
@@ -292,14 +292,14 @@ class ASO_Post_Type
 		}
 	} */
 
-	public function aso_add_design_page_rewrite_rules() {
+	public function asowp_add_design_page_rewrite_rules() {
 		global $wp_rewrite;
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if (!empty($page_settings) && $page_settings != false) {
-			$aso_page_id = $page_settings["configuratorPage"];
-			$aso_page = get_post($aso_page_id);
-			if (is_object($aso_page)) {
-				$raw_slug = get_permalink($aso_page->ID);
+			$asowp_page_id = $page_settings["configuratorPage"];
+			$asowp_page = get_post($asowp_page_id);
+			if (is_object($asowp_page)) {
+				$raw_slug = get_permalink($asowp_page->ID);
 				$home_url = home_url('/');
 				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
 				
@@ -321,14 +321,14 @@ class ASO_Post_Type
 		$wp_rewrite->flush_rules(false);
 	}
 	
-	public function aso_add_template_page_rewrite_rules() {
+	public function asowp_add_template_page_rewrite_rules() {
 		global $wp_rewrite;
-		$page_settings = get_option("aso_config_page");
+		$page_settings = get_option("asowp_config_page");
 		if (!empty($page_settings) && $page_settings != false) {
-			$aso_page_id = $page_settings["templatePage"];
-			$aso_page = get_post($aso_page_id);
-			if (is_object($aso_page)) {
-				$raw_slug = get_permalink($aso_page->ID);
+			$asowp_page_id = $page_settings["templatePage"];
+			$asowp_page = get_post($asowp_page_id);
+			if (is_object($asowp_page)) {
+				$raw_slug = get_permalink($asowp_page->ID);
 				$home_url = home_url('/');
 				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
 				
