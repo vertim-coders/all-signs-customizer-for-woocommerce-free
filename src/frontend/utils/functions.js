@@ -60,7 +60,7 @@ function formatPrice(price) {
 }
 
 function setScrollColor(color) {
-  document.documentElement.style.setProperty("--aso-scrollBar-color", color);
+  document.documentElement.style.setProperty("--asowp-scrollBar-color", color);
 }
 
 export { add_to_cart, formatPrice, setScrollColor };

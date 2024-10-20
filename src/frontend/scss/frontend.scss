@@ -1,14 +1,14 @@
 :root {
-  --aso-scrollBar-color: #000000;
+  --asowp-scrollBar-color: #000000;
 }
-.aso-configurator-container {
+.asowp-configurator-container {
   height: 100vh;
 }
-.aso-templates-customize_button {
+.asowp-templates-customize_button {
   color: white !important;
   text-decoration: none !important;
 }
-#aso-frontend-app {
+#asowp-frontend-app {
   p {
     margin: 0 !important;
   }
@@ -18,32 +18,32 @@
     overflow: auto;
   }
 
-  .aso-scrollBar::-webkit-scrollbar {
+  .asowp-scrollBar::-webkit-scrollbar {
     width: 6px;
     height: 4px;
     overflow: scroll;
   }
-  .aso-scrollBar::-webkit-scrollbar-thumb {
-    background-color: var(--aso-scrollBar-color);
+  .asowp-scrollBar::-webkit-scrollbar-thumb {
+    background-color: var(--asowp-scrollBar-color);
     border-radius: 20px;
   }
 
-  .aso-base-animation {
+  .asowp-base-animation {
     transition-property: all;
     transition-duration: 500ms;
     // cursor: pointer;
   }
-  .aso-buttons-rad-none {
+  .asowp-buttons-rad-none {
     border-radius: 0px !important;
     border: 0px;
   }
-  .aso-full-center {
+  .asowp-full-center {
     justify-content: center !important;
     align-items: center !important;
     /* white-space: nowrap; */
   }
 
-  .aso-option-buton {
+  .asowp-option-buton {
     width: fit-content;
     height: 90%;
     display: flex;
@@ -51,40 +51,40 @@
     width: -moz-fit-content;
   }
 
-  .aso-new-border {
+  .asowp-new-border {
     border: solid 1px !important;
   }
 
-  .aso-inputImage {
-    /* aso-text-md  */
+  .asowp-inputImage {
+    /* asowp-text-md  */
     display: flex !important;
     padding: 8px 14px 8px 14px !important;
     border-radius: 9999px !important;
     cursor: pointer !important;
   }
-  .aso-inputImage svg,
-  .aso-inputImage p {
+  .asowp-inputImage svg,
+  .asowp-inputImage p {
     margin-left: 5px !important;
     margin-right: 5px !important;
   }
 }
-.aso-text-size {
+.asowp-text-size {
   padding: 0 !important;
   height: 100% !important;
   margin: 0 !important;
   text-align: center;
 }
 
-.aso-inputColor-hide {
+.asowp-inputColor-hide {
   width: 0px !important;
   height: 0px !important;
 }
 
-.aso-scrollDiv {
+.asowp-scrollDiv {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
 }
-.aso-cardDiv {
+.asowp-cardDiv {
   // display: inline-block;
 }

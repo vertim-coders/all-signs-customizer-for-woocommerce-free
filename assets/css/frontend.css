@@ -2,7 +2,7 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./src/frontend/pages/configurateur/Default/index.vue?vue&type=style&index=0&id=5ab70054&scoped=true&lang=css ***!
   \************************************************************************************************************************************************************************************************************************************************************************************/
 
-.aso-hide[data-v-5ab70054]{
+.asowp-hide[data-v-5ab70054]{
         display: none;
 }
 .flipper[data-v-5ab70054] {
@@ -16,15 +16,15 @@
 .flipper-switch[data-v-5ab70054] {
         transform: rotateY(180deg);
 }
-#aso-sign-recto[data-v-5ab70054], #aso-sign-verso[data-v-5ab70054] {
+#asowp-sign-recto[data-v-5ab70054], #asowp-sign-verso[data-v-5ab70054] {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
 }
-#aso-sign-recto[data-v-5ab70054] {
+#asowp-sign-recto[data-v-5ab70054] {
         /* background-color: #bbb; */
         color: black;
 }
-#aso-sign-verso[data-v-5ab70054] {
+#asowp-sign-verso[data-v-5ab70054] {
         /* background-color: dodgerblue; */
         color: white;
         transform: rotateY(180deg);
@@ -57,15 +57,15 @@
 .flipper-switch[data-v-77962a27] {
         transform: rotateY(180deg);
 }
-#aso-sign-recto[data-v-77962a27], #aso-sign-verso[data-v-77962a27] {
+#asowp-sign-recto[data-v-77962a27], #asowp-sign-verso[data-v-77962a27] {
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
 }
-#aso-sign-recto[data-v-77962a27] {
+#asowp-sign-recto[data-v-77962a27] {
         /* background-color: #bbb; */
         color: black;
 }
-#aso-sign-verso[data-v-77962a27] {
+#asowp-sign-verso[data-v-77962a27] {
         /* background-color: dodgerblue; */
         color: white;
         transform: rotateY(180deg);
@@ -80,83 +80,83 @@ to {
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/frontend/scss/frontend.scss ***!
   \**************************************************************************************************************************/
 :root {
-  --aso-scrollBar-color: #000000;
+  --asowp-scrollBar-color: #000000;
 }
 
-.aso-configurator-container {
+.asowp-configurator-container {
   height: 100vh;
 }
 
-.aso-templates-customize_button {
+.asowp-templates-customize_button {
   color: white !important;
   text-decoration: none !important;
 }
 
-#aso-frontend-app p {
+#asowp-frontend-app p {
   margin: 0 !important;
 }
-#aso-frontend-app .no-scrollbar::-webkit-scrollbar {
+#asowp-frontend-app .no-scrollbar::-webkit-scrollbar {
   display: none;
   overflow: auto;
 }
-#aso-frontend-app .aso-scrollBar::-webkit-scrollbar {
+#asowp-frontend-app .asowp-scrollBar::-webkit-scrollbar {
   width: 6px;
   height: 4px;
   overflow: scroll;
 }
-#aso-frontend-app .aso-scrollBar::-webkit-scrollbar-thumb {
-  background-color: var(--aso-scrollBar-color);
+#asowp-frontend-app .asowp-scrollBar::-webkit-scrollbar-thumb {
+  background-color: var(--asowp-scrollBar-color);
   border-radius: 20px;
 }
-#aso-frontend-app .aso-base-animation {
+#asowp-frontend-app .asowp-base-animation {
   transition-property: all;
   transition-duration: 500ms;
 }
-#aso-frontend-app .aso-buttons-rad-none {
+#asowp-frontend-app .asowp-buttons-rad-none {
   border-radius: 0px !important;
   border: 0px;
 }
-#aso-frontend-app .aso-full-center {
+#asowp-frontend-app .asowp-full-center {
   justify-content: center !important;
   align-items: center !important;
   /* white-space: nowrap; */
 }
-#aso-frontend-app .aso-option-buton {
+#asowp-frontend-app .asowp-option-buton {
   width: fit-content;
   height: 90%;
   display: flex;
   flex-direction: column;
   width: -moz-fit-content;
 }
-#aso-frontend-app .aso-new-border {
+#asowp-frontend-app .asowp-new-border {
   border: solid 1px !important;
 }
-#aso-frontend-app .aso-inputImage {
-  /* aso-text-md  */
+#asowp-frontend-app .asowp-inputImage {
+  /* asowp-text-md  */
   display: flex !important;
   padding: 8px 14px 8px 14px !important;
   border-radius: 9999px !important;
   cursor: pointer !important;
 }
-#aso-frontend-app .aso-inputImage svg,
-#aso-frontend-app .aso-inputImage p {
+#asowp-frontend-app .asowp-inputImage svg,
+#asowp-frontend-app .asowp-inputImage p {
   margin-left: 5px !important;
   margin-right: 5px !important;
 }
 
-.aso-text-size {
+.asowp-text-size {
   padding: 0 !important;
   height: 100% !important;
   margin: 0 !important;
   text-align: center;
 }
 
-.aso-inputColor-hide {
+.asowp-inputColor-hide {
   width: 0px !important;
   height: 0px !important;
 }
 
-.aso-scrollDiv {
+.asowp-scrollDiv {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;

@@ -14,7 +14,7 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   position: absolute !important;
   padding: 0 0 0 2px !important;
 }
-.aso-config-page-error {
+.asowp-config-page-error {
   display: flex;
   position: relative;
   justify-content: center;
@@ -29,7 +29,7 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   }
 }
 
-.aso-config-page-error-title {
+.asowp-config-page-error-title {
   position: absolute;
   font-size: 10px !important;
   font-weight: 400;
@@ -42,12 +42,12 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   border: 1px solid #bd6161;
 }
 
-.aso-notice-nux {
+.asowp-notice-nux {
   background: #e7f5f9;
   display: flex;
   align-items: center;
 }
-.aso-notice-nux .aso-icon {
+.asowp-notice-nux .asowp-icon {
   position: relative;
   display: block;
   width: 40px;
@@ -57,12 +57,12 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   margin: 20px 17px 20px 5px;
   flex-shrink: 0;
 }
-.aso-notice-nux h2 {
+.asowp-notice-nux h2 {
   font-size: 13.5px !important;
   font-weight: 600 !important;
 }
 
-.aso-notice-nux .aso-icon img {
+.asowp-notice-nux .asowp-icon img {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -74,14 +74,14 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   max-width: 100%;
 }
 
-.aso-product-links {
+.asowp-product-links {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 40px;
 }
-.aso-product-links .aso-cart-product-preview,
-.aso-product-links a {
+.asowp-product-links .asowp-cart-product-preview,
+.asowp-product-links a {
   text-decoration: none !important;
   background-color: gray;
   padding: 5px 10px;
@@ -91,7 +91,7 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   cursor: pointer !important;
 }
 
-.aso-custom-options-info {
+.asowp-custom-options-info {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -101,7 +101,7 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   padding: 10px 0 10px 5px;
   gap: 10px;
 }
-.aso-custom-options-info-infos {
+.asowp-custom-options-info-infos {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -112,13 +112,13 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   gap: 10px;
 }
 
-.aso-custom-options-info label {
+.asowp-custom-options-info label {
   font-size: medium;
   font-weight: 600;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-.aso-custom-options-info .aso-cart-color-option {
+.asowp-custom-options-info .asowp-cart-color-option {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -139,30 +139,30 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   background-color: rgba(238, 237, 240, 0.872) !important;
   padding: 5px !important;
 }
-.aso-grid {
+.asowp-grid {
   display: grid !important;
   gap: 10px !important;
 }
 
-.aso-col {
+.asowp-col {
   border: 1px solid #ccc; /* Ajoutez une bordure pour distinguer les éléments */
   padding: 10px; /* Ajoutez un peu d'espacement interne pour le contenu */
 }
-.single-product .summary.entry-summary > .aso-buttons-wrap-simple,
-.single-product .summary.entry-summary > .aso-buttons-wrap-variation {
+.single-product .summary.entry-summary > .asowp-buttons-wrap-simple,
+.single-product .summary.entry-summary > .asowp-buttons-wrap-variation {
   display: none;
 }
-.aso-buttons-url {
+.asowp-buttons-url {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin: 0;
 }
-.aso-buttons-url .button {
+.asowp-buttons-url .button {
   float: none !important;
 }
-#aso-configurator-loader,
-#aso-templates-loader {
+#asowp-configurator-loader,
+#asowp-templates-loader {
   @keyframes pulseGradient {
     0%,
     100% {
@@ -177,17 +177,17 @@ td.is_asowp_customizable.column-is_asowp_customizable {
     }
   }
 
-  .aso-loader-container {
+  .asowp-loader-container {
     animation: pulseGradient 1.5s ease infinite;
   }
 }
 
-#aso-templates-loader {
+#asowp-templates-loader {
   width: 100%;
   height: 50vh;
 }
 
-.aso-grid-container {
+.asowp-grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
@@ -197,12 +197,12 @@ td.is_asowp_customizable.column-is_asowp_customizable {
 }
 
 @media (max-width: 600px) {
-  #aso-templates-loader {
+  #asowp-templates-loader {
     width: 100%;
     height: 60vh;
   }
 
-  .aso-grid-container {
+  .asowp-grid-container {
     grid-template-columns: 1fr;
     grid-gap: 15px;
   }

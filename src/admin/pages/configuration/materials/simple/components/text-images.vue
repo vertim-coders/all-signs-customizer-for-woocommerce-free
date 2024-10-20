@@ -1,39 +1,39 @@
 <template>
-    <div class="aso-translate-y-7">
-        <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
-            <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
+    <div class="asowp-translate-y-7">
+        <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
+            <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
-        <div class="aso-space-y-1" v-if="!isFetching">
-            <div class="aso-flex aso-bg-[#F8F9FB] aso-px-4 aso-py-12 aso-space-x-12">
+        <div class="asowp-space-y-1" v-if="!isFetching">
+            <div class="asowp-flex asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-12 asowp-space-x-12">
                 
-                <div class="aso-flex aso-font-semibold">
+                <div class="asowp-flex asowp-font-semibold">
                     Enable texte
-                    <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                        <label for="aso-toggle" @click="changeTextImageEnableText" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                            <div :class="textImages.enableText ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
+                        <label for="asowp-toggle" @click="changeTextImageEnableText" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                            <div :class="textImages.enableText ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
                         </label>
                     </div>
                 </div>
-                <div class="aso-flex aso-font-semibold">
+                <div class="asowp-flex asowp-font-semibold">
                     Enable image
-                    <div class="aso-flex aso-items-center aso-translate-x-2 aso-translate-y-0.5">
-                        <label for="aso-toggle" @click="changeTextImageEnableImage" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                        <div :class="textImages.enableImage ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
+                        <label for="asowp-toggle" @click="changeTextImageEnableImage" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                        <div :class="textImages.enableImage ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-font-bold aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" @click="updateMaterialTextImages" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                        <div class="aso-translate-y-1">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+                <div class="asowp-bg-[#016464] asowp-rounded">
+                    <button :disabled="isLoading" @click="updateMaterialTextImages" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                        <div class="asowp-translate-y-1">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg v-if="!isLoading" class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                             </svg>
                         </div>
 
-                        <span class="aso-font-semibold aso-text-[16px]">Save</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
                     </button>
                 </div>
             </div>

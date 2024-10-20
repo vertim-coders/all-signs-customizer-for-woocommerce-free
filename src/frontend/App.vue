@@ -8,23 +8,12 @@ import '@/frontend/utils/tailwindcss.min.js';
 import '../../assets/utilities/fabric.min.js';
 import '../../assets/utilities/hammerjs.js';
 import api from '@/admin/Api/api.js';
-// import '@/frontend/utils/aso-editor-script.js';
-const activateProduct = ref(true);
+// import '@/frontend/utils/asowp-editor-script.js';
+const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
+
 const product = ref('');
 const productId = asowp_data.author;
 onMounted(async() => {
-    try {
-        const response = await api.getProductHealth();
-        product.value = response.product;
-        if(response.asowp_health) {
-            activateProduct.value = true;
-        }else{
-            //await activateLicenseKey();
-            activateProduct.value = false;
-        }
-    } catch (error) {
-        activateProduct.value = false;
-    }
 });
 const activateLicenseKey = async () => {
     try {
@@ -44,7 +33,7 @@ const activateLicenseKey = async () => {
 }
 
 tailwind.config ={
-    prefix: 'aso-',
+    prefix: 'asowp-',
     corePlugins: {
         preflight: false,
     },

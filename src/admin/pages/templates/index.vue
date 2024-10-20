@@ -1,12 +1,12 @@
 <template>
     <div class="">
-        <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[80px] aso-z-[999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4] ">
-            <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex">
-                <button @click="state='templates'" :class="`aso-flex aso-text-[14px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-font-semibold ${ state == 'templates' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Templates</button>
-                <button @click="state='category'" :class="`aso-flex aso-text-[14px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-font-semibold ${ state == 'category' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Categories</button>
+        <div v-if="!isFetching" class="asowp-space-y-1 asowp-sticky asowp-top-[80px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#F4F4F4] ">
+            <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex">
+                <button @click="state='templates'" :class="`asowp-flex asowp-text-[14px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-font-semibold ${ state == 'templates' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Templates</button>
+                <button @click="state='category'" :class="`asowp-flex asowp-text-[14px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-font-semibold ${ state == 'category' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Categories</button>
             </div>
         </div>
-        <div class="aso-py-4">
+        <div class="asowp-py-4">
             <Templates v-if="state == 'templates'"/>
             <Categories v-if="state=='category'"/>
         </div>

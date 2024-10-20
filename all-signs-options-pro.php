@@ -45,7 +45,8 @@ Domain Path: /languages
  */
 
 // don't call the file directly
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * All_Signs_Options class
@@ -77,27 +78,69 @@ final class ASOWP_All_Signs_Options_Pro
      */
     public function __construct()
     {
-
         $this->define_constants();
         $this->asowp_save_output_settings();
         $this->asowp_save_pages_settings();
         $this->asowp_define_borders();
         $this->asowp_define_shapes();
         $this->asowp_define_fixingMethods();
+
+
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
 
+        add_filter('plugin_row_meta', [$this, 'warning_message_for_woocommerce_missing'], 10, 2);
+        add_action('admin_init', [$this, 'auto_deactivate_when_woocommerce_is_inactive']);
+        add_filter('plugin_action_links', [$this, 'modify_action_links'], 99, 2);
         add_action('plugins_loaded', array($this, 'init_plugin'));
         add_action('admin_notices', [$this, 'check_woocommerce_install_and_version']);
         add_action('admin_notices', [$this, 'check_config_pageselected']);
         add_action('admin_notices', [$this, 'get_not_available_notice']);
         add_action('admin_notices', [$this, 'permalink_notice']);
+
+    }
+
+    public function modify_action_links($actions, $plugin_file)
+    {
+        include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        // Vérifier si nous sommes sur notre plugin spécifique
+        if ($plugin_file == plugin_basename(__FILE__)) {
+            if (is_plugin_active('woocommerce/woocommerce.php')) {
+                // Si WooCommerce n'est pas actif, désactiver le lien d'activation
+                if (isset($actions['activate'])) {
+                    unset($actions['activate']);
+                }
+                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/asowp-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-options-free'));
+                // Ajouter un message ou une action personnalisée si besoin
+            }
+        }
+        return $actions;
+    }
+
+    public function auto_deactivate_when_woocommerce_is_inactive()
+    {
+        // Vérifie si WooCommerce est désactivé
+        if (!is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active(plugin_basename(__FILE__))) {
+            // Désactive votre plugin
+            deactivate_plugins(plugin_basename(__FILE__));
+        }
+    }
+    public function warning_message_for_woocommerce_missing($plugin_meta, $plugin_file)
+    {
+        // Vérifiez si le plugin est bien le vôtre
+        if (plugin_basename(__FILE__) == $plugin_file) {
+            if (!is_plugin_active('woocommerce/woocommerce.php')) {
+                // Ajoutez un message personnalisé à côté de la description
+                $plugin_meta[] = '<span style="color: red;"><strong>' . esc_html__("This plugin requires WooCommerce to run. Please install or activate WooCommerce.", "all-signs-options-free") . '</strong></span>';
+            }
+        }
+        return $plugin_meta;
     }
 
     /**
-     * Initializes the All_Signs_Options() class
+     * Initializes the ASOWP_All_Signs_Options_Pro() class
      *
-     * Checks for an existing All_Signs_Options() instance
+     * Checks for an existing ASOWP_All_Signs_Options_Pro() instance
      * and if it doesn't find one, creates it.
      */
     public static function init()
@@ -158,8 +201,8 @@ final class ASOWP_All_Signs_Options_Pro
         define("ASOWP_CHECK_TRANSIENT_NAME", "wp_update_check_asowp_pro");
 
         $upload_dir = wp_upload_dir();
-        $generation_path = $upload_dir['basedir'] . "/ASO/";
-        $generation_url = $upload_dir['baseurl'] . "/ASO/";
+        $generation_path = $upload_dir['basedir'] . "/ASOWP/";
+        $generation_url = $upload_dir['baseurl'] . "/ASOWP/";
 
         define('ASOWP_IMAGE_PATH', $generation_path . "images");
         define('ASOWP_IMAGE_URL', $generation_url . "images");
@@ -184,13 +227,13 @@ final class ASOWP_All_Signs_Options_Pro
         $pages_settings = [
             "configuratorPage" => 0,
             "templatePage" => 0,
-            "buttons"=>[
-                "productDesignButton"=>'Customize The Product',
-                "productTemplateButton"=>'Design From Example',
-                "templateAddToCartButton"=>'Add To Cart',
-                "templateDesignButton"=> 'Customize',
-                "allTemplatesText"=> 'All',
-                "recapsButtonOnCart"=>'Sign Recaps'        
+            "buttons" => [
+                "productDesignButton" => 'Customize The Product',
+                "productTemplateButton" => 'Design From Example',
+                "templateAddToCartButton" => 'Add To Cart',
+                "templateDesignButton" => 'Customize',
+                "allTemplatesText" => 'All',
+                "recapsButtonOnCart" => 'Sign Recaps'
             ],
             "others" => [
                 "titleBalise" => 'h1'
@@ -199,7 +242,7 @@ final class ASOWP_All_Signs_Options_Pro
         $have_pages_settings = get_option("asowp_config_page");
         if ($have_pages_settings == false) {
             update_option("asowp_config_page", $pages_settings);
-        }else{
+        } else {
             $differenceCles = array_diff_key($pages_settings, $have_pages_settings);
             if (count($differenceCles) > 0) {
                 foreach ($differenceCles as $key => $value) {
@@ -237,7 +280,7 @@ final class ASOWP_All_Signs_Options_Pro
         if ($have_borders == false) {
             update_option("asowp_all_borders", $borders);
         } else {
-            for ($i=0; $i < count($have_borders); $i++) { 
+            for ($i = 0; $i < count($have_borders); $i++) {
                 $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
 
                 $found = false;
@@ -330,7 +373,7 @@ final class ASOWP_All_Signs_Options_Pro
         if ($have_shapes == false) {
             update_option("asowp_all_shapes", $shapes);
         } else {
-            for ($i=0; $i < count($have_shapes); $i++) { 
+            for ($i = 0; $i < count($have_shapes); $i++) {
                 $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
 
                 $found = false;
@@ -503,7 +546,7 @@ final class ASOWP_All_Signs_Options_Pro
         if ($have_fixingMethods == false) {
             update_option("asowp_all_fixingMethods", $fixingMethods);
         } else {
-            for ($i=0; $i < count($have_fixingMethods); $i++) { 
+            for ($i = 0; $i < count($have_fixingMethods); $i++) {
                 $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
 
                 $found = false;
@@ -547,14 +590,16 @@ final class ASOWP_All_Signs_Options_Pro
      */
     public function activate()
     {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
 
-        $installed = get_option('ASOWP_installed');
+            $installed = get_option('ASOWP_installed');
 
-        if (!$installed) {
-            update_option('ASOWP_installed', time());
+            if (!$installed) {
+                update_option('ASOWP_installed', time());
+            }
+
+            update_option('ASOWP_version', ASOWP_VERSION);
         }
-
-        update_option('ASOWP_version', ASOWP_VERSION);
     }
 
     /**
@@ -574,7 +619,7 @@ final class ASOWP_All_Signs_Options_Pro
     public function includes()
     {
 
-        require_once ASOWP_INCLUDES . '/Assets.php';
+        //require_once ASOWP_INCLUDES . '/Assets.php';
 
         if ($this->is_request('admin')) {
             require_once ASOWP_INCLUDES . '/Admin.php';
@@ -590,9 +635,9 @@ final class ASOWP_All_Signs_Options_Pro
 
         require_once ASOWP_INCLUDES . '/Api.php';
         require_once ASOWP_INCLUDES . '/update/updater.php';
-        require_once ASOWP_INCLUDES . '/aso-post-type.php';
-        require_once ASOWP_INCLUDES . '/aso-design.php';
-        require_once ASOWP_INCLUDES . '/aso-product-config.php';
+        require_once ASOWP_INCLUDES . '/asowp-post-type.php';
+        require_once ASOWP_INCLUDES . '/asowp-design.php';
+        require_once ASOWP_INCLUDES . '/asowp-product-config.php';
         require_once ASOWP_INCLUDES . '/Functions.php';
         require_once ASOWP_INCLUDES . '/Public.php';
     }
@@ -683,31 +728,33 @@ final class ASOWP_All_Signs_Options_Pro
         if (class_exists('WooCommerce')) {
             $PageSettings = get_option('asowp_config_page', []);
             if (count($PageSettings) == 0) {
-?>
-                <div class="notice notice-warning aso-notice-nux is-dismissible">
-                    <span class="aso-icon">
-                        <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                ?>
+                <div class="notice notice-warning asowp-notice-nux is-dismissible">
+                    <span class="asowp-icon">
+                        <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_asowp-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
                         <h2><?php esc_html_e("Customization Page not found", "all-signs-options-pro") ?></h2>
-                        <p><?php _e('To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', "all-signs-options-pro"); ?></p>
+                        <p><?php _e('To display the configurator on a page without a short code, please select the page on which it should be displayed. Click <a href="admin.php?page=asowp#/global-settings/configuration-page">here</a>', "all-signs-options-pro"); ?>
+                        </p>
                     </div>
                 </div>
                 <?php
             } else {
 
                 if ((!get_post_status($PageSettings["configuratorPage"]) && $PageSettings["configuratorPage"] != 0) || $PageSettings["configuratorPage"] == 0) {
-                ?>
-                    <div class="notice notice-warning aso-notice-nux is-dismissible">
-                        <span class="aso-icon">
-                            <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                    ?>
+                    <div class="notice notice-warning asowp-notice-nux is-dismissible">
+                        <span class="asowp-icon">
+                            <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_asowp-icon2.png') ?>" alt="" width="250" />
                         </span>
                         <div>
                             <h2><?php esc_html_e("Customization Page not found", "all-signs-options-pro") ?></h2>
-                            <p><?php _e('Configuration page is not defined for ASO plugin. Click <a href="admin.php?page=aso#/global-settings/configuration-page">here</a>', "all-signs-options-pro"); ?></p>
+                            <p><?php _e('Configuration page is not defined for ASO plugin. Click <a href="admin.php?page=asowp#/global-settings/configuration-page">here</a>', "all-signs-options-pro"); ?>
+                            </p>
                         </div>
                     </div>
-                <?php
+                    <?php
                 }
             }
         }
@@ -721,33 +768,20 @@ final class ASOWP_All_Signs_Options_Pro
             global $woocommerce;
             if (version_compare($woocommerce->version, $version, '<')) {
                 ?>
-                <div class="notice notice-info aso-notice-nux is-dismissible">
-                    <span class="aso-icon">
-                        <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
+                <div class="notice notice-info asowp-notice-nux is-dismissible">
+                    <span class="asowp-icon">
+                        <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_asowp-icon2.png') ?>" alt="" width="250" />
                     </span>
                     <div>
                         <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
-                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-options-pro"); ?></p>
-                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-options-pro"), __('Activate WooCommerce', "all-signs-options-pro"), __('Install WooCommerce', "all-signs-options-pro")); ?></p>
+                        <p><?php esc_html_e('To avoid performance problems we recommend at least version 3.4 of Woocommerce.', "all-signs-options-pro"); ?>
+                        </p>
+                        <p><?php $this->install_plugin_button('woocommerce', 'woocommerce.php', 'WooCommerce', array(), __('WooCommerce activated', "all-signs-options-pro"), __('Activate WooCommerce', "all-signs-options-pro"), __('Install WooCommerce', "all-signs-options-pro")); ?>
+                        </p>
                     </div>
                 </div>
-            <?php
+                <?php
             }
-        } else {
-            ?>
-            <div class="notice notice-info aso-notice-nux is-dismissible">
-                <span class="aso-icon">
-                    <img src="<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>" alt="" width="250" />
-                </span>
-                <div>
-                    <h2><?php esc_html_e("Welcome to All Signs Options. Let's get you started !!!", "all-signs-options-pro") ?></h2>
-                    <p><?php esc_html_e('To enable eCommerce features you need to install or activate the WooCommerce plugin.', "all-signs-options-pro"); ?></p>
-                    <p>
-                        <a href="https://wordpress.org/plugins/woocommerce/" target="_blank"><?php esc_html__('Install WooCommerce', 'all-signs-options-pro'); ?></a>
-                    </p>
-                </div>
-            </div>
-            <?php
         }
     }
 
@@ -770,7 +804,7 @@ final class ASOWP_All_Signs_Options_Pro
                 // The plugin is already active.
                 $button = array(
                     'message' => esc_attr__('Activated', "all-signs-options-pro"),
-                    'url'     => '#',
+                    'url' => '#',
                     'classes' => array('storefront-button', 'disabled'),
                 );
 
@@ -783,7 +817,7 @@ final class ASOWP_All_Signs_Options_Pro
                 // The plugin exists but isn't activated yet.
                 $button = array(
                     'message' => esc_attr__('Activate', "all-signs-options-pro"),
-                    'url'     => $url,
+                    'url' => $url,
                     'classes' => array('activate-now'),
                 );
 
@@ -799,12 +833,16 @@ final class ASOWP_All_Signs_Options_Pro
 
                 $button['classes'] = implode(' ', $button['classes']);
 
-            ?>
+                ?>
                 <span class="plugin-card-<?php echo esc_attr($plugin_slug); ?>">
-                    <a href="<?php echo esc_url($button['url']); ?>" class="<?php echo esc_attr($button['classes']); ?>" data-originaltext="<?php echo esc_attr($button['message']); ?>" data-name="<?php echo esc_attr($plugin_name); ?>" data-slug="<?php echo esc_attr($plugin_slug); ?>" aria-label="<?php echo esc_attr($button['message']); ?>"><?php echo esc_html($button['message']); ?></a>
-                </span> <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', "all-signs-options-pro"); ?>
+                    <a href="<?php echo esc_url($button['url']); ?>" class="<?php echo esc_attr($button['classes']); ?>"
+                        data-originaltext="<?php echo esc_attr($button['message']); ?>"
+                        data-name="<?php echo esc_attr($plugin_name); ?>" data-slug="<?php echo esc_attr($plugin_slug); ?>"
+                        aria-label="<?php echo esc_attr($button['message']); ?>"><?php echo esc_html($button['message']); ?></a>
+                </span>
+                <?php echo /* translators: conjunction of two alternative options user can choose (in missing plugin admin notice). Example: "Activate WooCommerce or learn more" */ esc_html__('or', "all-signs-options-pro"); ?>
                 <a href="https://docs.signsdesigner.us" target="_blank"><?php esc_html_e('learn more', "all-signs-options-pro"); ?></a>
-            <?php
+                <?php
             }
         }
     }
@@ -814,9 +852,9 @@ final class ASOWP_All_Signs_Options_Pro
         if ($plugin_folders . '/' . $plugin_slug) {
             $plugins = get_plugins('/' . $plugin_slug);
             if (!empty($plugins)) {
-                $keys        = array_keys($plugins);
+                $keys = array_keys($plugins);
                 $plugin_file = $plugin_slug . '/' . $keys[0];
-                $url         = wp_nonce_url(
+                $url = wp_nonce_url(
                     add_query_arg(
                         array(
                             'action' => 'activate',
@@ -837,21 +875,27 @@ final class ASOWP_All_Signs_Options_Pro
      */
     public function permalink_notice()
     {
+        if (is_plugin_active('woocommerce/woocommerce.php')) {
 
-        $current_permalink_structure = get_option('permalink_structure');
+            $current_permalink_structure = get_option('permalink_structure');
 
-        if ($current_permalink_structure !== '/%postname%/') { ?>
+            if ($current_permalink_structure !== '/%postname%/') { ?>
 
-            <div class="notice notice-warning aso-notice-nux is-dismissible">
-                <span class="aso-icon">
-                    <img src='<?php echo esc_url(ASOWP_ASSETS . '/images/im_aso-icon2.png') ?>' alt="" width="250" />
-                </span>
-                <div>
-                    <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-options-pro") ?></h2>
-                    <p><?php esc_html_e('To do this, go to', "all-signs-options-pro") ?> <a href="<?php echo admin_url('options-permalink.php') ?>"><?php echo esc_html_e("Settings > Permanent links", "all-signs-options-pro") ?></a></p>
+                <div class="notice notice-warning asowp-notice-nux is-dismissible">
+                    <span class="asowp-icon">
+                        <img src='<?php echo esc_url(ASOWP_ASSETS . '/images/im_asowp-icon2.png') ?>' alt="" width="250" />
+                    </span>
+                    <div>
+                        <h2><?php esc_html_e('We recommend setting your permalinks to "/%postname%/" to improve natural SEO.w! 🤘', "all-signs-options-pro") ?>
+                        </h2>
+                        <p><?php esc_html_e('To do this, go to', "all-signs-options-pro") ?> <a
+                                href="<?php echo admin_url('options-permalink.php') ?>"><?php echo esc_html_e("Settings > Permanent links", "all-signs-options-pro") ?></a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <?php  }
+                <?php
+            }
+        }
     }
 
     /**
@@ -865,21 +909,18 @@ final class ASOWP_All_Signs_Options_Pro
         if (class_exists('WooCommerce')) {
             $asowp_settings = get_option("asowp_product_pro");
 
-
             if (empty($asowp_settings)) {
-            ?>
-                <div class="notice notice-warning aso-product-warning">
-                    <p><b>All Signs Options Pro: </b><?php _e("No license key found in the settings. Please click <a href='admin.php?page=aso#/global-settings/license'>here</a> to define one.", "all-signs-options-pro"); ?></p>
+                ?>
+                <div class="notice notice-warning asowp-product-warning">
+                    <p>
+                        <b>All Signs Options Pro: </b>
+                        <?php echo esc_html("No license key found in the settings. Please click", "all-signs-options-pro") ?>
+                        <a href='admin.php?page=asowp#/global-settings/license'><?php echo esc_html("here", "all-signs-options-pro") ?>
+                        </a>
+                        <?php echo esc_html("to define one.", "all-signs-options-pro") ?>
+                    </p>
                 </div>
                 <?php
-            } else {
-                if (empty(get_option('asowp_health-state')) || get_option('asowp_health-state') == false) { ?>
-                    <div class="notice notice-error aso-product-warning" style="display:none!important">
-                        <p><b>All Signs Options Pro: </b><?php _e('You have not yet activated your license or your license is not valid. Please activate it in order to get the plugin working.', "all-signs-options-pro"); ?></p>
-                        <a href='admin.php?page=aso#/global-settings/license'><?php echo _e("Go to activate", "all-signs-options-pro") ?></a>
-                        <div id="aso-license-message"></div>
-                    </div>
-<?php }
             }
         }
     }

@@ -1,126 +1,126 @@
 <template>
     <div>
-        <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[180px] aso-z-[999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4] aso-translate-y-2">
-            <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex">
-                <button @click="state='pages'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'pages' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Pages</button>
-                <button @click="state='buttons'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'buttons' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Buttons</button>
+        <div v-if="!isFetching" class="asowp-space-y-1 asowp-sticky asowp-top-[180px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#F4F4F4] asowp-translate-y-2">
+            <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex">
+                <button @click="state='pages'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'pages' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Pages</button>
+                <button @click="state='buttons'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'buttons' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Buttons</button>
             </div>
         </div>
-        <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
-            <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
+        <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
+            <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
-        <div class="aso-space-y-4 aso-py-10" v-if="!isFetching">
+        <div class="asowp-space-y-4 asowp-py-10" v-if="!isFetching">
             <div v-if="state == 'pages'">
-                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-2 aso-border-solid aso-border-[1px] aso-border-[#DDDDDD]">
-                    <div class="aso-flex aso-space-x-4 aso-py-4">
-                        <label class="aso-text-[12px] aso-text-[#444444] aso-py-1">With which tag do you want the configurator title to be displayed?</label>
+                <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-2 asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
+                    <div class="asowp-flex asowp-space-x-4 asowp-py-4">
+                        <label class="asowp-text-[12px] asowp-text-[#444444] asowp-py-1">With which tag do you want the configurator title to be displayed?</label>
                         <select v-model="configPages.others.titleBalise">
                             <option :value="balise" v-for="(balise,key) in titleBalise" :key="key">{{balise}}</option>
                         </select>
                     </div>
-                    <div class="aso-flex aso-flex-col aso-space-y-3">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Select the configuration Page</label>
-                        <select class="aso-w-full" v-model="configPages.configuratorPage">
+                    <div class="asowp-flex asowp-flex-col asowp-space-y-3">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Select the configuration Page</label>
+                        <select class="asowp-w-full" v-model="configPages.configuratorPage">
                             <option v-for="(page,key) in pages" :value="page.id" :key="key">{{ page.title }}</option>
                         </select>
                     </div>
-                    <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
+                    <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
                     
-                        <button :disabled="isLoading" @click="handleAddNewPage('design')" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer">
-                            <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button :disabled="isLoading" @click="handleAddNewPage('design')" class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer">
+                            <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="plus-lg">
                                 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                                 </g>
                             </svg>
-                            <div class="aso-text-[14px]">
+                            <div class="asowp-text-[14px]">
                                 Add new page
                             </div>
                         </button>
                     </div>
                 </div>
-                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-2 aso-border-solid aso-border-[1px] aso-border-t-0 aso-border-[#DDDDDD]">
-                    <div class="aso-flex aso-flex-col aso-space-y-3">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Template page</label>
-                        <select class="aso-w-full" v-model="configPages.templatePage">
+                <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-2 asowp-border-solid asowp-border-[1px] asowp-border-t-0 asowp-border-[#DDDDDD]">
+                    <div class="asowp-flex asowp-flex-col asowp-space-y-3">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Template page</label>
+                        <select class="asowp-w-full" v-model="configPages.templatePage">
                             <option v-for="(page,key) in pages" :value="page.id" :key="key">{{ page.title }}</option>
                         </select>
                     </div>
-                    <div class="aso-flex aso-justify-end aso-space-x-2 aso-w-4/4 aso-bg-[#F8F9FB] aso-text-[12px] aso-px-4 aso-py-4 aso-pb-2">
+                    <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
                     
-                        <button :disabled="isLoading" @click="handleAddNewPage('template')" class="aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer">
-                            <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button :disabled="isLoading" @click="handleAddNewPage('template')" class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer">
+                            <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="plus-lg">
                                 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                                 </g>
                             </svg>
-                            <div class="aso-text-[14px]">
+                            <div class="asowp-text-[14px]">
                                 Add new page
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
-            <div v-if="state == 'buttons'" class="aso-px-10">
-                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
-                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of design button on product: </label>
-                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.productDesignButton" />
+            <div v-if="state == 'buttons'" class="asowp-px-10">
+                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
+                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">Text of design button on product: </label>
+                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.productDesignButton" />
                 </div>
-                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
-                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of template button on product: </label>
-                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.productTemplateButton" />
+                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
+                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">Text of template button on product: </label>
+                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.productTemplateButton" />
                 </div>
-                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
-                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of add to cart button on template: </label>
-                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.templateAddToCartButton" />
+                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
+                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">Text of add to cart button on template: </label>
+                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.templateAddToCartButton" />
                 </div>
-                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
-                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of show all templates on template page: </label>
-                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.allTemplatesText" />
+                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
+                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">Text of show all templates on template page: </label>
+                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.allTemplatesText" />
                 </div>
-                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
-                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of design button on template: </label>
-                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.templateDesignButton" />
+                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
+                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">Text of design button on template: </label>
+                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.templateDesignButton" />
                 </div>
-                <div class="aso-flex aso-space-x-3 aso-justify-evenly aso-my-1 aso-items-center">
-                    <label class="aso-w-1/2 aso-text-[14px] aso-font-bold aso-text-[#444444]">Text of recap button in cart: </label>
-                    <input type="text" class="aso-w-1/2 aso-h-[35px]" v-model="configPages.buttons.recapsButtonOnCart" />
+                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
+                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">Text of recap button in cart: </label>
+                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.recapsButtonOnCart" />
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" @click="saveConfigPage" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                        <div class="aso-translate-y-1">
-                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
+                <div class="asowp-bg-[#016464] asowp-rounded">
+                    <button :disabled="isLoading" @click="saveConfigPage" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                        <div class="asowp-translate-y-1">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg v-if="!isLoading" class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                             </svg>
                         </div>
-                        <span class="aso-font-semibold aso-text-[16px]">Save</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="setBack" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
-            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
-                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
-                    <button @click.stop="setBack" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
-                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <div v-if="openModal" @click.self="setBack" class="asowp-z-[999] asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%] asowp-z-50 asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full">
+            <div class="asowp-relative asowp-p-4 asowp-w-full asowp-max-w-md asowp-max-h-full">
+                <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700">
+                    <button @click.stop="setBack" type="button" :class="`${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-absolute asowp-top-3 asowp-end-2.5 asowp-text-gray-400 asowp-bg-transparent hover:bg-gray-200 hover:text-gray-900 asowp-rounded-lg asowp-text-sm asowp-w-8 asowp-h-8 asowp-ms-auto asowp-inline-flex asowp-justify-center asowp-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="aso-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">Close modal</span>
                     </button>
-                    <div class="aso-p-4 md:p-5 aso-text-center">
-                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <div class="asowp-p-4 md:p-5 asowp-text-center">
+                        <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Give your page title</h3>
-                        <input v-model="page.title" class="aso-rounded aso-w-full aso-h-[35px] aso-p-4 aso-border-solid aso-border-[#016464] aso-my-2 focus:aso-border-solid focus:aso-border-[#016464] focus:aso-ring-4 focus:aso-ring-[#016460]" />
-                        <button @click="addNewPage()" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:aso-bg-[#016460] focus:aso-ring-4 focus:aso-outline-none aso-my-2 aso-border-none  focus:aso-ring-[#016464]  aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Give your page title</h3>
+                        <input v-model="page.title" class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-p-4 asowp-border-solid asowp-border-[#016464] asowp-my-2 focus:asowp-border-solid focus:asowp-border-[#016464] focus:asowp-ring-4 focus:asowp-ring-[#016460]" />
+                        <button @click="addNewPage()" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-[#016464] asowp-cursor-pointer' :'asowp-bg-[#016464] asowp-cursor-not-allowed'} hover:asowp-bg-[#016460] focus:asowp-ring-4 focus:asowp-outline-none asowp-my-2 asowp-border-none  focus:asowp-ring-[#016464]  asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Yes, I'm sure
                         </button>
-                        <button @click.stop="setBack" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="setBack" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
                     </div>
                 </div>
             </div>

@@ -3,4 +3,4 @@ import App from "./App.vue";
 import router from "./router";
 const app = createApp(App);
 app.use(router);
-app.mount("#aso-frontend-app");
+app.mount("#asowp-frontend-app");

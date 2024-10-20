@@ -1,38 +1,38 @@
 <template>
     <div>
-        <div class="aso-space-y-4 aso-translate-y-8">
+        <div class="asowp-space-y-4 asowp-translate-y-8">
             <div>
-                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
-                    <div class="aso-flex aso-space-x-3">
-                        <div class="aso-text-[16px]">Activate the double-sided option</div>
-                        <div class="aso-flex aso-items-center aso-translate-y-0.5">
-                            <label for="toggleActivate" class="aso-relative aso-inline-flex aso-items-center aso-cursor-pointer aso-border-[1px] aso-border-solid aso-border-black aso-rounded-full">
-                                <input id="toggleActivate" type="checkbox" name="toggleActivate" class="aso-sr-only aso-peer" v-model="signPart.doublePart.active">
-                                <div :class="`peer-checked:after:aso-border-[#016464] peer-checked:after:aso-border-solid peer-checked:after:aso-border-[5px] peer-checked:after:aso-top-[-2px] peer-checked:after:aso-translate-y-[-15%] aso-w-10 aso-h-3 aso-border aso-border-[5px] aso-border-[#016464] aso-bg-zinc-300 aso-rounded-full aso-peer peer-checked:after:aso-translate-x-[140%] after:aso-content-[''] after:aso-absolute after:aso-top-[-2px] after:aso-left-[-5px] after:aso-bg-zinc-300 after:aso-border-white after:aso-border-solid after:aso-translate-y-[-15%] after:aso-border-[#FFFFFF] after:aso-border-[5px] after:aso-rounded-full after:aso-h-2.5 after:aso-w-2.5 after:aso-transition-all after:aso-shadow-lg`"></div>
+                <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
+                    <div class="asowp-flex asowp-space-x-3">
+                        <div class="asowp-text-[16px]">Activate the double-sided option</div>
+                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
+                            <label for="toggleActivate" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="toggleActivate" type="checkbox" name="toggleActivate" class="asowp-sr-only asowp-peer" v-model="signPart.doublePart.active">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
                             </label>
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2"  v-if="signPart.doublePart.active">
-                        <label class="aso-font-semibold aso-text-[16px]">Label of option to change face</label>
-                        <input type="text" v-model="signPart.doublePart.label" class="aso-w-3/5"/>
+                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2"  v-if="signPart.doublePart.active">
+                        <label class="asowp-font-semibold asowp-text-[16px]">Label of option to change face</label>
+                        <input type="text" v-model="signPart.doublePart.label" class="asowp-w-3/5"/>
                     </div>
-                    <div class="aso-flex aso-justify-between" v-if="signPart.doublePart.active">
-                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                            <label class="aso-font-semibold aso-text-[16px]">Part 1</label>
-                            <input type="text" v-model="signPart.doublePart.part1" class="aso-w-full"/>
+                    <div class="asowp-flex asowp-justify-between" v-if="signPart.doublePart.active">
+                        <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                            <label class="asowp-font-semibold asowp-text-[16px]">Part 1</label>
+                            <input type="text" v-model="signPart.doublePart.part1" class="asowp-w-full"/>
                         </div>
-                        <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                            <label class="aso-font-semibold aso-text-[16px]">Part 2</label>
-                            <input type="text" v-model="signPart.doublePart.part2" class="aso-w-full"/>
+                        <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                            <label class="asowp-font-semibold asowp-text-[16px]">Part 2</label>
+                            <input type="text" v-model="signPart.doublePart.part2" class="asowp-w-full"/>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" @click="updateSignPartSettings" class="aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointeraso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                        <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
-                        <div class="aso-font-semibold aso-text-[16px]">Save</div>
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
+                <div class="asowp-bg-[#016464] asowp-rounded">
+                    <button :disabled="isLoading" @click="updateSignPartSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                        <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
+                        <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
                     </button>
                 </div>
             </div>

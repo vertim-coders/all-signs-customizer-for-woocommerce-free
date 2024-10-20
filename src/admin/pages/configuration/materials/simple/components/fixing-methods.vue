@@ -1,84 +1,84 @@
 <template>
     <div>
-        <div class="aso-space-y-1 aso-translate-y-7" v-if="!isNewFixing">
-            <div class="aso-flex aso-justify-end aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-pb-2" v-if="manageFixingMethods.length > 0">
-                <button :disabled="isLoading" :class="`aso-flex aso-w-fit aso-h-fit aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 ${isLoading?'aso-cursor-not-allowed':'aso-cursor-pointer'}`" @click="newFixing">
-                    <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="asowp-space-y-1 asowp-translate-y-7" v-if="!isNewFixing">
+            <div class="asowp-flex asowp-justify-end asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-pb-2" v-if="manageFixingMethods.length > 0">
+                <button :disabled="isLoading" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 ${isLoading?'asowp-cursor-not-allowed':'asowp-cursor-pointer'}`" @click="newFixing">
+                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
                         <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                         </g>
                     </svg>
-                    <div class="aso-text-[14px]">
+                    <div class="asowp-text-[14px]">
                         Add new fixing method
                     </div>
                 </button>
             </div>
-            <div class="aso-relative" id="monTableau">
-                <table class="aso-w-full aso-px-4 aso-border aso-border-collapse aso-border-0">
-                    <thead class="aso-text-[14px] aso-text-center aso-bg-[#f0f0f1]">
+            <div class="asowp-relative" id="monTableau">
+                <table class="asowp-w-full asowp-px-4 asowp-border asowp-border-collapse asowp-border-0">
+                    <thead class="asowp-text-[14px] asowp-text-center asowp-bg-[#f0f0f1]">
                         <tr class="">
-                            <th scope="col" class="aso-p-4 aso-px-8 aso-w-12 aso-font-normal">
+                            <th scope="col" class="asowp-p-4 asowp-px-8 asowp-w-12 asowp-font-normal">
                                 Title 
                             </th>
-                            <th scope="col" class="aso-px-6 aso-font-normal">
+                            <th scope="col" class="asowp-px-6 asowp-font-normal">
                                 Icon
                             </th>
-                            <th scope="col" class="aso-px-6 aso-font-normal">
+                            <th scope="col" class="asowp-px-6 asowp-font-normal">
                                 Additional Price
                             </th>
-                            <th scope="col" class="aso-px-6 aso-font-normal">
+                            <th scope="col" class="asowp-px-6 asowp-font-normal">
                                 Default
                             </th>
-                            <th scope="col" class="aso-px-6 aso-font-normal">
+                            <th scope="col" class="asowp-px-6 asowp-font-normal">
                                 Action
                             </th>
                             
                         </tr>
                     </thead>
-                    <tbody class="aso-bg-white">
+                    <tbody class="asowp-bg-white">
                         
                         <tr v-if="isFetching">
                             <td colspan="7">
-                                <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[200px] p-4">
-                                    <img class="aso-w-[100px] aso-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
+                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[200px] p-4">
+                                    <img class="asowp-w-[100px] asowp-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
                                 </div>
                             </td>
                         </tr>
                         <tr v-if="fixingMethods.length == 0 && !isFetching">
                             <td colspan="7">
-                                <div class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[150px]">
-                                    <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
-                                        <p class="aso-text-2xl aso-font-bold">{{noFixingMethodsFound}}</p>
+                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[150px]">
+                                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
+                                        <p class="asowp-text-2xl asowp-font-bold">{{noFixingMethodsFound}}</p>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         
-                        <tr v-for="(fx, key) in fixingMethods" :key=key class="aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-b-2 aso-border-solid aso-border-[#f0f0f1]">
-                            <td class="aso-w-28 aso-text-center aso-px-8 aso-p-4">
+                        <tr v-for="(fx, key) in fixingMethods" :key=key class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
+                            <td class="asowp-w-28 asowp-text-center asowp-px-8 asowp-p-4">
                                 {{manageFixingMethods[fx.fixingMethodId].name}}
                             </td>
-                            <td class="aso-px-6 aso-flex aso-justify-center aso-space-x-2">
-                                <img :src="manageFixingMethods[fx.fixingMethodId].icon" class="aso-w-[50px] aso-h-[50px]" v-if="manageFixingMethods[fx.fixingMethodId].icon.trim() != ''"/>
+                            <td class="asowp-px-6 asowp-flex asowp-justify-center asowp-space-x-2">
+                                <img :src="manageFixingMethods[fx.fixingMethodId].icon" class="asowp-w-[50px] asowp-h-[50px]" v-if="manageFixingMethods[fx.fixingMethodId].icon.trim() != ''"/>
                             </td>
-                            <td class="aso-text-[12px] aso-text-center aso-px-6 aso-py-2">
-                                <span class="aso-w-fit aso-rounded-lg aso-px-2 aso-p-1 aso-bg-[#9ACD321F] aso-text-[#466801] aso-border-none">
+                            <td class="asowp-text-[12px] asowp-text-center asowp-px-6 asowp-py-2">
+                                <span class="asowp-w-fit asowp-rounded-lg asowp-px-2 asowp-p-1 asowp-bg-[#9ACD321F] asowp-text-[#466801] asowp-border-none">
                                     {{fx.additionalPrice}}
                                 </span>
                             </td>
-                            <td class="aso-pl-14 aso-py-2">
-                                <span class="aso-w-fit aso-flex aso-items-center aso-translate-x-5 aso-translate-y-0.5">
-                                    <label for="aso-toggle" @click="!isLoading?selectDefault(key):''" class="aso-cursor-pointer aso-bg-[#F8F8FF] aso-border-[1px] aso-border-solid aso-border-black aso-w-6 aso-h-0.5 aso-rounded-full aso-p-1">
-                                        <div :class="fx.isDefault ? 'aso-translate-x-[100%] aso-border-[#016464]': 'aso-border-[#FFFFFF]'" class="aso-toggle-dot aso-w-2.5 aso-h-2.5 aso-duration-100 -aso-translate-y-[8px] -aso-translate-x-2 aso-border-[4px] aso-border-solid aso-bg-[#D9D9D9] aso-rounded-full aso-shadow-md aso-transform"></div>
+                            <td class="asowp-pl-14 asowp-py-2">
+                                <span class="asowp-w-fit asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
+                                    <label for="asowp-toggle" @click="!isLoading?selectDefault(key):''" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                                        <div :class="fx.isDefault ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
                                     </label>
                                 </span>
                             </td>
-                            <td class="aso-px-6 aso-text-center">
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialFixingMethod(key,fx)">
+                            <td class="asowp-px-6 asowp-text-center">
+                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer">
+                                    <img class="asowp-w-5 asowp-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialFixingMethod(key,fx)">
                                 </button>
-                                <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer">
-                                    <img class="aso-w-5 aso-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialFixingMethod(key,fx,true)">
+                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer">
+                                    <img class="asowp-w-5 asowp-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialFixingMethod(key,fx,true)">
                                 </button>
                             </td>
                         </tr>
@@ -86,14 +86,14 @@
                 </table>
             </div>
         </div>
-        <div class="aso-space-y-2 aso-translate-y-7" v-if="isNewFixing">
-            <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
+        <div class="asowp-space-y-2 asowp-translate-y-7" v-if="isNewFixing">
+            <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]">
                 {{isEdit ? 'Edit fixing methiod' : 'Add new fixing methods' }}
             </div>
-            <div class="aso-flex aso-flex-col aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" v-if="isEdit">
-                <div class="aso-flex aso-justify-between">
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select fixing method</label>
+            <div class="asowp-flex asowp-flex-col asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" v-if="isEdit">
+                <div class="asowp-flex asowp-justify-between">
+                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
+                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Select fixing method</label>
                         <Multiselect
                             v-model="fixingMethod.fixingMethodId"
                             placeholder="Select FixingMethod"
@@ -103,22 +103,22 @@
                         >
                             <template v-slot:singleLabel="{ value }">
                                 <div class="multiselect-single-label">
-                                    <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
+                                    <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="value.icon"> {{ value.name }}
                                 </div>
                             </template>
     
                             <template v-slot:option="{ option }">
-                                <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
+                                <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="option.icon">{{ option.name }}
                             </template>
                         </Multiselect>
                     </div>
-                    <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                        <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                        <input type="number" v-model="fixingMethod.additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(fixingMethod.additionalPrice)?fixingMethod.additionalPrice=0:''">
+                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
+                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
+                        <input type="number" v-model="fixingMethod.additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(fixingMethod.additionalPrice)?fixingMethod.additionalPrice=0:''">
                     </div>
                 </div>
-                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-text-[16px] aso-font-normal">Exclude shapes</label>
+                <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col">
+                    <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude shapes</label>
                     <Multiselect
                         v-model="fixingMethod.excludeShapes" 
                         placeholder="Select shapes"
@@ -127,11 +127,11 @@
                         :options="MaterialSimpleShapes"
                         mode="tags"
                     />
-                    <span class="aso-text-[#444444] aso-text-[12px]">exclude the shapes of this fixing Method</span>
+                    <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the shapes of this fixing Method</span>
                     
                 </div>
-                <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-text-[16px] aso-font-normal">Exclude size</label>
+                <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col">
+                    <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude size</label>
                     <Multiselect
                         v-model="fixingMethod.excludeSizes" 
                         placeholder="Select Sizes"
@@ -140,23 +140,23 @@
                         :options="MaterialSimpleSizes"
                         mode="tags"
                     />
-                    <span class="aso-text-[#444444] aso-text-[12px]">exclude the sizes of this fixing Method</span>
+                    <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the sizes of this fixing Method</span>
                     
                 </div>
                 
             </div>
             <div v-if="!isEdit">
-                <div class="aso-relative aso-flex aso-flex-col aso-justify-between aso-px-4 aso-py-4 aso-bg-[#F8F9FB]" :key="key" v-for="(fx,key) in addNewFixingMethods">
-                    <div v-if="!dropdownFixingMethods[key]" class="aso-flex aso-space-x-4">
-                        <h2 class="aso-text-[15px] aso-font-bold">{{ key+1 }}.</h2>
-                        <div class="aso-translate-y-3.5">
-                            <span class="aso-text-[15px] aso-font-bold">{{ manageFixingMethods[fx.fixingMethodId].name }}</span>
-                            <span class="aso-text-[15px] aso-font-bold"> - {{ addNewFixingMethods[key].additionalPrice }}</span>
+                <div class="asowp-relative asowp-flex asowp-flex-col asowp-justify-between asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" :key="key" v-for="(fx,key) in addNewFixingMethods">
+                    <div v-if="!dropdownFixingMethods[key]" class="asowp-flex asowp-space-x-4">
+                        <h2 class="asowp-text-[15px] asowp-font-bold">{{ key+1 }}.</h2>
+                        <div class="asowp-translate-y-3.5">
+                            <span class="asowp-text-[15px] asowp-font-bold">{{ manageFixingMethods[fx.fixingMethodId].name }}</span>
+                            <span class="asowp-text-[15px] asowp-font-bold"> - {{ addNewFixingMethods[key].additionalPrice }}</span>
                         </div>
                     </div>
-                    <div class="aso-flex aso-justify-between" v-show="dropdownFixingMethods[key]">
-                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Select fixing method</label>
+                    <div class="asowp-flex asowp-justify-between" v-show="dropdownFixingMethods[key]">
+                        <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
+                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Select fixing method</label>
                             <Multiselect
                                 v-model="addNewFixingMethods[key].fixingMethodId"
                                 placeholder="Select FixingMethod"
@@ -166,22 +166,22 @@
                             >
                                 <template v-slot:singleLabel="{ value }">
                                     <div class="multiselect-single-label">
-                                        <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="value.icon"> {{ value.name }}
+                                        <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="value.icon"> {{ value.name }}
                                     </div>
                                 </template>
         
                                 <template v-slot:option="{ option }">
-                                    <img class="aso-w-6 aso-h-6 aso-rounded aso-mr-2" :src="option.icon">{{ option.name }}
+                                    <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="option.icon">{{ option.name }}
                                 </template>
                             </Multiselect>
                         </div>
-                        <div class="aso-w-2/5 aso-space-y-2 aso-flex aso-flex-col">
-                            <label for="" class="aso-text-[12px] aso-text[#444444] aso-font-normal">Additional Price</label>
-                            <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="aso-rounded aso-w-full aso-h-[30px]" @blur="isNaN(addNewFixingMethods[key].additionalPrice)?addNewFixingMethods[key].additionalPrice=0:''">
+                        <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
+                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
+                            <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(addNewFixingMethods[key].additionalPrice)?addNewFixingMethods[key].additionalPrice=0:''">
                         </div>
                     </div>
-                    <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col" v-show="dropdownFixingMethods[key]">
-                        <label for="" class="aso-text-[16px] aso-font-normal">Exclude shapes</label>
+                    <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col" v-show="dropdownFixingMethods[key]">
+                        <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude shapes</label>
                         <Multiselect
                             v-model="addNewFixingMethods[key].excludeShapes" 
                             placeholder=""
@@ -190,10 +190,10 @@
                             :options="MaterialSimpleShapes"
                             mode="tags"
                         />
-                        <span class="aso-text-[#444444] aso-text-[12px]">exclude the shapes of this fixing Method</span>
+                        <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the shapes of this fixing Method</span>
                     </div>
-                    <div class="aso-w-full aso-space-y-2 aso-flex aso-flex-col" v-show="dropdownFixingMethods[key]">
-                        <label for="" class="aso-text-[16px] aso-font-normal">Exclude size</label>
+                    <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col" v-show="dropdownFixingMethods[key]">
+                        <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude size</label>
                         <Multiselect
                             v-model="addNewFixingMethods[key].excludeSizes" 
                             placeholder=""
@@ -202,85 +202,85 @@
                             :options="MaterialSimpleSizes"
                             mode="tags"
                         />
-                        <span class="aso-text-[#444444] aso-text-[12px]">exclude the sizes of this fixing Method</span>
+                        <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the sizes of this fixing Method</span>
                         
                     </div>
-                    <div @click="handleDeleteNewFixMethod(key)" class="aso-flex aso-absolute aso-justify-center aso-items-center aso-right-2 aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                    <div @click="handleDeleteNewFixMethod(key)" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center asowp-right-2 asowp-top-0 asowp-shadow-md asowp-rounded-full asowp-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </div>
-                    <div v-if="dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                    <div v-if="dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full asowp-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                         </svg>
                     </div>
-                    <div v-if="!dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full aso-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                    <div v-if="!dropdownFixingMethods[key]" @click="dropdownFixingMethods[key]=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full asowp-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                         </svg>
                     </div>
                 </div>
-                <div class="aso-pt-4" v-if="notSelectedManageFixingMethods.length > 0">
-                    <button :disabled="isLoading" @click="handleAddMaterialFixingMethod" class="aso-flex aso-jsutify-center aso-items-center aso-bg-[#016464] aso-rounded aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-8 aso-p-2.5 aso-rounded aso-border-none hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div class="asowp-pt-4" v-if="notSelectedManageFixingMethods.length > 0">
+                    <button :disabled="isLoading" @click="handleAddMaterialFixingMethod" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        <span class="aso-font-semibold aso-text-[16px]">Add More Fixing Method</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">Add More Fixing Method</span>
                     </button>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
-                        <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+                <div class="asowp-bg-[#016464] asowp-rounded">
+                    <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
+                        <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
 
-                        <div class="aso-font-semibold aso-text-[16px]">Back</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
                     </button>
                 </div>
-                <div class="aso-bg-[#016464] aso-rounded" v-if="isEdit">
-                    <button @click="updateMaterialFixingMethods" :class="`aso-rounded aso-flex ${!isLoading ? 'aso-bg-amber-400 ' :'aso-bg-amber-500'} aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer`">
-                        <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                        <div class="aso-font-semibold aso-text-[16px]">Update</div>
+                <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
+                    <button @click="updateMaterialFixingMethods" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
+                        <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <div class="asowp-font-semibold asowp-text-[16px]">Update</div>
                     </button>
                 </div>
-                <div class="aso-bg-[#016464] aso-rounded" v-if="!isEdit">
-                    <button @click="addFixingMethods" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white  aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer">
-                        <div class="aso-translate-y-1">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <svg v-if="!isLoading" class="aso-w-4 aso-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
+                    <button @click="addFixingMethods" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white  asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer">
+                        <div class="asowp-translate-y-1">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg v-if="!isLoading" class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                             </svg>
                         </div>
-                        <span class="aso-font-semibold aso-text-[16px]">Save</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
-            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
-                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
-                    <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
-                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <div v-if="openModal" @click.self="closeModal" class="asowp-z-[999] asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%] asowp-z-50 asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full">
+            <div class="asowp-relative asowp-p-4 asowp-w-full asowp-max-w-md asowp-max-h-full">
+                <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700">
+                    <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-absolute asowp-top-3 asowp-end-2.5 asowp-text-gray-400 asowp-bg-transparent hover:bg-gray-200 hover:text-gray-900 asowp-rounded-lg asowp-text-sm asowp-w-8 asowp-h-8 asowp-ms-auto asowp-inline-flex asowp-justify-center asowp-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="aso-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">Close modal</span>
                     </button>
-                    <div class="aso-p-4 md:p-5 aso-text-center">
-                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <div class="asowp-p-4 md:p-5 asowp-text-center">
+                        <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this fixing method?</h3>
-                        <input v-model="manageFixingMethods[fixingMethodId].name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
-                        <button @click="deleteFixingMethods" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this fixing method?</h3>
+                        <input v-model="manageFixingMethods[fixingMethodId].name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
+                        <button @click="deleteFixingMethods" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
+                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Yes, I'm sure
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
                     </div>
                 </div>
             </div>

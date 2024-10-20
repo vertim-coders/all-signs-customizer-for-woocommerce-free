@@ -1,40 +1,40 @@
 <template>
-    <div v-if="!isFetching" class="aso-space-y-1 aso-sticky aso-top-[124px] aso-z-[999] aso-w-full aso-shadow-md aso-flex aso-justify-center aso-items-center aso-bg-[#F4F4F4] aso-translate-y-2">
-        <div class="aso-bg-[#F4F4F4] aso-p-2 aso-space-x-6 aso-justify-center aso-items-center aso-flex">
-            <button @click="state='skins'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'skins' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Choose Skin</button>
-            <button @click="state='colors'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'colors' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Colors</button>
-            <button @click="state='custom'" :class="`aso-flex aso-text-[12px] aso-px-6 aso-p-2 aso-w-fit aso-h-fit aso-bg-white aso-rounded aso-border-none aso-text-black aso-font-semibold ${ state == 'custom' ?'aso-font-bold aso-text-[#016464] aso-bg-[#E1E1E1]':''} hover:aso-bg-[#E1E1E1] hover:aso-text-[#016464] aso-cursor-pointer`" >Custom CSS</button>
+    <div v-if="!isFetching" class="asowp-space-y-1 asowp-sticky asowp-top-[124px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#F4F4F4] asowp-translate-y-2">
+        <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex">
+            <button @click="state='skins'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'skins' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Choose Skin</button>
+            <button @click="state='colors'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'colors' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Colors</button>
+            <button @click="state='custom'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'custom' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Custom CSS</button>
         </div>
     </div>
-    <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
-        <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
+    <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
+        <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
     </div>
     <div v-if="!isFetching">
         <div class="" v-show="state=='skins'">
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
-                <h3 class="aso-text-[16px]">Choose your customizer appearance</h3>
-                <div class="aso-p-6">
-                    <div class="aso-flex aso-justify-evenly aso-items-center">
-                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded aso-w-[320px]" :class="themes.skin == 'default' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
-                            <input type="radio" id="default" name="skin" value="default" v-model="themes.skin" class="aso-invisible">
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
+                <h3 class="asowp-text-[16px]">Choose your customizer appearance</h3>
+                <div class="asowp-p-6">
+                    <div class="asowp-flex asowp-justify-evenly asowp-items-center">
+                        <div class="asowp-flex-col asowp-space-y-4 asowp-px-2 asowp-rounded asowp-w-[320px]" :class="themes.skin == 'default' ? 'asowp-ring-2 asowp-ring-[#016464]' : ''">
+                            <input type="radio" id="default" name="skin" value="default" v-model="themes.skin" class="asowp-invisible">
                             <label for="default">
-                                <div class="aso-w-full aso-h-[200px] aso-relative aso-flex aso-justify-center aso-items-center">
-                                    <img src="../../../../../../assets/images/skin-default.png" alt="Image 1" class="aso-w-auto aso-h-full aso-cursor-pointer aso-absolute">
+                                <div class="asowp-w-full asowp-h-[200px] asowp-relative asowp-flex asowp-justify-center asowp-items-center">
+                                    <img src="../../../../../../assets/images/skin-default.png" alt="Image 1" class="asowp-w-auto asowp-h-full asowp-cursor-pointer asowp-absolute">
                                 </div>
-                                <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
-                                   <label for="default" class="aso-text-base aso-font-semibold aso-text-black">Default skin</label>
+                                <div class="asowp-flex asowp-items-center asowp-justify-between asowp-bg-white asowp-rounded-b">
+                                   <label for="default" class="asowp-text-base asowp-font-semibold asowp-text-black">Default skin</label>
                                     <input type="radio" id="default" name="skin-1" value="default" v-model="themes.skin" :checked="themes.skin == 'default'">
                                 </div>
                             </label>
                         </div>
-                        <div class="aso-flex-col aso-space-y-4 aso-px-2 aso-rounded aso-w-[320px]" :class="themes.skin == 'couffo' ? 'aso-ring-2 aso-ring-[#016464]' : ''">
-                            <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" class="aso-invisible">
+                        <div class="asowp-flex-col asowp-space-y-4 asowp-px-2 asowp-rounded asowp-w-[320px]" :class="themes.skin == 'couffo' ? 'asowp-ring-2 asowp-ring-[#016464]' : ''">
+                            <input type="radio" id="couffo" name="skin" value="couffo" v-model="themes.skin" class="asowp-invisible">
                             <label for="couffo">
-                                <div class="aso-w-full aso-h-[200px] aso-relative aso-flex aso-justify-center aso-items-center">
-                                    <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="aso-w-auto aso-h-full aso-cursor-pointer aso-absolute">
+                                <div class="asowp-w-full asowp-h-[200px] asowp-relative asowp-flex asowp-justify-center asowp-items-center">
+                                    <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="asowp-w-auto asowp-h-full asowp-cursor-pointer asowp-absolute">
                                 </div>
-                                <div class="aso-flex aso-items-center aso-justify-between aso-bg-white aso-rounded-b">
-                                    <label for="couffo" class="aso-text-base aso-font-semibold aso-text-black">Couffo Skin</label>
+                                <div class="asowp-flex asowp-items-center asowp-justify-between asowp-bg-white asowp-rounded-b">
+                                    <label for="couffo" class="asowp-text-base asowp-font-semibold asowp-text-black">Couffo Skin</label>
                                     <input type="radio" id="couffo" name="skin-2" value="couffo" v-model="themes.skin" :checked="themes.skin == 'couffo'">
                                 </div>
                             </label>
@@ -43,1969 +43,1969 @@
                 </div>
             </div>
         </div>
-        <div v-show="state=='colors'" class="aso-bg-[#F8F9FB] aso-py-6">
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Canvas{{ themes.skin == "default" ? ', Header and Side Bars' : ', Header and Bottom Bars' }}</h2>
+        <div v-show="state=='colors'" class="asowp-bg-[#F8F9FB] asowp-py-6">
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Canvas{{ themes.skin == "default" ? ', Header and Side Bars' : ', Header and Bottom Bars' }}</h2>
                 </div>
-                <div class="aso-flex aso-justify-between" v-show="dropdownColorsSections['canvas']">
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Canvas Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-flex asowp-justify-between" v-show="dropdownColorsSections['canvas']">
+                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Canvas Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.canvas.backgroundColor"
                                 @input="updateCanvasBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.canvas.backgroundColor"
                                 @input="updateCanvasBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Canvas Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Canvas Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.canvas.borderColor"
                                 @input="updateCanvasBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.canvas.borderColor"
                                 @input="updateCanvasBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div class="aso-flex aso-justify-between" v-show="dropdownColorsSections['canvas']">
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Bars Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-flex asowp-justify-between" v-show="dropdownColorsSections['canvas']">
+                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Bars Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.backgroundColor"
                                 @input="updateBarsBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.backgroundColor"
                                 @input="updateBarsBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col aso-w-2/5 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Bars Title Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Bars Title Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.titleColor"
                                 @input="updateBarsTitleColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.titleColor"
                                 @input="updateBarsTitleColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['canvas']" @click="dropdownColorsSections['canvas']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['canvas']" @click="dropdownColorsSections['canvas']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['canvas']" @click="dropdownColorsSections['canvas']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['canvas']" @click="dropdownColorsSections['canvas']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative">
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Price Section</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Price Section</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-2 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['price']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-2 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['price']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.price.backgroundColor"
                                 @input="updateBarsPriceBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.price.backgroundColor"
                                 @input="updateBarsPriceBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.price.textColor"
                                 @input="updateBarsPriceTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.price.textColor"
                                 @input="updateBarsPriceTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text Before Price</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Before Price</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.price.textBeforeColor"
                                 @input="updateBarsPriceTextBeforeColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.price.textBeforeColor"
                                 @input="updateBarsPriceTextBeforeColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text After Price Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text After Price Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.price.textAfterColor"
                                 @input="updateBarsPriceTextAfterColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.price.textAfterColor"
                                 @input="updateBarsPriceTextAfterColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['price']" @click="dropdownColorsSections['price']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['price']" @click="dropdownColorsSections['price']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['price']" @click="dropdownColorsSections['price']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['price']" @click="dropdownColorsSections['price']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative">
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Reset Button</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Reset Button</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-4 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['resetButton']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-4 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['resetButton']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.backgroundColor"
                                 @input="updateBarsResetBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.backgroundColor"
                                 @input="updateBarsResetBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.hoverBackgroundColor"
                                 @input="updateBarsResetHoverBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.hoverBackgroundColor"
                                 @input="updateBarsResetHoverBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.textColor"
                                 @input="updateBarsResetTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.textColor"
                                 @input="updateBarsResetTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.hoverTextColor"
                                 @input="updateBarsResetHoverTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.hoverTextColor"
                                 @input="updateBarsResetHoverTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.borderColor"
                                 @input="updateBarsResetBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.borderColor"
                                 @input="updateBarsResetBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.hoverBorderColor"
                                 @input="updateBarsResetHoverBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.hoverBorderColor"
                                 @input="updateBarsResetHoverBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalBackgroundColor"
                                 @input="updateBarsResetModalBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalBackgroundColor"
                                 @input="updateBarsResetModalBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Container Modal Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Container Modal Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalContainerBackground"
                                 @input="updateBarsResetModalContainerBackgroundCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalContainerBackground"
                                 @input="updateBarsResetModalContainerBackgroundCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalTextColor"
                                 @input="updateBarsResetModalTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalTextColor"
                                 @input="updateBarsResetModalTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Yes Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Yes Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalYesButtonBackgroundColor"
                                 @input="updateBarsResetModalYesButtonBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalYesButtonBackgroundColor"
                                 @input="updateBarsResetModalYesButtonBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Yes Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Yes Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalYesButtonTextColor"
                                 @input="updateBarsResetModalYesButtonTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalYesButtonTextColor"
                                 @input="updateBarsResetModalYesButtonTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">No Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">No Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalNoButtonBackgroundColor"
                                 @input="updateBarsResetModalNoButtonBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalNoButtonBackgroundColor"
                                 @input="updateBarsResetModalNoButtonBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">No Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">No Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.reset.modalNoButtonTextColor"
                                 @input="updateBarsResetModalNoButtonTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.reset.modalNoButtonTextColor"
                                 @input="updateBarsResetModalNoButtonTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['resetButton']" @click="dropdownColorsSections['resetButton']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['resetButton']" @click="dropdownColorsSections['resetButton']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['resetButton']" @click="dropdownColorsSections['resetButton']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['resetButton']" @click="dropdownColorsSections['resetButton']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative">
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Undo and Redo Button</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Undo and Redo Button</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['undoRedo']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['undoRedo']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.undoRedo.backgroundColor"
                                 @input="updateBarsUndoRedoBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.undoRedo.backgroundColor"
                                 @input="updateBarsUndoRedoBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.undoRedo.hoverBackgroundColor"
                                 @input="updateBarsUndoRedoHoverBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.undoRedo.hoverBackgroundColor"
                                 @input="updateBarsUndoRedoHoverBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.undoRedo.textColor"
                                 @input="updateBarsUndoRedoTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.undoRedo.textColor"
                                 @input="updateBarsUndoRedoTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.undoRedo.hoverTextColor"
                                 @input="updateBarsUndoRedoHoverTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.undoRedo.hoverTextColor"
                                 @input="updateBarsUndoRedoHoverTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.undoRedo.borderColor"
                                 @input="updateBarsUndoRedoBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.undoRedo.borderColor"
                                 @input="updateBarsUndoRedoBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.undoRedo.hoverBorderColor"
                                 @input="updateBarsUndoRedoHoverBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.undoRedo.hoverBorderColor"
                                 @input="updateBarsUndoRedoHoverBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['undoRedo']" @click="dropdownColorsSections['undoRedo']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['undoRedo']" @click="dropdownColorsSections['undoRedo']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['undoRedo']" @click="dropdownColorsSections['undoRedo']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['undoRedo']" @click="dropdownColorsSections['undoRedo']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative">
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Preview Button</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Preview Button</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['previewButton']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['previewButton']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.preview.backgroundColor"
                                 @input="updateBarsPreviewBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.preview.backgroundColor"
                                 @input="updateBarsPreviewBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.preview.hoverBackgroundColor"
                                 @input="updateBarsPreviewHoverBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.preview.hoverBackgroundColor"
                                 @input="updateBarsPreviewHoverBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.preview.textColor"
                                 @input="updateBarsPreviewTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.preview.textColor"
                                 @input="updateBarsPreviewTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.preview.hoverTextColor"
                                 @input="updateBarsPreviewHoverTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.preview.hoverTextColor"
                                 @input="updateBarsPreviewHoverTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.preview.borderColor"
                                 @input="updateBarsPreviewBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.preview.borderColor"
                                 @input="updateBarsPreviewBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.preview.hoverBorderColor"
                                 @input="updateBarsPreviewHoverBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.preview.hoverBorderColor"
                                 @input="updateBarsPreviewHoverBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['previewButton']" @click="dropdownColorsSections['previewButton']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['previewButton']" @click="dropdownColorsSections['previewButton']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['previewButton']" @click="dropdownColorsSections['previewButton']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['previewButton']" @click="dropdownColorsSections['previewButton']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative">
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">help Button</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">help Button</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['helpButton']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['helpButton']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.help.backgroundColor"
                                 @input="updateBarsHelpBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.help.backgroundColor"
                                 @input="updateBarsHelpBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.help.hoverBackgroundColor"
                                 @input="updateBarsHelpHoverBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.help.hoverBackgroundColor"
                                 @input="updateBarsHelpHoverBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.help.textColor"
                                 @input="updateBarsHelpTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.help.textColor"
                                 @input="updateBarsHelpTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.help.hoverTextColor"
                                 @input="updateBarsHelpHoverTextColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.help.hoverTextColor"
                                 @input="updateBarsHelpHoverTextColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.help.borderColor"
                                 @input="updateBarsHelpBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.help.borderColor"
                                 @input="updateBarsHelpBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Hover Border Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.bars.help.hoverBorderColor"
                                 @input="updateBarsHelpHoverBorderColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.bars.help.hoverBorderColor"
                                 @input="updateBarsHelpHoverBorderColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['helpButton']" @click="dropdownColorsSections['helpButton']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['helpButton']" @click="dropdownColorsSections['helpButton']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['helpButton']" @click="dropdownColorsSections['helpButton']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['helpButton']" @click="dropdownColorsSections['helpButton']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
             
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Options SideBar</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Options SideBar</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['optionsSideBar']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['optionsSideBar']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.backgroundColor"
                                 @input="updateOptionsSideBarBackgroundColorCodeHex"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.backgroundColor"
                                 @input="updateOptionsSideBarBackgroundColorCodeHex"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsBackgroundColor"
                                 @input="updateOptionsSideBarScrollButtonsBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsBackgroundColor"
                                 @input="updateOptionsSideBarScrollButtonsBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsHoverBackgroundColor"
                                 @input="updateOptionsSideBarScrollButtonsHoverBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsHoverBackgroundColor"
                                 @input="updateOptionsSideBarScrollButtonsHoverBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsTextColor"
                                 @input="updateOptionsSideBarScrollButtonsTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsTextColor"
                                 @input="updateOptionsSideBarScrollButtonsTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Scroll Buttons Text Hover Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Text Hover Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsHoverTextColor"
                                 @input="updateOptionsSideBarScrollButtonsHoverTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.scrollButtonsHoverTextColor"
                                 @input="updateOptionsSideBarScrollButtonsHoverTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.buttons.backgroundColor"
                                 @input="updateOptionsSideBarOptionsButtonsBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.buttons.backgroundColor"
                                 @input="updateOptionsSideBarOptionsButtonsBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.buttons.hoverBackgroundColor"
                                 @input="updateOptionsSideBarOptionsButtonsHoverBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.buttons.hoverBackgroundColor"
                                 @input="updateOptionsSideBarOptionsButtonsHoverBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.buttons.textColor"
                                 @input="updateOptionsSideBarOptionsButtonsTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.buttons.textColor"
                                 @input="updateOptionsSideBarOptionsButtonsTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Options Buttons Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.buttons.hoverTextColor"
                                 @input="updateOptionsSideBarOptionsButtonsHoverTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.buttons.hoverTextColor"
                                 @input="updateOptionsSideBarOptionsButtonsHoverTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['optionsSideBar']" @click="dropdownColorsSections['optionsSideBar']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['optionsSideBar']" @click="dropdownColorsSections['optionsSideBar']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['optionsSideBar']" @click="dropdownColorsSections['optionsSideBar']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['optionsSideBar']" @click="dropdownColorsSections['optionsSideBar']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Options Modals</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Options Modals</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['optionsModals']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Background Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['optionsModals']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.backgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.backgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.textColor"
                                 @input="updateOptionsSideBarOptionsModalsTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.textColor"
                                 @input="updateOptionsSideBarOptionsModalsTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Header Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.headerBackgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsHeaderBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.headerBackgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsHeaderBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Header Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Header Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
                                 @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.headerTextColor"
                                 @input="updateOptionsSideBarOptionsModalsHeaderTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Buttons Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Buttons Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.backgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.backgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Buttons Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Buttons Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsHoverBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverBackgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsHoverBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modals Buttons Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modals Buttons Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.textColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.textColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modals Buttons Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modals Buttons Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverTextColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsHoverTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.buttons.hoverTextColor"
                                 @input="updateOptionsSideBarOptionsModalsButtonsHoverTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['optionsModals']" @click="dropdownColorsSections['optionsModals']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['optionsModals']" @click="dropdownColorsSections['optionsModals']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['optionsModals']" @click="dropdownColorsSections['optionsModals']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['optionsModals']" @click="dropdownColorsSections['optionsModals']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Option in Modal</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Option in Modal</h2>
                 </div>
-                <div class="aso-grid aso-grid-cols-2 w-full gap-4 aso-justify-between aso-items-center" v-if="dropdownColorsSections['modalsOption']">
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Text Color</label>
-                        <div class="aso-relative aso-flex">
+                <div class="asowp-grid asowp-grid-cols-2 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['modalsOption']">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.textColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.textColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Hover Background Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Hover Background Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.hoverBackgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionHoverBackgroundColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.hoverBackgroundColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionHoverBackgroundColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Hover Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Hover Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.hoverTextColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionHoverTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.hoverTextColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionHoverTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
-                    <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                        <label class="aso-text-[12px] aso-text-[#444444]">Modal Option Active Text Color</label>
-                        <div class="aso-relative aso-flex">
+                    <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Active Text Color</label>
+                        <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
                                 type="color"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.activeTextColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionActiveTextColor"
-                                class="aso-w-9 aso-h-[30px]"
+                                class="asowp-w-9 asowp-h-[30px]"
                             />
                             <input
                                 type="text"
                                 v-model="themes.colors.optionsSideBar.options.modals.option.activeTextColor"
                                 @input="updateOptionsSideBarOptionsModalsOptionActiveTextColor"
-                                class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                             />
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['modalsOption']" @click="dropdownColorsSections['modalsOption']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['modalsOption']" @click="dropdownColorsSections['modalsOption']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['modalsOption']" @click="dropdownColorsSections['modalsOption']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['modalsOption']" @click="dropdownColorsSections['modalsOption']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-pt-8 aso-space-y-6 aso-relative" >
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Objects Options</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Objects Options</h2>
                 </div>
                 <div v-show="dropdownColorsSections['objectsOptions']">
-                    <div class="aso-grid aso-grid-cols-3 w-full gap-4 aso-justify-between aso-items-center">
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                            <div class="aso-relative aso-flex">
+                    <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.backgroundColor"
                                     @input="updateObjectsOptionsBackgroundColorCodeHex"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.backgroundColor"
                                     @input="updateObjectsOptionsBackgroundColorCodeHex"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Edit Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Edit Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.edit.buttonColor"
                                     @input="updateObjectsOptionsEditButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.edit.buttonColor"
                                     @input="updateObjectsOptionsEditButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Hover Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.edit.hoverButtonColor"
                                     @input="updateObjectsOptionsEditHoverButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.edit.hoverButtonColor"
                                     @input="updateObjectsOptionsEditHoverButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Edit Button Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Edit Button Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.edit.textColor"
                                     @input="updateObjectsOptionsEditTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.edit.textColor"
                                     @input="updateObjectsOptionsEditTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Edit Button Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Edit Button Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.edit.hoverTextColor"
                                     @input="updateObjectsOptionsEditHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.edit.hoverTextColor"
                                     @input="updateObjectsOptionsEditHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Clone Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.clone.buttonColor"
                                     @input="updateObjectsOptionsCloneButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.clone.buttonColor"
                                     @input="updateObjectsOptionsCloneButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Clone Hover Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Hover Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.clone.hoverButtonColor"
                                     @input="updateObjectsOptionsCloneHoverButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.clone.hoverButtonColor"
                                     @input="updateObjectsOptionsCloneHoverButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Clone Button Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Button Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.clone.textColor"
                                     @input="updateObjectsOptionsCloneTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.clone.textColor"
                                     @input="updateObjectsOptionsCloneTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Clone Button Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Button Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.clone.hoverTextColor"
                                     @input="updateObjectsOptionsCloneHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.clone.hoverTextColor"
                                     @input="updateObjectsOptionsCloneHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Delete Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.delete.buttonColor"
                                     @input="updateObjectsOptionsDeleteButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.delete.buttonColor"
                                     @input="updateObjectsOptionsDeleteButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Delete Hover Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Hover Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.delete.hoverButtonColor"
                                     @input="updateObjectsOptionsDeleteHoverButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.delete.hoverButtonColor"
                                     @input="updateObjectsOptionsDeleteHoverButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Delete Button Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Button Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.delete.textColor"
                                     @input="updateObjectsOptionsDeleteTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.delete.textColor"
                                     @input="updateObjectsOptionsDeleteTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Delete Button Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Button Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.delete.hoverTextColor"
                                     @input="updateObjectsOptionsDeleteHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.delete.hoverTextColor"
                                     @input="updateObjectsOptionsDeleteHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Center Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.center.buttonColor"
                                     @input="updateObjectsOptionsCenterButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.center.buttonColor"
                                     @input="updateObjectsOptionsCenterButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Center Hover Button Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Hover Button Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.center.hoverButtonColor"
                                     @input="updateObjectsOptionsCenterHoverButtonColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.center.hoverButtonColor"
                                     @input="updateObjectsOptionsCenterHoverButtonColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Center Button Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Button Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.center.textColor"
                                     @input="updateObjectsOptionsCenterTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.center.textColor"
                                     @input="updateObjectsOptionsCenterTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Center Button Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Button Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.objectsOptions.center.hoverTextColor"
                                     @input="updateObjectsOptionsCenterHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.center.hoverTextColor"
                                     @input="updateObjectsOptionsCenterHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['objectsOptions']" @click="dropdownColorsSections['objectsOptions']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['objectsOptions']" @click="dropdownColorsSections['objectsOptions']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['objectsOptions']" @click="dropdownColorsSections['objectsOptions']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['objectsOptions']" @click="dropdownColorsSections['objectsOptions']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6 aso-relative" >
-                <div class="aso-flex aso-space-x-4">
-                    <h2 class="aso-text-[15px] aso-font-bold">Recaps Section</h2>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-relative" >
+                <div class="asowp-flex asowp-space-x-4">
+                    <h2 class="asowp-text-[15px] asowp-font-bold">Recaps Section</h2>
                 </div>
                 <div v-show="dropdownColorsSections['recaps']">
-                    <div class="aso-grid aso-grid-cols-4 w-full gap-4 aso-justify-between aso-items-center">
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Background Color</label>
-                            <div class="aso-relative aso-flex">
+                    <div class="asowp-grid asowp-grid-cols-4 w-full gap-4 asowp-justify-between asowp-items-center">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.backgroundColor"
                                     @input="updateRecapsBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.backgroundColor"
                                     @input="updateRecapsBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Header Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Header Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.headerBackgroundColor"
                                     @input="updateRecapsHeaderBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.headerBackgroundColor"
                                     @input="updateRecapsHeaderBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Header Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Header Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.headerTextColor"
                                     @input="updateRecapsHeaderTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.objectsOptions.edit.buttonColor"
                                     @input="updateRecapsHeaderTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Hover Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.optionHoverBackgroundColor"
                                     @input="updateRecapsOptionHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.optionHoverBackgroundColor"
                                     @input="updateRecapsOptionHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Hover Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Hover Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.optionHoverTextColor"
                                     @input="updateRecapsOptionHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.optionHoverTextColor"
                                     @input="updateRecapsOptionHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.optionTextColor"
                                     @input="updateRecapsOptionTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.optionTextColor"
                                     @input="updateRecapsOptionTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Border Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Border Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.optionBorderColor"
                                     @input="updateRecapsOptionBorderColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.optionBorderColor"
                                     @input="updateRecapsOptionBorderColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Recaps Option Border Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Border Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.optionHoverBorderColor"
                                     @input="updateRecapsOptionHoverBorderColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.optionBorderColor"
                                     @input="updateRecapsOptionHoverBorderColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonFinishBackgroundColor"
                                     @input="updateRecapsButtonFinishBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonFinishBackgroundColor"
                                     @input="updateRecapsButtonFinishBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Hover Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonFinishHoverBackgroundColor"
                                     @input="updateRecapsButtonFinishHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonFinishHoverBackgroundColor"
                                     @input="updateRecapsButtonFinishHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonFinishTextColor"
                                     @input="updateRecapsButtonFinishTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonFinishTextColor"
                                     @input="updateRecapsButtonFinishTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Finish Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonFinishHoverTextColor"
                                     @input="updateRecapsButtonFinishHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonFinishHoverTextColor"
                                     @input="updateRecapsButtonFinishHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonAddToCartBackgroundColor"
                                     @input="updateRecapsButtonAddToCartBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonAddToCartBackgroundColor"
                                     @input="updateRecapsButtonAddToCartBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Hover Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonAddToCartHoverBackgroundColor"
                                     @input="updateRecapsButtonAddToCartHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonAddToCartHoverBackgroundColor"
                                     @input="updateRecapsButtonAddToCartHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonAddToCartTextColor"
                                     @input="updateRecapsButtonAddToCartTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonAddToCartTextColor"
                                     @input="updateRecapsButtonAddToCartTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button AddToCart Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonAddToCartHoverTextColor"
                                     @input="updateRecapsButtonAddToCartHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonAddToCartHoverTextColor"
                                     @input="updateRecapsButtonAddToCartHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonEditBackgroundColor"
                                     @input="updateRecapsButtonEditBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonEditBackgroundColor"
                                     @input="updateRecapsButtonEditBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Hover Background Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Hover Background Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonEditHoverBackgroundColor"
                                     @input="updateRecapsButtonEditHoverBackgroundColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonEditHoverBackgroundColor"
                                     @input="updateRecapsButtonEditHoverBackgroundColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Text Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Text Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonEditTextColor"
                                     @input="updateRecapsButtonEditTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonEditTextColor"
                                     @input="updateRecapsButtonEditTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
-                        <div class="aso-flex aso-flex-col w-1/4 aso-space-y-2">
-                            <label class="aso-text-[12px] aso-text-[#444444]">Button Edit Text Hover Color</label>
-                            <div class="aso-relative aso-flex">
+                        <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Text Hover Color</label>
+                            <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
                                     type="color"
                                     v-model="themes.colors.recaps.buttonEditHoverTextColor"
                                     @input="updateRecapsButtonEditHoverTextColor"
-                                    class="aso-w-9 aso-h-[30px]"
+                                    class="asowp-w-9 asowp-h-[30px]"
                                 />
                                 <input
                                     type="text"
                                     v-model="themes.colors.recaps.buttonEditHoverTextColor"
                                     @input="updateRecapsButtonEditHoverTextColor"
-                                    class="aso-p-1 aso-text-black aso-w-full aso-translate-y-0"
+                                    class="asowp-p-1 asowp-text-black asowp-w-full asowp-translate-y-0"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-if="dropdownColorsSections['recaps']" @click="dropdownColorsSections['recaps']=false" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="dropdownColorsSections['recaps']" @click="dropdownColorsSections['recaps']=false" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 18.75 7.5-7.5 7.5 7.5" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 7.5-7.5 7.5 7.5" />
                     </svg>
                 </div>
-                <div v-if="!dropdownColorsSections['recaps']" @click="dropdownColorsSections['recaps']=true" class="aso-flex aso-absolute aso-justify-center aso-items-center  aso-my-0 aso-right-8 aso-top-0 aso-shadow-md aso-rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                <div v-if="!dropdownColorsSections['recaps']" @click="dropdownColorsSections['recaps']=true" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center  asowp-my-0 asowp-right-8 asowp-top-0 asowp-shadow-md asowp-rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
                     </svg>
                 </div>
             </div>
         </div>
-        <div v-show="state=='custom'" class="aso-w-full aso-h-full aso-translate-y-9">
-            <div class="aso-p-4">
-                <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:aso-italic placeholder:aso-text-slate-400 aso-w-full aso-h-full aso-rounded-none"></textarea>
+        <div v-show="state=='custom'" class="asowp-w-full asowp-h-full asowp-translate-y-9">
+            <div class="asowp-p-4">
+                <textarea name="" id="" placeholder="write your custom css here!!" v-model="themes.customCSS" cols="30" rows="10" class="placeholder:asowp-italic placeholder:asowp-text-slate-400 asowp-w-full asowp-h-full asowp-rounded-none"></textarea>
             </div> 
         </div>
-        <div class="aso-sticky aso-bottom-0 aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end aso-translate-y-12">
-            <div class="aso-bg-[#016464] aso-rounded">
-                <button :disabled="isLoading" @click="updateThemesSettings" class="aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointeraso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
-                    <div class="aso-font-semibold aso-text-[16px]">Save</div>
+        <div class="asowp-sticky asowp-bottom-0 asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end asowp-translate-y-12">
+            <div class="asowp-bg-[#016464] asowp-rounded">
+                <button :disabled="isLoading" @click="updateThemesSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
+                    <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
                 </button>
             </div>
         </div>

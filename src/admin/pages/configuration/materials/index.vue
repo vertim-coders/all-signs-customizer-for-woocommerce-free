@@ -1,26 +1,26 @@
 <template>
-    <div class="aso-py-10 aso-w-full">
+    <div class="asowp-py-10 asowp-w-full">
         <div v-if="!isNewComponent">
-            <div class="aso-sticky aso-top-[80px] aso-z-[999]">
-                <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-pt-4 aso-pb-2 aso-flex">
-                    <div  v-if="config.trim() != ''" class="aso-font-bold">
+            <div class="asowp-sticky asowp-top-[80px] asowp-z-[999]">
+                <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-pt-4 asowp-pb-2 asowp-flex">
+                    <div  v-if="config.trim() != ''" class="asowp-font-bold">
                         {{config}}
                     </div>
-                    <img  v-if="config.trim() != ''" class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
+                    <img  v-if="config.trim() != ''" class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
                     <div v-if="config.trim() != ''" >
                         Material
                     </div>
                 </div>
-                <div v-if="!isFetching" class="aso-flex aso-justify-end aso-items-center aso-space-x-2 aso-bg-[#F8F9FB] aso-pb-4 aso-py-4">
+                <div v-if="!isFetching" class="asowp-flex asowp-justify-end asowp-items-center asowp-space-x-2 asowp-bg-[#F8F9FB] asowp-pb-4 asowp-py-4">
                     
-                    <div class="aso-w-1/4">
-                        <button class="aso-flex aso-w-fit aso-h-[fit] aso-rounded aso-bg-[#016464] aso-px-4 aso-space-x-2 aso-p-1.5 aso-border-none aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-cursor-pointer" @click="addComponent">
-                            <svg class="aso-w-5 aso-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div class="asowp-w-1/4">
+                        <button class="asowp-flex asowp-w-fit asowp-h-[fit] asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="addComponent">
+                            <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="plus-lg">
                                 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
                                 </g>
                             </svg>
-                            <div class="aso-text-[14px]">
+                            <div class="asowp-text-[14px]">
                                 Add new Material
                             </div>
                         </button>
@@ -28,65 +28,65 @@
                 </div>
             </div>
             <!-- Table which display all materials -->
-            <div class="aso-w-full aso-overflow-x-auto">
-                <div class="aso-overflow-hidden aso-w-full">
-                    <div class="aso-grid aso-grid-cols-5 aso-justify-center aso-items-center aso-p-4 aso-text-sm aso-font-medium aso-text-gray-900 aso-bg-gray-100 aso-border-t aso-border-b aso-border-gray-200 aso-gap-x-16">
-                        <div class="aso-flex aso-items-center aso-justify-center">Material Name</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Description</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Icon</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Behavior (type)</div>
-                        <div class="aso-flex aso-items-center aso-justify-center">Actions</div>
+            <div class="asowp-w-full asowp-overflow-x-auto">
+                <div class="asowp-overflow-hidden asowp-w-full">
+                    <div class="asowp-grid asowp-grid-cols-5 asowp-justify-center asowp-items-center asowp-p-4 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-bg-gray-100 asowp-border-t asowp-border-b asowp-border-gray-200 asowp-gap-x-16">
+                        <div class="asowp-flex asowp-items-center asowp-justify-center">Material Name</div>
+                        <div class="asowp-flex asowp-items-center asowp-justify-center">Description</div>
+                        <div class="asowp-flex asowp-items-center asowp-justify-center">Icon</div>
+                        <div class="asowp-flex asowp-items-center asowp-justify-center">Behavior (type)</div>
+                        <div class="asowp-flex asowp-items-center asowp-justify-center">Actions</div>
                     </div>
                     
-                    <div v-if="isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center aso-w-full aso-h-[306px] p-4">
-                        <img class="aso-w-[200px] aso-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
+                    <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
+                        <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
                     </div>
-                    <div v-if="materials.length == 0 && !isFetching" class="aso-bg-white aso-border-solid aso-border aso-border-[#D1D1D1] aso-flex aso-flex-col aso-space-y-12 aso-justify-center aso-items-center aso-py-10 aso-h-[306px]">
-                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-justify-center aso-items-center">
-                            <p class="aso-text-2xl aso-font-bold">{{notFoundMessage}}</p>
+                    <div v-if="materials.length == 0 && !isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[306px]">
+                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
+                            <p class="asowp-text-2xl asowp-font-bold">{{notFoundMessage}}</p>
                         </div>
                     </div>
-                    <div v-for="(material,key) in materials" :key="key" class="aso-cursor-pointer aso-grid aso-items-center aso-bg-white aso-grid-cols-5 aso-px-4 aso-py-3 aso-text-sm aso-text-gray-700 aso-border-b-1 aso-border-t-0 aso-border-l-0 aso-border-r-0 aso-border-solid aso-border-gray-200 aso-gap-x-16">
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-overflow-hidden aso-flex aso-pl-4 aso-whitespace-nowrap aso-text-ellipsis aso-space-x-4">
-                            <span class="aso-w-5 aso-h-5 aso-p-1 aso-px-1 aso-flex aso-justify-center aso-items-center aso-rounded-full aso-bg-[#f0f0f1] aso-border aso-border-solid aso-border-black ">
-                                <span class="aso-text-[12px]">{{getInitials(material.name)}}</span> 
+                    <div v-for="(material,key) in materials" :key="key" class="asowp-cursor-pointer asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-5 asowp-px-4 asowp-py-3 asowp-text-sm asowp-text-gray-700 asowp-border-b-1 asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16">
+                        <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-overflow-hidden asowp-flex asowp-pl-4 asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4">
+                            <span class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-items-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black ">
+                                <span class="asowp-text-[12px]">{{getInitials(material.name)}}</span> 
                             </span>
-                            <span class="aso-flex aso-justify-center aso-items-center">{{ material.name }}</span>
+                            <span class="asowp-flex asowp-justify-center asowp-items-center">{{ material.name }}</span>
                         </div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center aso-overflow-hidden aso-whitespace-nowrap aso-text-ellipsis">{{material.description}}</div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
-                            <img class="aso-w-10 aso-h-10 aso-rounded" :src="material.icon" alt="" v-if="material.icon!=''">
+                        <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis">{{material.description}}</div>
+                        <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
+                            <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="material.icon" alt="" v-if="material.icon!=''">
                         </div>
-                        <div class="aso-text-gray-500 dark:aso-text-gray-400 aso-flex aso-justify-center aso-items-center">
-                            <span :class="`aso-w-fit aso-rounded-lg aso-p-1 aso-text-[12px] aso-text-center aso-px-2 ${material.type == 'simple' ? 'aso-bg-[#EEF5FF] aso-text-black' :'aso-bg-[#9ACD321F] aso-text-[#466801]'} aso-border-none`">
+                        <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
+                            <span :class="`asowp-w-fit asowp-rounded-lg asowp-p-1 asowp-text-[12px] asowp-text-center asowp-px-2 ${material.type == 'simple' ? 'asowp-bg-[#EEF5FF] asowp-text-black' :'asowp-bg-[#9ACD321F] asowp-text-[#466801]'} asowp-border-none`">
                                 {{material.type}}
                             </span>
                         </div>
-                        <div class="aso-flex aso-space-x-[1.5px] aso-justify-center aso-items-center aso-text-gray-500 dark:aso-text-gray-400">
-                            <button class="aso-bg-[#FFC7D8] aso-p-2 aso-rounded-md aso-border-none aso-cursor-pointer aso-space-x-1 aso-flex" @click="redirectToMaterail(key,material.name,material.type)">
-                                <img class="aso-w-4 aso-h-4" src="../../../../../assets/icons/ic_manage.svg" alt="">
-                                <span class="aso-text-[12px]">
+                        <div class="asowp-flex asowp-space-x-[1.5px] asowp-justify-center asowp-items-center asowp-text-gray-500 dark:asowp-text-gray-400">
+                            <button class="asowp-bg-[#FFC7D8] asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex" @click="redirectToMaterail(key,material.name,material.type)">
+                                <img class="asowp-w-4 asowp-h-4" src="../../../../../assets/icons/ic_manage.svg" alt="">
+                                <span class="asowp-text-[12px]">
                                     Manage
                                 </span>
                             </button>
-                            <button class="aso-bg-transparent aso-border-none aso-text-[#2DD05B] aso-cursor-pointer"  @click="selectMaterialEdit(material,key)">
-                                <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_edit.svg" alt="">
+                            <button class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer"  @click="selectMaterialEdit(material,key)">
+                                <img class="asowp-w-5 asowp-h-5" src="../../../../../assets/icons/ic_edit.svg" alt="">
                             </button>
                             
-                            <div class="aso-bg-white aso-relative">
-                                <button class="aso-bg-transparent aso-border-none aso-cursor-pointer" @click="handleOpenMaterialParams(key)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-rotate-90 aso-h-6">
+                            <div class="asowp-bg-white asowp-relative">
+                                <button class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer" @click="handleOpenMaterialParams(key)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-rotate-90 asowp-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                     </svg>
                                 </button>
-                                <div class="aso-bg-white aso-shadow-md aso-flex aso-justify-center aso-items-center aso-space-x-2 aso-p-2 aso-absolute -aso-top-12 aso-z-[999] aso-right-0 aso-rounded" v-if="showParams[key]" @click.self="showParams[key]=false;">
-                                    <button class="aso-bg-transparent aso-border-none aso-text-[#FF6600] aso-cursor-pointer"  @click="selectCloneMaterial(material)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-6 aso-h-6">
+                                <div class="asowp-bg-white asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-space-x-2 asowp-p-2 asowp-absolute -asowp-top-12 asowp-z-[999] asowp-right-0 asowp-rounded" v-if="showParams[key]" @click.self="showParams[key]=false;">
+                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#FF6600] asowp-cursor-pointer"  @click="selectCloneMaterial(material)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
                                         </svg>
                                     </button>
-                                    <button class="aso-bg-transparent aso-border-none aso-text-[#A00000] aso-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
-                                        <img class="aso-w-5 aso-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
+                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
+                                        <img class="asowp-w-5 asowp-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
                                     </button>
                                 </div>
                             </div>
@@ -95,40 +95,40 @@
                 </div>
             </div>
         </div>
-        <div class="aso-space-y-0.5" v-if="isNewComponent">
-            <div class="aso-bg-[#F8F9FB] aso-text-[16px] aso-space-x-1 aso-px-4 aso-py-4 aso-flex">
-                <div  v-if="config.trim() != ''" class="aso-font-bold aso-text-[16px]">
+        <div class="asowp-space-y-0.5" v-if="isNewComponent">
+            <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
+                <div  v-if="config.trim() != ''" class="asowp-font-bold asowp-text-[16px]">
                     {{config}}
                 </div>
-                <img class="aso-w-4 aso-h-4 aso-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="aso-text-[16px]">
+                <img class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
+                <div class="asowp-text-[16px]">
                     Material
                 </div>
             </div>
-            <div class="aso-text-[16px] aso-font-bold aso-px-4 aso-py-4 aso-bg-[#F8F9FB]">
+            <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]">
                 Add material
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-px-4 aso-py-4 aso-space-y-6">
-                <div class="aso-flex aso-justify-between">
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Material name <span class="aso-text-red-500">*</span></label>
-                        <input type="text" v-model="newMaterial.name" :class="`${emptyLabel?'aso-field-required':''} aso-rounded aso-w-full aso-h-[35px]`">
+            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-y-6">
+                <div class="asowp-flex asowp-justify-between">
+                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[14px]">
+                        <label for="" class="asowp-font-normal">Material name <span class="asowp-text-red-500">*</span></label>
+                        <input type="text" v-model="newMaterial.name" :class="`${emptyLabel?'asowp-field-required':''} asowp-rounded asowp-w-full asowp-h-[35px]`">
                     </div>
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[14px]">
-                        <label for="" class="aso-font-normal">Description</label>
-                        <input type="text" v-model="newMaterial.description" class="aso-rounded aso-w-full aso-h-[35px]">
+                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[14px]">
+                        <label for="" class="asowp-font-normal">Description</label>
+                        <input type="text" v-model="newMaterial.description" class="asowp-rounded asowp-w-full asowp-h-[35px]">
                     </div>
                 </div>
-                <div class="aso-flex aso-justify-between">
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Upload icon</label>
-                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
-                            <div class="aso-flex aso-space-x-2">
-                                <button @click="selectMaterialIcon" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">upload PopupImg</button>
-                                <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
-                                    <img v-if="newMaterial.icon != ''" :src="newMaterial.icon" alt="" class="aso-absolute aso-w-full aso-h-full">
-                                    <button v-if="newMaterial.icon != ''" @click="()=>{newMaterial.icon = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                <div class="asowp-flex asowp-justify-between">
+                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
+                        <label for="" class="asowp-font-normal">Upload icon</label>
+                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
+                            <div class="asowp-flex asowp-space-x-2">
+                                <button @click="selectMaterialIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload PopupImg</button>
+                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
+                                    <img v-if="newMaterial.icon != ''" :src="newMaterial.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
+                                    <button v-if="newMaterial.icon != ''" @click="()=>{newMaterial.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
                                     </button>
@@ -136,15 +136,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="aso-w-2/5 aso-flex aso-flex-col aso-space-y-2 aso-text-[12px]">
-                        <label for="" class="aso-font-normal">Upload PopupImg</label>
-                        <div class="aso-flex aso-flex-col aso-space-y-2 aso-w-full aso-pt-2 aso-w-1/2">
-                            <div class="aso-flex aso-space-x-2">
-                                <button @click="closeTnymceModal" class="aso-bg-[#016464] aso-border-none aso-w-fit aso-h-fit aso-p-4 aso-rounded aso-px-4 aso-text-white aso-opacity-90 hover:aso-opacity-100 aso-text-[10px] aso-cursor-pointer">Pop For Image</button>
-                                <!-- <div :class="`aso-relative aso-w-[82px] aso-h-[49px] aso-rounded-md aso-overflow-hidden`">
-                                    <img v-if="newMaterial.popImg != ''" :src="newMaterial.popImg" alt="" class="aso-absolute aso-w-full aso-h-full">
-                                    <button v-if="newMaterial.popImg != ''" @click="()=>{newMaterial.popImg = ''}" :class="`aso-bg-[#016464] aso-absolute aso-bottom-0 aso-right-0 aso-text-white aso-p-1 aso-rounded-tl-lg aso-border-none`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-4 aso-h-4">
+                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
+                        <label for="" class="asowp-font-normal">Upload PopupImg</label>
+                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
+                            <div class="asowp-flex asowp-space-x-2">
+                                <button @click="closeTnymceModal" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">Pop For Image</button>
+                                <!-- <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
+                                    <img v-if="newMaterial.popImg != ''" :src="newMaterial.popImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
+                                    <button v-if="newMaterial.popImg != ''" @click="()=>{newMaterial.popImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
                                     </button>
@@ -153,96 +153,96 @@
                         </div>
                     </div>
                 </div>
-                <div class="aso-space-y-2 aso-pt-2 aso-flex aso-flex-col">
-                    <label for="" class="aso-font-bold">Type</label>
-                    <select name="" id="" class="aso-w-full aso-h-[30px] aso-font-normal" v-model="newMaterial.type" :disabled="isEdit">
+                <div class="asowp-space-y-2 asowp-pt-2 asowp-flex asowp-flex-col">
+                    <label for="" class="asowp-font-bold">Type</label>
+                    <select name="" id="" class="asowp-w-full asowp-h-[30px] asowp-font-normal" v-model="newMaterial.type" :disabled="isEdit">
                         <option value="simple">Simple</option>
                         <option value="advance">Advance</option>
                     </select>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-4 aso-justify-end aso-items-end">
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-p-2 aso-border-none aso-text-white aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer" @click="back">
-                        <svg class="aso-w-6 aso-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+                <div class="asowp-bg-[#016464] asowp-rounded">
+                    <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
+                        <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
 
-                        <div class="aso-font-semibold aso-text-[16px]">Back</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
                     </button>
                 </div>
-                <div class="aso-bg-[#016464] aso-rounded" v-if="isEdit">
-                    <button @click="updateMaterial" :class="`aso-rounded aso-flex ${!isLoading ? 'aso-bg-amber-400 ' :'aso-bg-amber-500'} aso-w-fit aso-space-x-2 aso-h-fit aso-px-8 aso-text-white aso-p-2 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer`">
-                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                        <div class="aso-font-semibold aso-text-[16px]">Update</div>
+                <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
+                    <button @click="updateMaterial" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <div class="asowp-font-semibold asowp-text-[16px]">Update</div>
                     </button>
                 </div>
-                <div class="aso-bg-[#016464] aso-rounded" v-if="!isEdit">
-                    <button @click="addNewMaterial" class="aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white  aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-border-none hover:aso-text-white hover:aso-opacity-100 aso-cursor-pointer">
-                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                        <div class="aso-font-semibold aso-text-[16px]">Save</div>
+                <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
+                    <button @click="addNewMaterial" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white  asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer">
+                        <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Delete Modal-->
-        <div v-if="openModal" @click.self="closeModal" class="aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-[999] aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full aso-z-[999]">
-            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
-                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
-                    <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-border-solid aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
-                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <div v-if="openModal" @click.self="closeModal" class="asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%] asowp-z-[999] asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full asowp-z-[999]">
+            <div class="asowp-relative asowp-p-4 asowp-w-full asowp-max-w-md asowp-max-h-full">
+                <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700">
+                    <button @click.stop="closeModal" type="button" :class="`${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-border-solid asowp-absolute asowp-top-3 asowp-end-2.5 asowp-text-gray-400 asowp-bg-transparent hover:bg-gray-200 hover:text-gray-900 asowp-rounded-lg asowp-text-sm asowp-w-8 asowp-h-8 asowp-ms-auto asowp-inline-flex asowp-justify-center asowp-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="aso-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">Close modal</span>
                     </button>
-                    <div class="aso-p-4 md:p-5 aso-text-center">
-                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <div class="asowp-p-4 md:p-5 asowp-text-center">
+                        <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Are you sure you want to delete this configuration?</h3>
-                        <input v-model="deleteMaterial.name" readonly class="aso-rounded aso-w-full aso-h-[35px] aso-text-center aso-p-4 aso-my-2 aso-border-none" />
-                        <button @click="delMaterial" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-red-600 aso-cursor-pointer' :'aso-bg-red-700 aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this configuration?</h3>
+                        <input v-model="deleteMaterial.name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
+                        <button @click="delMaterial" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Yes, I'm sure
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Clone Modal-->
-        <div v-if="openCloneModal" @click.self="closeCloneModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full">
-            <div class="aso-relative aso-p-4 aso-w-full aso-max-w-md aso-max-h-full">
-                <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700">
-                    <button @click.stop="closeCloneModal" type="button" :class="`${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'} aso-absolute aso-top-3 aso-end-2.5 aso-text-gray-400 aso-bg-transparent hover:bg-gray-200 hover:text-gray-900 aso-rounded-lg aso-text-sm aso-w-8 aso-h-8 aso-ms-auto aso-inline-flex aso-justify-center aso-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
-                        <svg class="aso-w-3 aso-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <div v-if="openCloneModal" @click.self="closeCloneModal" class="asowp-z-[999] asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%] asowp-z-50 asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full">
+            <div class="asowp-relative asowp-p-4 asowp-w-full asowp-max-w-md asowp-max-h-full">
+                <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700">
+                    <button @click.stop="closeCloneModal" type="button" :class="`${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'} asowp-absolute asowp-top-3 asowp-end-2.5 asowp-text-gray-400 asowp-bg-transparent hover:bg-gray-200 hover:text-gray-900 asowp-rounded-lg asowp-text-sm asowp-w-8 asowp-h-8 asowp-ms-auto asowp-inline-flex asowp-justify-center asowp-items-center dark:hover:bg-gray-600 dark:hover:text-white`" data-modal-hide="popup-modal">
+                        <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="aso-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">Close modal</span>
                     </button>
-                    <div class="aso-p-4 md:p-5 aso-text-center">
-                        <svg class="aso-mx-auto aso-mb-4 aso-text-gray-400 aso-w-12 aso-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <div class="asowp-p-4 md:p-5 asowp-text-center">
+                        <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="aso-mb-5 aso-text-lg aso-font-normal aso-text-gray-500 dark:text-gray-400">Give the name of the new material, which will be an imitation of the current one.</h3>
-                        <input v-model="newMaterial.name" class="aso-rounded aso-w-full aso-h-[35px] aso-text-start aso-p-4 aso-my-2 aso-border-solid aso-border-gray-400" />
-                        <button @click="addNewMaterial" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aso-w-5 aso-w-5" v-if="!isLoading">
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Give the name of the new material, which will be an imitation of the current one.</h3>
+                        <input v-model="newMaterial.name" class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-start asowp-p-4 asowp-my-2 asowp-border-solid asowp-border-gray-400" />
+                        <button @click="addNewMaterial" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-[#016464] asowp-cursor-pointer' :'asowp-bg-[#016464] asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-w-5" v-if="!isLoading">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
                             Clone
                         </button>
-                        <button @click.stop="closeCloneModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">Cancel</button>
+                        <button @click.stop="closeCloneModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">Cancel</button>
                     </div>
                 </div>
             </div>
         </div> 
     </div>
-    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="aso-z-[999] aso-bg-gray-400 aso-overflow-y-auto aso-overflow-x-hidden aso-fixed aso-top-0 aso-right-[25%] aso-left-[75%] aso-z-50 aso-flex aso-justify-center aso-items-center aso-w-full md:aso-inset-0 aso-h-full aso-h-full">
-        <div class="aso-relative aso-top-[50px] aso-p-4 aso-w-full aso-max-w-[60%] aso-max-h-fit">
-            <div class="aso-relative aso-bg-white aso-rounded-lg aso-shadow dark:bg-gray-700 aso-px-4">
-                <div class="aso-px-[10px] aso-pt-[5px]">
+    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="asowp-z-[999] asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%] asowp-z-50 asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full asowp-h-full">
+        <div class="asowp-relative asowp-top-[50px] asowp-p-4 asowp-w-full asowp-max-w-[60%] asowp-max-h-fit">
+            <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700 asowp-px-4">
+                <div class="asowp-px-[10px] asowp-pt-[5px]">
                     <!-- <Editor
                         api-key="02v0ot513pkt9cwnhg3l36u9l13l91z8ux5oyf24nnqlp12j"
                         :init="{
@@ -253,13 +253,13 @@
                         }"
                         v-model="newMaterial.popImg"
                     /> -->
-                    <textarea name="" id="aso-admin-tinymce" cols="30" rows="10"></textarea>
-                    <div class="aso-p-4 md:p-5 aso-text-center">
-                        <button @click="savePopImg" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-text-white ${!isLoading ? 'aso-bg-[#016464] aso-cursor-pointer' :'aso-bg-[#016464] aso-cursor-not-allowed'} hover:aso-bg-[#016464] focus:ring-4 focus:outline-none aso-my-2 aso-border-none  focus:ring-red-300 dark:focus:ring-red-800 aso-font-medium aso-rounded-lg aso-text-sm aso-inline-flex aso-items-center aso-px-5 aso-py-2.5 aso-text-center`">
-                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" :disabled="isLoading"/>
+                    <textarea name="" id="asowp-admin-tinymce" cols="30" rows="10"></textarea>
+                    <div class="asowp-p-4 md:p-5 asowp-text-center">
+                        <button @click="savePopImg" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-[#016464] asowp-cursor-pointer' :'asowp-bg-[#016464] asowp-cursor-not-allowed'} hover:asowp-bg-[#016464] focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
+                            <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             Save
                         </button>
-                        <button @click.stop="closeTnymceModal" data-modal-hide="popup-modal" type="button" :class="`aso-border-solid aso-py-2.5 aso-px-5 aso-ms-3 aso-text-sm aso-font-medium aso-text-gray-900 aso-my-2  aso-border-gray-500 aso-border-white focus:outline-none aso-bg-white aso-rounded-lg aso-border aso-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'aso-cursor-not-allowed' : 'aso-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeTnymceModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
                     </div>
                 </div>
             </div>
@@ -334,7 +334,7 @@ const getInitials = (str) => {
 
 onMounted(async() => {
     tinymce.init({
-        selector: '#aso-admin-tinymce',
+        selector: '#asowp-admin-tinymce',
         plugins: 'wordpress paste link image media',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
         relative_urls: false,

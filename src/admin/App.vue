@@ -1,11 +1,11 @@
 <template>
-    <div id="aso-backend-app" class="aso-h-[100vh]">
+    <div id="asowp-backend-app" class="asowp-h-[100vh]">
         <Headerbar v-if="$route.name!=='preview-back'"/>
         <Sidebar v-if="$route.name !== 'home'"/>
-        <div v-if="activateProduct" :class="$route.name !== 'home' ? `aso-w-[calc(100%-85px)] aso-pl-[10px] aso-pt-[10px] aso-mt-[40px]` : 'aso-w-full aso-px-[10px] aso-pt-[10px]'">
+        <div v-if="activateProduct" :class="$route.name !== 'home' ? `asowp-w-[calc(100%-85px)] asowp-pl-[10px] asowp-pt-[10px] asowp-mt-[40px]` : 'asowp-w-full asowp-px-[10px] asowp-pt-[10px]'">
             <router-view />
         </div>
-        <div v-if="!activateProduct" :class="`aso-w-[calc(100%-85px)] aso-pl-[10px] aso-pt-[10px] aso-mt-[40px]`">
+        <div v-if="!activateProduct" :class="`asowp-w-[calc(100%-85px)] asowp-pl-[10px] asowp-pt-[10px] asowp-mt-[40px]`">
             <GlobalSettings />
         </div>
     </div>
@@ -19,22 +19,11 @@ import Headerbar from './pages/components/headerbar.vue';
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import api from './Api/api';
-const activateProduct = ref(true);
+const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
 const product = ref('');
 const productId = asowp_data.author;
 onMounted(async() => {
-    try {
-        const response = await api.getProductHealth();
-        product.value = response.product;
-        if(response.asowp_health) {
-            activateProduct.value = true;
-        }else{
-            //await activateLicenseKey();
-            activateProduct.value = false;
-        }
-    } catch (error) {
-        activateProduct.value = false;
-    }
+    
 });
 const activateLicenseKey = async () => {
     try {
@@ -54,7 +43,7 @@ const activateLicenseKey = async () => {
 }
 
 tailwind.config ={
-    prefix: 'aso-',
+    prefix: 'asowp-',
     corePlugins: {
         preflight: false,
     },

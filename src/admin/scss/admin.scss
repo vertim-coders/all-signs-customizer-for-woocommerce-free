@@ -3,7 +3,7 @@
 .error {
   display: none !important;
 }
-.aso-home-gradient {
+.asowp-home-gradient {
   background: rgb(240, 243, 250);
   background: linear-gradient(
     90deg,
@@ -11,30 +11,30 @@
     rgba(1, 100, 100, 1) 100%
   );
 }
-#aso-frontend-app.aso-preview-configurator .aso-scrollBar img {
+#asowp-frontend-app.asowp-preview-configurator .asowp-scrollBar img {
   width: -webkit-fill-available;
   width: -moz-available;
 }
-.aso-config-admin {
+.asowp-config-admin {
   height: 100vh;
   // height: calc(100vh)-80px;
 }
-.aso-pricing-link a {
+.asowp-pricing-link a {
   text-decoration: none !important;
 }
 .wp-core-ui select {
   max-width: none !important;
 }
-.aso-header {
+.asowp-header {
   width: calc(100% - 160px) !important;
 }
-.aso-container {
+.asowp-container {
   width: calc(100% - 100px) !important;
 }
-.aso-preview-configurator {
+.asowp-preview-configurator {
   height: calc(100vh - 50px) !important;
 }
-.folded .aso-header {
+.folded .asowp-header {
   width: calc(100% - 36px) !important;
 }
 #wpfooter {
@@ -49,7 +49,7 @@
   display: none !important;
 }
 
-.aso-notice-nux {
+.asowp-notice-nux {
   h2 {
     margin: 0 !important;
   }
@@ -59,12 +59,12 @@ input[type="checkbox"],
 input[type="radio"] {
   margin: 0 !important;
 }
-#aso-frontend-app input[type="checkbox"],
-#aso-frontend-app input[type="radio"] {
+#asowp-frontend-app input[type="checkbox"],
+#asowp-frontend-app input[type="radio"] {
   display: none !important;
 }
 
-.aso-field-required {
+.asowp-field-required {
   border: solid 2px #ff0000 !important;
   padding: 5px;
   color: #ff0000 !important;

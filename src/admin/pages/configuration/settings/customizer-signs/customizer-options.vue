@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="aso-space-y-4 aso-translate-y-8">
+        <div class="asowp-space-y-4 asowp-translate-y-8">
             <div>
-                <div class="aso-bg-[#F8F9FB] aso-px-8 aso-py-8 aso-space-y-6">
-                    <div class="aso-flex aso-justify-between">
-                        <div class="aso-flex aso-flex-col aso-w-2/5">
-                            <label class="aso-text-[12px]">Measurement Unit</label>
+                <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
+                    <div class="asowp-flex asowp-justify-between">
+                        <div class="asowp-flex asowp-flex-col asowp-w-2/5">
+                            <label class="asowp-text-[12px]">Measurement Unit</label>
                             <select v-model="customizer.measurementUnit">
                                 <option value="mm">Millimeters</option>
                                 <option value="cm">Centimeters</option>
@@ -13,8 +13,8 @@
                                 <option value="in">Inches</option>
                             </select>
                         </div>
-                        <div class="aso-flex aso-flex-col aso-w-2/5">
-                            <label class="aso-text-[12px]">Show/hide Measurements</label>
+                        <div class="asowp-flex asowp-flex-col asowp-w-2/5">
+                            <label class="asowp-text-[12px]">Show/hide Measurements</label>
                             <select v-model="customizer.showHideMeasurements">
                                 <option value="both">show both width and height</option>
                                 <option value="none">Do not show measurements</option>
@@ -23,16 +23,16 @@
                             </select>
                         </div>
                     </div>
-                    <div class="aso-flex aso-justify-between">
-                        <div class="aso-flex aso-flex-col aso-w-2/5">
-                            <label class="aso-text-[12px]">Decimal Format of Measurements</label>
+                    <div class="asowp-flex asowp-justify-between">
+                        <div class="asowp-flex asowp-flex-col asowp-w-2/5">
+                            <label class="asowp-text-[12px]">Decimal Format of Measurements</label>
                             <select v-model="customizer.decimalFormatMeasurements">
                                 <option value="with-decimal">with decimal</option>
                                 <option value="no-decimal">No decimal</option>
                             </select>
                         </div>
-                        <div class="aso-flex aso-flex-col aso-w-2/5">
-                            <label class="aso-text-[12px]">Desktop Column Order</label>
+                        <div class="asowp-flex asowp-flex-col asowp-w-2/5">
+                            <label class="asowp-text-[12px]">Desktop Column Order</label>
                             <select v-model="customizer.desktopColumnOrder">
                                 <option value="right">Right</option>
                                 <option value="left">Left</option>
@@ -41,11 +41,11 @@
                     </div>
                 </div>
             </div>
-            <div class="aso-bg-[#F8F9FB] aso-flex aso-space-x-4 aso-px-4 aso-py-3 aso-justify-end aso-items-end">
-                <div class="aso-bg-[#016464] aso-rounded">
-                    <button :disabled="isLoading" @click="updateCustomizerSettings" class=" aso-rounded aso-flex aso-bg-transparent aso-w-fit aso-space-x-2 aso-h-fit aso-text-white aso-px-12 aso-p-2.5 aso-border-none aso-opacity-90 hover:aso-opacity-100 hover:aso-border-none hover:aso-text-white hover:aso-bg-[#016464] aso-cursor-pointer">
-                        <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="aso-w-5 aso-w-5" v-if="isLoading" />
-                        <div class="aso-font-semibold aso-text-[16px]">Save</div>
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
+                <div class="asowp-bg-[#016464] asowp-rounded">
+                    <button :disabled="isLoading" @click="updateCustomizerSettings" class=" asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                        <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
+                        <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
                     </button>
                 </div>
             </div>
