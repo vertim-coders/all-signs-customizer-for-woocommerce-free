@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="asowp-z-[998] asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%] asowp-z-50 asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full">
+    <div v-show="openTnyMce" @click.self="closeTnymceModal" class="asowp-z-[998] asowp-bg-gray-400 asowp-overflow-y-auto asowp-overflow-x-hidden asowp-fixed asowp-top-0 asowp-right-[25%] asowp-left-[75%]  asowp-flex asowp-justify-center asowp-items-center asowp-w-full md:asowp-inset-0 asowp-h-full">
         <div class="asowp-relative asowp-top-[50px] asowp-p-4 asowp-w-full asowp-max-w-[60%] asowp-max-h-fit">
             <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700 asowp-px-4">
                 <div class="asowp-px-[10px] asowp-pt-[5px]">

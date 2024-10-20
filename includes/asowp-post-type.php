@@ -170,135 +170,6 @@ class ASOWP_Post_Type
 		$a_vars[] = 'vcid';
 		return $a_vars;
 	}
-	/*public function asowp_add_design_page_rewrite_rules( $param ) {
-		   
-		   global $wp_rewrite;
-		   $page_settings = get_option("asowp_config_page");
-		   if ( !empty($page_settings) && $page_settings != false ) {
-			   $asowp_page_id = $page_settings["configuratorPage"];
-		   } else {
-			   $asowp_page_id = false;
-		   }
-
-		   // if ( function_exists( 'icl_object_id' ) ) {
-		   // 	$asowp_page_id = icl_object_id( $asowp_page_id, 'page', false, ICL_LANGUAGE_CODE );
-		   // } 
-		   $asowp_page = get_post( $asowp_page_id );
-		   if ( is_object( $asowp_page ) ) {
-			   $raw_slug = get_permalink( $asowp_page->ID );
-			   $home_url = home_url( '/' );
-			   $slug     = str_replace( $home_url, '', $raw_slug );
-			   // If the slug does not have the trailing slash, we get 404 (ex postname = /%postname%)
-			   $sep = '';
-			   if ( substr( $slug, -1 ) != '/' ) {
-				   $sep = '/';
-			   }
-			   add_rewrite_rule(
-					   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-design' . '/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-					   // `pagename` because we use this WordPress page
-					   // `designer_slug` because we assign the first captured regex part to this variable
-					   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]',
-				   // This is a rather specific URL, so we add it to the top of the list
-					   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					   'top'
-			   );
-			   add_rewrite_rule(
-					   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-design' . '/([^/]+)/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-					   // `pagename` because we use this WordPress page
-					   // `designer_slug` because we assign the first captured regex part to this variable
-					   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&asowp-tplid=$matches[2]',
-				   // This is a rather specific URL, so we add it to the top of the list
-					   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					   'top'
-			   );
-			   add_rewrite_rule(
-					   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-edit' . '/([^/]+)/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-					   // `pagename` because we use this WordPress page
-					   // `designer_slug` because we assign the first captured regex part to this variable
-					   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&edit=$matches[2]',
-				   // This is a rather specific URL, so we add it to the top of the list
-					   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					   'top'
-			   );
-			   add_rewrite_rule(
-					   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-saved-design' . '/([^/]+)/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-					   // `pagename` because we use this WordPress page
-					   // `designer_slug` because we assign the first captured regex part to this variable
-					   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&design-index=$matches[2]',
-				   // This is a rather specific URL, so we add it to the top of the list
-					   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					   'top'
-			   );
-
-			   $wp_rewrite->flush_rules( false );
-		   }
-	   }*/
-
-	/*public function asowp_add_template_page_rewrite_rules( $param ) {
-		   
-		   global $wp_rewrite;
-		   $page_settings = get_option("asowp_config_page");
-		   if ( !empty($page_settings) && $page_settings != false ) {
-			   $asowp_page_id = $page_settings["templatePage"];
-		   } else {
-			   $asowp_page_id = false;
-		   }
-
-		   // if ( function_exists( 'icl_object_id' ) ) {
-		   // 	$asowp_page_id = icl_object_id( $asowp_page_id, 'page', false, ICL_LANGUAGE_CODE );
-		   // }
-		   $asowp_page = get_post( $asowp_page_id );
-		   if ( is_object( $asowp_page ) ) {
-			   $raw_slug = get_permalink( $asowp_page->ID );
-			   $home_url = home_url( '/' );
-			   $slug     = str_replace( $home_url, '', $raw_slug );
-			   // If the slug does not have the trailing slash, we get 404 (ex postname = /%postname%)
-			   $sep = '';
-			   if ( substr( $slug, -1 ) != '/' ) {
-				   $sep = '/';
-			   }
-			   add_rewrite_rule(
-				   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-templates' . '/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-				   // `pagename` because we use this WordPress page
-				   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]',
-				   // This is a rather specific URL, so we add it to the top of the list
-				   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-				   'top'
-			   );
-			   add_rewrite_rule(
-					   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-templates' . '/([^/]+)/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-					   // `pagename` because we use this WordPress page
-					   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&tpl=$matches[2]',
-				   // This is a rather specific URL, so we add it to the top of the list
-					   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					   'top'
-			   );
-			   add_rewrite_rule(
-					   // The regex to match the incoming URL
-				   $slug . $sep . 'asowp-templates' . '/([^/]+)/([^/]+)/?$',
-				   // The resulting internal URL: `index.php` because we still use WordPress
-					   // `pagename` because we use this WordPress page
-					   'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&vcid=$matches[2]',
-				   // This is a rather specific URL, so we add it to the top of the list
-					   // Otherwise, the "catch-all" rules at the bottom (for pages and attachments) will "win"
-					   'top'
-			   );
-
-			   $wp_rewrite->flush_rules( false );
-		   }
-	   } */
 
 	public function asowp_add_design_page_rewrite_rules()
 	{
@@ -312,14 +183,14 @@ class ASOWP_Post_Type
 				$home_url = home_url('/');
 				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
 
-				// Règle pour URL avec asowp-tplid
+
 				add_rewrite_rule(
 					$slug . '/asowp-design/([^/]+)/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&asowp-tplid=$matches[2]',
 					'top'
 				);
 
-				// Règle pour URL sans asowp-tplid
+
 				add_rewrite_rule(
 					$slug . '/asowp-design/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]',
@@ -328,6 +199,7 @@ class ASOWP_Post_Type
 			}
 		}
 		$wp_rewrite->flush_rules(false);
+
 	}
 
 	public function asowp_add_template_page_rewrite_rules()
@@ -342,14 +214,12 @@ class ASOWP_Post_Type
 				$home_url = home_url('/');
 				$slug = trim(str_replace($home_url, '', $raw_slug), '/');
 
-				// Règle pour URL avec asowp-tplid
 				add_rewrite_rule(
 					$slug . '/asowp-templates/([^/]+)/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]&asowp-tplid=$matches[2]',
 					'top'
 				);
 
-				// Règle pour URL sans asowp-tplid
 				add_rewrite_rule(
 					$slug . '/asowp-templates/([^/]+)/?$',
 					'index.php?pagename=' . $slug . '&asowp-product-id=$matches[1]',

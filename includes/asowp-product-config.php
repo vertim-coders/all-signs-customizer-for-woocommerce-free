@@ -563,7 +563,7 @@ class ASOWP_Product_Config
 			$meta_value = get_post_meta((int) $config_id['config-id'], "asowp-configs-meta", true);
 			$general_options = $meta_value["data"]["settings"]["generals"]["product"] ?? null;
 			$custom_products_ids = asowp_get_custom_products();
-			$custom_products_ids = array_map($anonymous_function, $custom_products);
+			//$custom_products_ids = array_map($anonymous_function, $custom_products);
 			if (in_array($pid, $custom_products_ids) && $general_options != null && $general_options['hideAddToCartButtonOnDetailPage']) {
 				wp_localize_script("asowp-product-min", "cart_hide_button", [
 					"hide_cart_button" => $general_options['hideAddToCartButtonOnDetailPage']

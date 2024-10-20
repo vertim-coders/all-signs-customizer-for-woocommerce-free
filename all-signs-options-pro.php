@@ -547,27 +547,18 @@ final class ASOWP_All_Signs_Options_Pro
             update_option("asowp_all_fixingMethods", $fixingMethods);
         } else {
             for ($i = 0; $i < count($have_fixingMethods); $i++) {
-                $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
+                $search_strings = ['all-signs-options-starter/assets/images/', 'all-signs-options-free/assets/images/'];
 
-                $found = false;
-                foreach ($search_strings as $string) {
-                    if (strpos($have_fixingMethods[$i]["icon"], $string) !== false) {
-                        $found = true;
-                        break;
-                    }
-                }
+                $have_fixingMethods[$i]["icon"] = str_replace($search_strings, "all-signs-options-pro/assets/images/", $have_fixingMethods[$i]["icon"]);
 
-                if ($found) {
-                    $have_fixingMethods[$i]["icon"] = str_replace($search_strings, 'all-signs-options-pro/', $have_fixingMethods[$i]["icon"]);
-                    update_option("asowpWP_all_fixingMethods", $have_fixingMethods);
-                }
             }
+            update_option("asowp_all_fixingMethods", $have_fixingMethods);
             $differenceCles = array_diff_key($fixingMethods, $have_fixingMethods);
             if (count($differenceCles) > 0) {
                 foreach ($differenceCles as $key => $value) {
                     $have_fixingMethods[$key] = $value;
                 }
-                update_option("asowpWP_all_fixingMethods", $have_fixingMethods);
+                update_option("asowp_all_fixingMethods", $have_fixingMethods);
             }
         }
     }
@@ -590,7 +581,7 @@ final class ASOWP_All_Signs_Options_Pro
      */
     public function activate()
     {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        if (is_plugin_active('woocommerce/woocommerce.php')) {
 
             $installed = get_option('ASOWP_installed');
 

@@ -7855,7 +7855,7 @@
             recaps:{...configData.value,
                 custom_price: parseFloat(
                     finalPrices.value + parseFloat(asowp_p_p_p_p_p_configurator_data.regularPrice)
-                ).toFixed(asowp_p_configurator_data.decimals)
+                ).toFixed(asowp_configurator_data.decimals)
             },
             variation_id:asowp_configurator_data.productID,
             quantity:1

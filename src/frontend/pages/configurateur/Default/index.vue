@@ -2560,7 +2560,7 @@
         
                 if(route.name == 'template-maker'){
                     template.value = await api.getTemplate(template_config_id,template_id);
-                    asowp_p_configurator_data.regularPrice = template.value.basePrice;
+                    asowp_configurator_data.regularPrice = template.value.basePrice;
                 }
         
                 handleCheckTemplate(props.template.designFromTemplate)
@@ -7777,7 +7777,7 @@
                 ...configData.value,
                 custom_price: parseFloat(
                     finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
-                ).toFixed(asowp_p_configurator_data.decimals)
+                ).toFixed(asowp_configurator_data.decimals)
             },
             variation_id:asowp_configurator_data.productID,
             quantity:1
