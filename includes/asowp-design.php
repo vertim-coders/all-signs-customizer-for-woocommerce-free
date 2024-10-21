@@ -222,8 +222,8 @@ class ASOWP_Design
 				<?php } ?>
 			</div>
 			<div class="asowp-custom-options-info">
-				<label for=""><?php echo esc_html($recaps["sign"]["color"]["label"]) ?>: </label>
 				<?php if (isset($recaps["sign"]["color"]["value"]["face1"]) || isset($recaps["texts"]["value"]["face2"])) { ?>
+					<label for=""><?php echo esc_html($recaps["sign"]["color"]["label"]) ?>: </label>
 					<?php foreach ($recaps["sign"]["color"]["value"] as $key => $color) { ?>
 						<div style="display:flex; justify-content:center; align-items:center;">
 							<label for="" style="margin: 0 5px;"><?php echo esc_html($recaps["faces"][$key]) ?>: </label>
@@ -239,16 +239,22 @@ class ASOWP_Design
 						</div>
 					<?php }
 				} else { ?>
-					<span for="" style="margin: 0 5px;"><?php echo esc_html($recaps["sign"]["color"]["value"]["name"]) ?> </span>
-					<?php if ($this->isColorCode($recaps["sign"]["color"]["value"]["codeHex"])) { ?>
-						<div class="asowp-cart-color-option"
-							style="background:<?php echo esc_attr($recaps["sign"]["color"]["value"]["codeHex"]) ?>;"></div>
-					<?php } else { ?>
-						<div class="asowp-cart-color-option" style="position:relative;">
-							<img src="<?php echo esc_url($recaps["sign"]["color"]["value"]["codeHex"]) ?>"
-								style="position:absolute; width:100%; height:100%;" />
+					<div sytle="display:flex; justify-content:between;">
+						<div>
+							<label for=""><?php echo esc_html($recaps["sign"]["color"]["label"]) ?>: </label>
+							<span for="" style="margin: 0 5px;">
+								<?php echo esc_html($recaps["sign"]["color"]["value"]["name"]) ?>
+							</span>
 						</div>
-					<?php } ?>
+						<?php if ($this->isColorCode($recaps["sign"]["color"]["value"]["codeHex"])) { ?>
+							<div class="asowp-cart-color-option"
+								style="background:<?php echo esc_attr($recaps["sign"]["color"]["value"]["codeHex"]) ?>;"></div>
+						<?php } else { ?>
+							<div class="asowp-cart-color-option" style="position:relative;">
+								<img src="<?php echo esc_url($recaps["sign"]["color"]["value"]["codeHex"]) ?>" style="width:100px;" />
+							</div>
+						<?php } ?>
+					</div>
 				<?php } ?>
 			</div>
 			<?php if (isset($recaps["texts"]["value"]) && count($recaps["texts"]["value"]) > 0) { ?>
@@ -400,19 +406,19 @@ class ASOWP_Design
 	 * @return mixed
 	 */
 	/* public function set_email_order_item_meta( $item_id, $item, $order) {
-			  if ( is_order_received_page() ) {
-				  return;
-			  }
-			  $order_data   = wc_get_order_item_meta( $item_id, 'asowp_meta_data' );
+				if ( is_order_received_page() ) {
+					return;
+				}
+				$order_data   = wc_get_order_item_meta( $item_id, 'asowp_meta_data' );
 
-			  if ( isset( $order_data ) && !empty( $order_data ) ) {
-				  ob_start();
+				if ( isset( $order_data ) && !empty( $order_data ) ) {
+					ob_start();
 
-				  $details = ob_get_clean();
-				  return $details;
-			  }
+					$details = ob_get_clean();
+					return $details;
+				}
 
-		  } */
+			} */
 
 	/**
 	 * Add order design to mail.
@@ -430,7 +436,7 @@ class ASOWP_Design
 			foreach ($items as $item) {
 				if (isset($item["asowp_meta_data"]['recaps'])) {
 					if (isset($item["asowp_meta_data"]['zip'])) {
-						$attachments[] = $item["asowp_meta_data"]['zip'];
+						array_push($attachments, str_replace(ASOWP_IMAGE_URL, ASOWP_IMAGE_PATH, $item["asowp_meta_data"]['zip']));
 					}
 
 				}
@@ -467,22 +473,22 @@ class ASOWP_Design
 				<?php
 			}
 			/* $product_id = $_product->get_id();
-							  $meta = get_post_meta($product_id,'product-asowp-metas',true);
-							  if(!empty($meta) && isset($meta[$product_id]['config-id'])){
-								  $configId = $meta[$product_id]['config-id'];
-								  if($configId !=0){
-									  $config = get_post_meta($configId,"asowp-configs-meta",true);
-									  if(!empty($config)){
-										  $email_data = $config['settings']["generals"]["output"]['manufacturerEmail'];
-										  if(isset($email_data["sendDesignByEmail"]) && $email_data["sendDesignByEmail"] && isset($email_data["receiverEmail"]) && !empty($email_data["receiverEmail"])){
-											  ?>
-											  <div>
-												  <button class="button asowp-send-email" data-product-id="<?php echo esc_attr($product_id)?>" data-order='<?php echo wp_json_encode(["recaps"=>$order_data,"order_id"=>$order_id])?>'><?php echo __("Send Manufacturer mail","all-signs-options-pro")?></button>
-											  </div>
-									  <?php }
-									  }
-								  }
-							  } */
+																														$meta = get_post_meta($product_id,'product-asowp-metas',true);
+																														if(!empty($meta) && isset($meta[$product_id]['config-id'])){
+																															$configId = $meta[$product_id]['config-id'];
+																															if($configId !=0){
+																																$config = get_post_meta($configId,"asowp-configs-meta",true);
+																																if(!empty($config)){
+																																	$email_data = $config['settings']["generals"]["output"]['manufacturerEmail'];
+																																	if(isset($email_data["sendDesignByEmail"]) && $email_data["sendDesignByEmail"] && isset($email_data["receiverEmail"]) && !empty($email_data["receiverEmail"])){
+																																		?>
+																																		<div>
+																																			<button class="button asowp-send-email" data-product-id="<?php echo esc_attr($product_id)?>" data-order='<?php echo wp_json_encode(["recaps"=>$order_data,"order_id"=>$order_id])?>'><?php echo __("Send Manufacturer mail","all-signs-options-pro")?></button>
+																																		</div>
+																																<?php }
+																																}
+																															}
+																														} */
 
 		}
 
@@ -555,10 +561,16 @@ class ASOWP_Design
 	{
 
 		$order_data = wc_get_order_item_meta($item_id, 'asowp_meta_data');
+		/* if (isset($order_data) && !empty($order_data)) {
+				  if (is_account_page()) {
+					  echo wp_kses_post($this->display_custom_recaps($order_data["recaps"], true));
+				  }
+			  } */
 		if (isset($order_data) && !empty($order_data)) {
-			if (is_account_page()) {
-				echo wp_kses_post($this->display_custom_recaps($order_data["recaps"], true));
-			}
+			ob_start();
+			$recaps = $order_data["recaps"];
+			include ASOWP_INCLUDES . '/purchase-mail.php';
+			echo wp_kses_post(ob_get_clean());
 		}
 
 	}
