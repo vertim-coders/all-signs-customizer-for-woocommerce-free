@@ -17,7 +17,7 @@ class ASOWP_Materials_Advance extends WP_REST_Controller
      */
     public function __construct()
     {
-        $this->namespace = 'aso/v1';
+        $this->namespace = 'asowp/v1';
         $this->rest_base = '/configs';
     }
 

@@ -80,25 +80,25 @@ class ASOWP_Admin
     public function plugin_page()
     {
         $api_url = get_rest_url(); ?>
-        <div class="wrap">
-            <div id="asowp-admin-app"></div>
-        </div>
-        <?php wp_localize_script("asowp-admin", "asowp_data", [
-            "rest_url" => $api_url . "aso/v1",
-            "ajax_url" => esc_url(admin_url('admin-ajax.php')),
-            "site_url" => urlencode(get_site_url()),
-            "caches" => get_transient('asowp_health-state-checking'),
-            "author" => ASOWP_ID,
-            "assets_url" => ASOWP_ASSETS,
-            "page" => "admin",
-            "version" => ASOWP_VERSION,
-            'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
-            'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
-        ]);
-        wp_localize_script("asowp-admin", "asowp_configurator_data", array(
-            "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
-            "borders_url" => ASOWP_ASSETS . '/images/borders',
-        ));
+                <div class="wrap">
+                    <div id="asowp-admin-app"></div>
+                </div>
+                <?php wp_localize_script("asowp-admin", "asowp_data", [
+                    "rest_url" => $api_url . "asowp/v1",
+                    "ajax_url" => esc_url(admin_url('admin-ajax.php')),
+                    "site_url" => urlencode(get_site_url()),
+                    "caches" => get_transient('asowp_health-state-checking'),
+                    "author" => ASOWP_ID,
+                    "assets_url" => ASOWP_ASSETS,
+                    "page" => "admin",
+                    "version" => ASOWP_VERSION,
+                    'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
+                    'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
+                ]);
+                wp_localize_script("asowp-admin", "asowp_configurator_data", array(
+                    "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
+                    "borders_url" => ASOWP_ASSETS . '/images/borders',
+                ));
     }
 
     public function asowp_add_custom_mime_types($mimes)

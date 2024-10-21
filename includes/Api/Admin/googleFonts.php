@@ -9,13 +9,15 @@ use WP_REST_Controller;
 /**
  * REST_API Handler
  */
-class ASOWP_Api_GoogleFonts extends WP_REST_Controller {
+class ASOWP_Api_GoogleFonts extends WP_REST_Controller
+{
 
     /**
      * [__construct description]
      */
-    public function __construct() {
-        $this->namespace = 'aso/v1';
+    public function __construct()
+    {
+        $this->namespace = 'asowp/v1';
         $this->rest_base = 'google-fonts';
     }
 
@@ -24,15 +26,16 @@ class ASOWP_Api_GoogleFonts extends WP_REST_Controller {
      *
      * @return void
      */
-    public function register_routes() {
+    public function register_routes()
+    {
         register_rest_route(
             $this->namespace,
             '/' . $this->rest_base,
             array(
                 array(
-                    'methods'             => \WP_REST_Server::READABLE,
-                    'callback'            => array( $this, 'get_google_fonts' ),
-                    'permission_callback' => array( $this, 'get_config_permissions_check' )
+                    'methods' => \WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_google_fonts'),
+                    'permission_callback' => array($this, 'get_config_permissions_check')
                 ),
             )
         );
@@ -44,7 +47,8 @@ class ASOWP_Api_GoogleFonts extends WP_REST_Controller {
      *
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
-    public function get_google_fonts( $request ) {
+    public function get_google_fonts($request)
+    {
         $json = '{
         "kind": "webfonts#webfontList",
         "items": [
@@ -31922,7 +31926,7 @@ class ASOWP_Api_GoogleFonts extends WP_REST_Controller {
     }';
         $json = json_decode($json);
         return rest_ensure_response($json->items);
-    }    
+    }
 
     /**
      * Checks if a given request has access to read the items.
@@ -31931,7 +31935,8 @@ class ASOWP_Api_GoogleFonts extends WP_REST_Controller {
      *
      * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
      */
-    public function get_config_permissions_check( $request ) {
+    public function get_config_permissions_check($request)
+    {
         return true;
     }
 
@@ -31940,7 +31945,8 @@ class ASOWP_Api_GoogleFonts extends WP_REST_Controller {
      *
      * @return array Collection parameters.
      */
-    public function get_collection_params() {
+    public function get_collection_params()
+    {
         return [];
     }
 }

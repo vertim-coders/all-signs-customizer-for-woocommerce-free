@@ -21,7 +21,7 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
    */
   public function __construct()
   {
-    $this->namespace = 'aso/v1';
+    $this->namespace = 'asowp/v1';
     $this->rest_base = 'globals-settings';
   }
   /**
