@@ -108,6 +108,8 @@ function handleCloneCanvas() {
     "objectType",
     "imageUrl",
     "fontFamilyUrl",
+    "neonColor",
+    "glowRadius"
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -125,14 +127,7 @@ function handleCloneCanvas() {
 
 var currentUnit = "";
 var defaultFontSize = 0;
-function handleGetCurrentUnit(
-  unit,
-  fontSize,
-  minFontSize,
-  maxFontSize,
-  textFontFam,
-  textFontFamUrl
-) {
+function handleGetCurrentUnit( unit, fontSize, minFontSize, maxFontSize, textFontFam, textFontFamUrl) {
   currentUnit = unit;
   defaultFontSize = fontSize;
 
@@ -148,6 +143,10 @@ function handleGetCurrentUnit(
 var visualizerText = {};
 function handleGetDefaultText(object) {
   visualizerText = object;
+}
+var textType = "normal"
+function handleGetTextType(type){
+  textType = type;
 }
 
 var defaultShadow = new fabric.Shadow({
@@ -201,6 +200,7 @@ function updateModifications(good, position) {
       },
     };
     var frontJsonData = canvas.toJSON([
+      "type",
       "fill",
       "name",
       "id",
@@ -221,6 +221,8 @@ function updateModifications(good, position) {
       "objectType",
       "imageUrl",
       "fontFamilyUrl",
+      "neonColor",
+      "glowRadius"
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -243,6 +245,8 @@ function updateModifications(good, position) {
       "objectType",
       "imageUrl",
       "fontFamilyUrl",
+      "neonColor",
+      "glowRadius"
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -252,10 +256,9 @@ function updateModifications(good, position) {
     var canvasAsJson = JSON.stringify(frontJsonData);
     var backCanvasAsJson = JSON.stringify(backJsonData);
 
-    if (
-      currentConfig.currentStateIndex <
-      currentConfig.canvasState.length - 1
-    ) {
+    console.log(frontJsonData)
+
+    if ( currentConfig.currentStateIndex < currentConfig.canvasState.length - 1 ) {
       var indexToBeInserted = currentConfig.currentStateIndex + 1;
       currentConfig.canvasState[indexToBeInserted] = {
         front: canvasAsJson,
@@ -275,10 +278,7 @@ function updateModifications(good, position) {
       currentConfig.canvasObjects.push(objects);
     }
     currentConfig.currentStateIndex = currentConfig.canvasState.length - 1;
-    if (
-      currentConfig.currentStateIndex == currentConfig.canvasState.length - 1 &&
-      currentConfig.currentStateIndex != -1
-    ) {
+    if ( currentConfig.currentStateIndex == currentConfig.canvasState.length - 1 && currentConfig.currentStateIndex != -1 ) {
       // currentConfig.redoButton.disabled= "disabled";
     }
   }
@@ -318,7 +318,7 @@ function handleUndo() {
                     prevObject[0].fill = "transparent";
                   }
                 }
-                if (prevObject[0].name === "asowp-SignText") {
+                if (prevObject[0].name === "asowp-SignText" || prevObject[0].type === "neon-Text") {
                   prevObject[0].on("editing:entered", () => {
                     handleGetAddedTextValues(prevObject[0]);
                   });
@@ -337,6 +337,29 @@ function handleUndo() {
                     handleGetAddedTextValues(prevObject[0]);
                     reScaleText(prevObject[0]);
                   });
+                  prevObject[0].name = "asowp-SignText"
+                  prevObject[0].canvasName = canva.name
+                  prevObject[0].clipPath = null
+                  prevObject[0].uniScaleTransform = true,
+                  prevObject[0].centeredScaling = true,
+                  prevObject[0].lockScalingFlip = true,
+                  prevObject[0].evented = true,
+                  prevObject[0].originX = "center",
+                  prevObject[0].originY = "center",
+
+                  prevObject[0].setControlsVisibility({
+                    mt: false, // Middle top
+                    mb: false, // Middle bottom
+                    ml: false, // Middle left
+                    mr: false, // Middle right
+                    bl: true, // Bottom left
+                    br: true, // Bottom right
+                    tl: true, // Top left
+                    tr: true, // Top right
+                  });
+
+                  console.log(prevObject[0], "asowp-SignText")
+
                 }
                 if (prevObject[0].name === "asowp-SignImage") {
                   prevObject[0].on("mousedown", function () {
@@ -352,33 +375,15 @@ function handleUndo() {
             });
           }
 
-          recreateState(
-            canvas,
-            currentConfig.canvasState[currentConfig.currentStateIndex - 1].front
-          );
-          recreateState(
-            backCanvas,
-            currentConfig.canvasState[currentConfig.currentStateIndex - 1].back
-          );
+          recreateState( canvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].front );
+          recreateState( backCanvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].back );
 
           if (activeSignFace === "front") {
-            handleSelectBorder(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face1.type
-            );
-            handlechangeBorderColor(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face1.color
-            );
+            handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face1.type );
+            handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face1.color );
           } else {
-            handleSelectBorder(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face2.type
-            );
-            handlechangeBorderColor(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face2.color
-            );
+            handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face2.type );
+            handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face2.color );
           }
 
           addedTexts = [];
@@ -396,19 +401,11 @@ function handleUndo() {
           });
 
           // addedTexts = [...currentConfig.canvasObjects[currentConfig.currentStateIndex-1].texts]
-          maxTextCharForSize =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .maxChars;
-          addedImages =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .images;
+          maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].maxChars;
+          addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1] .images;
 
-          fixScale =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .fixScale;
-          sizeRatio =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .sizeRatio;
+          fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixScale;
+          sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].sizeRatio;
 
           currentConfig.undoStatus = false;
           currentConfig.currentStateIndex -= 1;
@@ -496,7 +493,7 @@ function handleRedo() {
                   prevObject[0].fill = "transparent";
                 }
               }
-              if (prevObject[0].name === "asowp-SignText") {
+              if (prevObject[0].name === "asowp-SignText" || prevObject[0].type === "neon-Text") {
                 prevObject[0].on("editing:entered", () => {
                   handleGetAddedTextValues(prevObject[0]);
                 });
@@ -515,8 +512,26 @@ function handleRedo() {
                   handleGetAddedTextValues(prevObject[0]);
                   reScaleText(prevObject[0]);
                 });
+                prevObject[0].name = "asowp-SignText"
+                prevObject[0].canvasName = canva.name
+                prevObject[0].clipPath = null
+                prevObject[0].uniScaleTransform = true,
+                prevObject[0].centeredScaling = true,
+                prevObject[0].lockScalingFlip = true,
+                prevObject[0].evented = true,
+                prevObject[0].originX = "center",
+                prevObject[0].originY = "center",
 
-                // console.log(prevObject[0]);
+                prevObject[0].setControlsVisibility({
+                  mt: false, // Middle top
+                  mb: false, // Middle bottom
+                  ml: false, // Middle left
+                  mr: false, // Middle right
+                  bl: true, // Bottom left
+                  br: true, // Bottom right
+                  tl: true, // Top left
+                  tr: true, // Top right
+                });
               }
               if (prevObject[0].name === "asowp-SignImage") {
                 prevObject[0].on("mousedown", function () {
@@ -576,19 +591,11 @@ function handleRedo() {
         });
 
         // addedTexts = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].texts
-        maxTextCharForSize =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .maxChars;
-        addedImages =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .images;
+        maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].maxChars;
+        addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].images;
 
-        fixScale =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .fixScale;
-        sizeRatio =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .sizeRatio;
+        fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixScale;
+        sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].sizeRatio;
 
         currentConfig.redoStatus = false;
         currentConfig.currentStateIndex += 1;
@@ -1142,6 +1149,23 @@ function handleChangeSize(width, height, name, maxChar) {
             obj.text = obj.text.slice(0, obj.text.length - charsToRemove);
             obj.set("text", obj.text);
 
+            if(textType === "3D"){
+              var textLayer = null
+              var objects = activeCanvas.getObjects();
+              objects.forEach(function(object) {
+                if(object.id == obj.id && object.name == "asowp-SignTextLayer"){
+                  textLayer = object
+                }
+              })
+        
+              activeCanvas.remove(textLayer)
+              
+              textLayer.text = textLayer.text.slice( 0, obj.text.length - charsToRemove);
+              textLayer.set("text", obj.text);
+        
+              activeCanvas.add(textLayer)
+            } 
+
             canva.add(obj);
             obj.set("scaleX", obj.scaleX + 0.001);
             obj.set("scaleY", obj.scaleY + 0.001);
@@ -1155,11 +1179,7 @@ function handleChangeSize(width, height, name, maxChar) {
 
             canva.getObjects().forEach(function (obj) {
               if (obj.name === "asowp-SignText") {
-                function syncTextObjectsByFace(
-                  bigArray,
-                  textObjects,
-                  targetFace
-                ) {
+                function syncTextObjectsByFace( bigArray, textObjects, targetFace ) {
                   // Parcourir les objets du grand tableau qui ont la face cible
                   bigArray.forEach((bigObj, index) => {
                     // console.log(bigObj.canvasName,"can")
@@ -1183,11 +1203,7 @@ function handleChangeSize(width, height, name, maxChar) {
 
                   return bigArray;
                 }
-                addedTexts = syncTextObjectsByFace(
-                  addedTexts,
-                  textObjects,
-                  canva.name
-                );
+                addedTexts = syncTextObjectsByFace( addedTexts, textObjects, canva.name );
                 // console.log(addedTexts, "1969089151")
               }
             });
@@ -1343,10 +1359,18 @@ function handleDeleteObject(object) {
   var target = object;
   var canvas = target.canvas;
   canvas.discardActiveObject();
+  if(textType == "3D"){
+    var objects = canvas.getObjects();
+    objects.forEach((obj)=>{
+      if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+        canvas.remove(obj);
+      }
+    })
+  }
   canvas.remove(target);
   canvas.requestRenderAll();
 
-  if (target.type == "i-text") {
+  if (target.type == "i-text" || target.type == "neon-Text") {
     removeTextById(target.id, addedTexts);
     removeTextById(
       object.id,
@@ -1389,12 +1413,26 @@ function handleCloneObject(object, imageId) {
   var target = object;
   var canvas = target.canvas;
   target.clone(function (cloned) {
+    cloned.clipPath = null
     cloned.left += 10;
     cloned.top += 10;
-    if (cloned.type == "i-text") {
-      cloned.set("canvas", activeCanvas);
+    if (cloned.type == "i-text" || cloned.type == "neon-Text") {
+      cloned.set("canvas", canvas);
       // console.log(cloned.canvas, "cloned canvas");
-      handleAddTextToSign(cloned);
+      if(textType == "3D"){
+        var objects = canvas.getObjects();
+        objects.forEach((obj)=>{
+          if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+            obj.clone((layerClone)=>{
+              layerClone.left += 10;
+              layerClone.top += 10;
+              handleAddTextToSign(cloned, layerClone);
+            })
+          }
+        })
+      }else{
+        handleAddTextToSign(cloned);
+      }
     }
     if (
       cloned.type == "image" ||
@@ -1443,14 +1481,23 @@ function handleCenterVertically(object) {
   var canvas = target.canvas;
   var newCoord = target.getCoords();
   var Objects = canvas.getObjects();
-  Objects.forEach(function (object) {
-    if (object.name == "safeObject") {
-      var containerCoords = object.getCenterPoint();
+  Objects.forEach(function (objct) {
+    if (objct.name == "safeObject") {
+      var containerCoords = objct.getCenterPoint();
       var targetHeight = newCoord[3].y - newCoord[0].y;
       // var targetHeight = target.height
       // var newTop = object.top + (object.height /2) - (targetHeight /2)
       var newTop = containerCoords.y;
       target.top = newTop;
+
+      if(textType == "3D"){
+        var objets = activeCanvas.getObjects();
+        objets.forEach((obj)=>{
+          if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+            obj.top = newTop;
+          }
+        })
+      }
     }
   });
   canvas.renderAll();
@@ -1461,15 +1508,24 @@ function handleCenterHorizontally(object) {
   var canvas = target.canvas;
   var newCoord = target.getCoords();
   var Objects = canvas.getObjects();
-  Objects.forEach(function (object) {
-    if (object.name == "safeObject") {
-      var containerCoords = object.getCenterPoint();
+  Objects.forEach(function (objct) {
+    if (objct.name == "safeObject") {
+      var containerCoords = objct.getCenterPoint();
 
       // var targetWidth = (newCoord[1].x - newCoord[0].x)
       var targetWidth = target.width;
       // var newLeft = object.left + (object.width /2) - (targetWidth /2)
       var newLeft = containerCoords.x;
       target.left = newLeft;
+
+      if(textType == "3D"){
+        var objects = activeCanvas.getObjects();
+        objects.forEach((obj)=>{
+          if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+            obj.left = newLeft;
+          }
+        })
+      }
     }
   });
   canvas.renderAll();
@@ -5523,14 +5579,7 @@ function handleSelectFixingMethode(methode) {
 }
 
 // fonctions concernant l'ajout de text à la sign
-function getTextValueToUnit(
-  container,
-  objWidht,
-  objHeight,
-  objLeft,
-  objTop,
-  angle
-) {
+function getTextValueToUnit( container, objWidht, objHeight, objLeft, objTop, angle) {
   var textWidth = document.getElementById("text-width");
   var textHeight = document.getElementById("text-height");
   var textLeft = document.getElementById("text-left");
@@ -5559,20 +5608,14 @@ function getTextValueToUnit(
       var left = objLeft * radio;
       left = left * radio1;
 
-      var right =
-        currentSize.width -
-        (convertFromPx(left, currentUnit) +
-          convertFromPx(newWidth, currentUnit));
+      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
       // var right = objRight * radio
       // right = right * radio1
 
       var top = objTop * radio;
       top = top * radio1;
 
-      var bottom =
-        currentSize.height -
-        (convertFromPx(top, currentUnit) +
-          convertFromPx(newHeight, currentUnit));
+      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
 
       textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
       textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
@@ -5583,14 +5626,9 @@ function getTextValueToUnit(
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if (
-        activeCanvas.getActiveObject() &&
-        activeCanvas.getActiveObject().type == "image"
-      ) {
+      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt(
-          convertFromPx(newHeight, currentUnit)
-        );
+        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
     }
     if (container.width == 1000) {
@@ -5606,18 +5644,12 @@ function getTextValueToUnit(
       var left = objLeft * radio;
       left = left * radio1;
 
-      var right =
-        currentSize.width -
-        (convertFromPx(left, currentUnit) +
-          convertFromPx(newWidth, currentUnit));
+      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
 
       var top = objTop * radio;
       top = top * radio1;
 
-      var bottom =
-        currentSize.height -
-        (convertFromPx(top, currentUnit) +
-          convertFromPx(newHeight, currentUnit));
+      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
 
       // if(activeObject.type === 'i-text'){
       //     selectedText.width = parseInt(convertFromPx(newWidth, currentUnit))
@@ -5644,14 +5676,9 @@ function getTextValueToUnit(
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if (
-        activeCanvas.getActiveObject() &&
-        activeCanvas.getActiveObject().type == "image"
-      ) {
+      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt(
-          convertFromPx(newHeight, currentUnit)
-        );
+        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
     }
   }
@@ -5666,17 +5693,11 @@ function getTextValueToUnit(
 
       var left = objLeft * radio;
 
-      var right =
-        currentSize.width -
-        (convertFromPx(left, currentUnit) +
-          convertFromPx(newWidth, currentUnit));
+      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
 
       var top = objTop * radio;
 
-      var bottom =
-        currentSize.height -
-        (convertFromPx(top, currentUnit) +
-          convertFromPx(newHeight, currentUnit));
+      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
 
       textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
       textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
@@ -5686,14 +5707,9 @@ function getTextValueToUnit(
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if (
-        activeCanvas.getActiveObject() &&
-        activeCanvas.getActiveObject().type == "image"
-      ) {
+      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt(
-          convertFromPx(newHeight, currentUnit)
-        );
+        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
     }
     if (container.width == 1000) {
@@ -5705,17 +5721,11 @@ function getTextValueToUnit(
 
       var left = objLeft * radio;
 
-      var right =
-        currentSize.width -
-        (convertFromPx(left, currentUnit) +
-          convertFromPx(newWidth, currentUnit));
+      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
 
       var top = objTop * radio;
 
-      var bottom =
-        currentSize.height -
-        (convertFromPx(top, currentUnit) +
-          convertFromPx(newHeight, currentUnit));
+      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
 
       textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
       textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
@@ -5725,14 +5735,9 @@ function getTextValueToUnit(
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if (
-        activeCanvas.getActiveObject() &&
-        activeCanvas.getActiveObject().type == "image"
-      ) {
+      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt(
-          convertFromPx(newHeight, currentUnit)
-        );
+        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
     }
   }
@@ -5770,7 +5775,7 @@ var selectedText = {
 
 function handleGetAddedTextValues(transform) {
   var container = handleGetObjectByName("safeObject");
-  if (transform.type == "i-text") {
+  if (transform.type == "i-text" || transform.type == "neon-Text") {
     var obj = transform;
     obj.setCoords();
     var objWidht = obj.width * obj.scaleX;
@@ -5807,13 +5812,7 @@ function handleGetAddedTextValues(transform) {
     sizeEditor.value = parseInt(selectedText.size * 12);
 
     // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
-    getTextValueToUnit(
-      container,
-      objWidht,
-      objHeight,
-      objLeftInContainer,
-      objTopInContainer
-    );
+    getTextValueToUnit( container, objWidht, objHeight, objLeftInContainer, objTopInContainer );
 
     handleCalcTextPrice();
   } else {
@@ -5838,7 +5837,7 @@ function handleGetAddedTextValues(transform) {
     var objBottomInContainer =
       container.height - (objTopInContainer + objHeight);
 
-    if (obj.type == "i-text") {
+    if (obj.type == "i-text" || obj.type == "neon-Text") {
       selectedText.object = obj;
       selectedText.value = obj.text;
       selectedText.align = obj.textAlign;
@@ -5850,13 +5849,7 @@ function handleGetAddedTextValues(transform) {
       selectedText.linethrough = obj.linethrough;
       selectedText.overline = obj.overline;
 
-      getTextValueToUnit(
-        container,
-        objWidht,
-        objHeight,
-        objLeftInContainer,
-        objTopInContainer
-      );
+      getTextValueToUnit( container, objWidht, objHeight, objLeftInContainer, objTopInContainer );
     }
     handleCalcTextPrice();
 
@@ -5877,6 +5870,91 @@ function handleGetAddedTextValues(transform) {
     objTopInContainer
   );
 }
+fabric.NeonText = fabric.util.createClass(fabric.Text, {
+  type: 'neon-Text',
+
+  initialize: function(text, options) {
+    options = options || {};
+    this.neonColor = options.neonColor || 'white';
+    this.glowRadius = options.glowRadius || 20;
+    this.id = options.id;
+    this.name = options.name;
+    this.lockMoving = options.lockMoving;
+
+    // Assurez-vous que `text` est une chaîne de caractères
+    this.text = typeof text === 'string' ? text : '';
+
+    this.callSuper('initialize', this.text, options);
+  },
+
+  _render: function(ctx) {
+    this.callSuper('_render', ctx);
+    ctx.save();
+
+    const lines = this.text.split('\n');
+    const lineHeight = this.fontSize * this.lineHeight;
+
+    const originX = -this.width / 2;
+    let originY = -this.height / 2 + this.fontSize / 2 + (this.fontSize * 0.38);
+
+    lines.forEach((line, lineIndex) => {
+      const lineWidth = this.__lineWidths[lineIndex];
+      const lineHeight = this.__lineHeights[lineIndex];
+
+      const lineY = originY + lineIndex * lineHeight;
+
+      let lineX = originX;
+      const newLineOrigin = (this.width / 2 - lineWidth / 2);
+      if (this.textAlign === 'center') {
+        lineX += newLineOrigin;
+      } else if (this.textAlign === 'right') {
+        lineX += newLineOrigin * 2;
+      }
+
+      for (let i = this.glowRadius; i > 0; i -= 5) {
+        ctx.shadowColor = this.neonColor;
+        ctx.shadowBlur = i;
+        ctx.fillStyle = this.neonColor;
+        ctx.fillText(line, lineX, lineY);
+      }
+
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = 'transparent';
+    });
+
+    this.callSuper('_render', ctx);
+    ctx.restore();
+  },
+
+  toObject: function() {
+    return fabric.util.object.extend(this.callSuper('toObject'), {
+      neonColor: this.neonColor,
+      glowRadius: this.glowRadius,
+      id: this.id,
+      name: this.name,
+      lockMoving: this.lockMoving,
+    });
+  }
+});
+
+fabric.NeonText.fromObject = function (object, callback) {
+  // Assurez-vous que `object.text` est une chaîne de caractères
+  object.text = typeof object.text === 'string' ? object.text : '';
+  return callback(new fabric.NeonText(object.text, object));
+};
+
+// // Stockez la méthode d'origine de `fabric.Object._fromObject`
+// const originalFromObject = fabric.Object._fromObject;
+
+// console.log(originalFromObject, "================================")
+// // Remplacez `fabric.Object._fromObject` par votre implémentation personnalisée
+// // fabric.Object._fromObject = function (object, callback) {
+// //   if (object.type === 'neon-Text') {
+// //     return fabric.NeonText.fromObject(object, callback);
+// //   }
+// //   // Appelez la méthode d'origine pour les autres types d'objets
+// //   // return originalFromObject(object, callback);
+// // };
 
 let newId = 49;
 
@@ -5889,11 +5967,7 @@ function resizeText(textObject) {
 
   var totalCharacters = 0;
 
-  if (
-    maxTextCharForSize !== -1 &&
-    ((activeSignFace === "back" && backTextCharLength > maxTextCharForSize) ||
-      (activeSignFace === "front" && maxTextCharForSize < frontTextCharLength))
-  ) {
+  if ( maxTextCharForSize !== -1 && ((activeSignFace === "back" && backTextCharLength > maxTextCharForSize) || (activeSignFace === "front" && maxTextCharForSize < frontTextCharLength)) ) {
     if (activeSignFace === "front") {
       totalCharacters = frontTextCharLength;
     }
@@ -5906,12 +5980,29 @@ function resizeText(textObject) {
     activeCanvas.discardActiveObject();
     activeCanvas.remove(textObject);
 
+    var textLayer = null
+
+    
     // Supprimer les caractères en trop de cet objet
-    textObject.text = textObject.text.slice(
-      0,
-      textObject.text.length - charsToRemove
-    );
+    textObject.text = textObject.text.slice( 0, textObject.text.length - charsToRemove );
     textObject.set("text", textObject.text);
+
+    console.log("resize text")
+    if(textType === "3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+        if(object.id == textObject.id && object.name == "asowp-SignTextLayer"){
+          textLayer = object
+        }
+      })
+
+      activeCanvas.remove(textLayer)
+      
+      textLayer.text = textLayer.text.slice( 0, textObject.text.length - charsToRemove );
+      textLayer.set("text", textObject.text);
+
+      activeCanvas.add(textLayer)
+    } 
 
     activeCanvas.add(textObject);
 
@@ -5925,23 +6016,34 @@ function resizeText(textObject) {
   }
 }
 function reScaleText(textObject) {
-  if (
-    textObject.scaleX * 12 > maxTextSize ||
-    textObject.scaleY * 12 > maxTextSize
-  ) {
+  if ( textObject.scaleX * 12 > maxTextSize || textObject.scaleY * 12 > maxTextSize ) {
     textObject.scaleX = maxTextSize / 12;
     textObject.scaleY = maxTextSize / 12;
   }
-  if (
-    textObject.scaleX * 12 < minTextSize ||
-    textObject.scaleX * 12 < minTextSize
-  ) {
+  if ( textObject.scaleX * 12 < minTextSize || textObject.scaleX * 12 < minTextSize ) {
     textObject.scaleX = minTextSize / 12;
     textObject.scaleY = minTextSize / 12;
   }
+  if(textType === "3D"){
+    var objects = activeCanvas.getObjects();
+    objects.forEach(function(object) {
+      if(object.id == textObject.id && object.name == "asowp-SignTextLayer"){
+        if ( object.scaleX * 12 > maxTextSize || object.scaleY * 12 > maxTextSize ) {
+          object.scaleX = maxTextSize / 12;
+          object.scaleY = maxTextSize / 12;
+        }
+        if ( object.scaleX * 12 < minTextSize || object.scaleX * 12 < minTextSize ) {
+          object.scaleX = minTextSize / 12;
+          object.scaleY = minTextSize / 12;
+        }
+      }
+    })
+  } 
   activeCanvas.renderAll();
 }
-function handleAddTextToSign(clone) {
+function handleAddTextToSign(clone, layerClone) {
+  console.log("handleAddTextToSign", layerClone)
+  var newTextId = newId += 1
   if (
     maxTextCharForSize === -1 ||
     (activeSignFace === "back" && backTextCharLength < maxTextCharForSize) ||
@@ -5950,12 +6052,17 @@ function handleAddTextToSign(clone) {
     if (clone) {
       var cloneCanvas = clone.canvas;
 
-      var text1JSON = clone.toJSON(["fontFamilyUrl"]);
-      console.log(text1JSON);
+      var text1JSON = clone.toJSON(["fontFamilyUrl", "neonColor"]);
+      // console.log(text1JSON);
       delete text1JSON.evented;
+      if(layerClone){
+        var text1LayerJSON = layerClone.toJSON(["fontFamilyUrl"]);
+        // console.log(text1JSON);
+        delete text1LayerJSON.evented;
+      }
 
       var text2 = new fabric.IText(text1JSON.text, {
-        id: (newId += 1),
+        id: newTextId,
         name: "asowp-SignText",
         canvasName: activeCanvas.name,
         evented: true,
@@ -5981,7 +6088,88 @@ function handleAddTextToSign(clone) {
         originY: "center",
         // clipPath: handleClipAddedObject(activeCanvas),
         // mouseUpHandler: handleGetAddedTextValues,
+
+        stroke: text1JSON.stroke,
+        strokeWidth: text1JSON.strokeWidth,
+        strokeLineJoin: text1JSON.strokeLineJoin,
+        paintFirst: text1JSON.paintFirst,
       });
+
+      if(textType == "3D"){
+        var text2Layer = new fabric.IText(text1LayerJSON.text, {
+          id: newTextId,
+          name: "asowp-SignTextLayer",
+          canvasName: activeCanvas.name,
+          evented: true,
+          editable: false,
+          selectable: false,
+          scaleX: text1LayerJSON.scaleX,
+          scaleY: text1LayerJSON.scaleY,
+          top: text1LayerJSON.top,
+          left: text1LayerJSON.left,
+          // fontSize: text1JSON.fontSize,
+          underline: text1LayerJSON.underline,
+          linethrough: text1LayerJSON.linethrough,
+          overline: text1LayerJSON.overline,
+          fill: text1LayerJSON.fill,
+          textAlign: text1LayerJSON.textAlign,
+          fontFamily: text1LayerJSON.fontFamily,
+          fontFamilyUrl: text1LayerJSON.fontFamilyUrl,
+          fontWeight: text1LayerJSON.fontWeight,
+          fontStyle: text1LayerJSON.fontStyle,
+          uniScaleTransform: true,
+          centeredScaling: true,
+          lockScalingFlip: true,
+          originX: "center",
+          originY: "center",
+
+          stroke: text1LayerJSON.stroke,
+          strokeWidth: text1LayerJSON.strokeWidth,
+          strokeLineJoin: text1LayerJSON.strokeLineJoin,
+          paintFirst: text1LayerJSON.paintFirst,
+          shadow: text1LayerJSON.shadow,
+
+          // clipPath: handleClipAddedObject(activeCanvas),
+          // mouseUpHandler: handleGetAddedTextValues,
+        });
+      }
+      
+      if(textType == "neon"){
+        var neonText2 = new fabric.NeonText('new text', {
+          id: newTextId,
+          name: "asowp-SignText",
+          canvasName: activeCanvas.name,
+          evented: true,
+          editable: true,
+          scaleX: text1JSON.scaleX,
+          scaleY: text1JSON.scaleY,
+          top: text1JSON.top,
+          left: text1JSON.left,
+          // fontSize: text1JSON.fontSize,
+          underline: text1JSON.underline,
+          linethrough: text1JSON.linethrough,
+          overline: text1JSON.overline,
+          textAlign: text1JSON.textAlign,
+          fontFamily: text1JSON.fontFamily,
+          fontFamilyUrl: text1JSON.fontFamilyUrl,
+          fontWeight: text1JSON.fontWeight,
+          fontStyle: text1JSON.fontStyle,
+          uniScaleTransform: true,
+          centeredScaling: true,
+          lockScalingFlip: true,
+          evented: true,
+          originX: "center",
+          originY: "center",
+  
+          // fontSize: 50,
+          fill: text1JSON.fill,
+          neonColor: text1JSON.neonColor,
+          glowRadius: 50,
+        });
+      }
+
+
+
       text2.lockMoving = {
         x: false,
         y: false,
@@ -5997,9 +6185,7 @@ function handleAddTextToSign(clone) {
         tl: true, // Top left
         tr: true, // Top right
       });
-
       text2.set("canvas", cloneCanvas);
-
       text2.on("editing:entered", () => {
         handleGetAddedTextValues(text2);
       });
@@ -6019,17 +6205,81 @@ function handleAddTextToSign(clone) {
         reScaleText(text2);
       });
 
-      activeCanvas.add(text2);
-      addedTexts.push(text2);
-      activeCanvas.setActiveObject(text2);
+      if(textType == "neon"){
+        neonText2.lockMoving = {
+          x: false,
+          y: false,
+        };
+        neonText2.lockScale = false;
+        neonText2.setControlsVisibility({
+          mt: false, // Middle top
+          mb: false, // Middle bottom
+          ml: false, // Middle left
+          mr: false, // Middle right
+          bl: true, // Bottom left
+          br: true, // Bottom right
+          tl: true, // Top left
+          tr: true, // Top right
+        });
+        neonText2.on("editing:entered", () => {
+          handleGetAddedTextValues(neonText2);
+        });
+        neonText2.on("editing:exited", () => {
+          handleGetAddedTextValues(neonText2);
+          resizeText(neonText2);
+        });
+        neonText2.on("selected", () => {
+          handleGetAddedTextValues(neonText2);
+        });
+        neonText2.on("mousedown", function () {
+          handleGetAddedTextValues(neonText2);
+          reScaleText(neonText2);
+        });
+        neonText2.on("mouseup", function () {
+          handleGetAddedTextValues(neonText2);
+          reScaleText(neonText2);
+        });
+      }
+
+      // activeCanvas.add(text2);
+      if(textType == "normal"){
+        activeCanvas.add(text2);
+      }else if(textType == "3D"){
+        activeCanvas.add(text2Layer, text2);
+      }else if(textType == "neon"){
+        activeCanvas.add(neonText2);
+      }
+
+
+      // addedTexts.push(text2);
+      if(textType != "neon"){
+        addedTexts.push(text2);
+      }else if(textType == "neon"){
+        addedTexts.push(neonText2);
+      }
+      
+      if(textType != "neon"){
+        activeCanvas.setActiveObject(text2);
+      }else if(textType == "neon"){
+        activeCanvas.setActiveObject(neonText2);
+      }
       // lockToCanvas(text2)
     } else {
       var sign = handleGetObjectByName("safeObject");
-      var newText = new fabric.IText("", {
-        id: (newId += 1),
+      var solidSide = new fabric.Shadow({
+        color: "black",
+        offsetX: 2,
+        offsetY: 2,
+        blur: 0,
+        isActive: true,
+        affectStroke: true,
+      });
+
+      var newText = new fabric.IText((textType == 'normal' ? "" : "new text"), {
+        id: newTextId,
         name: "asowp-SignText",
         canvasName: activeCanvas.name,
-        // editable: true,
+        // editable: (textType == "normal" ? true : false),
         selectOnEdit: false,
         top: sign.top + sign.height / 3,
         left: sign.left + sign.width / 3,
@@ -6049,6 +6299,12 @@ function handleAddTextToSign(clone) {
         originX: "center",
         originY: "center",
 
+        stroke: 'black',
+        strokeWidth: ( textType == '3D' ? 1 : 0),
+        strokeLineJoin: 'round',
+        paintFirst: 'stroke',
+        strokeUniform: true,
+
         renderControls: false,
         // path: new fabric.Path('M 0 0 C 50 -100 150 -100 200 0', {
         //     strokeWidth: 1,
@@ -6058,11 +6314,84 @@ function handleAddTextToSign(clone) {
         // pathStartOffset: 0
         // minScaleLimit: 0.3
       });
+      if(textType === "3D"){
+        var newTextLayer = new fabric.IText((textType == 'normal' ? "" : "new text"), {
+          id: newTextId,
+          name: "asowp-SignTextLayer",
+          canvasName: activeCanvas.name,
+          selectable: false,
+          selectOnEdit: false,
+          top: sign.top + sign.height / 3,
+          left: sign.left + sign.width / 3,
+  
+          fill: currentSignTextColor,
+          fontFamily: currenTextFontFam,
+          fontFamilyUrl: currenTextFontFamUrl,
+          scaleX: defaultFontSize / 12,
+          scaleY: defaultFontSize / 12,
+          uniScaleTransform: true,
+          centeredScaling: true,
+          lockScalingFlip: true,
+          evented: true,
+          showITextBorder: true,
+  
+          originX: "center",
+          originY: "center",
+  
+          renderControls: false,
+  
+          layerType: 'text-layer',
+          stroke: 'red',
+          strokeWidth: 5,
+          strokeLineJoin: 'round',
+          paintFirst: 'stroke',
+          // strokeUniform: true,
+          strokeDashOffset: 1,
+          shadow: solidSide,
+        });
+      }
+      if(textType == "neon"){
+        var neonText = new fabric.NeonText('new text', {
+          id: newTextId,
+          name: "asowp-SignText",
+          canvasName: activeCanvas.name,
+          // editable: (textType == "normal" ? true : false),
+          selectOnEdit: false,
+          top: sign.top + sign.height / 3,
+          left: sign.left + sign.width / 3,
+          fill: currentSignTextColor,
+          fontFamily: currenTextFontFam,
+          fontFamilyUrl: currenTextFontFamUrl,
+          // fontSize: defaultFontSize,
+          scaleX: defaultFontSize / 12,
+          scaleY: defaultFontSize / 12,
+          uniScaleTransform: true,
+          centeredScaling: true,
+          lockScalingFlip: true,
+          evented: true,
+          originX: "center",
+          originY: "center",
+  
+          // fontSize: 50,
+          fill: 'white', // Couleur intérieure du texte
+          neonColor: 'orange',
+          glowRadius: 50,
+        });
+      }
+
       newText.lockMoving = {
         x: false,
         y: false,
       };
       newText.lockScale = false;
+
+      if(textType == "neon"){
+        neonText.lockMoving = {
+          x: false,
+          y: false,
+        };
+        neonText.lockScale = false;
+      }
 
       newText.setControlsVisibility({
         mt: false, // Middle top
@@ -6074,11 +6403,9 @@ function handleAddTextToSign(clone) {
         tl: true, // Top left
         tr: true, // Top right
       });
-
       newText.on("editing:entered", () => {
         handleGetAddedTextValues(newText);
       });
-
       newText.on("editing:exited", () => {
         handleGetAddedTextValues(newText);
         resizeText(newText);
@@ -6095,21 +6422,73 @@ function handleAddTextToSign(clone) {
         reScaleText(newText);
       });
 
-      activeCanvas.add(newText);
-      newText.enterEditing();
+      if(textType == "neon"){
+        neonText.setControlsVisibility({
+          mt: false, // Middle top
+          mb: false, // Middle bottom
+          ml: false, // Middle left
+          mr: false, // Middle right
+          bl: true, // Bottom left
+          br: true, // Bottom right
+          tl: true, // Top left
+          tr: true, // Top right
+        });
+        neonText.on("editing:entered", () => {
+          handleGetAddedTextValues(neonText);
+        });
+        neonText.on("editing:exited", () => {
+          handleGetAddedTextValues(neonText);
+          resizeText(neonText);
+        });
+        neonText.on("selected", () => {
+          handleGetAddedTextValues(neonText);
+        });
+        neonText.on("mousedown", function () {
+          handleGetAddedTextValues(neonText);
+          reScaleText(neonText);
+        });
+        neonText.on("mouseup", function () {
+          handleGetAddedTextValues(neonText);
+          reScaleText(neonText);
+        });
+      }
 
-      handleCenterHorizontally(newText);
-      handleCenterVertically(newText);
+      if(textType == "normal"){
+        activeCanvas.add(newText);
+      }else if(textType == "3D"){
+        activeCanvas.add(newTextLayer, newText);
+      }else if(textType == "neon"){
+        activeCanvas.add(neonText);
+      }
 
-      addedTexts.push(newText);
-      handleChangeTextFontFam(
-        currenTextFontFam.replaceAll(/\s+/g, "-"),
-        currenTextFontFamUrl
-      );
+      if(textType == 'normal'){
+        newText.enterEditing();
+      }
+
+      if(textType == 'normal' ||textType == '3D'){
+        handleCenterHorizontally(newText);
+        handleCenterVertically(newText);
+      }
+      if(textType == '3D'){
+        handleCenterHorizontally(newTextLayer);
+        handleCenterVertically(newTextLayer);
+      }else if(textType == "neon"){
+        handleCenterHorizontally(neonText);
+        handleCenterVertically(neonText);
+      }
+
+      if(textType != "neon"){
+        addedTexts.push(newText);
+      }
+      if(textType == "neon"){
+        addedTexts.push(neonText);
+      }
+      // handleChangeTextFontFam( currenTextFontFam.replaceAll(/\s+/g, "-"), currenTextFontFamUrl );
       // lockToCanvas(newText)
     }
     activeCanvas.renderAll();
     updateModifications(true, "==ajout de text==");
+    console.log(activeCanvas.getObjects(), "==ajout de text==");
   }
 
   FtextObjects = handleGetTextObjects1("asowp-SignText");
@@ -6143,6 +6522,15 @@ function handleChangeTextValue(event) {
   ) {
     selectedText.value = event.target.value;
     currentText.set("text", String(selectedText.value));
+    if(textType === "3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+        if(object.id == currentText.id && object.name == "asowp-SignTextLayer"){
+          object.set("text", String(selectedText.value));
+        }
+      })
+    }
+
     activeCanvas.requestRenderAll();
     handleGetAddedTextValues(currentText);
 
@@ -6155,6 +6543,18 @@ function handleChangeTextValue(event) {
       // editor.disabled = false;
       selectedText.value = event.target.value;
       currentText.set("text", String(selectedText.value));
+
+      if(textType === "3D"){
+        console.log('azerty')
+        var objects = activeCanvas.getObjects();
+        objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("text", String(selectedText.value));
+          }
+        })
+      }
+
+
       activeCanvas.requestRenderAll();
       handleGetAddedTextValues(currentText);
 
@@ -6175,6 +6575,16 @@ function handleChangeTextValue(event) {
 function handleChangeTextAlign(align) {
   var currentText = selectedText.object;
   currentText.set("textAlign", align);
+  if(textType == "3D"){
+    var objects = activeCanvas.getObjects();
+    objects.forEach(function(object) {
+      if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+        object.set("textAlign", align);
+      }
+    })
+  }
+
+
   activeCanvas.requestRenderAll();
   selectedText.align = currentText.textAlign;
   handleGetAddedTextValues(currentText);
@@ -6185,8 +6595,24 @@ function handleChangeTextWeight() {
   var currentText = selectedText.object;
   if (selectedText.weight == "normal") {
     currentText.set("fontWeight", "bold");
+    if(textType == "3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontWeight", "bold");
+          }
+      })
+    }
   } else if (selectedText.weight == "bold") {
     currentText.set("fontWeight", "normal");
+    if(textType == "3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontWeight", "normal");
+          }
+      })
+    }
   }
   // console.log("current");
   activeCanvas.renderAll();
@@ -6198,8 +6624,26 @@ function handleChangeTextStyle() {
   var currentText = selectedText.object;
   if (selectedText.style == "normal") {
     currentText.set("fontStyle", "italic");
+
+    if("3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontStyle", "italic");
+          }
+      })
+    }
   } else if (selectedText.style == "italic") {
     currentText.set("fontStyle", "normal");
+
+    if("3D"){
+      var objects = canvas.getObjects();
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontStyle", "normal");
+          }
+      })
+    }
   }
   activeCanvas.requestRenderAll();
   handleGetAddedTextValues(currentText);
@@ -6215,6 +6659,16 @@ function handleChangeTextSize(size, minSize, maxSize) {
     var currentText = selectedText.object;
     currentText.set("scaleX", selectedText.size / 12);
     currentText.set("scaleY", selectedText.size / 12);
+
+    if(textType == "3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+        if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+          object.set("scaleX", selectedText.size / 12);
+          object.set("scaleY", selectedText.size / 12);
+        }
+      })
+    }
     activeCanvas.renderAll();
     handleGetAddedTextValues(currentText);
   }
@@ -6224,14 +6678,25 @@ var currenTextFontFamUrl = "";
 
 async function handleChangeTextFontFam(font, url) {
   try {
+    console.log(selectedText, "selected")
     var currentText = selectedText.object;
     const myfont = new FontFaceObserver(font);
     await myfont.load();
 
     currentText.set("fontFamily", font);
     currentText.set("fontFamilyUrl", url);
+    
+    if(textType == "3D"){
+      var objects = activeCanvas.getObjects();
+      objects.forEach(function(object) {
+        if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+          object.set("fontFamily", font);
+          object.set("fontFamilyUrl", url);
+        }
+      })
+    }
+    
     activeCanvas.renderAll();
-
     handleGetAddedTextValues(currentText);
   } catch (e) {
     console.log(e);
@@ -6282,6 +6747,110 @@ function handleOverlineText(color) {
   handleGetAddedTextValues(currentText);
 
   return selectedText.overline;
+}
+
+function handleChangeTextBorder(layer, value){
+  var currentText = selectedText.object;
+
+  if(layer){
+    currentText.set("strokeWidth", value);
+  }else{
+    var objects = activeCanvas.getObjects();
+    objects.forEach(function(object) {
+        if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+            object.set("strokeWidth", value);
+        }
+    })
+    console.log("aeaze")
+  }
+
+
+  activeCanvas.renderAll();
+}
+function handleChangeTextBorderColor(layer, color){
+  var currentText = selectedText.object;
+
+  // if (color.endsWith('.jpg') || color.endsWith('.png') || color.endsWith('.webp') || color.endsWith('.svg') || color.startsWith('data:image')) {
+  //   handleConvertImageToDataURI(color, function (dataURI) {
+  //     fabric.util.loadImage( dataURI, function (img) {
+  //         // var scaleX = object.width / img.width;
+  //         // var scaleY = object.height / img.height;
+  //         var pattern = new fabric.Pattern({
+  //           source: img,
+  //           repeat: "repeat",
+  //           patternTransform: [0.1, 0, 0, 0.1, 0, 0],
+  //         });
+
+  //         // console.log(pattern)
+
+  //         if(layer){
+  //           var objects = canvas.getObjects();
+  //           objects.forEach(function(object) {
+  //               if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+  //                   object.set("stroke", pattern);
+  //               }
+  //           })
+  //         }else{
+  //           currentText.set("stroke", pattern);
+  //         }
+  //       },
+  //       { crossOrigin: "anonymous" }
+  //     );
+  //   });
+  // }else{
+  // }
+  if(layer){
+    currentText.set("stroke", color);
+  }else{
+    var objects = activeCanvas.getObjects();
+    objects.forEach(function(object) {
+        if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+            object.set("stroke", color);
+        }
+    })
+  }
+
+
+  activeCanvas.renderAll();
+}
+function handleShow3dSide(state){
+  var currentText = selectedText.object;
+  /////////////
+  var objects = activeCanvas.getObjects();
+  objects.forEach(function(object) {
+    if(object.id == currentText.id && object.name === "asowp-SignTextLayer"){
+        if(state){
+          object.shadow.offsetX = 2
+          object.shadow.offsetY = 2
+        }else{
+          object.shadow.offsetX = 0
+          object.shadow.offsetY = 0
+        }
+      }
+  })
+
+  activeCanvas.renderAll();
+}
+function handleChange3dSideColor(color){
+  var currentText = selectedText.object;
+/////////////
+  var objects = activeCanvas.getObjects();
+  objects.forEach(function(object) {
+      if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+        object.shadow.color = color
+      }
+  })
+  activeCanvas.renderAll();
+}
+
+function handleChangeTextLightColor(color) {
+  var currentText = selectedText.object;
+  selectedText.color = color;
+  currentText.set("neonColor", color);
+  activeCanvas.renderAll();
+  handleGetAddedTextValues(currentText);
+
+  return selectedText.color;
 }
 
 // fonctions concernant l'ajout d'image sur le canvas
@@ -8829,6 +9398,7 @@ export {
   handleGetCanvas,
   handleGetCurrentUnit,
   handleGetDefaultText,
+  handleGetTextType,
   handleUndo,
   handleRedo,
   handleClearAll,
@@ -8861,6 +9431,11 @@ export {
   handleUnderlineText,
   handleCrossText,
   handleOverlineText,
+  handleChangeTextBorder,
+  handleChangeTextBorderColor,
+  handleShow3dSide,
+  handleChange3dSideColor,
+  handleChangeTextLightColor,
   handleGetImageSettings,
   handleGetAddedImageValues,
   handleAddImageToSign,

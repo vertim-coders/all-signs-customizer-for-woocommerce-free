@@ -2649,6 +2649,17 @@
                     if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
                         updateInfoDiv(activeObject);
                     }
+
+                    var objects = canvas.getObjects();
+                    objects.forEach(function(object) {
+                        // if(object.id == activeObject.id){
+                        //     object.top = activeObject.top
+                        //     object.left = activeObject.left
+                        // }
+                        if(object.name === "safeObject"){
+                            console.log(object, "safeObject")
+                        }
+                    })
                 });
                 canvas.on('object:scaling', function(e) {
                     var activeObject = e.target;
@@ -2845,7 +2856,8 @@
 
         //selection du matériel
         var templateMaterialId = allMaterials.value.findIndex((item, index) => item.name === sign.material.name)
-        selectMaterial(props.config.data.materials[templateMaterialId])
+        currentMaterialId.value = sign.material.id
+        selectMaterial(props.config.data.materials[sign.material.id])
         getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
         var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
