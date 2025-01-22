@@ -5956,6 +5956,20 @@ fabric.NeonText.fromObject = function (object, callback) {
 // //   // return originalFromObject(object, callback);
 // // };
 
+
+function loadFont(fontName, fontUrl) {
+  return new Promise((resolve, reject) => {
+    const font = new FontFace(fontName, `url(${fontUrl})`);
+    font.load()
+      .then((loadedFont) => {
+        document.fonts.add(loadedFont);
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 let newId = 49;
 
 var addedTexts = [];
@@ -6043,6 +6057,8 @@ function reScaleText(textObject) {
 }
 function handleAddTextToSign(clone, layerClone) {
   console.log("handleAddTextToSign", layerClone)
+
+
   var newTextId = newId += 1
   if (
     maxTextCharForSize === -1 ||
@@ -6284,7 +6300,7 @@ function handleAddTextToSign(clone, layerClone) {
         top: sign.top + sign.height / 3,
         left: sign.left + sign.width / 3,
         fill: currentSignTextColor,
-        fontFamily: currenTextFontFam,
+        fontFamily: currenTextFontFam.replaceAll(/\s+/g, '-'),
         fontFamilyUrl: currenTextFontFamUrl,
         // fontSize: defaultFontSize,
         scaleX: defaultFontSize / 12,
@@ -6325,7 +6341,7 @@ function handleAddTextToSign(clone, layerClone) {
           left: sign.left + sign.width / 3,
   
           fill: currentSignTextColor,
-          fontFamily: currenTextFontFam,
+          fontFamily: currenTextFontFam.replaceAll(/\s+/g, '-'),
           fontFamilyUrl: currenTextFontFamUrl,
           scaleX: defaultFontSize / 12,
           scaleY: defaultFontSize / 12,
@@ -6360,7 +6376,7 @@ function handleAddTextToSign(clone, layerClone) {
           top: sign.top + sign.height / 3,
           left: sign.left + sign.width / 3,
           fill: currentSignTextColor,
-          fontFamily: currenTextFontFam,
+          fontFamily: currenTextFontFam.replaceAll(/\s+/g, '-'),
           fontFamilyUrl: currenTextFontFamUrl,
           // fontSize: defaultFontSize,
           scaleX: defaultFontSize / 12,
@@ -7895,6 +7911,22 @@ function handleMoveobject(to) {
   activeCanvas.renderAll();
   // console.log('Index de l\'image:', index, "last index", lastIndex);
 }
+function findMaxId(tableau) {
+  if (!Array.isArray(tableau) || tableau.length === 0) {
+      // throw new Error("Le paramètre doit être un tableau non vide d'objets.");
+    return -1
+  }
+
+  // Utilisation de la méthode reduce pour trouver l'id maximum
+  const maxId = tableau.reduce((max, objet) => {
+      if (typeof objet.id !== 'number') {
+          throw new Error("Tous les objets doivent avoir un attribut 'id' de type nombre.");
+      }
+      return objet.id > max ? objet.id : max;
+  }, -Infinity);
+
+  return maxId;
+}
 
 function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   // console.log(canvasJson)
@@ -8045,14 +8077,12 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
             templateObject[0].objectType == "svg"
               ? templateObject[0].imageUrl
               : templateObject[0].getSrc();
-          addUniqueObject(
-            addedImages,
+          addUniqueObject( addedImages, 
             {
               id: templateObject[0].id,
               url: objectUrl,
               object: templateObject[0],
-            },
-            "id"
+            }, "id"
           );
         }
 
@@ -9219,6 +9249,11 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
           }
         }
 
+        let maxTemplateId = Math.max(findMaxId(addedTexts), findMaxId(addedImages))
+        if(maxTemplateId > newId){
+          newId = maxTemplateId
+        }
+
         canva.add(...templateObject);
       });
     });
@@ -9296,6 +9331,8 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   }
   setMeasurmentValue(canvas);
   setMeasurmentValue(backCanvas);
+
+  console.log(newId, "canvas newID")
 
   firstLoad = true;
   return {
