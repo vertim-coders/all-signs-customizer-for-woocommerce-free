@@ -903,6 +903,80 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div v-if="configTextType == '3D'">
+                                        <div>
+                                            <p class="aso-font-medium">Border size</p>
+                                            <div class="aso-p-2 aso-space-y-1">
+                                                <input  type="range" name="aso-borderSize" id="aso-text-borderWidth" :class="`aso-cursor-pointer aso-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
+                                                <input  type="range" name="aso-borderSize" id="aso-text-borderWidth" :class="`aso-cursor-pointer aso-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
+                                            </div>
+                                        </div>
+
+                                        <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="asowp-space-y-1">
+                                            <p class="asowp-font-medium">Border color</p>
+                                            <div class="asowp-flex asowp-space-x-2">
+                                                <div @click="()=>{firstBorder = true}" :class="`${firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Frist border</div>
+                                                <div @click="()=>{firstBorder = false}" :class="`${!firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Second border</div>
+                                            </div>
+                                            <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                                <div v-for="(color, index) in configTextSettings.colors" class="">
+                                                    <div @click="changeTextBorderColor(color.codeHex)" :class="`${(firstBorder && currentTextBorder1Color === color.codeHex) || (!firstBorder && currentTextBorder2Color === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                </div>
+            
+                                                <div :class="`asowp-relative`">
+                                                    <input id="asowp-setBorderTextColor1" type="color" v-model="customTextColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeTextBorderColor($event.target.value)" />
+                                                    <label for="asowp-setBorderTextColor1" v-if="configTextSettings.enableCustomColor" :class="`${currentTextBorderColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
+                                                        <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                            <g fill="none" fill-rule="evenodd">
+                                                                <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                                <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                                <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                                <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                                <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                                <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                                <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                                <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                            </g>
+                                                        </svg>
+                                                        <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="aso-flex aso-flex-col aso-space-y-2">
+                                            <p class="aso-font-medium">3D effect</p>
+                                            <div class="asowp-w-fit asowp-flex asowp-space-x-1 asowp-rounded-md" @click="show3dSide()">
+                                                <div :class="`${active3dSide ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">Active</div>
+                                                <div :class="`${!active3dSide ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">Disabled</div>
+                                            </div>
+                                            <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                                <div v-for="(color, index) in configTextSettings.colors" class="">
+                                                    <div @click="change3dSideColor(color.codeHex)" :class="`${active3dSideColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                </div>
+            
+                                                <div :class="`asowp-relative`">
+                                                    <input id="asowp-setSideColor" type="color" v-model="customTextColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="change3dSideColor($event.target.value)" />
+                                                    <label for="asowp-setSideColor" v-if="configTextSettings.enableCustomColor" :class="`${active3dSideColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
+                                                        <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                            <g fill="none" fill-rule="evenodd">
+                                                                <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                                <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                                <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                                <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                                <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                                <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                                <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                                <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                            </g>
+                                                        </svg>
+                                                        <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
         
                                     <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="asowp-space-y-1">
                                         <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
@@ -925,6 +999,34 @@
                                                         <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
                                                         <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
                                                     </g>
+                                                    </svg>
+                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div v-if="configTextType == 'neon'" class="asowp-space-y-1">
+                                        <p class="asowp-font-medium">Light color</p>
+                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                            <div v-for="(color, index) in configTextSettings.colors" class="">
+                                                <div @click="changeTextLightColor(color.codeHex)" :class="`${curentTextLightColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                            </div>
+        
+                                            <div :class="`asowp-relative`">
+                                                <input id="asowp-setTextLightColor1" type="color" v-model="curentTextLightColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeTextLightColor($event.target.value)" />
+                                                <label for="asowp-setTextLightColor1" v-if="configTextSettings.enableCustomColor" :class="`${curentTextLightColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
+                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                        <g fill="none" fill-rule="evenodd">
+                                                            <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                            <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                            <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                            <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                            <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                            <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                            <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                            <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                        </g>
                                                     </svg>
                                                     <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
                                                 </label>
@@ -977,14 +1079,14 @@
                                                     <p class="asowp-text-xs asowp-font-semibold">Italic</p>
                                                 </span>
         
-                                                <span v-if="configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.underline == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
+                                                <span v-if="configTextType == 'normal' && configTextSettings.enableUnderline" @click="underlineText" :class="`${selectedText.underline == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
                                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
                                                         <path d="M7 5V10C7 11.3261 7.52678 12.5979 8.46447 13.5355C9.40215 14.4732 10.6739 15 12 15C13.3261 15 14.5979 14.4732 15.5355 13.5355C16.4732 12.5979 17 11.3261 17 10V5M5 19H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>
                                                     <p class="asowp-text-xs asowp-font-semibold">Underline</p>
                                                 </span>
         
-                                                <span v-if="configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.linethrough == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
+                                                <span v-if="configTextType == 'normal' && configTextSettings.enableStrike" @click="crossText" :class="`${selectedText.linethrough == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
                                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
                                                         <path d="M7 8V13M7 13C7 14.3261 7.52678 15.5979 8.46447 16.5355C9.40215 17.4732 10.6739 18 12 18C13.3261 18 14.5979 17.4732 15.5355 16.5355C16.4732 15.5979 17 14.3261 17 13M7 13H17M17 13V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                         <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="currentColor"/>
@@ -992,7 +1094,7 @@
                                                     <p class="asowp-text-xs asowp-font-semibold">Crossline</p>
                                                 </span>
         
-                                                <span v-if="configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.overline == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
+                                                <span v-if="configTextType == 'normal' && configTextSettings.enableOverline" @click="overlineText" :class="`${selectedText.overline == true ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
                                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
                                                         <path d="M7 9V14C7 15.3261 7.52678 16.5979 8.46447 17.5355C9.40215 18.4732 10.6739 19 12 19C13.3261 19 14.5979 18.4732 15.5355 17.5355C16.4732 16.5979 17 15.3261 17 14V9M5 5H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                     </svg>
@@ -2063,6 +2165,11 @@
         handleUnderlineText,
         handleCrossText,
         handleOverlineText,
+        handleChangeTextBorder,
+        handleChangeTextBorderColor,
+        handleShow3dSide,
+        handleChange3dSideColor,
+        handleChangeTextLightColor,
         handleGetImageSettings,
         handleGetAddedImageValues,
         handleAddImageToSign,
@@ -5228,6 +5335,14 @@
                     selectedText.value.underline = obj.underline
                     selectedText.value.linethrough = obj.linethrough
                     selectedText.value.overline = obj.overline
+                    
+                    borderSize.value = obj.strokeWidth
+                    borderLayerSize.value = obj.secondStrokeWidth
+                    currentTextBorder1Color.value = obj.stroke
+                    currentTextBorder2Color.value = obj.secondStroke
+
+                    active3dSide.value = obj.activeSide
+                    active3dSideColor.value = obj.sideColor
                 }
             })
             activeCanvas.requestRenderAll();
@@ -5314,6 +5429,47 @@
     }
     function overlineText(){
         selectedText.value.overline = handleOverlineText()
+    }
+    var borderSize = ref(2)
+    var borderLayerSize = ref(2)
+    function changeTextBorder(layer, e){
+        if(layer){
+            borderLayerSize.value = e.target.value
+        }else{
+            borderSize.value = e.target.value
+        }
+        handleChangeTextBorder(layer, e.target.value)
+    }
+    var borderLineJoin = ref("round")
+    function changeBorderLineJoin(join){
+        borderLineJoin.value = join
+        handleChangeBorderLineJoin(join)
+    }
+    var firstBorder = ref(true)
+    var currentTextBorder1Color = ref("")
+    var currentTextBorder2Color = ref("")
+    function changeTextBorderColor(color){
+        if(firstBorder.value){
+            currentTextBorder1Color.value = color
+        }else{
+            currentTextBorder2Color.value = color
+        }
+        handleChangeTextBorderColor(firstBorder.value, color)
+    }
+    var active3dSide = ref(true)
+    function show3dSide(){
+        active3dSide.value = !active3dSide.value
+        handleShow3dSide(active3dSide.value)
+    }
+    var active3dSideColor = ref("")
+    function change3dSideColor(color){
+        active3dSideColor.value = color
+        handleChange3dSideColor(color)
+    }
+    var curentTextLightColor = ref("")
+    function changeTextLightColor(color){
+        curentTextLightColor.value = color
+        handleChangeTextLightColor(color)
     }
 
     function changeTextBackground(textObject){
@@ -5768,11 +5924,11 @@
             function supprimerNonChiffres(chaine) {
                 return chaine.replace(/[^0-9.]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -5870,7 +6026,7 @@
 
 
 
-        // console.log(configData.value, "Added")
+        console.log(configData.value, "Added")
         finish.value = true
         genImage(canvas, 'svg', 'finish-1')
         if(configDoublePart.value.active){
@@ -6700,6 +6856,8 @@
                 case 'png':
                     canva.setWidth(1900)
                     canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
                     dataURL = canva.toDataURL({
                         format: 'png',
@@ -6712,6 +6870,9 @@
                 case 'jpeg':
                     canva.setWidth(1900)
                     canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+                    
                     canva.backgroundColor = configColors.value.canvasBackgroundColor
                     dataURL = canva.toDataURL({
                         format: 'jpeg',
@@ -6723,6 +6884,9 @@
                 case 'webp':
                     canva.setWidth(1900)
                     canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+                    
                     dataURL = canva.toDataURL({
                         format: 'webp',
                         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
@@ -7842,6 +8006,9 @@
                     case 'png':
                         canva.setWidth(1900)
                         canva.setHeight(1080)
+                        checkScreenSize(1900, 1080)
+                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                         dataURL = canva.toDataURL({
                             format: 'png',
                             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
@@ -7852,6 +8019,9 @@
                     case 'jpeg':
                         canva.setWidth(1900)
                         canva.setHeight(1080)
+                        checkScreenSize(1900, 1080)
+                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                         canva.backgroundColor = configColors.value.canvasBackgroundColor
                         dataURL = canva.toDataURL({
                             format: 'jpeg',
@@ -7863,6 +8033,9 @@
                     case 'webp':
                         canva.setWidth(1900)
                         canva.setHeight(1080)
+                        checkScreenSize(1900, 1080)
+                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                         dataURL = canva.toDataURL({
                             format: 'webp',
                             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp

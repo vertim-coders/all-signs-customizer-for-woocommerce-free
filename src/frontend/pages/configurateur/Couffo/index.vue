@@ -1034,7 +1034,7 @@
                                         </div>
                                         <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                <div @click="changeTextBorderColor(color.codeHex)" :class="`${currentTextBorderColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeTextBorderColor(color.codeHex)" :class="`${(firstBorder && currentTextBorder1Color === color.codeHex) || (!firstBorder && currentTextBorder2Color === color.codeHex)? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
                                             </div>
         
                                             <div :class="`asowp-relative`">
@@ -3733,6 +3733,14 @@
 
         currentSizeValues.value = handleGetSignPosition()
         handleReadyToSaveState(true);
+
+        simulateCanvasClick()
+    }
+    function simulateCanvasClick(){
+        activeCanvas.fire('mouse:down', {
+            e: new MouseEvent('click', { clientX: 100, clientY: 100 }), // Coordonnées du clic
+            pointer: { x: 100, y: 100 }, // Position du clic
+        });
     }
     function getCanvasCenter() {
         const canvasWidth = canvas.getWidth();
@@ -5409,6 +5417,14 @@
                     selectedText.value.underline = obj.underline
                     selectedText.value.linethrough = obj.linethrough
                     selectedText.value.overline = obj.overline
+
+                    borderSize.value = obj.strokeWidth
+                    borderLayerSize.value = obj.secondStrokeWidth
+                    currentTextBorder1Color.value = obj.stroke
+                    currentTextBorder2Color.value = obj.secondStroke
+
+                    active3dSide.value = obj.activeSide
+                    active3dSideColor.value = obj.sideColor
                 }
             })
             activeCanvas.requestRenderAll();
@@ -5498,7 +5514,6 @@
     var borderSize = ref(2)
     var borderLayerSize = ref(2)
     function changeTextBorder(layer, e){
-        console.log(layer, e)
         if(layer){
             borderLayerSize.value = e.target.value
         }else{
@@ -5512,7 +5527,8 @@
         handleChangeBorderLineJoin(join)
     }
     var firstBorder = ref(true)
-    var currentTextBorderColor = ref("")
+    var currentTextBorder1Color = ref("")
+    var currentTextBorder2Color = ref("")
     function changeTextBorderColor(color){
         currentTextBorderColor.value = color
         // if(firstBorder.value){
@@ -6988,6 +7004,8 @@
                 case 'png':
                     canva.setWidth(1900)
                     canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
                     dataURL = canva.toDataURL({
                         format: 'png',
@@ -7000,6 +7018,9 @@
                 case 'jpeg':
                     canva.setWidth(1900)
                     canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                     canva.backgroundColor = configColors.value.canvasBackgroundColor
                     dataURL = canva.toDataURL({
                         format: 'jpeg',
@@ -7011,6 +7032,9 @@
                 case 'webp':
                     canva.setWidth(1900)
                     canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                     dataURL = canva.toDataURL({
                         format: 'webp',
                         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
@@ -8134,6 +8158,9 @@
                     case 'png':
                         canva.setWidth(1900)
                         canva.setHeight(1080)
+                        checkScreenSize(1900, 1080)
+                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                         dataURL = canva.toDataURL({
                             format: 'png',
                             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
@@ -8144,6 +8171,9 @@
                     case 'jpeg':
                         canva.setWidth(1900)
                         canva.setHeight(1080)
+                        checkScreenSize(1900, 1080)
+                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                         canva.backgroundColor = configColors.value.canvasBackgroundColor
                         dataURL = canva.toDataURL({
                             format: 'jpeg',
@@ -8155,6 +8185,9 @@
                     case 'webp':
                         canva.setWidth(1900)
                         canva.setHeight(1080)
+                        checkScreenSize(1900, 1080)
+                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
                         dataURL = canva.toDataURL({
                             format: 'webp',
                             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp

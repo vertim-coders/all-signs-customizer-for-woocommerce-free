@@ -109,7 +109,11 @@ function handleCloneCanvas() {
     "imageUrl",
     "fontFamilyUrl",
     "neonColor",
-    "glowRadius"
+    "glowRadius",
+    "secondStrokeWidth",
+    "secondStroke",
+    "activeSide",
+    "sideColor",
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -222,7 +226,11 @@ function updateModifications(good, position) {
       "imageUrl",
       "fontFamilyUrl",
       "neonColor",
-      "glowRadius"
+      "glowRadius",
+      "secondStrokeWidth",
+      "secondStroke",
+      "activeSide",
+      "sideColor",
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -246,7 +254,11 @@ function updateModifications(good, position) {
       "imageUrl",
       "fontFamilyUrl",
       "neonColor",
-      "glowRadius"
+      "glowRadius",
+      "secondStrokeWidth",
+      "secondStroke",
+      "activeSide",
+      "sideColor",
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -5880,6 +5892,7 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
     this.id = options.id;
     this.name = options.name;
     this.lockMoving = options.lockMoving;
+    this.canvasName = options.canvasName;
 
     // Assurez-vous que `text` est une chaîne de caractères
     this.text = typeof text === 'string' ? text : '';
@@ -5933,6 +5946,7 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
       id: this.id,
       name: this.name,
       lockMoving: this.lockMoving,
+      canvasName: this.canvasName,
     });
   }
 });
@@ -6068,7 +6082,7 @@ function handleAddTextToSign(clone, layerClone) {
     if (clone) {
       var cloneCanvas = clone.canvas;
 
-      var text1JSON = clone.toJSON(["fontFamilyUrl", "neonColor"]);
+      var text1JSON = clone.toJSON(["fontFamilyUrl", "neonColor", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor"]);
       // console.log(text1JSON);
       delete text1JSON.evented;
       if(layerClone){
@@ -6109,6 +6123,11 @@ function handleAddTextToSign(clone, layerClone) {
         strokeWidth: text1JSON.strokeWidth,
         strokeLineJoin: text1JSON.strokeLineJoin,
         paintFirst: text1JSON.paintFirst,
+
+        secondStrokeWidth: text1JSON.secondStrokeWidth,
+        secondStroke: text1JSON.secondStroke,
+        activeSide: text1JSON.activeSide,
+        sideColor: text1JSON.sideColor,
       });
 
       if(textType == "3D"){
@@ -6283,7 +6302,7 @@ function handleAddTextToSign(clone, layerClone) {
     } else {
       var sign = handleGetObjectByName("safeObject");
       var solidSide = new fabric.Shadow({
-        color: "black",
+        color: "#000000",
         offsetX: 2,
         offsetY: 2,
         blur: 0,
@@ -6315,20 +6334,19 @@ function handleAddTextToSign(clone, layerClone) {
         originX: "center",
         originY: "center",
 
-        stroke: 'black',
+        stroke: '#000000',
         strokeWidth: ( textType == '3D' ? 1 : 0),
         strokeLineJoin: 'round',
         paintFirst: 'stroke',
         strokeUniform: true,
 
+        secondStrokeWidth: textType == "3D" ? 5 : 0,
+        secondStroke: textType == "3D" ? "#c4271d" : 0,
+        activeSide: textType == "3D" ? true : false,
+        sideColor: textType == "3D" ? "#000000" : "transparent",
+
         renderControls: false,
-        // path: new fabric.Path('M 0 0 C 50 -100 150 -100 200 0', {
-        //     strokeWidth: 1,
-        //     visible: false
-        // }),
-        // pathSide: 'left',
-        // pathStartOffset: 0
-        // minScaleLimit: 0.3
+
       });
       if(textType === "3D"){
         var newTextLayer = new fabric.IText((textType == 'normal' ? "" : "new text"), {
@@ -6357,7 +6375,7 @@ function handleAddTextToSign(clone, layerClone) {
           renderControls: false,
   
           layerType: 'text-layer',
-          stroke: 'red',
+          stroke: '#c4271d',
           strokeWidth: 5,
           strokeLineJoin: 'round',
           paintFirst: 'stroke',
@@ -6771,13 +6789,14 @@ function handleChangeTextBorder(layer, value){
   if(layer){
     currentText.set("strokeWidth", value);
   }else{
+    currentText.set("secondStrokeWidth", value);
     var objects = activeCanvas.getObjects();
     objects.forEach(function(object) {
         if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
             object.set("strokeWidth", value);
         }
     })
-    console.log("aeaze")
+    // console.log("aeaze")
   }
 
 
@@ -6818,6 +6837,8 @@ function handleChangeTextBorderColor(layer, color){
   if(layer){
     currentText.set("stroke", color);
   }else{
+    currentText.set("secondStroke", color);
+
     var objects = activeCanvas.getObjects();
     objects.forEach(function(object) {
         if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
@@ -6836,9 +6857,11 @@ function handleShow3dSide(state){
   objects.forEach(function(object) {
     if(object.id == currentText.id && object.name === "asowp-SignTextLayer"){
         if(state){
+          currentText.set("activeSide", true)
           object.shadow.offsetX = 2
           object.shadow.offsetY = 2
         }else{
+          currentText.set("activeSide", false)
           object.shadow.offsetX = 0
           object.shadow.offsetY = 0
         }
@@ -6849,6 +6872,7 @@ function handleShow3dSide(state){
 }
 function handleChange3dSideColor(color){
   var currentText = selectedText.object;
+  currentText.set("sideColor", color);
 /////////////
   var objects = activeCanvas.getObjects();
   objects.forEach(function(object) {
@@ -7946,7 +7970,7 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
     var rect;
     canva.clear();
     canvasJson.objects.forEach(function (obj) {
-      fabric.util.enlivenObjects([obj], function (templateObject) {
+      fabric.util.enlivenObjects([obj], async function (templateObject) {
         if (templateObject[0].name === "safeObject") {
           rect = templateObject[0];
           if (typeof templateObject[0].fill !== "string") {
@@ -8033,6 +8057,9 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
             handleGetAddedTextValues(templateObject[0]);
             reScaleText(templateObject[0]);
           });
+
+          await loadFont(templateObject[0].fontFamily, templateObject[0].fontFamilyUrl)
+          // templateObject[0].set('fontFamily', templateObject[0].fontFamily)
 
           addUniqueObject(addedTexts, templateObject[0], "id");
         }
@@ -9387,12 +9414,18 @@ function handleFinishConfiguration(textsTable, imagesTable) {
         textsValues,
         {
           id: text.id,
+          type: textType,
           values: formatValues(handleGetAddedTextValues(text)),
           textContent: text.text,
           bold: text.fontWeight,
           italic: text.fontStyle,
           fontFamily: text.fontFamily,
           color: text.fill,
+          neonColor: textType == "neon" ? text.neonColor : null,
+          firstBorder: textType == "3D" ? {size: text.strokeWidth, color: text.stroke} : null,
+          secondBorder: textType == "3D" ? {size: text.secondStrokeWidth, color: text.secondStroke} : null,
+          side: textType == "3D" ? text.activeSide : null,
+          sideColor: textType == "3D" ? text.sideColor : null,
           underlined: text.underline,
           crossed: text.linethrough,
           overlined: text.overline,
