@@ -5957,19 +5957,6 @@ fabric.NeonText.fromObject = function (object, callback) {
   return callback(new fabric.NeonText(object.text, object));
 };
 
-// // Stockez la méthode d'origine de `fabric.Object._fromObject`
-// const originalFromObject = fabric.Object._fromObject;
-
-// console.log(originalFromObject, "================================")
-// // Remplacez `fabric.Object._fromObject` par votre implémentation personnalisée
-// // fabric.Object._fromObject = function (object, callback) {
-// //   if (object.type === 'neon-Text') {
-// //     return fabric.NeonText.fromObject(object, callback);
-// //   }
-// //   // Appelez la méthode d'origine pour les autres types d'objets
-// //   // return originalFromObject(object, callback);
-// // };
-
 
 function loadFont(fontName, fontUrl) {
   return new Promise((resolve, reject) => {
@@ -6796,7 +6783,6 @@ function handleChangeTextBorder(layer, value){
             object.set("strokeWidth", value);
         }
     })
-    // console.log("aeaze")
   }
 
 
@@ -7952,8 +7938,7 @@ function findMaxId(tableau) {
   return maxId;
 }
 
-function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
-  // console.log(canvasJson)
+function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) {
   var signData = templateData;
 
   function addUniqueObject(arr, obj, key) {
@@ -7966,7 +7951,6 @@ function handleAddTemplateText(canvas1Json, canvas2Json, templateData, statut) {
   }
 
   function loadFromJSON(canva, canvasJson) {
-    // console.log("Loading", canva.name, canva)
     var rect;
     canva.clear();
     canvasJson.objects.forEach(function (obj) {
@@ -9528,7 +9512,7 @@ export {
   handleLockScaling,
   handleLockRotating,
   handleLockEdition,
-  handleAddTemplateText,
+  handleLoadTemplateData,
   handleMoveobject,
   handleChangeAddedSvgColor,
   handleSetShadow,

@@ -1035,7 +1035,7 @@
                                     </div>
         
                                     <div class="asowp-space-y-1">
-                                        <p class="asowp-font-medium">Other custom</p>
+                                        <!-- <p class="asowp-font-medium">Other custom</p> -->
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
                                             <div class="asowp-flex asowp-flex-wrap asowp-gap-3">
                                                 <span @click="cloneObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
@@ -1309,7 +1309,7 @@
                                     </div>
 
                                     <div class="asowp-space-y-3">
-                                        <p class="asowp-font-medium">Other custom</p>
+                                        <!-- <p class="asowp-font-medium">Other custom</p> -->
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
                                             <div class="asowp-flex asowp-flex-wrap asowp-gap-3">
                                                 <span @click="cloneObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer`">
@@ -2192,7 +2192,7 @@
         handleLockScaling,
         handleLockRotating,
         handleLockEdition,
-        handleAddTemplateText,
+        handleLoadTemplateData,
         handleMoveobject,
         handleChangeAddedSvgColor,
         handleSetShadow,
@@ -2529,7 +2529,7 @@
         selectMaterial(props.config.data.materials[sign.material.id], sign.material.id)
         getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
-        var loadedTemplate = handleAddTemplateText(data.template.face1, data.template.face2, sign, statut)
+        var loadedTemplate = handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut)
 
         //selection de border
         if(sign.material.type === 'simple'){
@@ -6156,6 +6156,32 @@
             reader.readAsDataURL(blob);
         });
     }
+    function applyNeonEffectToSVG(svgString, canva) {
+        var neonTextArray = canva.getObjects().filter(obj => obj.name === "asowp-SignText" && obj.type === "neon-Text")
+        // Parser le SVG en un document DOM
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+
+        // Récupérer tous les éléments <text> dans le SVG
+        const textElements = svgDoc.querySelectorAll('text');
+
+        textElements.forEach(textElement => {
+            // Récupérer le contenu du texte
+            const textContent = textElement.textContent.trim();
+
+            // Trouver l'objet correspondant dans le tableau neonTextArray
+            const neonText = neonTextArray.find(item => item.text === textContent);
+
+            if (neonText) {
+                // Appliquer l'effet néon avec text-shadow
+                textElement.setAttribute('style', `text-shadow: ${neonText.neonColor} 1px 0 20px; fill: ${neonText.fill}`);
+            }
+        });
+
+        // Convertir le document SVG modifié en chaîne de caractères
+        const serializer = new XMLSerializer();
+        return serializer.serializeToString(svgDoc.documentElement);
+    }
     // async function genImage(canva, format, purpose, width, height) {
     //     try{
 
@@ -6840,7 +6866,10 @@
             await drawnPathFromText()
 
             // Générer le SVG avec les polices intégrées
-            const svgContent = canva.toSVG(options);
+            let svgContent = canva.toSVG(options);
+            if(configTextType.value === "neon"){
+                svgContent = applyNeonEffectToSVG(svgContent, canva)
+            }
             const svgWithFonts = await addFontsToSVG(svgContent);
             const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
                     
@@ -6872,7 +6901,7 @@
                     canva.setHeight(1080)
                     checkScreenSize(1900, 1080)
                     canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
-                    
+
                     canva.backgroundColor = configColors.value.canvasBackgroundColor
                     dataURL = canva.toDataURL({
                         format: 'jpeg',
@@ -6886,7 +6915,7 @@
                     canva.setHeight(1080)
                     checkScreenSize(1900, 1080)
                     canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
-                    
+
                     dataURL = canva.toDataURL({
                         format: 'webp',
                         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
@@ -7990,7 +8019,10 @@
 
                 await drawnPathFromText()
                         
-                const svgContent = canva.toSVG(options);
+                let svgContent = canva.toSVG(options);
+                if(configTextType.value === "neon"){
+                    svgContent = applyNeonEffectToSVG(svgContent, canva)
+                }
                 const svgWithFonts = await addFontsToSVG(svgContent);
                 const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
                         
