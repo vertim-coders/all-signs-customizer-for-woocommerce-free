@@ -8,7 +8,7 @@ import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
 import Settings from "@/admin/pages/configuration/settings/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import Templates from "@/admin/pages/templates/index.vue";
-import ConfigurateTemplate from "@/admin/pages/templates/Configurate-template.vue";
+import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
 import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
 import Preview from "@/admin/pages/preview/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";

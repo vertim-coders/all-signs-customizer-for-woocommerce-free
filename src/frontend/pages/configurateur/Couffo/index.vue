@@ -1039,7 +1039,7 @@
         
                                             <div :class="`asowp-relative`">
                                                 <input id="asowp-setBorderTextColor1" type="color" v-model="customTextColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeTextBorderColor($event.target.value)" />
-                                                <label for="asowp-setBorderTextColor1" v-if="configTextSettings.enableCustomColor" :class="`${currentTextBorderColor == 'custom' ? `asowp-border-4 asowp-border-solid asowp-border-[#016464]` : `` } asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
+                                                <label for="asowp-setBorderTextColor1" v-if="configTextSettings.enableCustomColor" :class="` asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
                                                     <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
                                                         <g fill="none" fill-rule="evenodd">
                                                             <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
@@ -2259,7 +2259,7 @@
     var configDoublePart = ref({})
     var configTextSettings = ref({})
 
-    var configTextType = ref('neon')
+    var configTextType = ref('normal')
 
     var configTextFontSettings = ref({})
     var configImageSettings = ref({})
@@ -5530,13 +5530,12 @@
     var currentTextBorder1Color = ref("")
     var currentTextBorder2Color = ref("")
     function changeTextBorderColor(color){
-        currentTextBorderColor.value = color
-        // if(firstBorder.value){
-        //     borderLayerSize.value = e.target.value
-        // }else{
-        //     borderSize.value = e.target.value
-        // }
-        handleChangeTextBorderColor(firstBorder.value, color)
+        if(firstBorder.value){
+            currentTextBorder1Color.value = color
+        }else{
+            currentTextBorder2Color.value = color
+        }       
+         handleChangeTextBorderColor(firstBorder.value, color)
     }
     var active3dSide = ref(true)
     function show3dSide(){
@@ -8689,6 +8688,7 @@
             configSectionIcons.value = props.config.data.settings.languageImages.images
             configOutputSettings.value = props.config.data.settings.generals.output
             configVisualiserTexts.value = props.config.data.settings.languageImages.visualizer
+            configTextType.value = configTextSettings.value.textType;
 
             customSizeValues.value.label = (configVisualiserTexts.value.customSize && configVisualiserTexts.value.customSize.trim() !== '' ? configVisualiserTexts.value.customSize : 'Custom size')
 

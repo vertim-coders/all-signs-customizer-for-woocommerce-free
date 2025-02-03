@@ -545,6 +545,7 @@ const defaultSettings = ref({
             enableTextAlignment:true,
             enableCurvedUp:true,
             enableCurvedDown:true,
+            textType:'normal'
         },
         images: {
             enableDownloadImage:true,

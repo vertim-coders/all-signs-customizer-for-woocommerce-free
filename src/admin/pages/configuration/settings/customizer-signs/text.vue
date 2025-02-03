@@ -2,6 +2,54 @@
     <div>
         <div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
+                 <div class="asowp-text-[16px] asowp-font-bold">Enable Text Type</div>
+                <div class="asowp-grid asowp-grid-cols-5 asowp-gap-y-6">
+                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
+                        <div class="">
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
+                                <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-normal.png" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Normal</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="textTypeNormal" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="textTypeNormal" type="checkbox" name="textTypeNormal" class="asowp-sr-only asowp-peer" v-model="text.textType" true-value="normal" false-value="normal">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
+                        <div class="">
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
+
+                                <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-neon.png" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">NEON</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="textTypeNeon" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="textTypeNeon" type="checkbox" name="textTypeNeon" class="asowp-sr-only asowp-peer" v-model="text.textType" true-value="neon" false-value="normal">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+                    </div>
+                         <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
+                        <div class="">
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
+                                <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-3d.png" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">3D</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="textType3d" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="textType3d" type="checkbox" name="textType3d" class="asowp-sr-only asowp-peer" v-model="text.textType" true-value="3D" false-value="normal">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+                    </div>
+                  
+                 
+                </div>
                 <div class="asowp-flex asowp-flex-col asowp-w-full">
                     <label class="asowp-text-[12px]">Select Fonts</label>
                     <Multiselect
@@ -342,6 +390,7 @@ const text = ref({
     enableTextAlignment:true,
     enableCurvedUp:true,
     enableCurvedDown:true,
+    textType:"normal",
 });
 const manageFonts = ref([]);
 
