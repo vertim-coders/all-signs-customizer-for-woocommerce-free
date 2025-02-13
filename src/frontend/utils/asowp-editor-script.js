@@ -5892,6 +5892,7 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
     this.id = options.id;
     this.name = options.name;
     this.lockMoving = options.lockMoving;
+    this.fontFamilyUrl = options.fontFamilyUrl;
     this.canvasName = options.canvasName;
 
     // Assurez-vous que `text` est une chaîne de caractères
@@ -5946,6 +5947,7 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
       id: this.id,
       name: this.name,
       lockMoving: this.lockMoving,
+      fontFamilyUrl: this.fontFamilyUrl,
       canvasName: this.canvasName,
     });
   }
@@ -6056,7 +6058,7 @@ function reScaleText(textObject) {
   } 
   activeCanvas.renderAll();
 }
-function handleAddTextToSign(clone, layerClone) {
+async function handleAddTextToSign(clone, layerClone) {
   console.log("handleAddTextToSign", layerClone)
 
 
@@ -6287,6 +6289,8 @@ function handleAddTextToSign(clone, layerClone) {
       }
       // lockToCanvas(text2)
     } else {
+      await loadFont(currenTextFontFam.replaceAll(/\s+/g, '-'), currenTextFontFamUrl)
+
       var sign = handleGetObjectByName("safeObject");
       var solidSide = new fabric.Shadow({
         color: "#000000",
@@ -6396,7 +6400,7 @@ function handleAddTextToSign(clone, layerClone) {
           // fontSize: 50,
           fill: 'white', // Couleur intérieure du texte
           neonColor: 'orange',
-          glowRadius: 50,
+          glowRadius: 35,
         });
       }
 
@@ -7938,7 +7942,7 @@ function findMaxId(tableau) {
   return maxId;
 }
 
-function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) {
+async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) {
   var signData = templateData;
 
   function addUniqueObject(arr, obj, key) {
@@ -7950,46 +7954,23 @@ function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) 
     }
   }
 
-  function loadFromJSON(canva, canvasJson) {
+  async function loadFromJSON(canva, canvasJson) {
     var rect;
+    
+    for(const object of canvasJson.objects){
+      if (object.name === "asowp-SignText") {
+        console.log(object, "asowp-SignText")
+        await loadFont(object.fontFamily, object.fontFamilyUrl)
+      }
+    }
     canva.clear();
     canvasJson.objects.forEach(function (obj) {
       fabric.util.enlivenObjects([obj], async function (templateObject) {
-        if (templateObject[0].name === "safeObject") {
-          rect = templateObject[0];
-          if (typeof templateObject[0].fill !== "string") {
-            templateObject[0].fill = "transparent";
-            // console.log('WARNING:')
-            var image;
-            if (canva.name === "front-face") {
-              signBackground1 = "pattern";
-              patternUrl1 = templateData.color.face1.codeHex;
-              image = templateData.color.face1.codeHex;
-            }
-            if (canva.name === "back-face") {
-              signBackground2 = "pattern";
-              patternUrl2 = templateData.color.face2.codeHex;
-              image = templateData.color.face2.codeHex;
-            }
-            fabric.util.loadImage(
-              image,
-              function (img) {
-                var scaleX = templateObject[0].width / img.width;
-                var scaleY = templateObject[0].height / img.height;
-                var pattern = new fabric.Pattern({
-                  source: img,
-                  repeat: "no-repeat",
-                  patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
-                });
-                templateObject[0].set("fill", pattern);
-                // canvas.add(pattern);
-                canva.renderAll();
-              }
-              // { crossOrigin: "anonymous" }
-            );
-          }
-        }
         if (templateObject[0].name === "asowp-SignText") {
+          // await loadFont(templateObject[0].fontFamily, templateObject[0].fontFamilyUrl)
+          // templateObject[0].set('fontFamily', templateObject[0].fontFamily)
+          // console.log('fontFamily', templateObject[0])
+
           // templateObject[0].dirty = true
           // templateObject[0].set('noScaleCache', false);
           templateObject[0].setControlsVisibility({
@@ -8042,10 +8023,42 @@ function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) 
             reScaleText(templateObject[0]);
           });
 
-          await loadFont(templateObject[0].fontFamily, templateObject[0].fontFamilyUrl)
-          // templateObject[0].set('fontFamily', templateObject[0].fontFamily)
-
           addUniqueObject(addedTexts, templateObject[0], "id");
+        }
+
+        if (templateObject[0].name === "safeObject") {
+          rect = templateObject[0];
+          if (typeof templateObject[0].fill !== "string") {
+            templateObject[0].fill = "transparent";
+            // console.log('WARNING:')
+            var image;
+            if (canva.name === "front-face") {
+              signBackground1 = "pattern";
+              patternUrl1 = templateData.color.face1.codeHex;
+              image = templateData.color.face1.codeHex;
+            }
+            if (canva.name === "back-face") {
+              signBackground2 = "pattern";
+              patternUrl2 = templateData.color.face2.codeHex;
+              image = templateData.color.face2.codeHex;
+            }
+            fabric.util.loadImage(
+              image,
+              function (img) {
+                var scaleX = templateObject[0].width / img.width;
+                var scaleY = templateObject[0].height / img.height;
+                var pattern = new fabric.Pattern({
+                  source: img,
+                  repeat: "no-repeat",
+                  patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                });
+                templateObject[0].set("fill", pattern);
+                // canvas.add(pattern);
+                canva.renderAll();
+              }
+              // { crossOrigin: "anonymous" }
+            );
+          }
         }
 
         if (templateObject[0].name === "asowp-SignImage") {
@@ -9270,11 +9283,11 @@ function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) 
     });
   }
 
-  loadFromJSON(canvas, canvas1Json);
+  await loadFromJSON(canvas, canvas1Json);
   activeBorder = signData.border.face1.type;
   activeBorderColor = signData.border.face1.codeHex;
   if (templateData.doubleFace) {
-    loadFromJSON(backCanvas, canvas2Json);
+    await loadFromJSON(backCanvas, canvas2Json);
     activeBorder2 = signData.border.face2.type;
     activeBorderColor2 = signData.border.face2.codeHex;
   }
@@ -9345,12 +9358,18 @@ function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) 
 
   console.log(newId, "canvas newID")
 
+  // replace3DLayer(canvas)
+  // replace3DLayer(backCanvas)
+
   firstLoad = true;
   return {
     size: currentSizeValues,
     texts: addedTexts,
     images: addedImages,
   };
+}
+
+function replace3DLayer(canva){
 }
 
 function handleFinishConfiguration(textsTable, imagesTable) {

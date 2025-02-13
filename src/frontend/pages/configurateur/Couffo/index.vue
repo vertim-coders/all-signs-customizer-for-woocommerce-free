@@ -2531,7 +2531,7 @@
     }
 
     var isTemplate = ref(false)
-    function selectTemplate(data, statut){
+    async function selectTemplate(data, statut){
         console.log(data)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
@@ -2568,7 +2568,7 @@
         selectMaterial(props.config.data.materials[sign.material.id], sign.material.id)
         getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
-        var loadedTemplate = handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut)
+        var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut)
 
         //selection de border
         if(sign.material.type === 'simple'){
@@ -2755,6 +2755,8 @@
         }
         handleReadyToSaveState(true, true)
         firstSetLoad.value = true
+
+        // simulateCanvasClick(canvas)
     }
 
     var matchingFixings = ref([])
@@ -3904,7 +3906,7 @@
     var materialType = ref('')
     var firstLoad = ref(false)
     function selectMaterial(material, id){
-        console.log(material, "selected material")
+        // console.log(material, "selected material")
 
         currentMaterial.value = material
         currentMaterialId.value = id
@@ -5377,8 +5379,8 @@
 
     var textNumberForSize = ref(0)
     var addedTexts = ref([])
-    function addTextToSign(){
-        addedTexts.value =  handleAddTextToSign()
+    async function addTextToSign(){
+        addedTexts.value =  await handleAddTextToSign()
         // console.log(addedTexts.value, "added text")
         if(addedTexts.value.length > 0){
             var index = addedTexts.value.length - 1
@@ -8891,11 +8893,11 @@
                             selectAdvanceFirstValue()
                         }
                     }else{                    
-                        selectTemplate(template.value.data.templateData, 'making')
+                        await selectTemplate(template.value.data.templateData, 'making')
                     }
                 }else{
                     if(props.template.designFromTemplate === true){
-                        selectTemplate(props.template.template.data.templateData)
+                        await selectTemplate(props.template.template.data.templateData)
                     }else{
                         if(props.config.data.materials.length > 0){
                             selectMaterial(props.config.data.materials[0], 0)
