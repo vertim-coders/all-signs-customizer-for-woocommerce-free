@@ -9358,8 +9358,8 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
 
   console.log(newId, "canvas newID")
 
-  // replace3DLayer(canvas)
-  // replace3DLayer(backCanvas)
+  replace3DLayer(canvas)
+  replace3DLayer(backCanvas)
 
   firstLoad = true;
   return {

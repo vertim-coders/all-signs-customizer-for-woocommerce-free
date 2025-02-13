@@ -757,11 +757,11 @@
                         <div v-if="materialType === 'simple'" class="asowp-w-full asowp-h-full asowp-space-y-2 asowp-p-3 asowp-overflow-auto asowp-scrollBar">
                             <div :class="`asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`">
                                 <div v-for="(colorr, id) in colorrs.allColors" class="asowp-flex asowp-flex-col asowp-items-center asowp-justify-start asowp-space-y-2">
-                                    <div v-if="!colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-14 asowp-h-14 asowp-bg-[${colorr.pattern.codeHex}] asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-text-[${colorr.textColor.codeHex}] asowp-rounded-full asowp-cursor-pointer asowp-overflow-hidden asowp-relative`"> 
+                                    <div v-if="!colorr.pattern.active" @click="changeSignColor(id, colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name && activeSignColoriD == id || activeFace === 'back-face' && activeSignFace2Color === colorr.name && activeSignFace2ColoriD == id ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-14 asowp-h-14 asowp-bg-[${colorr.pattern.codeHex}] asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-text-[${colorr.textColor.codeHex}] asowp-rounded-full asowp-cursor-pointer asowp-overflow-hidden asowp-relative`"> 
                                         <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`asowp-absolute asowp-top-0 asowp-left-0 asowp-w-full asowp-h-full`" />
                                         <span v-if="colorr.textColor.active" class="asowp-z-10">C</span>
                                     </div>
-                                    <div v-if="colorr.pattern.active" @click="changeSignColor(colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name || activeFace === 'back-face' && activeSignFace2Color === colorr.name ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-relative asowp-w-14 asowp-h-14 asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-text-[${colorr.textColor.codeHex}] asowp-rounded-full asowp-cursor-pointer asowp-overflow-hidden asowp-relative`"> 
+                                    <div v-if="colorr.pattern.active" @click="changeSignColor(id, colorr.name, colorr.pattern, colorr.textColor, colorr.additionalPrice)" :class="`${activeFace === 'front-face' && activeSignColor === colorr.name && activeSignColoriD == id || activeFace === 'back-face' && activeSignFace2Color === colorr.name && activeSignFace2ColoriD == id ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-relative asowp-w-14 asowp-h-14 asowp-flex asowp-full-center asowp-font-bold asowp-text-lg asowp-text-[${colorr.textColor.codeHex}] asowp-rounded-full asowp-cursor-pointer asowp-overflow-hidden asowp-relative`"> 
                                         <img v-if="colorr.prevImg !== ''" :src="colorr.prevImg" :class="`asowp-absolute asowp-top-0 asowp-left-0 asowp-w-full asowp-h-full`"  />
                                         <img v-if="colorr.prevImg === ''" :src="colorr.pattern.url" :class="`asowp-absolute asowp-top-0 asowp-left-0 asowp-w-full asowp-h-full`"  />
                                         <span v-if="colorr.textColor.active" class="asowp-z-10">C</span>
@@ -775,7 +775,7 @@
                             <div v-if="colorrs.customColors.active" :class="`asowp-flex asowp-flex-col asowp-space-y-2`">
                                 <p class="asowp-font-medium">{{colorrs.customColors.label}}</p>
                                 <div :class="`asowp-relative asowp-w-fit`">
-                                    <input id="asowp-setSignColor" type="color" v-model="simpleColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[30%] asowp-left-[30%]" @input="changeSignColor(colorrs.customColors.label, {active: false, codeHex: simpleColor, url: ''}, {active: false, codeHex: '', sameForBorder: false}, 0)"/>
+                                    <input id="asowp-setSignColor" type="color" v-model="simpleColor" class="asowp-inputColor-hide asowp-absolute asowp-top-[30%] asowp-left-[30%]" @input="changeSignColor(-1, colorrs.customColors.label, {active: false, codeHex: simpleColor, url: ''}, {active: false, codeHex: '', sameForBorder: false}, 0)"/>
                                     <label for="asowp-setSignColor" :class="`${activeSignColor == colorrs.customColors.label ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-14 asowp-h-14 asowp-flex asowp-full-center asowp-rounded-full asowp-overflow-hidden`">
                                         <svg v-if="colorrs.customColors.prevImg === ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
                                             <g fill="none" fill-rule="evenodd">
@@ -2657,6 +2657,7 @@
         //selection des couleur de sign
         if(isColorOrImage(sign.color.face1.codeHex) === 'color'){
             activeSignColor.value = sign.color.face1.name
+            activeSignColoriD.value = sign.color.face1.id
             patternActive1.value = false
             activeSignColorCode1.value = sign.color.face1.codeHex
             var pattern = {
@@ -2667,6 +2668,7 @@
             // setSignColor(canvas, pattern, sign.color.face1.textColor, 'black')
         }else{
             activeSignColor.value = sign.color.face1.name
+            activeSignColoriD.value = sign.color.face1.id
             patternActive1.value = true
             activeSignColorCode1.value = sign.color.face1.codeHex
             var pattern = {
@@ -2685,6 +2687,7 @@
         if(sign.doubleFace === true){
             if(isColorOrImage(sign.color.face2.codeHex) === 'color'){
                 activeSignFace2Color.value = sign.color.face2.name;
+                activeSignFace2ColoriD.value = sign.color.face2.id;
                 patternActive2.value = false
                 activeSignColorCode2.value = sign.color.face2.codeHex
                 var pattern = {
@@ -2695,6 +2698,7 @@
                 // setSignColor(canvasBack, pattern, sign.color.face2.textColor, 'black')
             }else{
                 activeSignFace2Color.value = sign.color.face2.name;
+                activeSignFace2ColoriD.value = sign.color.face2.id;
                 patternActive2.value = true
                 activeSignColorCode2.value = sign.color.face2.codeHex
                 var pattern = {
@@ -2973,14 +2977,14 @@
             while (index < colorrs.value.allColors.length && !haveDefault) {
                 if(colorrs.value.allColors[index].isDefault){
                     // console.log(colorrs.value.allColors[index], "default")
-                    changeSignColor(colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice, true )
+                    changeSignColor(index, colorrs.value.allColors[index].name, colorrs.value.allColors[index].pattern, colorrs.value.allColors[index].textColor, colorrs.value.allColors[index].additionalPrice, true )
                     haveDefault = true
                     break;
                 }
                 index++;
             }
             if(!haveDefault){
-                changeSignColor(colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice, true )
+                changeSignColor(0, colorrs.value.allColors[0].name, colorrs.value.allColors[0].pattern, colorrs.value.allColors[0].textColor, colorrs.value.allColors[0].additionalPrice, true )
             }
         }else{
             // changeSignColor(color, colorr)
@@ -4769,6 +4773,8 @@
     var colorrs = ref([])
     var activeSignColor = ref('')
     var activeSignFace2Color = ref('')
+    var activeSignColoriD = ref(0)
+    var activeSignFace2ColoriD = ref(0)
     var activeSignColorCode1 = ref('')
     var activeSignColorCode2 = ref('')
     var patternActive1 = ref(false)
@@ -4780,7 +4786,7 @@
     var colorTextColorName2 = ref("")
     var colorTextCodeHex1 = ref("")
     var colorTextCodeHex2 = ref("")
-    function changeSignColor(name, pattern, textColor, price, restart) {
+    function changeSignColor(id, name, pattern, textColor, price, restart) {
         // console.log(color.name, "changeSignColor")
         var color1Price = 0
         var color2Price = 0
@@ -4789,10 +4795,12 @@
             if(configDoublePart.value.active){
                 signTextColor1.value = textColor
                 activeSignColor.value = name;
+                activeSignColoriD.value = id;
                 color1Price = price
     
                 signTextColor2.value = textColor
                 activeSignFace2Color.value = name;
+                activeSignFace2ColoriD.value = id;
                 color2Price = price
     
                 var colorPrice1Object = {
@@ -4844,6 +4852,7 @@
             }else{
                 signTextColor1.value = textColor
                 activeSignColor.value = name;
+                activeSignColoriD.value = id;
                 color1Price = price
                 var colorPrice1Object = {
                     name: "color1",
@@ -4877,6 +4886,7 @@
             if(activeFace.value === "front-face"){
                 signTextColor1.value = textColor
                 activeSignColor.value = name;
+                activeSignColoriD.value = id;
                 color1Price = price
                 
                 var colorPrice1Object = {
@@ -4912,6 +4922,7 @@
             if(configDoublePart.value.active && activeFace.value === "back-face"){
                 signTextColor2.value = textColor
                 activeSignFace2Color.value = name;
+                activeSignFace2ColoriD.value = id;
                 color2Price = price
 
                 var colorPrice2Object = {
@@ -5833,6 +5844,7 @@
                 color: {
                     label: (configVisualiserTexts.value.textColor && configVisualiserTexts.value.textColor.trim() != '' ? configVisualiserTexts.value.textColor : 'Colors'),
                     value: {
+                        id: activeSignColoriD.value,
                         name: activeSignColor.value,
                         codeHex: activeSignColorCode1.value,
                         textColor: {
@@ -5934,6 +5946,7 @@
                         label: (configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() != '' ? configVisualiserTexts.textColor : 'Colors'),
                         value: {
                             face1: {
+                                id: activeSignColoriD.value,
                                 name: activeSignColor.value,
                                 codeHex: activeSignColorCode1.value,
                                 textColor: {
@@ -5943,6 +5956,7 @@
                                 }
                             },
                             face2: {
+                                id: activeSignFace2ColoriD.value,
                                 name: activeSignFace2Color.value,
                                 codeHex : activeSignColorCode2.value,
                                 textColor: {
@@ -6044,6 +6058,7 @@
                     shape: selectedShape.value,
                     color: {
                         face1: {
+                            id: activeSignColoriD.value,
                             name: activeSignColor.value,
                             codeHex: activeSignColorCode1.value,
                             textColor: {
@@ -6053,6 +6068,7 @@
                             }
                         },
                         face2: {
+                            id: activeSignFace2ColoriD.value,
                             name: activeSignFace2Color.value,
                             codeHex : activeSignColorCode2.value,
                             textColor: {
