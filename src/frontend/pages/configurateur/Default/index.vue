@@ -906,10 +906,10 @@
 
                                     <div v-if="configTextType == '3D'">
                                         <div>
-                                            <p class="aso-font-medium">Border size</p>
-                                            <div class="aso-p-2 aso-space-y-1">
-                                                <input  type="range" name="aso-borderSize" id="aso-text-borderWidth" :class="`aso-cursor-pointer aso-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
-                                                <input  type="range" name="aso-borderSize" id="aso-text-borderWidth" :class="`aso-cursor-pointer aso-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
+                                            <p class="asowp-font-medium">Border size</p>
+                                            <div class="asowp-p-2 asowp-space-y-1">
+                                                <input  type="range" name="asowp-borderSize" id="asowp-text-borderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
+                                                <input  type="range" name="asowp-borderSize" id="asowp-text-borderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
                                             </div>
                                         </div>
 
@@ -921,7 +921,7 @@
                                             </div>
                                             <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                                 <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                    <div @click="changeTextBorderColor(color.codeHex)" :class="`${(firstBorder && currentTextBorder1Color === color.codeHex) || (!firstBorder && currentTextBorder2Color === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                    <div @click="changeTextBorderColor(color.codeHex)" :class="`${(firstBorder && currentTextBorder1Color === color.codeHex) || (!firstBorder && currentTextBorder2Color === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
                                                 </div>
             
                                                 <div :class="`asowp-relative`">
@@ -945,15 +945,15 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="aso-flex aso-flex-col aso-space-y-2">
-                                            <p class="aso-font-medium">3D effect</p>
+                                        <div class="asowp-flex asowp-flex-col asowp-space-y-2">
+                                            <p class="asowp-font-medium">3D effect</p>
                                             <div class="asowp-w-fit asowp-flex asowp-space-x-1 asowp-rounded-md" @click="show3dSide()">
                                                 <div :class="`${active3dSide ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">Active</div>
                                                 <div :class="`${!active3dSide ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded-md asowp-cursor-pointer asowp-base-animation`">Disabled</div>
                                             </div>
                                             <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                                 <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                    <div @click="change3dSideColor(color.codeHex)" :class="`${active3dSideColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                    <div @click="change3dSideColor(color.codeHex)" :class="`${active3dSideColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
                                                 </div>
             
                                                 <div :class="`asowp-relative`">
@@ -982,7 +982,7 @@
                                         <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
                                         <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeTextColor(color.codeHex)" :class="`${selectedText.color === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
                                             </div>
         
                                             <div :class="`asowp-relative`">
@@ -1010,7 +1010,7 @@
                                         <p class="asowp-font-medium">Light color</p>
                                         <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                             <div v-for="(color, index) in configTextSettings.colors" class="">
-                                                <div @click="changeTextLightColor(color.codeHex)" :class="`${curentTextLightColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeTextLightColor(color.codeHex)" :class="`${curentTextLightColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
                                             </div>
         
                                             <div :class="`asowp-relative`">
@@ -1247,7 +1247,7 @@
                                         <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
                                         <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                             <div v-for="(color, index) in configImageSettings.colors" class="">
-                                                <div @click="changeSvgColor(color.codeHex)" :class="`${currentSvgColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-p-2 asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                                <div @click="changeSvgColor(color.codeHex)" :class="`${currentSvgColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
                                             </div>
                                             <div :class="`asowp-relative`">
                                                 <input id="asowp-setSvgColor" type="color" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeSvgColor($event.target.value)" />
@@ -1900,13 +1900,13 @@
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignColor}}</span>
                             <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span v-if="!patternActive1" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${activeSignColorCode1}] asowp-flex`"></span>
+                                <span v-if="!patternActive1" :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${activeSignColorCode1}] asowp-flex`"></span>
                                 <img v-if="patternActive1" :src="activeSignColorCode1" class="asowp-w-[35px] asowp-h-[35px]" />
                             </span>
 
                             <span v-if="signTextColor1.active" class="lowercase first-letter:uppercase">{{colorTextColorName1}}</span>
                             <span v-if="signTextColor1.active" :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${colorTextCodeHex1}] asowp-flex`"></span>
+                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${colorTextCodeHex1}] asowp-flex`"></span>
                             </span>
                         </div>
 
@@ -1914,13 +1914,13 @@
                             <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignFace2Color}}</span>
                             <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span v-if="!patternActive2" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${activeSignColorCode2}] asowp-flex`"></span>
+                                <span v-if="!patternActive2" :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${activeSignColorCode2}] asowp-flex`"></span>
                                 <img v-if="patternActive2" :src="activeSignColorCode1" class="asowp-w-[35px] asowp-h-[35px]" />
                             </span>
                             
                             <span v-if="signTextColor2.active" class="lowercase first-letter:uppercase">{{colorTextColorName2}}</span>
                             <span v-if="signTextColor2.active" :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
-                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${colorTextCodeHex2}] asowp-flex`"></span>
+                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${colorTextCodeHex2}] asowp-flex`"></span>
                             </span>
                         </div>
                     </p>
@@ -2747,6 +2747,7 @@
         }
 
         if(sign.size.setting){
+            currentSizeSetting.value = sign.size.setting
             handleGetCharPrice(sign.size.setting.charPrice, sign.size.setting.startPriceAtChar, templateSize.maxChars)
         }
 
@@ -2770,6 +2771,7 @@
 
         textsPrices.value = handleSetPrice()
         getOptionPrice()
+        activeFace.value = "front-face"
         
         if(!firstSetLoad.value){
             saveStep("select of first values")
@@ -3532,7 +3534,7 @@
             }
             handleReadyToSaveState(true);
         }
-        
+        simulateCanvasClick()
     }
     function nextStep(){
         handleReadyToSaveState(false);
@@ -3644,6 +3646,7 @@
             }
             handleReadyToSaveState(true);
         }
+        simulateCanvasClick()
     }
     function clearStep(){
         // currentSizeName.value = stepArray.value.states[0].size.name
@@ -5392,11 +5395,11 @@
         if(activeFace.value == object.canvasName){
             selectText.value = true
             object.selected = true;
-    
+            
             selectedText.value.value = object.text
             
             activeCanvas.getObjects().forEach(function(obj){
-                if(object.id === obj.id){
+                if(obj.name === "asowp-SignText" && obj.id === object.id){
                     if(setActive){
                         activeCanvas.setActiveObject(obj);
                     }

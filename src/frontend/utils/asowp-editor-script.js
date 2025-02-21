@@ -7435,24 +7435,6 @@ function handleCalcTextPrice(position) {
     (activeSignFace === "front" && startPriceAtChar < frontTextCharLength) ||
     (activeSignFace === "back" && backTextCharLength > startPriceAtChar)
   ) {
-    // var avalaibleChars = object.text.length - startPriceAtChar
-    // var charPricing = avalaibleChars * charPrice
-
-    // console.log(avalaibleChars, "available chars for pricing")
-
-    // function addUniqueObject(arr, obj, key) {
-    //     const index = arr.findIndex(item => item[key] === obj[key]);
-    //     if(index !== -1){
-    //         arr[index] = obj;
-    //     }
-    //     else{
-    //         arr.push(obj);
-    //     }
-    // }
-    // addUniqueObject(textsPrice, {id: object.id, price: charPricing}, 'id')
-
-    // removeDeletedTextPrice(textsPrice, addedTexts)
-    // console.log(textsPrice, "table de prix de text")
     if (frontTextCharLength > startPriceAtChar) {
       avalaibleFaceChars =
         sumOptionsPrice(FtextObjects, "text").length - startPriceAtChar;
