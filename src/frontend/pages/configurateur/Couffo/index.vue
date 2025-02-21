@@ -1770,8 +1770,8 @@
                     </span>
                 </div>
     
-                <!-- <img ref="showPreview" :src="prevImg" class="asowp-w-[70%] asowp-h-[70%]" /> -->
-                <div id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-rounded asowp-relative asowp-overflow-hidden`"></div>
+                <img v-if="configTextType == 'neon'" id="asowp-showPreview" :src="prevImg" class="asowp-w-auto asowp-h-full" style="pointer-events: none; user-select: none; -webkit-user-select: none" />
+                <div v-if="configTextType != 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-rounded asowp-relative asowp-overflow-hidden`"></div>
                 
                 <div v-if="configImageSettings.scenes.length > 0" class="asowp-w-full asowp-h-[10%] asowp-flex">
                     <div class="asowp-w-full asowp-h-full asowp-flex asowp-items-center asowp-justify-center asowp-space-x-2">
@@ -1917,28 +1917,28 @@
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignColor}}</span>
-                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
                                 <span v-if="!patternActive1" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${activeSignColorCode1}] asowp-flex`"></span>
                                 <img v-if="patternActive1" :src="activeSignColorCode1" class="asowp-w-[35px] asowp-h-[35px]" />
                             </span>
 
                             <span v-if="signTextColor1.active" class="lowercase first-letter:uppercase">{{colorTextColorName1}}</span>
-                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                <span v-if="signTextColor1.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${colorTextCodeHex1}] asowp-flex`"></span>
+                            <span v-if="signTextColor1.active" :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${colorTextCodeHex1}] asowp-flex`"></span>
                             </span>
                         </div>
 
                         <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignFace2Color}}</span>
-                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
                                 <span v-if="!patternActive2" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${activeSignColorCode2}] asowp-flex`"></span>
                                 <img v-if="patternActive2" :src="activeSignColorCode1" class="asowp-w-[35px] asowp-h-[35px]" />
                             </span>
                             
                             <span v-if="signTextColor2.active" class="lowercase first-letter:uppercase">{{colorTextColorName2}}</span>
-                            <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
-                                <span v-if="signTextColor2.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${colorTextCodeHex2}] asowp-flex`"></span>
+                            <span v-if="signTextColor2.active" :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${colorTextCodeHex2}] asowp-flex`"></span>
                             </span>
                         </div>
                     </p>
@@ -2039,7 +2039,23 @@
                         <div v-if="!configDoublePart.active && configData.texts.value.length > 0" clss="asowp-space-y-1">
                             <div v-for="(text, id) in configData.texts.value" class="asowp-flex asowp-full-center">
                                 {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
-                                <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}] asowp-mx-1`"></span>
+                                <div class="asowp-flex asowp-space-x-2 asowp-mx-1">
+                                    <span :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}]`"></span>
+                                    </span>
+                                    <span v-if="configTextType == 'neon'" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span  :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.neonColor}]`"></span>
+                                    </span>
+                                    <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.firstBorder.color}]`"></span>
+                                    </span>
+                                    <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.secondBorder.color}]`"></span>
+                                    </span>
+                                    <span v-if="configTextType == '3D' && text.side == true" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                        <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.sideColor}]`"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
@@ -2048,7 +2064,23 @@
                                 <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
                                 <div v-for="(text, id) in configData.texts.value.face1" class="asowp-flex asowp-full-center">
                                     {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
-                                    <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}] asowp-mx-1`"></span>
+                                    <div class="asowp-flex asowp-space-x-2 asowp-mx-1">
+                                        <span :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == 'neon'" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span  :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.neonColor}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.firstBorder.color}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.secondBorder.color}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == '3D' && text.side == true" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.sideColor}]`"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -2056,7 +2088,23 @@
                                 <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
                                 <div v-for="(text, id) in configData.texts.value.face2" class="asowp-flex asowp-full-center">
                                     {{text.textContent}}: {{text.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{text.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}
-                                    <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}] asowp-mx-1`"></span>
+                                    <div class="asowp-flex asowp-space-x-2 asowp-mx-1">
+                                        <span :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.color}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == 'neon'" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span  :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.neonColor}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == '3D' && text.firstBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.firstBorder.color}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == '3D' && text.secondBorder.size > 0" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.secondBorder.color}]`"></span>
+                                        </span>
+                                        <span v-if="configTextType == '3D' && text.side == true" :class="`asowp-h-fit asowp-w-fit asowp-flex asowp-p-[1px] asowp-ring-[1px] asowp-ring-[${configColors.recaps.headerBackgroundColor}]`">
+                                            <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-flex asowp-bg-[${text.sideColor}]`"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2532,7 +2580,7 @@
 
     var isTemplate = ref(false)
     async function selectTemplate(data, statut){
-        console.log(data)
+        // console.log(data)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -2721,7 +2769,8 @@
         var templateSize = {
             name: 'Template',
             width: sign.size.width,
-            height: sign.size.height
+            height: sign.size.height,
+            maxChars: sign.size.maxChars
         }
         currentSizeData.value = templateSize
         currentSizeValues.value = loadedTemplate.size
@@ -2734,6 +2783,10 @@
         }else{
             currentSizeThickness.value = false
             currentThickValue.value = 0
+        }
+
+        if(sign.size.setting){
+            handleGetCharPrice(sign.size.setting.charPrice, sign.size.setting.startPriceAtChar, templateSize.maxChars)
         }
 
         if(sign.material.type == 'advance'){
@@ -2754,13 +2807,16 @@
         usedImages.value = loadedTemplate.images
         // console.log(loadedTemplate.images, "loadedTemplate.images")
 
+        textsPrices.value = handleSetPrice()
+        getOptionPrice()
+        
         if(!firstSetLoad.value){
             saveStep("select of first values")
         }
         handleReadyToSaveState(true, true)
         firstSetLoad.value = true
 
-        // simulateCanvasClick(canvas)
+        // simulateCanvasClick()
     }
 
     var matchingFixings = ref([])
@@ -4133,7 +4189,7 @@
             if(activeCanvas.getActiveObject() !== null){
                 var object = activeCanvas.getActiveObject();
                 // addedTexts.value = handleDeleteObject(object)
-                if(object.type == 'i-text' || object.type == "neon-Text"){
+                if(object.name == "asowp-SignText"){
                     addedTexts.value = handleDeleteObject(object)
                     selectText.value = false
                     // console.log(addedTexts.value)
@@ -4179,7 +4235,7 @@
             if(activeCanvas.getActiveObject() !== null){
                 newImagePriceId.value = newImagePriceId.value + 1
                 var object = activeCanvas.getActiveObject();
-                if(object.type === 'i-text' || object.type === "neon-Text"){
+                if(object.name === 'asowp-SignText'){
                     handleCloneObject(object)
                     saveStep('clonage du text');
                 }
@@ -5608,6 +5664,7 @@
     var textsPrices = ref(0)
     var finalPrices = ref(0)
     function getOptionPrice(priceObject){
+        textsPrices.value = handleSetPrice()
         function addUniqueObject(arr, obj, key) {
             if(obj.type === 'image'){
                 const index = arr.findIndex(item => item.id === obj.id)
@@ -5627,7 +5684,9 @@
                 }
             }
         }
-        addUniqueObject(optionsPrices.value, priceObject, 'name')
+        if(priceObject){
+            addUniqueObject(optionsPrices.value, priceObject, 'name')
+        }
         // console.log(optionsPrices.value, "priceObject")
 
         function removeObjectByName(arr, name) {
@@ -5687,28 +5746,26 @@
             
             return totalPrice
         }
-
-        if(materialType.value === 'advance'){
-            removeObjectByName(optionsPrices.value, 'none')
-            removeObjectByName(optionsPrices.value, 'shape')
-            removeObjectByName(optionsPrices.value, 'color1')
-            removeObjectByName(optionsPrices.value, 'color2')
-            removeObjectByName(optionsPrices.value, 'border1')
-            removeObjectByName(optionsPrices.value, 'border2')
-
-            removeObjectByType(optionsPrices.value, 'add-component')
-
-            // console.log("options pricing advance", optionsPrices.value)
-            // console.log("PRIX TOTAL",sumOptionsPrice(optionsPrices.value, 'price'))
-
-        }else{
-            removeObjectByName(optionsPrices.value, 'none')
-            removeObjectByName(optionsPrices.value, 'model')
+        if(priceObject){
+            if(materialType.value === 'advance'){
+                removeObjectByName(optionsPrices.value, 'none')
+                removeObjectByName(optionsPrices.value, 'shape')
+                removeObjectByName(optionsPrices.value, 'color1')
+                removeObjectByName(optionsPrices.value, 'color2')
+                removeObjectByName(optionsPrices.value, 'border1')
+                removeObjectByName(optionsPrices.value, 'border2')
+    
+                removeObjectByType(optionsPrices.value, 'add-component')
+    
+                // console.log("options pricing advance", optionsPrices.value)
+                // console.log("PRIX TOTAL",sumOptionsPrice(optionsPrices.value, 'price'))
+    
+            }else{
+                removeObjectByName(optionsPrices.value, 'none')
+                removeObjectByName(optionsPrices.value, 'model')
+            }
         }
         finalPrices.value = sumOptionsPrice(optionsPrices.value, 'price') + textsPrices.value;
-        // console.log("PRIX TOTAL options",sumOptionsPrice(optionsPrices.value, 'price'))
-        // console.log("PRIX TOTAL texts",textsPrices.value)
-        // console.log("TOTAL PRICE", finalPrices.value)
     }
 
     var finish = ref(false)
@@ -6020,11 +6077,11 @@
             function supprimerNonChiffres(chaine) {
                 return chaine.replace(/[^0-9.]/g, '');
             }
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -6053,7 +6110,8 @@
                             value: (currentThickValue.value !== -99 ? thicknessValue : 'none'),
                         },
                         ratioScale: activeCanvas.ratioScale,
-                        unit: configSettings.value.customizerSign.customizerOptions.measurementUnit
+                        unit: configSettings.value.customizerSign.customizerOptions.measurementUnit,
+                        setting: currentSizeSetting.value,
                     },
                     shape: selectedShape.value,
                     color: {
@@ -6142,28 +6200,52 @@
     }
     const showPreview = ref(null)
     async function showConfigRender(){
-            // designImages: generateImage(canvas, configOutputSettings.value.filesFormat),
         showImg.value = true
 
         if(configDoublePart.value.active){
             if(activeFace.value === "front-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                    prevImg.value = await genImageWithWatermark(canvas, 'svg', 'preview', 1317, 622);
+                    if(configTextType.value == 'neon'){
+                        prevImg.value = await genImageWithWatermark(canvas, 'png', 'preview');
+                    }else{
+                        prevImg.value = await genImageWithWatermark(canvas, 'svg', 'preview');
+                    }
                 }else{
-                    prevImg.value = await genImage(canvas, 'svg', 'preview');
+                    if(configTextType.value == 'neon'){
+                        prevImg.value = await genImage(canvas, 'png', 'preview');
+                    }else{
+                        prevImg.value = await genImage(canvas, 'svg', 'preview');
+                    }
                 }
             }else if(activeFace.value === "back-face"){
                 if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                    prevImg.value = await genImageWithWatermark(canvasBack, 'svg', 'preview', 1317, 622);
+                    // prevImg.value = await genImageWithWatermark(canvasBack, 'svg', 'preview', 1317, 622);
+                    if(configTextType.value == 'neon'){
+                        prevImg.value = await genImageWithWatermark(canvasBack, 'png', 'preview', 1317, 622);
+                    }else{
+                        prevImg.value = await genImageWithWatermark(canvasBack, 'svg', 'preview', 1317, 622);
+                    }
                 }else{
-                    prevImg.value = await genImage(canvasBack, 'svg', 'preview');
+                    if(configTextType.value == 'neon'){
+                        prevImg.value = await genImage(canvasBack, 'png', 'preview');
+                    }else{
+                        prevImg.value = await genImage(canvasBack, 'svg', 'preview');
+                    }
                 }
             }
         }else{
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
-                prevImg.value = await genImageWithWatermark(canvas, 'svg', 'preview');
+                if(configTextType.value == 'neon'){
+                    prevImg.value = await genImageWithWatermark(canvas, 'png', 'preview');
+                }else{
+                    prevImg.value = await genImageWithWatermark(canvas, 'svg', 'preview');
+                }
             }else{
-                prevImg.value = await genImage(canvas, 'png', 'preview');
+                if(configTextType.value == 'neon'){
+                    prevImg.value = await genImage(canvas, 'png', 'preview');
+                }else{
+                    prevImg.value = await genImage(canvas, 'svg', 'preview');
+                }
             }
         }
     }
@@ -6310,6 +6392,7 @@
             if (neonText) {
                 // Appliquer l'effet néon avec text-shadow
                 textElement.setAttribute('style', `text-shadow: ${neonText.neonColor} 1px 0 20px; fill: ${neonText.fill}`);
+                // textElement.setAttribute('font-size', `100px`);
             }
         });
 
@@ -7002,6 +7085,7 @@
                 }
             });
             canva.renderAll();
+            simulateCanvasClick(canva)
 
 
             // Ajouter les polices dans le SVG
@@ -7130,16 +7214,27 @@
                     object.moveTo(fixingPositionId);
                 }
             });
-            checkScreenSize()
-
-            canva.renderAll();
 
             if(purpose === 'preview'){
-                previewScreen.innerHTML = svgDataPreview;
+                // if(configTextType.value == 'neon'){
+                //     canva.setWidth(1900)
+                //     canva.setHeight(1080)
+                //     checkScreenSize(1900, 1080)
+                //     canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
-                const svgElement = previewScreen.querySelector('svg');
-
-                svgElement.classList.add('asowp-z-10');
+                //     prevImg.value = canva.toDataURL({
+                //         format: 'png',
+                //         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                //     });
+                    
+                // }
+                if(configTextType.value != 'neon'){
+                    previewScreen.innerHTML = svgDataPreview;
+    
+                    const svgElement = previewScreen.querySelector('svg');
+    
+                    svgElement.classList.add('asowp-z-10');
+                }
 
                 if(configImageSettings.value.scenes.length > 0){
                     var miniPreview = document.getElementById('asowp-miniPreview')
@@ -7159,6 +7254,10 @@
                 var previewFinish1 = document.getElementById('asowp-previewFinish2')
                 previewFinish1.innerHTML = svgDataPreview;
             }
+
+            checkScreenSize()
+            canva.renderAll();
+            simulateCanvasClick(canva)
 
             return dataURL;
 
@@ -7805,521 +7904,539 @@
 
     // }
     async function genImageWithWatermark(canva, format, purpose, width, height) {
-        try{
-            // Sauvegarde les dimensions actuelles du canvas
-            const originalWidth = canva.getWidth();
-            const originalHeight = canva.getHeight();
+        return new Promise((resolve, reject) => {
+            try{
+                // Sauvegarde les dimensions actuelles du canvas
+                const originalWidth = canva.getWidth();
+                const originalHeight = canva.getHeight();
 
-            var canvasCenter = getCanvasCenter()
+                var canvasCenter = getCanvasCenter()
 
-            // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
-            // if (width && height) {
-            //     canva.setWidth(width);
-            //     canva.setHeight(height);
-            //     checkScreenSize(width, height)
-            // }
+                // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
+                // if (width && height) {
+                //     canva.setWidth(width);
+                //     canva.setHeight(height);
+                //     checkScreenSize(width, height)
+                // }
 
-            fabric.Image.fromURL(configOutputSettings.value.waterMark, async function(img) {  
-                var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
-                const imgWidth = 100;
-                const imgHeight = 100;
-                const spacing = 50; // Espacement entre les images
+                fabric.Image.fromURL(configOutputSettings.value.waterMark, async function(img) {  
+                    var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
+                    const imgWidth = 100;
+                    const imgHeight = 100;
+                    const spacing = 50; // Espacement entre les images
 
-                // Créer un canvas temporaire
-                const patternCanvas = document.createElement('canvas');
-                const patternContext = patternCanvas.getContext('2d');
-                // Définir les dimensions du canvas temporaire
-                patternCanvas.width = imgWidth + spacing;
-                patternCanvas.height = imgHeight + spacing;
-                // Dessiner l'image de filigrane sur le canvas temporaire
-                patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
-                const pattern = new fabric.Pattern({
-                    // source: img.getElement(),
-                    source: patternCanvas,
-                    repeat: 'no-repeat'
-                });
-                const watermarkRect = new fabric.Rect({
-                    left: sign.left + sign.width - imgWidth - 10,
-                    top: sign.top + sign.height - imgHeight - 10,
-                    // left: -canvasCenter.x,
-                    // top: -canvasCenter.y,
-                    width: imgWidth,
-                    height: imgHeight,
-                    // width: (originalWidth*2),
-                    // height: (originalHeight*2),
-                    fill: pattern,  
-                    selectable: false,
-                    evented: false,
-                    name: 'watermark',
-                    opacity: 0.5,
-                });
-                canva.add(watermarkRect);
-                watermarkRect.bringToFront()
+                    // Créer un canvas temporaire
+                    const patternCanvas = document.createElement('canvas');
+                    const patternContext = patternCanvas.getContext('2d');
+                    // Définir les dimensions du canvas temporaire
+                    patternCanvas.width = imgWidth + spacing;
+                    patternCanvas.height = imgHeight + spacing;
+                    // Dessiner l'image de filigrane sur le canvas temporaire
+                    patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
+                    const pattern = new fabric.Pattern({
+                        // source: img.getElement(),
+                        source: patternCanvas,
+                        repeat: 'no-repeat'
+                    });
+                    const watermarkRect = new fabric.Rect({
+                        left: sign.left + sign.width - imgWidth - 10,
+                        top: sign.top + sign.height - imgHeight - 10,
+                        // left: -canvasCenter.x,
+                        // top: -canvasCenter.y,
+                        width: imgWidth,
+                        height: imgHeight,
+                        // width: (originalWidth*2),
+                        // height: (originalHeight*2),
+                        fill: pattern,  
+                        selectable: false,
+                        evented: false,
+                        name: 'watermark',
+                        opacity: 0.5,
+                    });
+                    canva.add(watermarkRect);
+                    watermarkRect.bringToFront()
 
 
-                const optionsPreview = {
-                    width: '100%',
-                    height: '100%',
-                    class: 'asowp-z-10',
-                    // viewBox: {
-                    //     x: -100,
-                    //     y: -50,
-                    //     width: canva.width+300,
-                    //     height: canva.height+300
-                    // },
-                    encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-                };
+                    const optionsPreview = {
+                        width: '100%',
+                        height: '100%',
+                        class: 'asowp-z-10',
+                        // viewBox: {
+                        //     x: -100,
+                        //     y: -50,
+                        //     width: canva.width+300,
+                        //     height: canva.height+300
+                        // },
+                        encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+                    };
 
-                const options = {
-                    width: '1900px',  // ou la largeur que vous souhaitez
-                    height: '1080px', // ou la hauteur que vous souhaitez
-                    encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-                };
-                function checkWoff2(chaine) {
-                    return chaine.endsWith('.woff2');
-                }
+                    const options = {
+                        width: '1900px',  // ou la largeur que vous souhaitez
+                        height: '1080px', // ou la hauteur que vous souhaitez
+                        encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+                    };
+                    function checkWoff2(chaine) {
+                        return chaine.endsWith('.woff2');
+                    }
 
-                function hasExtendedLowercase(text, font, xHeight, fontSize) {
-                    if (typeof text !== 'string') {
-                        console.error('Text must be a string');
+                    function hasExtendedLowercase(text, font, xHeight, fontSize) {
+                        if (typeof text !== 'string') {
+                            console.error('Text must be a string');
+                            return false;
+                        }
+                        const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
+                        const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
+                        
+                        // let hasSame = false;
+                        // for (let char of testChars) {
+                        //     if (char.match(/[a-z]/)) {
+                        //         let path = font.getPath(char, 0, 0, fontSize);
+                        //         let bbox = path.getBoundingBox();
+                        //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
+                        //         if (xHeight > bbox.y2 - bbox.y1) {
+                        //             return true;
+                        //         }
+                        //     }
+                        // }
+                        for (let char of testExtendsChars) {
+                            if (char.match(/[a-z]/)) {
+                                let path = font.getPath(char, 0, 0, fontSize);
+                                let bbox = path.getBoundingBox();
+                                // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
+                                // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
+                                if (xHeight*0.9 > bbox.y2 - bbox.y1) {
+                                    return true;
+                                }
+                            }
+                        }
                         return false;
                     }
-                    const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
-                    const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
-                    
-                    // let hasSame = false;
-                    // for (let char of testChars) {
-                    //     if (char.match(/[a-z]/)) {
-                    //         let path = font.getPath(char, 0, 0, fontSize);
-                    //         let bbox = path.getBoundingBox();
-                    //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
-                    //         if (xHeight > bbox.y2 - bbox.y1) {
-                    //             return true;
-                    //         }
-                    //     }
-                    // }
-                    for (let char of testExtendsChars) {
-                        if (char.match(/[a-z]/)) {
-                            let path = font.getPath(char, 0, 0, fontSize);
-                            let bbox = path.getBoundingBox();
-                            // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
-                            // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
-                            if (xHeight*0.9 > bbox.y2 - bbox.y1) {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
-                }
 
-                async function drawnPathFromText() {
-                    return new Promise((resolve, reject) => {
-                        var elements = canvas.getObjects()
-                        let promises = []
+                    async function drawnPathFromText() {
+                        return new Promise((resolve, reject) => {
+                            var elements = canvas.getObjects()
+                            let promises = []
 
-                        elements.forEach((object, index) => {
-                            if (object.name === 'safeObject') {
-                                if (typeof object.fill !== 'string') {
-                                    var patternFill = object.fill
-                                    let promise = new Promise((resolve, reject) => {
-                                        handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
-                                            fabric.Image.fromURL(dataURI, (img) => {
-                                                try {
-                                                    img.left = object.left;
-                                                    img.top = object.top;
+                            elements.forEach((object, index) => {
+                                if (object.name === 'safeObject') {
+                                    if (typeof object.fill !== 'string') {
+                                        var patternFill = object.fill
+                                        let promise = new Promise((resolve, reject) => {
+                                            handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
+                                                fabric.Image.fromURL(dataURI, (img) => {
+                                                    try {
+                                                        img.left = object.left;
+                                                        img.top = object.top;
 
-                                                    img.clipPath = handleClipAddedObject(canva);
-                                                    
-                                                    img.name = 'asowp-signPattern';
-                                                    
-                                                    if (object.width > object.height) {
-                                                        img.scaleToWidth(object.width);
-                                                    } else {
-                                                        img.scaleToHeight(object.height);
+                                                        img.clipPath = handleClipAddedObject(canva);
+                                                        
+                                                        img.name = 'asowp-signPattern';
+                                                        
+                                                        if (object.width > object.height) {
+                                                            img.scaleToWidth(object.width);
+                                                        } else {
+                                                            img.scaleToHeight(object.height);
+                                                        }
+                                                        var shadowRect = handleSetShadow(canva)
+                                                        object.shadow = null
+                                                        canva.add(img, shadowRect);
+                                                        img.moveTo(index + 1);
+                                                        shadowRect.sendToBack()                                                                                          
+                                                        
+                                                        object.fill = patternFill;
+                                                        canva.renderAll()
+                                                        resolve(img);
+                                                    } catch (error) {
+                                                        reject(error);
                                                     }
-                                                    var shadowRect = handleSetShadow(canva)
-                                                    object.shadow = null
-                                                    canva.add(img, shadowRect);
-                                                    img.moveTo(index + 1);
-                                                    shadowRect.sendToBack()                                                                                          
-                                                    
-                                                    object.fill = patternFill;
-                                                    canva.renderAll()
-                                                    resolve(img);
-                                                } catch (error) {
-                                                    reject(error);
-                                                }
+                                                });
                                             });
                                         });
-                                    });
-                                    promises.push(promise);
+                                        promises.push(promise);
+                                    }
                                 }
-                            }
+                            });
+
+                            Promise.all(promises)
+                                .then(groups => resolve(groups))
+                                .catch(error => reject(error));
                         });
+                    }
+                    async function addFontsToSVG(svgContent) {
+                        let fontStyles = '';
 
-                        Promise.all(promises)
-                            .then(groups => resolve(groups))
-                            .catch(error => reject(error));
-                    });
-                }
-                async function addFontsToSVG(svgContent) {
-                    let fontStyles = '';
+                        // Parcourir le tableau allFonts pour ajouter les polices
+                        for (const font of allFonts.value) {
+                            const fontBase64 = await getFontAsBase64(font.url);
+                            fontStyles += `
+                                @font-face {
+                                    font-family: '${font.label.replaceAll(/\s+/g, '-')}';
+                                    src: url('${fontBase64}') format('woff2');
+                                }
+                            `;
+                        }
 
-                    // Parcourir le tableau allFonts pour ajouter les polices
-                    for (const font of allFonts.value) {
-                        const fontBase64 = await getFontAsBase64(font.url);
-                        fontStyles += `
-                            @font-face {
-                                font-family: '${font.label.replaceAll(/\s+/g, '-')}';
-                                src: url('${fontBase64}') format('woff2');
-                            }
-                        `;
+                        // Insérer la balise <style> juste après l'ouverture de <svg>
+                        const svgWithFonts = svgContent.replace(
+                            /<svg[^>]*>/,
+                            `$&<style>${fontStyles}</style>`
+                        );
+
+                        return svgWithFonts;
                     }
 
-                    // Insérer la balise <style> juste après l'ouverture de <svg>
-                    const svgWithFonts = svgContent.replace(
-                        /<svg[^>]*>/,
-                        `$&<style>${fontStyles}</style>`
-                    );
+                    // function convertSvgToImage(svgDataUrl, format = 'png'){
+                    //     const canvas = document.createElement('canvas');
+                    //     var tempCanvas  = new fabric.Canvas(imageCanvasRef.value,{
+                    //         width: 1900, 
+                    //         height: 1080, 
+                    //         interactive: false,
+                    //         backgroundColor : "transparent",
+                    //     });
 
-                    return svgWithFonts;
-                }
+                    //     var url = ''
+                        
+                    //     fabric.loadSVGFromURL(svgDataUrl, async function (image) {
+                    //         const img = fabric.util.groupSVGElements(image);
 
-                // function convertSvgToImage(svgDataUrl, format = 'png'){
-                //     const canvas = document.createElement('canvas');
-                //     var tempCanvas  = new fabric.Canvas(imageCanvasRef.value,{
-                //         width: 1900, 
-                //         height: 1080, 
-                //         interactive: false,
-                //         backgroundColor : "transparent",
-                //     });
+                    //         img.scale(1.5);
 
-                //     var url = ''
+                    //         img.setCoords();
+                    //         var newWidth = img.width * img.scaleX;
+                    //         var newHeight = img.height * img.scaleY;
+
+                    //         img.width = 1900;
+                    //         img.height = 1080;
+
+                    //         tempCanvas.add(img);
+                    //         img.center()
+                    //         tempCanvas.renderAll();
+
+                    //         console.log(tempCanvas, "tempCanvas", img)
+
+                    //         const dataURL = tempCanvas.toDataURL({
+                    //             format: 'png',
+                    //             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    //         });
+
+                    //         url = await dataURL
+
+                    //         var downloadLink = document.createElement("a");
+                    //         downloadLink.href = dataURL ;
+                    //         downloadLink.download = 'fileName' + ".png";
+
+                    //         document.body.appendChild(downloadLink);
+                    //         downloadLink.click();
+                    //         document.body.removeChild(downloadLink);
+
+                    //         tempCanvas.dispose()
+                    //     });
+                    // }
+                    function convertSvgToImage(svgDataUrl, format) {
+                        return new Promise((resolve, reject) => {
+                            const canvas = document.createElement('canvas');
+                            var tempCanvas = new fabric.Canvas(canvas, {
+                                width: 1900,
+                                height: 1080,
+                                interactive: false,
+                                backgroundColor: "transparent",
+                            });
+
+                            // fabric.Image.fromURL( svgDataUrl, function (img) {
+                            //     try {
+                            //         // const img = fabric.util.groupSVGElements(image, options);
+                            //         img.scale(1);
+                                    
+                            //         // img.left = -300
+                            //         // img.top = -300
+                            //         img.setCoords();
+                            //         var newW = img.width * img.scaleX
+                            //         var newH = img.height * img.scaleX
+
+                            //         // img.width = 1900;
+                            //         // img.height = 1080;
+                            //         // img.strokeWidth = 10
+                            //         // img.stroke = 'red'
+
+                            //         console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+
+                            //         tempCanvas.add(img);
+                            //         // img.center();
+                            //         tempCanvas.renderAll();
+
+                            //         var dataUrl = ""
+                            //         switch (format) {
+                            //             case 'png':
+                            //                 dataUrl = tempCanvas.toDataURL({
+                            //                     format: 'png',
+                            //                     quality: 1.0
+                            //                 });
+                            //             break;       
+                            //             case 'jpeg':
+                            //                 dataUrl = tempCanvas.toDataURL({
+                            //                     format: 'jpeg',
+                            //                     quality: 1.0
+                            //                 });
+                            //             break;       
+                            //             case 'webp':
+                            //                 dataUrl = tempCanvas.toDataURL({
+                            //                     format: 'webp',
+                            //                     quality: 1.0
+                            //                 });
+                            //             break;       
+                            //         }
+
+                            //         tempCanvas.dispose();
+
+                            //         // Résoudre la Promise avec l'URL des données
+                            //         resolve(dataUrl);
+                            //     } catch (error) {
+                            //         reject(error);
+                            //     }
+                            // });
+                            fabric.loadSVGFromURL(svgDataUrl, function (image, options) {
+                                try {
+                                    const img = fabric.util.groupSVGElements(image, options);
+                                    img.scale(1);
+                                    
+                                    // img.left = -300
+                                    // img.top = -300
+                                    img.setCoords();
+                                    var newW = img.width * img.scaleX
+                                    var newH = img.height * img.scaleX
+
+                                    // img.width = 1900;
+                                    // img.height = 1080;
+                                    // img.strokeWidth = 10
+                                    // img.stroke = 'red'
+
+                                    // console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
+
+                                    tempCanvas.add(img);
+                                    // img.center();
+                                    tempCanvas.renderAll();
+
+                                    var dataUrl = ""
+                                    switch (format) {
+                                        case 'png':
+                                            dataUrl = tempCanvas.toDataURL({
+                                                format: 'png',
+                                                quality: 1.0
+                                            });
+                                        break;       
+                                        case 'jpeg':
+                                            dataUrl = tempCanvas.toDataURL({
+                                                format: 'jpeg',
+                                                quality: 1.0
+                                            });
+                                        break;       
+                                        case 'webp':
+                                            dataUrl = tempCanvas.toDataURL({
+                                                format: 'webp',
+                                                quality: 1.0
+                                            });
+                                        break;       
+                                    }
+
+                                    tempCanvas.dispose();
+
+                                    // Résoudre la Promise avec l'URL des données
+                                    resolve(dataUrl);
+                                } catch (error) {
+                                    reject(error);
+                                }
+                            });
+                        });
+                    }
+            
+            
+                    var widthVisibility
+                    var heightVisibility
+                    var thickVisibility
+                    var borderPositionId
+                    var fixingPositionId
+                    canva.getObjects().forEach((object, index) => {
+                        // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
+                        //     object.set('visible', false);
+                        // }
+                        if(object.name === 'widthLine' || object.name === 'width-value'){
+                            widthVisibility = object.visible
+                            object.set('visible', false);
+                        }
+                        if(object.name === 'heightLine' || object.name === 'height-value'){
+                            heightVisibility = object.visible
+                            object.set('visible', false);
+                        }
+                        if(object.name === 'asowp-SignText'){
+                            // object.set('visible', true);
+                        }
+                        if(object.name === 'thickness-value'){
+                            thickVisibility = object.visible
+                            object.set('visible', false);
+                        }
+                        if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                            borderPositionId = index
+                            object.bringToFront();
+                        }
+                        if(object.objectType === 'asowp-fixingMethods'){
+                            fixingPositionId = index
+                            object.bringToFront();
+                        }
+                    });
+                    canva.renderAll();
+
+                    await drawnPathFromText()
+                    simulateCanvasClick(canva)
+                            
+                    let svgContent = canva.toSVG(options);
+                    if(configTextType.value == "neon"){
+                        svgContent = applyNeonEffectToSVG(svgContent, canva)
+                    }
+                    const svgWithFonts = await addFontsToSVG(svgContent);
+                    const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
+                            
+                    // Générer le SVG avec les polices intégrées pour le preview
+                    const svgPreview = canva.toSVG(optionsPreview);
+                    const svgDataPreview = await addFontsToSVG(svgPreview);
                     
-                //     fabric.loadSVGFromURL(svgDataUrl, async function (image) {
-                //         const img = fabric.util.groupSVGElements(image);
+                    var previewScreen = document.getElementById('showPreview')
+                    var dataURL  = ""
+                    // Génère l'image avec le format spécifié
+                    switch (format) {
+                        case 'png':
+                            canva.setWidth(1900)
+                            canva.setHeight(1080)
+                            checkScreenSize(1900, 1080)
+                            canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
-                //         img.scale(1.5);
+                            dataURL = canva.toDataURL({
+                                format: 'png',
+                                quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                            });
+                            // dataURL = await convertSvgToImage(svgUrl, 'png')
+                        break;
+            
+                        case 'jpeg':
+                            canva.setWidth(1900)
+                            canva.setHeight(1080)
+                            checkScreenSize(1900, 1080)
+                            canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
-                //         img.setCoords();
-                //         var newWidth = img.width * img.scaleX;
-                //         var newHeight = img.height * img.scaleY;
+                            canva.backgroundColor = configColors.value.canvasBackgroundColor
+                            dataURL = canva.toDataURL({
+                                format: 'jpeg',
+                                quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                            });
+                            // dataURL = await convertSvgToImage(svgUrl, 'jpeg')
+                        break;
+            
+                        case 'webp':
+                            canva.setWidth(1900)
+                            canva.setHeight(1080)
+                            checkScreenSize(1900, 1080)
+                            canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
-                //         img.width = 1900;
-                //         img.height = 1080;
-
-                //         tempCanvas.add(img);
-                //         img.center()
-                //         tempCanvas.renderAll();
-
-                //         console.log(tempCanvas, "tempCanvas", img)
-
-                //         const dataURL = tempCanvas.toDataURL({
-                //             format: 'png',
-                //             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                //         });
-
-                //         url = await dataURL
-
-                //         var downloadLink = document.createElement("a");
-                //         downloadLink.href = dataURL ;
-                //         downloadLink.download = 'fileName' + ".png";
-
-                //         document.body.appendChild(downloadLink);
-                //         downloadLink.click();
-                //         document.body.removeChild(downloadLink);
-
-                //         tempCanvas.dispose()
-                //     });
-                // }
-                function convertSvgToImage(svgDataUrl, format) {
-                    return new Promise((resolve, reject) => {
-                        const canvas = document.createElement('canvas');
-                        var tempCanvas = new fabric.Canvas(canvas, {
-                            width: 1900,
-                            height: 1080,
-                            interactive: false,
-                            backgroundColor: "transparent",
-                        });
-
-                        // fabric.Image.fromURL( svgDataUrl, function (img) {
-                        //     try {
-                        //         // const img = fabric.util.groupSVGElements(image, options);
-                        //         img.scale(1);
-                                
-                        //         // img.left = -300
-                        //         // img.top = -300
-                        //         img.setCoords();
-                        //         var newW = img.width * img.scaleX
-                        //         var newH = img.height * img.scaleX
-
-                        //         // img.width = 1900;
-                        //         // img.height = 1080;
-                        //         // img.strokeWidth = 10
-                        //         // img.stroke = 'red'
-
-                        //         console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
-
-                        //         tempCanvas.add(img);
-                        //         // img.center();
-                        //         tempCanvas.renderAll();
-
-                        //         var dataUrl = ""
-                        //         switch (format) {
-                        //             case 'png':
-                        //                 dataUrl = tempCanvas.toDataURL({
-                        //                     format: 'png',
-                        //                     quality: 1.0
-                        //                 });
-                        //             break;       
-                        //             case 'jpeg':
-                        //                 dataUrl = tempCanvas.toDataURL({
-                        //                     format: 'jpeg',
-                        //                     quality: 1.0
-                        //                 });
-                        //             break;       
-                        //             case 'webp':
-                        //                 dataUrl = tempCanvas.toDataURL({
-                        //                     format: 'webp',
-                        //                     quality: 1.0
-                        //                 });
-                        //             break;       
-                        //         }
-
-                        //         tempCanvas.dispose();
-
-                        //         // Résoudre la Promise avec l'URL des données
-                        //         resolve(dataUrl);
-                        //     } catch (error) {
-                        //         reject(error);
-                        //     }
-                        // });
-                        fabric.loadSVGFromURL(svgDataUrl, function (image, options) {
-                            try {
-                                const img = fabric.util.groupSVGElements(image, options);
-                                img.scale(1);
-                                
-                                // img.left = -300
-                                // img.top = -300
-                                img.setCoords();
-                                var newW = img.width * img.scaleX
-                                var newH = img.height * img.scaleX
-
-                                // img.width = 1900;
-                                // img.height = 1080;
-                                // img.strokeWidth = 10
-                                // img.stroke = 'red'
-
-                                // console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
-
-                                tempCanvas.add(img);
-                                // img.center();
-                                tempCanvas.renderAll();
-
-                                var dataUrl = ""
-                                switch (format) {
-                                    case 'png':
-                                        dataUrl = tempCanvas.toDataURL({
-                                            format: 'png',
-                                            quality: 1.0
-                                        });
-                                    break;       
-                                    case 'jpeg':
-                                        dataUrl = tempCanvas.toDataURL({
-                                            format: 'jpeg',
-                                            quality: 1.0
-                                        });
-                                    break;       
-                                    case 'webp':
-                                        dataUrl = tempCanvas.toDataURL({
-                                            format: 'webp',
-                                            quality: 1.0
-                                        });
-                                    break;       
-                                }
-
-                                tempCanvas.dispose();
-
-                                // Résoudre la Promise avec l'URL des données
-                                resolve(dataUrl);
-                            } catch (error) {
-                                reject(error);
+                            dataURL = canva.toDataURL({
+                                format: 'webp',
+                                quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                            });
+                            // dataURL = await convertSvgToImage(svgUrl, 'webp')
+                        break;
+            
+                        case 'svg':
+                            dataURL = svgUrl
+                        break;
+                    
+                        default:
+            
+                        break;
+                    }
+            
+                    // Restaure les dimensions et l'affichage originales du canvas
+                    canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+                    canva.getObjects().forEach(object => {
+                        // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
+                        //     object.set('visible', true);
+                        // }
+                        if(object.name === 'widthLine' || object.name === 'width-value'){
+                            object.set('visible', widthVisibility);
+                        }
+                        if(object.name === 'heightLine' || object.name === 'height-value'){
+                            object.set('visible', heightVisibility);
+                        }
+                        if(object.name === 'asowp-SignText'){
+                            // object.set('visible', false);
+                        }
+                        if(object.name === 'thickness-value'){
+                            object.set('visible', thickVisibility);
+                        }
+                        if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
+                            // console.log(object, "watermark")
+                            canva.remove(object)
+                        }
+                        if(object.name === 'safeObject'){
+                            if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
+                                object.shadow = defaultShadow.value
                             }
-                        });
+                            if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
+                                object.shadow = defaultShadow.value
+                            }
+                        }
+                        if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                        // borderPositionId = index
+                            object.moveTo(borderPositionId);
+                        }
+                        if(object.objectType === 'asowp-fixingMethods'){
+                            object.moveTo(fixingPositionId);
+                        }
                     });
-                }
         
         
-                var widthVisibility
-                var heightVisibility
-                var thickVisibility
-                var borderPositionId
-                var fixingPositionId
-                canva.getObjects().forEach((object, index) => {
-                    // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
-                    //     object.set('visible', false);
-                    // }
-                    if(object.name === 'widthLine' || object.name === 'width-value'){
-                        widthVisibility = object.visible
-                        object.set('visible', false);
-                    }
-                    if(object.name === 'heightLine' || object.name === 'height-value'){
-                        heightVisibility = object.visible
-                        object.set('visible', false);
-                    }
-                    if(object.name === 'asowp-SignText'){
-                        // object.set('visible', true);
-                    }
-                    if(object.name === 'thickness-value'){
-                        thickVisibility = object.visible
-                        object.set('visible', false);
-                    }
-                    if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-                        borderPositionId = index
-                        object.bringToFront();
-                    }
-                    if(object.objectType === 'asowp-fixingMethods'){
-                        fixingPositionId = index
-                        object.bringToFront();
-                    }
-                });
-                canva.renderAll();
+                    if(purpose === 'preview'){
+                        // if(configTextType.value == 'neon'){
+                        //     canva.setWidth(1900)
+                        //     canva.setHeight(1080)
+                        //     checkScreenSize(1900, 1080)
+                        //     canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
 
-                await drawnPathFromText()
-                        
-                let svgContent = canva.toSVG(options);
-                if(configTextType.value == "neon"){
-                    console.log("config")
-                    svgContent = applyNeonEffectToSVG(svgContent, canva)
-                }
-                const svgWithFonts = await addFontsToSVG(svgContent);
-                const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
-                        
-                // Générer le SVG avec les polices intégrées pour le preview
-                const svgPreview = canva.toSVG(optionsPreview);
-                const svgDataPreview = await addFontsToSVG(svgPreview);
-                
-                var previewScreen = document.getElementById('showPreview')
-                var dataURL  = ""
-                // Génère l'image avec le format spécifié
-                
-                switch (format) {
-                    case 'png':
-                        canva.setWidth(1900)
-                        canva.setHeight(1080)
-                        checkScreenSize(1900, 1080)
-                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
-
-                        dataURL = canva.toDataURL({
-                            format: 'png',
-                            quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                        });
-                        // dataURL = await convertSvgToImage(svgUrl, 'png')
-                    break;
+                        //     prevImg.value = canva.toDataURL({
+                        //         format: 'png',
+                        //         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                        //     });                   
+                        // }
+                        if(configTextType.value != 'neon'){
+                            previewScreen.innerHTML = svgDataPreview;
         
-                    case 'jpeg':
-                        canva.setWidth(1900)
-                        canva.setHeight(1080)
-                        checkScreenSize(1900, 1080)
-                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
-
-                        canva.backgroundColor = configColors.value.canvasBackgroundColor
-                        dataURL = canva.toDataURL({
-                            format: 'jpeg',
-                            quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                        });
-                        // dataURL = await convertSvgToImage(svgUrl, 'jpeg')
-                    break;
+                            const svgElement = previewScreen.querySelector('svg');
         
-                    case 'webp':
-                        canva.setWidth(1900)
-                        canva.setHeight(1080)
-                        checkScreenSize(1900, 1080)
-                        canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
-
-                        dataURL = canva.toDataURL({
-                            format: 'webp',
-                            quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-                        });
-                        // dataURL = await convertSvgToImage(svgUrl, 'webp')
-                    break;
-        
-                    case 'svg':
-                        dataURL = svgUrl
-                    break;
-                
-                    default:
-        
-                    break;
-                }
-        
-                // Restaure les dimensions et l'affichage originales du canvas
-                canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-                canva.getObjects().forEach(object => {
-                    // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
-                    //     object.set('visible', true);
-                    // }
-                    if(object.name === 'widthLine' || object.name === 'width-value'){
-                        object.set('visible', widthVisibility);
-                    }
-                    if(object.name === 'heightLine' || object.name === 'height-value'){
-                        object.set('visible', heightVisibility);
-                    }
-                    if(object.name === 'asowp-SignText'){
-                        // object.set('visible', false);
-                    }
-                    if(object.name === 'thickness-value'){
-                        object.set('visible', thickVisibility);
-                    }
-                    if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
-                        // console.log(object, "watermark")
-                        canva.remove(object)
-                    }
-                    if(object.name === 'safeObject'){
-                        if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
-                            object.shadow = defaultShadow.value
+                            // Ajoutez une classe à l'élément SVG
+                            svgElement.classList.add('asowp-z-10');
                         }
-                        if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
-                            object.shadow = defaultShadow.value
+
+                        if(configImageSettings.value.scenes.length > 0){
+                            var miniPreview = document.getElementById('asowp-miniPreview')
+                            miniPreview.innerHTML = svgDataPreview;
+
                         }
+                    }else{
+                        var ink = document.createElement("a");
+                        ink.href = dataURL;
+                        ink.download = 'image' + "." + format;
+                        document.body.appendChild(ink);
+                        ink.click();
+                        document.body.removeChild(ink);
                     }
-                    if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-                    // borderPositionId = index
-                        object.moveTo(borderPositionId);
-                    }
-                    if(object.objectType === 'asowp-fixingMethods'){
-                        object.moveTo(fixingPositionId);
-                    }
+
+                    checkScreenSize()
+                    canva.renderAll();
+                    simulateCanvasClick(canva)
+
+                    resolve(dataURL)
                 });
-    
-                canva.renderAll();
-    
-                if(purpose === 'preview'){
-                    previewScreen.innerHTML = svgDataPreview;
-
-                    const svgElement = previewScreen.querySelector('svg');
-
-                    // Ajoutez une classe à l'élément SVG
-                    svgElement.classList.add('asowp-z-10');
-
-                    if(configImageSettings.value.scenes.length > 0){
-                        var miniPreview = document.getElementById('asowp-miniPreview')
-                        miniPreview.innerHTML = svgDataPreview;
-
-                    }
-                }else{
-                    var ink = document.createElement("a");
-                    ink.href = dataURL;
-                    ink.download = 'image' + "." + format;
-                    document.body.appendChild(ink);
-                    ink.click();
-                    document.body.removeChild(ink);
-                }
-
-            });
-        }catch (error) {
-            console.error("Une erreur est survenue:", error);
-        }
+            }catch (error) {
+                reject("Une erreur est survenue:", error);
+            }
+        })
         // return dataURL;
 
     }

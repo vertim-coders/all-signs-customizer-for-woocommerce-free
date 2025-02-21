@@ -268,7 +268,7 @@ function updateModifications(good, position) {
     var canvasAsJson = JSON.stringify(frontJsonData);
     var backCanvasAsJson = JSON.stringify(backJsonData);
 
-    console.log(frontJsonData)
+    // console.log(frontJsonData)
 
     if ( currentConfig.currentStateIndex < currentConfig.canvasState.length - 1 ) {
       var indexToBeInserted = currentConfig.currentStateIndex + 1;
@@ -1635,7 +1635,7 @@ function setNormalBorber(canva, size, color) {
   if (firstLoad) {
     sign = handleGetObjectByName("safeObject", canva);
   } else {
-    console.log(signData, "signData");
+    // console.log(signData, "signData");
 
     var newSignWidth = handleMiseAEchelle(
       signData.width,
@@ -6400,7 +6400,7 @@ async function handleAddTextToSign(clone, layerClone) {
           // fontSize: 50,
           fill: 'white', // Couleur intérieure du texte
           neonColor: 'orange',
-          glowRadius: 35,
+          glowRadius: 25,
         });
       }
 
@@ -6513,7 +6513,7 @@ async function handleAddTextToSign(clone, layerClone) {
     }
     activeCanvas.renderAll();
     updateModifications(true, "==ajout de text==");
-    console.log(activeCanvas.getObjects(), "==ajout de text==");
+    // console.log(activeCanvas.getObjects(), "==ajout de text==");
   }
 
   FtextObjects = handleGetTextObjects1("asowp-SignText");
@@ -7402,8 +7402,11 @@ function handleChangeAddedSvgColor(color) {
 var totalCharPrice = 0;
 var charPrice = 0;
 var startPriceAtChar = 0;
-function handleGetCharPrice(price, startAt) {
+function handleGetCharPrice(price, startAt, maxChar) {
   // console.log(startAt, "charPrice")
+  if(maxChar){
+    maxTextCharForSize = maxChar
+  }
   charPrice = price;
   startPriceAtChar = startAt;
 }
@@ -7469,9 +7472,12 @@ function handleCalcTextPrice(position) {
   }
 
   textsPrice = (avalaibleFaceChars + avalaibleBackChars) * charPrice;
+  let finalTextPrice = textsPrice
+
+  return finalTextPrice
 }
 function handleSetPrice() {
-  return textsPrice;
+  return handleCalcTextPrice();
 }
 
 function handleClipAddedObject(canva) {
@@ -7959,7 +7965,7 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
     
     for(const object of canvasJson.objects){
       if (object.name === "asowp-SignText") {
-        console.log(object, "asowp-SignText")
+        // console.log(object, "asowp-SignText")
         await loadFont(object.fontFamily, object.fontFamilyUrl)
       }
     }
@@ -8004,6 +8010,10 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
 
           templateObject[0].clipPath = null;
 
+          templateObject[0].uniScaleTransform = true,
+          templateObject[0].centeredScaling = true,
+          templateObject[0].lockScalingFlip = true,
+
           templateObject[0].on("editing:entered", () => {
             handleGetAddedTextValues(templateObject[0]);
           });
@@ -8022,6 +8032,10 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
             handleGetAddedTextValues(templateObject[0]);
             reScaleText(templateObject[0]);
           });
+
+          if(templateObject[0].type == "neon-Text"){
+            templateObject[0].glowRadius = 25
+          }
 
           addUniqueObject(addedTexts, templateObject[0], "id");
         }
@@ -9356,7 +9370,114 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
   setMeasurmentValue(canvas);
   setMeasurmentValue(backCanvas);
 
-  console.log(newId, "canvas newID")
+  if (templateData.size.maxChars != -1) {
+    FtextObjects = handleGetTextObjects1("asowp-SignText");
+    BtextObjects = handleGetTextObjects2("asowp-SignText");
+
+    function adjustTextCharacters(textObjects, maxCharacters, canva) {
+      let totalCharacters = 0;
+
+      // Calculer le nombre total de caractères dans les objets "text"
+      textObjects.forEach((obj) => {
+        totalCharacters += obj.text.length;
+      });
+
+      // Si le total est inférieur ou égal au maximum, on ne fait rien
+      if (totalCharacters <= maxCharacters) {
+        return;
+      }
+
+      // Sinon, on commence par supprimer des caractères du dernier objet
+      let charsToRemove = totalCharacters - maxCharacters;
+      for (let i = textObjects.length - 1; i >= 0; i--) {
+        const obj = textObjects[i];
+        // obj.set('canvas', activeCanvas);
+        if (obj.text.length > charsToRemove) {
+          canva.discardActiveObject();
+          canva.remove(obj);
+          // Supprimer les caractères en trop de cet objet
+          obj.text = obj.text.slice(0, obj.text.length - charsToRemove);
+          obj.set("text", obj.text);
+
+          if(textType === "3D"){
+            var textLayer = null
+            var objects = activeCanvas.getObjects();
+            objects.forEach(function(object) {
+              if(object.id == obj.id && object.name == "asowp-SignTextLayer"){
+                textLayer = object
+              }
+            })
+      
+            activeCanvas.remove(textLayer)
+            
+            textLayer.text = textLayer.text.slice( 0, obj.text.length - charsToRemove);
+            textLayer.set("text", obj.text);
+      
+            activeCanvas.add(textLayer)
+          } 
+
+          canva.add(obj);
+          obj.set("scaleX", obj.scaleX + 0.001);
+          obj.set("scaleY", obj.scaleY + 0.001);
+
+          charsToRemove = 0;
+          break;
+        } else {
+          // Supprimer complètement cet objet
+          charsToRemove -= obj.text.length;
+          textObjects.splice(i, 1);
+
+          canva.getObjects().forEach(function (obj) {
+            if (obj.name === "asowp-SignText") {
+              function syncTextObjectsByFace( bigArray, textObjects, targetFace ) {
+                // Parcourir les objets du grand tableau qui ont la face cible
+                bigArray.forEach((bigObj, index) => {
+                  // console.log(bigObj.canvasName,"can")
+                  if (bigObj.canvasName === targetFace) {
+                    // Trouver l'objet correspondant dans le petit tableau
+                    const smallObj = textObjects.find(
+                      (obj) => obj.id === bigObj.id
+                    );
+
+                    if (smallObj) {
+                      console.log(bigObj.canvasName, "array", index);
+                      // L'objet existe dans le petit tableau, on le remplace
+                      bigArray[index] = smallObj;
+                    } else {
+                      // L'objet n'existe pas dans le petit tableau, on le supprime
+                      bigArray.splice(index, 1);
+                      index--;
+                    }
+                  }
+                });
+
+                return bigArray;
+              }
+              addedTexts = syncTextObjectsByFace( addedTexts, textObjects, canva.name );
+              // console.log(addedTexts, "1969089151")
+            }
+          });
+
+          canva.remove(obj);
+        }
+
+        // Si on a supprimé tous les caractères en trop, on peut arrêter
+        if (charsToRemove <= 0) {
+          break;
+        }
+      }
+
+      canva.renderAll();
+    }
+    adjustTextCharacters(FtextObjects, maxChar, canvas);
+    adjustTextCharacters(BtextObjects, maxChar, backCanvas);
+  }else{
+    FtextObjects = handleGetTextObjects1("asowp-SignText");
+    BtextObjects = handleGetTextObjects2("asowp-SignText");
+  }
+  frontTextCharLength = sumOptionsPrice(FtextObjects, "text").length;
+  backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
+  handleSetPrice()
 
   replace3DLayer(canvas)
   replace3DLayer(backCanvas)

@@ -68,6 +68,11 @@
     margin-right: 5px !important;
   }
 }
+#asowp-showPreview{
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none
+}
 .asowp-text-size {
   padding: 0 !important;
   height: 100% !important;
