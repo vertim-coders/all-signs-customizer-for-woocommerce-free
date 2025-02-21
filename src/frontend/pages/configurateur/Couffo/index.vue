@@ -5453,7 +5453,11 @@
         // console.log(addedTexts.value, "added text")
         if(addedTexts.value.length > 0){
             var index = addedTexts.value.length - 1
-            getTextObject(addedTexts.value[index], false)
+            if(configTextType.value != "normal"){
+                getTextObject(addedTexts.value[index], true)
+            }else{
+                getTextObject(addedTexts.value[index], false)
+            }
         }
         textsPrices.value = handleSetPrice()
         var priceObject = {

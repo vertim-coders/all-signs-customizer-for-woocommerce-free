@@ -6188,7 +6188,7 @@ async function handleAddTextToSign(clone, layerClone) {
           // fontSize: 50,
           fill: text1JSON.fill,
           neonColor: text1JSON.neonColor,
-          glowRadius: 50,
+          glowRadius: 25,
         });
       }
 
@@ -6876,11 +6876,19 @@ function handleChange3dSideColor(color){
 function handleChangeTextLightColor(color) {
   var currentText = selectedText.object;
   selectedText.color = color;
+  currentText.set("neonColor", "black");
   currentText.set("neonColor", color);
+  simulateCanvasClick()
   activeCanvas.renderAll();
   handleGetAddedTextValues(currentText);
 
   return selectedText.color;
+}
+function simulateCanvasClick(){
+  activeCanvas.fire('mouse:down', {
+      e: new MouseEvent('click', { clientX: 100, clientY: 100 }), // Coordonnées du clic
+      pointer: { x: 100, y: 100 }, // Position du clic
+  });
 }
 
 // fonctions concernant l'ajout d'image sur le canvas
@@ -7911,6 +7919,7 @@ function handleMoveobject(to) {
   }
 
   activeCanvas.renderAll();
+  simulateCanvasClick()
   // console.log('Index de l\'image:', index, "last index", lastIndex);
 }
 function findMaxId(tableau) {
