@@ -9470,8 +9470,10 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
   handleSetPrice()
 
-  replace3DLayer(canvas)
-  replace3DLayer(backCanvas)
+  if(textType == "3D"){
+    replace3DLayer(canvas)
+    replace3DLayer(backCanvas)
+  }
 
   firstLoad = true;
   return {
