@@ -1845,13 +1845,15 @@
                     <p class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                            <div id="asowp-previewFinish1" class="asowp-w-auto asowp-h-[70px]"></div>
+                            <div v-if="configTextType != 'neon'" id="asowp-previewFinish1" class="asowp-w-auto asowp-h-[70px]"></div>
+                            <img v-if="configTextType == 'neon'" :src="prevImg" alt="" class="asowp-w-auto asowp-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
                         </div>
 
                         <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                            <div id="asowp-previewFinish2" class="asowp-w-auto asowp-h-[70px]"></div>
                             <!-- <img :src="configData.designImages.face2[0].url" class="asowp-w-auto asowp-h-[70px]" > -->
+                            <div v-if="configTextType != 'neon'" id="asowp-previewFinish2" class="asowp-w-auto asowp-h-[70px]"></div>
+                            <img v-if="configTextType == 'neon'" :src="prevImgBack" alt="" class="asowp-w-auto asowp-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
                         </div>
                     </p>
                 </div>
@@ -6097,7 +6099,7 @@
                 },
                 designImages: {
                     face1: designImagesFace1,
-                    face2: (configDoublePart.value.active ? generateOutputImage(designImagesFace2, canvasBack) : []),
+                    face2: (configDoublePart.value.active ? await generateOutputImage(designImagesFace2, canvasBack) : []),
                 },
                 template:{
                     face1: current1State,
@@ -6117,15 +6119,24 @@
 
         console.log(configData.value, "Added")
         finish.value = true
-        genImage(canvas, 'svg', 'finish-1')
+        if(configTextType.value != 'neon'){
+            await genImage(canvas, 'svg', 'finish-1')
+        }else{
+            prevImg.value = await genImage(canvas, 'png', 'preview')
+        }
         if(configDoublePart.value.active){
-            genImage(canvasBack, 'svg', 'finish-2')
+            if(configTextType.value != 'neon'){
+                await genImage(canvasBack, 'svg', 'finish-2')
+            }else{
+                prevImgBack.value = await genImage(canvasBack, 'png', 'preview')
+            }
         }
 
     }
 
     var showImg = ref(false)
     var prevImg = ref("")
+    var prevImgBack = ref("")
     function closeprevImg(){
         showImg.value = false
         currentSceneId.value = -1
