@@ -906,17 +906,48 @@
 
                                     <div v-if="configTextType == '3D'">
                                         <div>
-                                            <p class="asowp-font-medium">Border size</p>
-                                            <div class="asowp-p-2 asowp-space-y-1">
-                                                <input  type="range" name="asowp-borderSize" id="asowp-text-borderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
-                                                <input  type="range" name="asowp-borderSize" id="asowp-text-borderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
+                                            <div class="asowp-flex asowp-items-center asowp-justify-between">
+                                                <p class="asowp-font-semibold">Border size</p>
+
+                                                <span @click="show3DTextHelp()" :class="`asowp-flex asowp-text-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] asowp-cursor-pointer`">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="aswp-w-6 asowp-h-6">
+                                                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+
+                                            <div class="asowp-p-2 asowp-space-y-0.5">
+                                                <label for="asowp-text-firstBorderWidth" class="asop-text-[0.3em]">First border</label>
+                                                <input  type="range" name="asowp-borderSize" id="asowp-text-firstBorderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="25" :step="1" :value="borderLayerSize" @input="(e)=> {changeTextBorder(true, e)}">
+                                                <label for="asowp-text-secondBorderWidth" class="asop-text-[0.3em]">Second border</label>
+                                                <input  type="range" name="asowp-borderSize" id="asowp-text-secondBorderWidth" :class="`asowp-cursor-pointer asowp-w-full`" :min="0" :max="30" :step="1" :value="borderSize" @input="(e)=> {changeTextBorder(false, e)}">
+                                            </div>
+
+                                            <div v-if="textSideHelp" :class="`asowp-absolute asowp-top-[10%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-flex asowp-w-[70%] asowp-h-[80%] asowp-left-[31%] asowp-translate-x-[100%] asowp-justify-center asowp-z-10`">
+                                                <div class="asowp-flex asowp-flex-col asowp-w-full asowp-h-full asowp-space-y-2 asowp-overflow-auto asowp-p-2 asowp-scrollBar">
+                                                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
+                                                        <div :class="`asowp-w-[90%] asowp-h-40 asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]`"></div>
+                                                        <!-- <img :src="first-border.png" alt="" class="asowp-w-[90%] asowp-h-auto"> -->
+                                                        <p>First border</p>
+                                                    </div>
+                                                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
+                                                        <div :class="`asowp-w-[90%] asowp-h-40 asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]`"></div>
+                                                        <!-- <img src="second-border.png" alt="" class="asowp-w-[90%] asowp-h-auto"> -->
+                                                        <p>Second border</p>
+                                                    </div>
+                                                    <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
+                                                        <div :class="`asowp-w-[90%] asowp-h-40 asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]`"></div>
+                                                        <!-- <img src="first-border.png" alt="" class="asowp-w-[100%] asowp-h-auto"> -->
+                                                        <p>3D effect</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div v-if="(activeFace === 'front-face' && !signTextColor1.active) || (activeFace === 'back-face' && !signTextColor2.active)" class="asowp-space-y-1">
                                             <p class="asowp-font-medium">Border color</p>
                                             <div class="asowp-flex asowp-space-x-2">
-                                                <div @click="()=>{firstBorder = true}" :class="`${firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Frist border</div>
+                                                <div @click="()=>{firstBorder = true}" :class="`${firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">First border</div>
                                                 <div @click="()=>{firstBorder = false}" :class="`${!firstBorder ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Second border</div>
                                             </div>
                                             <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
@@ -2306,6 +2337,7 @@
     function closeOption(){
         showOption.value = false;
         step.value = '';
+        textSideHelp.value = false;
     }
 
     const handleDocumentClick = (e) => {
@@ -2335,6 +2367,8 @@
     var addComponentValue = ref({})
     var addComponentId = ref(0)
     function showOptions(option, stepValue, id){
+        textSideHelp.value = false
+        
         switch (option) {
             case 'fixing-methode':
                 if(fixinggs.value.length > 0){
@@ -8555,6 +8589,11 @@
     var dropdownExample = ref(false);
     function showDropdownExample(){
         dropdownExample.value = !dropdownExample.value
+    }
+
+    var textSideHelp = ref(false);
+    function show3DTextHelp(){
+        textSideHelp.value = !textSideHelp.value
     }
 
     const isAddingToCart = ref(false)

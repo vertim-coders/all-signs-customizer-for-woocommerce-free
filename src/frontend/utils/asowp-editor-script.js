@@ -6059,7 +6059,7 @@ function reScaleText(textObject) {
   activeCanvas.renderAll();
 }
 async function handleAddTextToSign(clone, layerClone) {
-  console.log("handleAddTextToSign", layerClone)
+  console.log("handleAddTextToSign", newId, layerClone)
 
 
   var newTextId = newId += 1
@@ -6319,6 +6319,7 @@ async function handleAddTextToSign(clone, layerClone) {
         centeredScaling: true,
         lockScalingFlip: true,
         evented: true,
+        // editable: false,
         showITextBorder: true,
         // clipPath: handleClipAddedObject(activeCanvas),
 
@@ -6430,6 +6431,9 @@ async function handleAddTextToSign(clone, layerClone) {
       });
       newText.on("editing:entered", () => {
         handleGetAddedTextValues(newText);
+        if(textType == "3D"){
+          newText.exitEditing()
+        }
       });
       newText.on("editing:exited", () => {
         handleGetAddedTextValues(newText);
@@ -8007,6 +8011,9 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
 
           templateObject[0].on("editing:entered", () => {
             handleGetAddedTextValues(templateObject[0]);
+            if(textType == "3D"){
+              templateObject[0].exitEditing()
+            }
           });
           templateObject[0].on("editing:exited", () => {
             handleGetAddedTextValues(templateObject[0]);
