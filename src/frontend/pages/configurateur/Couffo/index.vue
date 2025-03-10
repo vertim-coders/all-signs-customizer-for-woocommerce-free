@@ -1750,7 +1750,7 @@
         </div>
 
         <div v-if="showImg" :class="`asowp-absolute asowp-top-0 asowp-z-20 asowp-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso asowp-w-full asowp-h-full asowp-flex asowp-full-center asowp-overflow-hidden`">
-            <div :class="`asowp-relative asowp-w-[90%] lg:asowp-h-[80%] asowp-flex asowp-flex-col asowp-full-center asowp-bg-[${configColors.canvas.backgroundColor}] asowp-border-solid asowp-p-2 asowp-overflow-hidden`">
+            <div :class="`asowp-relative asowp-w-[90%] lg:asowp-h-[80%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-full-center asowp-bg-[${configColors.canvas.backgroundColor}] asowp-border-solid asowp-p-2 asowp-overflow-hidden`">
                 <span @click="closeprevImg" :class="`asowp-absolute asowp-top-0 asowp-right-0 asowp-flex asowp-full-centerasowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-0.5 asowp-base-animation asowp-cursor-pointer asowp-z-20`">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -1770,7 +1770,9 @@
                     </span>
                 </div>
     
-                <img v-if="configTextType == 'neon'" id="asowp-showPreview" :src="prevImg" class="asowp-w-auto asowp-h-full" style="pointer-events: none; user-select: none; -webkit-user-select: none" />
+                <div v-if="configTextType = 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-items-center asowp-justify-center asowp-rounded asowp-relative asowp-overflow-hidden`">
+                    <img id="asowp-showPreview" :src="prevImg" class="asowp-w-auto asowp-h-full asowp-z-10" style="pointer-events: none; user-select: none; -webkit-user-select: none" />
+                </div>
                 <div v-if="configTextType != 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-rounded asowp-relative asowp-overflow-hidden`"></div>
                 
                 <div v-if="configImageSettings.scenes.length > 0" class="asowp-w-full asowp-h-[10%] asowp-flex">
@@ -7256,7 +7258,6 @@
                 if(configImageSettings.value.scenes.length > 0){
                     var miniPreview = document.getElementById('asowp-miniPreview')
                     miniPreview.innerHTML = svgDataPreview;
-
                 }
             }else if(purpose === 'download'){
                 const link = document.createElement('a');
