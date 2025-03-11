@@ -2654,8 +2654,20 @@
         selectMaterial(props.config.data.materials[sign.material.id], sign.material.id)
         getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
-        var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut)
 
+        var defTextColor = (configTextSettings.value.colors.length > 0 ? configTextSettings.value.colors[0].codeHex : "#000000")
+        signTextColor1.value = sign.color.face1.textColor
+
+        let configTextColor = ""
+
+        if(sign.color.face1.textColor.active){
+            configTextColor = sign.color.face1.textColor.codeHex
+        }else{
+            configTextColor = defTextColor
+        }
+
+
+        var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut, configTextColor)
         //selection de border
         if(sign.material.type === 'simple'){
             if(borderrs.value.allBorders.length > 0){
@@ -2771,6 +2783,7 @@
         }
 
         if(sign.doubleFace === true){
+            signTextColor2.value = sign.color.face2.textColor
             if(isColorOrImage(sign.color.face2.codeHex) === 'color'){
                 activeSignFace2Color.value = sign.color.face2.name;
                 activeSignFace2ColoriD.value = sign.color.face2.id;
@@ -6165,6 +6178,7 @@
                             codeHex: activeSignColorCode1.value,
                             textColor: {
                                 active: signTextColor1.value.active,
+                                sameForBorder: signTextColor1.value.sameForBorder,
                                 name: (signTextColor1.value.active ? colorTextColorName1.value : null),
                                 codeHex: (signTextColor1.value.active ? colorTextCodeHex1.value : null),
                             }
@@ -6175,6 +6189,7 @@
                             codeHex : activeSignColorCode2.value,
                             textColor: {
                                 active: signTextColor2.value.active,
+                                sameForBorder: signTextColor2.value.sameForBorder,
                                 name: (signTextColor2.value.active ? colorTextColorName2.value : null),
                                 codeHex: (signTextColor2.value.active ? colorTextCodeHex2.value : null),
                             }

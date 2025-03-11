@@ -7943,8 +7943,10 @@ function findMaxId(tableau) {
   return maxId;
 }
 
-async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut) {
+async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut, defaultTextColor) {
   var signData = templateData;
+
+  currentSignTextColor = defaultTextColor
 
   function addUniqueObject(arr, obj, key) {
     const index = arr.findIndex((item) => item[key] === obj[key]);

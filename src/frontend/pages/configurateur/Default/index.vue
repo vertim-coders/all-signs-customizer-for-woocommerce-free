@@ -2615,8 +2615,20 @@
         selectMaterial(props.config.data.materials[sign.material.id], sign.material.id)
         getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
-        var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut)
 
+        var defTextColor = (configTextSettings.value.colors.length > 0 ? configTextSettings.value.colors[0].codeHex : "#000000")
+        signTextColor1.value = sign.color.face1.textColor
+
+        let configTextColor = ""
+
+        if(sign.color.face1.textColor.active){
+            configTextColor = sign.color.face1.textColor.codeHex
+        }else{
+            configTextColor = defTextColor
+        }
+
+
+        var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut, configTextColor)
         //selection de border
         if(sign.material.type === 'simple'){
             if(borderrs.value.allBorders.length > 0){
@@ -2732,6 +2744,7 @@
         }
 
         if(sign.doubleFace === true){
+            signTextColor2.value = sign.color.face2.textColor
             if(isColorOrImage(sign.color.face2.codeHex) === 'color'){
                 activeSignFace2Color.value = sign.color.face2.name;
                 activeSignFace2ColoriD.value = sign.color.face2.id;
@@ -2809,7 +2822,6 @@
 
         textsPrices.value = handleSetPrice()
         getOptionPrice()
-        activeFace.value = "front-face"
         
         if(!firstSetLoad.value){
             saveStep("select of first values")
