@@ -6159,7 +6159,7 @@ async function handleAddTextToSign(clone, layerClone) {
       }
       
       if(textType == "neon"){
-        var neonText2 = new fabric.NeonText('new text', {
+        var neonText2 = new fabric.NeonText(text1JSON.text, {
           id: newTextId,
           name: "asowp-SignText",
           canvasName: activeCanvas.name,
