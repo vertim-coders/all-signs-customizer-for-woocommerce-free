@@ -6059,7 +6059,7 @@ function reScaleText(textObject) {
   activeCanvas.renderAll();
 }
 async function handleAddTextToSign(clone, layerClone) {
-  console.log("handleAddTextToSign", newId, layerClone)
+  // console.log("handleAddTextToSign", newId, layerClone)
 
 
   var newTextId = newId += 1
@@ -6707,7 +6707,7 @@ var currenTextFontFamUrl = "";
 
 async function handleChangeTextFontFam(font, url) {
   try {
-    console.log(selectedText, "selected")
+    // console.log(selectedText, "selected")
     var currentText = selectedText.object;
     const myfont = new FontFaceObserver(font);
     await myfont.load();

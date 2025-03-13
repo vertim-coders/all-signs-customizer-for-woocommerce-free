@@ -6338,16 +6338,20 @@
         const textElements = svgDoc.querySelectorAll('text');
 
         textElements.forEach(textElement => {
-            // Récupérer le contenu du texte
-            const textContent = textElement.textContent.trim();
+            // Récupérer tous les <tspan> à l'intérieur de <text>
+            const tspanElements = textElement.querySelectorAll('tspan');
 
-            // Trouver l'objet correspondant dans le tableau neonTextArray
-            const neonText = neonTextArray.find(item => item.text === textContent);
+            tspanElements.forEach(tspan => {
+                const textContent = tspan.textContent;
 
-            if (neonText) {
-                // Appliquer l'effet néon avec text-shadow
-                textElement.setAttribute('style', `text-shadow: ${neonText.neonColor} 1px 0 20px; fill: ${neonText.fill}`);
-            }
+                // Trouver l'objet correspondant dans neonTextArray
+                const neonText = neonTextArray.find(item => item.text.includes(textContent.trim()));
+
+                if (neonText) {
+                    // Appliquer l'effet néon avec text-shadow au <tspan> individuellement
+                    tspan.setAttribute('style', `text-shadow: ${neonText.neonColor} 1px 0 20px; fill: ${neonText.fill}`);
+                }
+            });
         });
 
         // Convertir le document SVG modifié en chaîne de caractères
@@ -8906,7 +8910,7 @@
                 }
 
                 fabric.Object.prototype.transparentCorners = false;
-                fabric.Object.prototype.cornerColor = 'black';
+                fabric.Object.prototype.cornerColor = '#181818';
                 fabric.Object.prototype.borderColor = 'black';
                 fabric.Object.prototype.cornerStyle = 'circle';
                 
