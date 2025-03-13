@@ -1783,7 +1783,7 @@
                     </span>
                 </div>
     
-                <div v-if="configTextType = 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-items-center asowp-justify-center asowp-rounded asowp-relative asowp-overflow-hidden`">
+                <div v-if="configTextType == 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-items-center asowp-justify-center asowp-rounded asowp-relative asowp-overflow-hidden`">
                     <img id="asowp-showPreview" :src="prevImg" class="asowp-w-auto asowp-h-full asowp-z-10" style="pointer-events: none; user-select: none; -webkit-user-select: none" />
                 </div>
                 <div v-if="configTextType != 'neon'" id="showPreview" :class="`asowp-w-full asowp-h-[88%] asowp-flex asowp-rounded asowp-relative asowp-overflow-hidden`"></div>
