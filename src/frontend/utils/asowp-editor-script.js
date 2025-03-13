@@ -7024,6 +7024,7 @@ function handleAddImageToSign(image, imageId, price) {
           y: false,
         };
         img.lockScale = false;
+        img.lockRotate = false;
         img.setControlsVisibility({
           mt: false, // Middle top
           mb: false, // Middle bottom
@@ -7091,6 +7092,7 @@ function handleAddImageToSign(image, imageId, price) {
               y: false,
             };
             img.lockScale = false;
+            img.lockRotate = false;
             img.setControlsVisibility({
               mt: false, // Middle top
               mb: false, // Middle bottom
@@ -7253,7 +7255,7 @@ function handleTurnImageLeft() {
     if (currentImage.angle == 0) {
       currentImage.set("angle", 360);
     }
-    var newAngle = currentImage.angle - 90;
+    var newAngle = currentImage.angle - 45;
     currentImage.set("angle", newAngle);
 
     activeCanvas.requestRenderAll();
@@ -7263,7 +7265,7 @@ function handleTurnImageLeft() {
 function handleTurnRightImage() {
   var currentImage = activeCanvas.getActiveObject();
   if (currentImage.type === "image") {
-    var newAngle = currentImage.angle + 90;
+    var newAngle = currentImage.angle + 45;
     currentImage.set("angle", newAngle);
     if (currentImage.angle >= 360) {
       currentImage.set("angle", 0);
