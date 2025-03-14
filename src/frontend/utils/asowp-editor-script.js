@@ -380,6 +380,16 @@ function handleUndo() {
                   prevObject[0].on("mouseup", function () {
                     handleGetAddedImageValues(prevObject[0]);
                   });
+                  prevObject[0].setControlsVisibility({
+                    mt: false, // Middle top
+                    mb: false, // Middle bottom
+                    ml: false, // Middle left
+                    mr: false, // Middle right
+                    bl: true, // Bottom left
+                    br: true, // Bottom right
+                    tl: true, // Top left
+                    tr: true, // Top right
+                  });
                 }
                 canva.add(...prevObject);
                 canva.renderAll();
@@ -551,6 +561,16 @@ function handleRedo() {
                 });
                 prevObject[0].on("mouseup", function () {
                   handleGetAddedImageValues(prevObject[0]);
+                });
+                prevObject[0].setControlsVisibility({
+                  mt: false, // Middle top
+                  mb: false, // Middle bottom
+                  ml: false, // Middle left
+                  mr: false, // Middle right
+                  bl: true, // Bottom left
+                  br: true, // Bottom right
+                  tl: true, // Top left
+                  tr: true, // Top right
                 });
               }
               canva.add(...prevObject);
@@ -1473,6 +1493,16 @@ function handleCloneObject(object, imageId) {
       });
       cloned.on("mouseup", function () {
         handleGetAddedImageValues(cloned);
+      });
+      cloned.setControlsVisibility({
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
       });
 
       addedImages.push({
@@ -5638,7 +5668,7 @@ function getTextValueToUnit( container, objWidht, objHeight, objLeft, objTop, an
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
+      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
         imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
@@ -5688,7 +5718,7 @@ function getTextValueToUnit( container, objWidht, objHeight, objLeft, objTop, an
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
+      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
         imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
@@ -5719,7 +5749,7 @@ function getTextValueToUnit( container, objWidht, objHeight, objLeft, objTop, an
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
+      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
         imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
@@ -5747,7 +5777,7 @@ function getTextValueToUnit( container, objWidht, objHeight, objLeft, objTop, an
       textBottom.textContent = parseInt(bottom);
       textAngle.textContent = parseInt(angle);
 
-      if ( activeCanvas.getActiveObject() && activeCanvas.getActiveObject().type == "image" ) {
+      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
         imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
         imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
       }
@@ -6212,6 +6242,9 @@ async function handleAddTextToSign(clone, layerClone) {
       text2.set("canvas", cloneCanvas);
       text2.on("editing:entered", () => {
         handleGetAddedTextValues(text2);
+        if(textType == "3D"){
+          text2.exitEditing()
+        }
       });
       text2.on("editing:exited", () => {
         handleGetAddedTextValues(text2);
@@ -6986,14 +7019,69 @@ function handleConvertImageToDataURI(imageUrl, callback) {
 
   img.src = imageUrl;
 }
+function hasFontFaceInSVG(svgString) {
+  const fontFaceRegex = /@font-face\s*{[^}]+}/g;
+  return fontFaceRegex.test(svgString);
+}
+async function getSvgStringFromUrl(url){
+  return new Promise((resolve, reject) => {
+    fetch(url)
+    .then(response => response.text())
+    .then(svgString => {
+      resolve(svgString)
+    });
+  })
+}
+
+async function sanitizeSVG(svgString) {
+  // 1️⃣ Parser le SVG en DOM
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgString, 'image/svg+xml');
+
+  // 2️⃣ Supprimer les @font-face dans les balises <style>
+  const styles = doc.querySelectorAll('style');
+  let fontsToLoad = new Set();
+
+  styles.forEach((style) => {
+    let newCSS = style.textContent.replace(/@font-face\s*{[^}]+}/g, ''); // Supprime les @font-face
+    style.textContent = newCSS;
+
+    // 3️⃣ Extraire les polices utilisées dans font-family
+    const matches = newCSS.match(/font-family:\s*['"]?([\w\s-]+)['"]?/g);
+    if (matches) {
+      matches.forEach((match) => {
+        let fontName = match.replace(/font-family:\s*['"]?|['"]?/g, '').trim();
+        fontsToLoad.add(fontName);
+      });
+    }
+  });
+
+  // 4️⃣ Charger les polices avant d'afficher le SVG
+  await Promise.all(
+    [...fontsToLoad].map((font) =>
+      new FontFace(font, `url('${font}.woff2')`).load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+      }).catch(() => console.warn(`Impossible de charger la police: ${font}`))
+    )
+  );
+
+  // 5️⃣ Convertir le SVG modifié en string
+  return new XMLSerializer().serializeToString(doc);
+}
+
 function handleAddImageToSign(image, imageId, price) {
   function isSVGImage(image) {
     var src = image;
     return src.endsWith(".svg") || src.startsWith("data:image/svg+xml");
   }
-  function useImage(imgUrl, imgId, price) {
+  async function useImage(imgUrl, imgId, price) {
     if (isSVGImage(imgUrl)) {
-      fabric.loadSVGFromURL(imgUrl, function (image) {
+      let svgString = await getSvgStringFromUrl(imgUrl)
+      if(hasFontFaceInSVG(svgString)){
+        svgString = await sanitizeSVG(svgString)
+      }
+
+      fabric.loadSVGFromString(svgString, function (image) {
         const img = fabric.util.groupSVGElements(image);
 
         img.scale(0.4);
@@ -7167,9 +7255,9 @@ function handleAddImageToSign(image, imageId, price) {
     });
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     if (image) {
-      useImage(image, imageId, price);
+      await useImage(image, imageId, price);
       resolve({ images: addedImages, error: "" });
     } else {
       imageInput.addEventListener("change", function (e) {
@@ -7183,10 +7271,10 @@ function handleAddImageToSign(image, imageId, price) {
           )
             .then((validFile) => {
               const reader = new FileReader();
-              reader.onload = () => {
+              reader.onload = async () => {
                 const imgBase64 = reader.result;
                 if (!itsDone) {
-                  useImage(imgBase64);
+                  await useImage(imgBase64);
                   itsDone = true;
                   resolve({ images: addedImages, error: "" });
                 }
@@ -7202,12 +7290,12 @@ function handleAddImageToSign(image, imageId, price) {
           // Création d'un objet FileReader
           const reader = new FileReader();
           // Lecture du fichier image lorsqu'il est chargé
-          reader.onload = () => {
+          reader.onload = async () => {
             // Stockage de l'image en base64 dans une variable
             const imgBase64 = reader.result;
             // Utilisation de l'image
             if (!itsDone) {
-              useImage(imgBase64);
+              await useImage(imgBase64);
               itsDone = true;
             }
           };

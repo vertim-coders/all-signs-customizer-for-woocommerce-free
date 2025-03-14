@@ -1376,7 +1376,7 @@
                                 </div>
                             </div>
 
-                            <div v-show="editImage" class="asowp-p-2">
+                            <div v-show="editImage" class="asowp-p-2 asowp-space-y-2">
                                 <div>
                                     <p class="asowp-font-medium">Size</p>
                                     <div class="asowp-p-2 asowp-space-y-1">
@@ -4551,7 +4551,7 @@
         }
 
         if((customSizeValues.value.width >= customSize.width.min && customSizeValues.value.width <= customSize.width.max) && (customSizeValues.value.height >= customSize.height.min && customSizeValues.value.height <= customSize.height.max)){
-            if(customSize.pricings.length > 0){
+            if(customSize.pricings && customSize.pricings.length > 0){
                 var valeur = customSizeValues.value.width * customSizeValues.value.height
                 var matchingSettings = checkInterval(customSize.pricings, valeur)
                 // console.log(matchingSettings, "resultat")
@@ -4560,6 +4560,14 @@
                     textNumber: 0, 
                     charPrice: matchingSettings.charPrice, 
                     basePrice: matchingSettings.basePrice, 
+                    maxTextChar: -1, 
+                    startPriceAtChar: 0
+                }
+            }else{
+                customSizeTextValues.value = {
+                    textNumber: 0, 
+                    charPrice: 0, 
+                    basePrice: 0, 
                     maxTextChar: -1, 
                     startPriceAtChar: 0
                 }
@@ -6505,6 +6513,34 @@
 
     
     var imageCanvasRef = ref(null);
+    function getUsedFonts(canva){
+        var fonts = [];
+
+        function removeDuplicates(array) {
+            const uniqueItems = new Map();
+        
+            array.forEach(item => {
+            const key = `${item.label}-${item.url}`; // Clé unique basée sur label + url
+            uniqueItems.set(key, item);
+            });
+        
+            return Array.from(uniqueItems.values());
+        }
+        
+        let objects = canva.getObjects();
+        objects.forEach(obj => {
+            if(obj.name == "asowp-SignText"){
+                fonts.push({
+                    label: obj.fontFamily,
+                    url: obj.fontFamilyUrl
+                })
+            }
+        });
+
+        fonts = removeDuplicates(fonts);
+
+        return fonts;
+    }
     async function getFontAsBase64(url) {
         const response = await fetch(url);
         const blob = await response.blob();
@@ -6514,6 +6550,29 @@
             reader.readAsDataURL(blob);
         });
     }
+    async function addFontsToSVG(svgContent, fonts) {
+        let fontStyles = '';
+
+        // Parcourir le tableau allFonts pour ajouter les polices
+        for (const font of fonts) {
+            const fontBase64 = await getFontAsBase64(font.url);
+            fontStyles += `
+                @font-face {
+                    font-family: '${font.label.replaceAll(/\s+/g, '-')}';
+                    src: url('${fontBase64}') format('woff2');
+                }
+            `;
+        }
+
+        // Insérer la balise <style> juste après l'ouverture de <svg>
+        const svgWithFonts = svgContent.replace(
+            /<svg[^>]*>/,
+            `$&<style>${fontStyles}</style>`
+        );
+
+        return svgWithFonts;
+    }
+
     async function genImage(canva, format, purpose, width, height) {
         try{
             var currentWidth = canva.width
@@ -6642,15 +6701,22 @@
                                                 img.left = object.left;
                                                 img.top = object.top;
 
+                                                let scaleX = object.width / img.width;
+                                                let scaleY = object.height / img.height;
+
+
                                                 img.clipPath = handleClipAddedObject(canva);
                                                 
                                                 img.name = 'asowp-signPattern';
+
+                                                img.scaleX = scaleX;
+                                                img.scaleY = scaleY;
                                                 
-                                                if (object.width > object.height) {
-                                                    img.scaleToWidth(object.width);
-                                                } else {
-                                                    img.scaleToHeight(object.height);
-                                                }
+                                                // if (object.width > object.height) {
+                                                //     img.scaleToWidth(object.width);
+                                                // } else {
+                                                //     img.scaleToHeight(object.height);
+                                                // }
                                                 var shadowRect = handleSetShadow(canva)
                                                 object.shadow = null
                                                 canva.add(img, shadowRect);
@@ -6711,41 +6777,22 @@
 
 
             // Ajouter les polices dans le SVG
-            async function addFontsToSVG(svgContent) {
-                let fontStyles = '';
-
-                // Parcourir le tableau allFonts pour ajouter les polices
-                for (const font of allFonts.value) {
-                    const fontBase64 = await getFontAsBase64(font.url);
-                    fontStyles += `
-                        @font-face {
-                            font-family: '${font.label.replaceAll(/\s+/g, '-')}';
-                            src: url('${fontBase64}') format('woff2');
-                        }
-                    `;
-                }
-
-                // Insérer la balise <style> juste après l'ouverture de <svg>
-                const svgWithFonts = svgContent.replace(
-                    /<svg[^>]*>/,
-                    `$&<style>${fontStyles}</style>`
-                );
-
-                return svgWithFonts;
-            }
+        
             await drawnPathFromText()
 
             // Générer le SVG avec les polices intégrées
             let svgContent = canva.toSVG(options);
+            let usedFonts = getUsedFonts(canva)
+
             if(configTextType.value === "neon"){
                 svgContent = applyNeonEffectToSVG(svgContent, canva)
             }
-            const svgWithFonts = await addFontsToSVG(svgContent);
+            const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
             const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
                     
             // Générer le SVG avec les polices intégrées pour le preview
             const svgPreview = canva.toSVG(optionsPreview);
-            const svgDataPreview = await addFontsToSVG(svgPreview);
+            const svgDataPreview = await addFontsToSVG(svgPreview, usedFonts);
             var previewScreen = document.getElementById('showPreview')
 
 
@@ -7013,15 +7060,21 @@
                                                         img.left = object.left;
                                                         img.top = object.top;
 
+                                                        let scaleX = object.width / img.width;
+                                                        let scaleY = object.height / img.height;
+
                                                         img.clipPath = handleClipAddedObject(canva);
                                                         
                                                         img.name = 'asowp-signPattern';
+
+                                                        img.scaleX = scaleX;
+                                                        img.scaleY = scaleY;
                                                         
-                                                        if (object.width > object.height) {
-                                                            img.scaleToWidth(object.width);
-                                                        } else {
-                                                            img.scaleToHeight(object.height);
-                                                        }
+                                                        // if (object.width > object.height) {
+                                                        //     img.scaleToWidth(object.width);
+                                                        // } else {
+                                                        //     img.scaleToHeight(object.height);
+                                                        // }
                                                         var shadowRect = handleSetShadow(canva)
                                                         object.shadow = null
                                                         canva.add(img, shadowRect);
@@ -7046,28 +7099,6 @@
                                 .then(groups => resolve(groups))
                                 .catch(error => reject(error));
                         });
-                    }
-                    async function addFontsToSVG(svgContent) {
-                        let fontStyles = '';
-
-                        // Parcourir le tableau allFonts pour ajouter les polices
-                        for (const font of allFonts.value) {
-                            const fontBase64 = await getFontAsBase64(font.url);
-                            fontStyles += `
-                                @font-face {
-                                    font-family: '${font.label.replaceAll(/\s+/g, '-')}';
-                                    src: url('${fontBase64}') format('woff2');
-                                }
-                            `;
-                        }
-
-                        // Insérer la balise <style> juste après l'ouverture de <svg>
-                        const svgWithFonts = svgContent.replace(
-                            /<svg[^>]*>/,
-                            `$&<style>${fontStyles}</style>`
-                        );
-
-                        return svgWithFonts;
                     }
 
                     // function convertSvgToImage(svgDataUrl, format = 'png'){
@@ -7274,15 +7305,17 @@
                     simulateCanvasClick(canva)
                             
                     let svgContent = canva.toSVG(options);
+                    let usedFonts = getUsedFonts(canva)
+
                     if(configTextType.value == "neon"){
                         svgContent = applyNeonEffectToSVG(svgContent, canva)
                     }
-                    const svgWithFonts = await addFontsToSVG(svgContent);
+                    const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
                     const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
                             
                     // Générer le SVG avec les polices intégrées pour le preview
                     const svgPreview = canva.toSVG(optionsPreview);
-                    const svgDataPreview = await addFontsToSVG(svgPreview);
+                    const svgDataPreview = await addFontsToSVG(svgPreview, usedFonts);
                     
                     var previewScreen = document.getElementById('showPreview')
                     var dataURL  = ""

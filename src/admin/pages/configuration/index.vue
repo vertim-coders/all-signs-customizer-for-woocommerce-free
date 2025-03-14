@@ -1834,7 +1834,12 @@ const metaConfigs = ref({
                                 max: 1200,
                                 min: 30,
                                 label: "Height"
-                            }
+                            },
+                            pricings:[
+                                {surface:600,basePrice:10,charPrice:1.5},
+                                {surface:1600,basePrice:10,charPrice:3},
+                                {surface:2000,basePrice:10,charPrice:5},
+                            ]
                         }
                     },
                     colors: {
