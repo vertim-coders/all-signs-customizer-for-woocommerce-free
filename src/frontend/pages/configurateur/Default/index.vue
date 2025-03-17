@@ -934,7 +934,7 @@
                                                         <p>Second border</p>
                                                     </div>
                                                     <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="asowp-w-[100%] asowp-h-auto">
+                                                        <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="asowp-w-[90%] asowp-h-auto">
                                                         <p>3D effect</p>
                                                     </div>
                                                 </div>
@@ -2285,6 +2285,7 @@
     
     import opentype from 'opentype.js'
     import { load } from 'opentype.js'
+import { forAliasRE } from '@vue/compiler-core';
 
     const route = useRoute();
     const template_config_id = route.params.configId;
@@ -2631,6 +2632,17 @@
             configTextColor = defTextColor
         }
 
+        if(sign.color.face1.textColor.sameForBorder){
+            colorForBorder1.value = false
+        }else{
+            colorForBorder1.value = true
+        }
+        if(sign.color.face2.textColor.sameForBorder){
+            colorForBorder2.value = false
+        }else{
+            colorForBorder2.value = true
+        }
+
 
         var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut, configTextColor)
         //selection de border
@@ -2660,9 +2672,9 @@
                 activeFace1Border.value = sign.border.face1.type;
                 borderColorName1.value = sign.border.face1.color;
                 activeFace1BorderColor.value = sign.border.face1.codeHex
-                if(sign.border.face1.type !== 'none' && sign.border.face1.codeHex !== ('' || null)){
-                    colorForBorder1.value = true
-                }
+                // if(sign.border.face1.type !== 'none'){
+                //     colorForBorder1.value = true
+                // }
                 handleGetBorderData('front-face', {border: sign.border.face1.type, color: sign.border.face1.codeHex})
             }
 
@@ -6118,6 +6130,7 @@
                             codeHex: activeSignColorCode1.value,
                             textColor: {
                                 active: signTextColor1.value.active,
+                                sameForBorder: signTextColor1.value.sameForBorder,
                                 name: (signTextColor1.value.active ? colorTextColorName1.value : null),
                                 codeHex: (signTextColor1.value.active ? colorTextCodeHex1.value : null),
                             }
@@ -6128,6 +6141,7 @@
                             codeHex : activeSignColorCode2.value,
                             textColor: {
                                 active: signTextColor2.value.active,
+                                sameForBorder: signTextColor2.value.sameForBorder,
                                 name: (signTextColor2.value.active ? colorTextColorName2.value : null),
                                 codeHex: (signTextColor2.value.active ? colorTextCodeHex2.value : null),
                             }

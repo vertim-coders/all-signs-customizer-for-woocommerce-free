@@ -1047,7 +1047,7 @@
                                                     <p>Second border</p>
                                                 </div>
                                                 <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                    <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="asowp-w-[100%] asowp-h-auto">
+                                                    <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="asowp-w-[90%] asowp-h-auto">
                                                     <p>3D effect</p>
                                                 </div>
                                             </div>
@@ -2671,6 +2671,16 @@
             configTextColor = defTextColor
         }
 
+        if(sign.color.face1.textColor.sameForBorder){
+            colorForBorder1.value = false
+        }else{
+            colorForBorder1.value = true
+        }
+        if(sign.color.face2.textColor.sameForBorder){
+            colorForBorder2.value = false
+        }else{
+            colorForBorder2.value = true
+        }
 
         var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut, configTextColor)
         //selection de border
