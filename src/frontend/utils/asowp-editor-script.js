@@ -1449,6 +1449,14 @@ function handleCloneObject(object, imageId) {
     cloned.left += 10;
     cloned.top += 10;
     if (cloned.type == "i-text" || cloned.type == "neon-Text") {
+      var customAttribut = {
+        fontFamilyUrl: object.fontFamilyUrl,
+        neonColor: object.neonColor,
+        secondStrokeWidth: object.secondStrokeWidth,
+        secondStroke: object.secondStroke,
+        activeSide: object.activeSide,
+        sideColor: object.sideColor,
+      }
       cloned.set("canvas", canvas);
       // console.log(cloned.canvas, "cloned canvas");
       if(textType == "3D"){
@@ -1458,12 +1466,12 @@ function handleCloneObject(object, imageId) {
             obj.clone((layerClone)=>{
               layerClone.left += 10;
               layerClone.top += 10;
-              handleAddTextToSign(cloned, layerClone);
+              handleAddTextToSign(customAttribut, cloned, layerClone);
             })
           }
         })
       }else{
-        handleAddTextToSign(cloned);
+        handleAddTextToSign(customAttribut, cloned);
       }
     }
     if (
@@ -6088,7 +6096,7 @@ function reScaleText(textObject) {
   } 
   activeCanvas.renderAll();
 }
-async function handleAddTextToSign(clone, layerClone) {
+async function handleAddTextToSign(custom, clone, layerClone) {
   // console.log("handleAddTextToSign", newId, layerClone)
 
 
@@ -6127,7 +6135,7 @@ async function handleAddTextToSign(clone, layerClone) {
         fill: text1JSON.fill,
         textAlign: text1JSON.textAlign,
         fontFamily: text1JSON.fontFamily,
-        fontFamilyUrl: text1JSON.fontFamilyUrl,
+        fontFamilyUrl: custom.fontFamilyUrl,
         fontWeight: text1JSON.fontWeight,
         fontStyle: text1JSON.fontStyle,
         uniScaleTransform: true,
@@ -6143,10 +6151,10 @@ async function handleAddTextToSign(clone, layerClone) {
         strokeLineJoin: text1JSON.strokeLineJoin,
         paintFirst: text1JSON.paintFirst,
 
-        secondStrokeWidth: text1JSON.secondStrokeWidth,
-        secondStroke: text1JSON.secondStroke,
-        activeSide: text1JSON.activeSide,
-        sideColor: text1JSON.sideColor,
+        secondStrokeWidth: custom.secondStrokeWidth,
+        secondStroke: custom.secondStroke,
+        activeSide: custom.activeSide,
+        sideColor: custom.sideColor,
       });
 
       if(textType == "3D"){
@@ -6168,7 +6176,7 @@ async function handleAddTextToSign(clone, layerClone) {
           fill: text1LayerJSON.fill,
           textAlign: text1LayerJSON.textAlign,
           fontFamily: text1LayerJSON.fontFamily,
-          fontFamilyUrl: text1LayerJSON.fontFamilyUrl,
+          fontFamilyUrl: custom.fontFamilyUrl,
           fontWeight: text1LayerJSON.fontWeight,
           fontStyle: text1LayerJSON.fontStyle,
           uniScaleTransform: true,
@@ -8166,17 +8174,17 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
         }
 
         if (templateObject[0].name === "asowp-SignImage") {
+          templateObject[0].setControlsVisibility({
+            mt: false, // Middle top
+            mb: false, // Middle bottom
+            ml: false, // Middle left
+            mr: false, // Middle right
+            bl: true, // Bottom left
+            br: true, // Bottom right
+            tl: true, // Top left
+            tr: true, // Top right
+          });
           if (statut !== "making") {
-            templateObject[0].setControlsVisibility({
-              mt: false, // Middle top
-              mb: false, // Middle bottom
-              ml: false, // Middle left
-              mr: false, // Middle right
-              bl: true, // Bottom left
-              br: true, // Bottom right
-              tl: true, // Top left
-              tr: true, // Top right
-            });
             if (templateObject[0].lockMoving.x === true) {
               templateObject[0].lockMovementX = true;
             }
@@ -8201,10 +8209,7 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
             handleGetAddedImageValues(templateObject[0]);
           });
 
-          var objectUrl =
-            templateObject[0].objectType == "svg"
-              ? templateObject[0].imageUrl
-              : templateObject[0].getSrc();
+          var objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : templateObject[0].getSrc();
           addUniqueObject( addedImages, 
             {
               id: templateObject[0].id,

@@ -926,18 +926,15 @@
                                             <div v-if="textSideHelp" :class="`asowp-absolute asowp-top-[10%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-flex asowp-w-[70%] asowp-h-[80%] asowp-left-[31%] asowp-translate-x-[100%] asowp-justify-center asowp-z-10`">
                                                 <div class="asowp-flex asowp-flex-col asowp-w-full asowp-h-full asowp-space-y-2 asowp-overflow-auto asowp-p-2 asowp-scrollBar">
                                                     <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <div :class="`asowp-w-[90%] asowp-h-40 asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]`"></div>
-                                                        <!-- <img :src="first-border.png" alt="" class="asowp-w-[90%] asowp-h-auto"> -->
+                                                        <img src="../../../../../assets/images/text-types/Help/first-border.png" alt="" class="asowp-w-[90%] asowp-h-auto">
                                                         <p>First border</p>
                                                     </div>
                                                     <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <div :class="`asowp-w-[90%] asowp-h-40 asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]`"></div>
-                                                        <!-- <img src="second-border.png" alt="" class="asowp-w-[90%] asowp-h-auto"> -->
+                                                        <img src="../../../../../assets/images/text-types/Help/second-border.png" alt="" class="asowp-w-[90%] asowp-h-auto">
                                                         <p>Second border</p>
                                                     </div>
                                                     <div class="asowp-flex asowp-flex-col asowp-w-full asowp-items asowp-justify-start">
-                                                        <div :class="`asowp-w-[90%] asowp-h-40 asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}]`"></div>
-                                                        <!-- <img src="first-border.png" alt="" class="asowp-w-[100%] asowp-h-auto"> -->
+                                                        <img src="../../../../../assets/images/text-types/Help/side.png" alt="" class="asowp-w-[100%] asowp-h-auto">
                                                         <p>3D effect</p>
                                                     </div>
                                                 </div>
@@ -2355,6 +2352,14 @@
             // if(route.name == 'template-maker' && !templateButton.contains(e.target) && !templateOptions.contains(e.target) ){
             //     showTempSettings.value = false;
             // }
+        }
+    }
+
+    async function hideCanvasForWaiting(staut) {
+        if (staut == true) {
+            canvas.getElement().style.opacity = "0"
+        } else {
+            canvas.getElement().style.opacity = "1"
         }
     }
 
@@ -8887,6 +8892,7 @@
                     selectable: false,
                 })
 
+                await hideCanvasForWaiting(true)
 
                 canvas.add(rectangle, hLine, hValue, wLine, wValue, thickness);
                 canvasBack.add(rectangle2);
@@ -9174,6 +9180,8 @@
             if(route.name == 'template-maker'){
                 template.value = await api.getTemplate(template_config_id,template_id);
             }
+
+            await hideCanvasForWaiting(false)
             
             return {
                 canvas
