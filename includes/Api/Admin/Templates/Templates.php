@@ -192,7 +192,9 @@ class ASOWP_Api_Templates extends WP_REST_Controller
 
             if (!empty($templates)) {
                 if (isset($templates[$template_id])) {
-                    return rest_ensure_response($templates[$template_id]);
+                    $template =  $templates[$template_id];
+                    $template["data"] = isset( $template["data_file"]) ? asowp_get_large_data($template["data_file"])  : $template["data"] ;
+                    return rest_ensure_response($template);
                 } else {
                     return rest_ensure_response(array("message" => __("No template found", "all-signs-options-pro")));
                 }
@@ -263,10 +265,16 @@ class ASOWP_Api_Templates extends WP_REST_Controller
                         if ($meta_value[$template_id] == $template) {
                             return rest_ensure_response(["success" => "same", "message" => __("No change observed in template", "all-signs-options-pro")]);
                         } else {
+                            $data_filename =  isset($template["data_file"]) ? asowp_get_filename_without_extension($template["data_file"])  :  uniqid('asowp-'.$config_id.'-'.$template_id);
+                            $template["data_file"] = asowp_save_large_data($template["data"],$data_filename, 'templates');
+                            $template["data"]=[
+                                'templateData'=>[],
+                                'cartData'=>[],
+                            ];
                             $meta_value[$template_id] = $template;
                             $response = update_post_meta($config_id, 'asowp-templates', $meta_value);
 
-                            if ($response) {
+                            if ($response || $template["data_file"]) {
                                 return rest_ensure_response(["success" => true, "message" => __("Template updated successfully", "all-signs-options-pro")]);
                             } else {
                                 return rest_ensure_response(["message" => __("update template failed", "all-signs-options-pro")]);

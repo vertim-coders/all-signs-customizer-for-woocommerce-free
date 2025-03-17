@@ -182,6 +182,7 @@ class ASOWP_Frontend
                                     $templates = get_post_meta($configId, "asowp-templates", true);
                                     if (isset($templates[$tplid])) {
                                         $template = $templates[$tplid];
+                                        $template["data"] = isset( $template["data_file"]) ? asowp_get_large_data($template["data_file"])  : $template["data"] ;
                                         $product_price = $templates[$tplid]["basePrice"];
                                     } else {
                                         $template = '';
@@ -304,12 +305,16 @@ class ASOWP_Frontend
                             $templates = get_post_meta($configId, "asowp-templates", true);
                             $all_categories = get_option("asowp-templates-categories", []);
                             $categories = [];
-                            foreach ($templates as $template) {
+                            foreach ($templates as $key=> $template) {
                                 if (isset($all_categories[$template["categoryId"]])) {
                                     if (!in_array(["value" => $template["categoryId"], "name" => $all_categories[$template["categoryId"]]], $categories)) {
                                         array_push($categories, ["value" => $template["categoryId"], "name" => $all_categories[$template["categoryId"]]]);
                                     }
                                 }
+
+                                $template["data"] = isset( $template["data_file"]) ? asowp_get_large_data($template["data_file"])  : $template["data"] ;
+                                $templates[$key] = $template;
+
                             }
                             $asowp_product = new ASOWP_Product_Config($productid);
                             if (count($templates) > 0) { ?>

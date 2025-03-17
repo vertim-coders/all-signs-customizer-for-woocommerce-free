@@ -284,3 +284,71 @@ function asowp_get_custom_products()
     }
 
 }
+
+/**
+ * Enregistre des données volumineuses dans un fichier JSON.
+ *
+ * @param mixed  $data  Données à sauvegarder.
+ * @param string $name  Nom du fichier (sans extension).
+ * @param string $path  Chemin relatif du dossier (ex: 'asowp-templates').
+ *
+ * @return string|null URL du fichier JSON si succès, null si erreur.
+ */
+function asowp_save_large_data($data, $name, $path) {
+    // Vérifier si les données sont valides
+    if (empty($data)) {
+        return null;
+    }
+
+    // Définition des chemins
+    $base_dir = trailingslashit(ASOWP_DATA_PATH) . trim($path, '/') . '/';
+    $base_url = trailingslashit(ASOWP_DATA_URL) . trim($path, '/') . '/';
+
+    // Création du dossier s'il n'existe pas
+    wp_mkdir_p($base_dir);
+
+    // Générer un nom de fichier propre
+    $file_name = sanitize_file_name($name) . '.json';
+    $file_path = $base_dir . $file_name;
+    $file_url = $base_url . $file_name;
+
+    // Sauvegarder les données dans le fichier JSON
+    if (file_put_contents($file_path, json_encode($data, JSON_PRETTY_PRINT))) {
+        return $file_url; // Retourne l'URL du fichier JSON
+    }
+
+    return null; // En cas d'échec
+}
+
+
+
+/**
+ * Récupère des données depuis un fichier JSON en convertissant l'URL en chemin.
+ *
+ * @param string $path URL ou chemin du fichier JSON.
+ *
+ * @return mixed Données JSON décodées ou null si fichier inexistant.
+ */
+function asowp_get_large_data($path) {
+    // Remplace l'URL par le chemin réel
+    $path = str_replace(ASOWP_DATA_URL, ASOWP_DATA_PATH, $path);
+
+    // Vérifier si le fichier existe et récupérer son contenu
+    if (file_exists($path)) {
+        $json_data = file_get_contents($path);
+        return json_decode($json_data, true);
+    }
+
+    return null; // Retourne null si le fichier n'existe pas
+}
+
+function asowp_get_filename_without_extension($file_url) {
+    // Convertir l'URL en chemin système si nécessaire
+    $file_path = str_replace(ASOWP_DATA_URL, ASOWP_DATA_PATH, $file_url);
+
+    // Extraire uniquement le nom du fichier
+    $file_name = pathinfo($file_path, PATHINFO_FILENAME);
+
+    return $file_name;
+}
+

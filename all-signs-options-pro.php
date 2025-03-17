@@ -209,6 +209,9 @@ final class ASOWP_All_Signs_Options_Pro
 
         define('ASOWP_ORDER_PATH', $generation_path . "ORDERS");
         define('ASOWP_ORDER_URL', $generation_url . "ORDERS");
+
+        define('ASOWP_DATA_PATH', $generation_path . "data");
+        define('ASOWP_DATA_URL', $generation_url . "data");
     }
 
     private function asowp_save_output_settings()
