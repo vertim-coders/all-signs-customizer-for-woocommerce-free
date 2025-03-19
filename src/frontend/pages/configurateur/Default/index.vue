@@ -8918,6 +8918,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 })
 
                 await hideCanvasForWaiting(true)
+                activeCanvas = canvas
 
                 canvas.add(rectangle, hLine, hValue, wLine, wValue, thickness);
                 canvasBack.add(rectangle2);
@@ -9199,7 +9200,6 @@ import { forAliasRE } from '@vue/compiler-core';
             verifierScrollabilite()
             setIsLoadedToFalse()
             // closeInfoDiv()
-            activeCanvas = canvas
 
             window.dispatchEvent(new Event('resize'));
             if(route.name == 'template-maker'){

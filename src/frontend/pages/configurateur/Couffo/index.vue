@@ -4549,7 +4549,7 @@
         //     centerSign(canvas)
         //     centerSign(canvasBack)
         // }, 50);
-        simulateCanvasClick()
+        // simulateCanvasClick()
     }
 
     function selectCustomSize(customSize){
@@ -8040,6 +8040,8 @@
 
                 await hideCanvasForWaiting(true)
 
+                activeCanvas = canvas
+
                 canvas.add(rectangle, hLine, hValue, wLine, wValue, thickness);
                 canvasBack.add(rectangle2);
             
@@ -8235,7 +8237,6 @@
                     }
                 });
                 
-                activeCanvas = canvas
 
                 checkScreenView()
 

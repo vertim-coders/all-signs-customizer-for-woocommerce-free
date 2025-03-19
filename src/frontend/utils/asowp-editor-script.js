@@ -200,6 +200,8 @@ function updateModifications(good, position) {
       maxChars: maxTextCharForSize,
       fixScale: fixScale,
       sizeRatio: sizeRatio,
+      shape: selectedShape,
+      fixingMethode: activeFixingMethode,
       border: {
         face1: {
           type: activeBorder,
@@ -410,6 +412,8 @@ function handleUndo() {
           recreateState( canvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].front );
           recreateState( backCanvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].back );
 
+          selectedShape = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].shape
+
           if (activeSignFace === "front") {
             handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face1.type );
             handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face1.color );
@@ -438,6 +442,10 @@ function handleUndo() {
 
           fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixScale;
           sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].sizeRatio;
+
+          activeFixingMethode = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixingMethode
+
+          handleSelectFixingMethode(currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixingMethode)
 
           currentConfig.undoStatus = false;
           currentConfig.currentStateIndex -= 1;
@@ -598,24 +606,14 @@ function handleRedo() {
           currentConfig.canvasState[currentConfig.currentStateIndex + 1].back
         );
 
+        selectedShape = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].shape
+
         if (activeSignFace === "front") {
-          handleSelectBorder(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face1.type
-          );
-          handlechangeBorderColor(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face1.color
-          );
+          handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face1.type );
+          handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face1.color );
         } else {
-          handleSelectBorder(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face2.type
-          );
-          handlechangeBorderColor(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face2.color
-          );
+          handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face2.type );
+          handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face2.color );
         }
 
         addedTexts = [];
@@ -638,6 +636,10 @@ function handleRedo() {
 
         fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixScale;
         sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].sizeRatio;
+
+        activeFixingMethode = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixingMethode
+
+        handleSelectFixingMethode(currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixingMethode)
 
         currentConfig.redoStatus = false;
         currentConfig.currentStateIndex += 1;
