@@ -331,6 +331,7 @@ function asowp_save_large_data($data, $name, $path) {
  */
 function asowp_get_large_data($path) {
     // Remplace l'URL par le chemin réel
+    $path = stripslashes($path);
     $path = str_replace(ASOWP_DATA_URL, ASOWP_DATA_PATH, $path);
 
     // Vérifier si le fichier existe et récupérer son contenu

@@ -265,7 +265,7 @@ class ASOWP_Api_Templates extends WP_REST_Controller
                         if ($meta_value[$template_id] == $template) {
                             return rest_ensure_response(["success" => "same", "message" => __("No change observed in template", "all-signs-options-pro")]);
                         } else {
-                            if(isset( $template["data"]["templateData"]) && count($template["data"]["templateData"])) {
+                            if(isset( $template["data"]["templateData"]['sign'])) {
 
                                 $data_filename =  isset($template["data_file"]) ? asowp_get_filename_without_extension($template["data_file"])  :  uniqid('asowp-'.$config_id.'-'.$template_id);
                                 $template["data_file"] = asowp_save_large_data($template["data"],$data_filename, 'templates');
