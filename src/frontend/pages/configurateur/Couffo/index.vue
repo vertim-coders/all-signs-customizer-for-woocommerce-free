@@ -1150,6 +1150,10 @@
 
                                 <div v-if="configTextType == 'neon'" class="asowp-space-y-1">
                                     <p class="asowp-font-medium">Light color</p>
+                                    <div class="asowp-flex asowp-space-x-2">
+                                        <div @click="()=>{turnNeonLightOnOff()}" :class="`${activeTextLight ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">On</div>
+                                        <div @click="()=>{turnNeonLightOnOff()}" :class="`${!activeTextLight ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Off</div>
+                                    </div>
                                     <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
                                         <div v-for="(color, index) in configTextSettings.colors" class="">
                                             <div @click="changeTextLightColor(color.codeHex)" :class="`${curentTextLightColor === color.codeHex ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
@@ -2281,6 +2285,7 @@
         handleShow3dSide,
         handleChange3dSideColor,
         handleChangeTextLightColor,
+        handleTurnLightOnOff,
         handleGetImageSettings,
         handleGetAddedImageValues,
         handleAddImageToSign,
@@ -5577,6 +5582,11 @@
 
                     active3dSide.value = obj.activeSide
                     active3dSideColor.value = obj.sideColor
+
+                    if(obj.type == "neon-Text"){
+                        curentTextLightColor.value = obj.neonColor
+                        activeTextLight.value = obj.glowRadius == 0 ? false : true
+                    }
                 }
             })
             activeCanvas.requestRenderAll();
@@ -5703,6 +5713,11 @@
     function changeTextLightColor(color){
         curentTextLightColor.value = color
         handleChangeTextLightColor(color)
+    }
+    var activeTextLight = ref(true)
+    function turnNeonLightOnOff(){
+        activeTextLight.value = !activeTextLight.value
+        handleTurnLightOnOff(activeTextLight.value)
     }
 
 
@@ -6523,7 +6538,7 @@
                 // Trouver l'objet correspondant dans neonTextArray
                 const neonText = neonTextArray.find(item => item.text.includes(textContent.trim()));
 
-                if (neonText) {
+                if (neonText && neonText.glowRadius > 0) {
                     // Appliquer l'effet néon avec text-shadow au <tspan> individuellement
                     tspan.setAttribute('style', `text-shadow: ${neonText.neonColor} 1px 0 20px; fill: ${neonText.fill}`);
                 }

@@ -6942,6 +6942,25 @@ function handleChangeTextLightColor(color) {
 
   return selectedText.color;
 }
+
+var defaultRadius = 25
+function handleTurnLightOnOff(state){
+  var radius = (state == true ? defaultRadius : 0)
+  var currentText = selectedText.object;
+  let alignment = currentText.textAlign
+
+
+  currentText.set("textAlign", "")
+  currentText.set("textAlign", alignment)
+
+  currentText.set("glowRadius", radius)
+
+  simulateCanvasClick()
+  activeCanvas.renderAll();
+  handleGetAddedTextValues(currentText);
+
+  return selectedText.color;
+}
 function simulateCanvasClick(){
   activeCanvas.fire('mouse:down', {
       e: new MouseEvent('click', { clientX: 100, clientY: 100 }), // Coordonnées du clic
@@ -9746,6 +9765,7 @@ export {
   handleShow3dSide,
   handleChange3dSideColor,
   handleChangeTextLightColor,
+  handleTurnLightOnOff,
   handleGetImageSettings,
   handleGetAddedImageValues,
   handleAddImageToSign,
