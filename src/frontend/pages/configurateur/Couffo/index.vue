@@ -2664,6 +2664,9 @@
         selectMaterial(props.config.data.materials[sign.material.id], sign.material.id)
         getSignInfos({name: 'Template', width: parseFloat(sign.size.width), height: parseFloat(sign.size.height)})
 
+        if(sign.material.type == 'advance'){
+            advancedComponent.value = sign.material.advanceComponent.component
+        }
 
         var defTextColor = (configTextSettings.value.colors.length > 0 ? configTextSettings.value.colors[0].codeHex : "#000000")
         signTextColor1.value = sign.color.face1.textColor
@@ -2862,8 +2865,6 @@
         }
 
         if(sign.material.type == 'advance'){
-            advancedComponent.value = sign.material.advanceComponent.component
-
             activeSignModel.value = sign.material.advanceComponent.option.data
             activeSignModelName.value = sign.material.advanceComponent.option.data.name
             activeSignModelId.value = sign.material.advanceComponent.option.id

@@ -8164,9 +8164,9 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
             reScaleText(templateObject[0]);
           });
 
-          if(templateObject[0].type == "neon-Text"){
-            templateObject[0].glowRadius = 25
-          }
+          // if(templateObject[0].type == "neon-Text"){
+          //   templateObject[0].glowRadius = 25
+          // }
 
           addUniqueObject(addedTexts, templateObject[0], "id");
         }
