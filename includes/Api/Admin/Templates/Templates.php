@@ -269,6 +269,18 @@ class ASOWP_Api_Templates extends WP_REST_Controller
 
                                 $data_filename =  isset($template["data_file"]) ? asowp_get_filename_without_extension($template["data_file"])  :  uniqid('asowp-'.$config_id.'-'.$template_id);
                                 $template["data_file"] = asowp_save_large_data($template["data"],$data_filename, 'templates');
+
+                                $template["recaps"] =  [
+                                    "customPrice" => isset($template["data"]["cartData"]["custom_price"] ) ?
+                                        $template["data"]["cartData"]["custom_price"] : "0" ,
+
+                                    "priceType" => isset($template["data"]["templateData"]["price"]['textAfter']) 
+                                        ? $template["data"]["templateData"]["price"]['textAfter'] : "",
+
+                                    "size" => isset($template["data"]["cartData"]["sign"]["size"]["value"])?
+                                        $template["data"]["cartData"]["sign"]["size"]["value"]["width"]["value"]  . ' x ' .  
+                                        $template["data"]["cartData"]["sign"]["size"]["value"]["height"]["value"] : "0mm x 0mm"  
+                                ];
                                 $template["data"]=[
                                     'templateData'=>[],
                                     'cartData'=>[],

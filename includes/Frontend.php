@@ -312,8 +312,7 @@ class ASOWP_Frontend
                                     }
                                 }
 
-                                $template["data"] = isset( $template["data_file"]) ? asowp_get_large_data($template["data_file"])  : $template["data"] ;
-                                $templates[$key] = $template;
+                            
 
                             }
                             $asowp_product = new ASOWP_Product_Config($productid);

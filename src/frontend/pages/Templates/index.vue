@@ -16,10 +16,10 @@
                 </div>
                 <div class="asowp-template-details-container asowp-border-[1px] asowp-border-solid asowp-border-l-0 asowp-border-b-0 asowp-border-r-0 asowp-border-[#c3cfd6] asowp-p-4">
                     <span class="asowp-template-title asowp-font-bold">{{template.name}}</span>
-                    <div class="asowp-template-size">{{template.data.templateData.sign ? template.data.templateData.sign.size.width + ' ' +template.data.templateData.sign.size.unit : 0}} x {{template.data.templateData.sign? template.data.templateData.sign.size.height + ' ' +template.data.templateData.sign.size.unit : 0}}</div>
-                    <div><span class="asowp-font-bold asowp-template-price">{{ template.data.templateData.price ? formatPrice(parseFloat(template.data.templateData.price.value),0)  : formatPrice(0, template.basePrice) }}</span> {{ template.data.templateData.price ?template.data.templateData.price.textAfter :''}}</div>
-                    <div class="asowp-space-y-3 asowp-py-3 asowp-template-details-buttons" v-if="template.data.templateData.sign">
-                        <button @click="addToCart(template)" :class="`${template.enableAddToCart ? 'asowp-visible' : 'asowp-invisible'}`" class="asowp-templates-add_to_cart_button asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#0374e3] asowp-rounded-[5px] asowp-w-full asowp-p-2.5">
+                    <div class="asowp-template-size">{{template.recaps?.size ?? ""}} </div>
+                    <div><span class="asowp-font-bold asowp-template-price">{{ formatPrice(template.recaps?.customPrice||0, template.basePrice) }}</span> {{ template.recaps?.priceType||""}}</div>
+                    <div class="asowp-space-y-3 asowp-py-3 asowp-template-details-buttons" v-if="template.recaps">
+                        <button @click="addToCart(template, index)" :class="`${template.enableAddToCart ? 'asowp-visible' : 'asowp-invisible'}`" class="asowp-templates-add_to_cart_button asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#0374e3] asowp-rounded-[5px] asowp-w-full asowp-p-2.5">
                             <svg v-if="!isAddingToCart" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                             </svg>
@@ -46,6 +46,7 @@
 <script setup>
 import { add_to_cart } from '@/frontend/utils/functions';
 import { onMounted, ref } from 'vue';
+import api from '../../../admin/Api/api';
 
 const templates = ref(asowp_templates.data);
 const allTemplates = asowp_templates.data;
@@ -62,10 +63,15 @@ onMounted(()=>{
         document.querySelector("#asowp-templates-loader").remove();
     }
 })
-const addToCart = async (template)=>{
+const addToCart = async (template, index = 0)=>{
     isAddingToCart.value = true
+    template = await api.getTemplate(template.configId, index);
+    // template.data.cartData.recaps.custom_price = ;
     const cart_data = {
-        recaps:{...template.data.cartData
+        recaps:{...template.data.cartData,
+            custom_price: parseFloat(
+                (template.recaps?.customPrice||0) + template.basePrice
+                ).toFixed(2)
         },
         variation_id:productId,
         quantity:1
