@@ -8432,6 +8432,396 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         })
     }
+    async function genImageWithoutFixing(canva, format, purpose, width, height) {
+        try{
+            var currentWidth = canva.width
+            var currentHeight = canva.height
+
+
+            var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
+            const optionsPreview = {
+                width: '100%',
+                height: '100%',
+                encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
+            };
+
+            const options = {
+                width: '1900px',
+                height: '1080px',
+                // viewBox: {
+                //     x: 0,
+                //     y: 0,
+                //     width: canva.width,
+                //     height: canva.height,
+                // },
+                encoding: 'UTF-8',
+            };
+
+
+            function convertSvgToImage(svgDataUrl, format) {
+                return new Promise((resolve, reject) => {
+                    const canvas = document.createElement('canvas');
+                    var tempCanvas = new fabric.Canvas(canvas, {
+                        width: 1900,
+                        height: 1080,
+                        interactive: false,
+                        backgroundColor: "transparent",
+                    });
+
+                    // Supprimer la balise <style> du SVG
+                    fetch(svgDataUrl)
+                        .then(response => response.text())
+                        .then(svgText => {
+                            const svgWithoutStyle = svgText.replace(/<style[\s\S]*?<\/style>/g, '');
+
+                            // Convertir le SVG nettoyé en URL de données
+                            const svgWithoutStyleUrl = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgWithoutStyle)))}`;
+
+                            // Charger le SVG nettoyé dans Fabric.js
+                            fabric.loadSVGFromURL(svgWithoutStyleUrl, function (image, options) {
+                                try {
+                                    const img = fabric.util.groupSVGElements(image, options);
+
+                                    img.scale(1);                                
+                                    img.setCoords();
+
+                                    // console.log(img._objects, "Image")
+
+                                    img._objects.forEach((obj) => {
+                                        if (obj.name === 'asowp-SignText') {
+                                            console.log('Loaded Text Object:', {
+                                                left: obj.left,
+                                                top: obj.top,
+                                                scaleX: obj.scaleX,
+                                                scaleY: obj.scaleY,
+                                                width: obj.width,
+                                                height: obj.height,
+                                                originX: obj.originX,
+                                                originY: obj.originY,
+                                            });
+                                        }
+                                    });
+
+                                    var newW = img.width * img.scaleX
+                                    var newH = img.height * img.scaleX
+
+
+                                    tempCanvas.add(img);
+                                    tempCanvas.renderAll();
+
+                                    var dataUrl = ""
+                                    switch (format) {
+                                        case 'png':
+                                            dataUrl = tempCanvas.toDataURL({
+                                                format: 'png',
+                                                quality: 1.0
+                                            });
+                                        break;       
+                                        case 'jpeg':
+                                            dataUrl = tempCanvas.toDataURL({
+                                                format: 'jpeg',
+                                                quality: 1.0
+                                            });
+                                        break;       
+                                        case 'webp':
+                                            dataUrl = tempCanvas.toDataURL({
+                                                format: 'webp',
+                                                quality: 1.0
+                                            });
+                                        break;       
+                                    }
+
+                                    tempCanvas.dispose();
+
+                                    // Résoudre la Promise avec l'URL des données
+                                    resolve(dataUrl);
+                                } catch (error) {
+                                    reject(error);
+                                }
+                            });
+                        })
+                        .catch(error => reject(error));
+                });
+            }
+    
+            async function drawnPathFromText() {
+                return new Promise((resolve, reject) => {
+                    var elements = canva.getObjects()
+                    let promises = []
+
+                    elements.forEach((object, index) => {
+                        if (object.name === 'safeObject') {
+                            if (typeof object.fill !== 'string') {
+                                var patternFill = object.fill
+                                let promise = new Promise((resolve, reject) => {
+                                    handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
+                                        fabric.Image.fromURL(dataURI, (img) => {
+                                            try {
+                                                let scaleX = object.width / img.width;
+                                                let scaleY = object.height / img.height;
+
+                                                img.left = object.left;
+                                                img.top = object.top;
+
+                                                img.clipPath = handleClipAddedObject(canva);
+                                                
+                                                img.name = 'asowp-signPattern';
+
+                                                img.scaleX = scaleX;
+                                                img.scaleY = scaleY;
+                                                
+                                                
+                                                // if (object.width > object.height) {
+                                                //     img.scaleToWidth(object.width);
+                                                // } else {
+                                                //     img.scaleToHeight(object.height);
+                                                // }
+
+
+                                                var shadowRect = handleSetShadow(canva)
+                                                object.shadow = null
+                                                canva.add(img, shadowRect);
+                                                img.moveTo(index + 1);
+                                                shadowRect.sendToBack()                                                                                         
+                                                
+                                                canva.renderAll()
+                                                resolve(img);
+                                            } catch (error) {
+                                                reject(error);
+                                            }
+                                        });
+                                    });
+                                });
+                                promises.push(promise);
+                            }
+                        }
+                    });
+
+                    Promise.all(promises)
+                        .then(groups => resolve(groups))
+                        .catch(error => reject(error));
+                });
+            }
+            var noShadow = new fabric.Shadow({
+              color: "black",
+              offsetX: 0,
+              offsetY: 0,
+              blur: 0,
+              isActive: true,
+            });
+    
+            var widthVisibility
+            var heightVisibility
+            var thickVisibility
+            var borderPositionId
+            var fixingPositionId
+            let fixingVisibility
+            let signShadow
+            let borderShadow
+            canva.getObjects().forEach((object, index) => {
+                if(object.name === 'widthLine' || object.name === 'width-value'){
+                    widthVisibility = object.visible
+                    object.set('visible', false);
+                }
+                if(object.name === 'heightLine' || object.name === 'height-value'){
+                    heightVisibility = object.visible
+                    object.set('visible', false);
+                }
+                if(object.name === 'asowp-SignText'){
+                    // object.set('visible', false);
+                }
+                if(object.name === 'thickness-value'){
+                    thickVisibility = object.visible
+                    object.set('visible', false);
+                }
+                if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                    borderPositionId = index
+                    object.bringToFront();
+                }
+                if(object.objectType === 'asowp-fixingMethods'){
+                    fixingVisibility = object.visible
+                    fixingPositionId = index
+                    object.bringToFront();
+                    object.set('visible', false);
+                }
+                if(object.name === 'safeObject'){
+                    signShadow = object.shadow
+                    object.shadow = noShadow
+                }
+                if(object.name === 'normal-border'){
+                    borderShadow = object.shadow
+                    object.shadow = noShadow
+                }
+            });
+            canva.renderAll();
+
+
+            await drawnPathFromText()
+
+            // Générer le SVG avec les polices intégrées
+            let svgContent = canva.toSVG(options);
+            let usedFonts = getUsedFonts(canva)
+
+            if(configTextType.value === "neon"){
+                svgContent = applyNeonEffectToSVG(svgContent, canva)
+            }
+            const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
+            const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
+                    
+            // Générer le SVG avec les polices intégrées pour le preview
+            const svgPreview = canva.toSVG(optionsPreview);
+            const svgDataPreview = await addFontsToSVG(svgPreview, usedFonts);
+            var previewScreen = document.getElementById('showPreview')
+
+
+            var dataURL  = ""
+            // Génère l'image avec le format spécifié
+            switch (format) {
+                case 'png':
+                    canva.setWidth(1900)
+                    canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
+                    dataURL = canva.toDataURL({
+                        format: 'png',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+
+                    // dataURL = await convertSvgToImage(svgUrl, 'png')
+                break;
+    
+                case 'jpeg':
+                    canva.setWidth(1900)
+                    canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
+                    canva.backgroundColor = configColors.value.canvasBackgroundColor
+                    dataURL = canva.toDataURL({
+                        format: 'jpeg',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                    // dataURL = await convertSvgToImage(svgUrl, 'jpeg')
+                break;
+    
+                case 'webp':
+                    canva.setWidth(1900)
+                    canva.setHeight(1080)
+                    checkScreenSize(1900, 1080)
+                    canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
+                    dataURL = canva.toDataURL({
+                        format: 'webp',
+                        quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                    });
+                    // dataURL = await convertSvgToImage(svgUrl, 'webp')
+                break;
+    
+                case 'svg':
+                    dataURL = svgUrl
+                break;
+            
+                default:
+    
+                break;
+            }
+    
+            // Restaure les dimensions et l'affichage originales du canvas
+            canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+            canva.getObjects().forEach(object => {
+                if(object.name === 'widthLine' || object.name === 'width-value'){
+                    object.set('visible', widthVisibility);
+                }
+                if(object.name === 'heightLine' || object.name === 'height-value'){
+                    object.set('visible', heightVisibility);
+                }
+                if(object.name === 'asowp-SignText'){
+                    object.set('visible', true);
+                }
+                if(object.name === 'thickness-value'){
+                    object.set('visible', thickVisibility);
+                }
+                if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
+                    // console.log(object, "watermark")
+                    canva.remove(object)
+                }
+                if(object.name === 'safeObject'){
+                    if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
+                        object.shadow = defaultShadow.value
+                    }
+                    if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
+                        object.shadow = defaultShadow.value
+                    }
+                }
+                if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
+                    object.moveTo(borderPositionId);
+                }
+                if(object.objectType === 'asowp-fixingMethods'){
+                    object.moveTo(fixingPositionId);
+                    object.set('visible', fixingVisibility);
+                }
+                if(object.name === 'safeObject'){
+                    object.shadow = signShadow
+                }
+                if(object.name === 'normal-border'){
+                    object.shadow = borderShadow
+                }
+            });
+
+
+            if(purpose === 'preview'){
+                // if(configTextType.value == 'neon'){
+
+                //     canva.setWidth(1900)
+                //     canva.setHeight(1080)
+                //     checkScreenSize(1900, 1080)
+                //     canva.zoomToPoint({x: canva.getWidth() /2, y: canva.getHeight() /2}, 1.5)
+
+                //     prevImg.value = canva.toDataURL({
+                //         format: 'png',
+                //         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
+                //     });
+                     
+                // }
+                if(configTextType.value != 'neon'){
+                    previewScreen.innerHTML = svgDataPreview;
+    
+                    const svgElement = previewScreen.querySelector('svg');
+    
+                    svgElement.classList.add('asowp-z-10');
+                }
+                
+                if(configImageSettings.value.scenes.length > 0){
+                    var miniPreview = document.getElementById('asowp-miniPreview')
+                    miniPreview.innerHTML = svgDataPreview;
+                }
+            }else if(purpose === 'download'){
+                const link = document.createElement('a');
+                link.href = dataURL;
+                // link.href = svgUrl;
+                link.download = 'img'+'.'+format;
+                link.click();
+            }else if(purpose === 'finish-1'){
+                var previewFinish1 = document.getElementById('asowp-previewFinish1')
+                previewFinish1.innerHTML = svgDataPreview;
+            }else if(purpose === 'finish-2'){
+                var previewFinish1 = document.getElementById('asowp-previewFinish2')
+                previewFinish1.innerHTML = svgDataPreview;
+            }
+
+            checkScreenSize()
+            canva.renderAll();
+
+            return dataURL;
+
+        }catch (error) {
+            console.error("Une erreur est survenue:", error);
+        }
+        // return dataURL;
+
+    }
+
     function convertToPx(dimension, unit) {
         var dimensions = dimension;
         var unit = unit;
