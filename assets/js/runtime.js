@@ -174,11 +174,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-<<<<<<< HEAD
-/******/ 		__webpack_require__.h = function() { return "71fe7979b89bc0dc0f66"; }
-=======
-/******/ 		__webpack_require__.h = function() { return "b4ce000fb84f39f29d4f"; }
->>>>>>> 61664f04e5cdc5be341fb425aa51cc8867bf1371
+/******/ 		__webpack_require__.h = function() { return "f9ee9063ce10384583a3"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -442,7 +438,7 @@
 /******/ 					if (idx >= 0) registeredStatusHandlers.splice(idx, 1);
 /******/ 				},
 /******/ 		
-/******/ 				// inherit from previous dispose call
+/******/ 				//inherit from previous dispose call
 /******/ 				data: currentModuleData[moduleId]
 /******/ 			};
 /******/ 			currentChildModule = undefined;
@@ -534,10 +530,11 @@
 /******/ 							return waitForBlockingPromises(function () {
 /******/ 								if (applyOnUpdate) {
 /******/ 									return internalApply(applyOnUpdate);
+/******/ 								} else {
+/******/ 									return setStatus("ready").then(function () {
+/******/ 										return updatedModules;
+/******/ 									});
 /******/ 								}
-/******/ 								return setStatus("ready").then(function () {
-/******/ 									return updatedModules;
-/******/ 								});
 /******/ 							});
 /******/ 						});
 /******/ 					});
@@ -652,7 +649,7 @@
 /******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
 /******/ 		var document = __webpack_require__.g.document;
 /******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
+/******/ 			if (document.currentScript)
 /******/ 				scriptUrl = document.currentScript.src;
 /******/ 			if (!scriptUrl) {
 /******/ 				var scripts = document.getElementsByTagName("script");
@@ -665,7 +662,7 @@
 /******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
 /******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
 /******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/^blob:/, "").replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
 /******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	}();
 /******/ 	
@@ -927,12 +924,15 @@
 /******/ 				if (__webpack_require__.o(currentUpdate, moduleId)) {
 /******/ 					var newModuleFactory = currentUpdate[moduleId];
 /******/ 					/** @type {TODO} */
-/******/ 					var result = newModuleFactory
-/******/ 						? getAffectedModuleEffects(moduleId)
-/******/ 						: {
-/******/ 								type: "disposed",
-/******/ 								moduleId: moduleId
-/******/ 							};
+/******/ 					var result;
+/******/ 					if (newModuleFactory) {
+/******/ 						result = getAffectedModuleEffects(moduleId);
+/******/ 					} else {
+/******/ 						result = {
+/******/ 							type: "disposed",
+/******/ 							moduleId: moduleId
+/******/ 						};
+/******/ 					}
 /******/ 					/** @type {Error|false} */
 /******/ 					var abortError = false;
 /******/ 					var doApply = false;
@@ -1183,17 +1183,17 @@
 /******/ 										moduleId: moduleId,
 /******/ 										module: __webpack_require__.c[moduleId]
 /******/ 									});
-/******/ 								} catch (err1) {
+/******/ 								} catch (err2) {
 /******/ 									if (options.onErrored) {
 /******/ 										options.onErrored({
 /******/ 											type: "self-accept-error-handler-errored",
 /******/ 											moduleId: moduleId,
-/******/ 											error: err1,
+/******/ 											error: err2,
 /******/ 											originalError: err
 /******/ 										});
 /******/ 									}
 /******/ 									if (!options.ignoreErrored) {
-/******/ 										reportError(err1);
+/******/ 										reportError(err2);
 /******/ 										reportError(err);
 /******/ 									}
 /******/ 								}
