@@ -2627,8 +2627,13 @@
     }
 
     var isTemplate = ref(false)
+    let templateDatas = ref({})
+    let templateStatut = ref("none")
     async function selectTemplate(data, statut){
-        console.log(data)
+        templateDatas.value = data
+        templateStatut.value = statut ? statut : "none"
+
+        // console.log(data)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -3401,9 +3406,25 @@
     function confirmResetAll(value){
         resetAllBool.value = value
     }
-    function clearAll() {
-        handleClearAll()
-        clearStep()
+    var resetType = ref("simple")
+    async function clearAll() {
+        if(resetType.value == "template"){
+            if(templateDatas.value != {}){
+                clearStep(true)
+                if(templateStatut.value == "making"){
+                    await selectTemplate(templateDatas.value, "making")
+                }else{
+                    await selectTemplate(templateDatas.value)
+                }
+                checkScreenSize()
+            }else{
+                handleClearAll()
+                clearStep()
+            }
+        }else if(resetType.value == "simple") {
+            handleClearAll()
+            clearStep()
+        }
 
         resetAllBool.value = false
     }
@@ -8467,8 +8488,10 @@
                 }
 
                 handleCheckTemplate(props.template.designFromTemplate)
+                isTemplate.value = props.template.designFromTemplate
                 if(route.name === 'template-maker'){
                     if(template.value.data.templateData.length == 0){
+                        resetType.value = "simple"
                         // console.log(template.value.data.templateData, "template-maker")
                         if(props.config.data.materials.length > 0){
                             selectMaterial(props.config.data.materials[0], 0)
@@ -8482,12 +8505,15 @@
                             selectAdvanceFirstValue()
                         }
                     }else{                    
+                        resetType.value = "template"
                         await selectTemplate(template.value.data.templateData, 'making')
                     }
                 }else{
                     if(props.template.designFromTemplate === true){
+                        resetType.value = "template"
                         await selectTemplate(props.template.template.data.templateData)
                     }else{
+                        resetType.value = "simple"
                         if(props.config.data.materials.length > 0){
                             selectMaterial(props.config.data.materials[0], 0)
                         }else{
