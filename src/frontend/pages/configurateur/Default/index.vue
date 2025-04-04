@@ -4516,21 +4516,54 @@ import { forAliasRE } from '@vue/compiler-core';
     function selectCustomSize(customSize){
         // console.log(customSize, "custom size")
         function checkInterval(pricings, value){
-            let settings = pricings[0];
-            for (let i = 0; i < pricings.length; i++) {
-                if (value <= (pricings[i].surface * pricings[i].surface)) {
-                    settings = pricings[i];
-                    break;
+            if(pricings.type){
+                if(pricings.type == "range"){
+                    let settings = pricings.value[0];
+                    for (let i = 0; i < pricings.length; i++) {
+                        if (value <= (pricings[i].surface * pricings[i].surface)) {
+                            settings = pricings[i];
+                            break;
+                        }
+                        settings = pricings[i];
+                    }
+                    return settings;   
+                }else if(pricings.type == "unit"){
+                    let settings = pricings.value;
+                    let newBasePrice = (value * settings.basePrice) / settings.surface
+                    let newSetting = {
+                        basePrice: newBasePrice,
+                        charPrice: settings.charPrice,
+                        maxTextChar: -1,
+                        startPriceAtChar: 0
+                    }
+                    return newSetting;   
                 }
-                settings = pricings[i];
+            }else{
+                if(pricings.length > 0){
+                    let settings = pricings[0];
+                    for (let i = 0; i < pricings.length; i++) {
+                        if (value <= (pricings[i].surface * pricings[i].surface)) {
+                            settings = pricings[i];
+                            break;
+                        }
+                        settings = pricings[i];
+                    }
+                    return settings;   
+                }else{
+                    return {
+                        basePrice: 0,
+                        charPrice: 0,
+                        maxTextChar: -1,
+                        startPriceAtChar: 0
+                    }
+                }
             }
-            return settings;   
         }
 
         if((customSizeValues.value.width >= customSize.width.min && customSizeValues.value.width <= customSize.width.max) && (customSizeValues.value.height >= customSize.height.min && customSizeValues.value.height <= customSize.height.max)){
-            console.log(customSize.pricings, "resultat")
+            // console.log(customSize.pricings, "resultat")
             
-            if(customSize.pricings && customSize.pricings.length > 0){
+            if(customSize.pricings){
                 var valeur = customSizeValues.value.width * customSizeValues.value.height
                 var matchingSettings = checkInterval(customSize.pricings, valeur)
                 // console.log(matchingSettings, "resultat")
