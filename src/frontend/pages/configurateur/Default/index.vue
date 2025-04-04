@@ -4568,7 +4568,7 @@ import { forAliasRE } from '@vue/compiler-core';
     var shapees = ref([])
     var selectedShape = ref('square')
     var currentShapeId = ref(0)
-    function selectShape(shape, setting, shapeId){
+    async function selectShape(shape, setting, shapeId){
         // currentShapeId.value = setting.shapeId
         currentShapeId.value = shapeId
         if(fixingExcludeShapes.value.includes(shapeId)){
@@ -4613,7 +4613,7 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
 
-        handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, currentSizeValues.value.top, currentSizeValues.value.left)
+        await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, currentSizeValues.value.top, currentSizeValues.value.left)
         selectedShape.value = shape
 
         var shapePrice = setting.additionalPrice

@@ -1,4 +1,6 @@
 var FontFaceObserver = require("fontfaceobserver");
+import opentype from 'opentype.js'
+import { load } from 'opentype.js'
 
 var fixingUrl = "";
 var borderUrl = "";
@@ -2432,7 +2434,397 @@ function handleSetImageToSignBackground(image) {
   // updateModifications(true, 'changer sign color')
 }
 
+
+
+
 //fonctions concernant le choix de shapes
+/**
+ * Crée un path englobant les objets dans une zone donnée
+ * @param {Object} zone - {left, top, width, height}
+ * @param {Number} [padding=10] - Marge autour des objets
+ * @param {Number} [strokeWidth=5] - Épaisseur du contour
+ * @returns {fabric.Path} Path englobant les objets
+ */
+function createContourPath(zone, padding = 10, strokeWidth = 5) {
+  // 1. Filtrer les objets dans la zone
+  const objectsInZone = canvas.getObjects().filter(obj => {
+    const objBounds = obj.getBoundingRect();
+    return (
+      objBounds.left < zone.left + zone.width &&
+      objBounds.left + objBounds.width > zone.left &&
+      objBounds.top < zone.top + zone.height &&
+      objBounds.top + objBounds.height > zone.top
+    );
+  });
+
+  if (objectsInZone.length === 0) return null;
+
+  // 2. Calculer le contour combiné
+  let combinedPath = '';
+  
+  objectsInZone.forEach(obj => {
+    const objBounds = obj.getBoundingRect();
+    const expandedBounds = {
+      left: objBounds.left - padding,
+      top: objBounds.top - padding,
+      width: objBounds.width + padding * 2,
+      height: objBounds.height + padding * 2
+    };
+    
+    // Créer un rectangle path pour chaque objet
+    const path = `M ${expandedBounds.left} ${expandedBounds.top}
+                  L ${expandedBounds.left + expandedBounds.width} ${expandedBounds.top}
+                  L ${expandedBounds.left + expandedBounds.width} ${expandedBounds.top + expandedBounds.height}
+                  L ${expandedBounds.left} ${expandedBounds.top + expandedBounds.height}
+                  Z `;
+    
+    combinedPath += path;
+  });
+
+  // 3. Créer et styliser le path
+  const contour = new fabric.Path(combinedPath, {
+    fill: 'transparent',
+    stroke: '#ff0000',
+    strokeWidth: strokeWidth,
+    strokeLineJoin: 'round',
+    selectable: false,
+    evented: false,
+    objectCaching: false
+  });
+
+  // 4. Simplifier le path (fusion des zones superposées)
+  simplifyPath(contour);
+
+  return contour;
+}
+/**
+ * Simplifie le path en fusionnant les zones superposées
+ */
+function simplifyPath(path) {
+  // Implémentation basique - à améliorer avec un algorithme de fusion de paths
+  path.set({ dirty: true });
+  canvas.renderAll();
+}
+
+
+
+async function createPreciseContourPath(zone, padding = 10) {
+  // 1. Filtrer les objets dans la zone avec précision
+  const objectsInZone = canvas.getObjects().filter(obj => obj.name == "asowp-SignText" || obj.name == "asowp-SignImage");
+
+  if (objectsInZone.length === 0) return null;
+
+  // 2. Extraire les points de contour précis
+  const allPoints = await extractExactPaths(objectsInZone, padding);
+  console.log(allPoints, "allPoints")
+  // const allPoints = await extractExactPaths(objectsInZone, padding);
+
+  // // 3. Calculer l'enveloppe convexe connectrice
+  // const hullPoints = convexHull(allPoints);
+  // if (hullPoints.length < 3) return null; // Pas assez de points pour former un path
+
+  // // 4. Créer le path SVG connecté
+  // const pathData = createSmoothPath(hullPoints);
+
+  return allPoints
+  // return new fabric.Path(pathData, {
+  //   fill: 'rgba(0,150,255,0.2)',
+  //   stroke: '#0096ff',
+  //   strokeWidth: 2,
+  //   selectable: false,
+  //   objectCaching: false // Important pour les paths dynamiques
+  // });
+}
+
+// Nouvelle fonction d'extraction des points de contour
+function extractContourPoints(objects, padding) {
+  const allPoints = [];
+  
+  for (const obj of objects) {
+    // Pour les objets Path/SVG
+    if (obj.path) {
+      obj.path.forEach(segment => {
+        if (segment[0] === 'L' || segment[0] === 'M') { // Lignes et mouvements
+          allPoints.push({
+            x: segment[1] + obj.left,
+            y: segment[2] + obj.top
+          });
+        }
+      });
+    }
+    // Pour les formes primitives
+    else {
+      const bounds = obj.getBoundingRect();
+      // Points cardinaux avec padding
+      allPoints.push(
+        { x: bounds.left - padding, y: bounds.top - padding },
+        { x: bounds.left + bounds.width + padding, y: bounds.top - padding },
+        { x: bounds.left - padding, y: bounds.top + bounds.height + padding },
+        { x: bounds.left + bounds.width + padding, y: bounds.top + bounds.height + padding }
+      );
+    }
+  }
+  
+  return allPoints;
+}
+
+function checkWoff2(chaine) {
+  return chaine.endsWith('.woff2');
+}
+function hasExtendedLowercase(text, font, xHeight, fontSize) {
+  if (typeof text !== 'string') {
+      console.error('Text must be a string');
+      return false;
+  }
+  const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
+  const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
+  
+  for (let char of testExtendsChars) {
+      if (char.match(/[a-z]/)) {
+          let path = font.getPath(char, 0, 0, fontSize);
+          let bbox = path.getBoundingBox();
+          // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
+          // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
+          if (xHeight*0.9 > bbox.y2 - bbox.y1) {
+              return true;
+          }
+      }
+  }
+  return false;
+}
+async function extractExactPaths(objects, padding) {
+  return Promise.all(objects.map(obj => {
+    return new Promise(async (resolve, reject) => {
+      // Pour les objets Path/SVG
+      if (obj.path) {
+        const offsetPath = offsetPath(obj.path, padding);
+        resolve(offsetPath);
+      } 
+      // Pour les formes primitives (rect, cercle...)
+      else {
+        if(obj.name === "asowp-SignText"){
+          // const svg = obj.toSVG();
+          // fabric.loadSVGFromString(svg, results => {
+          //   const path = results[0];
+          //   path.set({
+          //     left: obj.left,
+          //     top: obj.top,
+          //     originX: obj.originX,
+          //     originY: obj.originY
+          //   });
+          //   console.log(path, "123")
+          //   resolve(path);
+          // });
+          if(!checkWoff2(obj.fontFamilyUrl)){
+            var buffer = await fetch(obj.fontFamilyUrl).then(res => res.arrayBuffer());
+            var font = opentype.parse(buffer);
+            // var lines = object.text.split('\n')
+            var lines = (typeof obj.text === 'string') ? obj.text.split('\n') : [];
+            var fontSize = 40
+            const x = 50;
+            let y = fontSize*obj.scaleX;
+            // let y = (object.height*object.scaleY)/object._textLines.length;
+
+            const group = new fabric.Group([], {
+              left: obj.left,
+              top: obj.top,
+              name: 'asowp-svg-path',
+            });
+            let safeObject = handleGetObjectByName("safeObject")
+
+            
+            lines.forEach(line => {
+                // console.log(line, lines)
+                var path = font.getPath(line, 0, y, fontSize * obj.scaleX);
+                var pathBBox = path.getBoundingBox();
+                var pathWidth = pathBBox.x2 - pathBBox.x1;
+                let xHeight = pathBBox.y2 - pathBBox.y1;
+                
+                // Calculez le décalage x en fonction de l'alignement
+                var xOffset;
+
+                switch(obj.textAlign) {
+                    case 'center':
+                        xOffset = (obj.width * obj.scaleX - pathWidth) / 2;
+                        break;
+                    case 'right':
+                        xOffset = obj.width * obj.scaleX - pathWidth;
+                        break;
+                    default: // 'left'
+                        xOffset = 0;
+                }
+                
+                // Appliquez le décalage à tous les points du chemin
+                path.commands.forEach(cmd => {
+                    if (cmd.x !== undefined) cmd.x += xOffset;
+                    if (cmd.x1 !== undefined) cmd.x1 += xOffset;
+                    if (cmd.x2 !== undefined) cmd.x2 += xOffset;
+                });
+                
+                var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*obj.scaleX)
+                // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+                // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
+
+                var miniGroup = new fabric.Group([], {
+                });
+                const fabricPath = new fabric.Path(path.toPathData(20), {
+                    strokeWidth: 10,
+                    // top: object.top + y, 
+                    stroke: safeObject.fill,
+                    fill: safeObject.fill,
+                    originX: 'center',
+                });
+                if(obj.fontWeight == 'bold'){
+                    fabricPath.strokeWidth = 20
+                    fabricPath.stroke = obj.fill
+                }
+                if(obj.fontStyle == 'italic'){
+                    fabricPath.skewX = -3
+                }
+                if(obj.underline){
+                    // var objLeft = fabricPath.left
+                    var objLeft = xOffset;
+                    var objTop = fabricPath.top + fabricPath.height
+                    var top = (longLetter ? objTop-6 : objTop+4)
+                    // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
+
+                    var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                        stroke: obj.fill,
+                        left: objLeft,
+                        top: top,
+                        scaleY: obj.scaleY,
+                        strokeWidth: 3,
+                    });
+
+                    miniGroup.addWithUpdate(underline);
+                }
+                if(obj.overline){
+                    var objLeft = xOffset;
+                    var objTop = fabricPath.top - 8
+
+                    var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                        stroke: obj.fill,
+                        left: objLeft,
+                        top: objTop,
+                        scaleY: obj.scaleY,
+                        strokeWidth: 3,
+                    });
+
+                    miniGroup.addWithUpdate(overline);
+                }
+                if(obj.linethrough){
+                    var objLeft = xOffset;
+                    var objTop = fabricPath.top + fabricPath.height / 2
+                    var top = (longLetter ? objTop-6 : objTop+4)
+
+                    var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
+                        stroke: obj.fill,
+                        left: objLeft,
+                        top: top,
+                        scaleY: obj.scaleY,
+                        strokeWidth: 2,
+                        name: 'asowp-svg-path',
+                    });
+
+                    miniGroup.addWithUpdate(linethrough);
+                }
+                
+                // if(lines.length > 0){
+                //   let objLeft = xOffset;
+
+                //   var wordJoint = new fabric.Line([fabricPath.left + fabricPath.width/2, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width/2, y], {
+                //     stroke: safeObject.fill,
+                //     left: objLeft,
+                //     top: top,
+                //     scaleY: obj.scaleY,
+                //     width: 800,
+                //     strokeWidth: 2,
+                //     name: 'asowp-svg-path',
+                //   })
+                //   miniGroup.addWithUpdate(wordJoint);
+                // }
+                miniGroup.addWithUpdate(fabricPath);
+                group.addWithUpdate(miniGroup);
+                
+                y += fontSize*obj.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
+                // console.log(y, "Ajustez cette vale");
+            });
+
+            group.left = obj.left - (group.width / 2);
+            group.top = obj.top - (group.height / 2);
+
+            resolve(group);
+          }
+
+          
+        }
+      }
+    });
+  }));
+}
+
+// Création d'un path lissé avec courbes
+function createSmoothPath(points) {
+  if (points.length < 2) return '';
+  
+  let path = `M ${points[0].x} ${points[0].y}`;
+  
+  // Ajout de courbes Bézier entre les points
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i-1];
+    const curr = points[i];
+    const controlX = (prev.x + curr.x) / 2;
+    const controlY = (prev.y + curr.y) / 2;
+    
+    path += ` Q ${controlX} ${controlY}, ${curr.x} ${curr.y}`;
+  }
+  
+  // Fermer le path si nécessaire
+  if (points.length > 2) {
+    path += ' Z';
+  }
+  
+  return path;
+}
+
+// Algorithme convex hull (inchangé)
+function convexHull(points) {
+  points.sort((a, b) => a.x - b.x || a.y - b.y);
+  
+  const lower = [];
+  for (const p of points) {
+    while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) {
+      lower.pop();
+    }
+    lower.push(p);
+  }
+  
+  const upper = [];
+  for (let i = points.length - 1; i >= 0; i--) {
+    const p = points[i];
+    while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) {
+      upper.pop();
+    }
+    upper.push(p);
+  }
+
+  return lower.slice(0, -1).concat(upper.slice(0, -1));
+}
+
+function cross(o, a, b) {
+  return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+}
+
+
+
+
+
+
+
+
+
+
 var selectedShape = "";
 function handleGetShape(shape, fixing) {
   selectedShape = shape;
@@ -2440,301 +2832,289 @@ function handleGetShape(shape, fixing) {
     activeFixingMethode = fixing;
   }
 }
-function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
+async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
   var canvasCenter = getCanvasCenter();
 
   selectedShape = shape;
 
-  function setShape(canvas) {
+  async function setShape(canvas) {
     resetFixing(canvas);
     var Objects = canvas.getObjects();
-    Objects.forEach(function (object) {
-      if (object.type !== "line") {
-        var top = nTop;
-        var left = nLeft;
-        // var top = canvasCenter.y - (nwidth/2);
-        // var left = canvasCenter.x - (nheight/2);
-        var width = nwidth;
-        var height = nheight;
-        var objectfill;
+    // for(const [index, object] in Objects.entries()) {
 
-        if (typeof object.fill !== "string") {
-          object.fill = "transparent";
-        } else {
-          objectfill = object.fill;
-        }
-        var objectId = object.id;
-
-        if (object.name == "safeObject") {
-          object.setCoords();
-          switch (shape) {
-            case "square":
-              var squareShape = new fabric.Rect({
-                height: height,
-                width: width,
-                left: left,
-                top: top,
-                fill: objectfill,
-                selectable: false,
-                name: "safeObject",
-                shadow: defaultShadow,
-                id: objectId,
-              });
-
-              canvas.remove(object);
-              canvas.add(squareShape);
-              squareShape.sendToBack();
-              break;
-
-            case "rounded-square":
-              var roundedSquareShape = new fabric.Rect({
-                height: height,
-                width: width,
-                left: left,
-                top: top,
-                rx: 35,
-                ry: 35,
-                fill: objectfill,
-                selectable: false,
-                name: "safeObject",
-                shadow: defaultShadow,
-                id: objectId,
-              });
-              canvas.remove(object);
-              canvas.add(roundedSquareShape);
-              roundedSquareShape.sendToBack();
-              break;
-
-            case "oval":
-              var ellipseShape = new fabric.Ellipse({
-                ry: height / 2,
-                rx: width / 2,
-                fill: objectfill,
-                left: left,
-                top: top,
-                selectable: false,
-                name: "safeObject",
-                shadow: defaultShadow,
-                id: objectId,
-              });
-              canvas.remove(object);
-              canvas.add(ellipseShape);
-              ellipseShape.sendToBack();
-              break;
-
-            case "triangle":
-              var triangleShape = new fabric.Triangle({
-                height: height,
-                width: width,
-                left: left,
-                top: top,
-                fill: objectfill,
-                selectable: false,
-                name: "safeObject",
-                shadow: defaultShadow,
-                id: objectId,
-              });
-              canvas.remove(object);
-              canvas.add(triangleShape);
-              triangleShape.sendToBack();
-              break;
-
-            case "rotated-square":
-              var rotatedSquareShape = new fabric.Polygon(
-                [
-                  { x: width / 2, y: 0 },
-                  { x: width, y: height / 2 },
-                  { x: width / 2, y: height },
-                  { x: 0, y: height / 2 },
-                ],
-                {
-                  left: left,
-                  top: top,
-                  fill: objectfill,
-                  selectable: false,
-                  name: "safeObject",
-                  shadow: defaultShadow,
-                  id: objectId,
-                }
-              );
-              canvas.remove(object);
-              canvas.add(rotatedSquareShape);
-              rotatedSquareShape.sendToBack();
-              break;
-
-            case "turn-left":
-              var turnLeftShape = new fabric.Polygon(
-                [
-                  { x: 0, y: height / 2 },
-                  { x: width / 2, y: 0 },
-                  { x: width, y: 0 },
-                  { x: width, y: height },
-                  { x: width / 2, y: height },
-                ],
-                {
-                  left: left,
-                  top: top,
-                  fill: objectfill,
-                  selectable: false,
-                  name: "safeObject",
-                  shadow: defaultShadow,
-                  id: objectId,
-                }
-              );
-              canvas.remove(object);
-              canvas.add(turnLeftShape);
-              turnLeftShape.sendToBack();
-              break;
-
-            case "turn-right":
-              var turnRightShape = new fabric.Polygon(
-                [
-                  { x: 0, y: 0 },
-                  { x: width / 2, y: 0 },
-                  { x: width, y: height / 2 },
-                  { x: width / 2, y: height },
-                  { x: 0, y: height },
-                ],
-                {
-                  left: left,
-                  top: top,
-                  fill: objectfill,
-                  selectable: false,
-                  name: "safeObject",
-                  shadow: defaultShadow,
-                  id: objectId,
-                }
-              );
-              canvas.remove(object);
-              canvas.add(turnRightShape);
-              turnRightShape.sendToBack();
-              break;
-
-            case "arrow-right":
-              var arrowRightShape = new fabric.Polyline(
-                [
-                  { x: 0, y: (height / 5) * 4 },
-                  { x: width / 2, y: (height / 5) * 4 },
-                  { x: width / 2, y: height },
-                  { x: width, y: height / 2 },
-                  { x: width / 2, y: 0 },
-                  { x: width / 2, y: height / 5 },
-                  { x: 0, y: height / 5 },
-                ],
-                {
-                  left: left,
-                  top: top,
-                  fill: objectfill,
-                  selectable: false,
-                  name: "safeObject",
-                  shadow: defaultShadow,
-                  id: objectId,
-                }
-              );
-              canvas.remove(object);
-              canvas.add(arrowRightShape);
-              arrowRightShape.sendToBack();
-              break;
-
-            case "arrow-left":
-              var arrowLeftShape = new fabric.Polygon(
-                [
-                  { x: 0, y: height / 2 },
-                  { x: width / 2, y: 0 },
-                  { x: width / 2, y: height / 5 },
-                  { x: width, y: height / 5 },
-                  { x: width, y: (height / 5) * 4 },
-                  { x: width / 2, y: (height / 5) * 4 },
-                  { x: width / 2, y: height },
-                ],
-                {
-                  left: left,
-                  top: top,
-                  fill: objectfill,
-                  selectable: false,
-                  name: "safeObject",
-                  shadow: defaultShadow,
-                  id: objectId,
-                }
-              );
-              canvas.remove(object);
-              canvas.add(arrowLeftShape);
-              arrowLeftShape.sendToBack();
-              break;
-
-            case "stop":
-              var stopShape = new fabric.Polygon(
-                [
-                  { x: 0, y: (height / 3) * 2 },
-                  { x: width / 3, y: height },
-                  { x: (width / 3) * 2, y: height },
-                  { x: width, y: (height / 3) * 2 },
-                  { x: width, y: height / 3 },
-                  { x: (width / 3) * 2, y: 0 },
-                  { x: width / 3, y: 0 },
-                  { x: 0, y: height / 3 },
-                ],
-                {
-                  left: left,
-                  top: top,
-                  fill: objectfill,
-                  selectable: false,
-                  name: "safeObject",
-                  shadow: defaultShadow,
-                  id: objectId,
-                }
-              );
-              canvas.remove(object);
-              canvas.add(stopShape);
-              stopShape.sendToBack();
-              break;
-
-            case "rounded-top":
-              var roundedTopShape = new fabric.Rect({
-                height: height,
-                width: width,
-                left: left,
-                top: top,
-                rx: width,
-                ry: 10,
-                fill: objectfill,
-                selectable: false,
-                name: "safeObject",
-                shadow: defaultShadow,
-                id: objectId,
-              });
-              canvas.remove(object);
-              canvas.add(roundedTopShape);
-              roundedTopShape.sendToBack();
-              break;
-
-            case "rounded-sides":
-              var roundedSidesShape = new fabric.Rect({
-                height: height,
-                width: width,
-                left: left,
-                top: top,
-                rx: 10,
-                ry: height,
-                fill: objectfill,
-                selectable: false,
-                name: "safeObject",
-                shadow: defaultShadow,
-                id: objectId,
-              });
-              canvas.remove(object);
-              canvas.add(roundedSidesShape);
-              roundedSidesShape.sendToBack();
-              break;
-          }
-        }
+    let safeObject = handleGetObjectByName("safeObject")
+    var top = nTop;
+    var left = nLeft;
+    var width = nwidth;
+    var height = nheight;
+    var objectfill;
+    
+    if(safeObject != null){
+      if (typeof safeObject.fill !== "string") {
+        objectfill = "transparent";
+      } else {
+        objectfill = safeObject.fill;
       }
-    });
+      var objectId = safeObject.id;
+  
+      safeObject.setCoords();
+      let newObject
+      switch (shape) {
+        case "square":
+          newObject = new fabric.Rect({
+            height: height,
+            width: width,
+            left: left,
+            top: top,
+            fill: objectfill,
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          });
+          break;
+
+        case "rounded-square":
+          newObject = new fabric.Rect({
+            height: height,
+            width: width,
+            left: left,
+            top: top,
+            rx: 35,
+            ry: 35,
+            fill: objectfill,
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          });
+          break;
+
+        case "oval":
+          newObject = new fabric.Ellipse({
+            ry: height / 2,
+            rx: width / 2,
+            fill: objectfill,
+            left: left,
+            top: top,
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          });
+          break;
+
+        case "triangle":
+          newObject = new fabric.Triangle({
+            height: height,
+            width: width,
+            left: left,
+            top: top,
+            fill: objectfill,
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          });
+          break;
+
+        case "rotated-square":
+          newObject = new fabric.Polygon(
+            [
+              { x: width / 2, y: 0 },
+              { x: width, y: height / 2 },
+              { x: width / 2, y: height },
+              { x: 0, y: height / 2 },
+            ],
+            {
+              left: left,
+              top: top,
+              fill: objectfill,
+              selectable: false,
+              name: "safeObject",
+              shadow: defaultShadow,
+              id: objectId,
+            }
+          );
+          break;
+
+        case "turn-left":
+          newObject = new fabric.Polygon(
+            [
+              { x: 0, y: height / 2 },
+              { x: width / 2, y: 0 },
+              { x: width, y: 0 },
+              { x: width, y: height },
+              { x: width / 2, y: height },
+            ],
+            {
+              left: left,
+              top: top,
+              fill: objectfill,
+              selectable: false,
+              name: "safeObject",
+              shadow: defaultShadow,
+              id: objectId,
+            }
+          );
+          break;
+
+        case "turn-right":
+          newObject = new fabric.Polygon(
+            [
+              { x: 0, y: 0 },
+              { x: width / 2, y: 0 },
+              { x: width, y: height / 2 },
+              { x: width / 2, y: height },
+              { x: 0, y: height },
+            ],
+            {
+              left: left,
+              top: top,
+              fill: objectfill,
+              selectable: false,
+              name: "safeObject",
+              shadow: defaultShadow,
+              id: objectId,
+            }
+          );
+          break;
+
+        case "arrow-right":
+          newObject = new fabric.Polyline(
+            [
+              { x: 0, y: (height / 5) * 4 },
+              { x: width / 2, y: (height / 5) * 4 },
+              { x: width / 2, y: height },
+              { x: width, y: height / 2 },
+              { x: width / 2, y: 0 },
+              { x: width / 2, y: height / 5 },
+              { x: 0, y: height / 5 },
+            ],
+            {
+              left: left,
+              top: top,
+              fill: objectfill,
+              selectable: false,
+              name: "safeObject",
+              shadow: defaultShadow,
+              id: objectId,
+            }
+          );
+          break;
+
+        case "arrow-left":
+          newObject = new fabric.Polygon(
+            [
+              { x: 0, y: height / 2 },
+              { x: width / 2, y: 0 },
+              { x: width / 2, y: height / 5 },
+              { x: width, y: height / 5 },
+              { x: width, y: (height / 5) * 4 },
+              { x: width / 2, y: (height / 5) * 4 },
+              { x: width / 2, y: height },
+            ],
+            {
+              left: left,
+              top: top,
+              fill: objectfill,
+              selectable: false,
+              name: "safeObject",
+              shadow: defaultShadow,
+              id: objectId,
+            }
+          );
+          break;
+
+        case "stop":
+          newObject = new fabric.Polygon(
+            [
+              { x: 0, y: (height / 3) * 2 },
+              { x: width / 3, y: height },
+              { x: (width / 3) * 2, y: height },
+              { x: width, y: (height / 3) * 2 },
+              { x: width, y: height / 3 },
+              { x: (width / 3) * 2, y: 0 },
+              { x: width / 3, y: 0 },
+              { x: 0, y: height / 3 },
+            ],
+            {
+              left: left,
+              top: top,
+              fill: objectfill,
+              selectable: false,
+              name: "safeObject",
+              shadow: defaultShadow,
+              id: objectId,
+            }
+          );
+          break;
+
+        case "rounded-top":
+          newObject = new fabric.Rect({
+            height: height,
+            width: width,
+            left: left,
+            top: top,
+            rx: width,
+            ry: 10,
+            fill: objectfill,
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          });
+          break;
+
+        case "rounded-sides":
+          newObject = new fabric.Rect({
+            height: height,
+            width: width,
+            left: left,
+            top: top,
+            rx: 10,
+            ry: height,
+            fill: objectfill,
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          });
+          break;
+        
+        case "cur-to-shape":
+          let safeObjet = {
+            height: height,
+            width: width,
+            left: left,
+            top: top,
+          }
+          let preObject = await createPreciseContourPath(safeObjet, 6)
+          // newObject = createPreciseContourPath(safeObjet, 6)
+          preObject[0].set({
+            fill: "red",
+            selectable: false,
+            name: "safeObject",
+            shadow: defaultShadow,
+            id: objectId,
+          })
+
+          newObject = preObject[0]
+
+          break;
+      }
+      console.log(newObject, shape)
+
+      canvas.remove(safeObject);
+      canvas.add(newObject);
+      newObject.sendToBack();
+    }
+
     canvas.renderAll();
   }
 
-  setShape(canvas);
-  setShape(backCanvas);
+  await setShape(canvas);
+  await setShape(backCanvas);
   if (signBackground1 === "pattern") {
     setPattern(canvas, patternUrl1);
   }
@@ -6495,6 +6875,7 @@ async function handleAddTextToSign(custom, clone, layerClone) {
       });
       newText.on("selected", () => {
         handleGetAddedTextValues(newText);
+        console.log("selected", newText.path);
       });
       newText.on("mousedown", function () {
         handleGetAddedTextValues(newText);
