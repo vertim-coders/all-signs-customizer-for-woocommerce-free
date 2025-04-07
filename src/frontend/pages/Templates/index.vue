@@ -9,7 +9,8 @@
         <div :class="`asowp-grid md:asowp-grid-cols-2 lg:asowp-grid-cols-${templates_grid_cols} asowp-gap-8 asowp-templates-container`">
             <div v-for="(template, index) in templates" class="asowp-template-container asowp-border-[1px] asowp-border-solid asowp-border-[#c3cfd6] asowp-rounded asowp-bg-transparent">
                 <div class="asowp-template-image-container asowp-flex asowp-justify-center asowp-items-center pb-2 asowp-h-[200px]">
-                    <div class="asowp-w-full asowp-h-full asowp-flex asowp-items-center asowp-justify-center asowp-overflow-hidden asowp-object-cover">
+                    <div class="asowp-group asowp-relative asowp-w-full asowp-h-full asowp-flex asowp-items-center asowp-justify-center asowp-overflow-hidden asowp-object-cover">
+                        <img v-if="template.realImg && template.realImg != ''" class="group-hover:asowp-opacity-100 asowp-opacity-0 asowp-w-full asowp-absolute asowp-top-0 asowp-left-0 asowp-z-10 asowp-transition-all asowp-ease-in" :src="template.realImg" alt="">
                         <img class="asowp-w-full" v-if="template.prevImg && template.prevImg!=''" :src="template.prevImg" alt="">
                         <img class="asowp-w-full" v-if="!template.prevImg" src="../../../../assets/images/img_rectangle_noir.png" alt="">
                     </div>
