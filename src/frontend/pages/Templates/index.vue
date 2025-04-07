@@ -69,8 +69,7 @@ const addToCart = async (template, index = 0)=>{
     // template.data.cartData.recaps.custom_price = ;
     const cart_data = {
         recaps:{...template.data.cartData,
-            custom_price: parseFloat(
-                (template.recaps?.customPrice||0) + template.basePrice
+            custom_price: parseFloat( (template.recaps?.customPrice||0) + template.basePrice
                 ).toFixed(2)
         },
         variation_id:productId,
