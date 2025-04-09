@@ -112,7 +112,7 @@
                         <input type="number" v-model="template.basePrice" @blur="isNaN(template.basePrice)? template.basePrice =0 : ''" class="asowp-rounded asowp-w-full asowp-h-[32px]">                        
                     </div>
                 </div>
-                <div class="asowp-flex asowp-justify-between">
+                <div class="asowp-flex asowp-justify-between ">
                     <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
                         <label for="" class="asowp-font-normal">Upload Template Preview Image</label>
                         <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
@@ -129,6 +129,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
                         <label for="" class="asowp-font-normal">Enable add to cart on this design</label>
                         <div class="asowp-flex asowp-justify-start asowp-items-center asowp-space-x-4">
@@ -138,6 +139,24 @@
                                 <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[125%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-2px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
                             </label>
                             <p class="asowp-text-md asowp-font-medium asowp-text-black">Yes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="asowp-flex asowp-justify-between ">
+                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
+                        <label for="" class="asowp-font-normal">Upload Template Usage Image</label>
+                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
+                            <div class="asowp-flex asowp-space-x-2">
+                                <button @click="selectTemplateRealImg" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload PopupImg</button>
+                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
+                                    <img v-if="template.realImg" :src="template.realImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
+                                    <button v-if="!template.realImg" @click="()=>{template.realImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -230,6 +249,7 @@ const template = ref({
     configId:0,
     basePrice:0,
     prevImg:'',
+    realImg:'',
     enableAddToCart:false,
     data:{
         templateData:{},
@@ -311,6 +331,34 @@ const selectTemplatePrevImg = async(e) => {
         .open();
 }
 
+const selectTemplateRealImg = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select Template Usage Image",
+            button: {
+                text: "Select Image"
+            },
+            multiple: false
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                            template.value.realImg = (attachment.url);
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+
 const saveCategory = async ()=> {
     isLoading.value = true;
     const save = await api.createCategory(category.value);
@@ -346,6 +394,7 @@ const saveTemplate = async ()=>{
                 configId:0,
                 basePrice:0,
                 prevImg:'',
+                realImg:'',
                 enableAddToCart:false,
                 data:{
                     templateData:{},
@@ -362,6 +411,7 @@ const saveTemplate = async ()=>{
                 configId:0,
                 basePrice:0,
                 prevImg:'',
+                realImg:'',
                 enableAddToCart:false,
                 data:{
                     templateData:{},
@@ -409,6 +459,7 @@ const updateTemplate = async ()=>{
                 configId:0,
                 basePrice:0,
                 prevImg:'',
+                realImg:'',
                 enableAddToCart:false,
                 data:{
                     templateData:{},
@@ -427,6 +478,7 @@ const updateTemplate = async ()=>{
                 configId:0,
                 basePrice:0,
                 prevImg:'',
+                realImg:'',
                 enableAddToCart:false,
                 data:{
                     templateData:{},
@@ -462,6 +514,7 @@ const deleteTemplate = async ()=>{
             configId:0,
             basePrice:0,
             prevImg:'',
+            realImg:'',
             enableAddToCart:false,
             data:{
                 templateData:{},
@@ -479,6 +532,7 @@ const deleteTemplate = async ()=>{
             categoryId:'',
             configId:0,
             basePrice:0,
+            realImg:'',
             prevImg:'',
             enableAddToCart:false,
             data:{
@@ -501,6 +555,7 @@ const back = () =>{
         configId:0,
         basePrice:0,
         prevImg:'',
+        realImg:'',
         enableAddToCart:false,
         data:{
             templateData:{},
@@ -523,6 +578,7 @@ const closeModal = ()=>{
         configId:0,
         basePrice:0,
         prevImg:'',
+        realImg:'',
         enableAddToCart:false,
         data:{
             templateData:{},

@@ -2,7 +2,6 @@
     <div class="">
         <div class="asowp-space-y-1 asowp-translate-y-7" v-if="!isNewSize">
             <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
-                
                 <button v-if="!isFetching" :disabled="isLoading" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 ${isLoading?'asowp-cursor-not-allowed':'asowp-cursor-pointer'}`" @click="newSize">
                     <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
@@ -174,13 +173,31 @@
                         </div>
                     </div>
                     <div class="asowp-space-y-2">
-                        <div class="asowp-space-x-4 asowp-flex asowp-relative">
-                            <label>Pricings</label>
-                            <div @click="showPricingModal = true" class="asowp-cursor-pointer asowp-w-7 asowp-h-7 asowp-rounded-full asowp-bg-blue-500 asowp-text-white asowp-flex asowp-items-center asowp-justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
-                                </svg>
+                        <div class="asowp-space-x-8 asowp-flex asowp-relative asowp-justify-between asowp-pe-8  asowp-items-center">
+                            <div class="asowp-space-x-8 asowp-flex  asowp-items-center">
+                                <label>Pricings</label>
+                                <div @click="showPricingModal = true" class="asowp-cursor-pointer asowp-w-7 asowp-h-7 asowp-rounded-full asowp-bg-blue-500 asowp-text-white asowp-flex asowp-items-center asowp-justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                                    </svg>
+                                </div>  
                             </div>  
+                            <div class="asowp-flex asowp-items-center">
+                                Price per Surface
+                                <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
+                                    <label for="asowp-toggle" @click="()=>changePricingType('unit')" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                                        <div :class="sizes.customSize.pricings.type == 'unit' ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="asowp-flex asowp-items-center">
+                                Price per interval of surface
+                                <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
+                                    <label for="asowp-toggle" @click="()=>changePricingType('range')" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                                        <div :class="sizes.customSize.pricings.type == 'range' ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
+                                    </label>
+                                </div>
+                            </div>
                             <div v-if="showPricingModal" class="asowp-absolute -asowp-top-20 asowp-left-20  asowp-justify-center asowp-items-center asowp-w-full">
                                 <div class="asowp-relative asowp-p-4 asowp-w-full asowp-max-w-2xl asowp-max-h-full">
                                     <div class="asowp-relative asowp-bg-white asowp-rounded-lg asowp-shadow dark:bg-gray-700">
@@ -207,27 +224,27 @@
                                 </div>
                             </div>                         
                         </div>
-                        <div>
-                            <div class="asowp-relative asowp-space-y-2 asowp-py-2 asowp-flex asowp-flex-col asowp-text-[12px]" :key="key" v-for="pricing,key in sizes.customSize.pricings">
+                        <div v-if="sizes.customSize.pricings.type == 'range'">
+                            <div class="asowp-relative asowp-space-y-2 asowp-py-2 asowp-flex asowp-flex-col asowp-text-[12px]" :key="key" v-for="pricing,key in sizes.customSize.pricings.range">
                                 <div>
                                     <div class="asowp-py-2 asowp-grid asowp-grid-cols-4 asowp-gap-4 asowp-text-[12px]">   
                                         <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
                                             <label for="" class="asowp-bold asowp-font-normal">Surface</label>
                                             <div class="asowp-relative">
-                                                <input type="number" v-model="sizes.customSize.pricings[key].surface" class="asowp-rounded asowp-w-full asowp-h-[30px]" :class="`${!isValidPricing(key)?'asowp-field-required':''}`">
+                                                <input type="number" v-model="sizes.customSize.pricings.range[key].surface" class="asowp-rounded asowp-w-full asowp-h-[30px]" :class="`${!isValidPricing(key)?'asowp-field-required':''}`">
                                                 <span class="asowp-absolute asowp-top-[2px] asowp-right-[10%]">{{ measurementUnit }}<sup>2</sup></span>
                                             </div>
                                         </div>
                                         <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
                                             <label for="" class="asowp-bold asowp-font-normal">Base Price</label>
                                             <div class="asowp-relative">
-                                                <input type="number" v-model="sizes.customSize.pricings[key].basePrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(sizes.customSize.pricings[key].basePrice) ? sizes.customSize.pricings[key].basePrice=0 : ''">
+                                                <input type="number" v-model="sizes.customSize.pricings.range[key].basePrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(sizes.customSize.pricings.range[key].basePrice) ? sizes.customSize.pricings.range[key].basePrice=0 : ''">
                                             </div>
                                         </div>
                                         <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
                                             <label for="" class="asowp-bold asowp-font-normal">Char Price</label>
                                             <div class="asowp-relative">
-                                                <input type="number" v-model="sizes.customSize.pricings[key].charPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(sizes.customSize.pricings[key].charPrice) ? sizes.customSize.pricings[key].charPrice=0 : ''">
+                                                <input type="number" v-model="sizes.customSize.pricings.range[key].charPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(sizes.customSize.pricings.range[key].charPrice) ? sizes.customSize.pricings.range[key].charPrice=0 : ''">
                                             </div>
                                         </div>
                                         <div>
@@ -251,6 +268,34 @@
                                     </svg>
                                     <span class="asowp-font-semibold asowp-text-[16px]">More</span>
                                 </button>
+                            </div>
+                        </div>
+
+                        <div v-if="sizes.customSize.pricings.type == 'unit'">
+                            <div class="asowp-relative asowp-space-y-2 asowp-py-2 asowp-flex asowp-flex-col asowp-text-[12px]" >
+                                <div>
+                                    <div class="asowp-py-2 asowp-grid asowp-grid-cols-4 asowp-gap-4 asowp-text-[12px]">   
+                                        <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
+                                            <label for="" class="asowp-bold asowp-font-normal">Surface</label>
+                                            <div class="asowp-relative">
+                                                <input type="number" v-model="sizes.customSize.pricings.unit.surface" class="asowp-rounded asowp-w-full asowp-h-[30px]">
+                                                <span class="asowp-absolute asowp-top-[2px] asowp-right-[10%]">{{ measurementUnit }}<sup>2</sup></span>
+                                            </div>
+                                        </div>
+                                        <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
+                                            <label for="" class="asowp-bold asowp-font-normal">Base Price</label>
+                                            <div class="asowp-relative">
+                                                <input type="number" v-model="sizes.customSize.pricings.unit.basePrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(sizes.customSize.pricings.unit.basePrice) ? sizes.customSize.pricings.unit.basePrice=0 : ''">
+                                            </div>
+                                        </div>
+                                        <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
+                                            <label for="" class="asowp-bold asowp-font-normal">Char Price</label>
+                                            <div class="asowp-relative">
+                                                <input type="number" v-model="sizes.customSize.pricings.unit.charPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(sizes.customSize.pricings.unit.charPrice) ? sizes.customSize.pricings.unit.charPrice=0 : ''">
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -411,9 +456,15 @@ const sizes = ref({
             min:0,
             max:0
         },
-        pricings:[
-
-        ]
+        pricings: {
+            type:"unit",
+            unit:{
+              basePrice:0,
+              surface:0,
+              charPrice:0
+            },
+            range:[]
+        }
     },
     thickness: {
         active: false,
@@ -452,8 +503,16 @@ const fetchMaterialSizes = async () => {
         if(result.message){
             noSizesFound.value = result.message;
         }
-        if( !result.materialSizes.customSize.pricings){
-            result.materialSizes.customSize.pricings = [];
+        if( !result.materialSizes.customSize.pricings?.type){
+            result.materialSizes.customSize.pricings =  {
+                type:"unit",
+                unit:{
+                basePrice:0,
+                surface:0,
+                charPrice:0
+                },
+                range:[]
+            };
         }
         sizes.value = result.materialSizes;
         measurementUnit.value = result.measurementUnit;
@@ -591,6 +650,10 @@ const closeModal = () => {
 const changeCustomSizeActive = () => {
     sizes.value.customSize.active = !sizes.value.customSize.active;
 };
+
+const changePricingType = (type) =>{
+    sizes.value.customSize.pricings.type = type; 
+}
 const selectDefault = async(key) =>{
     sizes.value.allSizes[key].isDefault = true;
     for(let i=0; i<sizes.value.allSizes.length; i++){
@@ -608,22 +671,22 @@ const handleDeleteThickness = (key)=> {
 }
 
 const handleAddNewPricing = ()=>{
-    sizes.value.customSize.pricings.push({
+    sizes.value.customSize.pricings.range.push({
         basePrice:0,
         charPrice:0,
         surface:0
     });
 }
 const handleDeletePricing = (key)=>{
-    sizes.value.customSize.pricings.splice(key,1);
+    sizes.value.customSize.pricings.range.splice(key,1);
 }
 const isValidPricing = (key)=>{
     const minSurface = (sizes.value.customSize.width.min > sizes.value.customSize.height.min) ? sizes.value.customSize.width.min : sizes.value.customSize.height.min;
     const maxSurface = (sizes.value.customSize.width.max > sizes.value.customSize.height.max) ? sizes.value.customSize.width.max : sizes.value.customSize.height.max;
     
-    if(minSurface<=sizes.value.customSize.pricings[key].surface && maxSurface >= sizes.value.customSize.pricings[key].surface){
+    if(minSurface<=sizes.value.customSize.pricings.range[key].surface && maxSurface >= sizes.value.customSize.pricings.range[key].surface){
         if(key!=0){
-            if(sizes.value.customSize.pricings[key].surface > sizes.value.customSize.pricings[key-1].surface && sizes.value.customSize.pricings[key].surface<=maxSurface){
+            if(sizes.value.customSize.pricings.range[key].surface > sizes.value.customSize.pricings.range[key-1].surface && sizes.value.customSize.pricings.range[key].surface<=maxSurface){
                 canAddNewPricing.value=true;
                 return true;
             }else{

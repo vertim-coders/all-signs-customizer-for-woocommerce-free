@@ -99,15 +99,32 @@
                     {{isEdit ? 'Edit clipart' :'Add cliparts'}}
                 </div>
             </div>
-            <div class="asowp-z-[999] asowp-shadow-sm asowp-flex asowp-sticky asowp-top-[120px] asowp-bg-[#F8F9FB] asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4" v-if="!isEdit">
-                <label>Upload Images</label>
-                <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
-                    <label for="toggleUploadImage" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                        <input id="toggleUploadImage" type="checkbox" name="toggleUploadImage" class="asowp-sr-only asowp-peer" v-model="useApi">
-                        <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                    </label>
+            <div class="asowp-z-[999] asowp-shadow-sm asowp-flex asowp-sticky asowp-justify-between asowp-top-[120px] asowp-bg-[#F8F9FB] asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4" v-if="!isEdit">
+                <div class="asowp-flex  asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4">
+                    <label>Upload Images</label>
+                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
+                        <label for="toggleUploadImage" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                            <input id="toggleUploadImage" type="checkbox" name="toggleUploadImage" class="asowp-sr-only asowp-peer" v-model="useApi">
+                            <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                        </label>
+                    </div>
+                    <label>Use Cliparts API</label>
                 </div>
-                <label>Use Cliparts API</label>
+                <button v-if="!useApi && !isEdit" :disabled="isLoading" @click="selectClipartImages" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span class="asowp-font-semibold asowp-text-[16px]">Add many Images</span>
+                </button>
+                <div v-if="useApi && !isEdit" class="asowp-flex  asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4">
+                    <label>Select All</label>
+                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
+                        <label for="toggleUploadImages" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                            <input id="toggleUploadImages" type="checkbox" name="toggleUploadImages" class="asowp-sr-only asowp-peer" @change="toggleSelectAll">
+                            <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-y-8" v-if="!useApi && isEdit">
                 <div class="asowp-flex asowp-justify-between">
@@ -236,7 +253,7 @@
                 </div>
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-x-4 asowp-sticky asowp-bottom-[20px] asowp-shadow-sm" v-if="makeChoice">
-                <div class="asowp-grid asowp-grid-cols-3 asowp-py-4 asowp-px-4">
+                <div class="asowp-grid asowp-grid-cols-3 asowp-py-4 asowp-px-4 asowp-mt-28">
                     <div class="asowp-flex asowp-justify-between asowp-items-center asowp-relative asowp-space-x-2" :key="key" v-for="(clipart,key) in cliparts">
                         <div class="asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
                             <label for="" class="asowp-font-normal">Image</label>
@@ -550,6 +567,51 @@ const selectClipartImage = async(e,key=-1) => {
         )
         .open();
 }
+
+const selectClipartImages = async(e) => { 
+    e.preventDefault();
+    var uploader = wp.media(
+        {
+            title: "Select many images",
+            button: {
+                text: "Select many images"
+            },
+            multiple: true
+        }
+    )
+        .on(
+            'select',
+            function () {
+                var selection = uploader.state().get('selection');
+                selection.map(
+                    function (attachment) {
+                        attachment = attachment.toJSON();
+                        if (attachment.type == "image") {
+                                cliparts.value = cliparts.value.filter((curr => curr.url))
+                                cliparts.value.push({
+                                    title:"",
+                                    url: attachment.url,
+                                    additionalPrice:0
+                                });
+                            
+                        }
+                    }
+                );
+            }
+        )
+        .open();
+}
+
+function toggleSelectAll(event) {
+    if(event.target.checked) {
+        clipartsSelected.value =apiCliparts.value;
+    }else{
+        clipartsSelected.value = [];
+    }
+
+    
+}
+
 const addClipart = () => {
     isNew.value = true;
 }
