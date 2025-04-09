@@ -7,7 +7,7 @@ Plugin Name: All Signs Options Pro
 Plugin URI: https://signsdesigner.us/
 Description: The leading app for selling all types of custom signs with WordPress/Woocommerce.  ASO is designed to streamline and improve the process of designing, quoting and ordering custom signs for sign makers and their customers via a beautiful, user-friendly configurator with flexible options for setting up your online store.
 
-Version: 1.0
+Version: 1.3.0
 Author: Vertim Coders
 Author URI: https://vertimcoders.com
 License: GPL2
