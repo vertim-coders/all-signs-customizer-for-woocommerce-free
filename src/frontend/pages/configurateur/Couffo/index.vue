@@ -4580,21 +4580,20 @@
     }
 
     function selectCustomSize(customSize){
-        // console.log(customSize, "custom size")
         function checkInterval(pricings, value){
             if(pricings.type){
                 if(pricings.type == "range"){
-                    let settings = pricings.value[0];
-                    for (let i = 0; i < pricings.length; i++) {
-                        if (value <= (pricings[i].surface * pricings[i].surface)) {
-                            settings = pricings[i];
+                    let settings = pricings.range[0];
+                    for (let i = 0; i < pricings.range.length; i++) {
+                        if (value <= (pricings.range[i].surface * pricings.range[i].surface)) {
+                            settings = pricings.range[i];
                             break;
                         }
-                        settings = pricings[i];
+                        settings = pricings.range[i];
                     }
                     return settings;   
                 }else if(pricings.type == "unit"){
-                    let settings = pricings.value;
+                    let settings = pricings.unit;
                     let newBasePrice = (value * settings.basePrice) / settings.surface
                     let newSetting = {
                         basePrice: newBasePrice,
@@ -4623,7 +4622,9 @@
                         startPriceAtChar: 0
                     }
                 }
+
             }
+
         }
 
         if((customSizeValues.value.width >= customSize.width.min && customSizeValues.value.width <= customSize.width.max) && (customSizeValues.value.height >= customSize.height.min && customSizeValues.value.height <= customSize.height.max)){
@@ -4652,7 +4653,7 @@
             changeSize(customSizeValues.value, customSizeTextValues.value)
         }
 
-        simulateCanvasClick()
+        // simulateCanvasClick()
     }
 
     var currentThickValue = ref(0)
