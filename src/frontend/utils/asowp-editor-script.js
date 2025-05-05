@@ -1,6 +1,7 @@
 var FontFaceObserver = require("fontfaceobserver");
 import opentype from 'opentype.js'
 import { load } from 'opentype.js'
+import { generateGlobalContour } from "./canvasUtils/contour"
 
 var fixingUrl = "";
 var borderUrl = "";
@@ -47,6 +48,13 @@ function handleCheckActiveSignFace(face) {
 var isTemplate = false;
 function handleCheckTemplate(statut) {
   isTemplate = statut;
+}
+
+let widthVisibility = false
+let heightVisibility = false
+function handleGetMeasurementVibility(width, height){
+  widthVisibility = width
+  heightVisibility = height
 }
 
 // function handleCloneCanvas(canvas1, canvas2){
@@ -753,45 +761,109 @@ function handleReadyToSaveState(statut, start) {
   }
 }
 
+// function centerSign(canva) {
+//   var sign = handleGetObjectByName("safeObject", canva);
+//   var canvasCenter = getCanvasCenter();
+//   const allObjects = canva.getObjects();
+
+//   if (allObjects.length > 0) {
+//     const group = new fabric.Group(allObjects);
+//     canva.discardActiveObject();
+
+//     // Centrer le groupe
+//     group.set("left", canvasCenter.x - sign.width / 2);
+//     group.set("top", canvasCenter.y - sign.height / 2);
+
+//     group.setCoords();
+
+//     // currentSizeValues.value.left = canvasCenter.x - sign.width/2
+//     // currentSizeValues.value.top = canvasCenter.y - sign.height/2
+//     handleGetNewPosition(
+//       canvasCenter.x - sign.width / 2,
+//       canvasCenter.y - sign.height / 2
+//     );
+
+//     // Dégrouper les objets
+//     group._restoreObjectsState();
+//     canva.remove(group);
+//     canva.getObjects().forEach((obj) => {
+//       if (obj.name === "asowp-signText") {
+//         if (obj.isEditing) {
+//           obj.exitEditing();
+//         }
+//         obj.clipPath = handleClipAddedObject(canva);
+//       }
+//       if (obj.name === "asowp-SignImage") {
+//         obj.clipPath = handleClipAddedObject(canva);
+//       }
+//       obj.setCoords();
+//     });
+//   }
+//   canva.renderAll();
+// }
 function centerSign(canva) {
-  var sign = handleGetObjectByName("safeObject", canva);
-  var canvasCenter = getCanvasCenter();
-  const allObjects = canva.getObjects();
+  // 1. Désactiver temporairement le rendu
+  canva.renderOnAddRemove = false;
+  
+  let targetZoom = canva.getZoom()
+  let newWidth = canva.getWidth()
+  let newHeight = canva.getHeight()
+  
+  // 2. Trouver l'objet de référence
+  const safeObject = handleGetObjectByName("safeObject", canva);
+  if (!safeObject) return;
 
-  if (allObjects.length > 0) {
-    const group = new fabric.Group(allObjects);
-    canva.discardActiveObject();
+  canva.setWidth(newWidth);
+  canva.setHeight(newHeight);
 
-    // Centrer le groupe
-    group.set("left", canvasCenter.x - sign.width / 2);
-    group.set("top", canvasCenter.y - sign.height / 2);
+  // 3. Calculer le décalage nécessaire
+  const objectCenter = safeObject.getCenterPoint();
+  const canvasCenter = {
+    x: newWidth / 2,
+    y: newHeight / 2
+  };
+  const offset = {
+    x: canvasCenter.x - objectCenter.x,
+    y: canvasCenter.y - objectCenter.y
+  };
 
-    group.setCoords();
+  // 4. Réinitialiser le viewport (essential pour éviter l'accumulation d'erreurs)
+  canva.setViewportTransform([1, 0, 0, 1, 0, 0]);
+  
+  // 5. Appliquer le zoom au centre exact
+  canva.zoomToPoint( { x: canvasCenter.x, y: canvasCenter.y }, targetZoom );
 
-    // currentSizeValues.value.left = canvasCenter.x - sign.width/2
-    // currentSizeValues.value.top = canvasCenter.y - sign.height/2
-    handleGetNewPosition(
-      canvasCenter.x - sign.width / 2,
-      canvasCenter.y - sign.height / 2
-    );
-
-    // Dégrouper les objets
-    group._restoreObjectsState();
-    canva.remove(group);
-    canva.getObjects().forEach((obj) => {
-      if (obj.name === "asowp-signText") {
-        if (obj.isEditing) {
-          obj.exitEditing();
-        }
-        obj.clipPath = handleClipAddedObject(canva);
+  // 6. Déplacer TOUS les objets simultanément
+  canva.getObjects().forEach(obj => {
+    obj.set({
+      left: obj.left + offset.x,
+      top: obj.top + offset.y
+    }).setCoords();
+    if (obj.name === "asowp-signText") {
+      if (obj.isEditing) {
+        obj.exitEditing();
       }
-      if (obj.name === "asowp-SignImage") {
-        obj.clipPath = handleClipAddedObject(canva);
-      }
-      obj.setCoords();
-    });
-  }
+      obj.clipPath = handleClipAddedObject(canva);
+    }
+    if (obj.name === "asowp-SignImage") {
+      obj.clipPath = handleClipAddedObject(canva);
+    }
+  });
+
+  // 7. Réactiver le rendu et forcer le refresh
+  canva.renderOnAddRemove = true;
+  canva.calcOffset();
   canva.renderAll();
+
+  // Vérification visuelle (debug)
+  const finalPos = safeObject.getCenterPoint();
+  console.log("Centrage réussi:", 
+      Math.round(finalPos.x) === Math.round(canvasCenter.x) && 
+      Math.round(finalPos.y) === Math.round(canvasCenter.y),
+      `Objet: (${Math.round(finalPos.x)},${Math.round(finalPos.y)}) | Canvas: (${Math.round(canvasCenter.x)},${Math.round(canvasCenter.y)})`
+  );
+
+  handleGetNewPosition(safeObject.left, safeObject.top)
 }
 
 function convertToPx(dimension, unit) {
@@ -850,105 +922,257 @@ var signRatio = 0;
 var ratioScale = 0;
 var sizeRatio = "";
 
+
+// function handleMiseAEchelle(rW, rH) {
+//   const maxWidth = 1000;
+//   const maxHeight = 370;
+
+//   var finalWidth = 0;
+//   var finalHeight = 0;
+
+//   var signWPx = convertToPx(rW, currentUnit);
+//   var signHPx = convertToPx(rH, currentUnit);
+
+//   if ((signWPx || signHPx) > 10000) {
+//     fixScale = 0.25;
+//     canvas.fixingRatio = sizeRatio;
+//     backCanvas.fixingRatio = sizeRatio;
+//     canvas.fixingScale = fixScale;
+//     backCanvas.fixingScale = fixScale;
+//   } else {
+//     fixScale = 0.35;
+//     canvas.fixingRatio = sizeRatio;
+//     backCanvas.fixingRatio = sizeRatio;
+//     canvas.fixingScale = fixScale;
+//     backCanvas.fixingScale = fixScale;
+//   }
+//   if (signHPx >= signWPx / 2) {
+//     sizeRatio = "big";
+//     canvas.fixingRatio = sizeRatio;
+//     backCanvas.fixingRatio = sizeRatio;
+//     canvas.fixingScale = fixScale;
+//     backCanvas.fixingScale = fixScale;
+//   } else {
+//     sizeRatio = "small";
+//     canvas.fixingRatio = sizeRatio;
+//     backCanvas.fixingRatio = sizeRatio;
+//     canvas.fixingScale = fixScale;
+//     backCanvas.fixingScale = fixScale;
+//   }
+
+//   if (signWPx > signHPx) {
+//     finalWidth = maxWidth;
+//     var ratio = maxWidth / signWPx;
+//     signRatio = ratio;
+//     finalHeight = signHPx * ratio;
+//     ratioScale = 1;
+//   } else if (signHPx > signWPx) {
+//     finalHeight = maxHeight;
+//     var ratio = maxHeight / signHPx;
+//     signRatio = ratio;
+//     finalWidth = signWPx * ratio;
+//     ratioScale = 1;
+//   } else if ((signHPx = signWPx)) {
+//     finalWidth = maxHeight;
+//     finalHeight = maxHeight;
+//     ratioScale = 1;
+//   }
+
+//   var lastWidth = 0;
+//   var lastHeight = 0;
+
+//   if (finalWidth > maxWidth) {
+//     lastWidth = maxWidth;
+//     var newRatio = maxWidth / finalWidth;
+//     signRatio = newRatio;
+//     lastHeight = finalHeight * newRatio;
+//     ratioScale = 2;
+//   } else if (finalHeight > maxHeight) {
+//     lastHeight = maxHeight;
+//     var newRatio = maxHeight / finalHeight;
+//     signRatio = newRatio;
+//     lastWidth = finalWidth * newRatio;
+//     ratioScale = 2;
+//   }
+
+//   canvas.ratioScale = ratioScale;
+//   backCanvas.ratioScale = ratioScale;
+
+//   if (finalWidth > maxWidth || finalHeight > maxHeight) {
+//     return {
+//       preWidth: parseFloat(signWPx),
+//       preHeight: parseFloat(signHPx),
+//       firstWidth: finalWidth,
+//       firstHeight: finalHeight,
+//       width: lastWidth,
+//       height: lastHeight,
+//       fixScale,
+//       sizeRatio,
+//       ratioScale,
+//       signRatio,
+//     };
+//   } else {
+//     return {
+//       preWidth: parseFloat(signWPx),
+//       preHeight: parseFloat(signHPx),
+//       width: finalWidth,
+//       height: finalHeight,
+//       fixScale,
+//       sizeRatio,
+//       ratioScale,
+//       signRatio,
+//     };
+//   }
+// }
 function handleMiseAEchelle(rW, rH) {
   const maxWidth = 1000;
   const maxHeight = 370;
 
-  var finalWidth = 0;
-  var finalHeight = 0;
+  // Convertir les dimensions réelles en pixels
+  const signWPx = convertToPx(rW, currentUnit);
+  const signHPx = convertToPx(rH, currentUnit);
 
-  var signWPx = convertToPx(rW, currentUnit);
-  var signHPx = convertToPx(rH, currentUnit);
+  // Déterminer le scale de base
+  fixScale = (signWPx > 10000 || signHPx > 10000) ? 0.25 : 0.35;
+  sizeRatio = (signHPx >= signWPx / 2) ? "big" : "small";
 
-  if ((signWPx || signHPx) > 10000) {
-    fixScale = 0.25;
-    canvas.fixingRatio = sizeRatio;
-    backCanvas.fixingRatio = sizeRatio;
-    canvas.fixingScale = fixScale;
-    backCanvas.fixingScale = fixScale;
-  } else {
-    fixScale = 0.35;
-    canvas.fixingRatio = sizeRatio;
-    backCanvas.fixingRatio = sizeRatio;
-    canvas.fixingScale = fixScale;
-    backCanvas.fixingScale = fixScale;
-  }
-  if (signHPx >= signWPx / 2) {
-    sizeRatio = "big";
-    canvas.fixingRatio = sizeRatio;
-    backCanvas.fixingRatio = sizeRatio;
-    canvas.fixingScale = fixScale;
-    backCanvas.fixingScale = fixScale;
-  } else {
-    sizeRatio = "small";
-    canvas.fixingRatio = sizeRatio;
-    backCanvas.fixingRatio = sizeRatio;
-    canvas.fixingScale = fixScale;
-    backCanvas.fixingScale = fixScale;
-  }
-
+  // Calculer le ratio principal
+  let ratio, scaledWidth, scaledHeight;
+  
   if (signWPx > signHPx) {
-    finalWidth = maxWidth;
-    var ratio = maxWidth / signWPx;
-    signRatio = ratio;
-    finalHeight = signHPx * ratio;
-    ratioScale = 1;
-  } else if (signHPx > signWPx) {
-    finalHeight = maxHeight;
-    var ratio = maxHeight / signHPx;
-    signRatio = ratio;
-    finalWidth = signWPx * ratio;
-    ratioScale = 1;
-  } else if ((signHPx = signWPx)) {
-    finalWidth = maxHeight;
-    finalHeight = maxHeight;
-    ratioScale = 1;
-  }
-
-  var lastWidth = 0;
-  var lastHeight = 0;
-
-  if (finalWidth > maxWidth) {
-    lastWidth = maxWidth;
-    var newRatio = maxWidth / finalWidth;
-    signRatio = newRatio;
-    lastHeight = finalHeight * newRatio;
-    ratioScale = 2;
-  } else if (finalHeight > maxHeight) {
-    lastHeight = maxHeight;
-    var newRatio = maxHeight / finalHeight;
-    signRatio = newRatio;
-    lastWidth = finalWidth * newRatio;
-    ratioScale = 2;
-  }
-
-  canvas.ratioScale = ratioScale;
-  backCanvas.ratioScale = ratioScale;
-
-  if (finalWidth > maxWidth || finalHeight > maxHeight) {
-    return {
-      preWidth: parseFloat(signWPx),
-      preHeight: parseFloat(signHPx),
-      firstWidth: finalWidth,
-      firstHeight: finalHeight,
-      width: lastWidth,
-      height: lastHeight,
-      fixScale,
-      sizeRatio,
-      ratioScale,
-      signRatio,
-    };
+    ratio = maxWidth / signWPx;
+    scaledWidth = maxWidth;
+    scaledHeight = signHPx * ratio;
   } else {
-    return {
-      preWidth: parseFloat(signWPx),
-      preHeight: parseFloat(signHPx),
-      width: finalWidth,
-      height: finalHeight,
-      fixScale,
-      sizeRatio,
-      ratioScale,
-      signRatio,
-    };
+    ratio = maxHeight / signHPx;
+    scaledHeight = maxHeight;
+    scaledWidth = signWPx * ratio;
+  }
+
+  // Vérifier si un ajustement supplémentaire est nécessaire
+  if (scaledWidth > maxWidth || scaledHeight > maxHeight) {
+    const secondRatio = scaledWidth > maxWidth 
+      ? maxWidth / scaledWidth 
+      : maxHeight / scaledHeight;
+    
+    scaledWidth *= secondRatio;
+    scaledHeight *= secondRatio;
+    ratio *= secondRatio;
+  }
+
+  // Stocker les ratios pour la conversion inverse
+  canvas.fixingScale = fixScale;
+  canvas.fixingRatio = sizeRatio;
+  canvas.signRatio = ratio;
+
+  return {
+    width: scaledWidth,
+    height: scaledHeight,
+    fixScale,
+    sizeRatio,
+    ratioScale: ratio
+  };
+}
+// function handleReverseMiseAEchelle(canvasW, canvasH) {
+//   // 1. Récupérer les paramètres initiaux
+//   const maxCanvasWidth = 1000;
+//   const maxCanvasHeight = 370;
+//   const appliedScale = canvas.signRatio || 1; // Le ratio final appliqué
+  
+//   // 2. Calculer les dimensions intermédiaires (avant dernier ajustement)
+//   let intermediateW, intermediateH;
+  
+//   if (ratioScale === 2) {
+//     // Si un deuxième ratio a été appliqué
+//     intermediateW = canvasW / signRatio;
+//     intermediateH = canvasH / signRatio;
+//   } else {
+//     intermediateW = canvasW;   intermediateH = canvasH;
+//   }
+
+//   // 3. Annuler le scale initial
+//   const realWidthPx = intermediateW
+//   const realHeightPx = intermediateH
+
+//   // 4. Convertir en unité réelle
+//   const realWidth = parseInt(convertFromPx(realWidthPx, currentUnit));
+//   const realHeight = parseInt(convertFromPx(realHeightPx, currentUnit));
+
+//   console.log("Debug:", {
+//     canvasDimensions: {canvasW, canvasH},
+//     intermediate: {intermediateW, intermediateH},
+//     realPx: {realWidthPx, realHeightPx},
+//     realUnits: {realWidth, realHeight}
+//   });
+
+//   return { realWidth, realHeight };
+// }
+function handleReverseMiseAEchelle(canvaSign) {
+  // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
+  const { fixingScale, signRatio } = canvas;
+
+  //controle
+  let canvasW, canvasH
+  if(canvaSign.type != 'path'){
+    canvasW = canvaSign.width
+    canvasH = canvaSign.height
+  }else{
+    let scaleX = canvaSign.scaleX * canvaSign.group.scaleX
+    let scaleY = canvaSign.scaleY * canvaSign.group.scaleX
+    canvasW = (canvaSign.width + strokeSize) * scaleX
+    canvasH = (canvaSign.height + strokeSize) * scaleY
+  }
+  
+  // 2. Annuler le ratio final (signRatio)
+  const intermediateW = canvasW / signRatio;
+  const intermediateH = canvasH / signRatio;
+  
+  // 3. Annuler le scale de base
+  const realWidthPx = intermediateW;
+  const realHeightPx = intermediateH;
+  
+  // 4. Convertir en unité réelle
+  const realWidth = parseInt(convertFromPx(realWidthPx, currentUnit));
+  const realHeight = parseInt(convertFromPx(realHeightPx, currentUnit));
+  
+  return {
+    realWidth,
+    realHeight,
+    realWidthPx,
+    realHeightPx,
+    usedScale: signRatio * fixingScale // Le scale total appliqué
+  };
+}
+
+
+function setOutlineMeasurmentValue(sign, width, height) {
+  var Objects = activeCanvas.getObjects();
+  Objects.forEach((object) => {
+    if (object.name == "heightLine" || object.name == "widthLine" || object.name == "height-value" || object.name == "width-value" || object.name == "thickness-value") {
+      object.set("visible", false);
+    }
+    // if (object.name == "thickness-value") {
+    //   object.left = newRectLeft + newSignWidth / 2 - object.width / 2;
+    //   object.top = newRectTop + (newSignHeight + 65);
+    //   object.text = String(
+    //     "Thickness" + ": " + currentThickness + " " + currentUnit
+    //   );
+    // }
+  });
+  activeCanvas.renderAll();
+
+  var outlineWidth = document.getElementById("outline-width");
+  var outlineHeight = document.getElementById("outline-height");
+  var inputWidth = document.getElementById("outlineSizeWidth");
+  var inputHeight = document.getElementById("outlineSizeHeight");
+
+  if(widthVisibility === true){
+    outlineWidth.textContent = width
+    inputWidth.value = parseInt(width)
+  }
+  if(heightVisibility === true){
+    outlineHeight.textContent = height
+    inputHeight.value = height
   }
 }
 
@@ -961,6 +1185,20 @@ function handleGetObjectByName(name, canva) {
   }
   for (var i = 0; i < objects.length; i++) {
     if (objects[i].name === name) {
+      return objects[i];
+    }
+  }
+  return null;
+}
+function handleGetObjectByNameId(id, name, canva) {
+  var objects;
+  if (canva) {
+    objects = canva.getObjects();
+  } else {
+    objects = activeCanvas.getObjects();
+  }
+  for (var i = 0; i < objects.length; i++) {
+    if (objects[i].id === id && objects[i].name === name) {
       return objects[i];
     }
   }
@@ -1069,15 +1307,6 @@ function handleChangeSize(width, height, name, maxChar) {
   currentSizeName = name;
   currentSize = { width: width, height: height };
 
-  // console.log('mise à echelle',handleMiseAEchelle(width, height))
-  if (handleMiseAEchelle(width, height).preWidth) {
-    preWidth = handleMiseAEchelle(width, height).preWidth;
-    preHeight = handleMiseAEchelle(width, height).preHeight;
-  }
-  if (handleMiseAEchelle(width, height).firstHeight) {
-    firstWidth = handleMiseAEchelle(width, height).firstWidth;
-    firstHeight = handleMiseAEchelle(width, height).firstHeight;
-  }
 
   sizeRatio = handleMiseAEchelle(width, height).sizeRatio;
   fixScale = handleMiseAEchelle(width, height).fixScale;
@@ -1094,77 +1323,9 @@ function handleChangeSize(width, height, name, maxChar) {
   var newSignHeight = handleMiseAEchelle(width, height).height;
 
   var canvasCenter = getCanvasCenter();
-  // var newRectLeft = signLeft
-  // var newRectTop = signTop;
-  // var newRectLeft = (canvas.width /2) -(newSignWidth/2)
-  // var newRectTop = (canvas.height/2) - (newSignHeight/2);
-  var newRectLeft = canvasCenter.x - newSignWidth / 2;
-  var newRectTop = canvasCenter.y - newSignHeight / 2;
 
-  currentTop = newRectTop;
-  currentLeft = newRectLeft;
-
-  var newClipWidth = newSignWidth + newSignWidth * 0.5;
-  var newClipHeight = newSignHeight + newSignHeight * 0.5;
-
-  var newClipLeft = canvas.width / 2 - newClipWidth / 2;
-  var newClipTop = canvas.height / 2 - newClipHeight / 2;
-
-  //resize des des barres et valeurs de mesure
-  function setMeasurmentValue(canvas) {
-    var Objects = canvas.getObjects();
-    Objects.forEach((object) => {
-      if (object.name == "heightLine") {
-        object.set({
-          x1: newRectLeft + newSignWidth + 30,
-          y1: newRectTop,
-          x2: newRectLeft + newSignWidth + 30,
-          y2: newRectTop + newSignHeight,
-        });
-      }
-      if (object.name == "widthLine") {
-        object.set({
-          x1: newRectLeft,
-          y1: newRectTop + newSignHeight + 28.5,
-          x2: newRectLeft + newSignWidth + 10,
-          y2: newRectTop + newSignHeight + 28.5,
-        });
-      }
-      if (object.name == "height-value") {
-        object.text = String(height + " " + currentUnit);
-        object.top = newRectTop + newSignHeight / 2;
-        object.left = newRectLeft + newSignWidth + 55;
-      }
-      if (object.name == "width-value") {
-        object.text = String(width + " " + currentUnit);
-        object.left = newRectLeft + newSignWidth / 2 - object.width / 2;
-        object.top = newRectTop + (newSignHeight + 35);
-      }
-      if (object.name == "thickness-value") {
-        object.left = newRectLeft + newSignWidth / 2 - object.width / 2;
-        object.top = newRectTop + (newSignHeight + 65);
-        object.text = String(
-          "Thickness" + ": " + currentThickness + " " + currentUnit
-        );
-      }
-      if (selectedShape == "square" || selectedShape == "rounded-square") {
-        // if (object.name == "old-world-border") {
-        //   console.log('Please')
-        //   var scaleX = newSignWidth / object.width;
-        //   var scaleY = newSignHeight / object.height;
-        //   object.left = newRectLeft;
-        //   object.top = newRectTop;
-        //   object.scaleX = scaleX;
-        //   object.scaleY = scaleY;
-        // }
-      }
-    });
-    canvas.renderAll();
-  }
 
   var stop = false;
-  setMeasurmentValue(canvas);
-  setMeasurmentValue(backCanvas);
   if (firstLoad) {
     if (maxChar != -1) {
       FtextObjects = handleGetTextObjects1("asowp-SignText");
@@ -1272,14 +1433,7 @@ function handleChangeSize(width, height, name, maxChar) {
     BtextObjects = handleGetTextObjects2("asowp-SignText");
   }
 
-  handleSelectShape(
-    selectedShape,
-    newSignWidth,
-    newSignHeight,
-    newRectTop,
-    newRectLeft,
-    maxTextCharForSize
-  );
+  handleSelectShape( selectedShape, newSignWidth, newSignHeight, maxTextCharForSize );
 
   handleCalcTextPrice();
 
@@ -1300,15 +1454,6 @@ function handleGetSignPosition() {
   var height = signData.height;
   currentSize = { width: width, height: height };
 
-  // console.log('mise à echelle',handleMiseAEchelle(width, height))
-  if (handleMiseAEchelle(width, height).preWidth) {
-    preWidth = handleMiseAEchelle(width, height).preWidth;
-    preHeight = handleMiseAEchelle(width, height).preHeight;
-  }
-  if (handleMiseAEchelle(width, height).firstHeight) {
-    firstWidth = handleMiseAEchelle(width, height).firstWidth;
-    firstHeight = handleMiseAEchelle(width, height).firstHeight;
-  }
 
   sizeRatio = handleMiseAEchelle(width, height).sizeRatio;
   fixScale = handleMiseAEchelle(width, height).fixScale;
@@ -1319,10 +1464,10 @@ function handleGetSignPosition() {
   currentHeight = handleMiseAEchelle(width, height).height;
 
   return {
-    width: sign.width,
-    height: sign.height,
-    top: sign.top,
-    left: sign.left,
+    width: (sign.type == "path" || sign.type == "group") ? sign.prevWidth : sign.width,
+    height: (sign.type == "path" || sign.type == "group") ? sign.prevHeight : sign.height,
+    top: (sign.type == "path" || sign.type == "group") ? sign.prevLeft : sign.top,
+    left: (sign.type == "path" || sign.type == "group") ? sign.prevTop : sign.left,
     maxChar: maxTextCharForSize,
     sizeName: currentSizeName,
 
@@ -1950,24 +2095,30 @@ function handleSelectBorder(border, color) {
       activeBorderColor = color;
       activeBorderColor2 = color;
     }
-    setBorder(canvas, activeBorder, activeBorderColor);
-    setBorder(backCanvas, activeBorder2, activeBorderColor2);
+    if(selectedShape != "cut-to-shape"){
+      setBorder(canvas, activeBorder, activeBorderColor);
+      setBorder(backCanvas, activeBorder2, activeBorderColor2);
+    }
   } else {
     if (activeSignFace === "front") {
       activeBorder = border;
       if (color) {
         activeBorderColor = color;
       }
-      setBorder(canvas, activeBorder, activeBorderColor);
-      setBorder(backCanvas, activeBorder2, activeBorderColor2);
+      if(selectedShape != "cut-to-shape"){
+        setBorder(canvas, activeBorder, activeBorderColor);
+        setBorder(backCanvas, activeBorder2, activeBorderColor2);
+      }
     }
     if (activeSignFace === "back") {
       activeBorder2 = border;
       if (color) {
         activeBorderColor2 = color;
       }
-      setBorder(canvas, activeBorder, activeBorderColor);
-      setBorder(backCanvas, activeBorder2, activeBorderColor2);
+      if(selectedShape != "cut-to-shape"){
+        setBorder(canvas, activeBorder, activeBorderColor);
+        setBorder(backCanvas, activeBorder2, activeBorderColor2);
+      }
     }
   }
   function setBorder(canva, currBorder, activeColor) {
@@ -2326,13 +2477,7 @@ var signBackground1 = "color";
 var signBackground2 = "color";
 var patternUrl1 = "";
 var patternUrl2 = "";
-function handleChangeSignColor(
-  name,
-  pattern,
-  textColor,
-  defTextColor,
-  restart
-) {
+function handleChangeSignColor( name, pattern, textColor, defTextColor, restart ) {
   console.log();
   currentSignColor = name;
   var stop = true;
@@ -2349,14 +2494,31 @@ function handleChangeSignColor(
               signBackground2 = "pattern";
               patternUrl2 = pattern.url;
             }
-            setPattern(canva, pattern.url);
+            if(selectedShape != "cut-to-shape"){
+              setPattern(canva, pattern.url);
+            }
           } else {
             if (canva.name == "front-face") {
               signBackground1 = "color";
             } else {
               signBackground2 = "color";
             }
-            object.set("fill", pattern.codeHex);
+            if(selectedShape != "cut-to-shape"){
+              object.set("fill", pattern.codeHex);
+            }else{
+              let pathObjects = object._objects
+              const target = ` L ${canva.getWidth()} ${canva.getHeight()} `;
+
+              pathObjects.forEach(path => {
+                const d = path.d;
+                if (d && !d.includes(target)) {
+                  path.set({
+                    fill: pattern.codeHex,
+                    stroke: pattern.codeHex,
+                  })
+                }
+              });
+            }
           }
         }
         if (textColor.active) {
@@ -2437,391 +2599,90 @@ function handleSetImageToSignBackground(image) {
 
 
 
-//fonctions concernant le choix de shapes
-/**
- * Crée un path englobant les objets dans une zone donnée
- * @param {Object} zone - {left, top, width, height}
- * @param {Number} [padding=10] - Marge autour des objets
- * @param {Number} [strokeWidth=5] - Épaisseur du contour
- * @returns {fabric.Path} Path englobant les objets
- */
-function createContourPath(zone, padding = 10, strokeWidth = 5) {
-  // 1. Filtrer les objets dans la zone
-  const objectsInZone = canvas.getObjects().filter(obj => {
-    const objBounds = obj.getBoundingRect();
-    return (
-      objBounds.left < zone.left + zone.width &&
-      objBounds.left + objBounds.width > zone.left &&
-      objBounds.top < zone.top + zone.height &&
-      objBounds.top + objBounds.height > zone.top
-    );
+
+function sortByOffset(arr) {
+  return arr.sort((a, b) => {
+    if (a.offsetX !== b.offsetX) {
+      return a.left - b.left;
+    }
   });
-
-  if (objectsInZone.length === 0) return null;
-
-  // 2. Calculer le contour combiné
-  let combinedPath = '';
-  
-  objectsInZone.forEach(obj => {
-    const objBounds = obj.getBoundingRect();
-    const expandedBounds = {
-      left: objBounds.left - padding,
-      top: objBounds.top - padding,
-      width: objBounds.width + padding * 2,
-      height: objBounds.height + padding * 2
-    };
-    
-    // Créer un rectangle path pour chaque objet
-    const path = `M ${expandedBounds.left} ${expandedBounds.top}
-                  L ${expandedBounds.left + expandedBounds.width} ${expandedBounds.top}
-                  L ${expandedBounds.left + expandedBounds.width} ${expandedBounds.top + expandedBounds.height}
-                  L ${expandedBounds.left} ${expandedBounds.top + expandedBounds.height}
-                  Z `;
-    
-    combinedPath += path;
-  });
-
-  // 3. Créer et styliser le path
-  const contour = new fabric.Path(combinedPath, {
-    fill: 'transparent',
-    stroke: '#ff0000',
-    strokeWidth: strokeWidth,
-    strokeLineJoin: 'round',
-    selectable: false,
-    evented: false,
-    objectCaching: false
-  });
-
-  // 4. Simplifier le path (fusion des zones superposées)
-  simplifyPath(contour);
-
-  return contour;
-}
-/**
- * Simplifie le path en fusionnant les zones superposées
- */
-function simplifyPath(path) {
-  // Implémentation basique - à améliorer avec un algorithme de fusion de paths
-  path.set({ dirty: true });
-  canvas.renderAll();
 }
 
-
-
-async function createPreciseContourPath(zone, padding = 10) {
+async function createPreciseContourPath(zone) {
   // 1. Filtrer les objets dans la zone avec précision
   const objectsInZone = canvas.getObjects().filter(obj => obj.name == "asowp-SignText" || obj.name == "asowp-SignImage");
 
   if (objectsInZone.length === 0) return null;
 
   // 2. Extraire les points de contour précis
-  const allPoints = await extractExactPaths(objectsInZone, padding);
-  console.log(allPoints, "allPoints")
-  // const allPoints = await extractExactPaths(objectsInZone, padding);
+  let allPoints = await extractExactPaths(objectsInZone);
+  let sortedPaths = sortByOffset(allPoints)
+  
 
-  // // 3. Calculer l'enveloppe convexe connectrice
-  // const hullPoints = convexHull(allPoints);
-  // if (hullPoints.length < 3) return null; // Pas assez de points pour former un path
+  let canvaSize = {
+    width: activeCanvas.getWidth(),
+    height: activeCanvas.getHeight()
+  }
+  let currentZoom = activeCanvas.getZoom()
 
-  // // 4. Créer le path SVG connecté
-  // const pathData = createSmoothPath(hullPoints);
+  let mergedPath = await generateGlobalContour(sortedPaths, canvaSize, currentZoom)
 
-  return allPoints
-  // return new fabric.Path(pathData, {
-  //   fill: 'rgba(0,150,255,0.2)',
-  //   stroke: '#0096ff',
-  //   strokeWidth: 2,
-  //   selectable: false,
-  //   objectCaching: false // Important pour les paths dynamiques
-  // });
+
+  return mergedPath
 }
 
-// Nouvelle fonction d'extraction des points de contour
-function extractContourPoints(objects, padding) {
-  const allPoints = [];
+function cloneObjectForOutline(object){
+  return new Promise(async (resolve, reject) => {
+    var target = object;
+    var canvas = target.canvas;
+    target.clone(function (cloned) {
+      cloned.clipPath = null
+      if (cloned.type == "i-text" || cloned.type == "neon-Text") {
+        if(textType == "3D"){
+          var objects = canvas.getObjects();
+          objects.forEach((obj)=>{
+            if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+              obj.clone((layerClone)=>{
+                layerClone.left += 5;
+                layerClone.top += 5;
+
+                resolve({
+                  textType: "3D",
+                  text: cloned,
+                  side: layerClone
+                })
+              })
   
-  for (const obj of objects) {
-    // Pour les objets Path/SVG
-    if (obj.path) {
-      obj.path.forEach(segment => {
-        if (segment[0] === 'L' || segment[0] === 'M') { // Lignes et mouvements
-          allPoints.push({
-            x: segment[1] + obj.left,
-            y: segment[2] + obj.top
-          });
+            }
+          })
+        }else{
+          resolve(cloned)
         }
-      });
-    }
-    // Pour les formes primitives
-    else {
-      const bounds = obj.getBoundingRect();
-      // Points cardinaux avec padding
-      allPoints.push(
-        { x: bounds.left - padding, y: bounds.top - padding },
-        { x: bounds.left + bounds.width + padding, y: bounds.top - padding },
-        { x: bounds.left - padding, y: bounds.top + bounds.height + padding },
-        { x: bounds.left + bounds.width + padding, y: bounds.top + bounds.height + padding }
-      );
-    }
-  }
-  
-  return allPoints;
+      }
+      if ( cloned.type == "image" || cloned.type == "path" || cloned.type == "group" ) {
+        cloned.originX = "center";
+        cloned.originY = "center";
+
+        resolve(cloned)
+      }
+    });
+  })
 }
 
-function checkWoff2(chaine) {
-  return chaine.endsWith('.woff2');
-}
-function hasExtendedLowercase(text, font, xHeight, fontSize) {
-  if (typeof text !== 'string') {
-      console.error('Text must be a string');
-      return false;
-  }
-  const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
-  const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
-  
-  for (let char of testExtendsChars) {
-      if (char.match(/[a-z]/)) {
-          let path = font.getPath(char, 0, 0, fontSize);
-          let bbox = path.getBoundingBox();
-          // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
-          // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
-          if (xHeight*0.9 > bbox.y2 - bbox.y1) {
-              return true;
-          }
-      }
-  }
-  return false;
-}
-async function extractExactPaths(objects, padding) {
+async function extractExactPaths(objects) {
   return Promise.all(objects.map(obj => {
     return new Promise(async (resolve, reject) => {
-      // Pour les objets Path/SVG
-      if (obj.path) {
-        const offsetPath = offsetPath(obj.path, padding);
-        resolve(offsetPath);
-      } 
-      // Pour les formes primitives (rect, cercle...)
-      else {
-        if(obj.name === "asowp-SignText"){
-          // const svg = obj.toSVG();
-          // fabric.loadSVGFromString(svg, results => {
-          //   const path = results[0];
-          //   path.set({
-          //     left: obj.left,
-          //     top: obj.top,
-          //     originX: obj.originX,
-          //     originY: obj.originY
-          //   });
-          //   console.log(path, "123")
-          //   resolve(path);
-          // });
-          if(!checkWoff2(obj.fontFamilyUrl)){
-            var buffer = await fetch(obj.fontFamilyUrl).then(res => res.arrayBuffer());
-            var font = opentype.parse(buffer);
-            // var lines = object.text.split('\n')
-            var lines = (typeof obj.text === 'string') ? obj.text.split('\n') : [];
-            var fontSize = 40
-            const x = 50;
-            let y = fontSize*obj.scaleX;
-            // let y = (object.height*object.scaleY)/object._textLines.length;
-
-            const group = new fabric.Group([], {
-              left: obj.left,
-              top: obj.top,
-              name: 'asowp-svg-path',
-            });
-            let safeObject = handleGetObjectByName("safeObject")
-
-            
-            lines.forEach(line => {
-                // console.log(line, lines)
-                var path = font.getPath(line, 0, y, fontSize * obj.scaleX);
-                var pathBBox = path.getBoundingBox();
-                var pathWidth = pathBBox.x2 - pathBBox.x1;
-                let xHeight = pathBBox.y2 - pathBBox.y1;
-                
-                // Calculez le décalage x en fonction de l'alignement
-                var xOffset;
-
-                switch(obj.textAlign) {
-                    case 'center':
-                        xOffset = (obj.width * obj.scaleX - pathWidth) / 2;
-                        break;
-                    case 'right':
-                        xOffset = obj.width * obj.scaleX - pathWidth;
-                        break;
-                    default: // 'left'
-                        xOffset = 0;
-                }
-                
-                // Appliquez le décalage à tous les points du chemin
-                path.commands.forEach(cmd => {
-                    if (cmd.x !== undefined) cmd.x += xOffset;
-                    if (cmd.x1 !== undefined) cmd.x1 += xOffset;
-                    if (cmd.x2 !== undefined) cmd.x2 += xOffset;
-                });
-                
-                var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*obj.scaleX)
-                // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
-                // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
-
-                var miniGroup = new fabric.Group([], {
-                });
-                const fabricPath = new fabric.Path(path.toPathData(20), {
-                    strokeWidth: 10,
-                    // top: object.top + y, 
-                    stroke: safeObject.fill,
-                    fill: safeObject.fill,
-                    originX: 'center',
-                });
-                if(obj.fontWeight == 'bold'){
-                    fabricPath.strokeWidth = 20
-                    fabricPath.stroke = obj.fill
-                }
-                if(obj.fontStyle == 'italic'){
-                    fabricPath.skewX = -3
-                }
-                if(obj.underline){
-                    // var objLeft = fabricPath.left
-                    var objLeft = xOffset;
-                    var objTop = fabricPath.top + fabricPath.height
-                    var top = (longLetter ? objTop-6 : objTop+4)
-                    // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
-
-                    var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-                        stroke: obj.fill,
-                        left: objLeft,
-                        top: top,
-                        scaleY: obj.scaleY,
-                        strokeWidth: 3,
-                    });
-
-                    miniGroup.addWithUpdate(underline);
-                }
-                if(obj.overline){
-                    var objLeft = xOffset;
-                    var objTop = fabricPath.top - 8
-
-                    var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-                        stroke: obj.fill,
-                        left: objLeft,
-                        top: objTop,
-                        scaleY: obj.scaleY,
-                        strokeWidth: 3,
-                    });
-
-                    miniGroup.addWithUpdate(overline);
-                }
-                if(obj.linethrough){
-                    var objLeft = xOffset;
-                    var objTop = fabricPath.top + fabricPath.height / 2
-                    var top = (longLetter ? objTop-6 : objTop+4)
-
-                    var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-                        stroke: obj.fill,
-                        left: objLeft,
-                        top: top,
-                        scaleY: obj.scaleY,
-                        strokeWidth: 2,
-                        name: 'asowp-svg-path',
-                    });
-
-                    miniGroup.addWithUpdate(linethrough);
-                }
-                
-                // if(lines.length > 0){
-                //   let objLeft = xOffset;
-
-                //   var wordJoint = new fabric.Line([fabricPath.left + fabricPath.width/2, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width/2, y], {
-                //     stroke: safeObject.fill,
-                //     left: objLeft,
-                //     top: top,
-                //     scaleY: obj.scaleY,
-                //     width: 800,
-                //     strokeWidth: 2,
-                //     name: 'asowp-svg-path',
-                //   })
-                //   miniGroup.addWithUpdate(wordJoint);
-                // }
-                miniGroup.addWithUpdate(fabricPath);
-                group.addWithUpdate(miniGroup);
-                
-                y += fontSize*obj.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-                // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-                // console.log(y, "Ajustez cette vale");
-            });
-
-            group.left = obj.left - (group.width / 2);
-            group.top = obj.top - (group.height / 2);
-
-            resolve(group);
-          }
-
-          
-        }
+      if(obj.name === "asowp-SignText"){
+        let clone = await cloneObjectForOutline(obj)
+        resolve(clone)
+      }
+      if(obj.name === "asowp-SignImage"){
+        let clone = await cloneObjectForOutline(obj)
+        resolve(clone)
       }
     });
   }));
 }
-
-// Création d'un path lissé avec courbes
-function createSmoothPath(points) {
-  if (points.length < 2) return '';
-  
-  let path = `M ${points[0].x} ${points[0].y}`;
-  
-  // Ajout de courbes Bézier entre les points
-  for (let i = 1; i < points.length; i++) {
-    const prev = points[i-1];
-    const curr = points[i];
-    const controlX = (prev.x + curr.x) / 2;
-    const controlY = (prev.y + curr.y) / 2;
-    
-    path += ` Q ${controlX} ${controlY}, ${curr.x} ${curr.y}`;
-  }
-  
-  // Fermer le path si nécessaire
-  if (points.length > 2) {
-    path += ' Z';
-  }
-  
-  return path;
-}
-
-// Algorithme convex hull (inchangé)
-function convexHull(points) {
-  points.sort((a, b) => a.x - b.x || a.y - b.y);
-  
-  const lower = [];
-  for (const p of points) {
-    while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) {
-      lower.pop();
-    }
-    lower.push(p);
-  }
-  
-  const upper = [];
-  for (let i = points.length - 1; i >= 0; i--) {
-    const p = points[i];
-    while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) {
-      upper.pop();
-    }
-    upper.push(p);
-  }
-
-  return lower.slice(0, -1).concat(upper.slice(0, -1));
-}
-
-function cross(o, a, b) {
-  return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
-}
-
-
-
-
-
-
-
 
 
 
@@ -2832,7 +2693,7 @@ function handleGetShape(shape, fixing) {
     activeFixingMethode = fixing;
   }
 }
-async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
+async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
   var canvasCenter = getCanvasCenter();
 
   selectedShape = shape;
@@ -2843,12 +2704,13 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
     // for(const [index, object] in Objects.entries()) {
 
     let safeObject = handleGetObjectByName("safeObject")
-    var top = nTop;
-    var left = nLeft;
-    var width = nwidth;
-    var height = nheight;
+    // var width = nwidth;
+    // var height = nheight;
+    var width = (safeObject.type == "path" || safeObject.type == "group") ? safeObject.prevWidth : nwidth;
+    var height = (safeObject.type == "path" || safeObject.type == "group") ? safeObject.prevHeight : nheight;
     var objectfill;
     
+    let newObject
     if(safeObject != null){
       if (typeof safeObject.fill !== "string") {
         objectfill = "transparent";
@@ -2858,14 +2720,11 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
       var objectId = safeObject.id;
   
       safeObject.setCoords();
-      let newObject
       switch (shape) {
         case "square":
           newObject = new fabric.Rect({
             height: height,
             width: width,
-            left: left,
-            top: top,
             fill: objectfill,
             selectable: false,
             name: "safeObject",
@@ -2878,8 +2737,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
           newObject = new fabric.Rect({
             height: height,
             width: width,
-            left: left,
-            top: top,
             rx: 35,
             ry: 35,
             fill: objectfill,
@@ -2895,8 +2752,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
             ry: height / 2,
             rx: width / 2,
             fill: objectfill,
-            left: left,
-            top: top,
             selectable: false,
             name: "safeObject",
             shadow: defaultShadow,
@@ -2908,8 +2763,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
           newObject = new fabric.Triangle({
             height: height,
             width: width,
-            left: left,
-            top: top,
             fill: objectfill,
             selectable: false,
             name: "safeObject",
@@ -2927,8 +2780,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
               { x: 0, y: height / 2 },
             ],
             {
-              left: left,
-              top: top,
               fill: objectfill,
               selectable: false,
               name: "safeObject",
@@ -2948,8 +2799,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
               { x: width / 2, y: height },
             ],
             {
-              left: left,
-              top: top,
               fill: objectfill,
               selectable: false,
               name: "safeObject",
@@ -2969,8 +2818,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
               { x: 0, y: height },
             ],
             {
-              left: left,
-              top: top,
               fill: objectfill,
               selectable: false,
               name: "safeObject",
@@ -2992,8 +2839,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
               { x: 0, y: height / 5 },
             ],
             {
-              left: left,
-              top: top,
               fill: objectfill,
               selectable: false,
               name: "safeObject",
@@ -3015,8 +2860,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
               { x: width / 2, y: height },
             ],
             {
-              left: left,
-              top: top,
               fill: objectfill,
               selectable: false,
               name: "safeObject",
@@ -3039,8 +2882,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
               { x: 0, y: height / 3 },
             ],
             {
-              left: left,
-              top: top,
               fill: objectfill,
               selectable: false,
               name: "safeObject",
@@ -3054,8 +2895,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
           newObject = new fabric.Rect({
             height: height,
             width: width,
-            left: left,
-            top: top,
             rx: width,
             ry: 10,
             fill: objectfill,
@@ -3070,8 +2909,6 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
           newObject = new fabric.Rect({
             height: height,
             width: width,
-            left: left,
-            top: top,
             rx: 10,
             ry: height,
             fill: objectfill,
@@ -3082,50 +2919,143 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
           });
           break;
         
-        case "cur-to-shape":
+        case "cut-to-shape":
           let safeObjet = {
             height: height,
             width: width,
-            left: left,
-            top: top,
           }
-          let preObject = await createPreciseContourPath(safeObjet, 6)
-          // newObject = createPreciseContourPath(safeObjet, 6)
-          preObject[0].set({
-            fill: "red",
-            selectable: false,
+          newObject = await createPreciseContourPath(safeObjet, 6)
+
+          let pathObjects = newObject._objects
+          const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
+
+          pathObjects.forEach(path => {
+            const d = path.d;
+            if (d && !d.includes(target)) {
+              path.set({
+                fill: objectfill,
+                stroke: objectfill,
+                strokeWidth: strokeSize,
+                strokeLineJoin: 'round',
+                strokeLineCap: 'round',
+                left: path.left - (strokeSize/2),
+                top: path.top - (strokeSize/2),
+                name: "outline"
+              })
+            }
+          });
+
+          newObject.set({
+            fill: objectfill,
+            stroke: objectfill,
+            selectable: true,
             name: "safeObject",
             shadow: defaultShadow,
             id: objectId,
+            width: canvas.getWidth(true),
+            height: canvas.getHeight(true),
+            strokeWidth: 10,
+            strokeLineJoin: 'round',
+            strokeLineCap: 'round',
+            selectable: false,
+            prevWidth: width,
+            prevHeight: height,
           })
-
-          newObject = preObject[0]
 
           break;
       }
-      console.log(newObject, shape)
-
+      
       canvas.remove(safeObject);
       canvas.add(newObject);
       newObject.sendToBack();
+      if(shape == "cut-to-shape"){
+        console.log(newObject._objects, shape, newObject.type)
+
+        const bounds = newObject.getBoundingRect(false);
+        const scaleX = (canvas.getWidth()) / (bounds.width);
+        const scaleY = (canvas.getHeight()) / (bounds.height);
+        newObject.set({
+          left: 0,
+          top: 0,
+          scaleX: scaleX,
+          scaleY: scaleY,
+          originX: "center",
+          originY: "center",
+        });
+        activeCanvas.centerObject(newObject)
+
+        const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
+        let sign = newObject._objects.filter(path => path.d && !path.d.includes(target))
+
+        let realValues = handleReverseMiseAEchelle(sign[0])
+        setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
+      }else{
+        activeCanvas.centerObject(newObject)
+        setMeasurmentValue(canvas)
+      }
+
+      
+      function setMeasurmentValue(canvas, width, height) {
+        var Objects = canvas.getObjects();
+        Objects.forEach((object) => {
+          if (object.name == "heightLine") {
+            object.visible = heightVisibility
+            object.set({
+              x1: newObject.left + newObject.width + 30,
+              y1: newObject.top,
+              x2: newObject.left + newObject.width + 30,
+              y2: newObject.top + newObject.height,
+            });
+          }
+          if (object.name == "widthLine") {
+            object.visible = widthVisibility
+            object.set({
+              x1: newObject.left,
+              y1: newObject.top + newObject.height + 28.5,
+              x2: newObject.left + newObject.width + 10,
+              y2: newObject.top + newObject.height + 28.5,
+            });
+          }
+          if (object.name == "height-value") {
+            object.visible = heightVisibility
+            object.text = String(currentSize.height + " " + currentUnit);
+            object.top = newObject.top + newObject.height / 2;
+            object.left = newObject.left + newObject.width + 55;
+          }
+          if (object.name == "width-value") {
+            object.visible = widthVisibility
+            object.text = String(currentSize.width + " " + currentUnit);
+            object.left = newObject.left + newObject.width / 2 - object.width / 2;
+            object.top = newObject.top + (newObject.height + 35);
+          }
+          // if (object.name == "thickness-value") {
+          //   object.left = newObject.left + newObject.width / 2 - object.width / 2;
+          //   object.top = newObject.top + (newObject.height + 65);
+          //   object.text = String(
+          //     "Thickness" + ": " + currentThickness + " " + currentUnit
+          //   );
+          // }
+        });
+        canvas.renderAll();
+      }
+  
     }
 
     canvas.renderAll();
+
+
   }
 
   await setShape(canvas);
-  await setShape(backCanvas);
+  if(doubleFace){
+    await setShape(backCanvas);
+  }
   if (signBackground1 === "pattern") {
     setPattern(canvas, patternUrl1);
   }
   if (signBackground2 === "pattern") {
     setPattern(backCanvas, patternUrl2);
   }
-  // if(firstLoad){
-  //     if(signBackground === 'pattern'){
-  //         setPattern(canvas, patternUrl);
-  //     }
-  // }
 
   if (!firstLoad && !isTemplate) {
     removeBorder(canvas);
@@ -3142,6 +3072,36 @@ async function handleSelectShape(shape, nwidth, nheight, nTop, nLeft) {
     }
   }
   handleSelectFixingMethode(activeFixingMethode);
+}
+
+let strokeSize = 20
+function handleChangeOutlineSize(size){
+  let sign = handleGetObjectByName("safeObject")
+  let pathObjects = sign._objects
+  const target = ` L ${activeCanvas.getWidth()} ${activeCanvas.getHeight()} `;
+
+  if(size == "small"){
+    strokeSize = 10
+  }else if(size == "medium"){
+    strokeSize = 20
+  }else if(size == "large"){
+    strokeSize = 30
+  }else if(size == "xtra-large"){
+    strokeSize = 40
+  }
+
+  pathObjects.forEach(path => {
+    const d = path.d;
+    if (d && !d.includes(target)) {
+      path.set({
+        strokeWidth: strokeSize,
+        strokeLineJoin: 'round',
+        strokeLineCap: 'round',
+        left: path.left - (strokeSize/2),
+        top: path.top - (strokeSize/2),
+      })
+    }
+  });
 }
 
 //fonctions concernant les fixings methode
@@ -6005,8 +5965,10 @@ function handleSelectFixingMethode(methode) {
     canva.renderAll();
   }
 
-  setFixing(canvas);
-  setFixing(backCanvas);
+  if(selectedShape != "cut-to-shape"){
+    setFixing(canvas);
+    setFixing(backCanvas);
+  }
   // if(firstLoad){
   // }
 
@@ -6022,179 +5984,86 @@ function handleSelectFixingMethode(methode) {
 }
 
 // fonctions concernant l'ajout de text à la sign
-function getTextValueToUnit( container, objWidht, objHeight, objLeft, objTop, angle) {
-  var textWidth = document.getElementById("text-width");
-  var textHeight = document.getElementById("text-height");
-  var textLeft = document.getElementById("text-left");
-  var textRight = document.getElementById("text-right");
-  var textTop = document.getElementById("text-top");
-  var textBottom = document.getElementById("text-bottom");
-  var textAngle = document.getElementById("text-angle");
+function getObjectValueToUnit(container, obj, objWidth, objHeight, objLeft, objTop) {
+ // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
+  const { fixingScale, signRatio } = canvas;
+    
+  // 2. Annuler le ratio final (signRatio)
+  const intermediateW = objWidth / signRatio;
+  const intermediateH = objHeight / signRatio;
+  const intermediateLeft = objLeft / signRatio;
+  const intermediateTop = objTop / signRatio;
+  
+  // 3. Annuler le scale de base (fixingScale)
+  const realWidthPx = intermediateW 
+  const realHeightPx = intermediateH 
 
-  var imageWidth = document.getElementById("image-width");
-  var imageHeight = document.getElementById("image-height");
-
-  var activeObject = canvas.getActiveObject();
-
-  if (ratioScale == 2) {
-    if (container.height == 370) {
-      // console.log('container here', 'firstHeight',firstHeight,'preWidth', preWidth )
-      var radio = firstHeight / 370;
-      var radio1 = preWidth / 1000;
-
-      var newWidth = objWidht * radio;
-      newWidth = newWidth * radio1;
-
-      var newHeight = objHeight * radio;
-      newHeight = newHeight * radio1;
-
-      var left = objLeft * radio;
-      left = left * radio1;
-
-      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
-      // var right = objRight * radio
-      // right = right * radio1
-
-      var top = objTop * radio;
-      top = top * radio1;
-
-      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
-
-      textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-      textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
-      textLeft.textContent = parseInt(convertFromPx(left, currentUnit));
-      textRight.textContent = parseInt(right);
-      // textRight.textContent = parseInt(convertFromPx(right, currentUnit))
-      textTop.textContent = parseInt(convertFromPx(top, currentUnit));
-      textBottom.textContent = parseInt(bottom);
-      textAngle.textContent = parseInt(angle);
-
-      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
-        imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
-      }
-    }
-    if (container.width == 1000) {
-      var radio = firstWidth / 1000;
-      var radio1 = preHeight / 370;
-
-      var newWidth = objWidht * radio;
-      newWidth = newWidth * radio1;
-
-      var newHeight = objHeight * radio;
-      newHeight = newHeight * radio1;
-
-      var left = objLeft * radio;
-      left = left * radio1;
-
-      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
-
-      var top = objTop * radio;
-      top = top * radio1;
-
-      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
-
-      // if(activeObject.type === 'i-text'){
-      //     selectedText.width = parseInt(convertFromPx(newWidth, currentUnit))
-      //     selectedText.height = parseInt(convertFromPx(newHeight, currentUnit))
-      //     selectedText.left = parseInt(convertFromPx(left, currentUnit))
-      //     selectedText.right = right
-      //     selectedText.top = convertFromPx(top, currentUnit)
-      //     selectedText.bottom = bottom
-      // }if(activeObject.type == 'image'){
-      //     selectedImage.width = parseInt(convertFromPx(newWidth, currentUnit))
-      //     selectedImage.height = parseInt(convertFromPx(newHeight, currentUnit))
-      //     selectedImage.left = parseInt(convertFromPx(left, currentUnit))
-      //     selectedImage.right = right
-      //     selectedImage.top = convertFromPx(top, currentUnit)
-      //     selectedImage.bottom = bottom
-
-      // }
-
-      textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-      textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
-      textLeft.textContent = parseInt(convertFromPx(left, currentUnit));
-      textRight.textContent = parseInt(right);
-      textTop.textContent = parseInt(convertFromPx(top, currentUnit));
-      textBottom.textContent = parseInt(bottom);
-      textAngle.textContent = parseInt(angle);
-
-      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
-        imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
-      }
-    }
+  // 3.5
+  let intermediateSignW, intermediateSignH , realSignWidth , realSignHeight
+  if(container.type != 'path'){
+    intermediateSignW = container.width / signRatio;
+    intermediateSignH = container.height / signRatio;
+    realSignWidth = convertFromPx(intermediateSignW, currentUnit);
+    realSignHeight = convertFromPx(intermediateSignH, currentUnit);
+  }else{
+    let scaleX = container.scaleX * container.group.scaleX
+    let scaleY = container.scaleY * container.group.scaleX
+    intermediateSignW = ((container.width + strokeSize) * scaleX) / signRatio;
+    intermediateSignH = ((container.height + strokeSize) * scaleY) / signRatio;
+    realSignWidth = convertFromPx(intermediateSignW, currentUnit);
+    realSignHeight = convertFromPx(intermediateSignH, currentUnit);
   }
-
-  if (ratioScale == 1) {
-    if (container.height == 370) {
-      var radio = preHeight / 370;
-
-      var newWidth = objWidht * radio;
-
-      var newHeight = objHeight * radio;
-
-      var left = objLeft * radio;
-
-      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
-
-      var top = objTop * radio;
-
-      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
-
-      textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-      textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
-      textLeft.textContent = parseInt(convertFromPx(left, currentUnit));
-      textRight.textContent = parseInt(right);
-      textTop.textContent = parseInt(convertFromPx(top, currentUnit));
-      textBottom.textContent = parseInt(bottom);
-      textAngle.textContent = parseInt(angle);
-
-      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
-        imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
-      }
-    }
-    if (container.width == 1000) {
-      var radio = preWidth / 1000;
-
-      var newWidth = objWidht * radio;
-
-      var newHeight = objHeight * radio;
-
-      var left = objLeft * radio;
-
-      var right = currentSize.width - (convertFromPx(left, currentUnit) + convertFromPx(newWidth, currentUnit));
-
-      var top = objTop * radio;
-
-      var bottom = currentSize.height - (convertFromPx(top, currentUnit) + convertFromPx(newHeight, currentUnit));
-
-      textWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-      textHeight.textContent = parseInt(convertFromPx(newHeight, currentUnit));
-      textLeft.textContent = parseInt(convertFromPx(left, currentUnit));
-      textRight.textContent = parseInt(right);
-      textTop.textContent = parseInt(convertFromPx(top, currentUnit));
-      textBottom.textContent = parseInt(bottom);
-      textAngle.textContent = parseInt(angle);
-
-      if ( activeCanvas.getActiveObject() && (activeCanvas.getActiveObject().type == "image" || activeCanvas.getActiveObject().type == "path" || activeCanvas.getActiveObject().type == "group") ) {
-        imageWidth.textContent = parseInt(convertFromPx(newWidth, currentUnit));
-        imageHeight.textContent = parseInt( convertFromPx(newHeight, currentUnit) );
-      }
-    }
-  }
-
-  return {
-    width: parseInt(convertFromPx(newWidth, currentUnit)),
-    height: parseInt(convertFromPx(newHeight, currentUnit)),
-    left: parseInt(convertFromPx(left, currentUnit)),
-    right: parseInt(right),
-    // right: parseInt(convertFromPx(right, currentUnit)),
-    top: parseInt(convertFromPx(top, currentUnit)),
-    bottom: parseInt(bottom),
-  };
+  console.log(realSignWidth, realSignHeight, "787878", container)
+  
+  // 4. Convertir en unité réelle
+  const realWidth = convertFromPx(realWidthPx, currentUnit);
+  const realHeight = convertFromPx(realHeightPx, currentUnit);
+  const realLeft = convertFromPx(intermediateLeft, currentUnit);
+  const realTop = convertFromPx(intermediateTop, currentUnit);
+  const realRight = realSignWidth - (realWidth + realLeft);
+  const realBottom = realSignHeight - (realHeight + realTop);
+    
+    // 8. Mise à jour UI
+    updateDimensionUI({
+      width: realWidth,
+      height: realHeight,
+      left: realLeft,
+      right: realRight,
+      top: realTop,
+      bottom: realBottom,
+      angle: obj.angle
+    });
+    
+    return {
+        width: Math.round(realWidth * 10) / 10, // 1 décimale
+        height: Math.round(realHeight * 10) / 10,
+        left: Math.round(realLeft * 10) / 10,
+        right: Math.round(realRight * 10) / 10,
+        top: Math.round(realTop * 10) / 10,
+        bottom: Math.round(realBottom * 10) / 10,
+        angle: Math.round(obj.angle)
+    };
 }
+
+// Fonction utilitaire pour mettre à jour l'UI
+function updateDimensionUI(values) {
+  const ids = ['width', 'height', 'left', 'right', 'top', 'bottom', 'angle'];
+  ids.forEach(id => {
+    const element = document.getElementById(`text-${id}`);
+    if (element) element.textContent = Math.round(values[id]);
+  });
+
+  // Gestion spéciale pour les images
+  const activeObj = canvas.getActiveObject();
+  if (activeObj && ['image', 'path', 'group'].includes(activeObj.type)) {
+    const imgWidth = document.getElementById('image-width');
+    const imgHeight = document.getElementById('image-height');
+    if (imgWidth) imgWidth.textContent = Math.round(values.width);
+    if (imgHeight) imgHeight.textContent = Math.round(values.height);
+  }
+}
+
+
 //function for get added text value
 var selectedText = {
   object: {},
@@ -6217,7 +6086,24 @@ var selectedText = {
 };
 
 function handleGetAddedTextValues(transform) {
-  var container = handleGetObjectByName("safeObject");
+  var sign = handleGetObjectByName("safeObject");
+  let container
+  if(sign.type != "path" && sign.type != "group"){
+    container = sign
+  }else{
+    let pathObjects = sign._objects
+    const target = ` L ${activeCanvas.getWidth()} ${activeCanvas.getHeight()} `;
+    
+    pathObjects.forEach(path => {
+      const d = path.d;
+      if (path.name == "outline") {
+        container = path
+      }
+    });
+  }
+
+  let values
+
   if (transform.type == "i-text" || transform.type == "neon-Text") {
     var obj = transform;
     obj.setCoords();
@@ -6232,11 +6118,26 @@ function handleGetAddedTextValues(transform) {
     var objTop = objBounds.top;
 
     // Calculer par rapport aux dimensions du container
-    var objLeftInContainer = obj.left - objWidht / 2 - container.left;
-    var objRightInContainer = container.width - (objLeftInContainer + objWidht);
-    var objTopInContainer = obj.top - objHeight / 2 - container.top;
-    var objBottomInContainer =
-      container.height - (objTopInContainer + objHeight);
+    let objLeftInContainer, objRightInContainer, objTopInContainer, objBottomInContainer
+    if(container.type != "path" && container.type != "group"){
+      objLeftInContainer = obj.left - objWidht / 2 - container.left;
+      objRightInContainer = container.width - (objLeftInContainer + objWidht);
+      objTopInContainer = obj.top - objHeight / 2 - container.top;
+      objBottomInContainer = container.height - (objTopInContainer + objHeight);
+    }else{
+      const centerPoint = container.getCenterPoint();
+      const objectGlobal = fabric.util.transformPoint(
+        centerPoint,
+        sign.calcTransformMatrix()
+      );
+      let scaleX = sign.scaleX * container.scaleX
+      let scaleY = sign.scaleY * container.scaleX
+  
+      objLeftInContainer = obj.left - objWidht / 2 - objectGlobal.x;
+      objRightInContainer = (container.width * scaleX) - (objLeftInContainer + objWidht);
+      objTopInContainer = obj.top - objHeight / 2 - objectGlobal.y;
+      objBottomInContainer = (container.height * scaleY) - (objTopInContainer + objHeight);
+    }
 
     selectedText.object = obj;
     selectedText.value = obj.text;
@@ -6254,8 +6155,7 @@ function handleGetAddedTextValues(transform) {
     var sizeEditor = document.getElementById("asowp-text-size");
     sizeEditor.value = parseInt(selectedText.size * 12);
 
-    // formule pour obtenir le Right in the sign [((container.left + container.width)-((obj.left-(objWidht/2))+objWidht))]
-    getTextValueToUnit( container, objWidht, objHeight, objLeftInContainer, objTopInContainer );
+    values = getObjectValueToUnit( container, obj, objWidht, objHeight, objLeftInContainer, objTopInContainer );
 
     handleCalcTextPrice();
   } else {
@@ -6274,11 +6174,26 @@ function handleGetAddedTextValues(transform) {
     // obj.set('left', container.left)
     // canvas.renderAll()
 
-    var objLeftInContainer = obj.left - objWidht / 2 - container.left;
-    var objRightInContainer = container.width - (objLeftInContainer + objWidht);
-    var objTopInContainer = obj.top - objHeight / 2 - container.top;
-    var objBottomInContainer =
-      container.height - (objTopInContainer + objHeight);
+    let objLeftInContainer, objRightInContainer, objTopInContainer, objBottomInContainer
+    if(container.type != "path" && container.type != "group"){
+      objLeftInContainer = obj.left - objWidht / 2 - container.left;
+      objRightInContainer = container.width - (objLeftInContainer + objWidht);
+      objTopInContainer = obj.top - objHeight / 2 - container.top;
+      objBottomInContainer = container.height - (objTopInContainer + objHeight);
+    }else{
+      const centerPoint = container.getCenterPoint();
+      const objectGlobal = fabric.util.transformPoint(
+        centerPoint,
+        sign.calcTransformMatrix()
+      );
+      let scaleX = sign.scaleX * container.scaleX
+      let scaleY = sign.scaleY * container.scaleX
+  
+      objLeftInContainer = obj.left - objWidht / 2 - objectGlobal.x;
+      objRightInContainer = (container.width * scaleX) - (objLeftInContainer + objWidht);
+      objTopInContainer = obj.top - objHeight / 2 - objectGlobal.y;
+      objBottomInContainer = (container.height * scaleY) - (objTopInContainer + objHeight);
+    }
 
     if (obj.type == "i-text" || obj.type == "neon-Text") {
       selectedText.object = obj;
@@ -6292,7 +6207,7 @@ function handleGetAddedTextValues(transform) {
       selectedText.linethrough = obj.linethrough;
       selectedText.overline = obj.overline;
 
-      getTextValueToUnit( container, objWidht, objHeight, objLeftInContainer, objTopInContainer );
+      values = getObjectValueToUnit( container, obj, objWidht, objHeight, objLeftInContainer, objTopInContainer );
     }
     handleCalcTextPrice();
 
@@ -6301,17 +6216,8 @@ function handleGetAddedTextValues(transform) {
     var sizeEditor = document.getElementById("asowp-text-size");
     sizeEditor.value = parseInt(selectedText.size + 12);
   }
-  // console.log('container-left',parseInt(container.left), 'object-left',parseInt((obj.left-(objWidht/2))), 'object-left in sign', parseInt(((obj.left-(objWidht/2))) - (container.left)), 'object-right in sign', parseInt((container.left + container.width)-((obj.left-(objWidht/2))+objWidht)))
-  // console.log('container-width',parseInt(container.width), 'object-widht',parseInt((objWidht)))
-  // console.log('container-height',parseInt(container.height), 'object-height',parseInt((objHeight)))
-  // console.log(selectedText.value, textEditor.value)
-  return getTextValueToUnit(
-    container,
-    objWidht,
-    objHeight,
-    objLeftInContainer,
-    objTopInContainer
-  );
+  
+  return values;
 }
 fabric.NeonText = fabric.util.createClass(fabric.Text, {
   type: 'neon-Text',
@@ -6875,7 +6781,7 @@ async function handleAddTextToSign(custom, clone, layerClone) {
       });
       newText.on("selected", () => {
         handleGetAddedTextValues(newText);
-        console.log("selected", newText.path);
+        // console.log("selected", newText.path);
       });
       newText.on("mousedown", function () {
         handleGetAddedTextValues(newText);
@@ -7030,11 +6936,6 @@ function handleChangeTextValue(event) {
 
   frontTextCharLength = sumOptionsPrice(FtextObjects, "text").length;
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
-  // if(backTextCharLength === undefined){
-  //     backTextCharLength = 0
-  // }
-
-  // console.log(frontTextCharLength, "frontTextCharLength")
 }
 function handleChangeTextAlign(align) {
   var currentText = selectedText.object;
@@ -7366,10 +7267,20 @@ function handleGetImageSettings(settings) {
   imageSettings = settings;
 }
 function handleGetAddedImageValues(object) {
-  var container = handleGetObjectByName("safeObject");
-  var newCoord = object.getCoords();
-  // var objWidht = (newCoord[1].x - newCoord[0].x)
-  // var objHeight = (newCoord[3].y - newCoord[0].y)
+  var sign = handleGetObjectByName("safeObject");
+  let container
+  if(sign.type != "path" && sign.type != "group"){
+    container = sign
+  }else{
+    let pathObjects = sign._objects
+    
+    pathObjects.forEach(path => {
+      const d = path.d;
+      if (path.name == "outline") {
+        container = path
+      }
+    });
+  }
 
   object.setCoords();
   var objWidht = object.width * object.scaleX;
@@ -7382,10 +7293,27 @@ function handleGetAddedImageValues(object) {
   var objTop = objBounds.top;
 
   // Calculer par rapport aux dimensions du container
-  var objLeftInContainer = object.left - objWidht / 2 - container.left;
-  var objRightInContainer = container.width - (objLeftInContainer + objWidht);
-  var objTopInContainer = object.top - objHeight / 2 - container.top;
-  var objBottomInContainer = container.height - (objTopInContainer + objHeight);
+  let objLeftInContainer, objRightInContainer, objTopInContainer, objBottomInContainer
+  if(container.type != "path" && container.type != "group"){
+    objLeftInContainer = object.left - objWidht / 2 - container.left;
+    objRightInContainer = container.width - (objLeftInContainer + objWidht);
+    objTopInContainer = object.top - objHeight / 2 - container.top;
+    objBottomInContainer = container.height - (objTopInContainer + objHeight);
+  }else{
+    const outlineCenterPoint = container.getCenterPoint();
+    const outlineGlobal = fabric.util.transformPoint( outlineCenterPoint, sign.calcTransformMatrix() );
+    let scaleX = sign.scaleX * container.scaleX
+    let scaleY = sign.scaleY * container.scaleX
+
+    let objCenter = object.getCenterPoint()
+    let objPoint = fabric.util.transformPoint( objCenter, object.calcTransformMatrix() );
+
+    objLeftInContainer = objPoint.x - (outlineGlobal.x - (strokeSize));
+    objRightInContainer = ((container.width + strokeSize) * scaleX) - (objLeftInContainer + objWidht);
+    objTopInContainer = objPoint.y - (outlineGlobal.y - (strokeSize));
+    objBottomInContainer = ((container.height + strokeSize) * scaleY) - (objTopInContainer + objHeight);
+    console.log(objPoint, "898989", outlineGlobal)  
+  }
 
   selectedImage.width = parseInt(objWidht);
   selectedImage.height = parseInt(objHeight);
@@ -7395,26 +7323,10 @@ function handleGetAddedImageValues(object) {
   selectedImage.bottom = parseInt(objBottomInContainer);
   selectedImage.angle = parseInt(object.angle);
 
-  getTextValueToUnit(
-    container,
-    objWidht,
-    objHeight,
-    objLeftInContainer,
-    objTopInContainer,
-    object.angle
-  );
-  // console.log('container-left',parseInt(container.left), 'object-left',parseInt((object.left-(objWidht/2))), 'object-left in sign', parseInt(((object.left-(objWidht/2))) - (container.left)), 'object-right in sign', parseInt((container.left + container.width)-((object.left-(objWidht/2))+objWidht)))
-  // console.log('container-width',parseInt(container.width), 'object-widht',parseInt((objWidht)))
-  // console.log('container-height',parseInt(container.height), 'object-height',parseInt((objHeight)))
+  // let values = getObjectValueToUnit( container, objWidht, objHeight, objLeftInContainer, objTopInContainer, object.angle );
+  let values = getObjectValueToUnit( container, object, objWidht, objHeight, objLeftInContainer, objTopInContainer );
 
-  return getTextValueToUnit(
-    container,
-    objWidht,
-    objHeight,
-    objLeftInContainer,
-    objTopInContainer,
-    object.angle
-  );
+  return values;
 }
 var addedImages = [];
 function handleConvertImageToDataURI(imageUrl, callback) {
@@ -7504,8 +7416,12 @@ function handleAddImageToSign(image, imageId, price) {
 
       fabric.loadSVGFromString(svgString, function (image) {
         const img = fabric.util.groupSVGElements(image);
-
-        img.scale(0.4);
+        let sign = handleGetObjectByName("safeObject", activeCanvas)
+        if(img.width > img.height){
+          img.scaleToWidth(sign.width/2)
+        }else{
+          img.scaleToHeight(sign.height/2)
+        }
 
         img.setCoords();
         var newWidth = img.width * img.scaleX;
@@ -7573,7 +7489,12 @@ function handleAddImageToSign(image, imageId, price) {
         fabric.Image.fromURL(
           dataURI,
           function (img) {
-            img.scale(0.4);
+            let sign = handleGetObjectByName("safeObject");
+            if(img.width > img.height){
+              img.scaleToWidth(sign.width/2)
+            }else{
+              img.scaleToHeight(sign.height/2)
+            }
 
             img.setCoords();
             var newWidth = img.width * img.scaleX;
@@ -8019,7 +7940,7 @@ function handleClipAddedObject(canva) {
       });
       break;
 
-    case "oval":
+    case "cu-to-shape":
       clipPath = new fabric.Ellipse({
         ry: sign.height / 2,
         rx: sign.width / 2,
@@ -8179,6 +8100,10 @@ function handleClipAddedObject(canva) {
         ry: sign.height,
         selectable: false,
       });
+      break;
+  
+    case "oval":
+      clipPath = null
       break;
   }
 
@@ -8469,7 +8394,7 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
   }
 
   async function loadFromJSON(canva, canvasJson) {
-    var rect;
+    let rect;
     
     for(const object of canvasJson.objects){
       if (object.name === "asowp-SignText") {
@@ -8558,7 +8483,7 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
             }
     
             if (templateObject[0].name === "safeObject") {
-              rect = templateObject[0];
+              rect = await templateObject[0];
               if (typeof templateObject[0].fill !== "string") {
                 templateObject[0].fill = "transparent";
                 // console.log('WARNING:')
@@ -10117,6 +10042,8 @@ export {
   getSignInfos,
   handleCheckTemplate,
   handleReadyToSaveState,
+  handleGetMeasurementVibility,
+  setOutlineMeasurmentValue,
   handleGetCanvas,
   handleGetCurrentUnit,
   handleGetDefaultText,

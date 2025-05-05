@@ -45,20 +45,6 @@
                                 </svg>
                                 <img v-if="configSectionIcons.icon !== '' " :src="configSectionIcons.icon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                            
                             </span>
-
-                            <!-- <span @click="showConfigRender()" :class="`asowp-flex asowp-p-1.5 asowp-full-center asowp-cursor-pointer asowp-rounded-full asowp-bg-[${configColors.bars.preview.backgroundColor}] asowp-text-[${configColors.bars.preview.textColor}] hover:asowp-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.preview.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.preview.borderColor}] hover:asowp-border-[${configColors.bars.preview.hoverBorderColor}]`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                            </span>
-
-                            <span @click="centerSign(canvas)" :class="`asowp-flex asowp-p-1.5 asowp-full-center asowp-cursor-pointer asowp-rounded-full asowp-bg-[${configColors.bars.help.backgroundColor}] asowp-text-[${configColors.bars.help.textColor}] hover:asowp-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.help.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.help.borderColor}] hover:asowp-border-[${configColors.bars.help.hoverBorderColor}]`">
-                                <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-4 asowp-h-4">
-                                    <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
-                                    <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
-                                </svg>
-                            </span> -->
                         </div>
                     </div>
     
@@ -203,6 +189,12 @@
                                 </svg>
                                 <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
                             </div>
+                        </div>
+
+                        <div v-if="selectedShape === 'cut-to-shape'" :class="`asowp-flex asowp-flex-col asowp-absolute asowp-top-[2%] asowp-left-2 asowp-bg-[#828282]/60 asowp-text-white asowp-text-[14px] asowp-p-2 asowp-px-3 asowp-rounded-md asowp-shadow-md`">
+                            <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}</span> 
+                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-width'">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="outline-width"></span> {{configUnit}}</span>
+                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-height'">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="outline-height"></span> {{configUnit}}</span>
                         </div>
                     </div>
     
@@ -457,7 +449,7 @@
                         <div v-show="step == 'size'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-sizes-section">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textSize}}</p>    
                             <div class="asowp-h-full asowp-space-y-2 asowp-p-4 asowp-overflow-auto asowp-scrollBar">
-                                <div class="asowp-space-y-2">
+                                <div v-if="selectedShape != 'cut-to-shape'" class="asowp-space-y-2">
                                     <div @click="dropSizeToggle()" id="asowp-fontSelected-dropdown" :class="`asowp-cursor-pointer asowp-items-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  asowp-px-2 asowp-border border-gray-400 asowp-rounded-md asowp-flex asowp-justify-between asowp-text-base asowp-base-animation`">
                                         <div class="asowp-w-fit asowp-flex asowp-items-center asowp-justify-center asowp-p-2">
                                             <p v-show="currentSizeName != ''" :class="`lg:asowp-text-sm `" >{{ currentSizeName }}</p>
@@ -517,7 +509,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="customSizeActive" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
+                                <div v-if="customSizeActive && selectedShape != 'cut-to-shape'" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
                                     <p class="asowp-text-base asowp-font-semibold">{{configVisualiserTexts.customSize}}</p>
                                     <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-2 ">
                                         <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
@@ -534,6 +526,20 @@
                                         {{ configVisualiserTexts.customSizeButtonDone && configVisualiserTexts.customSizeButtonDone.trim() !== '' ? configVisualiserTexts.customSizeButtonDone : 'Done' }}
                                     </span>
                                 </div>
+                                <div v-if="selectedShape == 'cut-to-shape'" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
+                                    <p class="asowp-text-base asowp-font-semibold">{{configVisualiserTexts.customSize}}</p>
+                                    <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-2 ">
+                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
+                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
+                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" disabled type="number" name="" id="outlineSizeWidth" style="border-radius: 6px">
+                                        </div>
+                                        <!-- <p class="asowp-px-2">x</p> -->
+                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
+                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeHeight">{{ customSizes.height.label }} ({{configUnit}})</label>
+                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" disabled type="number" name="" id="outlineSizeHeight" style="border-radius: 6px">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
         
@@ -542,6 +548,17 @@
         
                             <div class="asowp-w-full asowp-h-full asowp-overflow-auto asowp-scrollBar">
                                 <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
+                                    <div class="asowp-w-full asowp-flex">
+                                        <input type="radio" id="cut-to-shape-0" name="asowp-shape" class="peer asowp-hidden" @change="selectShape('cut-to-shape', {additionalPrice: 0}, 0)">
+                                        <label for="cut-to-shape-0" :class="`${selectedShape == 'cut-to-shape' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="`asowp-bg-lime-500 asowp-w-16 asowp-h-16`">
+                                            </div>
+                                            <p>cut-to-shape</p>
+                                        </label>
+                                    </div>
+
                                     <div v-for="(shapee, id) in shapees">
                                         <div v-for="(shape, index) in allShapes" :key="shape.name" class="asowp-w-full asowp-flex">
                                             <div class="asowp-w-full asowp-flex" v-if="shapee.shapeId == index">
@@ -697,7 +714,7 @@
                         <div v-show="step == 'border'" class="asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-borders-section">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textBorder}}</p>    
         
-                            <div class="asowp-w-full asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div class="asowp-borders-div asowp-w-full asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
                                 <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
                                     <div v-if="activeFace === 'front-face'" v-for="(borderr, id) in borderrs.allBorders">
                                         <div v-for="(border, index) in allBorders" :key="border.name" class="asowp-w-full asowp-flex">
@@ -1977,9 +1994,9 @@
                     <p class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                            <span class="lowercase first-letter:uppercase">{{activeFace1Border}}</span>
+                            <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace1Border : "none"}}</span>
 
-                            <div v-if="activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.codeHex}] asowp-flex`"></span>
@@ -1987,7 +2004,7 @@
                                 </span>
                             </div>
 
-                            <div v-if="activeFace1Border !== 'none' && colorForBorder1" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && colorForBorder1" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName1}}</span>
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.codeHex}] asowp-flex`"></span>
@@ -1998,16 +2015,16 @@
 
                         <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                            <span class="lowercase first-letter:uppercase">{{activeFace2Border}}</span>
+                            <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace2Border : "none"}}</span>
                         
-                            <div v-if="activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>    
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face2.codeHex}] asowp-flex`"></span>
                                 </span>
                             </div>
 
-                            <div v-if="activeFace2Border !== 'none' && colorForBorder2" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && colorForBorder2" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName2}}</span>
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face2.codeHex}] asowp-flex`"></span>
@@ -2214,6 +2231,7 @@
     import { ref, onMounted, defineProps, onBeforeUnmount } from 'vue';
     import {getSignInfos, handleCheckTemplate, handleReadyToSaveState, 
         handleGetCanvas, handleGetCurrentUnit,
+        handleGetMeasurementVibility,
         handleGetDefaultText,
         handleGetTextType,
         handleUndo,
@@ -3780,6 +3798,55 @@ import { forAliasRE } from '@vue/compiler-core';
         flipped.value = !flipped.value
     }
 
+    function centerAndZoomAfterResize(canva, targetZoom, newWidth, newHeight) {
+        // 1. Désactiver temporairement le rendu
+        canva.renderOnAddRemove = false;
+        
+        // 2. Trouver l'objet de référence
+        const safeObject = handleGetObjectByName("safeObject", canva);
+        if (!safeObject) return;
+
+        canva.setWidth(newWidth);
+        canva.setHeight(newHeight);
+
+        // 3. Calculer le décalage nécessaire
+        const objectCenter = safeObject.getCenterPoint();
+        const canvasCenter = {
+            x: newWidth / 2,
+            y: newHeight / 2
+        };
+        const offset = {
+            x: canvasCenter.x - objectCenter.x,
+            y: canvasCenter.y - objectCenter.y
+        };
+
+        // 4. Réinitialiser le viewport (essential pour éviter l'accumulation d'erreurs)
+        canva.setViewportTransform([1, 0, 0, 1, 0, 0]);
+        
+        // 5. Appliquer le zoom au centre exact
+        canva.zoomToPoint( { x: canvasCenter.x, y: canvasCenter.y }, targetZoom );
+
+        // 6. Déplacer TOUS les objets simultanément
+        canva.getObjects().forEach(obj => {
+            obj.set({
+                left: obj.left + offset.x,
+                top: obj.top + offset.y
+            }).setCoords();
+        });
+
+        // 7. Réactiver le rendu et forcer le refresh
+        canva.renderOnAddRemove = true;
+        canva.calcOffset();
+        canva.renderAll();
+
+        // Vérification visuelle (debug)
+        const finalPos = safeObject.getCenterPoint();
+        // console.log("Centrage réussi:", 
+        //     Math.round(finalPos.x) === Math.round(canvasCenter.x) && 
+        //     Math.round(finalPos.y) === Math.round(canvasCenter.y),
+        //     `Objet: (${Math.round(finalPos.x)},${Math.round(finalPos.y)}) | Canvas: (${Math.round(canvasCenter.x)},${Math.round(canvasCenter.y)})`
+        // );
+    }
     function checkScreenSize(width, height){
         handleReadyToSaveState(false);
 
@@ -3819,18 +3886,10 @@ import { forAliasRE } from '@vue/compiler-core';
             // console.log("==2==", scaleRatio, "==2==")
         }
 
-        canvas.zoomToPoint({x: canvas.getWidth() /2, y: canvas.getHeight() /2}, scaleRatio)
-        canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
+        centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight)
+        centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight)
 
         
-        canvas.setWidth(canvasWidth);
-        canvas.setHeight(canvasHeight);
-        
-        canvasBack.setWidth(canvasWidth);
-        canvasBack.setHeight(canvasHeight);
-        
-        centerSign(canvas)
-        centerSign(canvasBack)
 
         currentSizeValues.value = handleGetSignPosition()
         handleReadyToSaveState(true);
@@ -4570,6 +4629,7 @@ import { forAliasRE } from '@vue/compiler-core';
     var currentShapeId = ref(0)
     async function selectShape(shape, setting, shapeId){
         // currentShapeId.value = setting.shapeId
+        selectedShape.value = shape
         currentShapeId.value = shapeId
         if(fixingExcludeShapes.value.includes(shapeId)){
             // if(activeFixingId === matchingFixings.value.length-1){
@@ -4584,6 +4644,14 @@ import { forAliasRE } from '@vue/compiler-core';
             getOptionPrice(fixingPriceObject)
         }
         if(activeFace.value == 'front-face'){
+            const container = document.getElementById('asowp-borders-section');
+            const target = container.querySelector('.asowp-borders-div'); // ou '.target-div' si elle a une classe spécifique
+            if(selectedShape.value == 'cut-to-shape'){
+                target.classList.add('asowp-disabled-div');
+            }
+            else{
+                target.classList.remove('asowp-disabled-div');
+            }
             if(border1ExcludeShapes.value.includes(shapeId)){
                 // if(face1BorderId.value === matchingBorders.value.length-1){
                 //     selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0)
@@ -4613,8 +4681,7 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
 
-        await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, currentSizeValues.value.top, currentSizeValues.value.left)
-        selectedShape.value = shape
+        await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height)
 
         var shapePrice = setting.additionalPrice
         var shapePriceObject = {
@@ -5962,9 +6029,9 @@ import { forAliasRE } from '@vue/compiler-core';
                 border: {
                     label: (configVisualiserTexts.value.textBorder && configVisualiserTexts.value.textBorder.trim() != '' ? configVisualiserTexts.value.textBorder : 'Borders'),
                     value: {
-                        type: activeFace1Border.value,
-                        color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
-                        codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                        type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace1Border.value,
+                        color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value))),
+                        codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas))),
                     },
                 },
                 fixingMethod: {
@@ -6076,15 +6143,20 @@ import { forAliasRE } from '@vue/compiler-core';
                         label: (configVisualiserTexts.value.textBorder && configVisualiserTexts.value.textBorder.trim() != '' ? configVisualiserTexts.value.textBorder : 'Borders'),
                         value: {
                             face1: {
-                                type: activeFace1Border.value,
-                                color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
-                                codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                                type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace1Border.value,
+                                color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value))),
+                                codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas))),
                             },
                             face2: {
-                                type: activeFace2Border.value,
-                                color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
-                                codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
-                            },
+                                type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace2Border.value,
+                                color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value))),
+                                codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack))),
+                            }
+                            // ,{
+                            //     type: activeFace2Border.value,
+                            //     color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
+                            //     codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
+                            // },
                         },
                     },
                     fixingMethod: {
@@ -6193,16 +6265,26 @@ import { forAliasRE } from '@vue/compiler-core';
                         },
                     },
                     border: {
+                        // face1: {
+                        //     type: activeFace1Border.value,
+                        //     color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
+                        //     codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                        // },
+                        // face2: {
+                        //     type: activeFace2Border.value,
+                        //     color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
+                        //     codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
+                        // },
                         face1: {
-                            type: activeFace1Border.value,
-                            color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
-                            codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                            type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace1Border.value,
+                            color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value))),
+                            codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas))),
                         },
                         face2: {
-                            type: activeFace2Border.value,
-                            color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
-                            codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
-                        },
+                            type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace2Border.value,
+                            color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value))),
+                            codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack))),
+                        }
                     },
                     fixingMethod: {
                         type: activeFixingMethode.value,
@@ -9341,6 +9423,11 @@ import { forAliasRE } from '@vue/compiler-core';
                     selectable: false,
                 })
 
+                handleGetMeasurementVibility(
+                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false),
+                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
+                )
+
                 await hideCanvasForWaiting(true)
                 activeCanvas = canvas
 
@@ -9422,6 +9509,17 @@ import { forAliasRE } from '@vue/compiler-core';
                     }
                 });
                 canvas.on('selection:cleared', closeObjectValues);
+                canvas.on('object:modified', (e) => {
+                    if(selectedShape.value === "cut-to-shape"){
+                        console.log("modified", selectedShape.value)
+                        let resizeTimer;
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(() => {
+                            handleSelectShape("cut-to-shape")
+                        }, 600);
+                    }
+                });
+
                 canvas.on('mouse:down', function(options) {
                     var sign = handleGetObjectByName('safeObject');
                     canvas.getObjects().forEach(function(obj) {
@@ -9607,16 +9705,12 @@ import { forAliasRE } from '@vue/compiler-core';
 
                 let resizeTimer;
                 window.addEventListener('load', () => {
-                    // centerSign(canvas)
-                    // centerSign(canvasBack)
                 });
                 window.addEventListener('resize', () => {
                     checkScreenView()
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(() => {
                         checkScreenSize()
-                        // centerSign(canvas)
-                        // centerSign(canvasBack)
                     }, 250); // Délai de 250 millisecondes
                 });
                 
