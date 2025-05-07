@@ -125,6 +125,8 @@ function handleCloneCanvas() {
     "activeSide",
     "sideColor",
     "zIndex",
+    "prevWidth",
+    "prevHeight"
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -252,6 +254,8 @@ function updateModifications(good, position) {
       "activeSide",
       "sideColor",
       "zIndex",
+      "prevWidth",
+      "prevHeight"
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -281,6 +285,8 @@ function updateModifications(good, position) {
       "activeSide",
       "sideColor",
       "zIndex",
+      "prevWidth",
+      "prevHeight"
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -918,112 +924,10 @@ function convertFromPx(dimension, unit) {
 }
 
 var fixScale = 0;
-var signRatio = 0;
-var ratioScale = 0;
 var sizeRatio = "";
+var ratioScale = 0;
 
 
-// function handleMiseAEchelle(rW, rH) {
-//   const maxWidth = 1000;
-//   const maxHeight = 370;
-
-//   var finalWidth = 0;
-//   var finalHeight = 0;
-
-//   var signWPx = convertToPx(rW, currentUnit);
-//   var signHPx = convertToPx(rH, currentUnit);
-
-//   if ((signWPx || signHPx) > 10000) {
-//     fixScale = 0.25;
-//     canvas.fixingRatio = sizeRatio;
-//     backCanvas.fixingRatio = sizeRatio;
-//     canvas.fixingScale = fixScale;
-//     backCanvas.fixingScale = fixScale;
-//   } else {
-//     fixScale = 0.35;
-//     canvas.fixingRatio = sizeRatio;
-//     backCanvas.fixingRatio = sizeRatio;
-//     canvas.fixingScale = fixScale;
-//     backCanvas.fixingScale = fixScale;
-//   }
-//   if (signHPx >= signWPx / 2) {
-//     sizeRatio = "big";
-//     canvas.fixingRatio = sizeRatio;
-//     backCanvas.fixingRatio = sizeRatio;
-//     canvas.fixingScale = fixScale;
-//     backCanvas.fixingScale = fixScale;
-//   } else {
-//     sizeRatio = "small";
-//     canvas.fixingRatio = sizeRatio;
-//     backCanvas.fixingRatio = sizeRatio;
-//     canvas.fixingScale = fixScale;
-//     backCanvas.fixingScale = fixScale;
-//   }
-
-//   if (signWPx > signHPx) {
-//     finalWidth = maxWidth;
-//     var ratio = maxWidth / signWPx;
-//     signRatio = ratio;
-//     finalHeight = signHPx * ratio;
-//     ratioScale = 1;
-//   } else if (signHPx > signWPx) {
-//     finalHeight = maxHeight;
-//     var ratio = maxHeight / signHPx;
-//     signRatio = ratio;
-//     finalWidth = signWPx * ratio;
-//     ratioScale = 1;
-//   } else if ((signHPx = signWPx)) {
-//     finalWidth = maxHeight;
-//     finalHeight = maxHeight;
-//     ratioScale = 1;
-//   }
-
-//   var lastWidth = 0;
-//   var lastHeight = 0;
-
-//   if (finalWidth > maxWidth) {
-//     lastWidth = maxWidth;
-//     var newRatio = maxWidth / finalWidth;
-//     signRatio = newRatio;
-//     lastHeight = finalHeight * newRatio;
-//     ratioScale = 2;
-//   } else if (finalHeight > maxHeight) {
-//     lastHeight = maxHeight;
-//     var newRatio = maxHeight / finalHeight;
-//     signRatio = newRatio;
-//     lastWidth = finalWidth * newRatio;
-//     ratioScale = 2;
-//   }
-
-//   canvas.ratioScale = ratioScale;
-//   backCanvas.ratioScale = ratioScale;
-
-//   if (finalWidth > maxWidth || finalHeight > maxHeight) {
-//     return {
-//       preWidth: parseFloat(signWPx),
-//       preHeight: parseFloat(signHPx),
-//       firstWidth: finalWidth,
-//       firstHeight: finalHeight,
-//       width: lastWidth,
-//       height: lastHeight,
-//       fixScale,
-//       sizeRatio,
-//       ratioScale,
-//       signRatio,
-//     };
-//   } else {
-//     return {
-//       preWidth: parseFloat(signWPx),
-//       preHeight: parseFloat(signHPx),
-//       width: finalWidth,
-//       height: finalHeight,
-//       fixScale,
-//       sizeRatio,
-//       ratioScale,
-//       signRatio,
-//     };
-//   }
-// }
 function handleMiseAEchelle(rW, rH) {
   const maxWidth = 1000;
   const maxHeight = 370;
@@ -1061,9 +965,10 @@ function handleMiseAEchelle(rW, rH) {
   }
 
   // Stocker les ratios pour la conversion inverse
-  canvas.fixingScale = fixScale;
-  canvas.fixingRatio = sizeRatio;
-  canvas.signRatio = ratio;
+  activeCanvas.fixingScale = fixScale;
+  activeCanvas.fixingRatio = sizeRatio;
+  activeCanvas.ratioScale = ratio;
+  ratioScale = ratio;
 
   return {
     width: scaledWidth,
@@ -1073,43 +978,9 @@ function handleMiseAEchelle(rW, rH) {
     ratioScale: ratio
   };
 }
-// function handleReverseMiseAEchelle(canvasW, canvasH) {
-//   // 1. Récupérer les paramètres initiaux
-//   const maxCanvasWidth = 1000;
-//   const maxCanvasHeight = 370;
-//   const appliedScale = canvas.signRatio || 1; // Le ratio final appliqué
-  
-//   // 2. Calculer les dimensions intermédiaires (avant dernier ajustement)
-//   let intermediateW, intermediateH;
-  
-//   if (ratioScale === 2) {
-//     // Si un deuxième ratio a été appliqué
-//     intermediateW = canvasW / signRatio;
-//     intermediateH = canvasH / signRatio;
-//   } else {
-//     intermediateW = canvasW;   intermediateH = canvasH;
-//   }
-
-//   // 3. Annuler le scale initial
-//   const realWidthPx = intermediateW
-//   const realHeightPx = intermediateH
-
-//   // 4. Convertir en unité réelle
-//   const realWidth = parseInt(convertFromPx(realWidthPx, currentUnit));
-//   const realHeight = parseInt(convertFromPx(realHeightPx, currentUnit));
-
-//   console.log("Debug:", {
-//     canvasDimensions: {canvasW, canvasH},
-//     intermediate: {intermediateW, intermediateH},
-//     realPx: {realWidthPx, realHeightPx},
-//     realUnits: {realWidth, realHeight}
-//   });
-
-//   return { realWidth, realHeight };
-// }
 function handleReverseMiseAEchelle(canvaSign) {
-  // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
-  const { fixingScale, signRatio } = canvas;
+  // // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
+  // const { fixingScale, ratioScale } = canvas;
 
   //controle
   let canvasW, canvasH
@@ -1124,8 +995,10 @@ function handleReverseMiseAEchelle(canvaSign) {
   }
   
   // 2. Annuler le ratio final (signRatio)
-  const intermediateW = canvasW / signRatio;
-  const intermediateH = canvasH / signRatio;
+  const intermediateW = canvasW ;
+  const intermediateH = canvasH ;
+  // const intermediateW = canvasW / ratioScale;
+  // const intermediateH = canvasH / ratioScale;
   
   // 3. Annuler le scale de base
   const realWidthPx = intermediateW;
@@ -1140,7 +1013,7 @@ function handleReverseMiseAEchelle(canvaSign) {
     realHeight,
     realWidthPx,
     realHeightPx,
-    usedScale: signRatio * fixingScale // Le scale total appliqué
+    usedScale: ratioScale // Le scale total appliqué
   };
 }
 
@@ -1166,11 +1039,11 @@ function setOutlineMeasurmentValue(sign, width, height) {
   var inputWidth = document.getElementById("outlineSizeWidth");
   var inputHeight = document.getElementById("outlineSizeHeight");
 
-  if(widthVisibility === true){
+  if(widthVisibility === true && outlineWidth != null){
     outlineWidth.textContent = width
     inputWidth.value = parseInt(width)
   }
-  if(heightVisibility === true){
+  if(heightVisibility === true && outlineHeight != null){
     outlineHeight.textContent = height
     inputHeight.value = height
   }
@@ -1300,30 +1173,21 @@ function handleGetNewPosition(left, top) {
   signTop = top;
 }
 function handleChangeSize(width, height, name, maxChar) {
-  // console.log(maxChar, "asowp-SignText")
-
   maxTextCharForSize = maxChar;
 
   currentSizeName = name;
   currentSize = { width: width, height: height };
 
+  let scaleValues = handleMiseAEchelle(width, height)
 
-  sizeRatio = handleMiseAEchelle(width, height).sizeRatio;
-  fixScale = handleMiseAEchelle(width, height).fixScale;
-  signRatio = handleMiseAEchelle(width, height).signRatio;
-  ratioScale = handleMiseAEchelle(width, height).ratioScale;
+  sizeRatio = scaleValues.sizeRatio;
+  fixScale = scaleValues.fixScale;
 
-  currentWidth = handleMiseAEchelle(width, height).width;
-  currentHeight = handleMiseAEchelle(width, height).height;
+  currentWidth = scaleValues.width;
+  currentHeight = scaleValues.height;
 
-  // var currentBackground = canvas.backgroundImage
-  // var currentShape = canvas.clipPath
-
-  var newSignWidth = handleMiseAEchelle(width, height).width;
-  var newSignHeight = handleMiseAEchelle(width, height).height;
-
-  var canvasCenter = getCanvasCenter();
-
+  var newSignWidth = scaleValues.width;
+  var newSignHeight = scaleValues.height;
 
   var stop = false;
   if (firstLoad) {
@@ -1454,14 +1318,14 @@ function handleGetSignPosition() {
   var height = signData.height;
   currentSize = { width: width, height: height };
 
+  let scaleValues = handleMiseAEchelle(width, height)
 
-  sizeRatio = handleMiseAEchelle(width, height).sizeRatio;
-  fixScale = handleMiseAEchelle(width, height).fixScale;
-  signRatio = handleMiseAEchelle(width, height).signRatio;
-  ratioScale = handleMiseAEchelle(width, height).ratioScale;
+  sizeRatio = scaleValues.sizeRatio;
+  fixScale = scaleValues.fixScale;
+  ratioScale = scaleValues.ratioScale;
 
-  currentWidth = handleMiseAEchelle(width, height).width;
-  currentHeight = handleMiseAEchelle(width, height).height;
+  currentWidth = scaleValues.width;
+  currentHeight = scaleValues.height;
 
   return {
     width: (sign.type == "path" || sign.type == "group") ? sign.prevWidth : sign.width,
@@ -2694,8 +2558,6 @@ function handleGetShape(shape, fixing) {
   }
 }
 async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
-  var canvasCenter = getCanvasCenter();
-
   selectedShape = shape;
 
   async function setShape(canvas) {
@@ -2704,10 +2566,8 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
     // for(const [index, object] in Objects.entries()) {
 
     let safeObject = handleGetObjectByName("safeObject")
-    // var width = nwidth;
-    // var height = nheight;
-    var width = (safeObject.type == "path" || safeObject.type == "group") ? safeObject.prevWidth : nwidth;
-    var height = (safeObject.type == "path" || safeObject.type == "group") ? safeObject.prevHeight : nheight;
+    var width = nwidth;
+    var height = nheight;
     var objectfill;
     
     let newObject
@@ -2996,6 +2856,8 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
 
       
       function setMeasurmentValue(canvas, width, height) {
+  console.log(currentSize, "size 00")
+
         var Objects = canvas.getObjects();
         Objects.forEach((object) => {
           if (object.name == "heightLine") {
@@ -3028,13 +2890,13 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
             object.left = newObject.left + newObject.width / 2 - object.width / 2;
             object.top = newObject.top + (newObject.height + 35);
           }
-          // if (object.name == "thickness-value") {
-          //   object.left = newObject.left + newObject.width / 2 - object.width / 2;
-          //   object.top = newObject.top + (newObject.height + 65);
-          //   object.text = String(
-          //     "Thickness" + ": " + currentThickness + " " + currentUnit
-          //   );
-          // }
+          if (object.name == "thickness-value") {
+            object.left = newObject.left + newObject.width / 2 - object.width / 2;
+            object.top = newObject.top + (newObject.height + 65);
+            object.text = String(
+              "Thickness" + ": " + currentThickness + " " + currentUnit
+            );
+          }
         });
         canvas.renderAll();
       }
@@ -5986,30 +5848,44 @@ function handleSelectFixingMethode(methode) {
 // fonctions concernant l'ajout de text à la sign
 function getObjectValueToUnit(container, obj, objWidth, objHeight, objLeft, objTop) {
  // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
-  const { fixingScale, signRatio } = canvas;
+  // const { fixingScale, signRatio } = canvas;
     
   // 2. Annuler le ratio final (signRatio)
-  const intermediateW = objWidth / signRatio;
-  const intermediateH = objHeight / signRatio;
-  const intermediateLeft = objLeft / signRatio;
-  const intermediateTop = objTop / signRatio;
+  let intermediateW , intermediateH, intermediateLeft, intermediateTop
   
   // 3. Annuler le scale de base (fixingScale)
-  const realWidthPx = intermediateW 
-  const realHeightPx = intermediateH 
+  let realWidthPx , realHeightPx
 
   // 3.5
   let intermediateSignW, intermediateSignH , realSignWidth , realSignHeight
+  let scaleX, scaleY
   if(container.type != 'path'){
-    intermediateSignW = container.width / signRatio;
-    intermediateSignH = container.height / signRatio;
+    intermediateSignW = container.width / ratioScale;
+    intermediateSignH = container.height / ratioScale;
     realSignWidth = convertFromPx(intermediateSignW, currentUnit);
     realSignHeight = convertFromPx(intermediateSignH, currentUnit);
+
+      // 2. Annuler le ratio final (signRatio)
+    intermediateW = objWidth / ratioScale;
+    intermediateH = objHeight / ratioScale;
+    intermediateLeft = objLeft / ratioScale;
+    intermediateTop = objTop / ratioScale;
+    
+    realWidthPx = intermediateW 
+    realHeightPx = intermediateH 
   }else{
-    let scaleX = container.scaleX * container.group.scaleX
-    let scaleY = container.scaleY * container.group.scaleX
-    intermediateSignW = ((container.width + strokeSize) * scaleX) / signRatio;
-    intermediateSignH = ((container.height + strokeSize) * scaleY) / signRatio;
+    realWidthPx = objWidth 
+    realHeightPx = objHeight 
+
+
+
+    scaleX = container.scaleX * container.group.scaleX
+    scaleY = container.scaleY * container.group.scaleX
+    // console.log(container.scaleX, "path scale", container.group.scaleX, "svg group scale", container.scaleX * container.group.scaleX, "total scale")
+    intermediateSignW = ((container.width + strokeSize) * scaleX);
+    intermediateSignH = ((container.height + strokeSize) * scaleY);
+    // intermediateSignW = ((container.width + strokeSize) * scaleX) / ratioScale;
+    // intermediateSignH = ((container.height + strokeSize) * scaleY) / ratioScale;
     realSignWidth = convertFromPx(intermediateSignW, currentUnit);
     realSignHeight = convertFromPx(intermediateSignH, currentUnit);
   }
@@ -6047,7 +5923,13 @@ function getObjectValueToUnit(container, obj, objWidth, objHeight, objLeft, objT
 
 // Fonction utilitaire pour mettre à jour l'UI
 function updateDimensionUI(values) {
-  const ids = ['width', 'height', 'left', 'right', 'top', 'bottom', 'angle'];
+  let ids 
+  if(selectedShape != "cut-to-shape"){ 
+   ids = ['width', 'height', 'left', 'right', 'top', 'bottom', 'angle'];
+  }else{
+    ids = ['width', 'height','angle'];
+  }
+
   ids.forEach(id => {
     const element = document.getElementById(`text-${id}`);
     if (element) element.textContent = Math.round(values[id]);
@@ -7312,7 +7194,7 @@ function handleGetAddedImageValues(object) {
     objRightInContainer = ((container.width + strokeSize) * scaleX) - (objLeftInContainer + objWidht);
     objTopInContainer = objPoint.y - (outlineGlobal.y - (strokeSize));
     objBottomInContainer = ((container.height + strokeSize) * scaleY) - (objTopInContainer + objHeight);
-    console.log(objPoint, "898989", outlineGlobal)  
+    // console.log(objPoint, "898989", outlineGlobal)  
   }
 
   selectedImage.width = parseInt(objWidht);
@@ -7940,7 +7822,7 @@ function handleClipAddedObject(canva) {
       });
       break;
 
-    case "cu-to-shape":
+    case "oval":
       clipPath = new fabric.Ellipse({
         ry: sign.height / 2,
         rx: sign.width / 2,
@@ -8102,7 +7984,7 @@ function handleClipAddedObject(canva) {
       });
       break;
   
-    case "oval":
+    case "cut-to-shape":
       clipPath = null
       break;
   }
@@ -9818,8 +9700,12 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
     });
     canvas.renderAll();
   }
-  setMeasurmentValue(canvas);
-  setMeasurmentValue(backCanvas);
+  if(templateData.shape != "cut-to-shape"){
+    setMeasurmentValue(canvas);
+    setMeasurmentValue(backCanvas);
+  }else{
+    setOutlineMeasurmentValue(sign[0], signData.size.width, signData.size.height)
+  }
 
   if (templateData.size.maxChars != -1) {
     FtextObjects = handleGetTextObjects1("asowp-SignText");
@@ -10044,6 +9930,7 @@ export {
   handleReadyToSaveState,
   handleGetMeasurementVibility,
   setOutlineMeasurmentValue,
+  handleMiseAEchelle,
   handleGetCanvas,
   handleGetCurrentUnit,
   handleGetDefaultText,

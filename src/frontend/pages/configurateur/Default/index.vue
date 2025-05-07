@@ -136,7 +136,7 @@
                                 <div>
                                     <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
                                 </div>
-                                <div>
+                                <div v-if="selectedShape != 'cut-to-shape'">
                                     <span class="asowp-font-semibold">{{ configVisualiserTexts.textPosition && configVisualiserTexts.textPosition.trim() !== '' ? configVisualiserTexts.textPosition : 'Position' }}:</span> {{ configVisualiserTexts.textLeft && configVisualiserTexts.textLeft.trim() !== '' ? configVisualiserTexts.textLeft : 'Left' }}: <span id="text-left"></span> {{configUnit}}, {{ configVisualiserTexts.textRight && configVisualiserTexts.textRight.trim() !== '' ? configVisualiserTexts.textRight : 'Right' }}: <span id="text-right"></span> {{configUnit}}, {{ configVisualiserTexts.textTop && configVisualiserTexts.textTop.trim() !== '' ? configVisualiserTexts.textTop : 'Top' }}: <span id="text-top"></span> {{configUnit}}, {{ configVisualiserTexts.textBottom && configVisualiserTexts.textBottom.trim() !== '' ? configVisualiserTexts.textBottom : 'Bottom' }}: <span id="text-bottom"></span> {{configUnit}}
                                 </div>
                                 <div v-show="angleActive">
@@ -193,8 +193,8 @@
 
                         <div v-if="selectedShape === 'cut-to-shape'" :class="`asowp-flex asowp-flex-col asowp-absolute asowp-top-[2%] asowp-left-2 asowp-bg-[#828282]/60 asowp-text-white asowp-text-[14px] asowp-p-2 asowp-px-3 asowp-rounded-md asowp-shadow-md`">
                             <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}</span> 
-                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-width'">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="outline-width"></span> {{configUnit}}</span>
-                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-height'">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="outline-height"></span> {{configUnit}}</span>
+                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-width'">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="outline-width"> {{ currentSizeData.width }} </span> {{configUnit}}</span>
+                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-height'">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="outline-height"> {{ currentSizeData.height }} </span> {{configUnit}}</span>
                         </div>
                     </div>
     
@@ -2232,6 +2232,7 @@
     import {getSignInfos, handleCheckTemplate, handleReadyToSaveState, 
         handleGetCanvas, handleGetCurrentUnit,
         handleGetMeasurementVibility,
+        handleMiseAEchelle,
         handleGetDefaultText,
         handleGetTextType,
         handleUndo,
@@ -4681,7 +4682,23 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
 
-        await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height)
+        let signObject = handleGetObjectByName("safeObject")
+        if(signObject.type == "group" || signObject.type == "path"){
+            currentSizeValues.value = handleMiseAEchelle(sizees.value[0].width, sizees.value[0].height)
+            console.log(currentSizeValues.value, "999999999")
+            handleGetShape(shape)
+            let sizee = sizees.value[0]
+            // changeSize({label: sizee.label, width:sizee.width, height:sizee.height}, {textNumber: sizee.textNumber, charPrice: sizee.charPrice, basePrice: sizee.basePrice, maxTextChar: sizee.maxTextChar, startPriceAtChar: sizee.startPriceAtChar}, 0)
+            handleChangeSize(sizee.width, sizee.height, sizee.name, sizee.maxTextChar)
+            // await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, sizees.value[0])
+            // currentSizeData.value = sizees.value[0]
+
+            currentSizeName.value = sizee.label
+            currentSizeData.value = {label: sizee.label, width:sizee.width, height:sizee.height}
+        }else{
+            await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height)
+        }
+
 
         var shapePrice = setting.additionalPrice
         var shapePriceObject = {
@@ -5887,8 +5904,10 @@ import { forAliasRE } from '@vue/compiler-core';
     var finishLoading = ref(true)
     async function finishConfig(){
         closeObjectValues()
-        var heightValue = handleGetObjectByName('height-value', canvas)
-        var widthValue = handleGetObjectByName('width-value', canvas)
+        var heightValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('height-value', canvas) : {text: `${document.getElementById("outline-width").textContent} ${configUnit.value}`}
+        var widthValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('width-value', canvas) : {text: `${document.getElementById("outline-height").textContent} ${configUnit.value}`}
+        console.log(heightValue, widthValue, "7777777777")
+        
         var thicknessValue = 'none'
         switch(currentSizeThickness.value) {
             case false:
@@ -6200,14 +6219,14 @@ import { forAliasRE } from '@vue/compiler-core';
             canvas.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex",])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
             canvasBack.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex",])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -9423,11 +9442,6 @@ import { forAliasRE } from '@vue/compiler-core';
                     selectable: false,
                 })
 
-                handleGetMeasurementVibility(
-                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false),
-                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
-                )
-
                 await hideCanvasForWaiting(true)
                 activeCanvas = canvas
 
@@ -9440,6 +9454,11 @@ import { forAliasRE } from '@vue/compiler-core';
                     getCanvas(canvas, canvasBack, 'simple')
                 }
                 handleCloneCanvas(canvas, canvasBack)
+
+                handleGetMeasurementVibility(
+                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false),
+                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
+                )
             
                 canvas.selection = false;
                 canvasBack.selection = false;
