@@ -2,6 +2,7 @@ var FontFaceObserver = require("fontfaceobserver");
 import opentype from 'opentype.js'
 import { load } from 'opentype.js'
 import { generateGlobalContour } from "./canvasUtils/contour"
+import { generateQRCodeObject } from "./canvasUtils/qrCodeInFabric"
 
 var fixingUrl = "";
 var borderUrl = "";
@@ -126,7 +127,9 @@ function handleCloneCanvas() {
     "sideColor",
     "zIndex",
     "prevWidth",
-    "prevHeight"
+    "prevHeight",
+    "fromData",
+    "color",
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -209,6 +212,7 @@ function updateModifications(good, position) {
     var objects = {
       texts: [...addedTexts],
       images: [...addedImages],
+      qrCodes: [...addedQRCodes],
       maxChars: maxTextCharForSize,
       fixScale: fixScale,
       sizeRatio: sizeRatio,
@@ -255,7 +259,9 @@ function updateModifications(good, position) {
       "sideColor",
       "zIndex",
       "prevWidth",
-      "prevHeight"
+      "prevHeight",
+      "fromData",
+      "color",
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -286,7 +292,9 @@ function updateModifications(good, position) {
       "sideColor",
       "zIndex",
       "prevWidth",
-      "prevHeight"
+      "prevHeight",
+      "fromData",
+      "color",
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -454,7 +462,9 @@ function handleUndo() {
 
           // addedTexts = [...currentConfig.canvasObjects[currentConfig.currentStateIndex-1].texts]
           maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].maxChars;
-          addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1] .images;
+          addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].images;
+          addedQRCodes = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].qrCodes;
+
 
           fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixScale;
           sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].sizeRatio;
@@ -488,6 +498,7 @@ function handleUndo() {
           addedTexts = [...currentConfig.canvasObjects[0].texts];
           maxTextCharForSize = currentConfig.canvasObjects[0].maxChar;
           addedImages = currentConfig.canvasObjects[0].images;
+          addedQRCodes = currentConfig.canvasObjects[0].qrCodes;
 
           fixScale = currentConfig.canvasObjects[0].fixScale;
           sizeRatio = currentConfig.canvasObjects[0].sizeRatio;
@@ -505,7 +516,6 @@ function handleUndo() {
   frontTextCharLength = sumOptionsPrice(FtextObjects, "text").length;
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
 
-  // console.log(currentConfig.canvasObjects, "UNdo");
   centerSign(canvas);
   centerSign(backCanvas);
 
@@ -513,6 +523,7 @@ function handleUndo() {
   return {
     texts: addedTexts,
     images: addedImages,
+    qrCodes: addedQRCodes,
   };
 }
 
@@ -649,6 +660,8 @@ function handleRedo() {
         // addedTexts = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].texts
         maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].maxChars;
         addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].images;
+        addedQRCodes = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].qrCodes;
+
 
         fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixScale;
         sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].sizeRatio;
@@ -687,6 +700,7 @@ function handleRedo() {
   return {
     texts: addedTexts,
     images: addedImages,
+    qrCodes: addedQRCodes,
   };
 }
 
@@ -1462,6 +1476,17 @@ function handleDeleteObject(object) {
     }
 
     return addedImages;
+  }
+  if (target.name == "asowp-QRCode") {
+    removeTextById(target.id, addedQRCodes);
+
+    console.log(addedQRCodes, "added images");
+
+    if (readyToSave) {
+      updateModifications(true, "selection de fixing");
+    }
+
+    return addedQRCodes;
   }
 }
 function handleCloneObject(object, imageId) {
@@ -2474,7 +2499,7 @@ function sortByOffset(arr) {
 
 async function createPreciseContourPath(zone) {
   // 1. Filtrer les objets dans la zone avec précision
-  const objectsInZone = canvas.getObjects().filter(obj => obj.name == "asowp-SignText" || obj.name == "asowp-SignImage");
+  const objectsInZone = canvas.getObjects().filter(obj => obj.name == "asowp-SignText" || obj.name == "asowp-SignImage" || obj.name == "asowp-QRCode");
 
   if (objectsInZone.length === 0) return null;
 
@@ -2541,6 +2566,10 @@ async function extractExactPaths(objects) {
         resolve(clone)
       }
       if(obj.name === "asowp-SignImage"){
+        let clone = await cloneObjectForOutline(obj)
+        resolve(clone)
+      }
+      if(obj.name === "asowp-QRCode"){
         let clone = await cloneObjectForOutline(obj)
         resolve(clone)
       }
@@ -2856,8 +2885,6 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
 
       
       function setMeasurmentValue(canvas, width, height) {
-  console.log(currentSize, "size 00")
-
         var Objects = canvas.getObjects();
         Objects.forEach((object) => {
           if (object.name == "heightLine") {
@@ -5881,7 +5908,6 @@ function getObjectValueToUnit(container, obj, objWidth, objHeight, objLeft, objT
 
     scaleX = container.scaleX * container.group.scaleX
     scaleY = container.scaleY * container.group.scaleX
-    // console.log(container.scaleX, "path scale", container.group.scaleX, "svg group scale", container.scaleX * container.group.scaleX, "total scale")
     intermediateSignW = ((container.width + strokeSize) * scaleX);
     intermediateSignH = ((container.height + strokeSize) * scaleY);
     // intermediateSignW = ((container.width + strokeSize) * scaleX) / ratioScale;
@@ -5889,7 +5915,7 @@ function getObjectValueToUnit(container, obj, objWidth, objHeight, objLeft, objT
     realSignWidth = convertFromPx(intermediateSignW, currentUnit);
     realSignHeight = convertFromPx(intermediateSignH, currentUnit);
   }
-  console.log(realSignWidth, realSignHeight, "787878", container)
+  // console.log(realSignWidth, realSignHeight, "787878", container)
   
   // 4. Convertir en unité réelle
   const realWidth = convertFromPx(realWidthPx, currentUnit);
@@ -7106,6 +7132,114 @@ function handleChangeTextLightColor(color) {
 
   return selectedText.color;
 }
+
+let addedQRCodes = []
+async function handleAddQRCode(data, clone){
+  var newCodeId = newId += 1
+  let object = clone ? await generateQRCodeObject(data, clone.color) : await generateQRCodeObject(data)
+
+  object.set({
+    id: newCodeId,
+    name: "asowp-QRCode",
+    canvasName: activeCanvas.name
+  })
+  object.on("mousedown", function () {
+    handleGetAddedImageValues(object);
+  });
+  object.on("mouseup", function () {
+    handleGetAddedImageValues(object);
+  });
+  
+  activeCanvas.add(object)
+  if(clone){
+    object.set({
+      left: clone.left + 10,
+      top: clone.top + 10,
+      canvasName: clone.canvasName,
+      scaleX: clone.scaleX,
+      scaleY: clone.scaleY,
+      angle: clone.angle,
+    })
+  }else{
+    activeCanvas.centerObject(object)
+  }
+  activeCanvas.setActiveObject(object);
+
+  addedQRCodes.push(object)
+
+  updateModifications(true, "==ajout de QRCode==");
+  return {
+    codes: addedQRCodes,
+    activeCode: object
+  }
+}
+async function handleEditQRCode(code, value, color){
+
+  let activeObject = activeCanvas.getActiveObject()
+  if(activeObject && activeObject.id == code.id){
+    activeCanvas.remove(activeObject)
+  }
+
+  let object = await generateQRCodeObject(value, color)
+
+  object.set({
+    id: code.id,
+    name: "asowp-QRCode",
+    left: code.left,
+    top: code.top,
+    canvasName: code.canvasName,
+    scaleX: code.scaleX,
+    scaleY: code.scaleY,
+    angle: code.angle,
+  })
+  object.on("mousedown", function () {
+    handleGetAddedImageValues(object);
+  });
+  object.on("mouseup", function () {
+    handleGetAddedImageValues(object);
+  });
+  
+  activeCanvas.add(object)
+  activeCanvas.setActiveObject(object);
+
+  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? object : obj)
+
+  return addedQRCodes
+}
+async function handleChangeQRCodeColor(code, color){
+
+  let activeObject = activeCanvas.getActiveObject()
+  if(activeObject && activeObject.id == code.id){
+    activeCanvas.remove(activeObject)
+  }
+
+  let object = await generateQRCodeObject(code.fromData, color)
+
+  object.set({
+    id: code.id,
+    name: "asowp-QRCode",
+    left: code.left,
+    top: code.top,
+    canvasName: code.canvasName,
+    scaleX: code.scaleX,
+    scaleY: code.scaleY,
+    angle: code.angle,
+  })
+  object.on("mousedown", function () {
+    handleGetAddedImageValues(object);
+  });
+  object.on("mouseup", function () {
+    handleGetAddedImageValues(object);
+  });
+  
+  activeCanvas.add(object)
+  activeCanvas.setActiveObject(object);
+
+  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? object : obj)
+
+  return addedQRCodes
+}
+
 
 var defaultRadius = 25
 function handleTurnLightOnOff(state){
@@ -10000,4 +10134,7 @@ export {
   handleChangeAddedSvgColor,
   handleSetShadow,
   handleConvertImageToDataURI,
+  handleAddQRCode,
+  handleEditQRCode,
+  handleChangeQRCodeColor,
 };

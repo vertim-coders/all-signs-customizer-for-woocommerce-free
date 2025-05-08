@@ -1,4 +1,4 @@
-<template>
+<template> 
     <div class="asowp-relative asowp-flex asowp-w-full asowp-h-full">
 
         <div class="asowp-relative asowp-flex asowp-w-full asowp-h-full">
@@ -361,6 +361,15 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>                                  
                                 </div>
+                            </div>
+                        </div>
+                        <div @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-w-fit asowp-h-[90%] asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+                            </svg>
+                            <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                Qr Code
                             </div>
                         </div>
                     </div>
@@ -1434,6 +1443,115 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div v-show="step == 'qr-code'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-images-section">
+                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textImage}}</p>    
+
+                            <div :class="`asowp-bg-[${configColors.backgroundColorHeader}]/10 asowp-flex asowp-flex-col asowp-space-y-3 asowp-full-center asowp-p-4 asowp-m-1`">
+                                <span v-show="!addQRActive && !selectQRCode" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
+                                    <span @click="()=> {showClipartsSection(false); addQRActive = true}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+                                        </svg>
+                                        <p class="asowp-text-center">Add QR code</p>
+                                    </span>
+                                </span>
+
+                                <span v-show="selectQRCode || addQRActive" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
+                                    <span @click="()=> {selectQRCode = false, addQRActive = false}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                        </svg>
+                                        <p class="asowp-text-center">Edit QR Code</p>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="asowp-h-full asowp-space-y-2 asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+
+                                <div v-show="!selectQRCode && !addQRActive">
+                                    <p class="asowp-font-medium" v-show="usedQRCodes.length > 0">Codes added</p>
+                                    <div class="asowp-p-2 asowp-space-y-2">
+                                        <div v-for="(codeObject, index) in usedQRCodes">
+                                            <div :class="`${activeFace == codeObject.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 asowp-p-2 asowp-base-animation asowp-rounded-sm`" @click="editQRCode(codeObject, false)">
+                                                <!-- <p class="asowp-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p> -->
+                                                <p class="asowp-text-sm">Code {{ index }}</p>
+                                                <p class="asowp-text-xs">{{codeObject.fromData}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-show="addQRActive" class="asowp-p-2 asowp-space-y-2">
+                                    <!-- <div class="asowp-flex asowp-space-x-2">
+                                        <div @click="()=>{qrCodeType = 'text'}" :class="`${qrCodeType == 'text' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Text</div>
+                                        <div @click="()=>{qrCodeType = 'image'}" :class="`${qrCodeType == 'image' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Image</div>
+                                    </div> -->
+
+                                    <div v-if="qrCodeType == 'text'">
+                                        <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
+                                        <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm"  @input="getQRCodeData" style="border-radius: 6px"></textarea>
+                                    </div>
+                                    <div v-if="qrCodeType == 'image'">
+                                        <label :class="`asowp-w-3/4 asowp-inputImage asowp-full-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-text-sm`">
+                                            <input @change="getQRCodeData" class="asowp-hidden" id="asowp-QRCode-image-editor" type="file" name="asowp-Images" :accept="configImagesFormat" style="display: none;"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                            </svg>
+                                            <p>Upload image</p>
+                                        </label>
+                                    </div>
+
+                                    <span @click="addQRCode" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
+                                        <p class="asowp-text-center">Add</p>
+                                    </span>
+
+
+                                </div>
+
+                                <div v-show="selectQRCode" class="asowp-p-2 asowp-space-y-2">
+                                    <div>
+                                        <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
+                                        <textarea name="qrCode-editor" id="asowp-QRCode-editor" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="activeQrCodeData"  @input="changeQRCodeValue" style="border-radius: 6px"></textarea>
+                                    </div>
+
+                                    <div>
+                                        <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
+                                        
+                                        <div class="asowp-flex asowp-space-x-2">
+                                            <div @click="()=>{activeQrCodeColorPart = 'dark'}" :class="`${activeQrCodeColorPart == 'dark' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Dark part</div>
+                                            <div @click="()=>{activeQrCodeColorPart = 'light'}" :class="`${activeQrCodeColorPart == 'light' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Light part</div>
+                                        </div>
+                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                            <div v-for="(color, index) in configTextSettings.colors" class="">
+                                                <div @click="changeQRCodeColor(color.codeHex)" :class="`${(activeQrCodeColorPart === 'dark' && activeQrCodeColor.dark === color.codeHex) || (activeQrCodeColorPart === 'light' && activeQrCodeColor.light === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                            </div>
+        
+                                            <div :class="`asowp-relative`">
+                                                <input id="asowp-set-QRCodeColor" type="color" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeQRCodeColor($event.target.value)" />
+                                                <label for="asowp-set-QRCodeColor" v-if="configTextSettings.enableCustomColor" :class="`asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
+                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                        <g fill="none" fill-rule="evenodd">
+                                                            <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                            <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                            <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                            <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                            <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                            <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                            <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                            <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                        </g>
+                                                    </svg>
+                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
         
                         <div v-show="step == 'add-components'" class="asowp-ralative asowp-flex asowp-flex-col lg:asowp-space-y-1 asowp-w-full asowp-h-full" id="asowp-fixings-section">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{addComponentValue.title}}</p>    
@@ -2300,6 +2418,9 @@
         handleChangeAddedSvgColor,
         handleSetShadow,
         handleConvertImageToDataURI,
+        handleAddQRCode,
+        handleEditQRCode,
+        handleChangeQRCodeColor,
     } from '@/frontend/utils/asowp-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -2481,6 +2602,12 @@ import { forAliasRE } from '@vue/compiler-core';
                 }
             break;
         
+            case "qr-code":
+                // if(currentMaterialTextImages.value.enableImage){
+                // }
+                step.value = option;
+                showOption.value = true;
+            break;
             default:
                 break;
         }
@@ -3358,6 +3485,7 @@ import { forAliasRE } from '@vue/compiler-core';
             previousStep()
             addedTexts.value = options.texts
             usedImages.value = options.images
+            usedQRCodes.value = options.qrCodes
 
         }
         
@@ -3367,6 +3495,7 @@ import { forAliasRE } from '@vue/compiler-core';
         nextStep()
         addedTexts.value = options.texts
         usedImages.value = options.images
+        usedQRCodes.value = options.qrCodes
     }
     var resetAllBool = ref(false)
     function confirmResetAll(value){
@@ -3464,6 +3593,7 @@ import { forAliasRE } from '@vue/compiler-core';
             },
             texts: [...addedTexts.value],
             images: [...usedImages.value],
+            qrCodes: [...usedQRCodes.value],
             price: finalPrices.value,
         }
         // console.log(usedImages.value, "usedImages")
@@ -3997,6 +4127,8 @@ import { forAliasRE } from '@vue/compiler-core';
             infoDiv.classList.remove("asowp-hidden");
 
             var boundingRect = obj.getBoundingRect(false);
+            // console.log(obj, "555", boundingRect)
+            
             infoDiv.style.left =  boundingRect.left + boundingRect.width + 20 + 'px';
             infoDiv.style.top = boundingRect.top + (boundingRect.height) + 20 + 'px';
         } else {
@@ -4275,6 +4407,10 @@ import { forAliasRE } from '@vue/compiler-core';
                     showOptions('image')
                     editAddedImage(currentObject)
                 }
+                if(currentObject.name === 'asowp-QRCode'){
+                    showOptions('qr-code')
+                    editQRCode(currentObject)
+                }
             }
         }
     }
@@ -4295,6 +4431,11 @@ import { forAliasRE } from '@vue/compiler-core';
                         price: 0
                     }
                     getOptionPrice(priceObject)
+                }
+
+                if(object.name == 'asowp-QRCode'){
+                    usedQRCodes.value = handleDeleteObject(object)
+                    selectQRCode.value = false
                 }
                 if(object.name == 'asowp-SignImage'){
                     usedImages.value = handleDeleteObject(object)
@@ -4325,7 +4466,7 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
     }
-    function cloneObject(){
+    async function cloneObject(){
         if(activeCanvas.getActiveObject() !== undefined){
             if(activeCanvas.getActiveObject() !== null){
                 newImagePriceId.value = newImagePriceId.value + 1
@@ -4358,6 +4499,12 @@ import { forAliasRE } from '@vue/compiler-core';
         
                     usedImages.value = handleCloneObject(object, newImagePriceId.value)
                     // console.log(usedImages.value)
+                }
+
+                if(object.name === 'asowp-QRCode'){
+                    let qrObject = await handleAddQRCode(object.fromData, object)
+                    usedQRCodes.value = qrObject.codes
+                    saveStep('clonage du code Qr');
                 }
                 var priceObject = {
                     name: 'none',
@@ -5789,6 +5936,105 @@ import { forAliasRE } from '@vue/compiler-core';
     function flipImage(){
         handleFlipImage()
     }
+
+    let usedQRCodes = ref([])
+    let addQRActive = ref(false)
+    let selectQRCode = ref(false)
+    let qrCodeType = ref("text")
+    let qrCodeData = ref({})
+    let activeQrCode = ref({})
+    let activeQrCodeData = ref("")
+    let activeQrCodeColorPart = ref("dark")
+    let activeQrCodeColor = ref({
+        dark: '#000000',
+        light: '#ffffff',
+    })
+    async function getQRCodeData(e){
+        let source;
+        if (e.target.type === 'textarea' || e.target.tagName === 'TEXTAREA') {
+            source = e.target.value;
+        } else if (e.target.type === 'file') {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            source = file;
+        }
+        
+        try {
+            qrCodeData.value = source
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function addQRCode(){
+        try {
+            if(qrCodeData.value != {}){
+                const qrObject = await handleAddQRCode(qrCodeData.value);
+                addQRActive.value = false
+
+                usedQRCodes.value = qrObject.codes
+                editQRCode(qrObject.activeCode)
+
+                if(firstSetLoad.value){
+                    saveStep('add qrCode to sign')
+                }
+            }
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function editQRCode(code, active){
+        try {
+            if(activeFace.value == code.canvasName){
+                if(active == true){
+                    let activeCode = activeCanvas.getActiveObject()
+                    if(code.name == "asowp-QRCode" && code.id == activeCode.id){
+                        selectQRCode.value = true
+                        
+                        activeQrCode.value = code
+                        activeQrCodeData.value = code.fromData
+                        activeQrCodeColor.value = code.color
+                    }
+                }else{
+                    if(code.name == "asowp-QRCode"){
+                        selectQRCode.value = true
+                        activeCanvas.setActiveObject(code)
+                        
+                        activeQrCode.value = code
+                        activeQrCodeData.value = code.fromData
+                        activeQrCodeColor.value = code.color
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function changeQRCodeValue(){
+        try {
+            usedQRCodes.value = await handleEditQRCode(activeQrCode.value, activeQrCodeData.value, activeQrCodeColor.value)
+
+            console.log(usedQRCodes.value, "editing")
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function changeQRCodeColor(color){
+        try {
+            if(activeQrCodeColorPart.value == "dark"){
+                activeQrCodeColor.value.dark = color
+            }else{
+                activeQrCodeColor.value.light = color
+            }
+            usedQRCodes.value = await handleChangeQRCodeColor(activeQrCode.value, activeQrCodeColor.value)
+
+            console.log(usedQRCodes.value, "editing")
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+
+
+    
 
     var optionsPrices = ref([])
     var textsPrices = ref(0)
@@ -9549,7 +9795,7 @@ import { forAliasRE } from '@vue/compiler-core';
                             obj.clipPath = handleClipAddedObject(canvas);
                             canvas.renderAll();
                         }
-                        if (obj.name === 'asowp-SignImage') {
+                        if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
                             obj.clipPath = handleClipAddedObject(canvas);
                             canvas.renderAll();
                         }
@@ -9565,7 +9811,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvas.on('object:moving', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9579,7 +9825,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvas.on('object:scaling', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9593,7 +9839,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvas.on('object:rotating', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9646,7 +9892,7 @@ import { forAliasRE } from '@vue/compiler-core';
                             obj.clipPath = handleClipAddedObject(canvasBack);
                             canvasBack.renderAll();
                         }
-                        if (obj.name === 'asowp-SignImage') {
+                        if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
                             obj.clipPath = handleClipAddedObject(canvasBack);
                             canvasBack.renderAll();
                         }
@@ -9660,7 +9906,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvasBack.on('object:moving', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9674,7 +9920,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvasBack.on('object:scaling', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9688,7 +9934,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvasBack.on('object:rotating', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
