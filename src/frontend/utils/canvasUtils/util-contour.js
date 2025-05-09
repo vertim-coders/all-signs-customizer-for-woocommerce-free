@@ -144,7 +144,7 @@ function opaquePoints(pixels) {
   return points;
 }
 
-function contourCanvas(imageData, concavity) {
+function contourCanvas(imageData, concavity, strokeSize) {
   const c = document.createElement("canvas")
   const ctx = c.getContext("2d")
 
@@ -165,7 +165,12 @@ function contourCanvas(imageData, concavity) {
   }
 
   ctx.strokeStyle = "black"
+  if(strokeSize){
+    ctx.lineWidth = strokeSize
+  }
   ctx.fillStyle = "black"
+  ctx.lineJoin = "round"
+  ctx.lineCap = "round"
   ctx.beginPath()
   ctx.moveTo(start[0], start[1])
 
@@ -243,7 +248,7 @@ function removeBorderPathBySize(svgString, width, height) {
 // }
 
 
-async function contourPath(source, blur, scaleDiff, scaleX, scaleY, forcedWidth, forcedHeight) {
+async function contourPath(source, blur, strokeSize) {
   const sourceWidth = source.width
   const sourceHeight = source.height
   let imageData = source
@@ -254,7 +259,7 @@ async function contourPath(source, blur, scaleDiff, scaleX, scaleY, forcedWidth,
   
   
   StackBlur.imageDataRGBA(imageData, 0, 0, imageData.width, imageData.height, Math.round(blur))
-  imageData = contourCanvas(imageData, 1)
+  imageData = contourCanvas(imageData, 1, strokeSize)
   // imageData = threshold(imageData)
   // await downloadImageData(imageData)
 

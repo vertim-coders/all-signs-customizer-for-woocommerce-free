@@ -3038,6 +3038,8 @@ import { forAliasRE } from '@vue/compiler-core';
                     }
                     haveDefault = true
                     getSignInfos(sizeData)
+                    currentSizeData.value = sizeData
+                    currentSizeSetting.value.value = settings
                     currentSizeId.value = index
                     break;
                 }
@@ -3058,6 +3060,8 @@ import { forAliasRE } from '@vue/compiler-core';
                     startPriceAtChar: sizees.value[0].startPriceAtChar,
                 }
                 getSignInfos(sizeData)
+                currentSizeData.value = sizeData
+                currentSizeSetting.value.value = settings
                 currentSizeId.value = 0
             }
         }else{
@@ -5528,7 +5532,7 @@ import { forAliasRE } from '@vue/compiler-core';
     async function addImageToSign(image, price, id){
         // console.log(price, "Added")
         newImagePriceId.value ++
-        var currentImages = {}
+        let currentImages = {}
         try {
             if(image){      
                 var imagePrice = price
@@ -5544,7 +5548,10 @@ import { forAliasRE } from '@vue/compiler-core';
             }else{
                 currentImages = await handleAddImageToSign()
             }
-            imageError.value = ""
+            imageError.value = currentImages.error
+            if(imageError.value != ""){
+                alert(imageError.value)
+            }
             usedImages.value = currentImages.images
             addRecentImages()
             editImage.value = false

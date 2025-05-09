@@ -50,7 +50,7 @@ function downloadImageData(imageData, filename = 'image.png') {
 
 
 // 🧠 Fonction principale
-export async function generateGlobalContour(objectPaths, canvasSize, zoom) {
+export async function generateGlobalContour(objectPaths, canvasSize, zoom, strokeSize) {
   const width = canvasSize.width
   const height = canvasSize.height
 
@@ -95,7 +95,7 @@ export async function generateGlobalContour(objectPaths, canvasSize, zoom) {
   // await downloadImageData(binarized)
 
   // ImageTracer
-  const pathString = await contourPath(binarized, 1)
+  const pathString = await contourPath(binarized, 1, strokeSize)
   // const pathString = await contourPath(imageData, 1)
 
 

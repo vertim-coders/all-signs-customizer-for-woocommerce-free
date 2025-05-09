@@ -2400,10 +2400,11 @@ function handleChangeSignColor( name, pattern, textColor, defTextColor, restart 
 
               pathObjects.forEach(path => {
                 const d = path.d;
-                if (d && !d.includes(target)) {
+                // if (d && !d.includes(target)) {
+                if (path.name == "outline") {
                   path.set({
                     fill: pattern.codeHex,
-                    stroke: pattern.codeHex,
+                    // stroke: pattern.codeHex,
                   })
                 }
               });
@@ -2497,7 +2498,7 @@ function sortByOffset(arr) {
   });
 }
 
-async function createPreciseContourPath(zone) {
+async function createPreciseContourPath(size) {
   // 1. Filtrer les objets dans la zone avec précision
   const objectsInZone = canvas.getObjects().filter(obj => obj.name == "asowp-SignText" || obj.name == "asowp-SignImage" || obj.name == "asowp-QRCode");
 
@@ -2514,7 +2515,7 @@ async function createPreciseContourPath(zone) {
   }
   let currentZoom = activeCanvas.getZoom()
 
-  let mergedPath = await generateGlobalContour(sortedPaths, canvaSize, currentZoom)
+  let mergedPath = await generateGlobalContour(sortedPaths, canvaSize, currentZoom, size)
 
 
   return mergedPath
@@ -2809,11 +2810,20 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
           break;
         
         case "cut-to-shape":
+          let cutline1 = handleGetObjectByName("asowp-cutline1", canvas)
+          let cutline2 = handleGetObjectByName("asowp-cutline2", canvas)
+          if(cutline1){
+            canvas.remove(cutline1)
+          }
+          if(cutline2){
+            canvas.remove(cutline2)
+          }
+
           let safeObjet = {
             height: height,
             width: width,
           }
-          newObject = await createPreciseContourPath(safeObjet, 6)
+          newObject = await createPreciseContourPath(strokeSize)
 
           let pathObjects = newObject._objects
           const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
@@ -2823,12 +2833,8 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
             if (d && !d.includes(target)) {
               path.set({
                 fill: objectfill,
-                stroke: objectfill,
-                strokeWidth: strokeSize,
                 strokeLineJoin: 'round',
                 strokeLineCap: 'round',
-                left: path.left - (strokeSize/2),
-                top: path.top - (strokeSize/2),
                 name: "outline"
               })
             }
@@ -2839,11 +2845,10 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
             stroke: objectfill,
             selectable: true,
             name: "safeObject",
-            shadow: defaultShadow,
+            shadow: selectedCutline == "none" ? defaultShadow : null,
             id: objectId,
             width: canvas.getWidth(true),
             height: canvas.getHeight(true),
-            strokeWidth: 10,
             strokeLineJoin: 'round',
             strokeLineCap: 'round',
             selectable: false,
@@ -2875,6 +2880,47 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
 
         const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
         let sign = newObject._objects.filter(path => path.d && !path.d.includes(target))
+
+        let cutline1 = await cloneOutline(newObject)
+        let cutline2 = await cloneOutline(newObject)
+
+        let signCut1 = cutline1._objects.filter(path => path.fill == sign[0].fill)
+        let signCut2 = cutline2._objects.filter(path => path.fill == sign[0].fill)
+        
+        // console.log(cutline1, "cutline", cutline2)
+        // console.log(signCut1, "cutline sign", signCut2)
+
+        cutline2.set({
+          shadow: selectedCutline == "2x" ? defaultShadow : null,
+          selectable: false,
+          name: "asowp-cutline2",
+          visible: selectedCutline == "2x" ? true : false
+        })
+        cutline1.set({
+          selectable: false,
+          name: "asowp-cutline1",
+          visible: (selectedCutline == "1x" || selectedCutline == "2x" )  ? true : false,
+          shadow: selectedCutline == "1x" ? defaultShadow : null,
+        })
+
+        signCut1[0].set({
+          stroke: cutlinesColor.first,
+          strokeWidth: 5,
+          left: signCut1[0].left-2.5,
+          top: signCut1[0].top-2.5,
+        })
+        signCut2[0].set({
+          stroke: cutlinesColor.second,
+          strokeWidth: 10,
+          left: signCut2[0].left-5,
+          top: signCut2[0].top-5,
+        })
+
+        activeCanvas.add(cutline1, cutline2)
+        cutline1.sendToBack()
+        cutline2.sendToBack()
+
+
 
         let realValues = handleReverseMiseAEchelle(sign[0])
         setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
@@ -2991,6 +3037,51 @@ function handleChangeOutlineSize(size){
       })
     }
   });
+}
+let selectedCutline = "2x"
+let cutlinesColor = {
+  first: 'blue',
+  second: 'orange',
+}
+function handleSetCutline(size){
+  let cutline1 = handleGetObjectByName("asowp-cutline1")
+  let cutline2 = handleGetObjectByName("asowp-cutline2")
+  let sign = handleGetObjectByName("safeObject")
+  if(size == "1x"){
+    cutline1.visible = true
+    cutline2.visible = false
+
+    cutline1.shadow = defaultShadow
+    cutline2.shadow = null
+    sign.shadow = null
+
+  }else if(size == "2x"){
+    cutline1.visible = true
+    cutline2.visible = true
+
+    cutline1.shadow = null
+    cutline2.shadow = defaultShadow
+    sign.shadow = null
+  }else{
+    cutline1.visible = false
+    cutline2.visible = false
+    
+    cutline1.shadow = null
+    cutline2.shadow = null
+    sign.shadow = defaultShadow
+  }
+
+  activeCanvas.renderAll()
+}
+function cloneOutline(object){
+  return new Promise(async (resolve, reject) => {
+    var target = object;
+    var canvas = target.canvas;
+    target.clone(function (cloned) {
+      
+      resolve(cloned)
+    });
+  })
 }
 
 //fonctions concernant les fixings methode
@@ -7598,10 +7689,7 @@ function handleAddImageToSign(image, imageId, price) {
 
         // Vérifie si l'image respecte les conditions de taille
         if (width > maxWidth || width < minWidth) {
-          reject();
-          // console.log(
-          //   `L'image doit avoir une taille comprise entre ${minWidth} et ${maxWidth}`
-          // )
+          reject(`L'image doit avoir une taille comprise entre ${imageSettings.fileUploadScript.uploadMinWidth}px et ${imageSettings.fileUploadScript.uploadMaxWidth}px de largeur`);
         } else {
           resolve(file);
         }
@@ -7621,47 +7709,48 @@ function handleAddImageToSign(image, imageId, price) {
       imageInput.addEventListener("change", function (e) {
         const imgFile = imageInput.files[0];
 
-        if (imageSettings.fileUploadScript.customWithGraphical) {
-          checkImageSize(
-            imgFile,
-            imageSettings.fileUploadScript.uploadMaxWidth,
-            imageSettings.fileUploadScript.uploadMinWidth
-          )
-            .then((validFile) => {
-              const reader = new FileReader();
-              reader.onload = async () => {
-                const imgBase64 = reader.result;
-                if (!itsDone) {
-                  await useImage(imgBase64);
-                  itsDone = true;
-                  resolve({ images: addedImages, error: "" });
-                }
-              };
-              reader.readAsDataURL(validFile);
-            })
-            .catch((error) => {
-              // console.log(error);
-              imageError = `L'image doit avoir une taille comprise entre ${imageSettings.fileUploadScript.uploadMinWidth}px et ${imageSettings.fileUploadScript.uploadMaxWidth}px de largeur`;
-              reject({ images: addedImages, error: imageError });
-            });
-        } else {
-          // Création d'un objet FileReader
-          const reader = new FileReader();
-          // Lecture du fichier image lorsqu'il est chargé
-          reader.onload = async () => {
-            // Stockage de l'image en base64 dans une variable
-            const imgBase64 = reader.result;
-            // Utilisation de l'image
-            if (!itsDone) {
-              await useImage(imgBase64);
-              itsDone = true;
-            }
-          };
-          // Lancement de la lecture comme URL
-          reader.readAsDataURL(imgFile);
+        // console.log(imgFile, imageSettings.fileUploadScript, "upload verif", imageSettings.fileUploadScript.customWithGraphical)
 
-          resolve({ images: addedImages, error: "" });
-        }
+
+        // if (imageSettings.fileUploadScript.customWithGraphical) {
+        // } 
+        checkImageSize( imgFile, imageSettings.fileUploadScript.uploadMaxWidth, imageSettings.fileUploadScript.uploadMinWidth )
+          .then((validFile) => {
+            const reader = new FileReader();
+            reader.onload = async () => {
+              const imgBase64 = reader.result;
+              if (!itsDone) {
+                await useImage(imgBase64);
+                itsDone = true;
+                resolve({ images: addedImages, error: "" });
+              }
+            };
+            reader.readAsDataURL(validFile);
+          })
+          .catch((error) => {
+            console.log(error);
+            imageError = error;
+            resolve({ images: addedImages, error: error });
+            // reject({ images: addedImages, error: error });
+          });
+        // else {
+        //   // Création d'un objet FileReader
+        //   const reader = new FileReader();
+        //   // Lecture du fichier image lorsqu'il est chargé
+        //   reader.onload = async () => {
+        //     // Stockage de l'image en base64 dans une variable
+        //     const imgBase64 = reader.result;
+        //     // Utilisation de l'image
+        //     if (!itsDone) {
+        //       await useImage(imgBase64);
+        //       itsDone = true;
+        //     }
+        //   };
+        //   // Lancement de la lecture comme URL
+        //   reader.readAsDataURL(imgFile);
+
+        //   resolve({ images: addedImages, error: "" });
+        // }
       });
     }
   });
