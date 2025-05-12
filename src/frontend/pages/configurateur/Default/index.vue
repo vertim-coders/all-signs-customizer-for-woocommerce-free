@@ -552,10 +552,10 @@
                             </div>
                         </div>
         
-                        <div v-show="step == 'shape'" class="asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-shapes">
+                        <div v-show="step == 'shape'" class="asowp-flex asowp-flex-col asowp-w-full asowp-h-full" id="asowp-shapes">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textShape}}</p>    
         
-                            <div class="asowp-w-full asowp-h-full asowp-overflow-auto asowp-scrollBar">
+                            <div class="asowp-w-full asowp-h-full lg:asowp-py-2 asowp-overflow-auto asowp-scrollBar">
                                 <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
                                     <div class="asowp-w-full asowp-flex">
                                         <input type="radio" id="cut-to-shape-0" name="asowp-shape" class="peer asowp-hidden" @change="selectShape('cut-to-shape', {additionalPrice: 0}, 0)">
@@ -583,6 +583,58 @@
                                                     <p v-if="!shapee.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal asowp-invisible">none</p>
                                                 </label>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="selectedShape == 'cut-to-shape'" :class="`asowp-border-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}]`" style="border-top-width: thin">
+                                <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
+                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('small')">
+                                        <div :class="`${currentOutineSize == 'small' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="``">
+                                                <svg viewBox="0 0 20 23" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M13.334 11.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C2.48 17.84 2 16.723 2 15.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 3.97 11.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C7.19 3.191 8.421 3 9.822 3c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
+                                                        <path d="M1 7.215c.304-1.431.804-2.588 1.501-3.469.697-.88 1.704-1.559 3.022-2.034C6.842 1.237 8.368 1 10.104 1c1.723 0 3.123.203 4.2.608 1.078.406 1.87.915 2.377 1.53.506.614.861 1.391 1.065 2.328.114.584.17 1.635.17 3.156v4.561c0 3.18.073 5.192.219 6.035A7.56 7.56 0 0 0 19 21.642h-3.573" stroke="currentColor" class="stroke"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <p>Small</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('medium')">
+                                        <div :class="`${currentOutineSize == 'medium' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="``">
+                                                <svg viewBox="0 0 22 25" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M14.334 12.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C3.48 18.84 3 17.723 3 16.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 4.97 12.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C8.19 4.191 9.421 4 10.822 4c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
+                                                        <path d="M1 8.025c.344-1.618.909-2.925 1.697-3.921.787-.995 1.926-1.762 3.416-2.299C7.603 1.268 9.328 1 11.291 1c1.947 0 3.53.229 4.748.687 1.217.459 2.112 1.035 2.686 1.73.572.694.973 1.572 1.203 2.631.129.66.193 1.848.193 3.567v5.156c0 3.595.082 5.869.247 6.821a8.55 8.55 0 0 0 .978 2.74h-4.039" stroke="currentColor" class="stroke"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <p>Medium</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('large')">
+                                        <div :class="`${currentOutineSize == 'large' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="``">
+                                                <svg viewBox="0 0 25 28" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M15.334 14.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C4.48 20.84 4 19.723 4 18.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 5.97 14.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C9.19 6.191 10.421 6 11.822 6c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
+                                                        <path d="M1 8.828c.383-1.803 1.013-3.26 1.891-4.37.877-1.108 2.146-1.963 3.807-2.56 1.66-.6 3.582-.898 5.77-.898 2.17 0 3.933.255 5.29.766 1.357.511 2.354 1.153 2.994 1.927.637.774 1.084 1.752 1.34 2.932.144.736.215 2.06.215 3.975v5.746c0 4.006.092 6.54.276 7.6A9.528 9.528 0 0 0 23.673 27h-4.501" stroke="currentColor" class="stroke"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <p>Large</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1331,37 +1383,15 @@
                                     <div v-if="configImageSettingsFilters.active && activeImageType !== 'svg'" class="asowp-space-y-2">
                                         <p class="asowp-font-medium">Filters</p>
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
-                                            <div class="asowp-flex asowp-space-x-6">
-                                                <span @click="selectImageFilter('Blur')" :class="`${setFilter.blur ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Blur</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Greyscale')" :class="`${setFilter.greyscale ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Greyscale</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Sepia')" :class="`${setFilter.sepia ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Sepia</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Emboss')" :class="`${setFilter.embross ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Emboss</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Sharpen')" :class="`${setFilter.sharpen ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Sharpen</p>
-                                                </span>
+                                            <div class="asowp-flex asowp-flex-wrap asowp-space-x-6">
+                                                <div v-for="filter in validFilter">
+                                                    <span @click="selectImageFilter(filter.name)" :class="`${setFilter.blur ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                                        </svg>
+                                                        <p class="asowp-text-xs asowp-font-semibold">{{filter.name}}</p>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -2421,6 +2451,7 @@
         handleAddQRCode,
         handleEditQRCode,
         handleChangeQRCodeColor,
+        handleChangeOutlineSize,
     } from '@/frontend/utils/asowp-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -2430,7 +2461,7 @@
     
     import opentype from 'opentype.js'
     import { load } from 'opentype.js'
-import { forAliasRE } from '@vue/compiler-core';
+    import { forAliasRE } from '@vue/compiler-core';
 
     const route = useRoute();
     const template_config_id = route.params.configId;
@@ -2508,6 +2539,18 @@ import { forAliasRE } from '@vue/compiler-core';
             canvas.getElement().style.opacity = "1"
         }
     }
+
+    let validFilter = ref([
+        {name: "Blur", value: "blur", image: ""},
+        {name: "Greyscale", value: "greyscale", image: ""},
+        {name: "Sepia", value: "sepia", image: ""},
+        {name: "Emboss", value: "emboss", image: ""},
+        {name: "Sharpen", value: "sharpen", image: ""},
+        {name: "Greenify", value: "greenify", image: ""},
+        {name: "Pinkify", value: "pinkify", image: ""},
+        {name: "Orangeify", value: "orangeify", image: ""},
+        {name: "Blueify", value: "blueify", image: ""},
+    ])
 
     var selectText = ref(false);
     var editImage = ref(false);
@@ -4864,6 +4907,15 @@ import { forAliasRE } from '@vue/compiler-core';
 
         simulateCanvasClick()
     }
+    let currentOutineSize = ref("medium")
+    async function changeOutlineSize(size){
+        currentOutineSize.value = size
+        await handleChangeOutlineSize(size)
+
+        if(firstSetLoad.value){
+            saveStep('select shape')
+        }
+    }
 
     var firstBorderCheck = ref(true)
     var allBorders = ref({})
@@ -5646,6 +5698,10 @@ import { forAliasRE } from '@vue/compiler-core';
         sepia : false,
         embross : false,
         sharpen : false,
+        greenify : false,
+        pinkify : false,
+        orangeify  : false,
+        blueify  : false,
     })
     function selectImageFilter(filter){
         selectedImage.value.filters = handleSelectFilter(filter)
@@ -5680,6 +5736,30 @@ import { forAliasRE } from '@vue/compiler-core';
             setFilter.value.sharpen = true
         }else{
             setFilter.value.sharpen = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'greenify')){
+            setFilter.value.greenify = true
+        }else{
+            setFilter.value.greenify = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'pinkify')){
+            setFilter.value.pinkify = true
+        }else{
+            setFilter.value.pinkify = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'orangeify')){
+            setFilter.value.orangeify = true
+        }else{
+            setFilter.value.orangeify = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'blueify')){
+            setFilter.value.blueify = true
+        }else{
+            setFilter.value.blueify = false
         }
     }
     var currentSvgColor = ref('')
@@ -9794,16 +9874,17 @@ import { forAliasRE } from '@vue/compiler-core';
 
                 canvas.on('mouse:down', function(options) {
                     var sign = handleGetObjectByName('safeObject');
+                    let clipPath = handleClipAddedObject(canvas)
                     canvas.getObjects().forEach(function(obj) {
                         if (obj.name === 'asowp-SignText' || obj.name === "asowp-SignTextLayer") {
                             if(obj.isEditing){
                                 obj.exitEditing();
                             }
-                            obj.clipPath = handleClipAddedObject(canvas);
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvas.renderAll();
                         }
                         if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
-                            obj.clipPath = handleClipAddedObject(canvas);
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvas.renderAll();
                         }
                     });
@@ -9891,16 +9972,17 @@ import { forAliasRE } from '@vue/compiler-core';
                 canvasBack.on('selection:cleared', closeObjectValues);
                 canvasBack.on('mouse:down', function(options) {
                     var sign = handleGetObjectByName('safeObject');
+                    let clipPath = handleClipAddedObject(canvasBack)
                     canvasBack.getObjects().forEach(function(obj) {
                         if (obj.name === 'asowp-SignText' || obj.name === "asowp-SignTextLayer") {
                             if(obj.isEditing){
                                 obj.exitEditing();
                             }
-                            obj.clipPath = handleClipAddedObject(canvasBack);
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvasBack.renderAll();
                         }
                         if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
-                            obj.clipPath = handleClipAddedObject(canvasBack);
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvasBack.renderAll();
                         }
                     });

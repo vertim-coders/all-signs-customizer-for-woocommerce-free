@@ -2504,6 +2504,11 @@ async function createPreciseContourPath(size) {
 
   if (objectsInZone.length === 0) return null;
 
+  objectsInZone.forEach(object =>{
+    object.clipPath = null
+    activeCanvas.renderAll()
+  })
+
   // 2. Extraire les points de contour précis
   let allPoints = await extractExactPaths(objectsInZone);
   let sortedPaths = sortByOffset(allPoints)
@@ -2610,6 +2615,16 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
       var objectId = safeObject.id;
   
       safeObject.setCoords();
+
+      let cutline1 = handleGetObjectByName("asowp-cutline1", canvas)
+      let cutline2 = handleGetObjectByName("asowp-cutline2", canvas)
+      if(cutline1){
+        canvas.remove(cutline1)
+      }
+      if(cutline2){
+        canvas.remove(cutline2)
+      }
+
       switch (shape) {
         case "square":
           newObject = new fabric.Rect({
@@ -2810,15 +2825,6 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
           break;
         
         case "cut-to-shape":
-          let cutline1 = handleGetObjectByName("asowp-cutline1", canvas)
-          let cutline2 = handleGetObjectByName("asowp-cutline2", canvas)
-          if(cutline1){
-            canvas.remove(cutline1)
-          }
-          if(cutline2){
-            canvas.remove(cutline2)
-          }
-
           let safeObjet = {
             height: height,
             width: width,
@@ -3010,33 +3016,17 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
 }
 
 let strokeSize = 20
-function handleChangeOutlineSize(size){
-  let sign = handleGetObjectByName("safeObject")
-  let pathObjects = sign._objects
-  const target = ` L ${activeCanvas.getWidth()} ${activeCanvas.getHeight()} `;
-
+async function handleChangeOutlineSize(size){
   if(size == "small"){
     strokeSize = 10
+    await handleSelectShape(selectedShape)
   }else if(size == "medium"){
     strokeSize = 20
+    await handleSelectShape(selectedShape)
   }else if(size == "large"){
     strokeSize = 30
-  }else if(size == "xtra-large"){
-    strokeSize = 40
+    await handleSelectShape(selectedShape)
   }
-
-  pathObjects.forEach(path => {
-    const d = path.d;
-    if (d && !d.includes(target)) {
-      path.set({
-        strokeWidth: strokeSize,
-        strokeLineJoin: 'round',
-        strokeLineCap: 'round',
-        left: path.left - (strokeSize/2),
-        top: path.top - (strokeSize/2),
-      })
-    }
-  });
 }
 let selectedCutline = "2x"
 let cutlinesColor = {
@@ -7820,6 +7810,95 @@ function handleFlipImage() {
   activeCanvas.requestRenderAll();
   handleGetAddedImageValues(currentImage);
 }
+
+
+// custom filters
+//greenify
+fabric.Image.filters.Greenify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Greenify',
+  
+  fragmentSource: `
+      precision highp float;
+      uniform sampler2D uTexture;
+      varying vec2 vTexCoord;
+      void main() {
+          vec4 color = texture2D(uTexture, vTexCoord);
+          color.r = 0.0;
+          color.b = 0.0;
+          gl_FragColor = color;
+      }
+  `,
+  
+  isNeutralState: function() { return false; },
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Greenify.fromObject = function(object) {
+  return new fabric.Image.filters.Greenify(object);
+};
+//blueify
+fabric.Image.filters.Blueify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Blueify',
+  
+  fragmentSource: `
+      precision highp float;
+      uniform sampler2D uTexture;
+      varying vec2 vTexCoord;
+      void main() {
+          vec4 color = texture2D(uTexture, vTexCoord);
+          color.r = 0.0;
+          color.g *= 0.5;
+          color.b *= 0.8;
+          gl_FragColor = color;
+      }
+  `,
+  
+  isNeutralState: function() { return false; },
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Blueify.fromObject = function(object) {
+  return new fabric.Image.filters.Blueify(object);
+};
+//pinkify
+fabric.Image.filters.Pinkify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Pinkify',
+  fragmentSource: `
+      precision highp float;
+      uniform sampler2D uTexture;
+      varying vec2 vTexCoord;
+      void main() {
+          vec4 color = texture2D(uTexture, vTexCoord);
+          color.g *= 0.3;  // Réduit le vert (ajustez entre 0.0 et 0.5)
+          color.b *= 0.8;  // Garde un peu de bleu (ajustez entre 0.7 et 1.0)
+          gl_FragColor = color;
+      }
+  `,
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Pinkify.fromObject = function(object) {
+  return new fabric.Image.filters.Pinkify(object);
+};
+//Orangeify 
+fabric.Image.filters.Orangeify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Orangeify',
+  fragmentSource: `
+      precision highp float;
+      uniform sampler2D uTexture;
+      varying vec2 vTexCoord;
+      void main() {
+          vec4 color = texture2D(uTexture, vTexCoord);
+          color.r = min(1.0, color.r * 1.2);  // Boost le rouge (1.0 à 1.5)
+          color.g = min(1.0, color.g * 0.9);  // Légère réduction du vert (0.7 à 1.0)
+          color.b *= 0.2;                     // Réduit fortement le bleu (0.0 à 0.3)
+          gl_FragColor = color;
+      }
+  `,
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Orangeify.fromObject = function(object) {
+  return new fabric.Image.filters.Orangeify(object);
+};
+
+
 function handleSelectFilter(filter) {
   var currentImage = activeCanvas.getActiveObject();
   if (currentImage.type === "image") {
@@ -7865,6 +7944,26 @@ function handleSelectFilter(filter) {
             name: "blur",
           });
           currentImage.filters.push(blr);
+          break;
+
+        case "Greenify":
+          let greenify = new fabric.Image.filters.Greenify({ name: "greenify", });
+          currentImage.filters.push(greenify);
+          break;
+
+        case "Pinkify":
+          let pinkify = new fabric.Image.filters.Pinkify({ name: "pinkify", });
+          currentImage.filters.push(pinkify);
+          break;
+
+        case "Orangeify":
+          let orangeify = new fabric.Image.filters.Orangeify({ name: "orangeify", });
+          currentImage.filters.push(orangeify);
+          break;
+
+        case "Blueify":
+          let blueify = new fabric.Image.filters.Blueify({ name: "blueify", });
+          currentImage.filters.push(blueify);
           break;
       }
     } else {
@@ -7915,8 +8014,29 @@ function handleSelectFilter(filter) {
           });
           addUniqueFilter(currentImage.filters, blr, "name");
           break;
+
+        case "Greenify":
+          let Greenify = new fabric.Image.filters.Greenify({ name: "greenify", });
+          addUniqueFilter(currentImage.filters, Greenify, "name");
+          break;
+          
+        case "Pinkify":
+          let pinkify = new fabric.Image.filters.Pinkify({ name: "pinkify", });
+          addUniqueFilter(currentImage.filters, pinkify, "name");
+          break;
+
+        case "Orangeify":
+          let orangeify = new fabric.Image.filters.Orangeify({ name: "orangeify", });
+          addUniqueFilter(currentImage.filters, orangeify, "name");
+          break;
+
+        case "Blueify":
+          let blueify = new fabric.Image.filters.Blueify({ name: "blueify", });
+          addUniqueFilter(currentImage.filters, blueify, "name");
+          break;
       }
     }
+    console.log(currentImage.filters, "filters")
     currentImage.applyFilters();
     activeCanvas.renderAll();
 
@@ -7925,6 +8045,26 @@ function handleSelectFilter(filter) {
     return selectedImage.filters;
   }
 }
+async function getImageDataFromUrl(imageUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous'; // nécessaire si image externe
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const imageData = ctx.getImageData(0, 0, img.width, img.height);
+      resolve(imageData);
+    };
+    img.onerror = reject;
+    img.src = imageUrl;
+  });
+}
+
 function handleChangeAddedSvgColor(color) {
   var currentImage = activeCanvas.getActiveObject();
 
@@ -10226,4 +10366,5 @@ export {
   handleAddQRCode,
   handleEditQRCode,
   handleChangeQRCodeColor,
+  handleChangeOutlineSize,
 };
