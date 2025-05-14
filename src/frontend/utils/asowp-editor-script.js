@@ -2841,7 +2841,9 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
                 fill: objectfill,
                 strokeLineJoin: 'round',
                 strokeLineCap: 'round',
-                name: "outline"
+                name: "outline",
+                stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+                strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
               })
             }
           });
@@ -2851,7 +2853,7 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
             stroke: objectfill,
             selectable: true,
             name: "safeObject",
-            shadow: selectedCutline == "none" ? defaultShadow : null,
+            shadow: selectedCutline != "2x" ? defaultShadow : null,
             id: objectId,
             width: canvas.getWidth(true),
             height: canvas.getHeight(true),
@@ -2887,6 +2889,13 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
         const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
         let sign = newObject._objects.filter(path => path.d && !path.d.includes(target))
 
+        if(sign[0] && selectedCutline != "none"){
+          sign[0].set({
+            left: sign[0].left - (cutlinesData.first.borderSize/2),
+            top: sign[0].top - (cutlinesData.first.borderSize/2),
+          })
+        }
+
         let cutline1 = await cloneOutline(newObject)
         let cutline2 = await cloneOutline(newObject)
 
@@ -2905,21 +2914,22 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
         cutline1.set({
           selectable: false,
           name: "asowp-cutline1",
-          visible: (selectedCutline == "1x" || selectedCutline == "2x" )  ? true : false,
-          shadow: selectedCutline == "1x" ? defaultShadow : null,
+          visible: selectedCutline == "2x" ? true : false,
         })
 
+        let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
         signCut1[0].set({
-          stroke: cutlinesColor.first,
-          strokeWidth: 5,
-          left: signCut1[0].left-2.5,
-          top: signCut1[0].top-2.5,
+          stroke: cutlinesData.second.color,
+          strokeWidth: cutStroke1,
+          left: signCut1[0].left - (cutStroke1/2),
+          top: signCut1[0].top - (cutStroke1/2),
         })
+        let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize
         signCut2[0].set({
-          stroke: cutlinesColor.second,
-          strokeWidth: 10,
-          left: signCut2[0].left-5,
-          top: signCut2[0].top-5,
+          stroke: cutlinesData.second.borderColor,
+          strokeWidth: cutStroke2,
+          left: signCut2[0].left - (cutStroke2/2),
+          top: signCut2[0].top - (cutStroke2/2),
         })
 
         activeCanvas.add(cutline1, cutline2)
@@ -3029,29 +3039,63 @@ async function handleChangeOutlineSize(size){
   }
 }
 let selectedCutline = "2x"
-let cutlinesColor = {
-  first: 'blue',
-  second: 'orange',
+let cutlinesData = {
+  first: {
+    borderSize: 3,
+    color: 'green'
+  },
+  second: { 
+    color:'white',
+    size: 20,
+    borderColor: 'red',
+    borderSize: 5,
+  },
 }
 function handleSetCutline(size){
+  let safeObject = handleGetObjectByName("safeObject")
+  let outline = null
+  let pathObjects = safeObject._objects
+  pathObjects.forEach(path => {
+    if (path.name == "outline") {
+      outline = path
+    }
+  });
+
   let cutline1 = handleGetObjectByName("asowp-cutline1")
   let cutline2 = handleGetObjectByName("asowp-cutline2")
   let sign = handleGetObjectByName("safeObject")
   if(size == "1x"){
-    cutline1.visible = true
+    cutline1.visible = false
     cutline2.visible = false
 
-    cutline1.shadow = defaultShadow
+    cutline1.shadow = null
     cutline2.shadow = null
-    sign.shadow = null
+
+
+    sign.shadow = defaultShadow
+    outline.set({
+      stroke: cutlinesData.first.color,
+      strokeWidth: cutlinesData.first.borderSize,
+    })
 
   }else if(size == "2x"){
     cutline1.visible = true
     cutline2.visible = true
 
-    cutline1.shadow = null
     cutline2.shadow = defaultShadow
     sign.shadow = null
+
+    let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
+    let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize
+
+    cutline1.set({
+      stroke: cutlinesData.second.color,
+      strokeWidth: cutStroke1,
+    })
+    cutline2.set({
+      stroke: cutlinesData.second.borderColor,
+      strokeWidth: cutStroke2,
+    })
   }else{
     cutline1.visible = false
     cutline2.visible = false
