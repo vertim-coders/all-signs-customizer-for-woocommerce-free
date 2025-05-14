@@ -323,6 +323,16 @@
                                     {{configVisualiserTexts.textImage}}
                                 </div>
                             </div>
+
+                            <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableQrCode && (sizees.length > 0 || customSizeActive) ) || materialType == 'advance' && advancedComponent.options.length > 0" @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-w-fit asowp-h-[90%] asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+                                </svg>
+                                <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    Qr Code
+                                </div>
+                            </div>
     
                             <div v-if="(materialType == 'simple' && additionalComponents.length > 0 )" v-for="(option, id) in additionalComponents" class="asowp-w-fit asowp-h-[90%] asowp-cardDiv" >
                                 <div v-if="option.options.length > 0" @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id  ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-full asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer`">
@@ -361,15 +371,6 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>                                  
                                 </div>
-                            </div>
-                        </div>
-                        <div @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-w-fit asowp-h-[90%] asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
-                            </svg>
-                            <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
-                                Qr Code
                             </div>
                         </div>
                     </div>
@@ -1383,12 +1384,10 @@
                                     <div v-if="configImageSettingsFilters.active && activeImageType !== 'svg'" class="asowp-space-y-2">
                                         <p class="asowp-font-medium">Filters</p>
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
-                                            <div class="asowp-flex asowp-flex-wrap asowp-space-x-6">
+                                            <div class="asowp-flex asowp-flex-wrap asowp-gap-2">
                                                 <div v-for="filter in validFilter">
                                                     <span @click="selectImageFilter(filter.name)" :class="`${setFilter.blur ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                        </svg>
+                                                        <img :src="filter.image" class="asowp-flex asowp-h-20 asowp-w-20">
                                                         <p class="asowp-text-xs asowp-font-semibold">{{filter.name}}</p>
                                                     </span>
                                                 </div>
@@ -1475,7 +1474,8 @@
                         </div>
 
                         <div v-show="step == 'qr-code'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-images-section">
-                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textImage}}</p>    
+                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">Qr Code</p>    
+                            <!-- <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textImage}}</p>     -->
 
                             <div :class="`asowp-bg-[${configColors.backgroundColorHeader}]/10 asowp-flex asowp-flex-col asowp-space-y-3 asowp-full-center asowp-p-4 asowp-m-1`">
                                 <span v-show="!addQRActive && !selectQRCode" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
@@ -2542,14 +2542,14 @@
 
     let validFilter = ref([
         {name: "Blur", value: "blur", image: ""},
-        {name: "Greyscale", value: "greyscale", image: ""},
-        {name: "Sepia", value: "sepia", image: ""},
-        {name: "Emboss", value: "emboss", image: ""},
-        {name: "Sharpen", value: "sharpen", image: ""},
-        {name: "Greenify", value: "greenify", image: ""},
-        {name: "Pinkify", value: "pinkify", image: ""},
-        {name: "Orangeify", value: "orangeify", image: ""},
-        {name: "Blueify", value: "blueify", image: ""},
+        {name: "Greyscale", value: "greyscale", image: "../../../../../assets/images/filters/im_greyscale_filter.png"},
+        {name: "Sepia", value: "sepia", image: "../../../../../assets/images/filters/im_sepia_filter.png"},
+        {name: "Emboss", value: "emboss", image: "../../../../../assets/images/filters/im_emboss_filter.png"},
+        {name: "Sharpen", value: "sharpen", image: "../../../../../assets/images/filters/im_sharpen_filter.png"},
+        {name: "Greenify", value: "greenify", image: "../../../../../assets/images/filters/im_greenify_filter.png"},
+        {name: "Pinkify", value: "pinkify", image: "../../../../../assets/images/filters/im_pinkify_filter.png"},
+        {name: "Orangeify", value: "orangeify", image: "../../../../../assets/images/filters/im_orangeify_filter.png"},
+        {name: "Blueify", value: "blueify", image: "../../../../../assets/images/filters/im_blueify_filter.png"},
     ])
 
     var selectText = ref(false);

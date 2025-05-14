@@ -22,6 +22,14 @@
                         </label>
                     </div>
                 </div>
+                <div class="asowp-flex asowp-font-semibold">
+                    Enable QR Code
+                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
+                        <label for="asowp-toggle" @click="changeTextImageEnableQrCode" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                        <div :class="textImages.enableQrCode ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
                 <div class="asowp-bg-[#016464] asowp-rounded">
@@ -52,7 +60,8 @@
     const materialId = ref(route.params.materialId);
     const textImages = ref({
         enableText:true,
-        enableImage:true
+        enableImage:true,
+        enableQrCode:true
     });
     
 
@@ -89,5 +98,8 @@
     }
     const changeTextImageEnableImage = () => {
         textImages.value.enableImage = !textImages.value.enableImage;
+    }
+    const changeTextImageEnableQrCode = () => {
+        textImages.value.enableQrCode = !textImages.value.enableQrCode;
     }
 </script>
