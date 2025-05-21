@@ -1,5 +1,5 @@
 // import { fabric } from "fabric"
-import contourPath from "./util-contour"
+import {contourPath} from "./util-contour"
 
 function thresholdImageData(imageData) {
   const data = imageData.data

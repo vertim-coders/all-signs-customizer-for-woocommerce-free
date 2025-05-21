@@ -3,6 +3,10 @@ import opentype from 'opentype.js'
 import { load } from 'opentype.js'
 import { generateGlobalContour } from "./canvasUtils/contour"
 import { generateQRCodeObject } from "./canvasUtils/qrCodeInFabric"
+import { genSvgPath } from "./canvasUtils/util-contour"
+import {removeBackground}  from "@imgly/background-removal"
+
+
 
 var fixingUrl = "";
 var borderUrl = "";
@@ -181,6 +185,15 @@ function handleCheckObjects() {
   var objects = canvas.getObjects();
 
   return objects;
+}
+
+function addUniqueObject(arr, obj, key) {
+  const index = arr.findIndex((item) => item[key] === obj[key]);
+  if (index !== -1) {
+    arr[index] = obj;
+  } else {
+    arr.push(obj);
+  }
 }
 
 //Fonction de sauvegarde de l'état du canvas et des actions undo et redo
@@ -1190,7 +1203,7 @@ function handleChangeSize(width, height, name, maxChar) {
   maxTextCharForSize = maxChar;
 
   currentSizeName = name;
-  currentSize = { width: width, height: height };
+  currentSize = { width: width, height: height, label: name };
 
   let scaleValues = handleMiseAEchelle(width, height)
 
@@ -1330,7 +1343,7 @@ function handleGetSignPosition() {
   var sign = handleGetObjectByName("safeObject");
   var width = signData.width;
   var height = signData.height;
-  currentSize = { width: width, height: height };
+  currentSize = { width: width, height: height, label: currentSizeName };
 
   let scaleValues = handleMiseAEchelle(width, height)
 
@@ -2510,6 +2523,7 @@ async function createPreciseContourPath(size) {
   })
 
   // 2. Extraire les points de contour précis
+  // console.log(size, "2222", objectsInZone)
   let allPoints = await extractExactPaths(objectsInZone);
   let sortedPaths = sortByOffset(allPoints)
   
@@ -2528,9 +2542,15 @@ async function createPreciseContourPath(size) {
 
 function cloneObjectForOutline(object){
   return new Promise(async (resolve, reject) => {
+    
     var target = object;
     var canvas = target.canvas;
+    let activeFilters = target.name == 'asowp-SignImage' ? target.filters : []
+    if(target.name == 'asowp-SignImage'){
+      target.filters = []
+    }
     target.clone(function (cloned) {
+      // console.log("333", cloned)
       cloned.clipPath = null
       if (cloned.type == "i-text" || cloned.type == "neon-Text") {
         if(textType == "3D"){
@@ -2561,6 +2581,9 @@ function cloneObjectForOutline(object){
         resolve(cloned)
       }
     });
+    if(target.name == 'asowp-SignImage'){
+      target.filters = activeFilters
+    }
   })
 }
 
@@ -2573,6 +2596,7 @@ async function extractExactPaths(objects) {
       }
       if(obj.name === "asowp-SignImage"){
         let clone = await cloneObjectForOutline(obj)
+        clone.filters = []
         resolve(clone)
       }
       if(obj.name === "asowp-QRCode"){
@@ -2940,6 +2964,10 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
 
         let realValues = handleReverseMiseAEchelle(sign[0])
         setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
+
+        currentSize.width = realValues.realWidth
+        currentSize.height = realValues.realHeight
+        currentSize.label = 'sticker'
       }else{
         activeCanvas.centerObject(newObject)
         setMeasurmentValue(canvas)
@@ -2997,7 +3025,7 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
 
   }
 
-  await setShape(canvas);
+  let realValues = await setShape(canvas);
   if(doubleFace){
     await setShape(backCanvas);
   }
@@ -3023,6 +3051,19 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
     }
   }
   handleSelectFixingMethode(activeFixingMethode);
+
+  return currentSize
+}
+
+async function showLoader(statut){
+  let loader = document.getElementById("asowp-loader")
+  if(loader){
+    if(statut == true){
+      loader.style.display = "flex"
+    }else{
+      loader.style.display = "none"
+    }
+  }
 }
 
 let strokeSize = 20
@@ -7855,6 +7896,98 @@ function handleFlipImage() {
   handleGetAddedImageValues(currentImage);
 }
 
+async function handleRemoveBgImage(imgObject){
+  console.log(imgObject, "333")
+  let newImage = await removeBackgroundFromURL(imgObject.imageUrl)
+  
+  async function replaceImg(newImage){
+    fabric.Image.fromURL(newImage, (img) => {
+      img.top = imgObject.top;
+      img.left = imgObject.left;
+      img.width = imgObject.width;
+      img.height = imgObject.height;
+      // img.flipX = true
+      img.uniScaleTransform = imgObject.uniScaleTransform;
+      img.centeredScaling = imgObject.centeredScaling;
+      img.lockScalingFlip = imgObject.lockScalingFlip; 
+      img.originX = imgObject.originX;
+      img.originY = imgObject.originY;
+  
+      img.id = imgObject.id;
+      img.name = "asowp-SignImage";
+      img.canvasName = imgObject.canvasName;
+      img.priceId = imgObject.priceId;
+      img.price = imgObject.price;
+      img.objectType = imgObject.objectType;
+      img.imageUrl = imgObject.imageUrl;
+      img.imageNoBgUrl = newImage;
+      // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+      img.lockMoving = imgObject.lockMoving;
+      img.lockScale = imgObject.lockScale;
+      img.lockRotate = imgObject.lockRotate;
+      img.setControlsVisibility({
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
+      });
+  
+      img.on("mousedown", function () {
+        handleGetAddedImageValues(img);
+      });
+      img.on("mouseup", function () {
+        handleGetAddedImageValues(img);
+      });
+  
+      addUniqueObject(addedImages, { id: imgObject.id, url: imgObject.imageUrl, object: img }, "id" )
+      activeCanvas.remove(imgObject)
+      activeCanvas.add(img);
+  
+      return addedImages
+    },{ crossOrigin: "anonymous" });
+  }
+
+  return new Promise(async (resolve, reject) => {
+    if (imgObject) {
+      await replaceImg(newImage);
+      resolve({ images: addedImages, error: "" });
+    }
+});
+}
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // important si image externe
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+function blobToDataURL(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result); // result est une data URI
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+async function removeBackgroundFromURL(imageSrc) {
+  const resultBlob = await removeBackground(imageSrc);
+  console.log(resultBlob, "444")
+
+
+  // Convertit le Blob en URL pour affichage ou insertion dans une balise <img>
+  // const transparentImageUrl = URL.createObjectURL(resultBlob);
+  const transparentImageUrl = await blobToDataURL(resultBlob);
+
+  return transparentImageUrl;
+}
+
 
 // custom filters
 //greenify
@@ -7956,7 +8089,7 @@ function handleSelectFilter(filter) {
           currentImage.filters.push(sp);
           break;
 
-        case "Emboss":
+        case "Embross":
           /* Emboss */
           var emb = new fabric.Image.filters.Convolute({
             matrix: [1, 1, 1, 1, 0.7, -1, -1, -1, -1],
@@ -8029,7 +8162,7 @@ function handleSelectFilter(filter) {
           addUniqueFilter(currentImage.filters, sp, "name");
           break;
 
-        case "Emboss":
+        case "Embross":
           var emb = new fabric.Image.filters.Convolute({
             matrix: [1, 1, 1, 1, 0.7, -1, -1, -1, -1],
             name: "embross",
@@ -8080,7 +8213,6 @@ function handleSelectFilter(filter) {
           break;
       }
     }
-    console.log(currentImage.filters, "filters")
     currentImage.applyFilters();
     activeCanvas.renderAll();
 
@@ -10239,6 +10371,19 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
 function replace3DLayer(canva){
 }
 
+
+
+async function handleGenSvgDesignImg(canva, width, height) {
+  const imageData = canva.getContext().getImageData(0, 0, width, height)
+
+  let svgPaths = await genSvgPath(imageData)
+
+  console.log(svgPaths)
+  return svgPaths
+}
+
+
+
 function handleFinishConfiguration(textsTable, imagesTable) {
   var textsValues = [];
   var imagesValues = [];
@@ -10407,8 +10552,11 @@ export {
   handleChangeAddedSvgColor,
   handleSetShadow,
   handleConvertImageToDataURI,
+  handleRemoveBgImage,
   handleAddQRCode,
   handleEditQRCode,
   handleChangeQRCodeColor,
   handleChangeOutlineSize,
+  handleGenSvgDesignImg,
+  showLoader
 };

@@ -220,12 +220,12 @@ function removeBorderPathBySize(svgString, width, height) {
   // const target = `L ${height} ${width}`;
   const target = ` L ${width} ${height} `;
 
-  // paths.forEach(path => {
-  //   const d = path.getAttribute("d");
-  //   if (d && d.includes(target)) {
-  //     path.remove(); // supprime le path de contour
-  //   }
-  // });
+  paths.forEach(path => {
+    const d = path.getAttribute("d");
+    if (d && d.includes(target)) {
+      path.remove(); // supprime le path de contour
+    }
+  });
 
   return new XMLSerializer().serializeToString(doc);
 }
@@ -291,7 +291,8 @@ async function contourPath(source, blur, strokeSize) {
   // let pathList = await convertImageToSVG(imageData, options);
 
   let pathList = await ImageTracer.imagedataToSVG(imageData, options);
-  let cleanedSVG = removeBorderPathBySize(pathList, sourceWidth, sourceHeight)
+  let cleanedSVG = pathList
+  // let cleanedSVG = removeBorderPathBySize(pathList, sourceWidth, sourceHeight)
 
 
 
@@ -303,4 +304,35 @@ async function contourPath(source, blur, strokeSize) {
   }
 }
 
-export default contourPath
+async function genSvgPath(source){
+  const sourceWidth = source.width
+  const sourceHeight = source.height
+  let options = {
+    // blurradius: 1,         // pas de blur
+    pathomit: 8,           // ignore les petits détails
+    colorsampling: 0,      // évite de détecter trop de couleurs
+    numberofcolors: 16,     // limite les couleurs détectées
+    strokewidth: 0,        // pas de bordures
+    linefilter: true,      // évite de choper du bruit de contour
+    ltres: 1,           // simplification des lignes
+    qtres: 1,           // simplification des courbes
+    scale: 1,            // (l'image est déjà réduite)
+    viewbox: true        // Évite les transformations inutiles
+
+  }
+
+  //methode utilisant un web worker pour limiter l'incidence sur l'interface 
+  // let pathList = await convertImageToSVG(imageData, options);
+
+  let pathList = await ImageTracer.imagedataToSVG(source, options);
+  let cleanedSVG = removeBorderPathBySize(pathList, sourceWidth, sourceHeight)
+
+  return pathList
+  // return cleanedSVG
+}
+
+// export default contourPath
+export {
+  contourPath, 
+  genSvgPath
+}
