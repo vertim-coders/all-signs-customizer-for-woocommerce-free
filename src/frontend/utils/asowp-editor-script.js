@@ -7331,7 +7331,8 @@ async function handleAddQRCode(data, clone){
   }
   activeCanvas.setActiveObject(object);
 
-  addedQRCodes.push(object)
+  // addedQRCodes.push(object)
+  addedQRCodes.push({id: newCodeId, text: object.fromData, url:object.imgUrl, object: object})
 
   updateModifications(true, "==ajout de QRCode==");
   return {
@@ -7368,7 +7369,8 @@ async function handleEditQRCode(code, value, color){
   activeCanvas.add(object)
   activeCanvas.setActiveObject(object);
 
-  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? object : obj)
+  let objectData = {id: object.id, text: object.fromData, url:object.imgUrl, object: object}
+  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? objectData : obj)
 
   return addedQRCodes
 }
@@ -7897,9 +7899,7 @@ function handleFlipImage() {
 }
 
 async function handleRemoveBgImage(imgObject){
-  console.log(imgObject, "333")
-  let newImage = await removeBackgroundFromURL(imgObject.imageUrl)
-  
+  // console.log(imgObject, "333")
   async function replaceImg(newImage){
     fabric.Image.fromURL(newImage, (img) => {
       img.top = imgObject.top;
@@ -7951,11 +7951,71 @@ async function handleRemoveBgImage(imgObject){
       return addedImages
     },{ crossOrigin: "anonymous" });
   }
+  async function restoreImg(imgUrl){
+    fabric.Image.fromURL(imgUrl, (img) => {
+      img.top = imgObject.top;
+      img.left = imgObject.left;
+      img.width = imgObject.width;
+      img.height = imgObject.height;
+      // img.flipX = true
+      img.uniScaleTransform = imgObject.uniScaleTransform;
+      img.centeredScaling = imgObject.centeredScaling;
+      img.lockScalingFlip = imgObject.lockScalingFlip; 
+      img.originX = imgObject.originX;
+      img.originY = imgObject.originY;
+  
+      img.id = imgObject.id;
+      img.name = "asowp-SignImage";
+      img.canvasName = imgObject.canvasName;
+      img.priceId = imgObject.priceId;
+      img.price = imgObject.price;
+      img.objectType = imgObject.objectType;
+      img.imageUrl = imgObject.imageUrl;
+      img.imageNoBgUrl = "";
+      // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+      img.lockMoving = imgObject.lockMoving;
+      img.lockScale = imgObject.lockScale;
+      img.lockRotate = imgObject.lockRotate;
+      img.setControlsVisibility({
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
+      });
+  
+      img.on("mousedown", function () {
+        handleGetAddedImageValues(img);
+      });
+      img.on("mouseup", function () {
+        handleGetAddedImageValues(img);
+      });
+  
+      addUniqueObject(addedImages, { id: imgObject.id, url: imgObject.imageUrl, object: img }, "id" )
+      activeCanvas.remove(imgObject)
+      activeCanvas.add(img);
+  
+      return addedImages
+    },{ crossOrigin: "anonymous" });
+  }
 
   return new Promise(async (resolve, reject) => {
-    if (imgObject) {
+    if (!imgObject.imageNoBgUrl || imgObject.imageNoBgUrl == "") {
+      let newImage = await removeBackgroundFromURL(imgObject.imageUrl)
+
       await replaceImg(newImage);
       resolve({ images: addedImages, error: "" });
+      updateModifications(true, "==retrait du background image==");
+
+    }else{
+      await restoreImg(imgObject.imageUrl);
+      resolve({ images: addedImages, error: "" });
+      updateModifications(true, "==restauration du background image==");
+
     }
 });
 }
@@ -8974,13 +9034,48 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
                 handleGetAddedImageValues(templateObject[0]);
               });
     
-              var objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : await templateObject[0].getSrc();
+              let objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : await templateObject[0].getSrc();
               addUniqueObject( addedImages, 
                 {
                   id: templateObject[0].id,
                   url: objectUrl,
                   object: templateObject[0],
                 }, "id"
+              );
+            }
+
+            if (templateObject[0].name === "asowp-QRCode") {
+              templateObject[0].setControlsVisibility({
+                mt: false, // Middle top
+                mb: false, // Middle bottom
+                ml: false, // Middle left
+                mr: false, // Middle right
+                bl: true, // Bottom left
+                br: true, // Bottom right
+                tl: true, // Top left
+                tr: true, // Top right
+              });
+    
+              templateObject[0].clipPath = null;
+    
+              templateObject[0].on("mousedown", function () {
+                handleGetAddedImageValues(templateObject[0]);
+              });
+              templateObject[0].on("mouseup", function () {
+                handleGetAddedImageValues(templateObject[0]);
+              });
+    
+              // let objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : await templateObject[0].getSrc();
+              let objectUrl = await templateObject[0].getSrc();
+              addUniqueObject( addedQRCodes, 
+                // templateObject[0], 
+                {
+                  id: templateObject[0].id,
+                  text: templateObject[0].fromData,
+                  url: objectUrl,
+                  object: templateObject[0],
+                }, 
+                "id"
               );
             }
     
@@ -10365,6 +10460,7 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
     size: currentSizeValues,
     texts: addedTexts,
     images: addedImages,
+    qrCodes: addedQRCodes,
   };
 }
 
@@ -10384,9 +10480,10 @@ async function handleGenSvgDesignImg(canva, width, height) {
 
 
 
-function handleFinishConfiguration(textsTable, imagesTable) {
+function handleFinishConfiguration(textsTable, imagesTable, qrCodesTable) {
   var textsValues = [];
   var imagesValues = [];
+  var qrCodesValues = [];
   function formatValues(value) {
     var object = {
       width: {
@@ -10470,9 +10567,31 @@ function handleFinishConfiguration(textsTable, imagesTable) {
       );
     });
   }
+  if (qrCodesTable.length > 0) {
+    qrCodesTable.forEach((code) => {
+      function addTextValues(arr, obj, key) {
+        const exists = arr.some((item) => item[key] === obj[key]);
+        if (!exists) {
+          arr.push(obj);
+        }
+      }
+      addTextValues(
+        qrCodesValues,
+        {
+          id: code.id,
+          text: code.fromData,
+          // url: code.objectType === "svg" ? code.imageUrl : code.getSrc(),
+          url: code.getSrc(),
+          values: formatValues(handleGetAddedImageValues(code)),
+        },
+        "id"
+      );
+    });
+  }
   return {
     texts: textsValues,
     images: imagesValues,
+    qrCodes: qrCodesValues,
   };
 }
 

@@ -1408,18 +1408,33 @@
                                         <!-- <p class="asowp-font-medium">Other custom</p> -->
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
                                             <div class="asowp-flex asowp-flex-wrap asowp-gap-3">
-                                                <span @click="removeBackground()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                    <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
-                                                        <g clip-path="url(#clip0_65_739)">
-                                                            <path d="M6 6.5H22V10.5H24V6.5C24 5.96957 23.7893 5.46086 23.4142 5.08579C23.0391 4.71071 22.5304 4.5 22 4.5H6C5.46957 4.5 4.96086 4.71071 4.58579 5.08579C4.21071 5.46086 4 5.96957 4 6.5V22.5C4 23.0304 4.21071 23.5391 4.58579 23.9142C4.96086 24.2893 5.46957 24.5 6 24.5H10V22.5H6V6.5Z" fill="currentColor"/>
-                                                            <path d="M30 12.5H14C13.4696 12.5 12.9609 12.7107 12.5858 13.0858C12.2107 13.4609 12 13.9696 12 14.5V30.5C12 31.0304 12.2107 31.5391 12.5858 31.9142C12.9609 32.2893 13.4696 32.5 14 32.5H30C30.5304 32.5 31.0391 32.2893 31.4142 31.9142C31.7893 31.5391 32 31.0304 32 30.5V14.5C32 13.9696 31.7893 13.4609 31.4142 13.0858C31.0391 12.7107 30.5304 12.5 30 12.5ZM30 30.5H14V14.5H30V30.5Z" fill="currentColor"/>
-                                                            <path d="M21 28.5H23V23.5H28V21.5H23V16.5H21V21.5H16V23.5H21V28.5Z" fill="currentColor"/>
+                                                <span @click="removeBackground()" :class="`${activeImgWithBackground? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
+                                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+                                                            <path d="M160 2560 l0 -1840 2400 0 2400 0 0 1840 0 1840 -2400 0 -2400 0 0 -1840z m4640 458 l0 -1223 -480 480 -480 480 -460 -460 -460 -460 -660 660 -660 660 -640 -640 -640 -640 0 1183 0 1182 2240 0 2240 0 0 -1222z"/>
+                                                            <path d="M480 3920 l0 -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0
+                                                            -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0 -160 113 0 113 0 47
+                                                            48 47 48 0 112 0 112 113 0 113 0 47 48 47 48 0 112 0 112 113 0 113 0 47 48
+                                                            47 48 0 112 0 112 160 0 160 0 0 -113 0 -113 48 -47 48 -47 112 0 112 0 0
+                                                            -113 0 -113 48 -47 48 -47 112 0 112 0 0 -113 0 -113 48 -47 48 -47 112 0 112
+                                                            0 0 -113 0 -113 48 -47 48 -48 110 3 109 3 3 157 3 157 157 3 157 3 3 157 3
+                                                            157 157 3 157 3 3 158 3 157 159 0 159 0 3 -157 3 -158 157 -3 157 -3 3 -157
+                                                            3 -157 158 -3 157 -3 0 161 0 160 -160 0 -160 0 0 160 0 160 160 0 160 0 0
+                                                            160 0 160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 160 0 160 -160 0 -160 0 0
+                                                            -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0
+                                                            -160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160
+                                                            -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160
+                                                            0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0
+                                                            0 160 0 160 -160 0 -160 0 0 -160z m960 -320 l0 -160 -160 0 -160 0 0 -160 0
+                                                            -160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 160 0 160 160 0 160 0 0 -160z
+                                                            m640 0 l0 -160 160 0 160 0 0 160 0 160 160 0 160 0 0 -160 0 -160 160 0 160
+                                                            0 0 160 0 160 160 0 160 0 0 -160 0 -160 160 0 160 0 0 160 0 160 160 0 160 0
+                                                            0 -160 0 -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0
+                                                            -160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0
+                                                            -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0
+                                                            160 0 160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 -160z"/>
+                                                            <path d="M2400 3280 l0 -160 160 0 160 0 0 -160 0 -160 160 0 160 0 0 160 0 160 160 0 160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160z"/>
                                                         </g>
-                                                        <defs>
-                                                            <clipPath id="clip0_65_739">
-                                                                <rect width="36" height="36" fill="none" transform="translate(0 0.5)"/>    
-                                                            </clipPath>
-                                                        </defs>
                                                     </svg>
                                                     <p class="asowp-text-xs asowp-font-semibold">
                                                         Remove Bg
@@ -1532,10 +1547,10 @@
                                     <p class="asowp-font-medium" v-show="usedQRCodes.length > 0">Codes added</p>
                                     <div class="asowp-p-2 asowp-space-y-2">
                                         <div v-for="(codeObject, index) in usedQRCodes">
-                                            <div :class="`${activeFace == codeObject.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 asowp-p-2 asowp-base-animation asowp-rounded-sm`" @click="editQRCode(codeObject, false)">
+                                            <div :class="`${activeFace == codeObject.object.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 asowp-p-2 asowp-base-animation asowp-rounded-sm`" @click="editQRCode(codeObject.object, false)">
                                                 <!-- <p class="asowp-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p> -->
                                                 <p class="asowp-text-sm">Code {{ index }}</p>
-                                                <p class="asowp-text-xs">{{codeObject.fromData}}</p>
+                                                <p class="asowp-text-xs">{{codeObject.text}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -2347,6 +2362,57 @@
                     </div>
                 </div>
 
+                <div v-if="(!configDoublePart.active && configData.qrCodes.value.length > 0) || (configDoublePart.active && (configData.qrCodes.value.face1.length > 0 || configData.qrCodes.value.face2.length > 0))" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
+                    <div :class="`asowp-w-1/3`">
+                        <!-- <p v-if="configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textImage}}</p> -->
+                        <!-- <p v-if="!configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">Text</p> -->
+                        <p class="asowp-text-[16px] text-black asowp-font-semibold">Qr Code</p>
+                    </div>
+                    
+                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                        <div v-if="!configDoublePart.active && configData.qrCodes.value.length > 0">
+                            <div v-for="(code, id) in configData.qrCodes.value" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                                    <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                </span>
+                                <span>
+                                    <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div v-if="configDoublePart.active">
+                            <div v-if="configData.qrCodes.value.face1.length > 0">
+                                <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
+                                <div v-for="(code, id) in configData.qrCodes.value.face1" class="asowp-flex asowp-space-x-1 asowp-full-center">                              
+                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                    </span>
+                                    <span>
+                                        <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                        <!-- <p>top: {{image.top}}</p>
+                                        <p>bottom: {{image.bottom}}</p>
+                                        <p>left: {{image.left}}</p>
+                                        <p>right: {{image.right}}</p> -->
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div v-if="configDoublePart.active && configData.qrCodes.value.face2.length > 0">
+                                <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
+                                <div v-for="(code, id) in configData.qrCodes.value.face2" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                    </span>
+                                    <span>
+                                        <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit.value}}</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div v-if="customAdditionalValues != [] " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`" v-for="(option, index) in customAdditionalValues">
                     <p :class="`asowp-text-[16px] asowp-font-semibold`">{{option.label}}</p>
                     <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
@@ -2817,7 +2883,7 @@
         templateDatas.value = data
         templateStatut.value = statut ? statut : "none"
 
-        // console.log(data)
+        console.log(data)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -3065,10 +3131,11 @@
 
         //recupération des texts du template
         addedTexts.value = loadedTemplate.texts
-
         //recupération des images du template
         usedImages.value = loadedTemplate.images
-        // console.log(loadedTemplate.images, "loadedTemplate.images")
+        //recupération des qrCodes du template
+        usedQRCodes.value = loadedTemplate.qrCodes
+        // console.log(loadedTemplate, "loadedTemplate.images")
 
         textsPrices.value = handleSetPrice()
         getOptionPrice()
@@ -5700,6 +5767,7 @@
         tab.splice(index, 1);
     }
     var activeImageType = ref('no-svg')
+    var activeImgWithBackground = ref(false)
     function editAddedImage(image){
         if(activeFace.value === image.canvasName){
             editImage.value = true
@@ -5716,6 +5784,7 @@
                     }else{
                         checkFilter()
                     }
+                    activeImgWithBackground.value = !obj.imageNoBgUrl || (obj.imageNoBgUrl && obj.imageNoBgUrl == "") ? false : true
                 }
             })
         }
@@ -6064,11 +6133,21 @@
     }
     async function removeBackground(){
         let activeImg = activeCanvas.getActiveObject()
-        if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg" && (activeImg.imageNoBgUrl && activeImg.imageNoBgUrl != "")){
+        // if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg" && (activeImg.imageNoBgUrl && activeImg.imageNoBgUrl != "")){
+        if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg"){
             showLoader(true)
             let images = await handleRemoveBgImage(activeImg)
             usedImages.value = images.images
+            usedImages.value.forEach(image=>{
+                if(image.id === activeImg.id){
+                    activeImgWithBackground.value = !image.object.imageNoBgUrl || (image.object.imageNoBgUrl && image.object.imageNoBgUrl == "") ? false : true
+                }
+            })
             showLoader(false)
+
+            if(firstSetLoad.value){
+                saveStep('remove image background')
+            }
         }
     }
 
@@ -6285,9 +6364,9 @@
     var finishLoading = ref(true)
     async function finishConfig(){
         closeObjectValues()
-        var heightValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('height-value', canvas) : {text: `${document.getElementById("outline-width").textContent} ${configUnit.value}`}
-        var widthValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('width-value', canvas) : {text: `${document.getElementById("outline-height").textContent} ${configUnit.value}`}
-        console.log(heightValue, widthValue, "7777777777")
+        var heightValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('height-value', canvas) : {text: `${document.getElementById("outline-height").textContent} ${configUnit.value}`}
+        var widthValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('width-value', canvas) : {text: `${document.getElementById("outline-width").textContent} ${configUnit.value}`}
+        // console.log(heightValue, widthValue, "7777777777")
         
         var thicknessValue = 'none'
         switch(currentSizeThickness.value) {
@@ -6327,6 +6406,7 @@
 
         var textObjects = []
         var imageObjects = []
+        var qrCodeObjects = []
         
         var objects = canvas.getObjects();
         for (var i = 0; i < objects.length; i++) {
@@ -6348,8 +6428,17 @@
                 }
                 addUniqueObject(imageObjects, objects[i], 'id')
             }
+            if (objects[i].name === "asowp-QRCode") {
+                function addUniqueObject(arr, obj, key) {
+                    const exists = arr.some(item => item[key] === obj[key]);
+                    if (!exists) {
+                        arr.push(obj);
+                    }
+                }
+                addUniqueObject(qrCodeObjects, objects[i], 'id')
+            }
         }
-        var addedObject = handleFinishConfiguration(textObjects, imageObjects)
+        var addedObject = handleFinishConfiguration(textObjects, imageObjects, qrCodeObjects)
 
 
         var designImagesFace1 = []
@@ -6447,6 +6536,11 @@
                 label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
                 value: addedObject.images,
             },
+            qrCodes: {
+                // label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
+                label: "qr Codes",
+                value: addedObject.qrCodes,
+            },
             additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
             additionalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
             designImages: await generateOutputImage(designImagesFace1, canvas),
@@ -6459,8 +6553,9 @@
 
         var face2AddedObject = {}
         if(configDoublePart.value.active){
-            var face2TextObjects = []
-            var face2ImageObjects = []
+            let face2TextObjects = []
+            let face2ImageObjects = []
+            let face2QrCodeObjects = []
             var objects = canvasBack.getObjects();
 
             for (var i = 0; i < objects.length; i++) {
@@ -6482,8 +6577,17 @@
                     }
                     addUniqueObject(face2ImageObjects, objects[i], 'id')
                 }
+                if (objects[i].name === "asowp-QRCode") {
+                    function addUniqueObject(arr, obj, key) {
+                        const exists = arr.some(item => item[key] === obj[key]);
+                        if (!exists) {
+                            arr.push(obj);
+                        }
+                    }
+                    addUniqueObject(face2QrCodeObjects, objects[i], 'id')
+                }
             }
-            face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects)
+            face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects, face2QrCodeObjects)
 
             var designImagesFace2 = []
 
@@ -6578,6 +6682,14 @@
                         face2 :face2AddedObject.images
                     }
                 },
+                qrCodes: {
+                    // label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
+                    label: "qr Codes",
+                    value: {
+                        face1 :addedObject.qrCodes,
+                        face2 :face2AddedObject.qrCodes
+                    }
+                },
                 additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
                 additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
                 designImages: {
@@ -6600,14 +6712,14 @@
             canvas.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
             canvasBack.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -6699,6 +6811,10 @@
                 images: {
                     face1 :addedObject.images,
                     face2 :(face2AddedObject != {} ? face2AddedObject.images : null)
+                },
+                qrCodes: {
+                    face1 :addedObject.qrCodes,
+                    face2 :(face2AddedObject != {} ? face2AddedObject.qrCodes : null)
                 },
                 designImages: {
                     face1: designImagesFace1,
