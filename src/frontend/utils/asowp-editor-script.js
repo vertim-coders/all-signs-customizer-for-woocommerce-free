@@ -3079,7 +3079,7 @@ async function handleChangeOutlineSize(size){
     await handleSelectShape(selectedShape)
   }
 }
-let selectedCutline = "2x"
+let selectedCutline = "none"
 let cutlinesData = {
   first: {
     borderSize: 3,

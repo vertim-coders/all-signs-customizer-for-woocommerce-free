@@ -1301,6 +1301,21 @@
                                     </div>
                                 </div>
 
+                                <!-- <div v-show="IAGenerate" class="asowp-p-2 asowp-space-y-2">
+
+                                    <textarea name="" id="asowp-iaImage-prompt" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="prompt" style="border-radius: 6px"></textarea>
+
+                                    <span @click="generateImage()" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
+                                        <p class="asowp-text-center">{{ loading ? 'Génération...' : 'Générer' }}</p>
+                                    </span>
+
+                                    <div v-if="imageUrl" class="mt-4">
+                                        <img :src="imageUrl" alt="Image générée" class="w-full rounded shadow" />
+                                    </div>
+
+
+                                </div> -->
+
                                 <div v-if="clipartSection && !editImage">
                                     <div v-if="configImageSettingsClipart.active" class="asowp-space-y-3">
                                         <div class="asowp-flex asowp-flex-col asowp-space-y-2">
@@ -1565,15 +1580,6 @@
                                     <div v-if="qrCodeType == 'text'">
                                         <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
                                         <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm"  @input="getQRCodeData" style="border-radius: 6px"></textarea>
-                                    </div>
-                                    <div v-if="qrCodeType == 'image'">
-                                        <label :class="`asowp-w-3/4 asowp-inputImage asowp-full-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-text-sm`">
-                                            <input @change="getQRCodeData" class="asowp-hidden" id="asowp-QRCode-image-editor" type="file" name="asowp-Images" :accept="configImagesFormat" style="display: none;"/>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                                            </svg>
-                                            <p>Upload image</p>
-                                        </label>
                                     </div>
 
                                     <span @click="addQRCode" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
@@ -4080,6 +4086,7 @@
     }
 
     function centerAndZoomAfterResize(canva, targetZoom, newWidth, newHeight) {
+        // console.log(targetZoom, "zoom")
         // 1. Désactiver temporairement le rendu
         canva.renderOnAddRemove = false;
         
@@ -4128,7 +4135,7 @@
         //     `Objet: (${Math.round(finalPos.x)},${Math.round(finalPos.y)}) | Canvas: (${Math.round(canvasCenter.x)},${Math.round(canvasCenter.y)})`
         // );
     }
-    function checkScreenSize(width, height){
+    function checkScreenSize(width, height, fillFactor){
         handleReadyToSaveState(false);
 
         var canvasContainer = document.getElementById("asowp-canvas-containers")
@@ -4165,6 +4172,12 @@
             // wValue.fontSize = fontSize
             // tValue.fontSize = fontSize
             // console.log("==2==", scaleRatio, "==2==")
+        }
+
+        if(fillFactor && fillFactor != 0){
+            scaleRatio = scaleRatio * fillFactor
+            // let newScaleRatio = scaleRatio * fillFactor
+            console.log(scaleRatio, "zoom before render", fillFactor)
         }
 
         centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight)
@@ -6151,6 +6164,46 @@
         }
     }
 
+    var IAGenerate = ref(true)
+    const prompt = ref('');
+    const imageUrl = ref(null);
+    const loading = ref(false);
+
+    const DEEPAI_API_KEY = '0cce00f8-2f4c-476b-936f-36c8d315c72c';
+
+    async function generateImage() {
+        loading.value = true;
+        imageUrl.value = '';
+
+        try {
+            const response = await fetch('https://api.deepai.org/api/text2img', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'api-key': DEEPAI_API_KEY
+                },
+                body: JSON.stringify({
+                    text: prompt.value,
+                })
+            });
+
+            const data = await response.json();
+            console.log(data, "111111111")
+
+            if (data.output_url) {
+                imageUrl.value = data.output_url;
+            } else {
+                throw new Error('Erreur de génération');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Erreur lors de la génération de l’image');
+        } finally {
+            loading.value = false;
+        }
+    }
+
     let usedQRCodes = ref([])
     let addQRActive = ref(false)
     let selectQRCode = ref(false)
@@ -6934,16 +6987,16 @@
                 let designURL = await genSvgDesignImg(canvas, size.width, size.height);
                 // console.log(designURL)
 
-                let svgString = await handleGenSvgDesignImg(canvas, canvas.getWidth(), canvas.getHeight())
+                // let svgString = await handleGenSvgDesignImg(canvas, canvas.getWidth(), canvas.getHeight())
                 // let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
                 let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(designURL)));
 
                 // const stickerCanvas = await genPrintReadyFileInSheet(designURL, 10)
                 let paperSize = {
-                    width: convertToPixels(41, "cm"),
-                    height: convertToPixels(49.7, "cm"),
-                    // width: convertToPixels(210, configUnit.value),
-                    // height: convertToPixels(297, configUnit.value),
+                    // width: convertToPixels(41, "cm"),
+                    // height: convertToPixels(49.7, "cm"),
+                    width: convertToPixels(210, configUnit.value),
+                    height: convertToPixels(297, configUnit.value),
                 }
                 // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, 2480, 3508, 20)
                 const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
@@ -8402,30 +8455,437 @@
     }
 
 
+    // function checkScreenSizeSvg(width, height) {
+    //     handleReadyToSaveState(false);
+
+    //     var canvasContainer = document.getElementById("asowp-canvas-containers");
+        
+    //     // Déterminer les dimensions à utiliser
+    //     let canvasWidth, canvasHeight;
+    //     if (width && height) {
+    //         canvasWidth = width;
+    //         canvasHeight = height;
+    //     } else {
+    //         canvasWidth = canvasContainer.clientWidth;
+    //         canvasHeight = canvasContainer.clientHeight;
+    //     }
+
+    //     // Calculer le bounding box du contenu visible
+    //     function getContentBounds(canvasInstance) {
+    //         const exportObjects = canvasInstance.getObjects().filter(obj => 
+    //             ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+    //         );
+
+    //         if (exportObjects.length === 0) {
+    //             return null;
+    //         }
+
+    //         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    //         exportObjects.forEach(obj => {
+    //             const rect = obj.getBoundingRect();
+    //             minX = Math.min(minX, rect.left);
+    //             minY = Math.min(minY, rect.top);
+    //             maxX = Math.max(maxX, rect.left + rect.width);
+    //             maxY = Math.max(maxY, rect.top + rect.height);
+    //         });
+
+    //         return {
+    //             left: minX,
+    //             top: minY,
+    //             width: maxX - minX,
+    //             height: maxY - minY,
+    //             centerX: minX + (maxX - minX) / 2,
+    //             centerY: minY + (maxY - minY) / 2
+    //         };
+    //     }
+
+    //     // Calculer le zoom optimal basé sur le contenu
+    //     function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
+    //         const contentBounds = getContentBounds(canvasInstance);
+    //         console.log(contentBounds, "contentBounds")
+    //         if (!contentBounds) {
+    //             return 1; // Zoom par défaut si pas de contenu
+    //         }
+
+    //         // Marges de sécurité (en pourcentage de l'espace disponible)
+    //         const marginPercent = 0.1; // 10% de marge
+    //         const availableWidth = containerWidth * (1 - marginPercent * 2);
+    //         const availableHeight = containerHeight * (1 - marginPercent * 2);
+
+    //         // Calculer les ratios de zoom possibles
+    //         const zoomX = availableWidth / contentBounds.width;
+    //         const zoomY = availableHeight / contentBounds.height;
+
+    //         // Utiliser le plus petit ratio pour que tout le contenu soit visible
+    //         const optimalZoom = Math.min(zoomX, zoomY);
+
+    //         // Limiter le zoom entre des valeurs raisonnables
+    //         return Math.max(0.1, Math.min(optimalZoom, 10));
+    //     }
+
+    //     // Calculer les zooms pour chaque canvas
+    //     let scaleRatio = calculateOptimalZoom(canvas, canvasWidth, canvasHeight);
+    //     let scaleRatioBack = calculateOptimalZoom(canvasBack, canvasWidth, canvasHeight);
+
+    //     // Si on a les deux canvas, utiliser le zoom le plus restrictif
+    //     if (canvas && canvasBack) {
+    //         scaleRatio = Math.min(scaleRatio, scaleRatioBack);
+    //     }
+
+    //     // Facteur d'augmentation pour remplir davantage l'espace
+    //     const fillFactor = 1.5; // Augmente le zoom de 20% pour mieux remplir
+    //     scaleRatio *= fillFactor;
+
+    //     // Gestion des polices (partie existante améliorée)
+    //     try {
+    //         const hValue = handleGetObjectByName('height-value');
+    //         const wValue = handleGetObjectByName('width-value');
+    //         const tValue = handleGetObjectByName('thickness-value');
+
+    //         if (hValue && wValue && tValue) {
+    //             // Ajuster la taille de police en fonction du zoom
+    //             const baseFontSize = 12; // Taille de base
+    //             const fontSize = Math.max(baseFontSize, baseFontSize * scaleRatio * 0.8);
+                
+    //             // Optionnel : appliquer la nouvelle taille de police
+    //             // hValue.fontSize = fontSize;
+    //             // wValue.fontSize = fontSize;
+    //             // tValue.fontSize = fontSize;
+    //         }
+    //     } catch (error) {
+    //         console.warn("Erreur lors de l'ajustement des polices:", error);
+    //     }
+
+    //     // Appliquer le zoom et centrage
+    //     if (canvas) {
+    //         centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight);
+    //     }
+    //     if (canvasBack) {
+    //         centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight);
+    //     }
+
+    //     // Finalisation
+    //     try {
+    //         currentSizeValues.value = handleGetSignPosition();
+    //     } catch (error) {
+    //         console.warn("Erreur lors de la mise à jour des valeurs de taille:", error);
+    //     }
+
+    //     handleReadyToSaveState(true);
+    //     simulateCanvasClick();
+
+    //     // Debug: afficher les informations de zoom
+    //     console.log(`Zoom appliqué: ${scaleRatio.toFixed(2)}, Dimensions: ${canvasWidth}x${canvasHeight}`);
+    // }
+
+    function checkScreenSizeSvg(width, height) {
+        handleReadyToSaveState(false);
+
+        var canvasContainer = document.getElementById("asowp-canvas-containers");
+        
+        let canvasWidth, canvasHeight;
+        if (width && height) {
+            canvasWidth = width;
+            canvasHeight = height;
+        } else {
+            canvasWidth = canvasContainer.clientWidth;
+            canvasHeight = canvasContainer.clientHeight;
+        }
+
+        // Fonction simple pour calculer le zoom optimal
+        function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
+            if (!canvasInstance) return 1;
+
+            // Obtenir tous les objets exportables
+            const exportObjects = canvasInstance.getObjects().filter(obj => 
+                // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode'].includes(obj.name)
+            );
+
+            if (exportObjects.length === 0) {
+                return 1;
+            }
+
+            // Calculer les limites du contenu
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            
+            exportObjects.forEach(obj => {
+                if(obj.name == "safeObject" && obj._objects){
+
+                }else{
+                    const rect = obj.getBoundingRect();
+                    minX = Math.min(minX, rect.left);
+                    minY = Math.min(minY, rect.top);
+                    maxX = Math.max(maxX, rect.left + rect.width);
+                    maxY = Math.max(maxY, rect.top + rect.height);
+                }
+            });
+
+            const contentWidth = maxX - minX;
+            const contentHeight = maxY - minY;
+
+            // Marge de 20px de chaque côté
+            const margin = 50;
+            const targetWidth = containerWidth - (margin * 2);
+            const targetHeight = containerHeight - (margin * 2);
+
+            // Calculer le zoom nécessaire pour chaque dimension
+            const zoomX = targetWidth / contentWidth;
+            const zoomY = targetHeight / contentHeight;
+
+            // Prendre le plus petit pour que tout rentre
+            let zoom = Math.min(zoomX, zoomY);
+            // const zoom = Math.max(zoomX, zoomY);
+            if(selectedShape.value == "cut-to-shape"){
+                // zoom = zoom + 1
+                zoom = zoom * 0.9
+                console.log(selectedShape.value, "8888")
+            }
+
+            console.log(`Content: ${contentWidth.toFixed(1)} x ${contentHeight.toFixed(1)}`);
+            console.log(`Target: ${targetWidth} x ${targetHeight}`);
+            console.log(`Zoom calculated: ${zoom.toFixed(3)}`);
+
+            return Math.max(0.1, Math.min(zoom, 20)); // Limiter entre 0.1 et 20
+        }
+
+        // Calculer le zoom
+        let scaleRatio = calculateOptimalZoom(canvas, canvasWidth, canvasHeight);
+
+        // Si on a les deux canvas, prendre le plus petit zoom
+        // if (canvasBack) {
+        //     const scaleRatioBack = calculateOptimalZoom(canvasBack, canvasWidth, canvasHeight);
+        //     scaleRatio = Math.min(scaleRatio, scaleRatioBack);
+        // }
+
+        // Appliquer le zoom et centrer
+        if (canvas) {
+            centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight);
+        }
+        if (canvasBack) {
+            centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight);
+        }
+
+        // Gestion des polices
+        try {
+            const hValue = handleGetObjectByName('height-value');
+            const wValue = handleGetObjectByName('width-value');
+            const tValue = handleGetObjectByName('thickness-value');
+
+            if (hValue && wValue && tValue) {
+                const fontSize = Math.max(10, 12 * Math.sqrt(scaleRatio));
+                // hValue.fontSize = fontSize;
+                // wValue.fontSize = fontSize;
+                // tValue.fontSize = fontSize;
+            }
+        } catch (error) {
+            console.warn("Erreur polices:", error);
+        }
+
+        // Finalisation
+        try {
+            currentSizeValues.value = handleGetSignPosition();
+        } catch (error) {
+            console.warn("Erreur valeurs:", error);
+        }
+
+        handleReadyToSaveState(true);
+        simulateCanvasClick();
+
+        console.log(`Zoom final: ${scaleRatio.toFixed(3)} - Container: ${canvasWidth} x ${canvasHeight}`);
+    }
+
+    // Fonction auxiliaire améliorée pour centerAndZoomAfterResize
+    function centerAndZoomAfterResizeSvg(canvasInstance, zoom, containerWidth, containerHeight) {
+        if (!canvasInstance) return;
+
+        // Appliquer le zoom
+        canvasInstance.setZoom(zoom);
+
+        // Calculer le centre du conteneur
+        const centerX = containerWidth / 2;
+        const centerY = containerHeight / 2;
+
+        // Calculer le centre du canvas
+        const canvasCenterX = canvasInstance.getWidth() / 2;
+        const canvasCenterY = canvasInstance.getHeight() / 2;
+
+        // Calculer le décalage pour centrer le canvas dans le conteneur
+        const offsetX = centerX - (canvasCenterX * zoom);
+        const offsetY = centerY - (canvasCenterY * zoom);
+
+        // Appliquer la transformation de vue
+        const vpt = canvasInstance.viewportTransform;
+        vpt[4] = offsetX;
+        vpt[5] = offsetY;
+
+        canvasInstance.setViewportTransform(vpt);
+        canvasInstance.renderAll();
+
+        console.log(`Canvas centré: offset(${offsetX.toFixed(1)}, ${offsetY.toFixed(1)}) zoom: ${zoom.toFixed(3)}`);
+    }
+
+    // function checkScreenSizeSvg(width, height) {
+    //     handleReadyToSaveState(false);
+
+    //     var canvasContainer = document.getElementById("asowp-canvas-containers");
+        
+    //     // Déterminer les dimensions à utiliser
+    //     let canvasWidth, canvasHeight;
+    //     if (width && height) {
+    //         canvasWidth = width;
+    //         canvasHeight = height;
+    //     } else {
+    //         canvasWidth = canvasContainer.clientWidth;
+    //         canvasHeight = canvasContainer.clientHeight;
+    //     }
+
+    //     // Calculer le bounding box du contenu visible
+    //     function getContentBounds(canvasInstance) {
+    //         const exportObjects = canvasInstance.getObjects().filter(obj => 
+    //             ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+    //         );
+
+    //         if (exportObjects.length === 0) {
+    //             return null;
+    //         }
+
+    //         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    //         exportObjects.forEach(obj => {
+    //             const rect = obj.getBoundingRect();
+    //             minX = Math.min(minX, rect.left);
+    //             minY = Math.min(minY, rect.top);
+    //             maxX = Math.max(maxX, rect.left + rect.width);
+    //             maxY = Math.max(maxY, rect.top + rect.height);
+    //         });
+
+    //         return {
+    //             left: minX,
+    //             top: minY,
+    //             width: maxX - minX,
+    //             height: maxY - minY,
+    //             centerX: minX + (maxX - minX) / 2,
+    //             centerY: minY + (maxY - minY) / 2
+    //         };
+    //     }
+
+    //     // Calculer le zoom optimal basé sur le contenu
+    //     function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
+    //         const contentBounds = getContentBounds(canvasInstance);
+            
+    //         if (!contentBounds) {
+    //             return 2; // Zoom par défaut plus élevé si pas de contenu
+    //         }
+
+    //         // Marges très réduites pour maximiser l'utilisation de l'espace
+    //         const marginPercent = 0.02; // Seulement 2% de marge
+    //         const availableWidth = containerWidth * (1 - marginPercent * 2);
+    //         const availableHeight = containerHeight * (1 - marginPercent * 2);
+
+    //         // Calculer les ratios de zoom possibles
+    //         const zoomX = availableWidth / contentBounds.width;
+    //         const zoomY = availableHeight / contentBounds.height;
+
+    //         // Utiliser le plus petit ratio pour que tout le contenu soit visible
+    //         let optimalZoom = Math.min(zoomX, zoomY);
+
+    //         // Si le zoom calculé est trop petit, forcer un minimum plus élevé
+    //         const minZoom = 1.5; // Zoom minimum pour garantir une bonne visibilité
+    //         optimalZoom = Math.max(optimalZoom, minZoom);
+
+    //         // Limiter le zoom entre des valeurs raisonnables mais plus élevées
+    //         return Math.max(0.5, Math.min(optimalZoom, 15));
+    //     }
+
+    //     // Calculer les zooms pour chaque canvas
+    //     let scaleRatio = calculateOptimalZoom(canvas, canvasWidth, canvasHeight);
+    //     let scaleRatioBack = calculateOptimalZoom(canvasBack, canvasWidth, canvasHeight);
+
+    //     // Si on a les deux canvas, utiliser le zoom le plus élevé pour mieux remplir
+    //     if (canvas && canvasBack) {
+    //         scaleRatio = Math.max(scaleRatio, scaleRatioBack);
+    //     }
+
+    //     // Facteur d'augmentation plus agressif pour remplir davantage l'espace
+    //     const fillFactor = 1.8; // Augmente le zoom de 80% pour mieux remplir
+    //     scaleRatio *= fillFactor;
+
+    //     // Vérification finale : si le zoom est encore trop bas, appliquer un minimum absolu
+    //     const absoluteMinZoom = 2.0;
+    //     scaleRatio = Math.max(scaleRatio, absoluteMinZoom);
+
+    //     // Gestion des polices (partie existante améliorée)
+    //     try {
+    //         const hValue = handleGetObjectByName('height-value');
+    //         const wValue = handleGetObjectByName('width-value');
+    //         const tValue = handleGetObjectByName('thickness-value');
+
+    //         if (hValue && wValue && tValue) {
+    //             // Ajuster la taille de police en fonction du zoom
+    //             const baseFontSize = 12; // Taille de base
+    //             const fontSize = Math.max(baseFontSize, baseFontSize * scaleRatio * 0.8);
+                
+    //             // Optionnel : appliquer la nouvelle taille de police
+    //             // hValue.fontSize = fontSize;
+    //             // wValue.fontSize = fontSize;
+    //             // tValue.fontSize = fontSize;
+    //         }
+    //     } catch (error) {
+    //         console.warn("Erreur lors de l'ajustement des polices:", error);
+    //     }
+
+    //     // Appliquer le zoom et centrage
+    //     if (canvas) {
+    //         centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight);
+    //     }
+    //     if (canvasBack) {
+    //         centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight);
+    //     }
+
+    //     // Finalisation
+    //     try {
+    //         currentSizeValues.value = handleGetSignPosition();
+    //     } catch (error) {
+    //         console.warn("Erreur lors de la mise à jour des valeurs de taille:", error);
+    //     }
+
+    //     handleReadyToSaveState(true);
+    //     simulateCanvasClick();
+
+    //     // Debug: afficher les informations détaillées
+    //     const contentBounds = getContentBounds(canvas);
+    //     console.log('Content bounds:', contentBounds);
+    //     console.log(`Zoom final appliqué: ${scaleRatio.toFixed(2)}`);
+    //     console.log(`Dimensions container: ${canvasWidth}x${canvasHeight}`);
+    //     if (contentBounds) {
+    //         console.log(`Ratio de remplissage: width=${(canvasWidth / contentBounds.width * scaleRatio).toFixed(2)}, height=${(canvasHeight / contentBounds.height * scaleRatio).toFixed(2)}`);
+    //     }
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // async function genSvgDesignImg(canva, width, height) {
-    //     try{
-    //         var currentWidth = canva.width
-    //         var currentHeight = canva.height
+    //     try {
+    //         // Récupérer tous les objets à inclure
+    //         const exportObjects = canva.getObjects().filter(obj => 
+    //             ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+    //         );
 
+    //         if (exportObjects.length === 0) {
+    //             throw new Error("Aucun objet à exporter trouvé");
+    //         }
 
-    //         var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
-    //         const optionsPreview = {
-    //             width: '100%',
-    //             height: '100%',
-    //             encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-    //         };
-    //         const options = {
-    //             width: `${width}px`,
-    //             height: `${height}px`,
-    //             viewBox: {
-    //                 x: 0,
-    //                 y: 0,
-    //                 width: canva.width,
-    //                 height: canva.height,
-    //             },
-    //             encoding: 'UTF-8',
-    //         };
-    
     //         async function drawnPathFromText() {
     //             return new Promise((resolve, reject) => {
     //                 var elements = canva.getObjects()
@@ -8476,105 +8936,119 @@
     //                     .catch(error => reject(error));
     //             });
     //         }
-    
-    //         var widthVisibility
-    //         var heightVisibility
-    //         var thickVisibility
-    //         var borderPositionId
-    //         var fixingPositionId
-    //         canva.getObjects().forEach((object, index) => {
-    //             if(object.name === 'widthLine' || object.name === 'width-value'){
-    //                 widthVisibility = object.visible
+
+    //         canva.setWidth(width)
+    //         canva.setHeight(height)
+    //         checkScreenSize(width, height)
+
+    //         // Calculer le bounding box global
+            
+    //         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    //         exportObjects.forEach(obj => {
+    //             const rect = obj.getBoundingRect();
+    //             minX = Math.min(minX, rect.left);
+    //             minY = Math.min(minY, rect.top);
+    //             maxX = Math.max(maxX, rect.left + rect.width);
+    //             maxY = Math.max(maxY, rect.top + rect.height);
+    //         });
+
+    //         const contentWidth = maxX - minX;
+    //         const contentHeight = maxY - minY;
+
+    //         // Calculer le décalage pour centrer
+    //         const offsetX = (width - contentWidth) / 2 - minX;
+    //         const offsetY = (height - contentHeight) / 2 - minY;
+
+    //         // Options pour le SVG
+    //         const options = {
+    //             width: `${width}px`,
+    //             height: `${height}px`,
+    //             viewBox: `0 0 ${width+100} ${height+100}`,
+    //             // viewBox: `0 0 0 0`,
+    //             encoding: 'UTF-8',
+    //             suppressPreamble: true
+    //         };
+
+    //         // Sauvegarder les positions originales
+    //         const originalPositions = exportObjects.map(obj => ({
+    //             obj,
+    //             left: obj.left,
+    //             top: obj.top
+    //         }));
+
+    //         // Centrer temporairement les objets
+    //         // exportObjects.forEach(obj => {
+    //         //     obj.set({
+    //         //         left: obj.left + offsetX,
+    //         //         top: obj.top + offsetY
+    //         //     });
+    //         //     obj.setCoords();
+    //         // });
+
+    //         // Masquer les objets non exportés
+    //         const visibilityStates = {};
+    //         canva.getObjects().forEach(object => {
+    //             visibilityStates[object.name] = object.visible;
+    //             if (!exportObjects.includes(object)) {
     //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'heightLine' || object.name === 'height-value'){
-    //                 heightVisibility = object.visible
-    //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'asowp-SignText'){
-    //                 // object.set('visible', false);
-    //             }
-    //             if(object.name === 'thickness-value'){
-    //                 thickVisibility = object.visible
-    //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-    //                 borderPositionId = index
-    //                 object.bringToFront();
-    //             }
-    //             if(object.objectType === 'asowp-fixingMethods'){
-    //                 fixingPositionId = index
-    //                 object.bringToFront();
     //             }
     //         });
-    //         canva.renderAll();
 
+    //         await drawnPathFromText();
 
-    //         await drawnPathFromText()
-
-    //         // Générer le SVG avec les polices intégrées
+    //         // Générer le SVG
     //         let svgContent = canva.toSVG(options);
-    //         let usedFonts = getUsedFonts(canva)
+    //         let usedFonts = getUsedFonts(canva);
 
-    //         if(configTextType.value === "neon"){
-    //             svgContent = applyNeonEffectToSVG(svgContent, canva)
+    //         if(configTextType.value === "neon") {
+    //             svgContent = applyNeonEffectToSVG(svgContent, canva);
     //         }
-    //         const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
-    //         const svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgWithFonts))); 
 
-    //         var dataURL  = svgUrl
-    
-    //         // Restaure les dimensions et l'affichage originales du canvas
-    //         canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+    //         const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
+
+    //         // const finalSvg = `<?xml version="1.0" encoding="UTF-8"?>
+    //         //     <svg xmlns="http://www.w3.org/2000/svg" 
+    //         //         xmlns:xlink="http://www.w3.org/1999/xlink"
+    //         //         width="${width}" 
+    //         //         height="${height}"
+    //         //         viewBox="0 0 ${width} ${height}">
+    //         //     ${svgWithFonts}
+    //         //     </svg>`;
+
+    //         // Restaurer les états originaux
+    //         originalPositions.forEach(pos => {
+    //             pos.obj.set({
+    //                 left: pos.left,
+    //                 top: pos.top
+    //             });
+    //             pos.obj.setCoords();
+    //         });
+
     //         canva.getObjects().forEach(object => {
-    //             if(object.name === 'widthLine' || object.name === 'width-value'){
-    //                 object.set('visible', widthVisibility);
+    //             if (visibilityStates.hasOwnProperty(object.name)) {
+    //                 object.set('visible', visibilityStates[object.name]);
     //             }
-    //             if(object.name === 'heightLine' || object.name === 'height-value'){
-    //                 object.set('visible', heightVisibility);
-    //             }
-    //             if(object.name === 'asowp-SignText'){
-    //                 object.set('visible', true);
-    //             }
-    //             if(object.name === 'thickness-value'){
-    //                 object.set('visible', thickVisibility);
-    //             }
-    //             if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
-    //                 // console.log(object, "watermark")
-    //                 canva.remove(object)
-    //             }
-    //             if(object.name === 'safeObject'){
-    //                 if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
-    //                     object.shadow = defaultShadow.value
-    //                 }
-    //                 if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
-    //                     object.shadow = defaultShadow.value
-    //                 }
-    //             }
-    //             if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-    //                 object.moveTo(borderPositionId);
-    //             }
-    //             if(object.objectType === 'asowp-fixingMethods'){
-    //                 object.moveTo(fixingPositionId);
+    //             if (['watermark', 'asowp-svg-path', 'asowp-signPattern'].includes(object.name)) {
+    //                 canva.remove(object);
     //             }
     //         });
 
     //         checkScreenSize()
     //         canva.renderAll();
-
-    //         // return dataURL;
+    //         // return finalSvg;
     //         return svgWithFonts;
 
-    //     }catch (error) {
-    //         console.error("Une erreur est survenue:", error);
+    //     } catch (error) {
+    //         console.error("Erreur dans genSvgDesignImg:", error);
+    //         throw error;
     //     }
-    //     // return dataURL;
     // }
     async function genSvgDesignImg(canva, width, height) {
         try {
             // Récupérer tous les objets à inclure
             const exportObjects = canva.getObjects().filter(obj => 
-                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+                // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border'].includes(obj.name)
             );
 
             if (exportObjects.length === 0) {
@@ -8632,8 +9106,12 @@
                 });
             }
 
-            // Calculer le bounding box global
-            
+            canva.setWidth(width)
+            canva.setHeight(height)
+            // checkScreenSize(width, height, 1.5)
+            checkScreenSizeSvg(width, height)
+
+            // Calculer le bounding box global du contenu
             let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
             exportObjects.forEach(obj => {
                 const rect = obj.getBoundingRect();
@@ -8643,37 +9121,67 @@
                 maxY = Math.max(maxY, rect.top + rect.height);
             });
 
-            const contentWidth = maxX - minX;
-            const contentHeight = maxY - minY;
+            // const contentWidth = maxX - minX;
+            // const contentHeight = maxY - minY;
+            // const contentCenterX = minX + (contentWidth / 2);
+            // const contentCenterY = minY + (contentHeight / 2);
 
-            // Calculer le décalage pour centrer
-            const offsetX = (width - contentWidth) / 2 - minX;
-            const offsetY = (height - contentHeight) / 2 - minY;
+            // // Définir les marges de sécurité (en pixels)
+            // const marginX = 0; // marge horizontale
+            // const marginY = 0; // marge verticale
+            // const availableWidth = width - (2 * marginX);
+            // const availableHeight = height - (2 * marginY);
+
+            // // Calculer le facteur d'échelle pour que le contenu rentre dans les limites
+            // const scaleX = availableWidth / contentWidth;
+            // const scaleY = availableHeight / contentHeight;
+            
+            // // Utiliser le plus petit facteur pour maintenir les proportions
+            // const scale = Math.min(scaleX, scaleY, 1); // Ne pas agrandir si le contenu est déjà plus petit
+
+            // // Calculer la nouvelle position du centre pour centrer le contenu
+            // const newCenterX = width / 2;
+            // const newCenterY = height / 2;
+            
+            // // Calculer le décalage nécessaire
+            // const offsetX = newCenterX - contentCenterX;
+            // const offsetY = newCenterY - contentCenterY;
+
+            // Sauvegarder les positions et échelles originales
+            const originalStates = exportObjects.map(obj => ({
+                obj,
+                left: obj.left,
+                top: obj.top,
+                scaleX: obj.scaleX,
+                scaleY: obj.scaleY
+            }));
+
+            // Appliquer la transformation à tous les objets exportés
+            // exportObjects.forEach(obj => {
+            //     // Calculer la nouvelle position relative au centre du contenu
+            //     const relativeX = obj.left - contentCenterX;
+            //     const relativeY = obj.top - contentCenterY;
+                
+            //     // Appliquer l'échelle et repositionner
+            //     obj.set({
+            //         left: newCenterX + (relativeX * scale),
+            //         top: newCenterY + (relativeY * scale),
+            //         scaleX: (obj.scaleX || 1) * scale,
+            //         scaleY: (obj.scaleY || 1) * scale
+            //     });
+                
+            //     obj.setCoords();
+            // });
 
             // Options pour le SVG
             const options = {
                 width: `${width}px`,
                 height: `${height}px`,
-                viewBox: `0 0 ${width} ${height}`,
+                // viewBox: `0 0 ${width} ${height}`,
+                viewBox: `0 0 0 0`,
                 encoding: 'UTF-8',
-                suppressPreamble: true
+                // suppressPreamble: true
             };
-
-            // Sauvegarder les positions originales
-            const originalPositions = exportObjects.map(obj => ({
-                obj,
-                left: obj.left,
-                top: obj.top
-            }));
-
-            // Centrer temporairement les objets
-            exportObjects.forEach(obj => {
-                obj.set({
-                    left: obj.left + offsetX,
-                    top: obj.top + offsetY
-                });
-                obj.setCoords();
-            });
 
             // Masquer les objets non exportés
             const visibilityStates = {};
@@ -8687,7 +9195,8 @@
             await drawnPathFromText();
 
             // Générer le SVG
-            let svgContent = canva.toSVG(options);
+            // let svgContent = canva.toSVG(options);
+            let svgContent = canva.toSVG();
             let usedFonts = getUsedFonts(canva);
 
             if(configTextType.value === "neon") {
@@ -8696,22 +9205,15 @@
 
             const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
 
-            // const finalSvg = `<?xml version="1.0" encoding="UTF-8"?>
-            //     <svg xmlns="http://www.w3.org/2000/svg" 
-            //         xmlns:xlink="http://www.w3.org/1999/xlink"
-            //         width="${width}" 
-            //         height="${height}"
-            //         viewBox="0 0 ${width} ${height}">
-            //     ${svgWithFonts}
-            //     </svg>`;
-
             // Restaurer les états originaux
-            originalPositions.forEach(pos => {
-                pos.obj.set({
-                    left: pos.left,
-                    top: pos.top
+            originalStates.forEach(state => {
+                state.obj.set({
+                    left: state.left,
+                    top: state.top,
+                    scaleX: state.scaleX,
+                    scaleY: state.scaleY
                 });
-                pos.obj.setCoords();
+                state.obj.setCoords();
             });
 
             canva.getObjects().forEach(object => {
@@ -8723,8 +9225,9 @@
                 }
             });
 
+            checkScreenSize()
             canva.renderAll();
-            // return finalSvg;
+            
             return svgWithFonts;
 
         } catch (error) {
@@ -8916,7 +9419,7 @@
                 height: sheetHeight,
             });
 
-            console.log(canvas, "64646")
+            // console.log(canvas, "64646")
 
             fabric.Image.fromURL(designURL, (img) => {
                 const originalWidth = img.width;
@@ -8935,14 +9438,16 @@
                     for (let col = 0; col < cols; col++) {
                     if (currentCount >= count) break;
 
-                    const x = col * (scaledWidth + margin);
-                    const y = row * (scaledHeight + margin);
+                    const x = col * (scaledWidth);
+                    const y = row * (scaledHeight);
+                    // const x = col * (scaledWidth + margin);
+                    // const y = row * (scaledHeight + margin);
 
                     if (x + scaledWidth <= sheetWidth && y + scaledHeight <= sheetHeight) {
                         const clone = fabric.util.object.clone(img);
                         clone.set({
-                            left: x,
-                            top: y,
+                            left: x + margin,
+                            top: y + margin,
                             selectable: false,
                             evented: false,
                         });
