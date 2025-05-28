@@ -1638,7 +1638,7 @@
                             <div v-if="materialType == 'simple'" class="asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
                                 <div v-for="(option, index) in addComponentValue.options">
                                     <div class="asowp-space-y-3 asowp-w-full asowp-h-full">
-                                        <input type="radio" :id="'asowp-addOptions' + addComponentValue.title + option.title + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option.additionalPrice)">
+                                        <input type="radio" :id="'asowp-addOptions' + addComponentValue.title + option.title + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option)">
                                         <label :for="'asowp-addOptions' + addComponentValue.title + option.title + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
                                             <div :class="`${option.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : `` } asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
                                                 <img v-if="option.icon != ''" :src="option.icon" class="asowp-w-auto asowp-h-full" />
@@ -3404,9 +3404,21 @@
                     selectedShape.value = matchingShapes[index].shape.value
                     currentShapeId.value = index
                     handleGetShape(matchingShapes[index].shape.value)
+                    
+                    let shapePrice = 0
+                    currentShapePriceSetting.value = {
+                        value: matchingShapes[index].shapee.additionalPrice,
+                        surface: matchingShapes[index].shapee.surface,
+                        enablePricingBySurface: matchingShapes[index].shapee.enablePricingBySurface,
+                    }
+                    if(matchingShapes[index].shapee.enablePricingBySurface && matchingShapes[index].shapee.enablePricingBySurface == true){
+                        shapePrice = calcPriceByPrice(matchingShapes[index].shapee.surface, matchingShapes[index].shapee.additionalPrice)
+                    }else{
+                        shapePrice = matchingShapes[index].shapee.additionalPrice
+                    }
                     var shapePriceObject = {
                         name: "shape",
-                        price: matchingShapes[index].shapee.additionalPrice
+                        price: shapePrice
                     }
                     getOptionPrice(shapePriceObject)
                     haveDefault = true
@@ -3419,9 +3431,21 @@
                 selectedShape.value = matchingShapes[0].shape.value
                 currentShapeId.value = 0
                 handleGetShape(matchingShapes[0].shape.value)
+
+                let shapePrice = 0
+                currentShapePriceSetting.value = {
+                    value: matchingShapes[0].shapee.additionalPrice,
+                    surface: matchingShapes[0].shapee.surface,
+                    enablePricingBySurface: matchingShapes[0].shapee.enablePricingBySurface,
+                }
+                if(matchingShapes[0].shapee.enablePricingBySurface && matchingShapes[0].shapee.enablePricingBySurface == true){
+                    shapePrice = calcPriceByPrice(matchingShapes[0].shapee.surface, matchingShapes[0].shapee.additionalPrice)
+                }else{
+                    shapePrice = matchingShapes[0].shapee.additionalPrice
+                }
                 var shapePriceObject = {
                     name: "shape",
-                    price: matchingShapes[0].shapee.additionalPrice
+                    price: shapePrice
                 }
                 getOptionPrice(shapePriceObject)
             }
@@ -3479,6 +3503,8 @@
             }
         }else{
             selectFixingMethode('none')
+            fixingExcludeSizes.value = []
+            fixingExcludeShapes.value = []
         }
 
         var stopSize = false
@@ -3542,14 +3568,14 @@
                 if(addOption.options.length > 0){
                     while (index < addOption.options.length && !haveDefault) {
                         if(addOption.options[index].isDefault){
-                            selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index].additionalPrice)
+                            selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index])
                             haveDefault = true
                             break;
                         }
                         index++;
                     }
                     if(!haveDefault){
-                        selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0].additionalPrice)
+                        selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0])
                     }
                 }
             })
@@ -4869,6 +4895,26 @@
             }
         }
 
+        if(currentShapePriceSetting.value.enablePricingBySurface && currentShapePriceSetting.value.enablePricingBySurface == true){
+            let shapePrice = calcPriceByPrice(currentShapePriceSetting.value.surface, currentShapePriceSetting.value.value)
+            let shapePriceObject = {
+                name: "shape",
+                price: shapePrice
+            }
+            getOptionPrice(shapePriceObject)
+        }
+        addComponentSelected.value.forEach(component =>{
+            if(component.data.enablePricingBySurface && component.data.enablePricingBySurface == true){
+                let addOptionPrice = calcPriceByPrice(component.data.surface, component.data.additionalPrice)
+                var addOptionPriceObject = {
+                    type: 'add-component',
+                    name: component.option,
+                    price: addOptionPrice
+                }
+                getOptionPrice(addOptionPriceObject)
+            }
+        })
+
         textsPrices.value = handleSetPrice()
         var priceObject = {
             name: 'none',
@@ -4938,6 +4984,7 @@
     var shapees = ref([])
     var selectedShape = ref('square')
     var currentShapeId = ref(0)
+    var currentShapePriceSetting = ref({})
     async function selectShape(shape, setting, shapeId){
         // currentShapeId.value = setting.shapeId
         selectedShape.value = shape
@@ -5013,7 +5060,17 @@
         }
 
 
-        var shapePrice = setting.additionalPrice
+        let shapePrice = 0
+        currentShapePriceSetting.value = {
+            value: setting.additionalPrice,
+            surface: setting.surface,
+            enablePricingBySurface: setting.enablePricingBySurface,
+        }
+        if(setting.enablePricingBySurface && setting.enablePricingBySurface == true){
+            shapePrice = calcPriceByPrice(setting.surface, setting.additionalPrice)
+        }else{
+            shapePrice = setting.additionalPrice
+        }
         var shapePriceObject = {
             name: "shape",
             price: shapePrice
@@ -5034,6 +5091,12 @@
         if(firstSetLoad.value){
             saveStep('select shape')
         }
+    }
+    function calcPriceByPrice(surface, price){
+        let sizeSurface = currentSizeData.value.width * currentSizeData.value.height
+        let matchPrice = (sizeSurface / surface) * price
+
+        return matchPrice
     }
 
     var firstBorderCheck = ref(true)
@@ -5570,7 +5633,7 @@
     var additionalComponents = ref({})
     var selectedAddComponent = ref("")
     var addComponentSelected = ref([])
-    function selectAddComponent(addOption, option, price){
+    function selectAddComponent(addOption, option, optionData){
 
         function addUniqueObject(arr, obj, key) {
             const index = arr.findIndex(item => item[key] === obj[key]);
@@ -5581,14 +5644,19 @@
                 arr.push(obj);
             }
         }
-        addUniqueObject(addComponentSelected.value, {option: addOption, value: option}, 'option')
+        addUniqueObject(addComponentSelected.value, {option: addOption, value: option, data: optionData}, 'option')
 
         selectedAddComponent.value = option
 
         // console.log(addComponentSelected.value, "selected")
         // console.log(addComponentValue.value, "selected fsdfsdf")
 
-        var addOptionPrice = price
+        let addOptionPrice = 0
+        if(optionData.enablePricingBySurface && optionData.enablePricingBySurface == true){
+            addOptionPrice = calcPriceByPrice(optionData.surface, optionData.additionalPrice)
+        }else{
+            addOptionPrice = optionData.additionalPrice
+        }
         var addOptionPriceObject = {
             type: 'add-component',
             name: addOption,
