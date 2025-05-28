@@ -8537,11 +8537,11 @@
 
             // Prendre le plus petit pour que tout rentre
             let zoom = Math.min(zoomX, zoomY);
-            // const zoom = Math.max(zoomX, zoomY);
             if(selectedShape.value == "cut-to-shape"){
-                // zoom = zoom + 1
-                zoom = zoom * 0.9
+                zoom = zoom * 0.6
                 console.log(selectedShape.value, "8888")
+            }else{
+                zoom = zoom * 0.5
             }
 
             console.log(`Content: ${contentWidth.toFixed(1)} x ${contentHeight.toFixed(1)}`);
@@ -8596,39 +8596,9 @@
 
         console.log(`Zoom final: ${scaleRatio.toFixed(3)} - Container: ${canvasWidth} x ${canvasHeight}`);
     }
-
-    // Fonction auxiliaire améliorée pour centerAndZoomAfterResize
-    function centerAndZoomAfterResizeSvg(canvasInstance, zoom, containerWidth, containerHeight) {
-        if (!canvasInstance) return;
-
-        // Appliquer le zoom
-        canvasInstance.setZoom(zoom);
-
-        // Calculer le centre du conteneur
-        const centerX = containerWidth / 2;
-        const centerY = containerHeight / 2;
-
-        // Calculer le centre du canvas
-        const canvasCenterX = canvasInstance.getWidth() / 2;
-        const canvasCenterY = canvasInstance.getHeight() / 2;
-
-        // Calculer le décalage pour centrer le canvas dans le conteneur
-        const offsetX = centerX - (canvasCenterX * zoom);
-        const offsetY = centerY - (canvasCenterY * zoom);
-
-        // Appliquer la transformation de vue
-        const vpt = canvasInstance.viewportTransform;
-        vpt[4] = offsetX;
-        vpt[5] = offsetY;
-
-        canvasInstance.setViewportTransform(vpt);
-        canvasInstance.renderAll();
-
-        console.log(`Canvas centré: offset(${offsetX.toFixed(1)}, ${offsetY.toFixed(1)}) zoom: ${zoom.toFixed(3)}`);
-    }
-
     async function genSvgDesignImg(canva, width, height) {
         try {
+            await hideCanvasForWaiting(true)
             // Récupérer tous les objets à inclure
             const exportObjects = canva.getObjects().filter(obj => 
                 // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
@@ -8698,38 +8668,42 @@
             // Calculer le bounding box global du contenu
             let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
             exportObjects.forEach(obj => {
-                const rect = obj.getBoundingRect();
-                minX = Math.min(minX, rect.left);
-                minY = Math.min(minY, rect.top);
-                maxX = Math.max(maxX, rect.left + rect.width);
-                maxY = Math.max(maxY, rect.top + rect.height);
+                if(obj.name == "safeObject" && obj._objects){
+
+                }else{
+                    const rect = obj.getBoundingRect();
+                    minX = Math.min(minX, rect.left);
+                    minY = Math.min(minY, rect.top);
+                    maxX = Math.max(maxX, rect.left + rect.width);
+                    maxY = Math.max(maxY, rect.top + rect.height);
+                }
             });
 
-            // const contentWidth = maxX - minX;
-            // const contentHeight = maxY - minY;
-            // const contentCenterX = minX + (contentWidth / 2);
-            // const contentCenterY = minY + (contentHeight / 2);
+            const contentWidth = maxX - minX;
+            const contentHeight = maxY - minY;
+            const contentCenterX = minX + (contentWidth / 2);
+            const contentCenterY = minY + (contentHeight / 2);
 
-            // // Définir les marges de sécurité (en pixels)
-            // const marginX = 0; // marge horizontale
-            // const marginY = 0; // marge verticale
-            // const availableWidth = width - (2 * marginX);
-            // const availableHeight = height - (2 * marginY);
+            // Définir les marges de sécurité (en pixels)
+            const marginX = 30; // marge horizontale
+            const marginY = 30; // marge verticale
+            const availableWidth = width - (2 * marginX);
+            const availableHeight = height - (2 * marginY);
 
-            // // Calculer le facteur d'échelle pour que le contenu rentre dans les limites
-            // const scaleX = availableWidth / contentWidth;
-            // const scaleY = availableHeight / contentHeight;
+            // Calculer le facteur d'échelle pour que le contenu rentre dans les limites
+            const scaleX = availableWidth / contentWidth;
+            const scaleY = availableHeight / contentHeight;
             
-            // // Utiliser le plus petit facteur pour maintenir les proportions
-            // const scale = Math.min(scaleX, scaleY, 1); // Ne pas agrandir si le contenu est déjà plus petit
+            // Utiliser le plus petit facteur pour maintenir les proportions
+            const scale = Math.min(scaleX, scaleY, 1); // Ne pas agrandir si le contenu est déjà plus petit
 
-            // // Calculer la nouvelle position du centre pour centrer le contenu
-            // const newCenterX = width / 2;
-            // const newCenterY = height / 2;
+            // Calculer la nouvelle position du centre pour centrer le contenu
+            const newCenterX = width / 2;
+            const newCenterY = height / 2;
             
-            // // Calculer le décalage nécessaire
-            // const offsetX = newCenterX - contentCenterX;
-            // const offsetY = newCenterY - contentCenterY;
+            // Calculer le décalage nécessaire
+            const offsetX = newCenterX - contentCenterX;
+            const offsetY = newCenterY - contentCenterY;
 
             // Sauvegarder les positions et échelles originales
             const originalStates = exportObjects.map(obj => ({
@@ -8741,21 +8715,21 @@
             }));
 
             // Appliquer la transformation à tous les objets exportés
-            // exportObjects.forEach(obj => {
-            //     // Calculer la nouvelle position relative au centre du contenu
-            //     const relativeX = obj.left - contentCenterX;
-            //     const relativeY = obj.top - contentCenterY;
+            exportObjects.forEach(obj => {
+                // Calculer la nouvelle position relative au centre du contenu
+                const relativeX = obj.left - contentCenterX;
+                const relativeY = obj.top - contentCenterY;
                 
-            //     // Appliquer l'échelle et repositionner
-            //     obj.set({
-            //         left: newCenterX + (relativeX * scale),
-            //         top: newCenterY + (relativeY * scale),
-            //         scaleX: (obj.scaleX || 1) * scale,
-            //         scaleY: (obj.scaleY || 1) * scale
-            //     });
+                // Appliquer l'échelle et repositionner
+                obj.set({
+                    left: newCenterX + (relativeX * scale),
+                    top: newCenterY + (relativeY * scale),
+                    scaleX: (obj.scaleX || 1) * scale,
+                    scaleY: (obj.scaleY || 1) * scale
+                });
                 
-            //     obj.setCoords();
-            // });
+                obj.setCoords();
+            });
 
             // Options pour le SVG
             const options = {
@@ -8812,6 +8786,7 @@
             checkScreenSize()
             canva.renderAll();
             
+            await hideCanvasForWaiting(false)
             return svgWithFonts;
 
         } catch (error) {
@@ -8819,8 +8794,7 @@
             throw error;
         }
     }
-
-    async function genPrintReadyFileInSheet(designURL, count, sheetWidth = 2480, sheetHeight = 3508, margin = 0, scale = 1){
+    async function genPrintReadyFileInSheet(designURL, count, sheetWidth = 2480, sheetHeight = 3508, margin = 10, scale = 1){
         // return new Promise(async (resolve, reject) => {
         //     const image = new Image();
         //     image.crossOrigin = 'Anonymous';

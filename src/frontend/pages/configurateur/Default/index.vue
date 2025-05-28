@@ -7053,10 +7053,6 @@
                     height: convertToPixels(currentSizeData.value.height, configUnit.value),
                 }
                 let designURL = await genSvgDesignImg(canvas, size.width, size.height);
-                // console.log(designURL)
-
-                // let svgString = await handleGenSvgDesignImg(canvas, canvas.getWidth(), canvas.getHeight())
-                // let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
                 let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(designURL)));
 
                 // const stickerCanvas = await genPrintReadyFileInSheet(designURL, 10)
@@ -7067,19 +7063,19 @@
                     height: convertToPixels(297, configUnit.value),
                 }
                 // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, 2480, 3508, 20)
-                const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
+                // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
                 
 
                 // Exporter en image si besoin :
-                const dataURL = stickerCanvas.toDataURL({
-                    format: 'png',
-                    quality: 1.0
-                });
+                // const dataURL = stickerCanvas.toDataURL({
+                //     format: 'png',
+                //     quality: 1.0
+                // });
                 const link = document.createElement('a');
-                link.href = dataURL;
-                link.download = 'img'+'.'+'png';
-                // link.href = svgUrl;
-                // link.download = 'img'+'.'+'svg';
+                // link.href = dataURL;
+                // link.download = 'img'+'.'+'png';
+                link.href = svgUrl;
+                link.download = 'img'+'.'+'svg';
                 link.click();
             }
         }
@@ -8523,129 +8519,6 @@
     }
 
 
-    // function checkScreenSizeSvg(width, height) {
-    //     handleReadyToSaveState(false);
-
-    //     var canvasContainer = document.getElementById("asowp-canvas-containers");
-        
-    //     // Déterminer les dimensions à utiliser
-    //     let canvasWidth, canvasHeight;
-    //     if (width && height) {
-    //         canvasWidth = width;
-    //         canvasHeight = height;
-    //     } else {
-    //         canvasWidth = canvasContainer.clientWidth;
-    //         canvasHeight = canvasContainer.clientHeight;
-    //     }
-
-    //     // Calculer le bounding box du contenu visible
-    //     function getContentBounds(canvasInstance) {
-    //         const exportObjects = canvasInstance.getObjects().filter(obj => 
-    //             ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
-    //         );
-
-    //         if (exportObjects.length === 0) {
-    //             return null;
-    //         }
-
-    //         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    //         exportObjects.forEach(obj => {
-    //             const rect = obj.getBoundingRect();
-    //             minX = Math.min(minX, rect.left);
-    //             minY = Math.min(minY, rect.top);
-    //             maxX = Math.max(maxX, rect.left + rect.width);
-    //             maxY = Math.max(maxY, rect.top + rect.height);
-    //         });
-
-    //         return {
-    //             left: minX,
-    //             top: minY,
-    //             width: maxX - minX,
-    //             height: maxY - minY,
-    //             centerX: minX + (maxX - minX) / 2,
-    //             centerY: minY + (maxY - minY) / 2
-    //         };
-    //     }
-
-    //     // Calculer le zoom optimal basé sur le contenu
-    //     function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
-    //         const contentBounds = getContentBounds(canvasInstance);
-    //         console.log(contentBounds, "contentBounds")
-    //         if (!contentBounds) {
-    //             return 1; // Zoom par défaut si pas de contenu
-    //         }
-
-    //         // Marges de sécurité (en pourcentage de l'espace disponible)
-    //         const marginPercent = 0.1; // 10% de marge
-    //         const availableWidth = containerWidth * (1 - marginPercent * 2);
-    //         const availableHeight = containerHeight * (1 - marginPercent * 2);
-
-    //         // Calculer les ratios de zoom possibles
-    //         const zoomX = availableWidth / contentBounds.width;
-    //         const zoomY = availableHeight / contentBounds.height;
-
-    //         // Utiliser le plus petit ratio pour que tout le contenu soit visible
-    //         const optimalZoom = Math.min(zoomX, zoomY);
-
-    //         // Limiter le zoom entre des valeurs raisonnables
-    //         return Math.max(0.1, Math.min(optimalZoom, 10));
-    //     }
-
-    //     // Calculer les zooms pour chaque canvas
-    //     let scaleRatio = calculateOptimalZoom(canvas, canvasWidth, canvasHeight);
-    //     let scaleRatioBack = calculateOptimalZoom(canvasBack, canvasWidth, canvasHeight);
-
-    //     // Si on a les deux canvas, utiliser le zoom le plus restrictif
-    //     if (canvas && canvasBack) {
-    //         scaleRatio = Math.min(scaleRatio, scaleRatioBack);
-    //     }
-
-    //     // Facteur d'augmentation pour remplir davantage l'espace
-    //     const fillFactor = 1.5; // Augmente le zoom de 20% pour mieux remplir
-    //     scaleRatio *= fillFactor;
-
-    //     // Gestion des polices (partie existante améliorée)
-    //     try {
-    //         const hValue = handleGetObjectByName('height-value');
-    //         const wValue = handleGetObjectByName('width-value');
-    //         const tValue = handleGetObjectByName('thickness-value');
-
-    //         if (hValue && wValue && tValue) {
-    //             // Ajuster la taille de police en fonction du zoom
-    //             const baseFontSize = 12; // Taille de base
-    //             const fontSize = Math.max(baseFontSize, baseFontSize * scaleRatio * 0.8);
-                
-    //             // Optionnel : appliquer la nouvelle taille de police
-    //             // hValue.fontSize = fontSize;
-    //             // wValue.fontSize = fontSize;
-    //             // tValue.fontSize = fontSize;
-    //         }
-    //     } catch (error) {
-    //         console.warn("Erreur lors de l'ajustement des polices:", error);
-    //     }
-
-    //     // Appliquer le zoom et centrage
-    //     if (canvas) {
-    //         centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight);
-    //     }
-    //     if (canvasBack) {
-    //         centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight);
-    //     }
-
-    //     // Finalisation
-    //     try {
-    //         currentSizeValues.value = handleGetSignPosition();
-    //     } catch (error) {
-    //         console.warn("Erreur lors de la mise à jour des valeurs de taille:", error);
-    //     }
-
-    //     handleReadyToSaveState(true);
-    //     simulateCanvasClick();
-
-    //     // Debug: afficher les informations de zoom
-    //     console.log(`Zoom appliqué: ${scaleRatio.toFixed(2)}, Dimensions: ${canvasWidth}x${canvasHeight}`);
-    // }
-
     function checkScreenSizeSvg(width, height) {
         handleReadyToSaveState(false);
 
@@ -8703,11 +8576,11 @@
 
             // Prendre le plus petit pour que tout rentre
             let zoom = Math.min(zoomX, zoomY);
-            // const zoom = Math.max(zoomX, zoomY);
             if(selectedShape.value == "cut-to-shape"){
-                // zoom = zoom + 1
-                zoom = zoom * 0.9
+                zoom = zoom * 0.6
                 console.log(selectedShape.value, "8888")
+            }else{
+                zoom = zoom * 0.5
             }
 
             console.log(`Content: ${contentWidth.toFixed(1)} x ${contentHeight.toFixed(1)}`);
@@ -8762,357 +8635,9 @@
 
         console.log(`Zoom final: ${scaleRatio.toFixed(3)} - Container: ${canvasWidth} x ${canvasHeight}`);
     }
-
-    // Fonction auxiliaire améliorée pour centerAndZoomAfterResize
-    function centerAndZoomAfterResizeSvg(canvasInstance, zoom, containerWidth, containerHeight) {
-        if (!canvasInstance) return;
-
-        // Appliquer le zoom
-        canvasInstance.setZoom(zoom);
-
-        // Calculer le centre du conteneur
-        const centerX = containerWidth / 2;
-        const centerY = containerHeight / 2;
-
-        // Calculer le centre du canvas
-        const canvasCenterX = canvasInstance.getWidth() / 2;
-        const canvasCenterY = canvasInstance.getHeight() / 2;
-
-        // Calculer le décalage pour centrer le canvas dans le conteneur
-        const offsetX = centerX - (canvasCenterX * zoom);
-        const offsetY = centerY - (canvasCenterY * zoom);
-
-        // Appliquer la transformation de vue
-        const vpt = canvasInstance.viewportTransform;
-        vpt[4] = offsetX;
-        vpt[5] = offsetY;
-
-        canvasInstance.setViewportTransform(vpt);
-        canvasInstance.renderAll();
-
-        console.log(`Canvas centré: offset(${offsetX.toFixed(1)}, ${offsetY.toFixed(1)}) zoom: ${zoom.toFixed(3)}`);
-    }
-
-    // function checkScreenSizeSvg(width, height) {
-    //     handleReadyToSaveState(false);
-
-    //     var canvasContainer = document.getElementById("asowp-canvas-containers");
-        
-    //     // Déterminer les dimensions à utiliser
-    //     let canvasWidth, canvasHeight;
-    //     if (width && height) {
-    //         canvasWidth = width;
-    //         canvasHeight = height;
-    //     } else {
-    //         canvasWidth = canvasContainer.clientWidth;
-    //         canvasHeight = canvasContainer.clientHeight;
-    //     }
-
-    //     // Calculer le bounding box du contenu visible
-    //     function getContentBounds(canvasInstance) {
-    //         const exportObjects = canvasInstance.getObjects().filter(obj => 
-    //             ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
-    //         );
-
-    //         if (exportObjects.length === 0) {
-    //             return null;
-    //         }
-
-    //         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    //         exportObjects.forEach(obj => {
-    //             const rect = obj.getBoundingRect();
-    //             minX = Math.min(minX, rect.left);
-    //             minY = Math.min(minY, rect.top);
-    //             maxX = Math.max(maxX, rect.left + rect.width);
-    //             maxY = Math.max(maxY, rect.top + rect.height);
-    //         });
-
-    //         return {
-    //             left: minX,
-    //             top: minY,
-    //             width: maxX - minX,
-    //             height: maxY - minY,
-    //             centerX: minX + (maxX - minX) / 2,
-    //             centerY: minY + (maxY - minY) / 2
-    //         };
-    //     }
-
-    //     // Calculer le zoom optimal basé sur le contenu
-    //     function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
-    //         const contentBounds = getContentBounds(canvasInstance);
-            
-    //         if (!contentBounds) {
-    //             return 2; // Zoom par défaut plus élevé si pas de contenu
-    //         }
-
-    //         // Marges très réduites pour maximiser l'utilisation de l'espace
-    //         const marginPercent = 0.02; // Seulement 2% de marge
-    //         const availableWidth = containerWidth * (1 - marginPercent * 2);
-    //         const availableHeight = containerHeight * (1 - marginPercent * 2);
-
-    //         // Calculer les ratios de zoom possibles
-    //         const zoomX = availableWidth / contentBounds.width;
-    //         const zoomY = availableHeight / contentBounds.height;
-
-    //         // Utiliser le plus petit ratio pour que tout le contenu soit visible
-    //         let optimalZoom = Math.min(zoomX, zoomY);
-
-    //         // Si le zoom calculé est trop petit, forcer un minimum plus élevé
-    //         const minZoom = 1.5; // Zoom minimum pour garantir une bonne visibilité
-    //         optimalZoom = Math.max(optimalZoom, minZoom);
-
-    //         // Limiter le zoom entre des valeurs raisonnables mais plus élevées
-    //         return Math.max(0.5, Math.min(optimalZoom, 15));
-    //     }
-
-    //     // Calculer les zooms pour chaque canvas
-    //     let scaleRatio = calculateOptimalZoom(canvas, canvasWidth, canvasHeight);
-    //     let scaleRatioBack = calculateOptimalZoom(canvasBack, canvasWidth, canvasHeight);
-
-    //     // Si on a les deux canvas, utiliser le zoom le plus élevé pour mieux remplir
-    //     if (canvas && canvasBack) {
-    //         scaleRatio = Math.max(scaleRatio, scaleRatioBack);
-    //     }
-
-    //     // Facteur d'augmentation plus agressif pour remplir davantage l'espace
-    //     const fillFactor = 1.8; // Augmente le zoom de 80% pour mieux remplir
-    //     scaleRatio *= fillFactor;
-
-    //     // Vérification finale : si le zoom est encore trop bas, appliquer un minimum absolu
-    //     const absoluteMinZoom = 2.0;
-    //     scaleRatio = Math.max(scaleRatio, absoluteMinZoom);
-
-    //     // Gestion des polices (partie existante améliorée)
-    //     try {
-    //         const hValue = handleGetObjectByName('height-value');
-    //         const wValue = handleGetObjectByName('width-value');
-    //         const tValue = handleGetObjectByName('thickness-value');
-
-    //         if (hValue && wValue && tValue) {
-    //             // Ajuster la taille de police en fonction du zoom
-    //             const baseFontSize = 12; // Taille de base
-    //             const fontSize = Math.max(baseFontSize, baseFontSize * scaleRatio * 0.8);
-                
-    //             // Optionnel : appliquer la nouvelle taille de police
-    //             // hValue.fontSize = fontSize;
-    //             // wValue.fontSize = fontSize;
-    //             // tValue.fontSize = fontSize;
-    //         }
-    //     } catch (error) {
-    //         console.warn("Erreur lors de l'ajustement des polices:", error);
-    //     }
-
-    //     // Appliquer le zoom et centrage
-    //     if (canvas) {
-    //         centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight);
-    //     }
-    //     if (canvasBack) {
-    //         centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight);
-    //     }
-
-    //     // Finalisation
-    //     try {
-    //         currentSizeValues.value = handleGetSignPosition();
-    //     } catch (error) {
-    //         console.warn("Erreur lors de la mise à jour des valeurs de taille:", error);
-    //     }
-
-    //     handleReadyToSaveState(true);
-    //     simulateCanvasClick();
-
-    //     // Debug: afficher les informations détaillées
-    //     const contentBounds = getContentBounds(canvas);
-    //     console.log('Content bounds:', contentBounds);
-    //     console.log(`Zoom final appliqué: ${scaleRatio.toFixed(2)}`);
-    //     console.log(`Dimensions container: ${canvasWidth}x${canvasHeight}`);
-    //     if (contentBounds) {
-    //         console.log(`Ratio de remplissage: width=${(canvasWidth / contentBounds.width * scaleRatio).toFixed(2)}, height=${(canvasHeight / contentBounds.height * scaleRatio).toFixed(2)}`);
-    //     }
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // async function genSvgDesignImg(canva, width, height) {
-    //     try {
-    //         // Récupérer tous les objets à inclure
-    //         const exportObjects = canva.getObjects().filter(obj => 
-    //             ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
-    //         );
-
-    //         if (exportObjects.length === 0) {
-    //             throw new Error("Aucun objet à exporter trouvé");
-    //         }
-
-    //         async function drawnPathFromText() {
-    //             return new Promise((resolve, reject) => {
-    //                 var elements = canva.getObjects()
-    //                 let promises = []
-
-    //                 elements.forEach((object, index) => {
-    //                     if (object.name === 'safeObject') {
-    //                         if (typeof object.fill !== 'string') {
-    //                             var patternFill = object.fill
-    //                             let promise = new Promise((resolve, reject) => {
-    //                                 handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
-    //                                     fabric.Image.fromURL(dataURI, (img) => {
-    //                                         try {
-    //                                             let scaleX = object.width / img.width;
-    //                                             let scaleY = object.height / img.height;
-
-    //                                             img.left = object.left;
-    //                                             img.top = object.top;
-
-    //                                             img.clipPath = handleClipAddedObject(canva);
-                                                
-    //                                             img.name = 'asowp-signPattern';
-
-    //                                             img.scaleX = scaleX;
-    //                                             img.scaleY = scaleY;
-
-    //                                             var shadowRect = handleSetShadow(canva)
-    //                                             object.shadow = null
-    //                                             canva.add(img, shadowRect);
-    //                                             img.moveTo(index + 1);
-    //                                             shadowRect.sendToBack()                                                                                         
-                                                
-    //                                             canva.renderAll()
-    //                                             resolve(img);
-    //                                         } catch (error) {
-    //                                             reject(error);
-    //                                         }
-    //                                     });
-    //                                 });
-    //                             });
-    //                             promises.push(promise);
-    //                         }
-    //                     }
-    //                 });
-
-    //                 Promise.all(promises)
-    //                     .then(groups => resolve(groups))
-    //                     .catch(error => reject(error));
-    //             });
-    //         }
-
-    //         canva.setWidth(width)
-    //         canva.setHeight(height)
-    //         checkScreenSize(width, height)
-
-    //         // Calculer le bounding box global
-            
-    //         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    //         exportObjects.forEach(obj => {
-    //             const rect = obj.getBoundingRect();
-    //             minX = Math.min(minX, rect.left);
-    //             minY = Math.min(minY, rect.top);
-    //             maxX = Math.max(maxX, rect.left + rect.width);
-    //             maxY = Math.max(maxY, rect.top + rect.height);
-    //         });
-
-    //         const contentWidth = maxX - minX;
-    //         const contentHeight = maxY - minY;
-
-    //         // Calculer le décalage pour centrer
-    //         const offsetX = (width - contentWidth) / 2 - minX;
-    //         const offsetY = (height - contentHeight) / 2 - minY;
-
-    //         // Options pour le SVG
-    //         const options = {
-    //             width: `${width}px`,
-    //             height: `${height}px`,
-    //             viewBox: `0 0 ${width+100} ${height+100}`,
-    //             // viewBox: `0 0 0 0`,
-    //             encoding: 'UTF-8',
-    //             suppressPreamble: true
-    //         };
-
-    //         // Sauvegarder les positions originales
-    //         const originalPositions = exportObjects.map(obj => ({
-    //             obj,
-    //             left: obj.left,
-    //             top: obj.top
-    //         }));
-
-    //         // Centrer temporairement les objets
-    //         // exportObjects.forEach(obj => {
-    //         //     obj.set({
-    //         //         left: obj.left + offsetX,
-    //         //         top: obj.top + offsetY
-    //         //     });
-    //         //     obj.setCoords();
-    //         // });
-
-    //         // Masquer les objets non exportés
-    //         const visibilityStates = {};
-    //         canva.getObjects().forEach(object => {
-    //             visibilityStates[object.name] = object.visible;
-    //             if (!exportObjects.includes(object)) {
-    //                 object.set('visible', false);
-    //             }
-    //         });
-
-    //         await drawnPathFromText();
-
-    //         // Générer le SVG
-    //         let svgContent = canva.toSVG(options);
-    //         let usedFonts = getUsedFonts(canva);
-
-    //         if(configTextType.value === "neon") {
-    //             svgContent = applyNeonEffectToSVG(svgContent, canva);
-    //         }
-
-    //         const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
-
-    //         // const finalSvg = `<?xml version="1.0" encoding="UTF-8"?>
-    //         //     <svg xmlns="http://www.w3.org/2000/svg" 
-    //         //         xmlns:xlink="http://www.w3.org/1999/xlink"
-    //         //         width="${width}" 
-    //         //         height="${height}"
-    //         //         viewBox="0 0 ${width} ${height}">
-    //         //     ${svgWithFonts}
-    //         //     </svg>`;
-
-    //         // Restaurer les états originaux
-    //         originalPositions.forEach(pos => {
-    //             pos.obj.set({
-    //                 left: pos.left,
-    //                 top: pos.top
-    //             });
-    //             pos.obj.setCoords();
-    //         });
-
-    //         canva.getObjects().forEach(object => {
-    //             if (visibilityStates.hasOwnProperty(object.name)) {
-    //                 object.set('visible', visibilityStates[object.name]);
-    //             }
-    //             if (['watermark', 'asowp-svg-path', 'asowp-signPattern'].includes(object.name)) {
-    //                 canva.remove(object);
-    //             }
-    //         });
-
-    //         checkScreenSize()
-    //         canva.renderAll();
-    //         // return finalSvg;
-    //         return svgWithFonts;
-
-    //     } catch (error) {
-    //         console.error("Erreur dans genSvgDesignImg:", error);
-    //         throw error;
-    //     }
-    // }
     async function genSvgDesignImg(canva, width, height) {
         try {
+            await hideCanvasForWaiting(true)
             // Récupérer tous les objets à inclure
             const exportObjects = canva.getObjects().filter(obj => 
                 // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
@@ -9182,38 +8707,42 @@
             // Calculer le bounding box global du contenu
             let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
             exportObjects.forEach(obj => {
-                const rect = obj.getBoundingRect();
-                minX = Math.min(minX, rect.left);
-                minY = Math.min(minY, rect.top);
-                maxX = Math.max(maxX, rect.left + rect.width);
-                maxY = Math.max(maxY, rect.top + rect.height);
+                if(obj.name == "safeObject" && obj._objects){
+
+                }else{
+                    const rect = obj.getBoundingRect();
+                    minX = Math.min(minX, rect.left);
+                    minY = Math.min(minY, rect.top);
+                    maxX = Math.max(maxX, rect.left + rect.width);
+                    maxY = Math.max(maxY, rect.top + rect.height);
+                }
             });
 
-            // const contentWidth = maxX - minX;
-            // const contentHeight = maxY - minY;
-            // const contentCenterX = minX + (contentWidth / 2);
-            // const contentCenterY = minY + (contentHeight / 2);
+            const contentWidth = maxX - minX;
+            const contentHeight = maxY - minY;
+            const contentCenterX = minX + (contentWidth / 2);
+            const contentCenterY = minY + (contentHeight / 2);
 
-            // // Définir les marges de sécurité (en pixels)
-            // const marginX = 0; // marge horizontale
-            // const marginY = 0; // marge verticale
-            // const availableWidth = width - (2 * marginX);
-            // const availableHeight = height - (2 * marginY);
+            // Définir les marges de sécurité (en pixels)
+            const marginX = 30; // marge horizontale
+            const marginY = 30; // marge verticale
+            const availableWidth = width - (2 * marginX);
+            const availableHeight = height - (2 * marginY);
 
-            // // Calculer le facteur d'échelle pour que le contenu rentre dans les limites
-            // const scaleX = availableWidth / contentWidth;
-            // const scaleY = availableHeight / contentHeight;
+            // Calculer le facteur d'échelle pour que le contenu rentre dans les limites
+            const scaleX = availableWidth / contentWidth;
+            const scaleY = availableHeight / contentHeight;
             
-            // // Utiliser le plus petit facteur pour maintenir les proportions
-            // const scale = Math.min(scaleX, scaleY, 1); // Ne pas agrandir si le contenu est déjà plus petit
+            // Utiliser le plus petit facteur pour maintenir les proportions
+            const scale = Math.min(scaleX, scaleY, 1); // Ne pas agrandir si le contenu est déjà plus petit
 
-            // // Calculer la nouvelle position du centre pour centrer le contenu
-            // const newCenterX = width / 2;
-            // const newCenterY = height / 2;
+            // Calculer la nouvelle position du centre pour centrer le contenu
+            const newCenterX = width / 2;
+            const newCenterY = height / 2;
             
-            // // Calculer le décalage nécessaire
-            // const offsetX = newCenterX - contentCenterX;
-            // const offsetY = newCenterY - contentCenterY;
+            // Calculer le décalage nécessaire
+            const offsetX = newCenterX - contentCenterX;
+            const offsetY = newCenterY - contentCenterY;
 
             // Sauvegarder les positions et échelles originales
             const originalStates = exportObjects.map(obj => ({
@@ -9225,21 +8754,21 @@
             }));
 
             // Appliquer la transformation à tous les objets exportés
-            // exportObjects.forEach(obj => {
-            //     // Calculer la nouvelle position relative au centre du contenu
-            //     const relativeX = obj.left - contentCenterX;
-            //     const relativeY = obj.top - contentCenterY;
+            exportObjects.forEach(obj => {
+                // Calculer la nouvelle position relative au centre du contenu
+                const relativeX = obj.left - contentCenterX;
+                const relativeY = obj.top - contentCenterY;
                 
-            //     // Appliquer l'échelle et repositionner
-            //     obj.set({
-            //         left: newCenterX + (relativeX * scale),
-            //         top: newCenterY + (relativeY * scale),
-            //         scaleX: (obj.scaleX || 1) * scale,
-            //         scaleY: (obj.scaleY || 1) * scale
-            //     });
+                // Appliquer l'échelle et repositionner
+                obj.set({
+                    left: newCenterX + (relativeX * scale),
+                    top: newCenterY + (relativeY * scale),
+                    scaleX: (obj.scaleX || 1) * scale,
+                    scaleY: (obj.scaleY || 1) * scale
+                });
                 
-            //     obj.setCoords();
-            // });
+                obj.setCoords();
+            });
 
             // Options pour le SVG
             const options = {
@@ -9296,6 +8825,7 @@
             checkScreenSize()
             canva.renderAll();
             
+            await hideCanvasForWaiting(false)
             return svgWithFonts;
 
         } catch (error) {
@@ -9303,148 +8833,7 @@
             throw error;
         }
     }
-    // async function genSvgDesignImg(canva, width, height) {
-    //     try {
-    //         // Récupérer l'objet safeObject
-    //         const safeObject = handleGetObjectByName('safeObject', canva);
-    //         if (!safeObject) {
-    //             throw new Error("safeObject not found");
-    //         }
-
-    //         // Calculer les dimensions et position de safeObject
-    //         const objBounds = safeObject.getBoundingRect();
-    //         const padding = 10; // Petit padding optionnel
-
-    //         const options = {
-    //             // width: `${objBounds.width + padding*2}px`,
-    //             // height: `${objBounds.height + padding*2}px`,
-    //             width: `${width}px`,
-    //             height: `${height}px`,
-    //             viewBox: {
-    //                 // x: objBounds.left - padding,
-    //                 // y: objBounds.top - padding,
-    //                 // width: objBounds.width + padding*2,
-    //                 // height: objBounds.height + padding*2,
-    //                 // x: width - (objBounds.width/2),
-    //                 // y: height - (objBounds.height/2),
-    //                 x: 0,
-    //                 y: 0,
-    //                 width: width,   
-    //                 height: height,
-    //             },
-    //             encoding: 'UTF-8',
-    //             // suppressPreamble: true // Nous gérons manuellement l'en-tête SVG
-    //         };
-
-    //         async function drawnPathFromText() {
-    //             return new Promise((resolve, reject) => {
-    //                 var elements = canva.getObjects()
-    //                 let promises = []
-
-    //                 elements.forEach((object, index) => {
-    //                     if (object.name === 'safeObject') {
-    //                         if (typeof object.fill !== 'string') {
-    //                             var patternFill = object.fill
-    //                             let promise = new Promise((resolve, reject) => {
-    //                                 handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
-    //                                     fabric.Image.fromURL(dataURI, (img) => {
-    //                                         try {
-    //                                             let scaleX = object.width / img.width;
-    //                                             let scaleY = object.height / img.height;
-
-    //                                             img.left = object.left;
-    //                                             img.top = object.top;
-
-    //                                             img.clipPath = handleClipAddedObject(canva);
-                                                
-    //                                             img.name = 'asowp-signPattern';
-
-    //                                             img.scaleX = scaleX;
-    //                                             img.scaleY = scaleY;
-
-    //                                             var shadowRect = handleSetShadow(canva)
-    //                                             object.shadow = null
-    //                                             canva.add(img, shadowRect);
-    //                                             img.moveTo(index + 1);
-    //                                             shadowRect.sendToBack()                                                                                         
-                                                
-    //                                             canva.renderAll()
-    //                                             resolve(img);
-    //                                         } catch (error) {
-    //                                             reject(error);
-    //                                         }
-    //                                     });
-    //                                 });
-    //                             });
-    //                             promises.push(promise);
-    //                         }
-    //                     }
-    //                 });
-
-    //                 Promise.all(promises)
-    //                     .then(groups => resolve(groups))
-    //                     .catch(error => reject(error));
-    //             });
-    //         }
-
-    //         // Masquer les éléments non désirés
-    //         const visibilityStates = {};
-    //         canva.getObjects().forEach(object => {
-    //             visibilityStates[object.name] = object.visible;
-                
-    //             // Masquer tous les objets sauf ceux nécessaires
-    //             if (!['safeObject', 'asowp-SignText', 'asowp-SignImage', 'normal-border'].includes(object.name)) {
-    //                 object.set('visible', false);
-    //             }
-    //         });
-
-    //         await drawnPathFromText(); // Votre fonction existante
-
-    //         // Générer le SVG de base
-    //         let svgContent = canva.toSVG(options);
-    //         let usedFonts = getUsedFonts(canva);
-
-    //         if(configTextType.value === "neon") {
-    //             svgContent = applyNeonEffectToSVG(svgContent, canva);
-    //         }
-
-    //         const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
-
-    //         // Construire le SVG final avec le bon viewBox
-    //         // const finalSvg = `<?xml version="1.0" encoding="UTF-8"?>
-    //         //     <svg xmlns="http://www.w3.org/2000/svg" 
-    //         //         xmlns:xlink="http://www.w3.org/1999/xlink"
-    //         //         width="${objBounds.width + padding*2}" 
-    //         //         height="${objBounds.height + padding*2}"
-    //         //         viewBox="${objBounds.left - padding} ${objBounds.top - padding} ${objBounds.width + padding*2} ${objBounds.height + padding*2}">
-    //         //     ${svgWithFonts}
-    //         //     </svg>`;
-
-    //         // Restaurer la visibilité des objets
-    //         canva.getObjects().forEach(object => {
-    //             if (visibilityStates.hasOwnProperty(object.name)) {
-    //                 object.set('visible', visibilityStates[object.name]);
-    //             }
-    //         });
-
-    //         // Nettoyage des objets temporaires
-    //         canva.getObjects().forEach(object => {
-    //             if(['watermark', 'asowp-svg-path', 'asowp-signPattern'].includes(object.name)) {
-    //                 canva.remove(object);
-    //             }
-    //         });
-
-    //         canva.renderAll();
-
-    //         // return finalSvg;
-    //         return svgWithFonts;
-
-    //     } catch (error) {
-    //         console.error("Erreur dans genSvgDesignImg:", error);
-    //         throw error;
-    //     }
-    // }
-    async function genPrintReadyFileInSheet(designURL, count, sheetWidth = 2480, sheetHeight = 3508, margin = 0, scale = 1){
+    async function genPrintReadyFileInSheet(designURL, count, sheetWidth = 2480, sheetHeight = 3508, margin = 10, scale = 1){
         // return new Promise(async (resolve, reject) => {
         //     const image = new Image();
         //     image.crossOrigin = 'Anonymous';
