@@ -2607,6 +2607,18 @@ async function extractExactPaths(objects) {
   }));
 }
 
+async function setBlankSvg(){
+  return new Promise(async (resolve, reject) => {
+    let blankSign = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+        <rect x="50" y="50" width="100" height="100" fill="transparent" />
+      </svg>
+      `
+    fabric.loadSVGFromString(blankSign, function (image) {
+      const img = fabric.util.groupSVGElements(image);
+      resolve(img)
+    })
+  });
+}
 
 
 var selectedShape = "";
@@ -2855,39 +2867,56 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
           }
           newObject = await createPreciseContourPath(strokeSize)
 
-          let pathObjects = newObject._objects
-          const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
-
-          pathObjects.forEach(path => {
-            const d = path.d;
-            if (d && !d.includes(target)) {
-              path.set({
-                fill: objectfill,
-                strokeLineJoin: 'round',
-                strokeLineCap: 'round',
-                name: "outline",
-                stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
-                strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
-              })
-            }
-          });
-
-          newObject.set({
-            fill: objectfill,
-            stroke: objectfill,
-            selectable: true,
-            name: "safeObject",
-            shadow: selectedCutline != "2x" ? defaultShadow : null,
-            id: objectId,
-            width: canvas.getWidth(true),
-            height: canvas.getHeight(true),
-            strokeLineJoin: 'round',
-            strokeLineCap: 'round',
-            selectable: false,
-            prevWidth: width,
-            prevHeight: height,
-          })
-
+          if(newObject != null){
+            let pathObjects = newObject._objects
+            const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
+  
+            pathObjects.forEach(path => {
+              const d = path.d;
+              if (d && !d.includes(target)) {
+                path.set({
+                  fill: objectfill,
+                  strokeLineJoin: 'round',
+                  strokeLineCap: 'round',
+                  name: "outline",
+                  stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+                  strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+                })
+              }
+            });
+  
+            newObject.set({
+              fill: objectfill,
+              stroke: objectfill,
+              name: "safeObject",
+              shadow: selectedCutline != "2x" ? defaultShadow : null,
+              id: objectId,
+              width: canvas.getWidth(true),
+              height: canvas.getHeight(true),
+              strokeLineJoin: 'round',
+              strokeLineCap: 'round',
+              selectable: false,
+              prevWidth: width,
+              prevHeight: height,
+            })
+          }else{
+            newObject = await setBlankSvg()
+            newObject.set({
+              fill: objectfill,
+              // stroke: objectfill,
+              name: "safeObject",
+              shadow: selectedCutline != "2x" ? defaultShadow : null,
+              id: objectId,
+              width: canvas.getWidth(true),
+              height: canvas.getHeight(true),
+              strokeLineJoin: 'round',
+              strokeLineCap: 'round',
+              selectable: false,
+              prevWidth: width,
+              prevHeight: height,
+              opacity: 0,
+            })
+          }
           break;
       }
       
@@ -2911,63 +2940,73 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
         activeCanvas.centerObject(newObject)
 
         const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
-        let sign = newObject._objects.filter(path => path.d && !path.d.includes(target))
+        let sign = newObject._objects?.filter(path => path.d && !path.d.includes(target))
+        console.log(newObject, "fazfeaize", sign)
 
-        if(sign[0] && selectedCutline != "none"){
+        if(sign != undefined &&  sign[0] && selectedCutline != "none"){
           sign[0].set({
             left: sign[0].left - (cutlinesData.first.borderSize/2),
             top: sign[0].top - (cutlinesData.first.borderSize/2),
           })
         }
 
-        let cutline1 = await cloneOutline(newObject)
-        let cutline2 = await cloneOutline(newObject)
+        if(sign != undefined){
+          let cutline1 = await cloneOutline(newObject)
+          let cutline2 = await cloneOutline(newObject)
+  
+          let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0].fill)
+          let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0].fill)
+          
+          // console.log(cutline1, "cutline", cutline2)
+          // console.log(signCut1, "cutline sign", signCut2)
+  
+          cutline2.set({
+            shadow: selectedCutline == "2x" ? defaultShadow : null,
+            selectable: false,
+            name: "asowp-cutline2",
+            visible: selectedCutline == "2x" ? true : false
+          })
+          cutline1.set({
+            selectable: false,
+            name: "asowp-cutline1",
+            visible: selectedCutline == "2x" ? true : false,
+          })
+  
+          let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
+          signCut1[0].set({
+            stroke: cutlinesData.second.color,
+            strokeWidth: cutStroke1,
+            left: signCut1[0].left - (cutStroke1/2),
+            top: signCut1[0].top - (cutStroke1/2),
+          })
+          let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize
+          signCut2[0].set({
+            stroke: cutlinesData.second.borderColor,
+            strokeWidth: cutStroke2,
+            left: signCut2[0].left - (cutStroke2/2),
+            top: signCut2[0].top - (cutStroke2/2),
+          })
+  
+          activeCanvas.add(cutline1, cutline2)
+          cutline1.sendToBack()
+          cutline2.sendToBack()
+  
+  
+  
+          let realValues = handleReverseMiseAEchelle(sign[0])
+          setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
+  
+          currentSize.width = realValues.realWidth
+          currentSize.height = realValues.realHeight
+          currentSize.label = 'sticker'
+        }else{
+          setOutlineMeasurmentValue({}, 0, 0)
+  
+          currentSize.width = 0
+          currentSize.height = 0
+          currentSize.label = 'sticker'
 
-        let signCut1 = cutline1._objects.filter(path => path.fill == sign[0].fill)
-        let signCut2 = cutline2._objects.filter(path => path.fill == sign[0].fill)
-        
-        // console.log(cutline1, "cutline", cutline2)
-        // console.log(signCut1, "cutline sign", signCut2)
-
-        cutline2.set({
-          shadow: selectedCutline == "2x" ? defaultShadow : null,
-          selectable: false,
-          name: "asowp-cutline2",
-          visible: selectedCutline == "2x" ? true : false
-        })
-        cutline1.set({
-          selectable: false,
-          name: "asowp-cutline1",
-          visible: selectedCutline == "2x" ? true : false,
-        })
-
-        let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
-        signCut1[0].set({
-          stroke: cutlinesData.second.color,
-          strokeWidth: cutStroke1,
-          left: signCut1[0].left - (cutStroke1/2),
-          top: signCut1[0].top - (cutStroke1/2),
-        })
-        let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize
-        signCut2[0].set({
-          stroke: cutlinesData.second.borderColor,
-          strokeWidth: cutStroke2,
-          left: signCut2[0].left - (cutStroke2/2),
-          top: signCut2[0].top - (cutStroke2/2),
-        })
-
-        activeCanvas.add(cutline1, cutline2)
-        cutline1.sendToBack()
-        cutline2.sendToBack()
-
-
-
-        let realValues = handleReverseMiseAEchelle(sign[0])
-        setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
-
-        currentSize.width = realValues.realWidth
-        currentSize.height = realValues.realHeight
-        currentSize.label = 'sticker'
+        }
       }else{
         activeCanvas.centerObject(newObject)
         setMeasurmentValue(canvas)
