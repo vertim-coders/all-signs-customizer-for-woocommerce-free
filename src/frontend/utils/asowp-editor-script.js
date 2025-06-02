@@ -7442,7 +7442,8 @@ async function handleChangeQRCodeColor(code, color){
   activeCanvas.add(object)
   activeCanvas.setActiveObject(object);
 
-  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? object : obj)
+  let objectData = {id: object.id, text: object.fromData, url:object.imgUrl, object: object}
+  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? objectData : obj)
 
   return addedQRCodes
 }

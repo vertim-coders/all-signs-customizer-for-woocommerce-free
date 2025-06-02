@@ -7063,19 +7063,19 @@
                     height: convertToPixels(297, configUnit.value),
                 }
                 // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, 2480, 3508, 20)
-                // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
+                const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
                 
 
                 // Exporter en image si besoin :
-                // const dataURL = stickerCanvas.toDataURL({
-                //     format: 'png',
-                //     quality: 1.0
-                // });
+                const dataURL = stickerCanvas.toDataURL({
+                    format: 'png',
+                    quality: 1.0
+                });
                 const link = document.createElement('a');
-                // link.href = dataURL;
-                // link.download = 'img'+'.'+'png';
-                link.href = svgUrl;
-                link.download = 'img'+'.'+'svg';
+                link.href = dataURL;
+                link.download = 'img'+'.'+'png';
+                // link.href = svgUrl;
+                // link.download = 'img'+'.'+'svg';
                 link.click();
             }
         }
@@ -8524,14 +8524,14 @@
 
         var canvasContainer = document.getElementById("asowp-canvas-containers");
         
-        let canvasWidth, canvasHeight;
-        if (width && height) {
-            canvasWidth = width;
-            canvasHeight = height;
-        } else {
-            canvasWidth = canvasContainer.clientWidth;
-            canvasHeight = canvasContainer.clientHeight;
-        }
+        // let canvasWidth, canvasHeight;
+        // if (width && height) {
+        //     canvasWidth = width;
+        //     canvasHeight = height;
+        // } else {
+        //     canvasWidth = canvasContainer.clientWidth;
+        //     canvasHeight = canvasContainer.clientHeight;
+        // }
 
         // Fonction simple pour calculer le zoom optimal
         function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
@@ -8579,9 +8579,10 @@
             if(selectedShape.value == "cut-to-shape"){
                 zoom = zoom * 0.6
                 console.log(selectedShape.value, "8888")
-            }else{
-                zoom = zoom * 0.5
             }
+            // else{
+            //     zoom = zoom * 0.5
+            // }
 
             console.log(`Content: ${contentWidth.toFixed(1)} x ${contentHeight.toFixed(1)}`);
             console.log(`Target: ${targetWidth} x ${targetHeight}`);
@@ -8591,7 +8592,7 @@
         }
 
         // Calculer le zoom
-        let scaleRatio = calculateOptimalZoom(canvas, canvasWidth, canvasHeight);
+        let scaleRatio = calculateOptimalZoom(canvas, width, height);
 
         // Si on a les deux canvas, prendre le plus petit zoom
         // if (canvasBack) {
@@ -8601,10 +8602,10 @@
 
         // Appliquer le zoom et centrer
         if (canvas) {
-            centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight);
+            centerAndZoomAfterResize(canvas, scaleRatio, width, height);
         }
         if (canvasBack) {
-            centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight);
+            centerAndZoomAfterResize(canvasBack, scaleRatio, width, height);
         }
 
         // Gestion des polices
@@ -8633,7 +8634,7 @@
         handleReadyToSaveState(true);
         simulateCanvasClick();
 
-        console.log(`Zoom final: ${scaleRatio.toFixed(3)} - Container: ${canvasWidth} x ${canvasHeight}`);
+        console.log(`Zoom final: ${scaleRatio.toFixed(3)} - Container: ${width} x ${height}`);
     }
     async function genSvgDesignImg(canva, width, height) {
         try {
