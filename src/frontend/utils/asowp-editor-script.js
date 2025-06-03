@@ -1044,7 +1044,49 @@ function handleReverseMiseAEchelle(canvaSign) {
   };
 }
 
-
+function setMeasurmentValue(canvas, mainObject) {
+  var Objects = canvas.getObjects();
+  Objects.forEach((object) => {
+    if (object.name == "heightLine") {
+      object.visible = heightVisibility
+      object.set({
+        x1: mainObject.left + mainObject.width + 30,
+        y1: mainObject.top,
+        x2: mainObject.left + mainObject.width + 30,
+        y2: mainObject.top + mainObject.height,
+      });
+    }
+    if (object.name == "widthLine") {
+      object.visible = widthVisibility
+      object.set({
+        x1: mainObject.left,
+        y1: mainObject.top + mainObject.height + 28.5,
+        x2: mainObject.left + mainObject.width + 10,
+        y2: mainObject.top + mainObject.height + 28.5,
+      });
+    }
+    if (object.name == "height-value") {
+      object.visible = heightVisibility
+      object.text = String(currentSize.height + " " + currentUnit);
+      object.top = mainObject.top + mainObject.height / 2;
+      object.left = mainObject.left + mainObject.width + 55;
+    }
+    if (object.name == "width-value") {
+      object.visible = widthVisibility
+      object.text = String(currentSize.width + " " + currentUnit);
+      object.left = mainObject.left + mainObject.width / 2 - object.width / 2;
+      object.top = mainObject.top + (mainObject.height + 35);
+    }
+    if (object.name == "thickness-value") {
+      object.left = mainObject.left + mainObject.width / 2 - object.width / 2;
+      object.top = mainObject.top + (mainObject.height + 65);
+      object.text = String(
+        "Thickness" + ": " + currentThickness + " " + currentUnit
+      );
+    }
+  });
+  canvas.renderAll();
+}
 function setOutlineMeasurmentValue(sign, width, height) {
   var Objects = activeCanvas.getObjects();
   Objects.forEach((object) => {
@@ -1984,11 +2026,25 @@ function setNormalBorber(canva, size, color) {
       break;
   }
 
+  border.set({
+    shadow: selectedCutline != "2x" ? defaultShadow : null,
+    stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+    strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+  })
+
   return border;
 }
 
-function handleSelectBorder(border, color) {
+async function handleSelectBorder(border, color) {
   // console.log("handleSelectBorder", border, color);
+  let exCutline1 = handleGetObjectByName("aswop-cutline1", activeCanvas)
+  let exCutline2 = handleGetObjectByName("aswop-cutline2", activeCanvas)
+  if(exCutline1){
+    activeCanvas.remove(exCutline1)
+  }
+  if(exCutline2){
+    activeCanvas.remove(exCutline2)
+  }
 
   if (!firstLoad || restartBorderSet) {
     activeBorder = border;
@@ -2000,6 +2056,8 @@ function handleSelectBorder(border, color) {
     if(selectedShape != "cut-to-shape"){
       setBorder(canvas, activeBorder, activeBorderColor);
       setBorder(backCanvas, activeBorder2, activeBorderColor2);
+    }else{
+      await handleShowCutline(activeCanvas)
     }
   } else {
     if (activeSignFace === "front") {
@@ -2010,6 +2068,8 @@ function handleSelectBorder(border, color) {
       if(selectedShape != "cut-to-shape"){
         setBorder(canvas, activeBorder, activeBorderColor);
         setBorder(backCanvas, activeBorder2, activeBorderColor2);
+      }else{
+        await handleShowCutline(canvas)
       }
     }
     if (activeSignFace === "back") {
@@ -2020,10 +2080,12 @@ function handleSelectBorder(border, color) {
       if(selectedShape != "cut-to-shape"){
         setBorder(canvas, activeBorder, activeBorderColor);
         setBorder(backCanvas, activeBorder2, activeBorderColor2);
+      }else{
+        await handleShowCutline(canvas)
       }
     }
   }
-  function setBorder(canva, currBorder, activeColor) {
+  async function setBorder(canva, currBorder, activeColor) {
     // console.log(currBorder, activeColor, "setBorder")
     removeBorder(canva);
     var Objects = canva.getObjects();
@@ -2039,6 +2101,20 @@ function handleSelectBorder(border, color) {
             var border = setNormalBorber(canva, 10, activeColor);
             canva.add(border);
             border.sendToBack();
+            if(selectedCutline != "none"){
+              border.set({
+                left: border.left - (cutlinesData.first.borderSize/2),
+                top: border.top - (cutlinesData.first.borderSize/2),
+              })
+              // let cutline1 = handleGetObjectByName("asowp-cutline1", canva)
+              // let cutline2 = handleGetObjectByName("asowp-cutline2", canva)
+              // if(cutline1 != null){
+              //   cutline1.sendToBack()
+              // }
+              // if(cutline2 != null){
+              //   cutline2.sendToBack()
+              // }
+            }
 
             object.shadow = null;
           }
@@ -2311,6 +2387,8 @@ function handleSelectBorder(border, color) {
     });
     // console.log(canva.getObjects())
     canva.renderAll();
+
+    await handleShowCutline(canva)
   }
   firstBorderCheck = false;
 
@@ -2348,6 +2426,21 @@ function handlechangeBorderColor(color, position) {
           var borderNormal = setNormalBorber(canva, 10, color);
           canva.add(borderNormal);
           borderNormal.sendToBack();
+          if(selectedCutline != "none"){
+            borderNormal.set({
+              left: borderNormal.left - (cutlinesData.first.borderSize/2),
+              top: borderNormal.top - (cutlinesData.first.borderSize/2),
+            })
+            let cutline1 = handleGetObjectByName("asowp-cutline1", canva)
+            let cutline2 = handleGetObjectByName("asowp-cutline2", canva)
+            if(cutline1 != null){
+              cutline1.sendToBack()
+            }
+            if(cutline2 != null){
+              cutline2.sendToBack()
+            }
+          }
+          
         }
       }
       if (border === "old-world") {
@@ -2652,14 +2745,8 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
   
       safeObject.setCoords();
 
-      let cutline1 = handleGetObjectByName("asowp-cutline1", canvas)
-      let cutline2 = handleGetObjectByName("asowp-cutline2", canvas)
-      if(cutline1){
-        canvas.remove(cutline1)
-      }
-      if(cutline2){
-        canvas.remove(cutline2)
-      }
+      await resetCutline(canvas)
+      await resetCutline(canvas)
 
       switch (shape) {
         case "square":
@@ -2879,8 +2966,6 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
                   strokeLineJoin: 'round',
                   strokeLineCap: 'round',
                   name: "outline",
-                  stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
-                  strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
                 })
               }
             });
@@ -2943,59 +3028,9 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
         let sign = newObject._objects?.filter(path => path.d && !path.d.includes(target))
         console.log(newObject, "fazfeaize", sign)
 
-        if(sign != undefined &&  sign[0] && selectedCutline != "none"){
-          sign[0].set({
-            left: sign[0].left - (cutlinesData.first.borderSize/2),
-            top: sign[0].top - (cutlinesData.first.borderSize/2),
-          })
-        }
-
         if(sign != undefined){
-          let cutline1 = await cloneOutline(newObject)
-          let cutline2 = await cloneOutline(newObject)
-  
-          let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0].fill)
-          let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0].fill)
-          
-          // console.log(cutline1, "cutline", cutline2)
-          // console.log(signCut1, "cutline sign", signCut2)
-  
-          cutline2.set({
-            shadow: selectedCutline == "2x" ? defaultShadow : null,
-            selectable: false,
-            name: "asowp-cutline2",
-            visible: selectedCutline == "2x" ? true : false
-          })
-          cutline1.set({
-            selectable: false,
-            name: "asowp-cutline1",
-            visible: selectedCutline == "2x" ? true : false,
-          })
-  
-          let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
-          signCut1[0].set({
-            stroke: cutlinesData.second.color,
-            strokeWidth: cutStroke1,
-            left: signCut1[0].left - (cutStroke1/2),
-            top: signCut1[0].top - (cutStroke1/2),
-          })
-          let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize
-          signCut2[0].set({
-            stroke: cutlinesData.second.borderColor,
-            strokeWidth: cutStroke2,
-            left: signCut2[0].left - (cutStroke2/2),
-            top: signCut2[0].top - (cutStroke2/2),
-          })
-  
-          activeCanvas.add(cutline1, cutline2)
-          cutline1.sendToBack()
-          cutline2.sendToBack()
-  
-  
-  
           let realValues = handleReverseMiseAEchelle(sign[0])
-          setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
-  
+
           currentSize.width = realValues.realWidth
           currentSize.height = realValues.realHeight
           currentSize.label = 'sticker'
@@ -3009,53 +3044,53 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
         }
       }else{
         activeCanvas.centerObject(newObject)
-        setMeasurmentValue(canvas)
+        // setMeasurmentValue(canvas, newObject)
       }
 
       
-      function setMeasurmentValue(canvas, width, height) {
-        var Objects = canvas.getObjects();
-        Objects.forEach((object) => {
-          if (object.name == "heightLine") {
-            object.visible = heightVisibility
-            object.set({
-              x1: newObject.left + newObject.width + 30,
-              y1: newObject.top,
-              x2: newObject.left + newObject.width + 30,
-              y2: newObject.top + newObject.height,
-            });
-          }
-          if (object.name == "widthLine") {
-            object.visible = widthVisibility
-            object.set({
-              x1: newObject.left,
-              y1: newObject.top + newObject.height + 28.5,
-              x2: newObject.left + newObject.width + 10,
-              y2: newObject.top + newObject.height + 28.5,
-            });
-          }
-          if (object.name == "height-value") {
-            object.visible = heightVisibility
-            object.text = String(currentSize.height + " " + currentUnit);
-            object.top = newObject.top + newObject.height / 2;
-            object.left = newObject.left + newObject.width + 55;
-          }
-          if (object.name == "width-value") {
-            object.visible = widthVisibility
-            object.text = String(currentSize.width + " " + currentUnit);
-            object.left = newObject.left + newObject.width / 2 - object.width / 2;
-            object.top = newObject.top + (newObject.height + 35);
-          }
-          if (object.name == "thickness-value") {
-            object.left = newObject.left + newObject.width / 2 - object.width / 2;
-            object.top = newObject.top + (newObject.height + 65);
-            object.text = String(
-              "Thickness" + ": " + currentThickness + " " + currentUnit
-            );
-          }
-        });
-        canvas.renderAll();
-      }
+      // function setMeasurmentValue(canvas, mainObject) {
+      //   var Objects = canvas.getObjects();
+      //   Objects.forEach((object) => {
+      //     if (object.name == "heightLine") {
+      //       object.visible = heightVisibility
+      //       object.set({
+      //         x1: mainObject.left + mainObject.width + 30,
+      //         y1: mainObject.top,
+      //         x2: mainObject.left + mainObject.width + 30,
+      //         y2: mainObject.top + mainObject.height,
+      //       });
+      //     }
+      //     if (object.name == "widthLine") {
+      //       object.visible = widthVisibility
+      //       object.set({
+      //         x1: mainObject.left,
+      //         y1: mainObject.top + mainObject.height + 28.5,
+      //         x2: mainObject.left + mainObject.width + 10,
+      //         y2: mainObject.top + mainObject.height + 28.5,
+      //       });
+      //     }
+      //     if (object.name == "height-value") {
+      //       object.visible = heightVisibility
+      //       object.text = String(currentSize.height + " " + currentUnit);
+      //       object.top = mainObject.top + mainObject.height / 2;
+      //       object.left = mainObject.left + mainObject.width + 55;
+      //     }
+      //     if (object.name == "width-value") {
+      //       object.visible = widthVisibility
+      //       object.text = String(currentSize.width + " " + currentUnit);
+      //       object.left = mainObject.left + mainObject.width / 2 - object.width / 2;
+      //       object.top = mainObject.top + (mainObject.height + 35);
+      //     }
+      //     if (object.name == "thickness-value") {
+      //       object.left = mainObject.left + mainObject.width / 2 - object.width / 2;
+      //       object.top = mainObject.top + (mainObject.height + 65);
+      //       object.text = String(
+      //         "Thickness" + ": " + currentThickness + " " + currentUnit
+      //       );
+      //     }
+      //   });
+      //   canvas.renderAll();
+      // }
   
     }
 
@@ -3089,6 +3124,8 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
       handleSelectBorder(activeBorder2, activeBorderColor2);
     }
   }
+
+  // await handleShowCutline(canvas)
   handleSelectFixingMethode(activeFixingMethode);
 
   return currentSize
@@ -3121,15 +3158,19 @@ async function handleChangeOutlineSize(size){
 let selectedCutline = "none"
 let cutlinesData = {
   first: {
-    borderSize: 3,
+    borderSize: 10,
     color: 'green'
   },
   second: { 
     color:'white',
     size: 20,
     borderColor: 'red',
-    borderSize: 5,
+    borderSize: 10,
   },
+}
+function handleGetCutlineData(cutline, cutlineDatas){
+  selectedCutline = cutline
+  cutlinesData = cutlineDatas
 }
 function handleSetCutline(size){
   let safeObject = handleGetObjectByName("safeObject")
@@ -3190,12 +3231,223 @@ function handleSetCutline(size){
 function cloneOutline(object){
   return new Promise(async (resolve, reject) => {
     var target = object;
-    var canvas = target.canvas;
-    target.clone(function (cloned) {
-      
-      resolve(cloned)
-    });
+    if(target != null){
+      target.clone(function (cloned) {
+        resolve(cloned)
+      }); 
+    }
   })
+}
+
+async function resetCutline(canva){
+  return new Promise((resolve, reject)=>{
+    if(selectedShape != "cut-to-shape"){
+      let exCutline1 = handleGetObjectByName("asowp-cutline1", canva)
+      let exCutline2 = handleGetObjectByName("asowp-cutline2", canva)
+      if(exCutline1){
+        canva.remove(exCutline1)
+      }
+      if(exCutline2){
+        canva.remove(exCutline2)
+      }
+      let safeObject = handleGetObjectByName("safeObject", canva)
+      safeObject.set({
+        stroke: "black",
+        strokeWidth: 0
+      })
+    }else{
+      let exCutline1 = handleGetObjectByName("asowp-cutline1", canva)
+      let exCutline2 = handleGetObjectByName("asowp-cutline2", canva)
+      if(exCutline1){
+        canva.remove(exCutline1)
+      }
+      if(exCutline2){
+        canva.remove(exCutline2)
+      }
+    }
+    resolve(true)
+  })
+}
+async function handleShowCutline(canva){
+  await resetCutline(canvas)
+
+  let safeObject = handleGetObjectByName("safeObject", canva)
+  let cutline1 = null
+  let cutline2 = null
+  if(selectedShape != "cut-to-shape"){
+    
+    if(activeBorder == "normal"){
+      let borderObject = handleGetObjectByName("normal-border", canva)
+      cutline1 = await cloneOutline(borderObject)
+      cutline2 = await cloneOutline(borderObject)
+      let signStroke = safeObject.strokeWidth
+      safeObject.set({
+        stroke: "black",
+        strokeWidth: 0,
+        shadow: null,
+      })
+      // canva.centerObject(safeObject)
+      borderObject.set({
+        stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+        strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+        left: selectedCutline != 'none' ? borderObject.left - (cutlinesData.first.borderSize/2) : borderObject.left,
+        top: selectedCutline != 'none' ? borderObject.top - (cutlinesData.first.borderSize/2) : borderObject.top,
+        shadow: selectedCutline != "2x" ? defaultShadow : null,
+      })
+
+      let cutStroke2 = borderObject.strokeWidth + cutlinesData.second.size + cutlinesData.second.borderSize + cutlinesData.first.borderSize
+      cutline2.set({
+        stroke: cutlinesData.second.borderColor,
+        strokeWidth: cutStroke2,
+        left: cutline2.left - (cutStroke2/2),
+        top: cutline2.top - (cutStroke2/2),
+        shadow: selectedCutline == "2x" ? defaultShadow : null,
+        selectable: false,
+        name: "asowp-cutline2",
+        visible: selectedCutline == "2x" ? true : false
+      })
+
+      let cutStroke1 = borderObject.strokeWidth + cutlinesData.second.size + cutlinesData.first.borderSize
+      cutline1.set({
+        stroke: cutlinesData.second.color,
+        strokeWidth: cutStroke1,
+        left: cutline1.left - (cutStroke1/2),
+        top: cutline1.top - (cutStroke1/2),
+        selectable: false,
+        name: "asowp-cutline1",
+        visible: selectedCutline == "2x" ? true : false,
+      })
+    
+      if(selectedCutline != "2x"){
+        setMeasurmentValue(canva, safeObject)
+      }else{
+        let positionData = {
+          left: cutline2.left + (cutline2.strokeWidth),
+          top: cutline2.top + (cutline2.strokeWidth),
+          width: cutline2.width,
+          height: cutline2.height
+        }
+        // setMeasurmentValue(canva, cutline2)
+        setMeasurmentValue(canva, positionData)
+      }
+
+      canva.add(cutline1, cutline2)
+
+    }else{
+      cutline1 = await cloneOutline(safeObject)
+      cutline2 = await cloneOutline(safeObject)
+      
+      safeObject.set({
+        stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+        strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+        left: selectedCutline != 'none' ? safeObject.left - (cutlinesData.first.borderSize/2) : safeObject.left,
+        top: selectedCutline != 'none' ? safeObject.top - (cutlinesData.first.borderSize/2) : safeObject.top,
+        shadow: selectedCutline != "2x" ? defaultShadow : null,
+      })
+
+      let cutStroke2 = safeObject.strokeWidth + cutlinesData.second.size + cutlinesData.second.borderSize + cutlinesData.first.borderSize
+      cutline2.set({
+        stroke: cutlinesData.second.borderColor,
+        strokeWidth: cutStroke2,
+        left: cutline2.left - (cutStroke2/2),
+        top: cutline2.top - (cutStroke2/2),
+        shadow: selectedCutline == "2x" ? defaultShadow : null,
+        selectable: false,
+        name: "asowp-cutline2",
+        visible: selectedCutline == "2x" ? true : false
+      })
+
+      let cutStroke1 = safeObject.strokeWidth + cutlinesData.second.size + cutlinesData.first.borderSize
+      cutline1.set({
+        stroke: cutlinesData.second.color,
+        strokeWidth: cutStroke1,
+        left: cutline1.left - (cutStroke1/2),
+        top: cutline1.top - (cutStroke1/2),
+        selectable: false,
+        name: "asowp-cutline1",
+        visible: selectedCutline == "2x" ? true : false,
+      })
+    
+      if(selectedCutline != "2x"){
+        setMeasurmentValue(canva, safeObject)
+      }else{
+        let positionData = {
+          left: cutline2.left + (cutline2.strokeWidth),
+          top: cutline2.top + (cutline2.strokeWidth),
+          width: cutline2.width,
+          height: cutline2.height
+        }
+        // setMeasurmentValue(canva, cutline2)
+        setMeasurmentValue(canva, positionData)
+      }
+
+      canva.add(cutline1, cutline2)
+    }
+
+  }else{
+    cutline1 = await cloneOutline(safeObject)
+    cutline2 = await cloneOutline(safeObject)
+
+    const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
+    let sign = safeObject._objects?.filter(path => path.d && !path.d.includes(target))
+    let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0].fill)
+    let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0].fill)
+
+    console.log(sign, "****")
+
+    if(sign != undefined &&  sign[0] && selectedCutline != "none"){
+      let pathObjects = safeObject._objects
+  
+      pathObjects.forEach(path => {
+        if (path.name == "outline") {
+          path.set({
+            stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+            strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+            left: path.left - (cutlinesData.first.borderSize/2),
+            top: path.top - (cutlinesData.first.borderSize/2),
+          })
+        }
+      });
+    }
+  
+    if(sign != undefined){
+      cutline2.set({
+        shadow: selectedCutline == "2x" ? defaultShadow : null,
+        selectable: false,
+        name: "asowp-cutline2",
+        visible: selectedCutline == "2x" ? true : false
+      })
+      cutline1.set({
+        selectable: false,
+        name: "asowp-cutline1",
+        visible: selectedCutline == "2x" ? true : false,
+      })
+    
+      let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
+      signCut1[0].set({
+        stroke: cutlinesData.second.color,
+        strokeWidth: cutStroke1,
+        left: signCut1[0].left - (cutStroke1/2),
+        top: signCut1[0].top - (cutStroke1/2),
+      })
+      let cutStroke2 = cutlinesData.first.borderSize + cutlinesData.second.size + cutlinesData.second.borderSize
+      signCut2[0].set({
+        stroke: cutlinesData.second.borderColor,
+        strokeWidth: cutStroke2,
+        left: signCut2[0].left - (cutStroke2/2),
+        top: signCut2[0].top - (cutStroke2/2),
+      })
+    
+      canva.add(cutline1, cutline2)
+  
+      let realValues = handleReverseMiseAEchelle(sign[0])
+      setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
+    }else{
+      setOutlineMeasurmentValue({}, 0, 0)
+    }
+  }
+  cutline1.sendToBack()
+  cutline2.sendToBack()
 }
 
 //fonctions concernant les fixings methode
@@ -10717,5 +10969,6 @@ export {
   handleChangeQRCodeColor,
   handleChangeOutlineSize,
   handleGenSvgDesignImg,
-  showLoader
+  showLoader,
+  handleGetCutlineData
 };

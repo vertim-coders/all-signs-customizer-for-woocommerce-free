@@ -2559,6 +2559,7 @@
         handleChangeOutlineSize,
         handleGenSvgDesignImg,
         showLoader,
+        handleGetCutlineData,
     } from '@/frontend/utils/asowp-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -4838,13 +4839,25 @@
         addedTexts.value = currentSizeValues.value.texts
 
         if(sizeSetting){
-            var sizeBasePrice = sizeSetting.basePrice
-            handleGetCharPrice(sizeSetting.charPrice, sizeSetting.startPriceAtChar)
-            var sizeBasePriceObject = {
-                name: "sizeTextBase",
-                price: sizeBasePrice
+            console.log(sizeSetting, 'azer')
+            if(sizeSetting.perRange && sizeSetting.perRange == true){
+                var sizeBasePrice = sizeSetting.basePrice
+                var surface = customSizeValues.value.width * customSizeValues.value.height
+                handleGetCharPrice(sizeSetting.charPrice, sizeSetting.startPriceAtChar)
+                var sizeBasePriceObject = {
+                    name: "sizeTextBase",
+                    price: (sizeBasePrice * surface)
+                }
+                getOptionPrice(sizeBasePriceObject)
+            }else{
+                var sizeBasePrice = sizeSetting.basePrice
+                handleGetCharPrice(sizeSetting.charPrice, sizeSetting.startPriceAtChar)
+                var sizeBasePriceObject = {
+                    name: "sizeTextBase",
+                    price: sizeBasePrice
+                }
+                getOptionPrice(sizeBasePriceObject)
             }
-            getOptionPrice(sizeBasePriceObject)
         }
 
         if(sizeId != undefined){
@@ -4932,19 +4945,55 @@
     function selectCustomSize(customSize){
         // console.log(customSize, "custom size")
         function checkInterval(pricings, value){
-            let settings = pricings[0];
-            for (let i = 0; i < pricings.length; i++) {
-                if (value <= (pricings[i].surface * pricings[i].surface)) {
-                    settings = pricings[i];
-                    break;
+            if(pricings.type){
+                if(pricings.type == "range"){
+                    let settings = pricings.range[0];
+                    for (let i = 0; i < pricings.range.length; i++) {
+                        if (value <= (pricings.range[i].surface * pricings.range[i].surface)) {
+                            // settings = pricings.range[i];
+                            settings = { perRange: (pricings.rangePricingPerUnit && pricings.rangePricingPerUnit == true) ? pricings.rangePricingPerUnit : false, ...pricings.range[i]};
+                            break;
+                        }
+                        // settings = pricings.range[i];
+                        settings = { perRange: (pricings.rangePricingPerUnit && pricings.rangePricingPerUnit == true) ? pricings.rangePricingPerUnit : false, ...pricings.range[i]};
+                    }
+                    return settings;   
+                }else if(pricings.type == "unit"){
+                    let settings = pricings.unit;
+                    let newBasePrice = (value * settings.basePrice) / settings.surface
+                    let newSetting = {
+                        basePrice: newBasePrice,
+                        charPrice: settings.charPrice,
+                        maxTextChar: -1,
+                        startPriceAtChar: 0
+                    }
+                    return newSetting;   
                 }
-                settings = pricings[i];
+            }else{
+                if(pricings.length > 0){
+                    let settings = pricings[0];
+                    for (let i = 0; i < pricings.length; i++) {
+                        if (value <= (pricings[i].surface * pricings[i].surface)) {
+                            settings = pricings[i];
+                            break;
+                        }
+                        settings = pricings[i];
+                    }
+                    return settings;   
+                }else{
+                    return {
+                        basePrice: 0,
+                        charPrice: 0,
+                        maxTextChar: -1,
+                        startPriceAtChar: 0
+                    }
+                }
+
             }
-            return settings;   
         }
 
         if((customSizeValues.value.width >= customSize.width.min && customSizeValues.value.width <= customSize.width.max) && (customSizeValues.value.height >= customSize.height.min && customSizeValues.value.height <= customSize.height.max)){
-            console.log(customSize.pricings, "resultat")
+            // console.log(customSize, "resultat")
             
             if(customSize.pricings && customSize.pricings.length > 0){
                 var valeur = customSizeValues.value.width * customSizeValues.value.height
@@ -9287,6 +9336,12 @@
             fontFamSelected.value = (allFonts.value.length > 0 ? allFonts.value[0].label : 'Arial')
             configUnit.value = configSettings.value.customizerSign.customizerOptions.measurementUnit
             
+            if(props.config.data.settings.customizerSign.images.selectedCutline){
+                handleGetCutlineData(
+                    props.config.data.settings.customizerSign.images.selectedCutline,
+                    props.config.data.settings.customizerSign.images.cutlinesData,
+                )
+            }
 
             var optionss = document.querySelector('#asowp-options-container')
             document.addEventListener('click', handleDocumentClick)
@@ -9441,6 +9496,7 @@
                     (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false),
                     (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
                 )
+                // handleGetCutlineData()
             
                 canvas.selection = false;
                 canvasBack.selection = false;
