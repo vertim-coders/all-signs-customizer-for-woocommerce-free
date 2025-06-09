@@ -331,6 +331,31 @@ const api = {
         "/text-images"
     );
     return result.data;
+  }
+  ,
+  //Function related to discounts
+  updateMaterialSimpleDiscount: async (configId, materialId, textImages) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/materials/" +
+        materialId +
+        "/discounts/",
+      textImages
+    );
+    return edit.data;
+  },
+  getMaterialSimpleDiscounts: async (configId, materialId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/materials/" +
+        materialId +
+        "/discounts"
+    );
+    return result.data;
   },
   //Function related to borders
   updateMaterialSimpleBorders: async (configId, materialId, borders) => {

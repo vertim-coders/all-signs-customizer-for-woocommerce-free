@@ -174,6 +174,42 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
         );
         register_rest_route(
             $this->namespace,
+            $this->rest_base . '/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/discounts',
+            array(
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'save_material_discounts'),
+                    'permission_callback' => array($this, 'get_items_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                ),
+                array(
+                    'methods' => \WP_REST_Server::READABLE,
+                    'callback' => array($this, 'get_material_discounts'),
+                    'permission_callback' => array($this, 'get_items_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'material_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
             $this->rest_base . '/(?P<config_id>\d+)/materials/(?P<material_id>\d+)/borders',
             array(
                 array(
@@ -724,6 +760,80 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
             return rest_ensure_response(["sucess" => false, "message" => __("No config data found", "all-signs-options-pro")]);
         }
     }
+
+
+    /**
+     * Save a collection of discounts.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function save_material_discounts($request)
+    {
+        $config_id = $request->get_param('config_id');
+        $material_id = $request->get_param('material_id');
+
+        if ($config_id != 0) {
+            $meta_value = get_post_meta($config_id, 'asowp-configs-meta', true);
+            if (is_array($meta_value) && !empty($meta_value)) {
+                if (isset($meta_value['data']['materials'][$material_id]) && $meta_value['data']['materials'][$material_id]['type'] === "simple") {
+                    $new_discounts = json_decode($request->get_body(), true);
+                    if ($meta_value['data']['materials'][$material_id]['data']['discounts'] !== $new_discounts) {
+                        $meta_value['data']['materials'][$material_id]['data']['discounts'] = $new_discounts;
+                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        if ($update === true) {
+                            return rest_ensure_response(["success" => true, "message" => __("Material component discounts successfully updated", "all-signs-options-pro")]);
+                        } else {
+                            return rest_ensure_response(["success" => false, "message" => __("Material component discounts has not been updated", "all-signs-options-pro")]);
+                        }
+                    } else {
+                        return rest_ensure_response(["success" => "same", "message" => __("No change was observed", "all-signs-options-pro")]);
+                    }
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Material component discounts has not been updated", "all-signs-options-pro")]);
+                }
+
+            } else {
+                return rest_ensure_response(["success" => false, "message" => __("No config data found", "all-signs-options-pro")]);
+            }
+        } else {
+            return rest_ensure_response(["success" => false, "message" => __("No config data found", "all-signs-options-pro")]);
+        }
+    }
+    
+    /**
+     * Get a collection of discounts.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_material_discounts($request)
+    {
+        $config_id = $request->get_param('config_id');
+        $material_id = $request->get_param('material_id');
+        if ($config_id != 0) {
+            $meta_value = get_post_meta($config_id, 'asowp-configs-meta', true);
+            if (is_array($meta_value) && !empty($meta_value)) {
+                if (isset($meta_value['data']['materials'][$material_id])) {
+                    if ($meta_value['data']['materials'][$material_id]['data']['discounts']) {
+                        return rest_ensure_response($meta_value['data']['materials'][$material_id]['data']['discounts']);
+                    } else {
+                        return rest_ensure_response(["message" => __('Discounts not found', "all-signs-options-pro")]);
+                    }
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Material component discounts has not been found", "all-signs-options-pro")]);
+                }
+            } else {
+                return rest_ensure_response(["success" => false, "message" => __("No config data found", "all-signs-options-pro")]);
+            }
+        } else {
+            return rest_ensure_response(["success" => false, "message" => __("No config data found", "all-signs-options-pro")]);
+        }
+    }
+
+
     /**
      * Save a collection of colors.
      *

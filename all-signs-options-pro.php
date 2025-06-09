@@ -370,6 +370,11 @@ final class ASOWP_All_Signs_Options_Pro
                 'name' => 'Rounded Sides',
                 "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_rounded_sides.svg',
                 'value' => 'rounded-sides'
+            ],
+            [
+                'name' => 'Cut To Shape',
+                "icon" => ASOWP_ASSETS . '/images/shapes/ic_shape_cut_to_shape.svg',
+                'value' => 'cut-to-shape'
             ]
         ];
         $have_shapes = get_option("asowp_all_shapes");
@@ -401,6 +406,38 @@ final class ASOWP_All_Signs_Options_Pro
             }
         }
     }
+
+    private function asowp_add_shapes_if_not_exist()
+    {
+        // Définition des formes par défaut
+        $default_shapes = [
+            [
+                'name' => 'Cut To Shape',
+                'icon' => ASOWP_ASSETS . '/images/shapes/ic_shape_cut_to_shape.svg',
+                'value' => 'cut-to-shape'
+            ]
+        ];
+    
+        // Récupération des formes existantes
+        $existing_shapes = get_option('asowp_all_shapes', []);
+    
+        // 2. Ajout des formes manquantes
+        $existing_values = array_column($existing_shapes, 'value');
+        
+        foreach ($default_shapes as $default_shape) {
+            // Vérification si la forme existe déjà (par sa valeur)
+            if (!in_array($default_shape['value'], $existing_values)) {
+                $existing_shapes[] = $default_shape;
+                $shapes_updated = true;
+            }
+        }
+    
+        // Sauvegarde uniquement si des modifications ont été apportées
+        if ($shapes_updated) {
+            update_option('asowp_all_shapes', $existing_shapes);
+        }
+    }
+
     private function asowp_define_fixingMethods()
     {
         $fixingMethods = [
@@ -593,6 +630,8 @@ final class ASOWP_All_Signs_Options_Pro
             }
 
             update_option('ASOWP_version', ASOWP_VERSION);
+
+            $this->asowp_add_shapes_if_not_exist();
         }
     }
 

@@ -98,6 +98,19 @@
                 </button>
             </div>
             <div class="">
+                <button @click="()=>router.push('/configs/'+config.replace(/ /,'-')+'/'+configID+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/simple/discounts')" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-px-6 asowp-p-4 asowp-bg-transparent asowp-space-x-2 asowp-text-black ${route.name == 'Simple-Discounts' ? 'asowp-border-b-[3px] asowp-border-r-0 asowp-border-l-0 asowp-border-t-0 asowp-border-solid asowp-border-b-[#016464] asowp-text-[#016464] asowp-bg-[#F9F9F9]' : 'asowp-border-none'} hover:asowp-border-b-[3px] hover:asowp-border-r-0 hover:asowp-border-l-0 hover:asowp-border-t-0 hover:asowp-border-solid hover:asowp-border-b-[#016464] hover:asowp-bg-[#F9F9F9] hover:asowp-text-[#016464] asowp-cursor-pointer`">
+                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 40 41" fill="black" xmlns="http://www.w3.org/2000/svg">
+                        <g id="mdi:shape">
+                        <path id="Vector" d="M18.3333 23.0625V36.7292H5V23.0625H18.3333ZM20 3.41666L29.1667 18.7917H10.8333L20 3.41666ZM29.1667 22.2083C33.3333 22.2083 36.6667 25.625 36.6667 29.8958C36.6667 34.1667 33.3333 37.5833 29.1667 37.5833C25 37.5833 21.6667 34.1667 21.6667 29.8958C21.6667 25.625 25 22.2083 29.1667 22.2083Z" fill="currentColor"/>
+                        </g>
+                    </svg>
+
+                    <div class="asowp-text-[14px]">
+                        Discounts
+                    </div>
+                </button>
+            </div>
+            <div class="">
                 <button @click="()=>router.push('/configs/'+config.replace(/ /,'-')+'/'+configID+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/simple/others-components')" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-p-4 asowp-bg-transparent asowp-space-x-2 asowp-text-black ${route.name == 'Simple-OthersComponents' || route.name == 'Simple-OthersComponents-Options' ? 'asowp-border-b-[3px] asowp-border-r-0 asowp-border-l-0 asowp-border-t-0 asowp-border-solid asowp-border-b-[#016464] asowp-text-[#016464] asowp-bg-[#F9F9F9]' : 'asowp-border-none'} hover:asowp-border-b-[3px] hover:asowp-border-r-0 hover:asowp-border-l-0 hover:asowp-border-t-0 hover:asowp-border-solid hover:asowp-border-b-[#016464] hover:asowp-bg-[#F9F9F9] hover:asowp-text-[#016464] asowp-cursor-pointer`">
                     <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 26 28" fill="black" xmlns="http://www.w3.org/2000/svg">
                         <path d="M25 4H1M25 14H1M25 24H1M21 1V7M5 11V17M17 21V27" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -116,6 +129,7 @@
             <Colors v-if="route.name == 'Simple-Colors'"/>
             <FixingMethods v-if="route.name == 'Simple-FixingMethods'"/>
             <Shapes v-if="route.name == 'Simple-Shapes'"/>
+            <Discounts v-if="route.name == 'Simple-Discounts'"/>
             <TextImages v-if="route.name == 'Simple-TextImages'"/>
             <OthersComponents v-if="route.name == 'Simple-OthersComponents' || route.name == 'Simple-OthersComponents-Options'"/>
         </div>
@@ -127,6 +141,7 @@ import Borders from '@/admin/pages/configuration/materials/simple/components/bor
 import Colors from '@/admin/pages/configuration/materials/simple/components/colors.vue'
 import FixingMethods from '@/admin/pages/configuration/materials/simple/components/fixing-methods.vue'
 import Shapes from '@/admin/pages/configuration/materials/simple/components/shapes.vue'
+import Discounts from '@/admin/pages/configuration/materials/simple/components/discounts.vue'
 import TextImages from '@/admin/pages/configuration/materials/simple/components/text-images.vue'
 import OthersComponents from '@/admin/pages/configuration/materials/simple/components/others-components/index.vue'
 import { onMounted, ref } from 'vue'

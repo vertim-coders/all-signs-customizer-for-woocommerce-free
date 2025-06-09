@@ -162,7 +162,7 @@
                             </div>
                         </div>
                         <div class="asowp-grid asowp-gap-x-6 asowp-gap-y-1 asowp-grid-cols-5 asowp-px-8 asowp-py-4">
-                            <div v-for="(img,index) in image.scenes" :class="`asowp-relative asowp-flex asowp-w-[120px] asowp-border asowp-b-white asowp-rounded-md asowp-overflow-hidden`">
+                            <div v-for="(img,index) in image.scenes" :key="index" :class="`asowp-relative asowp-flex asowp-w-[120px] asowp-border asowp-b-white asowp-rounded-md asowp-overflow-hidden`">
                                 <div class="asowp-relative asowp-w-[120px] asowp-h-[120px] asowp-object-cover">
                                     <img :src="img" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                 </div>
@@ -171,6 +171,104 @@
                                         <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm3 10.5a.75.75 0 000-1.5H9a.75.75 0 000 1.5h6z" clip-rule="evenodd" />
                                     </svg>
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2">
+                    <!-- Titre principal -->
+                    <h3 class="asowp-text-sm asowp-font-semibold asowp-text-gray-800">Cutlines Settings</h3>
+                    
+                    <!-- Sélection du type de cutline -->
+                    <div class="asowp-flex asowp-flex-col asowp-space-y-2">
+                        <label for="cutlineType" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Cutline Type</label>
+                        <select id="cutlineType" v-model="image.selectedCutline" class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-h-[30px] asowp-w-full">
+                            <option v-for="cutline in cutlines" :key="cutline" :value="cutline">{{ cutline }}</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Section First Cutline -->
+                    <div class="">
+                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">First Cutline</h4>
+                        <div class="asowp-flex asowp-space-x-4">
+                            <div class="asowp-w-1/2 asowp-space-y-2">
+                                <label for="firstBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Size (px)</label>
+                                <input 
+                                    id="firstBorderSize"
+                                    type="number" 
+                                    min="0" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    v-model="image.cutlines.first.borderSize" 
+                                    autocomplete="off"
+                                    placeholder="0"
+                                > 
+                            </div>
+                            <div class="asowp-w-1/2 asowp-space-y-2">
+                                <label for="firstBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Color</label>
+                                <input
+                                    id="firstBorderColor"
+                                    type="color"
+                                    v-model="image.cutlines.first.color"
+                                    @input="(e)=>changeColorCodeHex(e,key)"
+                                    class="asowp-rounded asowp-border asowp-w-full asowp-h-[30px] asowp-cursor-pointer"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section Second Cutline -->
+                    <div class="">
+                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">Second Cutline</h4>
+                        
+                        <!-- Row 1: Size et Color entre les cutlines -->
+                        <div class="asowp-flex asowp-space-x-4 asowp-mb-2">
+                            <div class="asowp-w-1/2 asowp-space-y-2">
+                                <label for="secondSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Space Between Cutlines (px)</label>
+                                <input 
+                                    id="secondSize"
+                                    type="number" 
+                                    min="0" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    v-model="image.cutlines.second.size" 
+                                    autocomplete="off"
+                                    placeholder="0"
+                                > 
+                            </div>
+                            <div class="asowp-w-1/2 asowp-space-y-2">
+                                <label for="secondSpaceColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Space Color</label>
+                                <input
+                                    id="secondSpaceColor"
+                                    type="color"
+                                    v-model="image.cutlines.second.color"
+                                    @input="(e)=>changeColorCodeHex(e,key)"
+                                    class="asowp-rounded asowp-border asowp-w-full asowp-h-[30px] asowp-cursor-pointer"
+                                />
+                            </div>
+                        </div>
+                        
+                        <!-- Row 2: Border Size et Border Color -->
+                        <div class="asowp-flex asowp-space-x-4">
+                            <div class="asowp-w-1/2 asowp-space-y-2">
+                                <label for="secondBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Size (px)</label>
+                                <input 
+                                    id="secondBorderSize"
+                                    type="number" 
+                                    min="0" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    v-model="image.cutlines.second.borderSize" 
+                                    autocomplete="off"
+                                    placeholder="0"
+                                > 
+                            </div>
+                            <div class="asowp-w-1/2 asowp-space-y-2">
+                                <label for="secondBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Color</label>
+                                <input
+                                    id="secondBorderColor"
+                                    type="color"
+                                    v-model="image.cutlines.second.borderColor"
+                                    @input="(e)=>changeColorCodeHex(e,key)"
+                                    class="asowp-rounded asowp-border asowp-w-full asowp-h-[30px] asowp-cursor-pointer"
+                                /> 
                             </div>
                         </div>
                     </div>
@@ -204,7 +302,7 @@
                         </div>
 
                     </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
+                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex asowp-flex-wrap">
                         <div>
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -278,6 +376,64 @@
                             </label>
                         </div>
                     </div>
+                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
+                        <!-- Greenify -->
+                        <div>
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
+                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Greenify</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="toggleEnableGreenify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="toggleEnableGreenify" type="checkbox" name="toggleEnableGreenify" class="asowp-sr-only asowp-peer" v-model="image.filter.enableGreenify">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+
+                        <!-- Pinkify -->
+                        <div>
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
+                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Pinkify</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="toggleEnablePinkify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="toggleEnablePinkify" type="checkbox" name="toggleEnablePinkify" class="asowp-sr-only asowp-peer" v-model="image.filter.enablePinkify">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+
+                        <!-- Orangeify -->
+                        <div>
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
+                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Orangeify</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="toggleEnableOrangeify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="toggleEnableOrangeify" type="checkbox" name="toggleEnableOrangeify" class="asowp-sr-only asowp-peer" v-model="image.filter.enableOrangeify">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+
+                        <!-- Blueify -->
+                        <div>
+                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
+                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
+                            </button>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Blueify</div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
+                            <label for="toggleEnableBlueify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="toggleEnableBlueify" type="checkbox" name="toggleEnableBlueify" class="asowp-sr-only asowp-peer" v-model="image.filter.enableBlueify">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+                    </div>
+                    
                     
                 </div>
             </div>
@@ -318,6 +474,19 @@ const image = ref({
       uploadMaxWidth:100,
       allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
     },
+    selectedCutline:'none',
+    "cutlines": {
+        first: {
+            borderSize: 4,
+            color: '#FFF10E'
+        },
+        second: {
+            color: '#5EEC92',
+            size: 10,
+            borderColor: '#4A65F9',
+            borderSize: 4
+        }
+    },
     enableClipart:{
         active:true,
         selectedClipartGroups:[],
@@ -330,6 +499,10 @@ const image = ref({
         enableBlur:true,
         enableSepia:true,
         enableSharpen:true,
+        "enableGreenify":false,
+        "enablePinkify":false,
+        "enableOrangeify":false,
+        "enableBlueify":false
     },
     colors:[],
     scenes:[]
@@ -350,6 +523,10 @@ onMounted(async ()=>{
     }
     isFetching.value = false;
 });
+
+const cutlines = ['none', '1x', '2x'];
+
+
 const selectColorPrevImage = async(e) => { 
     e.preventDefault();
     var uploader = wp.media(

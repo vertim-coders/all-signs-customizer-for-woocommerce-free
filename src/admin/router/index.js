@@ -59,6 +59,11 @@ const router = createRouter({
       component: Simple,
     },
     {
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/discounts",
+      name: "Simple-Discounts",
+      component: Simple,
+    },
+    {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/text-images",
       name: "Simple-TextImages",
       component: Simple,

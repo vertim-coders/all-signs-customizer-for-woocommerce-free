@@ -24,7 +24,7 @@
                                 Icon
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                Additional Price
+                                Price
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
                                 Default
@@ -89,61 +89,274 @@
                 {{isEdit ? 'Edit Shape' : 'Add new shapes'}}
             </div>
             <div>
-                <div class="asowp-relative asowp-flex asowp-justify-between asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" v-if="isEdit">
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Select shape</label>
-                        <Multiselect
-                            v-model="shape.shapeId"
-                            placeholder="Select Shape"
-                            :options="notSelectedManageShapes"
-                            label="name"
-                            trackBy="name"
-                        >
-                            <template v-slot:singleLabel="{ value }">
-                                <div class="multiselect-single-label">
-                                    <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="value.icon"> {{ value.name }}
-                                </div>
-                            </template>
-    
-                            <template v-slot:option="{ option }">
-                                <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="option.icon">{{ option.name }}
-                            </template>
-                        </Multiselect>
+                <div class="asowp-relative asowp-flex asowp-flex-col asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB] asowp-space-y-4" v-if="isEdit">
+                    
+                    <!-- Première ligne: Select Shape + Surface + Price + Toggle -->
+                    <div class="asowp-flex asowp-space-x-4 asowp-items-end">
+                        <!-- Select Shape -->
+                        <div :class="`asowp-w-${shape.enablePricingBySurface? '1/4':'2/4' } asowp-space-y-2 asowp-flex asowp-flex-col`">
                         
-                    </div>
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
-                        <input type="number" v-model="shape.additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(shape.additionalPrice)?shape.additionalPrice=0:''">
-                        
-                    </div>
-                </div>
-                <div v-if="!isEdit">
-                    <div class="asowp-relative asowp-flex asowp-justify-between asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" :key="key" v-for="(shape,key) in addNewShapes">
-                        <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Select Shape</label>
+                            <label for="shapeSelect" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Select Shape</label>
                             <Multiselect
-                                v-model="addNewShapes[key].shapeId"
-                                placeholder="Select Border"
+                                id="shapeSelect"
+                                v-model="shape.shapeId"
+                                placeholder="Select Shape"
                                 :options="notSelectedManageShapes"
                                 label="name"
                                 trackBy="name"
+                                class="asowp-h-[30px]"
                             >
                                 <template v-slot:singleLabel="{ value }">
-                                    <div class="multiselect-single-label">
-                                        <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="value.icon"> {{ value.name }}
+                                    <div class="multiselect-single-label asowp-flex asowp-items-center">
+                                        <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="value.icon" :alt="value.name"> 
+                                        {{ value.name }}
                                     </div>
                                 </template>
-        
+
                                 <template v-slot:option="{ option }">
-                                    <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="option.icon">{{ option.name }}
+                                    <div class="asowp-flex asowp-items-center">
+                                        <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="option.icon" :alt="option.name">
+                                        {{ option.name }}
+                                    </div>
                                 </template>
                             </Multiselect>
+                        </div>
+
+                        <!-- Surface (conditionnel) -->
+                        <div v-if="shape.enablePricingBySurface" class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col">
+                            <label for="surfaceInput" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Surface (sq units)</label>
+                            <input 
+                                id="surfaceInput"
+                                type="number" 
+                                v-model="shape.surface" 
+                                class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                @blur="isNaN(shape.surface) ? shape.surface = 0 : ''"
+                                placeholder="0"
+                                min="0"
+                            >
+                        </div>
+                     
+
+
+
+                        <!-- Price -->
+                        <div class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col">
+                            <label for="priceInput" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">
+                                {{ shape.enablePricingBySurface ? "Price per Surface" : 'Additional Price' }}
+                            </label>
+                            <input 
+                                id="priceInput"
+                                type="number" 
+                                v-model="shape.additionalPrice" 
+                                class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                @blur="isNaN(shape.additionalPrice) ? shape.additionalPrice = 0 : ''"
+                                placeholder="0"
+                                min="0"
+                                step="0.01"
+                            >
+                        </div>
+
+                        <!-- Toggle Switch -->
+                        <div class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col asowp-items-center asowp-ms-auto">
+                            <label class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-text-center">Enable Pricing By Surface</label>
+                            <div class="asowp-flex asowp-items-center asowp-h-[30px]">
+                                <label 
+                                    for="pricingToggle" 
+                                    @click="()=> toggleEnablePricingBySurfaceOnEdit()" 
+                                    class="asowp-cursor-pointer asowp-relative asowp-inline-flex asowp-h-6 asowp-w-11 asowp-items-center asowp-rounded-full asowp-transition-colors focus:asowp-outline-none focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-ring-offset-2"
+                                    :class="shape.enablePricingBySurface ? 'asowp-bg-blue-600' : 'asowp-bg-gray-200'"
+                                >
+                                    <span 
+                                        class="asowp-inline-block asowp-h-4 asowp-w-4 asowp-transform asowp-rounded-full asowp-bg-white asowp-transition asowp-duration-200 asowp-ease-in-out asowp-shadow-lg"
+                                        :class="shape.enablePricingBySurface ? 'asowp-translate-x-6' : 'asowp-translate-x-1'"
+                                    ></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deuxième ligne: Shape Sizes (conditionnel pour cut-to-shape) -->
+                    <div v-if="manageShapes[shape.shapeId]?.value == 'cut-to-shape'" class="asowp-border-t">
+                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-3">Shape Sizes</h4>
+                        <div class="asowp-flex asowp-space-x-4">
+                            <!-- Small Size -->
+                            <div class="asowp-w-1/3 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                <label for="sizeSmall" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Small Size (px)</label>
+                                <input 
+                                    id="sizeSmall"
+                                    type="number" 
+                                    v-model="shape.shapeSize.small" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    @blur="isNaN(shape.shapeSize?.small) ? shape.shapeSize.small = 0 : ''"
+                                    placeholder="0"
+                                    min="0"
+                                >
+                            </div>
+
+                            <!-- Medium Size -->
+                            <div class="asowp-w-1/3 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                <label for="sizeMedium" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Medium Size (px)</label>
+                                <input 
+                                    id="sizeMedium"
+                                    type="number" 
+                                    v-model="shape.shapeSize.medium" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    @blur="isNaN(shape.shapeSize?.medium) ? shape.shapeSize.medium = 0 : ''"
+                                    placeholder="0"
+                                    min="0"
+                                >
+                            </div>
+
+                            <!-- Large Size -->
+                            <div class="asowp-w-1/3 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                <label for="sizeLarge" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Large Size (px)</label>
+                                <input 
+                                    id="sizeLarge"
+                                    type="number" 
+                                    v-model="shape.shapeSize.large" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    @blur="isNaN(shape.shapeSize?.large) ? shape.shapeSize.large = 0 : ''"
+                                    placeholder="0"
+                                    min="0"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div v-if="!isEdit">
+                    <div class="asowp-relative asowp-flex asowp-flex-col asowp-justify-between asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" :key="key" v-for="(shape,key) in addNewShapes">
+                                            <!-- Première ligne: Select Shape + Surface + Price + Toggle -->
+                        <div class="asowp-flex asowp-space-x-4 asowp-items-end">
+                            <!-- Select Shape -->
+                            <div :class="`asowp-w-${addNewShapes[key].enablePricingBySurface? '1/4':'2/4' } asowp-space-y-2 asowp-flex asowp-flex-col`">
+                                <label for="shapeSelect" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Select Shape</label>
+                                <Multiselect
+                                    id="shapeSelect"
+                                    v-model="addNewShapes[key].shapeId"
+                                    placeholder="Select Shape"
+                                    :options="notSelectedManageShapes"
+                                    label="name"
+                                    trackBy="name"
+                                    class="asowp-h-[30px]"
+                                >
+                                    <template v-slot:singleLabel="{ value }">
+                                        <div class="multiselect-single-label asowp-flex asowp-items-center">
+                                            <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="value.icon" :alt="value.name"> 
+                                            {{ value.name }}
+                                        </div>
+                                    </template>
+
+                                    <template v-slot:option="{ option }">
+                                        <div class="asowp-flex asowp-items-center">
+                                            <img class="asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2" :src="option.icon" :alt="option.name">
+                                            {{ option.name }}
+                                        </div>
+                                    </template>
+                                </Multiselect>
+                            </div>
+
+                            <!-- Surface (conditionnel) -->
+                            <div v-if="addNewShapes[key].enablePricingBySurface" class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                <label for="surfaceInput" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Surface (sq units)</label>
+                                <input 
+                                    id="surfaceInput"
+                                    type="number" 
+                                    v-model="addNewShapes[key].surface" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    @blur="isNaN(addNewShapes[key].surface) ? addNewShapes[key].surface = 0 : ''"
+                                    placeholder="0"
+                                    min="0"
+                                >
+                            </div>
                             
+
+                            <!-- Price -->
+                            <div class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                <label for="priceInput" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">
+                                    {{ addNewShapes[key].enablePricingBySurface ? "Price per Surface" : 'Additional Price' }}
+                                </label>
+                                <input 
+                                    id="priceInput"
+                                    type="number" 
+                                    v-model="addNewShapes[key].additionalPrice" 
+                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                    @blur="isNaN(addNewShapes[key].additionalPrice) ? addNewShapes[key].additionalPrice = 0 : ''"
+                                    placeholder="0"
+                                    min="0"
+                                    step="0.01"
+                                >
+                            </div>
+
+                            <!-- Toggle Switch -->
+                            <div class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col asowp-items-center asowp-ms-auto">
+                                <label class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-text-center">Enable Pricing By Surface</label>
+                                <div class="asowp-flex asowp-items-center asowp-h-[30px]">
+                                    <label 
+                                        for="pricingToggle" 
+                                        @click="()=>toggleEnablePricingBySurface(key)" 
+                                        class="asowp-cursor-pointer asowp-relative asowp-inline-flex asowp-h-6 asowp-w-11 asowp-items-center asowp-rounded-full asowp-transition-colors focus:asowp-outline-none focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-ring-offset-2"
+                                        :class="addNewShapes[key].enablePricingBySurface ? 'asowp-bg-blue-600' : 'asowp-bg-gray-200'"
+                                    >
+                                        <span 
+                                            class="asowp-inline-block asowp-h-4 asowp-w-4 asowp-transform asowp-rounded-full asowp-bg-white asowp-transition asowp-duration-200 asowp-ease-in-out asowp-shadow-lg"
+                                            :class="addNewShapes[key].enablePricingBySurface ? 'asowp-translate-x-6' : 'asowp-translate-x-1'"
+                                        ></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="asowp-w-2/5 asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
-                            <input type="number" v-model="addNewShapes[key].additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(addNewShapes[key].additionalPrice)?addNewShapes[key].additionalPrice=0:''">
+
+                        <!-- Deuxième ligne: Shape Sizes (conditionnel pour cut-to-shape) -->
+                        <div v-if="manageShapes[addNewShapes[key].shapeId]?.value == 'cut-to-shape'" class="asowp-border-t">
+                            <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-3">Shape Sizes</h4>
+                            <div class="asowp-flex asowp-space-x-4">
+                                <!-- Small Size -->
+                                <div class="asowp-w-1/3 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                    <label for="sizeSmall" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Small Size (px)</label>
+                                    <input 
+                                        id="sizeSmall"
+                                        type="number" 
+                                        v-model="addNewShapes[key].shapeSize.small" 
+                                        class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                        @blur="isNaN(addNewShapes[key].shapeSize?.small) ? addNewShapes[key].shapeSize.small = 0 : ''"
+                                        placeholder="0"
+                                        min="0"
+                                    >
+                                </div>
+
+                                <!-- Medium Size -->
+                                <div class="asowp-w-1/3 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                    <label for="sizeMedium" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Medium Size (px)</label>
+                                    <input 
+                                        id="sizeMedium"
+                                        type="number" 
+                                        v-model="addNewShapes[key].shapeSize.medium" 
+                                        class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                        @blur="isNaN(addNewShapes[key].shapeSize?.medium) ? addNewShapes[key].shapeSize.medium = 0 : ''"
+                                        placeholder="0"
+                                        min="0"
+                                    >
+                                </div>
+
+                                <!-- Large Size -->
+                                <div class="asowp-w-1/3 asowp-space-y-2 asowp-flex asowp-flex-col">
+                                    <label for="sizeLarge" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Large Size (px)</label>
+                                    <input 
+                                        id="sizeLarge"
+                                        type="number" 
+                                        v-model="addNewShapes[key].shapeSize.large" 
+                                        class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
+                                        @blur="isNaN(addNewShapes[key].shapeSize?.large) ? addNewShapes[key].shapeSize.large = 0 : ''"
+                                        placeholder="0"
+                                        min="0"
+                                    >
+                                </div>
+                            </div>
                         </div>
+                        
+
+                        
                         <div @click="handleDeleteNewShape(key)" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center asowp-right-2 asowp-top-2 asowp-shadow-md asowp-rounded-full asowp-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -241,11 +454,25 @@ const shape = ref({
     isDefault:false,
     shapeId:0,
     additionalPrice:0,
+    enablePricingBySurface: false,
+    surface: 0,
+    shapeSize: {
+        small: 20,
+        medium: 40,
+        large: 60
+    }
 });
 const addNewShapes = ref([{
     isDefault:false,
     shapeId:0,
     additionalPrice:0,
+    enablePricingBySurface: false,
+    surface: 0,
+    shapeSize: {
+        small: 20,
+        medium: 40,
+        large: 60
+    }
 }]);
 
 const notSelectedManageShapes = ref([]);
@@ -276,6 +503,13 @@ const handleAddMaterialShape = () =>{
         isDefault:false,
         shapeId:0,
         additionalPrice:0,
+        enablePricingBySurface: false,
+        surface: 0,
+        shapeSize: {
+            small: 20,
+            medium: 40,
+            large: 60
+        }
     });
 }
 
@@ -328,12 +562,26 @@ const updateShapes = async () => {
         shape.value = {
             isDefault:false,
             shapeId:0,
-            additionalPrice:0
+            additionalPrice:0,
+            enablePricingBySurface: false,
+            surface: 0,
+            shapeSize: {
+                small: 20,
+                medium: 40,
+                large: 60
+            }
         };
         addNewShapes.value =[{
             isDefault:false,
             shapeId:0,
             additionalPrice:0,
+            enablePricingBySurface: false,
+            surface: 0,
+            shapeSize: {
+                small: 20,
+                medium: 40,
+                large: 60
+            }
         }];
     }else{
         isLoading.value = false;
@@ -343,12 +591,26 @@ const updateShapes = async () => {
         shape.value = {
             isDefault:false,
             shapeId:0,
-            additionalPrice:0
+            additionalPrice:0,
+            enablePricingBySurface: false,
+            surface: 0,
+            shapeSize: {
+                small: 20,
+                medium: 40,
+                large: 60
+            }
         };
         addNewShapes.value =[{
             isDefault:false,
             shapeId:0,
             additionalPrice:0,
+            enablePricingBySurface: false,
+            surface: 0,
+            shapeSize: {
+                small: 20,
+                medium: 40,
+                large: 60
+            }
         }];
     }
 };
@@ -406,12 +668,26 @@ const back = () => {
     shape.value = {
         isDefault:false,
         shapeId:0,
-        additionalPrice:0
+        additionalPrice:0,
+        enablePricingBySurface: false,
+        surface: 0,
+        shapeSize: {
+            small: 20,
+            medium: 40,
+            large: 60
+        }
     };
     addNewShapes.value =[{
         isDefault:false,
         shapeId:0,
         additionalPrice:0,
+        enablePricingBySurface: false,
+        surface: 0,
+        shapeSize: {
+            small: 20,
+            medium: 40,
+            large: 60
+        }
     }];
 };
 const selectDefault = async(key) =>{
@@ -433,4 +709,13 @@ const handleDeleteNewShape = (key) =>{
         addNewShapes.value=tab;
     }
 }
+
+const toggleEnablePricingBySurface =(key)=>{
+    addNewShapes.value[key].enablePricingBySurface = !addNewShapes.value[key].enablePricingBySurface;
+  }
+
+const toggleEnablePricingBySurfaceOnEdit =()=>{
+    shape.value.enablePricingBySurface = !shape.value.enablePricingBySurface
+}
+
 </script>

@@ -561,6 +561,19 @@ const defaultSettings = ref({
                 active:true,
                 selectedClipartGroups:[],
             },
+            selectedCutline:'none',
+            "cutlines": {
+                first: {
+                    borderSize: 4,
+                    color: '#FFF10E'
+                },
+                second: {
+                    color: '#5EEC92',
+                    size: 10,
+                    borderColor: '#4A65F9',
+                    borderSize: 4
+                }
+            },
             filter: {
                 active:true,
                 enableGreyscale:true,
@@ -569,6 +582,10 @@ const defaultSettings = ref({
                 enableBlur:true,
                 enableSepia:true,
                 enableSharpen:true,
+                "enableGreenify":false,
+                "enablePinkify":false,
+                "enableOrangeify":false,
+                "enableBlueify":false
             },
             colors:[],
             scenes:[]
@@ -1373,7 +1390,8 @@ const metaConfigs = ref({
 							}
 						]
 					},
-					textImages: {
+					discounts:[],
+                    textImages: {
 						enableText:true,
                         enableImage:true
 					},
@@ -2260,6 +2278,7 @@ const metaConfigs = ref({
                             }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
@@ -3652,6 +3671,7 @@ const metaConfigs = ref({
                             }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
@@ -4249,6 +4269,7 @@ const metaConfigs = ref({
                             }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
@@ -4662,6 +4683,7 @@ const metaConfigs = ref({
                             }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
@@ -5022,6 +5044,7 @@ const metaConfigs = ref({
                             }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
@@ -5769,7 +5792,8 @@ const metaConfigs = ref({
 							}
 						]
 					},
-					textImages: {
+					discounts:[],
+                    textImages: {
 						enableText: true,
 						enableImage: true
 					},
@@ -6328,7 +6352,8 @@ const metaConfigs = ref({
 							}
 						]
 					},
-					textImages: {
+					discounts:[],
+                    textImages: {
 						enableText: true,
 						enableImage: true
 					},
@@ -7122,6 +7147,7 @@ const metaConfigs = ref({
                         }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
@@ -7781,6 +7807,7 @@ const metaConfigs = ref({
                     }
                     ]
                 },
+                discounts:[],
                 textImages: {
                     enableText: true,
                     enableImage: true
@@ -8424,6 +8451,7 @@ const metaConfigs = ref({
                         }
                         ]
                     },
+                    discounts:[],
                     textImages: {
                         enableText: true,
                         enableImage: true
