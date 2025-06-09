@@ -60,7 +60,8 @@
     const materialId = ref(route.params.materialId);
     const textImages = ref({
         enableText:true,
-        enableImage:true
+        enableImage:true,
+        enableQrCode:true
     });
     
 

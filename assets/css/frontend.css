@@ -167,3 +167,11 @@ to {
   overflow-y: hidden;
   white-space: nowrap;
 }
+
+.asowp-disabled-div {
+  pointer-events: none;
+  opacity: 0.5;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: not-allowed;
+}

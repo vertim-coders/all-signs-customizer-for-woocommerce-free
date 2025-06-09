@@ -112,6 +112,10 @@ class Assets
                 'src' => ASOWP_ASSETS . '/utilities/fabric.min.js',
                 'in_footer' => true
             ],
+            'asowp-paper' => [
+                'src' => ASOWP_ASSETS . '/utilities/paper.min.js',
+                'in_footer' => true
+            ],
             'asowp-sortable' => [
                 'src' => ASOWP_ASSETS . '/utilities/sortable.js',
                 'in_footer' => true

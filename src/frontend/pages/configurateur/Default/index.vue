@@ -1,4 +1,4 @@
-<template>
+<template> 
     <div class="asowp-relative asowp-flex asowp-w-full asowp-h-full">
 
         <div class="asowp-relative asowp-flex asowp-w-full asowp-h-full">
@@ -45,20 +45,6 @@
                                 </svg>
                                 <img v-if="configSectionIcons.icon !== '' " :src="configSectionIcons.icon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                            
                             </span>
-
-                            <!-- <span @click="showConfigRender()" :class="`asowp-flex asowp-p-1.5 asowp-full-center asowp-cursor-pointer asowp-rounded-full asowp-bg-[${configColors.bars.preview.backgroundColor}] asowp-text-[${configColors.bars.preview.textColor}] hover:asowp-bg-[${configColors.bars.preview.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.preview.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.preview.borderColor}] hover:asowp-border-[${configColors.bars.preview.hoverBorderColor}]`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                            </span>
-
-                            <span @click="centerSign(canvas)" :class="`asowp-flex asowp-p-1.5 asowp-full-center asowp-cursor-pointer asowp-rounded-full asowp-bg-[${configColors.bars.help.backgroundColor}] asowp-text-[${configColors.bars.help.textColor}] hover:asowp-bg-[${configColors.bars.help.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.help.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.help.borderColor}] hover:asowp-border-[${configColors.bars.help.hoverBorderColor}]`">
-                                <svg viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-4 asowp-h-4">
-                                    <path d="M9.375 9.92967C9.375 9.92967 9.45937 7.93162 11.3402 6.32955C12.457 5.37836 13.7982 5.10287 15 5.08592C16.0975 5.07199 17.0783 5.26392 17.6648 5.55939C18.6674 6.06677 20.625 7.30193 20.625 9.92967C20.625 12.6948 18.9152 13.9482 16.9717 15.3292C15.0281 16.7103 14.5312 18.0647 14.5312 19.6172" stroke="currentColor" stroke-width="3" stroke-miterlimit="10" stroke-linecap="round"/>
-                                    <path d="M14.5312 26.1556C15.5668 26.1556 16.4062 25.2882 16.4062 24.2181C16.4062 23.1481 15.5668 22.2806 14.5312 22.2806C13.4957 22.2806 12.6562 23.1481 12.6562 24.2181C12.6562 25.2882 13.4957 26.1556 14.5312 26.1556Z" fill="currentColor"/>
-                                </svg>
-                            </span> -->
                         </div>
                     </div>
     
@@ -150,7 +136,7 @@
                                 <div>
                                     <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
                                 </div>
-                                <div>
+                                <div v-if="selectedShape != 'cut-to-shape'">
                                     <span class="asowp-font-semibold">{{ configVisualiserTexts.textPosition && configVisualiserTexts.textPosition.trim() !== '' ? configVisualiserTexts.textPosition : 'Position' }}:</span> {{ configVisualiserTexts.textLeft && configVisualiserTexts.textLeft.trim() !== '' ? configVisualiserTexts.textLeft : 'Left' }}: <span id="text-left"></span> {{configUnit}}, {{ configVisualiserTexts.textRight && configVisualiserTexts.textRight.trim() !== '' ? configVisualiserTexts.textRight : 'Right' }}: <span id="text-right"></span> {{configUnit}}, {{ configVisualiserTexts.textTop && configVisualiserTexts.textTop.trim() !== '' ? configVisualiserTexts.textTop : 'Top' }}: <span id="text-top"></span> {{configUnit}}, {{ configVisualiserTexts.textBottom && configVisualiserTexts.textBottom.trim() !== '' ? configVisualiserTexts.textBottom : 'Bottom' }}: <span id="text-bottom"></span> {{configUnit}}
                                 </div>
                                 <div v-show="angleActive">
@@ -203,6 +189,12 @@
                                 </svg>
                                 <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasCenterH && configVisualiserTexts.textCanvasCenterH.trim() !== '' ? configVisualiserTexts.textCanvasCenterH : 'CenterH' }}</p>
                             </div>
+                        </div>
+
+                        <div v-if="selectedShape === 'cut-to-shape'" :class="`asowp-flex asowp-flex-col asowp-absolute asowp-top-[2%] asowp-left-2 asowp-bg-[#828282]/60 asowp-text-white asowp-text-[14px] asowp-p-2 asowp-px-3 asowp-rounded-md asowp-shadow-md`">
+                            <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}</span> 
+                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-width'">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="outline-width"> {{ currentSizeData.width }} </span> {{configUnit}}</span>
+                            <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-height'">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="outline-height"> {{ currentSizeData.height }} </span> {{configUnit}}</span>
                         </div>
                     </div>
     
@@ -331,6 +323,16 @@
                                     {{configVisualiserTexts.textImage}}
                                 </div>
                             </div>
+
+                            <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableQrCode && (sizees.length > 0 || customSizeActive) ) || materialType == 'advance' && advancedComponent.options.length > 0" @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-w-fit asowp-h-[90%] asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+                                </svg>
+                                <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
+                                    Qr Code
+                                </div>
+                            </div>
     
                             <div v-if="(materialType == 'simple' && additionalComponents.length > 0 )" v-for="(option, id) in additionalComponents" class="asowp-w-fit asowp-h-[90%] asowp-cardDiv" >
                                 <div v-if="option.options.length > 0" @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id  ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-full asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer`">
@@ -457,7 +459,7 @@
                         <div v-show="step == 'size'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-sizes-section">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textSize}}</p>    
                             <div class="asowp-h-full asowp-space-y-2 asowp-p-4 asowp-overflow-auto asowp-scrollBar">
-                                <div class="asowp-space-y-2">
+                                <div v-if="selectedShape != 'cut-to-shape'" class="asowp-space-y-2">
                                     <div @click="dropSizeToggle()" id="asowp-fontSelected-dropdown" :class="`asowp-cursor-pointer asowp-items-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}]  asowp-px-2 asowp-border border-gray-400 asowp-rounded-md asowp-flex asowp-justify-between asowp-text-base asowp-base-animation`">
                                         <div class="asowp-w-fit asowp-flex asowp-items-center asowp-justify-center asowp-p-2">
                                             <p v-show="currentSizeName != ''" :class="`lg:asowp-text-sm `" >{{ currentSizeName }}</p>
@@ -517,7 +519,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="customSizeActive" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
+                                <div v-if="customSizeActive && selectedShape != 'cut-to-shape'" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
                                     <p class="asowp-text-base asowp-font-semibold">{{configVisualiserTexts.customSize}}</p>
                                     <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-2 ">
                                         <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
@@ -534,14 +536,39 @@
                                         {{ configVisualiserTexts.customSizeButtonDone && configVisualiserTexts.customSizeButtonDone.trim() !== '' ? configVisualiserTexts.customSizeButtonDone : 'Done' }}
                                     </span>
                                 </div>
+                                <div v-if="selectedShape == 'cut-to-shape'" class="asowp-space-y-2 asowp-w-full asowp-pb-6">
+                                    <p class="asowp-text-base asowp-font-semibold">{{configVisualiserTexts.customSize}}</p>
+                                    <div class="asowp-flex asowp-justify-between asowp-items-center asowp-space-x-2 ">
+                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
+                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeWidth">{{ customSizes.width.label }} ({{configUnit}})</label>
+                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" disabled type="number" name="" id="outlineSizeWidth" style="border-radius: 6px">
+                                        </div>
+                                        <!-- <p class="asowp-px-2">x</p> -->
+                                        <div class="asowp-w-1/2 asowp-flex asowp-flex-col asowp-space-y-2">
+                                            <label :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.textColor}]`" for="sizeHeight">{{ customSizes.height.label }} ({{configUnit}})</label>
+                                            <input class="asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" disabled type="number" name="" id="outlineSizeHeight" style="border-radius: 6px">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
         
-                        <div v-show="step == 'shape'" class="asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-shapes">
+                        <div v-show="step == 'shape'" class="asowp-flex asowp-flex-col asowp-w-full asowp-h-full" id="asowp-shapes">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textShape}}</p>    
         
-                            <div class="asowp-w-full asowp-h-full asowp-overflow-auto asowp-scrollBar">
+                            <div class="asowp-w-full asowp-h-full lg:asowp-py-2 asowp-overflow-auto asowp-scrollBar">
                                 <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
+                                    <div class="asowp-w-full asowp-flex">
+                                        <input type="radio" id="cut-to-shape-0" name="asowp-shape" class="peer asowp-hidden" @change="selectShape('cut-to-shape', {additionalPrice: 0}, 0)">
+                                        <label for="cut-to-shape-0" :class="`${selectedShape == 'cut-to-shape' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="`asowp-bg-lime-500 asowp-w-16 asowp-h-16`">
+                                            </div>
+                                            <p>cut-to-shape</p>
+                                        </label>
+                                    </div>
+
                                     <div v-for="(shapee, id) in shapees">
                                         <div v-for="(shape, index) in allShapes" :key="shape.name" class="asowp-w-full asowp-flex">
                                             <div class="asowp-w-full asowp-flex" v-if="shapee.shapeId == index">
@@ -557,6 +584,58 @@
                                                     <p v-if="!shapee.additionalPrice > 0" class="asowp-text-[11px] asowp-leading-normal asowp-invisible">none</p>
                                                 </label>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="selectedShape == 'cut-to-shape'" :class="`asowp-border-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}]`" style="border-top-width: thin">
+                                <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
+                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('small')">
+                                        <div :class="`${currentOutineSize == 'small' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="``">
+                                                <svg viewBox="0 0 20 23" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M13.334 11.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C2.48 17.84 2 16.723 2 15.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 3.97 11.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C7.19 3.191 8.421 3 9.822 3c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
+                                                        <path d="M1 7.215c.304-1.431.804-2.588 1.501-3.469.697-.88 1.704-1.559 3.022-2.034C6.842 1.237 8.368 1 10.104 1c1.723 0 3.123.203 4.2.608 1.078.406 1.87.915 2.377 1.53.506.614.861 1.391 1.065 2.328.114.584.17 1.635.17 3.156v4.561c0 3.18.073 5.192.219 6.035A7.56 7.56 0 0 0 19 21.642h-3.573" stroke="currentColor" class="stroke"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <p>Small</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('medium')">
+                                        <div :class="`${currentOutineSize == 'medium' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="``">
+                                                <svg viewBox="0 0 22 25" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M14.334 12.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C3.48 18.84 3 17.723 3 16.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 4.97 12.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C8.19 4.191 9.421 4 10.822 4c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
+                                                        <path d="M1 8.025c.344-1.618.909-2.925 1.697-3.921.787-.995 1.926-1.762 3.416-2.299C7.603 1.268 9.328 1 11.291 1c1.947 0 3.53.229 4.748.687 1.217.459 2.112 1.035 2.686 1.73.572.694.973 1.572 1.203 2.631.129.66.193 1.848.193 3.567v5.156c0 3.595.082 5.869.247 6.821a8.55 8.55 0 0 0 .978 2.74h-4.039" stroke="currentColor" class="stroke"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <p>Medium</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="asowp-w-full asowp-flex" @click="changeOutlineSize('large')">
+                                        <div :class="`${currentOutineSize == 'large' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
+                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
+                                        >
+                                            <div :class="``">
+                                                <svg viewBox="0 0 25 28" xmlns="http://www.w3.org/2000/svg" :class="`asowp-w-6 asowp-h-6`">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M15.334 14.482c-1.002.409-2.505.756-4.509 1.043-1.135.163-1.938.347-2.408.551a2.402 2.402 0 0 0-1.089.898 2.359 2.359 0 0 0-.383 1.311c0 .736.278 1.35.836 1.84.557.492 1.372.737 2.446.737 1.063 0 2.009-.233 2.837-.698.828-.465 1.436-1.101 1.825-1.91.297-.623.445-1.543.445-2.76v-1.012zm.23 6.165c-1.022.87-2.007 1.483-2.952 1.84a8.544 8.544 0 0 1-3.044.538c-1.79 0-3.166-.438-4.126-1.312C4.48 20.84 4 19.723 4 18.363c0-.799.181-1.527.545-2.187A4.503 4.503 0 0 1 5.97 14.59c.588-.399 1.25-.7 1.986-.905.542-.143 1.36-.281 2.454-.414 2.23-.265 3.87-.583 4.923-.95.01-.38.015-.62.015-.722 0-1.124-.26-1.917-.781-2.377-.706-.624-1.754-.936-3.145-.936-1.299 0-2.257.228-2.876.683-.619.455-1.076 1.26-1.372 2.415l-2.7-.367c.246-1.156.65-2.09 1.212-2.8.562-.71 1.375-1.257 2.438-1.64C9.19 6.191 10.421 6 11.822 6c1.39 0 2.52.164 3.39.491.868.327 1.507.739 1.917 1.234.408.497.695 1.123.859 1.88.092.47.137 1.319.137 2.545v3.682c0 2.566.059 4.19.177 4.869.117.68.35 1.332.698 1.955h-2.883c-.287-.572-.47-1.242-.553-2.009z" fill="currentColor" class="fill"></path>
+                                                        <path d="M1 8.828c.383-1.803 1.013-3.26 1.891-4.37.877-1.108 2.146-1.963 3.807-2.56 1.66-.6 3.582-.898 5.77-.898 2.17 0 3.933.255 5.29.766 1.357.511 2.354 1.153 2.994 1.927.637.774 1.084 1.752 1.34 2.932.144.736.215 2.06.215 3.975v5.746c0 4.006.092 6.54.276 7.6A9.528 9.528 0 0 0 23.673 27h-4.501" stroke="currentColor" class="stroke"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <p>Large</p>
                                         </div>
                                     </div>
                                 </div>
@@ -697,7 +776,7 @@
                         <div v-show="step == 'border'" class="asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-borders-section">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textBorder}}</p>    
         
-                            <div class="asowp-w-full asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                            <div class="asowp-borders-div asowp-w-full asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
                                 <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
                                     <div v-if="activeFace === 'front-face'" v-for="(borderr, id) in borderrs.allBorders">
                                         <div v-for="(border, index) in allBorders" :key="border.name" class="asowp-w-full asowp-flex">
@@ -1222,6 +1301,21 @@
                                     </div>
                                 </div>
 
+                                <!-- <div v-show="IAGenerate" class="asowp-p-2 asowp-space-y-2">
+
+                                    <textarea name="" id="asowp-iaImage-prompt" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="prompt" style="border-radius: 6px"></textarea>
+
+                                    <span @click="generateImage()" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
+                                        <p class="asowp-text-center">{{ loading ? 'Génération...' : 'Générer' }}</p>
+                                    </span>
+
+                                    <div v-if="imageUrl" class="mt-4">
+                                        <img :src="imageUrl" alt="Image générée" class="w-full rounded shadow" />
+                                    </div>
+
+
+                                </div> -->
+
                                 <div v-if="clipartSection && !editImage">
                                     <div v-if="configImageSettingsClipart.active" class="asowp-space-y-3">
                                         <div class="asowp-flex asowp-flex-col asowp-space-y-2">
@@ -1305,37 +1399,23 @@
                                     <div v-if="configImageSettingsFilters.active && activeImageType !== 'svg'" class="asowp-space-y-2">
                                         <p class="asowp-font-medium">Filters</p>
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
-                                            <div class="asowp-flex asowp-space-x-6">
-                                                <span @click="selectImageFilter('Blur')" :class="`${setFilter.blur ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Blur</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Greyscale')" :class="`${setFilter.greyscale ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Greyscale</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Sepia')" :class="`${setFilter.sepia ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Sepia</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Emboss')" :class="`${setFilter.embross ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Emboss</p>
-                                                </span>
-                                                <span @click="selectImageFilter('Sharpen')" :class="`${setFilter.sharpen ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                                                    </svg>
-                                                    <p class="asowp-text-xs asowp-font-semibold">Sharpen</p>
-                                                </span>
+                                            <div class="asowp-flex asowp-flex-wrap asowp-gap-2">
+                                                <div v-for="filter in validFilter">
+                                                    <span @click="selectImageFilter(filter.name)" :class="`${setFilter[filter.value] ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-4 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-base-animation asowp-cursor-pointer`">
+                                                        <div class="asowp-p-0.5 asowp-rounded-md" :class="`${setFilter[filter.value] ? `asowp-ring-1 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-ring-[${configColors.optionsSideBar.options.modals.option.textColor}]`}`">
+                                                            <img v-if="filter.name == 'Blur'" src="../../../../../assets/images/filters/im_blueify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Greyscale'" src="../../../../../assets/images/filters/im_greyscale_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Sepia'" src="../../../../../assets/images/filters/im_sepia_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Embross'" src="../../../../../assets/images/filters/im_emboss_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Sharpen'" src="../../../../../assets/images/filters/im_sharpen_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Greenify'" src="../../../../../assets/images/filters/im_greenify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Pinkify'" src="../../../../../assets/images/filters/im_pinkify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Orangeify'" src="../../../../../assets/images/filters/im_orangeify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                            <img v-if="filter.name == 'Blueify'" src="../../../../../assets/images/filters/im_blueify_filter.png" class="asowp-flex asowp-h-20 asowp-w-20 asowp-rounded-md">
+                                                        </div>
+                                                        <p class="asowp-text-xs asowp-font-semibold">{{filter.name}}</p>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1343,6 +1423,39 @@
                                         <!-- <p class="asowp-font-medium">Other custom</p> -->
                                         <div class="asowp-w-full asowp-flex asowp-items-center">
                                             <div class="asowp-flex asowp-flex-wrap asowp-gap-3">
+                                                <span @click="removeBackground()" :class="`${activeImgWithBackground? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : ``} asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
+                                                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                                                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
+                                                            <path d="M160 2560 l0 -1840 2400 0 2400 0 0 1840 0 1840 -2400 0 -2400 0 0 -1840z m4640 458 l0 -1223 -480 480 -480 480 -460 -460 -460 -460 -660 660 -660 660 -640 -640 -640 -640 0 1183 0 1182 2240 0 2240 0 0 -1222z"/>
+                                                            <path d="M480 3920 l0 -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0
+                                                            -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0 -160 113 0 113 0 47
+                                                            48 47 48 0 112 0 112 113 0 113 0 47 48 47 48 0 112 0 112 113 0 113 0 47 48
+                                                            47 48 0 112 0 112 160 0 160 0 0 -113 0 -113 48 -47 48 -47 112 0 112 0 0
+                                                            -113 0 -113 48 -47 48 -47 112 0 112 0 0 -113 0 -113 48 -47 48 -47 112 0 112
+                                                            0 0 -113 0 -113 48 -47 48 -48 110 3 109 3 3 157 3 157 157 3 157 3 3 157 3
+                                                            157 157 3 157 3 3 158 3 157 159 0 159 0 3 -157 3 -158 157 -3 157 -3 3 -157
+                                                            3 -157 158 -3 157 -3 0 161 0 160 -160 0 -160 0 0 160 0 160 160 0 160 0 0
+                                                            160 0 160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 160 0 160 -160 0 -160 0 0
+                                                            -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0
+                                                            -160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160
+                                                            -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160
+                                                            0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0
+                                                            0 160 0 160 -160 0 -160 0 0 -160z m960 -320 l0 -160 -160 0 -160 0 0 -160 0
+                                                            -160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 160 0 160 160 0 160 0 0 -160z
+                                                            m640 0 l0 -160 160 0 160 0 0 160 0 160 160 0 160 0 0 -160 0 -160 160 0 160
+                                                            0 0 160 0 160 160 0 160 0 0 -160 0 -160 160 0 160 0 0 160 0 160 160 0 160 0
+                                                            0 -160 0 -160 160 0 160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0
+                                                            -160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 -160 0
+                                                            -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0
+                                                            160 0 160 -160 0 -160 0 0 160 0 160 160 0 160 0 0 -160z"/>
+                                                            <path d="M2400 3280 l0 -160 160 0 160 0 0 -160 0 -160 160 0 160 0 0 160 0 160 160 0 160 0 0 160 0 160 -160 0 -160 0 0 -160 0 -160 -160 0 -160 0 0 160 0 160 -160 0 -160 0 0 -160z"/>
+                                                        </g>
+                                                    </svg>
+                                                    <p class="asowp-text-xs asowp-font-semibold">
+                                                        Remove Bg
+                                                    </p>
+                                                </span>
+
                                                 <span @click="cloneObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
                                                     <svg viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
                                                         <g clip-path="url(#clip0_65_739)">
@@ -1417,6 +1530,107 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div v-show="step == 'qr-code'" class="asowp-relative asowp-flex asowp-flex-col lg:asowp-space-y-3 asowp-w-full asowp-h-full" id="asowp-images-section">
+                            <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">Qr Code</p>    
+                            <!-- <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textImage}}</p>     -->
+
+                            <div :class="`asowp-bg-[${configColors.backgroundColorHeader}]/10 asowp-flex asowp-flex-col asowp-space-y-3 asowp-full-center asowp-p-4 asowp-m-1`">
+                                <span v-show="!addQRActive && !selectQRCode" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
+                                    <span @click="()=> {showClipartsSection(false); addQRActive = true}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+                                        </svg>
+                                        <p class="asowp-text-center">Add QR code</p>
+                                    </span>
+                                </span>
+
+                                <span v-show="selectQRCode || addQRActive" :class="`asowp-w-3/4 asowp-text-[${configColors.backgroundButton}] asowp-border asowp-border-solid asowp-border-[${configColors.backgroundButton}] asowp-text-md asowp-p-2 asowp-px-4 asowp-rounded-full asowp-cursor-pointer`">
+                                    <span @click="()=> {selectQRCode = false, addQRActive = false}" :class="`asowp-flex asowp-full-center asowp-space-x-3`">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="asowp-w-5 asowp-h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                        </svg>
+                                        <p class="asowp-text-center">Edit QR Code</p>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="asowp-h-full asowp-space-y-2 asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+
+                                <div v-show="!selectQRCode && !addQRActive">
+                                    <p class="asowp-font-medium" v-show="usedQRCodes.length > 0">Codes added</p>
+                                    <div class="asowp-p-2 asowp-space-y-2">
+                                        <div v-for="(codeObject, index) in usedQRCodes">
+                                            <div :class="`${activeFace == codeObject.object.canvasName ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed`} asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-border asowp-border-solid asowp-border-[${configColors.optionsSideBar.options.modals.option.textColor}]/20 asowp-p-2 asowp-base-animation asowp-rounded-sm`" @click="editQRCode(codeObject.object, false)">
+                                                <!-- <p class="asowp-text-sm">{{configVisualiserTexts.textOptionText && configVisualiserTexts.textOptionText.trim() != '' ? configVisualiserTexts.textOptionText : 'Text'}} {{ index }}</p> -->
+                                                <p class="asowp-text-sm">Code {{ index }}</p>
+                                                <p class="asowp-text-xs">{{codeObject.text}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-show="addQRActive" class="asowp-p-2 asowp-space-y-2">
+                                    <!-- <div class="asowp-flex asowp-space-x-2">
+                                        <div @click="()=>{qrCodeType = 'text'}" :class="`${qrCodeType == 'text' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Text</div>
+                                        <div @click="()=>{qrCodeType = 'image'}" :class="`${qrCodeType == 'image' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Image</div>
+                                    </div> -->
+
+                                    <div v-if="qrCodeType == 'text'">
+                                        <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
+                                        <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm"  @input="getQRCodeData" style="border-radius: 6px"></textarea>
+                                    </div>
+
+                                    <span @click="addQRCode" :class="`asowp-w-fit asowp-flex asowp-full-center asowp-space-x-3 asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-border asowp-text-white asowp-text-md asowp-p-1 asowp-px-4 asowp-rounded-full asowp-cursor-pointer asowp-base-animation`">
+                                        <p class="asowp-text-center">Add</p>
+                                    </span>
+
+
+                                </div>
+
+                                <div v-show="selectQRCode" class="asowp-p-2 asowp-space-y-2">
+                                    <div>
+                                        <!-- <textarea name="" id="asowp-QRCode-text-editor" :disabled="route.name !== 'template-maker' && selectedText.object.editable === false" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="selectedText.value" @input="changeTextValue" style="border-radius: 6px"></textarea> -->
+                                        <textarea name="qrCode-editor" id="asowp-QRCode-editor" class="asowp-h-24 asowp-w-full asowp-border asowp-border-zinc-600 asowp-p-1 asowp-rounded-sm" v-model="activeQrCodeData"  @input="changeQRCodeValue" style="border-radius: 6px"></textarea>
+                                    </div>
+
+                                    <div>
+                                        <p class="asowp-font-medium">{{ configVisualiserTexts.textColor && configVisualiserTexts.textColor.trim() !== '' ? configVisualiserTexts.textColor : 'Color' }}</p>
+                                        
+                                        <div class="asowp-flex asowp-space-x-2">
+                                            <div @click="()=>{activeQrCodeColorPart = 'dark'}" :class="`${activeQrCodeColorPart == 'dark' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Dark part</div>
+                                            <div @click="()=>{activeQrCodeColorPart = 'light'}" :class="`${activeQrCodeColorPart == 'light' ? `asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}]` : 'asowp-bg-transparent'} hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}]  asowp-text-sm asowp-p-1 asowp-px-2 asowp-rounded asowp-cursor-pointer asowp-base-animation`">Light part</div>
+                                        </div>
+                                        <div class="asowp-w-full asowp-flex asowp-flex-wrap asowp-gap-2 asowp-items-center asowp-p-1 asowp-border">
+                                            <div v-for="(color, index) in configTextSettings.colors" class="">
+                                                <div @click="changeQRCodeColor(color.codeHex)" :class="`${(activeQrCodeColorPart === 'dark' && activeQrCodeColor.dark === color.codeHex) || (activeQrCodeColorPart === 'light' && activeQrCodeColor.light === color.codeHex) ? `asowp-ring-2 asowp-ring-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `` } asowp-w-8 asowp-h-8 asowp-bg-[${color.codeHex}] asowp-rounded-sm asowp-border asowp-cursor-pointer`"></div>
+                                            </div>
+        
+                                            <div :class="`asowp-relative`">
+                                                <input id="asowp-set-QRCodeColor" type="color" class="asowp-inputColor-hide asowp-absolute asowp-top-[50%]" @input="changeQRCodeColor($event.target.value)" />
+                                                <label for="asowp-set-QRCodeColor" v-if="configTextSettings.enableCustomColor" :class="`asowp-w-8 asowp-h-8 asowp-flex asowp-full-center asowp-overflow-hidden asowp-cursor-pointer`">
+                                                    <svg v-if="configTextSettings.colorsPrevImg == ''" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" class="asowp-w-full asowp-h-full">
+                                                        <g fill="none" fill-rule="evenodd">
+                                                            <path d="M22.015.061H.95a.866.866 0 0 0-.614.256l21.68 21.68V.061z" fill="#CE1128"></path>
+                                                            <path d="M.335.317A.867.867 0 0 0 .08.93v21.066h21.935L.335.317z" fill="#ED2E8A"></path>
+                                                            <path d="M43.696.317a.866.866 0 0 0-.614-.256H22.015v21.936L43.695.317z" fill="#F99410"></path>
+                                                            <path d="M43.696 43.678a.866.866 0 0 0 .255-.614V21.997H22.015l21.68 21.68z" fill="#20B718"></path>
+                                                            <path d="M43.696.317l-21.68 21.68H43.95V.931a.867.867 0 0 0-.255-.614" fill="#FCEA10"></path>
+                                                            <path d="M22.015 43.933h21.067a.87.87 0 0 0 .614-.255l-21.68-21.68v21.935z" fill="#2CB1E5"></path>
+                                                            <path d="M.08 21.997v21.067c0 .239.097.456.255.614l21.68-21.68H.08z" fill="#662483"></path>
+                                                            <path d="M.335 43.678a.867.867 0 0 0 .614.255h21.066V21.997L.335 43.677z" fill="#126EB2"></path>
+                                                        </g>
+                                                    </svg>
+                                                    <img v-if="configTextSettings.colorsPrevImg != ''" :src="configTextSettings.colorsPrevImg" class="asowp-w-full asowp-h-full">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
         
                         <div v-show="step == 'add-components'" class="asowp-ralative asowp-flex asowp-flex-col lg:asowp-space-y-1 asowp-w-full asowp-h-full" id="asowp-fixings-section">
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{addComponentValue.title}}</p>    
@@ -1424,7 +1638,7 @@
                             <div v-if="materialType == 'simple'" class="asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
                                 <div v-for="(option, index) in addComponentValue.options">
                                     <div class="asowp-space-y-3 asowp-w-full asowp-h-full">
-                                        <input type="radio" :id="'asowp-addOptions' + addComponentValue.title + option.title + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option.additionalPrice)">
+                                        <input type="radio" :id="'asowp-addOptions' + addComponentValue.title + option.title + index" name="asowp-fixings" class=" peer asowp-hidden" @change="selectAddComponent(addComponentValue.title, option.title, option)">
                                         <label :for="'asowp-addOptions' + addComponentValue.title + option.title + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
                                             <div :class="`${option.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : `` } asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
                                                 <img v-if="option.icon != ''" :src="option.icon" class="asowp-w-auto asowp-h-full" />
@@ -1977,9 +2191,9 @@
                     <p class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
-                            <span class="lowercase first-letter:uppercase">{{activeFace1Border}}</span>
+                            <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace1Border : "none"}}</span>
 
-                            <div v-if="activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && (signTextColor1.active && !colorForBorder1)" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName1}}</span>
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.codeHex}] asowp-flex`"></span>
@@ -1987,7 +2201,7 @@
                                 </span>
                             </div>
 
-                            <div v-if="activeFace1Border !== 'none' && colorForBorder1" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace1Border !== 'none' && colorForBorder1" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName1}}</span>
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span v-if="!configDoublePart.active" :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.codeHex}] asowp-flex`"></span>
@@ -1998,16 +2212,16 @@
 
                         <div v-if="configDoublePart.active" class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
-                            <span class="lowercase first-letter:uppercase">{{activeFace2Border}}</span>
+                            <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace2Border : "none"}}</span>
                         
-                            <div v-if="activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && (signTextColor2.active && !colorForBorder2)" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{colorTextColorName2}}</span>    
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face2.codeHex}] asowp-flex`"></span>
                                 </span>
                             </div>
 
-                            <div v-if="activeFace2Border !== 'none' && colorForBorder2" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                            <div v-if="selectedShape != 'cut-to-shape' && activeFace2Border !== 'none' && colorForBorder2" class="asowp-flex asowp-space-x-1 asowp-full-center">
                                 <span class="lowercase first-letter:uppercase">color: {{borderColorName2}}</span>
                                 <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
                                     <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-p-4 asowp-bg-[${configData.sign.border.value.face2.codeHex}] asowp-flex`"></span>
@@ -2154,6 +2368,57 @@
                     </div>
                 </div>
 
+                <div v-if="(!configDoublePart.active && configData.qrCodes.value.length > 0) || (configDoublePart.active && (configData.qrCodes.value.face1.length > 0 || configData.qrCodes.value.face2.length > 0))" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
+                    <div :class="`asowp-w-1/3`">
+                        <!-- <p v-if="configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textImage}}</p> -->
+                        <!-- <p v-if="!configVisualiserTexts.textImage" class="asowp-text-[16px] text-black asowp-font-semibold">Text</p> -->
+                        <p class="asowp-text-[16px] text-black asowp-font-semibold">Qr Code</p>
+                    </div>
+                    
+                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                        <div v-if="!configDoublePart.active && configData.qrCodes.value.length > 0">
+                            <div v-for="(code, id) in configData.qrCodes.value" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                                <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                                    <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                </span>
+                                <span>
+                                    <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div v-if="configDoublePart.active">
+                            <div v-if="configData.qrCodes.value.face1.length > 0">
+                                <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
+                                <div v-for="(code, id) in configData.qrCodes.value.face1" class="asowp-flex asowp-space-x-1 asowp-full-center">                              
+                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                    </span>
+                                    <span>
+                                        <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}}</p>
+                                        <!-- <p>top: {{image.top}}</p>
+                                        <p>bottom: {{image.bottom}}</p>
+                                        <p>left: {{image.left}}</p>
+                                        <p>right: {{image.right}}</p> -->
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div v-if="configDoublePart.active && configData.qrCodes.value.face2.length > 0">
+                                <span class="asowp-font-medium">{{configDoublePart.part2}}: </span>
+                                <div v-for="(code, id) in configData.qrCodes.value.face2" class="asowp-flex asowp-space-x-1 asowp-full-center">
+                                    <span :class="`asowp-h-fit asowp-w-fit asowp-p-[1px] asowp-border asowp-border-[${configColors.backgroundColorHeader}]`">
+                                        <img :src="code.url" :class="`asowp-h-[40px] asowp-w-[40px] asowp-flex`" />
+                                    </span>
+                                    <span>
+                                        <p>{{code.values.width.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit}} x {{code.values.height.value}} {{configSettings.customizerSign.customizerOptions.measurementUnit.value}}</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div v-if="customAdditionalValues != [] " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`" v-for="(option, index) in customAdditionalValues">
                     <p :class="`asowp-text-[16px] asowp-font-semibold`">{{option.label}}</p>
                     <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{ option.value }}</p>
@@ -2206,7 +2471,11 @@
             </svg>
         </div> -->
 
-
+        <div v-if="isLoading" id="asowp-loader" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/30 asowp-backdrop-blur-md asowp-z-10">
+            <span :class="`asowp-flex asowp-text-cyan-600`">
+                <svg class="asowp-w-[200px] aswop-h-[200px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+            </span>
+        </div>
     </div>
 </template>
 
@@ -2214,6 +2483,8 @@
     import { ref, onMounted, defineProps, onBeforeUnmount } from 'vue';
     import {getSignInfos, handleCheckTemplate, handleReadyToSaveState, 
         handleGetCanvas, handleGetCurrentUnit,
+        handleGetMeasurementVibility,
+        handleMiseAEchelle,
         handleGetDefaultText,
         handleGetTextType,
         handleUndo,
@@ -2281,6 +2552,13 @@
         handleChangeAddedSvgColor,
         handleSetShadow,
         handleConvertImageToDataURI,
+        handleRemoveBgImage,
+        handleAddQRCode,
+        handleEditQRCode,
+        handleChangeQRCodeColor,
+        handleChangeOutlineSize,
+        handleGenSvgDesignImg,
+        showLoader,
     } from '@/frontend/utils/asowp-editor-script.js';
     import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
@@ -2290,7 +2568,7 @@
     
     import opentype from 'opentype.js'
     import { load } from 'opentype.js'
-import { forAliasRE } from '@vue/compiler-core';
+    import { forAliasRE } from '@vue/compiler-core';
 
     const route = useRoute();
     const template_config_id = route.params.configId;
@@ -2368,6 +2646,19 @@ import { forAliasRE } from '@vue/compiler-core';
             canvas.getElement().style.opacity = "1"
         }
     }
+
+    let validFilter = ref([
+        {name: "Blur", value: "blur", image: ""},
+        {name: "Greyscale", value: "greyscale", image: "../../../../../assets/images/filters/im_greyscale_filter.png"},
+        {name: "Sepia", value: "sepia", image: "../../../../../assets/images/filters/im_sepia_filter.png"},
+        {name: "Embross", value: "embross", image: "../../../../../assets/images/filters/im_emboss_filter.png"},
+        {name: "Sharpen", value: "sharpen", image: "../../../../../assets/images/filters/im_sharpen_filter.png"},
+        {name: "Greenify", value: "greenify", image: "../../../../../assets/images/filters/im_greenify_filter.png"},
+        {name: "Pinkify", value: "pinkify", image: "../../../../../assets/images/filters/im_pinkify_filter.png"},
+        {name: "Orangeify", value: "orangeify", image: "../../../../../assets/images/filters/im_orangeify_filter.png"},
+        {name: "Blueify", value: "blueify", image: "../../../../../assets/images/filters/im_blueify_filter.png"},
+    ])
+    var isLoading = ref(false)
 
     var selectText = ref(false);
     var editImage = ref(false);
@@ -2462,6 +2753,12 @@ import { forAliasRE } from '@vue/compiler-core';
                 }
             break;
         
+            case "qr-code":
+                // if(currentMaterialTextImages.value.enableImage){
+                // }
+                step.value = option;
+                showOption.value = true;
+            break;
             default:
                 break;
         }
@@ -2592,7 +2889,7 @@ import { forAliasRE } from '@vue/compiler-core';
         templateDatas.value = data
         templateStatut.value = statut ? statut : "none"
 
-        // console.log(data)
+        console.log(data)
         firstSetLoad.value = false
         handleReadyToSaveState(false);
 
@@ -2840,10 +3137,11 @@ import { forAliasRE } from '@vue/compiler-core';
 
         //recupération des texts du template
         addedTexts.value = loadedTemplate.texts
-
         //recupération des images du template
         usedImages.value = loadedTemplate.images
-        // console.log(loadedTemplate.images, "loadedTemplate.images")
+        //recupération des qrCodes du template
+        usedQRCodes.value = loadedTemplate.qrCodes
+        // console.log(loadedTemplate, "loadedTemplate.images")
 
         textsPrices.value = handleSetPrice()
         getOptionPrice()
@@ -2892,6 +3190,8 @@ import { forAliasRE } from '@vue/compiler-core';
                     }
                     haveDefault = true
                     getSignInfos(sizeData)
+                    currentSizeData.value = sizeData
+                    currentSizeSetting.value.value = settings
                     currentSizeId.value = index
                     break;
                 }
@@ -2912,6 +3212,8 @@ import { forAliasRE } from '@vue/compiler-core';
                     startPriceAtChar: sizees.value[0].startPriceAtChar,
                 }
                 getSignInfos(sizeData)
+                currentSizeData.value = sizeData
+                currentSizeSetting.value.value = settings
                 currentSizeId.value = 0
             }
         }else{
@@ -3102,9 +3404,21 @@ import { forAliasRE } from '@vue/compiler-core';
                     selectedShape.value = matchingShapes[index].shape.value
                     currentShapeId.value = index
                     handleGetShape(matchingShapes[index].shape.value)
+                    
+                    let shapePrice = 0
+                    currentShapePriceSetting.value = {
+                        value: matchingShapes[index].shapee.additionalPrice,
+                        surface: matchingShapes[index].shapee.surface,
+                        enablePricingBySurface: matchingShapes[index].shapee.enablePricingBySurface,
+                    }
+                    if(matchingShapes[index].shapee.enablePricingBySurface && matchingShapes[index].shapee.enablePricingBySurface == true){
+                        shapePrice = calcPriceByPrice(matchingShapes[index].shapee.surface, matchingShapes[index].shapee.additionalPrice)
+                    }else{
+                        shapePrice = matchingShapes[index].shapee.additionalPrice
+                    }
                     var shapePriceObject = {
                         name: "shape",
-                        price: matchingShapes[index].shapee.additionalPrice
+                        price: shapePrice
                     }
                     getOptionPrice(shapePriceObject)
                     haveDefault = true
@@ -3117,9 +3431,21 @@ import { forAliasRE } from '@vue/compiler-core';
                 selectedShape.value = matchingShapes[0].shape.value
                 currentShapeId.value = 0
                 handleGetShape(matchingShapes[0].shape.value)
+
+                let shapePrice = 0
+                currentShapePriceSetting.value = {
+                    value: matchingShapes[0].shapee.additionalPrice,
+                    surface: matchingShapes[0].shapee.surface,
+                    enablePricingBySurface: matchingShapes[0].shapee.enablePricingBySurface,
+                }
+                if(matchingShapes[0].shapee.enablePricingBySurface && matchingShapes[0].shapee.enablePricingBySurface == true){
+                    shapePrice = calcPriceByPrice(matchingShapes[0].shapee.surface, matchingShapes[0].shapee.additionalPrice)
+                }else{
+                    shapePrice = matchingShapes[0].shapee.additionalPrice
+                }
                 var shapePriceObject = {
                     name: "shape",
-                    price: matchingShapes[0].shapee.additionalPrice
+                    price: shapePrice
                 }
                 getOptionPrice(shapePriceObject)
             }
@@ -3177,6 +3503,8 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }else{
             selectFixingMethode('none')
+            fixingExcludeSizes.value = []
+            fixingExcludeShapes.value = []
         }
 
         var stopSize = false
@@ -3240,14 +3568,14 @@ import { forAliasRE } from '@vue/compiler-core';
                 if(addOption.options.length > 0){
                     while (index < addOption.options.length && !haveDefault) {
                         if(addOption.options[index].isDefault){
-                            selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index].additionalPrice)
+                            selectAddComponent(addOption.title, addOption.options[index].title, addOption.options[index])
                             haveDefault = true
                             break;
                         }
                         index++;
                     }
                     if(!haveDefault){
-                        selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0].additionalPrice)
+                        selectAddComponent(addOption.title, addOption.options[0].title, addOption.options[0])
                     }
                 }
             })
@@ -3339,6 +3667,7 @@ import { forAliasRE } from '@vue/compiler-core';
             previousStep()
             addedTexts.value = options.texts
             usedImages.value = options.images
+            usedQRCodes.value = options.qrCodes
 
         }
         
@@ -3348,6 +3677,7 @@ import { forAliasRE } from '@vue/compiler-core';
         nextStep()
         addedTexts.value = options.texts
         usedImages.value = options.images
+        usedQRCodes.value = options.qrCodes
     }
     var resetAllBool = ref(false)
     function confirmResetAll(value){
@@ -3445,6 +3775,7 @@ import { forAliasRE } from '@vue/compiler-core';
             },
             texts: [...addedTexts.value],
             images: [...usedImages.value],
+            qrCodes: [...usedQRCodes.value],
             price: finalPrices.value,
         }
         // console.log(usedImages.value, "usedImages")
@@ -3780,7 +4111,57 @@ import { forAliasRE } from '@vue/compiler-core';
         flipped.value = !flipped.value
     }
 
-    function checkScreenSize(width, height){
+    function centerAndZoomAfterResize(canva, targetZoom, newWidth, newHeight) {
+        // console.log(targetZoom, "zoom")
+        // 1. Désactiver temporairement le rendu
+        canva.renderOnAddRemove = false;
+        
+        // 2. Trouver l'objet de référence
+        const safeObject = handleGetObjectByName("safeObject", canva);
+        if (!safeObject) return;
+
+        canva.setWidth(newWidth);
+        canva.setHeight(newHeight);
+
+        // 3. Calculer le décalage nécessaire
+        const objectCenter = safeObject.getCenterPoint();
+        const canvasCenter = {
+            x: newWidth / 2,
+            y: newHeight / 2
+        };
+        const offset = {
+            x: canvasCenter.x - objectCenter.x,
+            y: canvasCenter.y - objectCenter.y
+        };
+
+        // 4. Réinitialiser le viewport (essential pour éviter l'accumulation d'erreurs)
+        canva.setViewportTransform([1, 0, 0, 1, 0, 0]);
+        
+        // 5. Appliquer le zoom au centre exact
+        canva.zoomToPoint( { x: canvasCenter.x, y: canvasCenter.y }, targetZoom );
+
+        // 6. Déplacer TOUS les objets simultanément
+        canva.getObjects().forEach(obj => {
+            obj.set({
+                left: obj.left + offset.x,
+                top: obj.top + offset.y
+            }).setCoords();
+        });
+
+        // 7. Réactiver le rendu et forcer le refresh
+        canva.renderOnAddRemove = true;
+        canva.calcOffset();
+        canva.renderAll();
+
+        // Vérification visuelle (debug)
+        const finalPos = safeObject.getCenterPoint();
+        // console.log("Centrage réussi:", 
+        //     Math.round(finalPos.x) === Math.round(canvasCenter.x) && 
+        //     Math.round(finalPos.y) === Math.round(canvasCenter.y),
+        //     `Objet: (${Math.round(finalPos.x)},${Math.round(finalPos.y)}) | Canvas: (${Math.round(canvasCenter.x)},${Math.round(canvasCenter.y)})`
+        // );
+    }
+    function checkScreenSize(width, height, fillFactor){
         handleReadyToSaveState(false);
 
         var canvasContainer = document.getElementById("asowp-canvas-containers")
@@ -3819,18 +4200,16 @@ import { forAliasRE } from '@vue/compiler-core';
             // console.log("==2==", scaleRatio, "==2==")
         }
 
-        canvas.zoomToPoint({x: canvas.getWidth() /2, y: canvas.getHeight() /2}, scaleRatio)
-        canvasBack.zoomToPoint({x: canvas.width/2, y: canvas.height/2}, scaleRatio)
+        if(fillFactor && fillFactor != 0){
+            scaleRatio = scaleRatio * fillFactor
+            // let newScaleRatio = scaleRatio * fillFactor
+            console.log(scaleRatio, "zoom before render", fillFactor)
+        }
+
+        centerAndZoomAfterResize(canvas, scaleRatio, canvasWidth, canvasHeight)
+        centerAndZoomAfterResize(canvasBack, scaleRatio, canvasWidth, canvasHeight)
 
         
-        canvas.setWidth(canvasWidth);
-        canvas.setHeight(canvasHeight);
-        
-        canvasBack.setWidth(canvasWidth);
-        canvasBack.setHeight(canvasHeight);
-        
-        centerSign(canvas)
-        centerSign(canvasBack)
 
         currentSizeValues.value = handleGetSignPosition()
         handleReadyToSaveState(true);
@@ -3937,6 +4316,8 @@ import { forAliasRE } from '@vue/compiler-core';
             infoDiv.classList.remove("asowp-hidden");
 
             var boundingRect = obj.getBoundingRect(false);
+            // console.log(obj, "555", boundingRect)
+            
             infoDiv.style.left =  boundingRect.left + boundingRect.width + 20 + 'px';
             infoDiv.style.top = boundingRect.top + (boundingRect.height) + 20 + 'px';
         } else {
@@ -4215,6 +4596,10 @@ import { forAliasRE } from '@vue/compiler-core';
                     showOptions('image')
                     editAddedImage(currentObject)
                 }
+                if(currentObject.name === 'asowp-QRCode'){
+                    showOptions('qr-code')
+                    editQRCode(currentObject)
+                }
             }
         }
     }
@@ -4235,6 +4620,11 @@ import { forAliasRE } from '@vue/compiler-core';
                         price: 0
                     }
                     getOptionPrice(priceObject)
+                }
+
+                if(object.name == 'asowp-QRCode'){
+                    usedQRCodes.value = handleDeleteObject(object)
+                    selectQRCode.value = false
                 }
                 if(object.name == 'asowp-SignImage'){
                     usedImages.value = handleDeleteObject(object)
@@ -4265,7 +4655,7 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
     }
-    function cloneObject(){
+    async function cloneObject(){
         if(activeCanvas.getActiveObject() !== undefined){
             if(activeCanvas.getActiveObject() !== null){
                 newImagePriceId.value = newImagePriceId.value + 1
@@ -4298,6 +4688,12 @@ import { forAliasRE } from '@vue/compiler-core';
         
                     usedImages.value = handleCloneObject(object, newImagePriceId.value)
                     // console.log(usedImages.value)
+                }
+
+                if(object.name === 'asowp-QRCode'){
+                    let qrObject = await handleAddQRCode(object.fromData, object)
+                    usedQRCodes.value = qrObject.codes
+                    saveStep('clonage du code Qr');
                 }
                 var priceObject = {
                     name: 'none',
@@ -4499,6 +4895,26 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
 
+        if(currentShapePriceSetting.value.enablePricingBySurface && currentShapePriceSetting.value.enablePricingBySurface == true){
+            let shapePrice = calcPriceByPrice(currentShapePriceSetting.value.surface, currentShapePriceSetting.value.value)
+            let shapePriceObject = {
+                name: "shape",
+                price: shapePrice
+            }
+            getOptionPrice(shapePriceObject)
+        }
+        addComponentSelected.value.forEach(component =>{
+            if(component.data.enablePricingBySurface && component.data.enablePricingBySurface == true){
+                let addOptionPrice = calcPriceByPrice(component.data.surface, component.data.additionalPrice)
+                var addOptionPriceObject = {
+                    type: 'add-component',
+                    name: component.option,
+                    price: addOptionPrice
+                }
+                getOptionPrice(addOptionPriceObject)
+            }
+        })
+
         textsPrices.value = handleSetPrice()
         var priceObject = {
             name: 'none',
@@ -4601,8 +5017,10 @@ import { forAliasRE } from '@vue/compiler-core';
     var shapees = ref([])
     var selectedShape = ref('square')
     var currentShapeId = ref(0)
-    function selectShape(shape, setting, shapeId){
+    var currentShapePriceSetting = ref({})
+    async function selectShape(shape, setting, shapeId){
         // currentShapeId.value = setting.shapeId
+        selectedShape.value = shape
         currentShapeId.value = shapeId
         if(fixingExcludeShapes.value.includes(shapeId)){
             // if(activeFixingId === matchingFixings.value.length-1){
@@ -4617,6 +5035,14 @@ import { forAliasRE } from '@vue/compiler-core';
             getOptionPrice(fixingPriceObject)
         }
         if(activeFace.value == 'front-face'){
+            const container = document.getElementById('asowp-borders-section');
+            const target = container.querySelector('.asowp-borders-div'); // ou '.target-div' si elle a une classe spécifique
+            if(selectedShape.value == 'cut-to-shape'){
+                target.classList.add('asowp-disabled-div');
+            }
+            else{
+                target.classList.remove('asowp-disabled-div');
+            }
             if(border1ExcludeShapes.value.includes(shapeId)){
                 // if(face1BorderId.value === matchingBorders.value.length-1){
                 //     selectBorder(matchingBorders.value[0].border.value, matchingBorders.value[0].borderr.settings, matchingBorders.value[0].borderr.additionalPrice, matchingBorders.value[0].borderr.excludeShapes, matchingBorders.value[0].borderr.excludeSizes, 0)
@@ -4646,10 +5072,38 @@ import { forAliasRE } from '@vue/compiler-core';
             }
         }
 
-        handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, currentSizeValues.value.top, currentSizeValues.value.left)
-        selectedShape.value = shape
+        let signObject = handleGetObjectByName("safeObject")
+        if(signObject.type == "group" || signObject.type == "path"){
+            currentSizeValues.value = handleMiseAEchelle(sizees.value[0].width, sizees.value[0].height)
+            console.log(currentSizeValues.value, "999999999")
+            handleGetShape(shape)
+            let sizee = sizees.value[0]
 
-        var shapePrice = setting.additionalPrice
+            handleChangeSize(sizee.width, sizee.height, sizee.name, sizee.maxTextChar)
+
+            currentSizeName.value = sizee.label
+            currentSizeData.value = {label: sizee.label, width:sizee.width, height:sizee.height}
+        }else{
+            currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height)
+            // currentSizeData.value = {
+            //     name: "",
+            //     width: realSize.width,
+            //     height: realSize.height,
+            // }
+        }
+
+
+        let shapePrice = 0
+        currentShapePriceSetting.value = {
+            value: setting.additionalPrice,
+            surface: setting.surface,
+            enablePricingBySurface: setting.enablePricingBySurface,
+        }
+        if(setting.enablePricingBySurface && setting.enablePricingBySurface == true){
+            shapePrice = calcPriceByPrice(setting.surface, setting.additionalPrice)
+        }else{
+            shapePrice = setting.additionalPrice
+        }
         var shapePriceObject = {
             name: "shape",
             price: shapePrice
@@ -4661,6 +5115,21 @@ import { forAliasRE } from '@vue/compiler-core';
         }
 
         simulateCanvasClick()
+    }
+    let currentOutineSize = ref("medium")
+    async function changeOutlineSize(size){
+        currentOutineSize.value = size
+        await handleChangeOutlineSize(size)
+
+        if(firstSetLoad.value){
+            saveStep('select shape')
+        }
+    }
+    function calcPriceByPrice(surface, price){
+        let sizeSurface = currentSizeData.value.width * currentSizeData.value.height
+        let matchPrice = (sizeSurface / surface) * price
+
+        return matchPrice
     }
 
     var firstBorderCheck = ref(true)
@@ -5197,7 +5666,7 @@ import { forAliasRE } from '@vue/compiler-core';
     var additionalComponents = ref({})
     var selectedAddComponent = ref("")
     var addComponentSelected = ref([])
-    function selectAddComponent(addOption, option, price){
+    function selectAddComponent(addOption, option, optionData){
 
         function addUniqueObject(arr, obj, key) {
             const index = arr.findIndex(item => item[key] === obj[key]);
@@ -5208,14 +5677,19 @@ import { forAliasRE } from '@vue/compiler-core';
                 arr.push(obj);
             }
         }
-        addUniqueObject(addComponentSelected.value, {option: addOption, value: option}, 'option')
+        addUniqueObject(addComponentSelected.value, {option: addOption, value: option, data: optionData}, 'option')
 
         selectedAddComponent.value = option
 
         // console.log(addComponentSelected.value, "selected")
         // console.log(addComponentValue.value, "selected fsdfsdf")
 
-        var addOptionPrice = price
+        let addOptionPrice = 0
+        if(optionData.enablePricingBySurface && optionData.enablePricingBySurface == true){
+            addOptionPrice = calcPriceByPrice(optionData.surface, optionData.additionalPrice)
+        }else{
+            addOptionPrice = optionData.additionalPrice
+        }
         var addOptionPriceObject = {
             type: 'add-component',
             name: addOption,
@@ -5330,7 +5804,7 @@ import { forAliasRE } from '@vue/compiler-core';
     async function addImageToSign(image, price, id){
         // console.log(price, "Added")
         newImagePriceId.value ++
-        var currentImages = {}
+        let currentImages = {}
         try {
             if(image){      
                 var imagePrice = price
@@ -5346,7 +5820,10 @@ import { forAliasRE } from '@vue/compiler-core';
             }else{
                 currentImages = await handleAddImageToSign()
             }
-            imageError.value = ""
+            imageError.value = currentImages.error
+            if(imageError.value != ""){
+                alert(imageError.value)
+            }
             usedImages.value = currentImages.images
             addRecentImages()
             editImage.value = false
@@ -5404,6 +5881,7 @@ import { forAliasRE } from '@vue/compiler-core';
         tab.splice(index, 1);
     }
     var activeImageType = ref('no-svg')
+    var activeImgWithBackground = ref(false)
     function editAddedImage(image){
         if(activeFace.value === image.canvasName){
             editImage.value = true
@@ -5420,6 +5898,7 @@ import { forAliasRE } from '@vue/compiler-core';
                     }else{
                         checkFilter()
                     }
+                    activeImgWithBackground.value = !obj.imageNoBgUrl || (obj.imageNoBgUrl && obj.imageNoBgUrl == "") ? false : true
                 }
             })
         }
@@ -5441,6 +5920,10 @@ import { forAliasRE } from '@vue/compiler-core';
         sepia : false,
         embross : false,
         sharpen : false,
+        greenify : false,
+        pinkify : false,
+        orangeify  : false,
+        blueify  : false,
     })
     function selectImageFilter(filter){
         selectedImage.value.filters = handleSelectFilter(filter)
@@ -5475,6 +5958,30 @@ import { forAliasRE } from '@vue/compiler-core';
             setFilter.value.sharpen = true
         }else{
             setFilter.value.sharpen = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'greenify')){
+            setFilter.value.greenify = true
+        }else{
+            setFilter.value.greenify = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'pinkify')){
+            setFilter.value.pinkify = true
+        }else{
+            setFilter.value.pinkify = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'orangeify')){
+            setFilter.value.orangeify = true
+        }else{
+            setFilter.value.orangeify = false
+        }
+
+        if(selectedImage.value.filters.some(item => item['name'] === 'blueify')){
+            setFilter.value.blueify = true
+        }else{
+            setFilter.value.blueify = false
         }
     }
     var currentSvgColor = ref('')
@@ -5738,6 +6245,164 @@ import { forAliasRE } from '@vue/compiler-core';
     function flipImage(){
         handleFlipImage()
     }
+    async function removeBackground(){
+        let activeImg = activeCanvas.getActiveObject()
+        // if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg" && (activeImg.imageNoBgUrl && activeImg.imageNoBgUrl != "")){
+        if(activeImg.name == "asowp-SignImage" && activeImg.objectType == "no-svg"){
+            showLoader(true)
+            let images = await handleRemoveBgImage(activeImg)
+            usedImages.value = images.images
+            usedImages.value.forEach(image=>{
+                if(image.id === activeImg.id){
+                    activeImgWithBackground.value = !image.object.imageNoBgUrl || (image.object.imageNoBgUrl && image.object.imageNoBgUrl == "") ? false : true
+                }
+            })
+            showLoader(false)
+
+            if(firstSetLoad.value){
+                saveStep('remove image background')
+            }
+        }
+    }
+
+    var IAGenerate = ref(true)
+    const prompt = ref('');
+    const imageUrl = ref(null);
+    const loading = ref(false);
+
+    const DEEPAI_API_KEY = '0cce00f8-2f4c-476b-936f-36c8d315c72c';
+
+    async function generateImage() {
+        loading.value = true;
+        imageUrl.value = '';
+
+        try {
+            const response = await fetch('https://api.deepai.org/api/text2img', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'api-key': DEEPAI_API_KEY
+                },
+                body: JSON.stringify({
+                    text: prompt.value,
+                })
+            });
+
+            const data = await response.json();
+            console.log(data, "111111111")
+
+            if (data.output_url) {
+                imageUrl.value = data.output_url;
+            } else {
+                throw new Error('Erreur de génération');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Erreur lors de la génération de l’image');
+        } finally {
+            loading.value = false;
+        }
+    }
+
+    let usedQRCodes = ref([])
+    let addQRActive = ref(false)
+    let selectQRCode = ref(false)
+    let qrCodeType = ref("text")
+    let qrCodeData = ref({})
+    let activeQrCode = ref({})
+    let activeQrCodeData = ref("")
+    let activeQrCodeColorPart = ref("dark")
+    let activeQrCodeColor = ref({
+        dark: '#000000',
+        light: '#ffffff',
+    })
+    async function getQRCodeData(e){
+        let source;
+        if (e.target.type === 'textarea' || e.target.tagName === 'TEXTAREA') {
+            source = e.target.value;
+        } else if (e.target.type === 'file') {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            source = file;
+        }
+        
+        try {
+            qrCodeData.value = source
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function addQRCode(){
+        try {
+            if(qrCodeData.value != {}){
+                const qrObject = await handleAddQRCode(qrCodeData.value);
+                addQRActive.value = false
+
+                usedQRCodes.value = qrObject.codes
+                editQRCode(qrObject.activeCode)
+
+                if(firstSetLoad.value){
+                    saveStep('add qrCode to sign')
+                }
+            }
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function editQRCode(code, active){
+        try {
+            if(activeFace.value == code.canvasName){
+                if(active == true){
+                    let activeCode = activeCanvas.getActiveObject()
+                    if(code.name == "asowp-QRCode" && code.id == activeCode.id){
+                        selectQRCode.value = true
+                        
+                        activeQrCode.value = code
+                        activeQrCodeData.value = code.fromData
+                        activeQrCodeColor.value = code.color
+                    }
+                }else{
+                    if(code.name == "asowp-QRCode"){
+                        selectQRCode.value = true
+                        activeCanvas.setActiveObject(code)
+                        
+                        activeQrCode.value = code
+                        activeQrCodeData.value = code.fromData
+                        activeQrCodeColor.value = code.color
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function changeQRCodeValue(){
+        try {
+            usedQRCodes.value = await handleEditQRCode(activeQrCode.value, activeQrCodeData.value, activeQrCodeColor.value)
+
+            console.log(usedQRCodes.value, "editing")
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+    async function changeQRCodeColor(color){
+        try {
+            if(activeQrCodeColorPart.value == "dark"){
+                activeQrCodeColor.value.dark = color
+            }else{
+                activeQrCodeColor.value.light = color
+            }
+            usedQRCodes.value = await handleChangeQRCodeColor(activeQrCode.value, activeQrCodeColor.value)
+
+            console.log(usedQRCodes.value, "editing")
+        } catch (err) {
+            console.error("Erreur QR:", err);
+        }
+    }
+
+
+    
 
     var optionsPrices = ref([])
     var textsPrices = ref(0)
@@ -5853,8 +6518,10 @@ import { forAliasRE } from '@vue/compiler-core';
     var finishLoading = ref(true)
     async function finishConfig(){
         closeObjectValues()
-        var heightValue = handleGetObjectByName('height-value', canvas)
-        var widthValue = handleGetObjectByName('width-value', canvas)
+        var heightValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('height-value', canvas) : {text: `${document.getElementById("outline-height").textContent} ${configUnit.value}`}
+        var widthValue = selectedShape.value != "cut-to-shape" ? handleGetObjectByName('width-value', canvas) : {text: `${document.getElementById("outline-width").textContent} ${configUnit.value}`}
+        // console.log(heightValue, widthValue, "7777777777")
+        
         var thicknessValue = 'none'
         switch(currentSizeThickness.value) {
             case false:
@@ -5893,6 +6560,7 @@ import { forAliasRE } from '@vue/compiler-core';
 
         var textObjects = []
         var imageObjects = []
+        var qrCodeObjects = []
         
         var objects = canvas.getObjects();
         for (var i = 0; i < objects.length; i++) {
@@ -5914,8 +6582,17 @@ import { forAliasRE } from '@vue/compiler-core';
                 }
                 addUniqueObject(imageObjects, objects[i], 'id')
             }
+            if (objects[i].name === "asowp-QRCode") {
+                function addUniqueObject(arr, obj, key) {
+                    const exists = arr.some(item => item[key] === obj[key]);
+                    if (!exists) {
+                        arr.push(obj);
+                    }
+                }
+                addUniqueObject(qrCodeObjects, objects[i], 'id')
+            }
         }
-        var addedObject = handleFinishConfiguration(textObjects, imageObjects)
+        var addedObject = handleFinishConfiguration(textObjects, imageObjects, qrCodeObjects)
 
 
         var designImagesFace1 = []
@@ -5995,9 +6672,9 @@ import { forAliasRE } from '@vue/compiler-core';
                 border: {
                     label: (configVisualiserTexts.value.textBorder && configVisualiserTexts.value.textBorder.trim() != '' ? configVisualiserTexts.value.textBorder : 'Borders'),
                     value: {
-                        type: activeFace1Border.value,
-                        color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
-                        codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                        type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace1Border.value,
+                        color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value))),
+                        codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas))),
                     },
                 },
                 fixingMethod: {
@@ -6013,6 +6690,11 @@ import { forAliasRE } from '@vue/compiler-core';
                 label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
                 value: addedObject.images,
             },
+            qrCodes: {
+                // label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
+                label: "qr Codes",
+                value: addedObject.qrCodes,
+            },
             additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
             additionalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
             designImages: await generateOutputImage(designImagesFace1, canvas),
@@ -6025,8 +6707,9 @@ import { forAliasRE } from '@vue/compiler-core';
 
         var face2AddedObject = {}
         if(configDoublePart.value.active){
-            var face2TextObjects = []
-            var face2ImageObjects = []
+            let face2TextObjects = []
+            let face2ImageObjects = []
+            let face2QrCodeObjects = []
             var objects = canvasBack.getObjects();
 
             for (var i = 0; i < objects.length; i++) {
@@ -6048,8 +6731,17 @@ import { forAliasRE } from '@vue/compiler-core';
                     }
                     addUniqueObject(face2ImageObjects, objects[i], 'id')
                 }
+                if (objects[i].name === "asowp-QRCode") {
+                    function addUniqueObject(arr, obj, key) {
+                        const exists = arr.some(item => item[key] === obj[key]);
+                        if (!exists) {
+                            arr.push(obj);
+                        }
+                    }
+                    addUniqueObject(face2QrCodeObjects, objects[i], 'id')
+                }
             }
-            face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects)
+            face2AddedObject = handleFinishConfiguration(face2TextObjects, face2ImageObjects, face2QrCodeObjects)
 
             var designImagesFace2 = []
 
@@ -6109,15 +6801,20 @@ import { forAliasRE } from '@vue/compiler-core';
                         label: (configVisualiserTexts.value.textBorder && configVisualiserTexts.value.textBorder.trim() != '' ? configVisualiserTexts.value.textBorder : 'Borders'),
                         value: {
                             face1: {
-                                type: activeFace1Border.value,
-                                color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
-                                codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                                type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace1Border.value,
+                                color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value))),
+                                codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas))),
                             },
                             face2: {
-                                type: activeFace2Border.value,
-                                color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
-                                codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
-                            },
+                                type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace2Border.value,
+                                color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value))),
+                                codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack))),
+                            }
+                            // ,{
+                            //     type: activeFace2Border.value,
+                            //     color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
+                            //     codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
+                            // },
                         },
                     },
                     fixingMethod: {
@@ -6137,6 +6834,14 @@ import { forAliasRE } from '@vue/compiler-core';
                     value: {
                         face1 :addedObject.images,
                         face2 :face2AddedObject.images
+                    }
+                },
+                qrCodes: {
+                    // label: (configVisualiserTexts.value.textImage && configVisualiserTexts.value.textImage.trim() != '' ? configVisualiserTexts.value.textImage : 'Images'),
+                    label: "qr Codes",
+                    value: {
+                        face1 :addedObject.qrCodes,
+                        face2 :face2AddedObject.qrCodes
                     }
                 },
                 additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
@@ -6161,14 +6866,14 @@ import { forAliasRE } from '@vue/compiler-core';
             canvas.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex",])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
             canvasBack.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex",])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -6226,16 +6931,26 @@ import { forAliasRE } from '@vue/compiler-core';
                         },
                     },
                     border: {
+                        // face1: {
+                        //     type: activeFace1Border.value,
+                        //     color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
+                        //     codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                        // },
+                        // face2: {
+                        //     type: activeFace2Border.value,
+                        //     color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
+                        //     codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
+                        // },
                         face1: {
-                            type: activeFace1Border.value,
-                            color: (activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value)),
-                            codeHex: (activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas)),
+                            type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace1Border.value,
+                            color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : (signTextColor1.value.active && !colorForBorder1.value ? colorTextColorName1.value : borderColorName1.value))),
+                            codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace1Border.value == 'none' ? null : getBorderColor(activeFace1Border.value, canvas))),
                         },
                         face2: {
-                            type: activeFace2Border.value,
-                            color: (activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value)),
-                            codeHex: (activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack)),
-                        },
+                            type: selectedShape.value == 'cut-to-shape' ? "none" : activeFace2Border.value,
+                            color: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : (signTextColor2.value.active && !colorForBorder2.value ? colorTextColorName2.value : borderColorName2.value))),
+                            codeHex: selectedShape.value == 'cut-to-shape' ? null : ((activeFace2Border.value == 'none' ? null : getBorderColor(activeFace2Border.value, canvasBack))),
+                        }
                     },
                     fixingMethod: {
                         type: activeFixingMethode.value,
@@ -6250,6 +6965,10 @@ import { forAliasRE } from '@vue/compiler-core';
                 images: {
                     face1 :addedObject.images,
                     face2 :(face2AddedObject != {} ? face2AddedObject.images : null)
+                },
+                qrCodes: {
+                    face1 :addedObject.qrCodes,
+                    face2 :(face2AddedObject != {} ? face2AddedObject.qrCodes : null)
                 },
                 designImages: {
                     face1: designImagesFace1,
@@ -6360,7 +7079,37 @@ import { forAliasRE } from '@vue/compiler-core';
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                 await genImageWithWatermark(canvas, 'svg', 'download', 1317, 622);
             }else{
-                await genImage(canvas, 'svg', 'download');
+                
+                console.log(currentSizeData.value, "11111")
+                let size = {
+                    width: convertToPixels(currentSizeData.value.width, configUnit.value),
+                    height: convertToPixels(currentSizeData.value.height, configUnit.value),
+                }
+                let designURL = await genSvgDesignImg(canvas, size.width, size.height);
+                let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(designURL)));
+
+                // const stickerCanvas = await genPrintReadyFileInSheet(designURL, 10)
+                let paperSize = {
+                    // width: convertToPixels(41, "cm"),
+                    // height: convertToPixels(49.7, "cm"),
+                    width: convertToPixels(210, configUnit.value),
+                    height: convertToPixels(297, configUnit.value),
+                }
+                // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, 2480, 3508, 20)
+                const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
+                
+
+                // Exporter en image si besoin :
+                const dataURL = stickerCanvas.toDataURL({
+                    format: 'png',
+                    quality: 1.0
+                });
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = 'img'+'.'+'png';
+                // link.href = svgUrl;
+                // link.download = 'img'+'.'+'svg';
+                link.click();
             }
         }
     }
@@ -6516,469 +7265,6 @@ import { forAliasRE } from '@vue/compiler-core';
         return serializer.serializeToString(svgDoc.documentElement);
     }
 
-    // async function genImage(canva, format, purpose, width, height) {
-    //     try{
-
-    //         var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
-    //         const optionsPreview = {
-    //             width: '100%',
-    //             height: '100%',
-    //             encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-    //         };
-
-    //         const options = {
-    //             width: '1900px',  // ou la largeur que vous souhaitez
-    //             height: '1080px', // ou la hauteur que vous souhaitez
-    //             encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-    //         };
-    //         function checkWoff2(chaine) {
-    //             return chaine.endsWith('.woff2');
-    //         }
-    //         function hasExtendedLowercase(text, font, xHeight, fontSize) {
-    //             if (typeof text !== 'string') {
-    //                 console.error('Text must be a string');
-    //                 return false;
-    //             }
-    //             const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
-    //             const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
-                
-    //             // let hasSame = false;
-    //             // for (let char of testChars) {
-    //             //     if (char.match(/[a-z]/)) {
-    //             //         let path = font.getPath(char, 0, 0, fontSize);
-    //             //         let bbox = path.getBoundingBox();
-    //             //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
-    //             //         if (xHeight > bbox.y2 - bbox.y1) {
-    //             //             return true;
-    //             //         }
-    //             //     }
-    //             // }
-    //             for (let char of testExtendsChars) {
-    //                 if (char.match(/[a-z]/)) {
-    //                     let path = font.getPath(char, 0, 0, fontSize);
-    //                     let bbox = path.getBoundingBox();
-    //                     // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
-    //                     // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
-    //                     if (xHeight*0.9 > bbox.y2 - bbox.y1) {
-    //                         return true;
-    //                     }
-    //                 }
-    //             }
-    //             return false;
-    //         }
-    //         async function drawnPathFromText() {
-    //             return new Promise((resolve, reject) => {
-    //                 var elements = canva.getObjects()
-    //                 let promises = []
-
-    //                 elements.forEach((object, index) => {
-    //                     if (object.name === 'asowp-SignText') {
-    //                         if (!checkWoff2(object.fontFamily)) {
-    //                             let promise = (async () => {
-    //                                 try {
-    //                                     var buffer = await fetch(object.fontFamilyUrl).then(res => res.arrayBuffer());
-    //                                     var font = opentype.parse(buffer);
-    //                                     // var lines = object.text.split('\n')
-    //                                     var lines = (typeof object.text === 'string') ? object.text.split('\n') : [];
-    //                                     var fontSize = 40
-    //                                     const x = 50;
-    //                                     let y = fontSize*object.scaleX;
-    //                                     // let y = (object.height*object.scaleY)/object._textLines.length;
-
-    //                                     const group = new fabric.Group([], {
-    //                                         left: object.left,
-    //                                         top: object.top,
-    //                                         name: 'asowp-svg-path',
-    //                                         clipPath: handleClipAddedObject(canva),
-    //                                     });
-
-                                        
-    //                                     lines.forEach(line => {
-    //                                         // console.log(line, lines)
-    //                                         var path = font.getPath(line, 0, y, fontSize * object.scaleX);
-    //                                         var pathBBox = path.getBoundingBox();
-    //                                         var pathWidth = pathBBox.x2 - pathBBox.x1;
-    //                                         let xHeight = pathBBox.y2 - pathBBox.y1;
-                                            
-    //                                         // Calculez le décalage x en fonction de l'alignement
-    //                                         var xOffset;
-
-    //                                         switch(object.textAlign) {
-    //                                             case 'center':
-    //                                                 xOffset = (object.width * object.scaleX - pathWidth) / 2;
-    //                                                 break;
-    //                                             case 'right':
-    //                                                 xOffset = object.width * object.scaleX - pathWidth;
-    //                                                 break;
-    //                                             default: // 'left'
-    //                                                 xOffset = 0;
-    //                                         }
-                                            
-    //                                         // Appliquez le décalage à tous les points du chemin
-    //                                         path.commands.forEach(cmd => {
-    //                                             if (cmd.x !== undefined) cmd.x += xOffset;
-    //                                             if (cmd.x1 !== undefined) cmd.x1 += xOffset;
-    //                                             if (cmd.x2 !== undefined) cmd.x2 += xOffset;
-    //                                         });
-                                            
-    //                                         var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
-    //                                         // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
-    //                                         // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
-
-    //                                         var miniGroup = new fabric.Group([], {
-    //                                         });
-    //                                         const fabricPath = new fabric.Path(path.toPathData(20), {
-    //                                             strokeWidth: 2,
-    //                                             // top: object.top + y, 
-    //                                             stroke: object.fill,
-    //                                             fill: object.fill,
-    //                                             originX: 'center',
-    //                                         });
-    //                                         if(object.fontWeight == 'bold'){
-    //                                             fabricPath.strokeWidth = 2.3
-    //                                             fabricPath.stroke = object.fill
-    //                                         }
-    //                                         if(object.fontStyle == 'italic'){
-    //                                             fabricPath.skewX = -3
-    //                                         }
-    //                                         if(object.underline){
-    //                                             // var objLeft = fabricPath.left
-    //                                             var objLeft = xOffset;
-    //                                             var objTop = fabricPath.top + fabricPath.height
-    //                                             var top = (longLetter ? objTop-6 : objTop+4)
-    //                                             // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
-
-    //                                             var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-    //                                                 stroke: object.fill,
-    //                                                 left: objLeft,
-    //                                                 top: top,
-    //                                                 scaleY: object.scaleY,
-    //                                                 strokeWidth: 3,
-    //                                             });
-
-    //                                             miniGroup.addWithUpdate(underline);
-    //                                         }
-    //                                         if(object.overline){
-    //                                             var objLeft = xOffset;
-    //                                             var objTop = fabricPath.top - 8
-
-    //                                             var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-    //                                                 stroke: object.fill,
-    //                                                 left: objLeft,
-    //                                                 top: objTop,
-    //                                                 scaleY: object.scaleY,
-    //                                                 strokeWidth: 3,
-    //                                             });
-
-    //                                             miniGroup.addWithUpdate(overline);
-    //                                         }
-    //                                         if(object.linethrough){
-    //                                             var objLeft = xOffset;
-    //                                             var objTop = fabricPath.top + fabricPath.height / 2
-    //                                             var top = (longLetter ? objTop-6 : objTop+4)
-
-    //                                             var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-    //                                                 stroke: object.fill,
-    //                                                 left: objLeft,
-    //                                                 top: top,
-    //                                                 scaleY: object.scaleY,
-    //                                                 strokeWidth: 2,
-    //                                                 name: 'asowp-svg-path',
-    //                                             });
-
-    //                                             miniGroup.addWithUpdate(linethrough);
-    //                                         }
-    //                                         miniGroup.addWithUpdate(fabricPath);
-    //                                         group.addWithUpdate(miniGroup);
-    //                                         canva.renderAll()
-                                            
-    //                                         y += fontSize*object.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-    //                                         // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-    //                                         // console.log(y, "Ajustez cette vale");
-    //                                     });
-
-    //                                     group.left = object.left - (group.width / 2);
-    //                                     group.top = object.top - (group.height / 2);
-
-    //                                     canva.add(group);
-    //                                     group.moveTo(index)
-    //                                     return group;
-    //                                 } catch (error) {
-    //                                     console.error("Error in processing text:", error);
-    //                                     throw error;
-    //                                 }
-    //                             })();
-    //                             promises.push(promise);
-    //                         }
-    //                     }
-    //                     if (object.name === 'safeObject') {
-    //                         if (typeof object.fill !== 'string') {
-    //                             var patternFill = object.fill
-    //                             let promise = new Promise((resolve, reject) => {
-    //                                 handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
-    //                                     fabric.Image.fromURL(dataURI, (img) => {
-    //                                         try {
-    //                                             img.left = object.left;
-    //                                             img.top = object.top;
-
-    //                                             img.clipPath = handleClipAddedObject(canva);
-    //                                             // object.fill = '#313131';
-                                                
-    //                                             img.name = 'asowp-signPattern';
-                                                
-    //                                             if (object.width > object.height) {
-    //                                                 img.scaleToWidth(object.width);
-    //                                             } else {
-    //                                                 img.scaleToHeight(object.height);
-    //                                             }
-    //                                             var shadowRect = handleSetShadow(canva)
-    //                                             object.shadow = null
-    //                                             canva.add(img, shadowRect);
-    //                                             img.moveTo(index + 1);
-    //                                             shadowRect.sendToBack()                                                                                        
-                                                
-    //                                             // object.fill = patternFill;
-    //                                             canva.renderAll()
-    //                                             resolve(img);
-    //                                         } catch (error) {
-    //                                             reject(error);
-    //                                         }
-    //                                     });
-    //                                 });
-    //                             });
-    //                             promises.push(promise);
-    //                         }
-    //                     }
-    //                 });
-
-    //                 Promise.all(promises)
-    //                     .then(groups => resolve(groups))
-    //                     .catch(error => reject(error));
-    //             });
-    //         }
-
-
-    //         function convertSvgToImage(svgDataUrl, format) {
-    //             return new Promise((resolve, reject) => {
-    //                 const canvas = document.createElement('canvas');
-    //                 var tempCanvas = new fabric.Canvas(canvas, {
-    //                     width: 1900,
-    //                     height: 1080,
-    //                     interactive: false,
-    //                     backgroundColor: "transparent",
-    //                 });
-
-    //                 fabric.loadSVGFromURL(svgDataUrl, function (image, options) {
-    //                     try {
-    //                         const img = fabric.util.groupSVGElements(image, options);
-    //                         img.scale(1);
-                            
-    //                         // img.left = -300
-    //                         // img.top = -300
-    //                         img.setCoords();
-    //                         var newW = img.width * img.scaleX
-    //                         var newH = img.height * img.scaleX
-
-    //                         // img.width = 1900;
-    //                         // img.height = 1080;
-    //                         // img.strokeWidth = 10
-    //                         // img.stroke = 'red'
-
-    //                         // console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
-
-    //                         tempCanvas.add(img);
-    //                         // img.center();
-    //                         tempCanvas.renderAll();
-
-    //                         var dataUrl = ""
-    //                         switch (format) {
-    //                             case 'png':
-    //                                 dataUrl = tempCanvas.toDataURL({
-    //                                     format: 'png',
-    //                                     quality: 1.0
-    //                                 });
-    //                             break;       
-    //                             case 'jpeg':
-    //                                 dataUrl = tempCanvas.toDataURL({
-    //                                     format: 'jpeg',
-    //                                     quality: 1.0
-    //                                 });
-    //                             break;       
-    //                             case 'webp':
-    //                                 dataUrl = tempCanvas.toDataURL({
-    //                                     format: 'webp',
-    //                                     quality: 1.0
-    //                                 });
-    //                             break;       
-    //                         }
-
-    //                         tempCanvas.dispose();
-
-    //                         // Résoudre la Promise avec l'URL des données
-    //                         resolve(dataUrl);
-    //                     } catch (error) {
-    //                         reject(error);
-    //                     }
-    //                 });
-    //             });
-    //         }
-    
-    //         var widthVisibility
-    //         var heightVisibility
-    //         var thickVisibility
-    //         var borderPositionId
-    //         var fixingPositionId
-    //         canva.getObjects().forEach((object, index) => {
-    //             // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
-    //             //     object.set('visible', false);
-    //             // }
-    //             if(object.name === 'widthLine' || object.name === 'width-value'){
-    //                 widthVisibility = object.visible
-    //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'heightLine' || object.name === 'height-value'){
-    //                 heightVisibility = object.visible
-    //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'asowp-SignText'){
-    //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'thickness-value'){
-    //                 thickVisibility = object.visible
-    //                 object.set('visible', false);
-    //             }
-    //             if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-    //                 borderPositionId = index
-    //                 object.bringToFront();
-    //             }
-    //             if(object.objectType === 'asowp-fixingMethods'){
-    //                 fixingPositionId = index
-    //                 object.bringToFront();
-    //             }
-    //         });
-    //         canva.renderAll();
-
-    //         await drawnPathFromText()
-                    
-    //         const svgData = canva.toSVG(options);
-    //         const svgDataPreview = canva.toSVG(optionsPreview);
-    //         var previewScreen = document.getElementById('showPreview')
-
-    //         var svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-
-    //         var dataURL  = ""
-    //         // Génère l'image avec le format spécifié
-            
-    //         switch (format) {
-    //             case 'png':
-    //                 // dataURL = canva.toDataURL({
-    //                 //     format: 'png',
-    //                 //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //                 // });
-    //                 dataURL = await convertSvgToImage(svgUrl, 'png')
-    //             break;
-    
-    //             case 'jpeg':
-    //                 canva.backgroundColor = configColors.value.canvasBackgroundColor
-    //                 // dataURL = canva.toDataURL({
-    //                 //     format: 'jpeg',
-    //                 //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //                 // });
-    //                 dataURL = await convertSvgToImage(svgUrl, 'jpeg')
-    //             break;
-    
-    //             case 'webp':
-    //                 dataURL = canva.toDataURL({
-    //                     format: 'webp',
-    //                     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //                 });
-    //                 dataURL = await convertSvgToImage(svgUrl, 'webp')
-    //             break;
-    
-    //             case 'svg':
-    //                 dataURL = svgUrl
-    //             break;
-            
-    //             default:
-    
-    //             break;
-    //         }
-    
-    //         // Restaure les dimensions et l'affichage originales du canvas
-    //         canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-    //         canva.getObjects().forEach(object => {
-    //             // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
-    //             //     object.set('visible', true);
-    //             // }
-    //             if(object.name === 'widthLine' || object.name === 'width-value'){
-    //                 object.set('visible', widthVisibility);
-    //             }
-    //             if(object.name === 'heightLine' || object.name === 'height-value'){
-    //                 object.set('visible', heightVisibility);
-    //             }
-    //             if(object.name === 'asowp-SignText'){
-    //                 object.set('visible', true);
-    //             }
-    //             if(object.name === 'thickness-value'){
-    //                 object.set('visible', thickVisibility);
-    //             }
-    //             if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
-    //                 // console.log(object, "watermark")
-    //                 canva.remove(object)
-    //             }
-    //             if(object.name === 'safeObject'){
-    //                 if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
-    //                     object.shadow = defaultShadow.value
-    //                 }
-    //                 if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
-    //                     object.shadow = defaultShadow.value
-    //                 }
-    //             }
-    //             if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-    //                 // borderPositionId = index
-    //                 object.moveTo(borderPositionId);
-    //             }
-    //             if(object.objectType === 'asowp-fixingMethods'){
-    //                 // fixingPositionId = index
-    //                 object.moveTo(fixingPositionId);
-    //             }
-    //         });
-
-    //         canva.renderAll();
-
-    //         if(purpose === 'preview'){
-    //             previewScreen.innerHTML = svgDataPreview;
-
-    //             const svgElement = previewScreen.querySelector('svg');
-
-    //             svgElement.classList.add('asowp-z-10');
-
-    //             if(configImageSettings.value.scenes.length > 0){
-    //                 var miniPreview = document.getElementById('asowp-miniPreview')
-    //                 miniPreview.innerHTML = svgDataPreview;
-
-    //             }
-    //         }else if(purpose === 'download'){
-    //             const link = document.createElement('a');
-    //             link.href = dataURL;
-    //             link.download = 'img'+'.'+format;
-    //             link.click();
-    //         }else if(purpose === 'finish-1'){
-    //             var previewFinish1 = document.getElementById('asowp-previewFinish1')
-    //             previewFinish1.innerHTML = svgDataPreview;
-    //         }else if(purpose === 'finish-2'){
-    //             var previewFinish1 = document.getElementById('asowp-previewFinish2')
-    //             previewFinish1.innerHTML = svgDataPreview;
-    //         }
-
-    //         return dataURL;
-
-    //     }catch (error) {
-    //         console.error("Une erreur est survenue:", error);
-    //     }
-    //     // return dataURL;
-
-    // }
     async function genImage(canva, format, purpose, width, height) {
         try{
             var currentWidth = canva.width
@@ -7341,638 +7627,6 @@ import { forAliasRE } from '@vue/compiler-core';
         // return dataURL;
 
     }
-    // async function genImageWithWatermark(canva, format, purpose, width, height) {
-    //     try{
-    //         // Sauvegarde les dimensions actuelles du canvas
-    //         const originalWidth = canva.getWidth();
-    //         const originalHeight = canva.getHeight();
-
-    //         var canvasCenter = getCanvasCenter()
-
-    //         // Redimensionne le canvas si les nouvelles dimensions sont spécifiées
-    //         // if (width && height) {
-    //         //     canva.setWidth(width);
-    //         //     canva.setHeight(height);
-    //         //     checkScreenSize(width, height)
-    //         // }
-
-    //         fabric.Image.fromURL(configOutputSettings.value.waterMark, async function(img) {  
-    //             var sign = handleGetObjectByName('safeObject', canva)          // img.scaleToHeight(40);
-    //             const imgWidth = 100;
-    //             const imgHeight = 100;
-    //             const spacing = 50; // Espacement entre les images
-
-    //             // Créer un canvas temporaire
-    //             const patternCanvas = document.createElement('canvas');
-    //             const patternContext = patternCanvas.getContext('2d');
-    //             // Définir les dimensions du canvas temporaire
-    //             patternCanvas.width = imgWidth + spacing;
-    //             patternCanvas.height = imgHeight + spacing;
-    //             // Dessiner l'image de filigrane sur le canvas temporaire
-    //             patternContext.drawImage(img.getElement(), 0, 0, imgWidth, imgHeight);
-    //             const pattern = new fabric.Pattern({
-    //                 // source: img.getElement(),
-    //                 source: patternCanvas,
-    //                 repeat: 'no-repeat'
-    //             });
-    //             const watermarkRect = new fabric.Rect({
-    //                 left: sign.left + sign.width - imgWidth - 10,
-    //                 top: sign.top + sign.height - imgHeight - 10,
-    //                 // left: -canvasCenter.x,
-    //                 // top: -canvasCenter.y,
-    //                 width: imgWidth,
-    //                 height: imgHeight,
-    //                 // width: (originalWidth*2),
-    //                 // height: (originalHeight*2),
-    //                 fill: pattern,  
-    //                 selectable: false,
-    //                 evented: false,
-    //                 name: 'watermark',
-    //                 opacity: 0.5,
-    //             });
-    //             canva.add(watermarkRect);
-    //             watermarkRect.bringToFront()
-
-
-    //             const optionsPreview = {
-    //                 width: '100%',
-    //                 height: '100%',
-    //                 // viewBox: {
-    //                 //     x: -100,
-    //                 //     y: -50,
-    //                 //     width: canva.width+300,
-    //                 //     height: canva.height+300
-    //                 // },
-    //                 encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-    //             };
-
-    //             const options = {
-    //                 width: '1900px',  // ou la largeur que vous souhaitez
-    //                 height: '1080px', // ou la hauteur que vous souhaitez
-    //                 encoding: 'UTF-8' // optionnel, mais recommandé pour la compatibilité
-    //             };
-    //             function checkWoff2(chaine) {
-    //                 return chaine.endsWith('.woff2');
-    //             }
-
-    //             function hasExtendedLowercase(text, font, xHeight, fontSize) {
-    //                 if (typeof text !== 'string') {
-    //                     console.error('Text must be a string');
-    //                     return false;
-    //                 }
-    //                 const testChars = ['a', 'x', 'o', 'n', 'm']; // Caractères de base pour la hauteur
-    //                 const testExtendsChars = ['g', 'j', 'p', 'q', 'y'];
-                    
-    //                 // let hasSame = false;
-    //                 // for (let char of testChars) {
-    //                 //     if (char.match(/[a-z]/)) {
-    //                 //         let path = font.getPath(char, 0, 0, fontSize);
-    //                 //         let bbox = path.getBoundingBox();
-    //                 //         console.log(xHeight, (bbox.y2 - bbox.y1), "erettrtretrre")
-    //                 //         if (xHeight > bbox.y2 - bbox.y1) {
-    //                 //             return true;
-    //                 //         }
-    //                 //     }
-    //                 // }
-    //                 for (let char of testExtendsChars) {
-    //                     if (char.match(/[a-z]/)) {
-    //                         let path = font.getPath(char, 0, 0, fontSize);
-    //                         let bbox = path.getBoundingBox();
-    //                         // console.log((bbox.y2 - bbox.y1), xHeight , "syojiçyboytrh")
-    //                         // console.log((bbox.y2 - bbox.y1), xHeight*0.9 , "sfudbgpgoiebiàbj,yojiçyboytrh")
-    //                         if (xHeight*0.9 > bbox.y2 - bbox.y1) {
-    //                             return true;
-    //                         }
-    //                     }
-    //                 }
-    //                 return false;
-    //             }
-
-    //             async function drawnPathFromText() {
-    //                 return new Promise((resolve, reject) => {
-    //                     var elements = canvas.getObjects()
-    //                     let promises = []
-
-    //                     elements.forEach((object, index) => {
-    //                         if (object.name === 'asowp-SignText') {
-    //                             if (!checkWoff2(object.fontFamily)) {
-    //                                 let promise = (async () => {
-    //                                     try {
-    //                                         var buffer = await fetch(object.fontFamilyUrl).then(res => res.arrayBuffer());
-    //                                         var font = opentype.parse(buffer);
-    //                                         // var lines = object.text.split('\n')
-    //                                         var lines = (typeof object.text === 'string') ? object.text.split('\n') : [];
-    //                                         var fontSize = 40
-    //                                         const x = 50;
-    //                                         let y = fontSize*object.scaleX;
-    //                                         // let y = (object.height*object.scaleY)/object._textLines.length;
-
-    //                                         const group = new fabric.Group([], {
-    //                                             left: object.left,
-    //                                             top: object.top,
-    //                                             name: 'asowp-svg-path',
-    //                                             clipPath: handleClipAddedObject(canva),
-    //                                         });
-
-                                        
-    //                                         lines.forEach(line => {
-    //                                             // console.log(line, lines)
-    //                                             var path = font.getPath(line, 0, y, fontSize * object.scaleX);
-    //                                             var pathBBox = path.getBoundingBox();
-    //                                             var pathWidth = pathBBox.x2 - pathBBox.x1;
-    //                                             let xHeight = pathBBox.y2 - pathBBox.y1;
-                                                
-    //                                             // Calculez le décalage x en fonction de l'alignement
-    //                                             var xOffset;
-
-    //                                             switch(object.textAlign) {
-    //                                                 case 'center':
-    //                                                     xOffset = (object.width * object.scaleX - pathWidth) / 2;
-    //                                                     break;
-    //                                                 case 'right':
-    //                                                     xOffset = object.width * object.scaleX - pathWidth;
-    //                                                     break;
-    //                                                 default: // 'left'
-    //                                                     xOffset = 0;
-    //                                             }
-                                                
-    //                                             // Appliquez le décalage à tous les points du chemin
-    //                                             path.commands.forEach(cmd => {
-    //                                                 if (cmd.x !== undefined) cmd.x += xOffset;
-    //                                                 if (cmd.x1 !== undefined) cmd.x1 += xOffset;
-    //                                                 if (cmd.x2 !== undefined) cmd.x2 += xOffset;
-    //                                             });
-                                                
-    //                                             var longLetter = hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX)
-    //                                             // console.log(hasExtendedLowercase(String(line), font, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
-    //                                             // console.log(hasExtendedLowercase(String(line), font, xHeight, fontSize*object.scaleX), "svg-path osdnfsnfsdnf")
-
-    //                                             var miniGroup = new fabric.Group([], {
-    //                                             });
-    //                                             const fabricPath = new fabric.Path(path.toPathData(20), {
-    //                                                 strokeWidth: object.fontWeight === 'normal' ? 1 : 3,
-    //                                                 // top: object.top + y, 
-    //                                                 stroke: object.fill,
-    //                                                 fill: object.fill,
-    //                                                 originX: 'center',
-    //                                             });
-    //                                             if(object.fontWeight == 'bold'){
-    //                                                 // fabricPath.strokeWidth = 2.3
-    //                                                 fabricPath.stroke = object.fill
-    //                                             }
-    //                                             if(object.fontStyle == 'italic'){
-    //                                                 fabricPath.skewX = -3
-    //                                             }
-    //                                             if(object.underline){
-    //                                                 // var objLeft = fabricPath.left
-    //                                                 var objLeft = xOffset;
-    //                                                 var objTop = fabricPath.top + fabricPath.height
-    //                                                 var top = (longLetter ? objTop-6 : objTop+4)
-    //                                                 // console.log(top, "underline", 'false =',objTop , 'true =',objTop-5)
-
-    //                                                 var underline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-    //                                                     stroke: object.fill,
-    //                                                     left: objLeft,
-    //                                                     top: top,
-    //                                                     scaleY: object.scaleY,
-    //                                                     strokeWidth: 3,
-    //                                                 });
-
-    //                                                 miniGroup.addWithUpdate(underline);
-    //                                             }
-    //                                             if(object.overline){
-    //                                                 var objLeft = xOffset;
-    //                                                 var objTop = fabricPath.top - 8
-
-    //                                                 var overline = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-    //                                                     stroke: object.fill,
-    //                                                     left: objLeft,
-    //                                                     top: objTop,
-    //                                                     scaleY: object.scaleY,
-    //                                                     strokeWidth: 3,
-    //                                                 });
-
-    //                                                 miniGroup.addWithUpdate(overline);
-    //                                             }
-    //                                             if(object.linethrough){
-    //                                                 var objLeft = xOffset;
-    //                                                 var objTop = fabricPath.top + fabricPath.height / 2
-    //                                                 var top = (longLetter ? objTop-6 : objTop+4)
-
-    //                                                 var linethrough = new fabric.Line([fabricPath.left, fabricPath.top + fabricPath.height + 5, fabricPath.left + fabricPath.width + 4, fabricPath.top + fabricPath.height + 5], {
-    //                                                     stroke: object.fill,
-    //                                                     left: objLeft,
-    //                                                     top: top,
-    //                                                     scaleY: object.scaleY,
-    //                                                     strokeWidth: 2,
-    //                                                     name: 'asowp-svg-path',
-    //                                                 });
-
-    //                                                 miniGroup.addWithUpdate(linethrough);
-    //                                             }
-    //                                             miniGroup.addWithUpdate(fabricPath);
-    //                                             group.addWithUpdate(miniGroup);
-    //                                             canva.renderAll()
-                                                    
-    //                                             y += fontSize*object.scaleX * 1.3; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-    //                                             // y += y; // Ajustez cette valeur en fonction de la taille de la ligne et de l'espacement souhaité
-    //                                             // console.log(y, "Ajustez cette vale");
-    //                                         });
-
-    //                                         group.left = object.left - (group.width / 2);
-    //                                         group.top = object.top - (group.height / 2);
-
-    //                                         canva.add(group);
-    //                                         group.moveTo(index)
-    //                                         return group;
-    //                                     } catch (error) {
-    //                                         console.error("Error in processing text:", error);
-    //                                         throw error;
-    //                                     }
-    //                                 })();
-    //                                 promises.push(promise);
-    //                             }
-    //                         }
-    //                         if (object.name === 'safeObject') {
-    //                             if (typeof object.fill !== 'string') {
-    //                                 var patternFill = object.fill
-    //                                 let promise = new Promise((resolve, reject) => {
-    //                                     handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
-    //                                         fabric.Image.fromURL(dataURI, (img) => {
-    //                                             try {
-    //                                                 img.left = object.left;
-    //                                                 img.top = object.top;
-
-    //                                                 img.clipPath = handleClipAddedObject(canva);
-                                                    
-    //                                                 img.name = 'asowp-signPattern';
-                                                    
-    //                                                 if (object.width > object.height) {
-    //                                                     img.scaleToWidth(object.width);
-    //                                                 } else {
-    //                                                     img.scaleToHeight(object.height);
-    //                                                 }
-    //                                                 var shadowRect = handleSetShadow(canva)
-    //                                                 object.shadow = null
-    //                                                 canva.add(img, shadowRect);
-    //                                                 img.moveTo(index + 1);
-    //                                                 shadowRect.sendToBack()                                                                                          
-                                                    
-    //                                                 canva.renderAll()
-    //                                                 resolve(img);
-    //                                             } catch (error) {
-    //                                                 reject(error);
-    //                                             }
-    //                                         });
-    //                                     });
-    //                                 });
-    //                                 promises.push(promise);
-    //                             }
-    //                         }
-    //                     });
-
-    //                     Promise.all(promises)
-    //                         .then(groups => resolve(groups))
-    //                         .catch(error => reject(error));
-    //                 });
-    //             }
-
-    //             // function convertSvgToImage(svgDataUrl, format = 'png'){
-    //             //     const canvas = document.createElement('canvas');
-    //             //     var tempCanvas  = new fabric.Canvas(imageCanvasRef.value,{
-    //             //         width: 1900, 
-    //             //         height: 1080, 
-    //             //         interactive: false,
-    //             //         backgroundColor : "transparent",
-    //             //     });
-
-    //             //     var url = ''
-                    
-    //             //     fabric.loadSVGFromURL(svgDataUrl, async function (image) {
-    //             //         const img = fabric.util.groupSVGElements(image);
-
-    //             //         img.scale(1.5);
-
-    //             //         img.setCoords();
-    //             //         var newWidth = img.width * img.scaleX;
-    //             //         var newHeight = img.height * img.scaleY;
-
-    //             //         img.width = 1900;
-    //             //         img.height = 1080;
-
-    //             //         tempCanvas.add(img);
-    //             //         img.center()
-    //             //         tempCanvas.renderAll();
-
-    //             //         console.log(tempCanvas, "tempCanvas", img)
-
-    //             //         const dataURL = tempCanvas.toDataURL({
-    //             //             format: 'png',
-    //             //             quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //             //         });
-
-    //             //         url = await dataURL
-
-    //             //         var downloadLink = document.createElement("a");
-    //             //         downloadLink.href = dataURL ;
-    //             //         downloadLink.download = 'fileName' + ".png";
-
-    //             //         document.body.appendChild(downloadLink);
-    //             //         downloadLink.click();
-    //             //         document.body.removeChild(downloadLink);
-
-    //             //         tempCanvas.dispose()
-    //             //     });
-    //             // }
-    //             function convertSvgToImage(svgDataUrl, format) {
-    //                 return new Promise((resolve, reject) => {
-    //                     const canvas = document.createElement('canvas');
-    //                     var tempCanvas = new fabric.Canvas(canvas, {
-    //                         width: 1900,
-    //                         height: 1080,
-    //                         interactive: false,
-    //                         backgroundColor: "transparent",
-    //                     });
-
-    //                     // fabric.Image.fromURL( svgDataUrl, function (img) {
-    //                     //     try {
-    //                     //         // const img = fabric.util.groupSVGElements(image, options);
-    //                     //         img.scale(1);
-                                
-    //                     //         // img.left = -300
-    //                     //         // img.top = -300
-    //                     //         img.setCoords();
-    //                     //         var newW = img.width * img.scaleX
-    //                     //         var newH = img.height * img.scaleX
-
-    //                     //         // img.width = 1900;
-    //                     //         // img.height = 1080;
-    //                     //         // img.strokeWidth = 10
-    //                     //         // img.stroke = 'red'
-
-    //                     //         console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
-
-    //                     //         tempCanvas.add(img);
-    //                     //         // img.center();
-    //                     //         tempCanvas.renderAll();
-
-    //                     //         var dataUrl = ""
-    //                     //         switch (format) {
-    //                     //             case 'png':
-    //                     //                 dataUrl = tempCanvas.toDataURL({
-    //                     //                     format: 'png',
-    //                     //                     quality: 1.0
-    //                     //                 });
-    //                     //             break;       
-    //                     //             case 'jpeg':
-    //                     //                 dataUrl = tempCanvas.toDataURL({
-    //                     //                     format: 'jpeg',
-    //                     //                     quality: 1.0
-    //                     //                 });
-    //                     //             break;       
-    //                     //             case 'webp':
-    //                     //                 dataUrl = tempCanvas.toDataURL({
-    //                     //                     format: 'webp',
-    //                     //                     quality: 1.0
-    //                     //                 });
-    //                     //             break;       
-    //                     //         }
-
-    //                     //         tempCanvas.dispose();
-
-    //                     //         // Résoudre la Promise avec l'URL des données
-    //                     //         resolve(dataUrl);
-    //                     //     } catch (error) {
-    //                     //         reject(error);
-    //                     //     }
-    //                     // });
-    //                     fabric.loadSVGFromURL(svgDataUrl, function (image, options) {
-    //                         try {
-    //                             const img = fabric.util.groupSVGElements(image, options);
-    //                             img.scale(1);
-                                
-    //                             // img.left = -300
-    //                             // img.top = -300
-    //                             img.setCoords();
-    //                             var newW = img.width * img.scaleX
-    //                             var newH = img.height * img.scaleX
-
-    //                             // img.width = 1900;
-    //                             // img.height = 1080;
-    //                             // img.strokeWidth = 10
-    //                             // img.stroke = 'red'
-
-    //                             // console.log(img.width, img.height, tempCanvas.width, tempCanvas.height, "tempCanvas")
-
-    //                             tempCanvas.add(img);
-    //                             // img.center();
-    //                             tempCanvas.renderAll();
-
-    //                             var dataUrl = ""
-    //                             switch (format) {
-    //                                 case 'png':
-    //                                     dataUrl = tempCanvas.toDataURL({
-    //                                         format: 'png',
-    //                                         quality: 1.0
-    //                                     });
-    //                                 break;       
-    //                                 case 'jpeg':
-    //                                     dataUrl = tempCanvas.toDataURL({
-    //                                         format: 'jpeg',
-    //                                         quality: 1.0
-    //                                     });
-    //                                 break;       
-    //                                 case 'webp':
-    //                                     dataUrl = tempCanvas.toDataURL({
-    //                                         format: 'webp',
-    //                                         quality: 1.0
-    //                                     });
-    //                                 break;       
-    //                             }
-
-    //                             tempCanvas.dispose();
-
-    //                             // Résoudre la Promise avec l'URL des données
-    //                             resolve(dataUrl);
-    //                         } catch (error) {
-    //                             reject(error);
-    //                         }
-    //                     });
-    //                 });
-    //             }
-        
-    //             var widthVisibility
-    //             var heightVisibility
-    //             var thickVisibility
-    //             var borderPositionId
-    //             var fixingPositionId
-    //             canva.getObjects().forEach((object, index) => {
-    //                 // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
-    //                 //     object.set('visible', false);
-    //                 // }
-    //                 if(object.name === 'widthLine' || object.name === 'width-value'){
-    //                     widthVisibility = object.visible
-    //                     object.set('visible', false);
-    //                 }
-    //                 if(object.name === 'heightLine' || object.name === 'height-value'){
-    //                     heightVisibility = object.visible
-    //                     object.set('visible', false);
-    //                 }
-    //                 if(object.name === 'asowp-SignText'){
-    //                     object.set('visible', false);
-    //                 }
-    //                 if(object.name === 'thickness-value'){
-    //                     thickVisibility = object.visible
-    //                     object.set('visible', false);
-    //                 }
-    //                 if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-    //                     borderPositionId = index
-    //                     object.bringToFront();
-    //                 }
-    //                 if(object.objectType === 'asowp-fixingMethods'){
-    //                     fixingPositionId = index
-    //                     object.bringToFront();
-    //                 }
-    //             });
-    //             canva.renderAll();
-
-    //             await drawnPathFromText()
-                        
-    //             const svgData = canva.toSVG(options);
-    //             // const svgData = canva.toSVG(options);
-    //             const svgDataPreview = canva.toSVG(optionsPreview);
-    //             var previewScreen = document.getElementById('showPreview')
-    //             var svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-
-    //             var dataURL  = ""
-    //             // Génère l'image avec le format spécifié
-                
-    //             switch (format) {
-    //                 case 'png':
-    //                     // dataURL = canva.toDataURL({
-    //                     //     format: 'png',
-    //                     //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //                     // });
-    //                     dataURL = await convertSvgToImage(svgUrl, 'png')
-    //                 break;
-        
-    //                 case 'jpeg':
-    //                     canva.backgroundColor = configColors.value.canvasBackgroundColor
-    //                     // dataURL = canva.toDataURL({
-    //                     //     format: 'jpeg',
-    //                     //     quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //                     // });
-    //                     dataURL = await convertSvgToImage(svgUrl, 'jpeg')
-    //                 break;
-        
-    //                 case 'webp':
-    //                     dataURL = canva.toDataURL({
-    //                         format: 'webp',
-    //                         quality: 1.0 // 1.0 est la meilleure qualité pour les formats jpeg et webp
-    //                     });
-    //                     dataURL = await convertSvgToImage(svgUrl, 'webp')
-    //                 break;
-        
-    //                 case 'svg':
-    //                     dataURL = svgUrl
-
-
-    //                     // await drawnPathFromText()
-                        
-    //                     // var red = await convertSvgToImage(svgUrl, 'png')
-    //                     // console.log(canvas.getZoom(), "dfghfhf")
-    
-    //                     // var downloadLink = document.createElement("a");
-    //                     // var ink = document.createElement("a");
-    //                     // ink.href = svgUrl;
-    //                     // downloadLink.href = red;
-    //                     // ink.download = 'fileName' + ".svg";
-    //                     // downloadLink.download = 'fileName' + ".png";
-    
-    //                     // document.body.appendChild(downloadLink);
-    //                     // downloadLink.click();
-    //                     // document.body.removeChild(downloadLink);
-
-    //                     // document.body.appendChild(ink);
-    //                     // ink.click();
-    //                     // document.body.removeChild(ink);
-    //                 break;
-                
-    //                 default:
-        
-    //                 break;
-    //             }
-        
-    //             // Restaure les dimensions et l'affichage originales du canvas
-    //             canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-    //             canva.getObjects().forEach(object => {
-    //                 // if(object.name === 'heightLine' || object.name === 'widthLine' || object.name === 'height-value' || object.name === 'width-value' || object.name === 'asowp-SignText'){
-    //                 //     object.set('visible', true);
-    //                 // }
-    //                 if(object.name === 'widthLine' || object.name === 'width-value'){
-    //                     object.set('visible', widthVisibility);
-    //                 }
-    //                 if(object.name === 'heightLine' || object.name === 'height-value'){
-    //                     object.set('visible', heightVisibility);
-    //                 }
-    //                 if(object.name === 'asowp-SignText'){
-    //                     object.set('visible', true);
-    //                 }
-    //                 if(object.name === 'thickness-value'){
-    //                     object.set('visible', thickVisibility);
-    //                 }
-    //                 if(object.name === 'watermark' || object.name === 'asowp-svg-path' || object.name === 'asowp-signPattern'){
-    //                     // console.log(object, "watermark")
-    //                     canva.remove(object)
-    //                 }
-    //                 if(object.name === 'safeObject'){
-    //                     if(activeFace.value == 'front-face' && activeFace1Border.value != 'normal'){
-    //                         object.shadow = defaultShadow.value
-    //                     }
-    //                     if(activeFace.value == 'back-face' && activeFace2Border.value != 'normal'){
-    //                         object.shadow = defaultShadow.value
-    //                     }
-    //                 }
-    //                 if(object.name === 'old-world-border' || object.name === 'rounded-corners-border'){
-    //                 // borderPositionId = index
-    //                     object.moveTo(borderPositionId);
-    //                 }
-    //                 if(object.objectType === 'asowp-fixingMethods'){
-    //                     object.moveTo(fixingPositionId);
-    //                 }
-    //             });
-    
-    //             canva.renderAll();
-    
-    //             if(purpose === 'preview'){
-    //                 previewScreen.innerHTML = svgDataPreview;
-
-    //                 const svgElement = previewScreen.querySelector('svg');
-
-    //                 // Ajoutez une classe à l'élément SVG
-    //                 svgElement.classList.add('asowp-z-10');
-
-    //                 if(configImageSettings.value.scenes.length > 0){
-    //                     var miniPreview = document.getElementById('asowp-miniPreview')
-    //                     miniPreview.innerHTML = svgDataPreview;
-
-    //                 }
-    //             }else{
-    //                 var ink = document.createElement("a");
-    //                 ink.href = dataURL;
-    //                 ink.download = 'image' + "." + format;
-    //                 document.body.appendChild(ink);
-    //                 ink.click();
-    //                 document.body.removeChild(ink);
-    //             }
-
-    //         });
-    //     }catch (error) {
-    //         console.error("Une erreur est survenue:", error);
-    //     }
-    //     // return dataURL;
-
-    // }
     async function genImageWithWatermark(canva, format, purpose, width, height) {
         return new Promise((resolve, reject) => {
             try{
@@ -8873,6 +8527,435 @@ import { forAliasRE } from '@vue/compiler-core';
 
     }
 
+    function convertToPixels(value, unit, dpi = 300) {
+
+        const number = value;
+        let inches;
+
+        switch (unit) {
+            case 'mm':
+                inches = number / 25.4;
+            break;
+            case 'cm':
+                inches = number / 2.54;
+            break;
+            case 'in':
+            case 'inch':
+            case 'inches':
+                inches = number;
+            break;
+            default:
+            throw new Error('Unité non prise en charge : ' + unit);
+        }
+
+        return inches * dpi;
+    }
+
+
+    function checkScreenSizeSvg(width, height) {
+        handleReadyToSaveState(false);
+
+        var canvasContainer = document.getElementById("asowp-canvas-containers");
+        
+        // let canvasWidth, canvasHeight;
+        // if (width && height) {
+        //     canvasWidth = width;
+        //     canvasHeight = height;
+        // } else {
+        //     canvasWidth = canvasContainer.clientWidth;
+        //     canvasHeight = canvasContainer.clientHeight;
+        // }
+
+        // Fonction simple pour calculer le zoom optimal
+        function calculateOptimalZoom(canvasInstance, containerWidth, containerHeight) {
+            if (!canvasInstance) return 1;
+
+            // Obtenir tous les objets exportables
+            const exportObjects = canvasInstance.getObjects().filter(obj => 
+                // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode'].includes(obj.name)
+            );
+
+            if (exportObjects.length === 0) {
+                return 1;
+            }
+
+            // Calculer les limites du contenu
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            
+            exportObjects.forEach(obj => {
+                if(obj.name == "safeObject" && obj._objects){
+
+                }else{
+                    const rect = obj.getBoundingRect();
+                    minX = Math.min(minX, rect.left);
+                    minY = Math.min(minY, rect.top);
+                    maxX = Math.max(maxX, rect.left + rect.width);
+                    maxY = Math.max(maxY, rect.top + rect.height);
+                }
+            });
+
+            const contentWidth = maxX - minX;
+            const contentHeight = maxY - minY;
+
+            // Marge de 20px de chaque côté
+            const margin = 50;
+            const targetWidth = containerWidth - (margin * 2);
+            const targetHeight = containerHeight - (margin * 2);
+
+            // Calculer le zoom nécessaire pour chaque dimension
+            const zoomX = targetWidth / contentWidth;
+            const zoomY = targetHeight / contentHeight;
+
+            // Prendre le plus petit pour que tout rentre
+            let zoom = Math.min(zoomX, zoomY);
+            if(selectedShape.value == "cut-to-shape"){
+                zoom = zoom * 0.6
+                console.log(selectedShape.value, "8888")
+            }
+            // else{
+            //     zoom = zoom * 0.5
+            // }
+
+            console.log(`Content: ${contentWidth.toFixed(1)} x ${contentHeight.toFixed(1)}`);
+            console.log(`Target: ${targetWidth} x ${targetHeight}`);
+            console.log(`Zoom calculated: ${zoom.toFixed(3)}`);
+
+            return Math.max(0.1, Math.min(zoom, 20)); // Limiter entre 0.1 et 20
+        }
+
+        // Calculer le zoom
+        let scaleRatio = calculateOptimalZoom(canvas, width, height);
+
+        // Si on a les deux canvas, prendre le plus petit zoom
+        // if (canvasBack) {
+        //     const scaleRatioBack = calculateOptimalZoom(canvasBack, canvasWidth, canvasHeight);
+        //     scaleRatio = Math.min(scaleRatio, scaleRatioBack);
+        // }
+
+        // Appliquer le zoom et centrer
+        if (canvas) {
+            centerAndZoomAfterResize(canvas, scaleRatio, width, height);
+        }
+        if (canvasBack) {
+            centerAndZoomAfterResize(canvasBack, scaleRatio, width, height);
+        }
+
+        // Gestion des polices
+        try {
+            const hValue = handleGetObjectByName('height-value');
+            const wValue = handleGetObjectByName('width-value');
+            const tValue = handleGetObjectByName('thickness-value');
+
+            if (hValue && wValue && tValue) {
+                const fontSize = Math.max(10, 12 * Math.sqrt(scaleRatio));
+                // hValue.fontSize = fontSize;
+                // wValue.fontSize = fontSize;
+                // tValue.fontSize = fontSize;
+            }
+        } catch (error) {
+            console.warn("Erreur polices:", error);
+        }
+
+        // Finalisation
+        try {
+            currentSizeValues.value = handleGetSignPosition();
+        } catch (error) {
+            console.warn("Erreur valeurs:", error);
+        }
+
+        handleReadyToSaveState(true);
+        simulateCanvasClick();
+
+        console.log(`Zoom final: ${scaleRatio.toFixed(3)} - Container: ${width} x ${height}`);
+    }
+    async function genSvgDesignImg(canva, width, height) {
+        try {
+            await hideCanvasForWaiting(true)
+            // Récupérer tous les objets à inclure
+            const exportObjects = canva.getObjects().filter(obj => 
+                // ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border', 'asowp-cutline1', 'asowp-cutline2'].includes(obj.name)
+                ['safeObject', 'normal-border', 'asowp-SignText', 'asowp-SignTextLayer', 'asowp-SignImage', 'asowp-QRCode', 'normal-border'].includes(obj.name)
+            );
+
+            if (exportObjects.length === 0) {
+                throw new Error("Aucun objet à exporter trouvé");
+            }
+
+            async function drawnPathFromText() {
+                return new Promise((resolve, reject) => {
+                    var elements = canva.getObjects()
+                    let promises = []
+
+                    elements.forEach((object, index) => {
+                        if (object.name === 'safeObject') {
+                            if (typeof object.fill !== 'string') {
+                                var patternFill = object.fill
+                                let promise = new Promise((resolve, reject) => {
+                                    handleConvertImageToDataURI(object.fill.source.src, function(dataURI) {
+                                        fabric.Image.fromURL(dataURI, (img) => {
+                                            try {
+                                                let scaleX = object.width / img.width;
+                                                let scaleY = object.height / img.height;
+
+                                                img.left = object.left;
+                                                img.top = object.top;
+
+                                                img.clipPath = handleClipAddedObject(canva);
+                                                
+                                                img.name = 'asowp-signPattern';
+
+                                                img.scaleX = scaleX;
+                                                img.scaleY = scaleY;
+
+                                                var shadowRect = handleSetShadow(canva)
+                                                object.shadow = null
+                                                canva.add(img, shadowRect);
+                                                img.moveTo(index + 1);
+                                                shadowRect.sendToBack()                                                                                         
+                                                
+                                                canva.renderAll()
+                                                resolve(img);
+                                            } catch (error) {
+                                                reject(error);
+                                            }
+                                        });
+                                    });
+                                });
+                                promises.push(promise);
+                            }
+                        }
+                    });
+
+                    Promise.all(promises)
+                        .then(groups => resolve(groups))
+                        .catch(error => reject(error));
+                });
+            }
+
+            canva.setWidth(width)
+            canva.setHeight(height)
+            // checkScreenSize(width, height, 1.5)
+            checkScreenSizeSvg(width, height)
+
+            // Calculer le bounding box global du contenu
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            exportObjects.forEach(obj => {
+                if(obj.name == "safeObject" && obj._objects){
+
+                }else{
+                    const rect = obj.getBoundingRect();
+                    minX = Math.min(minX, rect.left);
+                    minY = Math.min(minY, rect.top);
+                    maxX = Math.max(maxX, rect.left + rect.width);
+                    maxY = Math.max(maxY, rect.top + rect.height);
+                }
+            });
+
+            const contentWidth = maxX - minX;
+            const contentHeight = maxY - minY;
+            const contentCenterX = minX + (contentWidth / 2);
+            const contentCenterY = minY + (contentHeight / 2);
+
+            // Définir les marges de sécurité (en pixels)
+            const marginX = 30; // marge horizontale
+            const marginY = 30; // marge verticale
+            const availableWidth = width - (2 * marginX);
+            const availableHeight = height - (2 * marginY);
+
+            // Calculer le facteur d'échelle pour que le contenu rentre dans les limites
+            const scaleX = availableWidth / contentWidth;
+            const scaleY = availableHeight / contentHeight;
+            
+            // Utiliser le plus petit facteur pour maintenir les proportions
+            const scale = Math.min(scaleX, scaleY, 1); // Ne pas agrandir si le contenu est déjà plus petit
+
+            // Calculer la nouvelle position du centre pour centrer le contenu
+            const newCenterX = width / 2;
+            const newCenterY = height / 2;
+            
+            // Calculer le décalage nécessaire
+            const offsetX = newCenterX - contentCenterX;
+            const offsetY = newCenterY - contentCenterY;
+
+            // Sauvegarder les positions et échelles originales
+            const originalStates = exportObjects.map(obj => ({
+                obj,
+                left: obj.left,
+                top: obj.top,
+                scaleX: obj.scaleX,
+                scaleY: obj.scaleY
+            }));
+
+            // Appliquer la transformation à tous les objets exportés
+            exportObjects.forEach(obj => {
+                // Calculer la nouvelle position relative au centre du contenu
+                const relativeX = obj.left - contentCenterX;
+                const relativeY = obj.top - contentCenterY;
+                
+                // Appliquer l'échelle et repositionner
+                obj.set({
+                    left: newCenterX + (relativeX * scale),
+                    top: newCenterY + (relativeY * scale),
+                    scaleX: (obj.scaleX || 1) * scale,
+                    scaleY: (obj.scaleY || 1) * scale
+                });
+                
+                obj.setCoords();
+            });
+
+            // Options pour le SVG
+            const options = {
+                width: `${width}px`,
+                height: `${height}px`,
+                // viewBox: `0 0 ${width} ${height}`,
+                viewBox: `0 0 0 0`,
+                encoding: 'UTF-8',
+                // suppressPreamble: true
+            };
+
+            // Masquer les objets non exportés
+            const visibilityStates = {};
+            canva.getObjects().forEach(object => {
+                visibilityStates[object.name] = object.visible;
+                if (!exportObjects.includes(object)) {
+                    object.set('visible', false);
+                }
+            });
+
+            await drawnPathFromText();
+
+            // Générer le SVG
+            // let svgContent = canva.toSVG(options);
+            let svgContent = canva.toSVG();
+            let usedFonts = getUsedFonts(canva);
+
+            if(configTextType.value === "neon") {
+                svgContent = applyNeonEffectToSVG(svgContent, canva);
+            }
+
+            const svgWithFonts = await addFontsToSVG(svgContent, usedFonts);
+
+            // Restaurer les états originaux
+            originalStates.forEach(state => {
+                state.obj.set({
+                    left: state.left,
+                    top: state.top,
+                    scaleX: state.scaleX,
+                    scaleY: state.scaleY
+                });
+                state.obj.setCoords();
+            });
+
+            canva.getObjects().forEach(object => {
+                if (visibilityStates.hasOwnProperty(object.name)) {
+                    object.set('visible', visibilityStates[object.name]);
+                }
+                if (['watermark', 'asowp-svg-path', 'asowp-signPattern'].includes(object.name)) {
+                    canva.remove(object);
+                }
+            });
+
+            checkScreenSize()
+            canva.renderAll();
+            
+            await hideCanvasForWaiting(false)
+            return svgWithFonts;
+
+        } catch (error) {
+            console.error("Erreur dans genSvgDesignImg:", error);
+            throw error;
+        }
+    }
+    async function genPrintReadyFileInSheet(designURL, count, sheetWidth = 2480, sheetHeight = 3508, margin = 10, scale = 1){
+        // return new Promise(async (resolve, reject) => {
+        //     const image = new Image();
+        //     image.crossOrigin = 'Anonymous';
+        //     image.onload = () => {
+        //     const stickerWidth = image.width;
+        //     const stickerHeight = image.height;
+
+        //     const sheetCanvas = document.createElement('canvas');
+        //     sheetCanvas.width = sheetWidth;
+        //     sheetCanvas.height = sheetHeight;
+        //     const ctx = sheetCanvas.getContext('2d');
+
+        //     const cols = Math.floor((sheetWidth + margin) / (stickerWidth + margin));
+        //     const rows = Math.ceil(count / cols);
+
+        //     let currentCount = 0;
+
+        //     for (let row = 0; row < rows; row++) {
+        //         for (let col = 0; col < cols; col++) {
+        //         if (currentCount >= count) break;
+
+        //         const x = col * (stickerWidth + margin);
+        //         const y = row * (stickerHeight + margin);
+
+        //         if (x + stickerWidth <= sheetWidth && y + stickerHeight <= sheetHeight) {
+        //             ctx.drawImage(image, x, y);
+        //             currentCount++;
+        //         }
+        //         }
+        //     }
+
+        //     resolve(canvas);
+        //     };
+        //     image.onerror = reject;
+        //     image.src = designURL;
+        // });
+        return new Promise((resolve, reject) => {
+            const canvas = new fabric.StaticCanvas(null, {
+                width: sheetWidth,
+                height: sheetHeight,
+            });
+
+            // console.log(canvas, "64646")
+
+            fabric.Image.fromURL(designURL, (img) => {
+                const originalWidth = img.width;
+                const originalHeight = img.height;
+
+                // img.scale(scale);
+                const scaledWidth = originalWidth * scale;
+                const scaledHeight = originalHeight * scale;
+
+                const cols = Math.floor((sheetWidth + margin) / (scaledWidth + margin));
+                const rows = Math.ceil(count / cols);
+
+                let currentCount = 0;
+
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < cols; col++) {
+                    if (currentCount >= count) break;
+
+                    const x = col * (scaledWidth);
+                    const y = row * (scaledHeight);
+                    // const x = col * (scaledWidth + margin);
+                    // const y = row * (scaledHeight + margin);
+
+                    if (x + scaledWidth <= sheetWidth && y + scaledHeight <= sheetHeight) {
+                        const clone = fabric.util.object.clone(img);
+                        clone.set({
+                            left: x + margin,
+                            top: y + margin,
+                            selectable: false,
+                            evented: false,
+                        });
+                        canvas.add(clone);
+                        currentCount++;
+                    }
+                    }
+                }
+
+            canvas.renderAll();
+            resolve(canvas);
+            }, { crossOrigin: 'anonymous' });
+        });
+    }
+
+
+
     function convertToPx(dimension, unit) {
         var dimensions = dimension;
         var unit = unit;
@@ -9386,6 +9469,11 @@ import { forAliasRE } from '@vue/compiler-core';
                     getCanvas(canvas, canvasBack, 'simple')
                 }
                 handleCloneCanvas(canvas, canvasBack)
+
+                handleGetMeasurementVibility(
+                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-width' ? true : false),
+                    (configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.value.customizerSign.customizerOptions.showHideMeasurements === 'only-height' ? true : false)
+                )
             
                 canvas.selection = false;
                 canvasBack.selection = false;
@@ -9455,18 +9543,30 @@ import { forAliasRE } from '@vue/compiler-core';
                     }
                 });
                 canvas.on('selection:cleared', closeObjectValues);
+                canvas.on('object:modified', (e) => {
+                    if(selectedShape.value === "cut-to-shape"){
+                        console.log("modified", selectedShape.value)
+                        let resizeTimer;
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(() => {
+                            handleSelectShape("cut-to-shape")
+                        }, 600);
+                    }
+                });
+
                 canvas.on('mouse:down', function(options) {
                     var sign = handleGetObjectByName('safeObject');
+                    let clipPath = handleClipAddedObject(canvas)
                     canvas.getObjects().forEach(function(obj) {
                         if (obj.name === 'asowp-SignText' || obj.name === "asowp-SignTextLayer") {
                             if(obj.isEditing){
                                 obj.exitEditing();
                             }
-                            obj.clipPath = handleClipAddedObject(canvas);
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvas.renderAll();
                         }
-                        if (obj.name === 'asowp-SignImage') {
-                            obj.clipPath = handleClipAddedObject(canvas);
+                        if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvas.renderAll();
                         }
                     });
@@ -9481,7 +9581,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvas.on('object:moving', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9495,7 +9595,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvas.on('object:scaling', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9509,7 +9609,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvas.on('object:rotating', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9554,16 +9654,17 @@ import { forAliasRE } from '@vue/compiler-core';
                 canvasBack.on('selection:cleared', closeObjectValues);
                 canvasBack.on('mouse:down', function(options) {
                     var sign = handleGetObjectByName('safeObject');
+                    let clipPath = handleClipAddedObject(canvasBack)
                     canvasBack.getObjects().forEach(function(obj) {
                         if (obj.name === 'asowp-SignText' || obj.name === "asowp-SignTextLayer") {
                             if(obj.isEditing){
                                 obj.exitEditing();
                             }
-                            obj.clipPath = handleClipAddedObject(canvasBack);
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvasBack.renderAll();
                         }
-                        if (obj.name === 'asowp-SignImage') {
-                            obj.clipPath = handleClipAddedObject(canvasBack);
+                        if (obj.name === 'asowp-SignImage' || obj.name === 'asowp-QRCode') {
+                            obj.clipPath = selectedShape.value != "cut-to-shape" ? clipPath : null;
                             canvasBack.renderAll();
                         }
                     });
@@ -9576,7 +9677,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvasBack.on('object:moving', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9590,7 +9691,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvasBack.on('object:scaling', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9604,7 +9705,7 @@ import { forAliasRE } from '@vue/compiler-core';
                 });
                 canvasBack.on('object:rotating', function(e) {
                     var activeObject = e.target;
-                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage'){
+                    if(activeObject.name === 'asowp-SignText' || activeObject.name === 'asowp-SignImage' || activeObject.name === 'asowp-QRCode'){
                         updateInfoDiv(activeObject);
                     }
 
@@ -9640,16 +9741,12 @@ import { forAliasRE } from '@vue/compiler-core';
 
                 let resizeTimer;
                 window.addEventListener('load', () => {
-                    // centerSign(canvas)
-                    // centerSign(canvasBack)
                 });
                 window.addEventListener('resize', () => {
                     checkScreenView()
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(() => {
                         checkScreenSize()
-                        // centerSign(canvas)
-                        // centerSign(canvasBack)
                     }, 250); // Délai de 250 millisecondes
                 });
                 
