@@ -134,6 +134,7 @@ function handleCloneCanvas() {
     "prevHeight",
     "fromData",
     "color",
+    "shapeType",
   ]);
   var canvasAsJson = JSON.stringify(jsonData);
 
@@ -275,6 +276,7 @@ function updateModifications(good, position) {
       "prevHeight",
       "fromData",
       "color",
+      "shapeType",
     ]);
     var backJsonData = backCanvas.toJSON([
       "fill",
@@ -308,6 +310,7 @@ function updateModifications(good, position) {
       "prevHeight",
       "fromData",
       "color",
+      "shapeType",
     ]);
 
     // var jsonData = handleGetObjectByName('safeObject', canvas).toObject(['name', 'id', 'selectable']);z
@@ -1110,11 +1113,15 @@ function setOutlineMeasurmentValue(sign, width, height) {
 
   if(widthVisibility === true && outlineWidth != null){
     outlineWidth.textContent = width
-    inputWidth.value = parseInt(width)
+    if(inputWidth){
+      inputWidth.value = parseInt(width)
+    }
   }
   if(heightVisibility === true && outlineHeight != null){
     outlineHeight.textContent = height
-    inputHeight.value = height
+    if(inputHeight){
+      inputHeight.value = height
+    }
   }
 }
 
@@ -2503,17 +2510,22 @@ function handleChangeSignColor( name, pattern, textColor, defTextColor, restart 
             }else{
               let pathObjects = object._objects
               const target = ` L ${canva.getWidth()} ${canva.getHeight()} `;
+              console.log(pathObjects, "3333")
 
-              pathObjects.forEach(path => {
-                const d = path.d;
-                // if (d && !d.includes(target)) {
-                if (path.name == "outline") {
-                  path.set({
-                    fill: pattern.codeHex,
-                    // stroke: pattern.codeHex,
-                  })
-                }
-              });
+              if(pathObjects && pathObjects.length > 0){
+                pathObjects.forEach(path => {
+                  const d = path.d;
+                  // if (d && !d.includes(target)) {
+                  if (path.name == "outline") {
+                    path.set({
+                      fill: pattern.codeHex,
+                      // stroke: pattern.codeHex,
+                    })
+                  }
+                });
+              }else{
+                object.set("fill", pattern.codeHex);
+              }
             }
           }
         }
@@ -2555,40 +2567,44 @@ function handleChangeSignColor( name, pattern, textColor, defTextColor, restart 
   return name;
 }
 function setPattern(canva, image) {
-  const imgElement = new Image();
-  imgElement.crossOrigin = "anonymous";
-  imgElement.src = image;
-  // console.log(image, "setPattern")
+  // const imgElement = new Image();
+  // imgElement.crossOrigin = "anonymous";
+  // imgElement.src = image;
   // var object = handleGetObjectByName('safeObject', canvas)
   canva.getObjects().forEach((object, index) => {
     if (object.name === "safeObject") {
-      handleConvertImageToDataURI(image, function (dataURI) {
-        fabric.util.loadImage(
-          dataURI,
-          function (img) {
-            var scaleX = object.width / img.width;
-            var scaleY = object.height / img.height;
-            var pattern = new fabric.Pattern({
-              source: img,
-              repeat: "no-repeat",
-              patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
-            });
-
-            // console.log(pattern)
-
-            object.set("fill", pattern);
-            // canvas.add(pattern);
-            canva.renderAll();
-          },
-          { crossOrigin: "anonymous" }
-        );
-      });
+      if(image){
+        console.log("pattern")
+        handleConvertImageToDataURI(image, function (dataURI) {
+          fabric.util.loadImage( dataURI, function (img) {
+              var scaleX = object.width / img.width;
+              var scaleY = object.height / img.height;
+              var pattern = new fabric.Pattern({
+                source: img,
+                repeat: "no-repeat",
+                patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+              });
+  
+              
+              object.set("fill", pattern);
+              // object.set("fill", "green");
+              console.log(pattern, object)
+              // canvas.add(pattern);
+              canva.renderAll();
+            },
+            { crossOrigin: "anonymous" }
+          );
+        });
+      }else{
+        console.log("no pattern")
+        object.set("fill", "darkgrey");
+      }
     }
   });
 }
 function handleSetImageToSignBackground(image) {
   setPattern(canvas, image);
-  setPattern(backCanvas, image);
+  // setPattern(backCanvas, image);
   // updateModifications(true, 'changer sign color')
 }
 
@@ -2721,8 +2737,11 @@ function handleGetShape(shape, fixing) {
     activeFixingMethode = fixing;
   }
 }
-async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
+async function handleSelectShape(shape, nwidth = 100, nheight = 100, shapeSizes) {
   selectedShape = shape;
+  if(shapeSizes && shapeSizes != null){
+    shapeSize = shapeSizes
+  }
 
   async function setShape(canvas) {
     resetFixing(canvas);
@@ -3008,6 +3027,9 @@ async function handleSelectShape(shape, nwidth = 100, nheight = 100) {
       canvas.remove(safeObject);
       canvas.add(newObject);
       newObject.sendToBack();
+      newObject.set({
+        shapeType: shape
+      });
       if(shape == "cut-to-shape"){
         console.log(newObject._objects, shape, newObject.type)
 
@@ -3143,15 +3165,23 @@ async function showLoader(statut){
 }
 
 let strokeSize = 20
-async function handleChangeOutlineSize(size){
+let shapeSize = {
+  small: 10,
+  medium: 20,
+  large: 30,
+}
+async function handleChangeOutlineSize(size, sizeData){
+  if(sizeData){
+    shapeSize = sizeData
+  }
   if(size == "small"){
-    strokeSize = 10
+    strokeSize = shapeSize.small
     await handleSelectShape(selectedShape)
   }else if(size == "medium"){
-    strokeSize = 20
+    strokeSize = shapeSize.medium
     await handleSelectShape(selectedShape)
   }else if(size == "large"){
-    strokeSize = 30
+    strokeSize = shapeSize.large
     await handleSelectShape(selectedShape)
   }
 }
@@ -3393,7 +3423,7 @@ async function handleShowCutline(canva){
     let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0].fill)
     let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0].fill)
 
-    console.log(sign, "****")
+    // console.log(sign, "****")
 
     if(sign != undefined &&  sign[0] && selectedCutline != "none"){
       let pathObjects = safeObject._objects

@@ -218,7 +218,7 @@
                                 <div>
                                     <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}:</span> {{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="text-width"></span> {{configUnit}},  {{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="text-height"></span> {{configUnit}}
                                 </div>
-                                <div>
+                                <div v-if="selectedShape != 'cut-to-shape'">
                                     <span class="asowp-font-semibold">{{ configVisualiserTexts.textPosition && configVisualiserTexts.textPosition.trim() !== '' ? configVisualiserTexts.textPosition : 'Position' }}:</span> {{ configVisualiserTexts.textLeft && configVisualiserTexts.textLeft.trim() !== '' ? configVisualiserTexts.textLeft : 'Left' }}: <span id="text-left"></span> {{configUnit}}, {{ configVisualiserTexts.textRight && configVisualiserTexts.textRight.trim() !== '' ? configVisualiserTexts.textRight : 'Right' }}: <span id="text-right"></span> {{configUnit}}, {{ configVisualiserTexts.textTop && configVisualiserTexts.textTop.trim() !== '' ? configVisualiserTexts.textTop : 'Top' }}: <span id="text-top"></span> {{configUnit}}, {{ configVisualiserTexts.textBottom && configVisualiserTexts.textBottom.trim() !== '' ? configVisualiserTexts.textBottom : 'Bottom' }}: <span id="text-bottom"></span> {{configUnit}}
                                 </div>
                                 <div v-show="angleActive">
@@ -308,6 +308,12 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM13.5 10.5h-6" />
                             </svg>
                         </span>
+                    </div>
+
+                    <div v-if="selectedShape === 'cut-to-shape'" :class="`asowp-flex asowp-flex-col asowp-absolute asowp-top-[2%] asowp-left-2 asowp-bg-[#828282]/60 asowp-text-white asowp-text-[14px] asowp-p-2 asowp-px-3 asowp-rounded-md asowp-shadow-md`">
+                        <span class="asowp-font-semibold">{{ configVisualiserTexts.textSize && configVisualiserTexts.textSize.trim() !== '' ? configVisualiserTexts.textSize : 'Size' }}</span> 
+                        <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-width'">{{ configVisualiserTexts.textWidth && configVisualiserTexts.textWidth.trim() !== '' ? configVisualiserTexts.textWidth : 'Width' }}: <span id="outline-width"> {{ currentSizeData.width }} </span> {{configUnit}}</span>
+                        <span v-if="configSettings.customizerSign.customizerOptions.showHideMeasurements === 'both' || configSettings.customizerSign.customizerOptions.showHideMeasurements === 'only-height'">{{ configVisualiserTexts.textHeight && configVisualiserTexts.textHeight.trim() !== '' ? configVisualiserTexts.textHeight : 'Height' }}: <span id="outline-height"> {{ currentSizeData.height }} </span> {{configUnit}}</span>
                     </div>
                 </div>
             </div>
@@ -677,18 +683,7 @@
                         <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textShape}}</p>    
     
                         <div class="asowp-w-full asowp-h-full asowp-overflow-auto asowp-scrollBar">
-                            <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
-                                <div class="asowp-w-full asowp-flex">
-                                    <input type="radio" id="cut-to-shape-0" name="asowp-shape" class="peer asowp-hidden" @change="selectShape('cut-to-shape', {additionalPrice: 0}, 0)">
-                                    <label for="cut-to-shape-0" :class="`${selectedShape == 'cut-to-shape' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                        asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
-                                    >
-                                        <div :class="`asowp-bg-lime-500 asowp-w-16 asowp-h-16`">
-                                        </div>
-                                        <p>cut-to-shape</p>
-                                    </label>
-                                </div>
-
+                            <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-full-center asowp-p-1">
                                 <div v-for="(shapee, id) in shapees">
                                     <div v-for="(shape, index) in allShapes" :key="shape.name" class="asowp-w-full asowp-flex">
                                         <div class="asowp-w-full asowp-flex" v-if="shapee.shapeId == index">
@@ -4558,16 +4553,6 @@
 
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
-        if(configDoublePart.value.active){
-            activeSignColor.value = model.color.name
-            activeSignColorCode1.value = model.image
-            
-            activeSignFace2Color.value = model.color.name
-             activeSignColorCode2.value = model.image
-        }else{
-            activeSignColor.value = model.color.name
-            activeSignColorCode1.value = model.image
-        }
 
         // selection de la couleur
         colorrs.value = [{color: model.color, image: model.image}]
@@ -4586,15 +4571,20 @@
         handleReadyToSaveState(true, true);
     }
 
-
-    function setImageToSignBackground(image, colorName){
-        activeSignColor.value = colorName
-        activeSignColorCode1.value = image
-        patternActive1.value = true
-
-        activeSignFace2Color.value = colorName
-        activeSignColorCode2.value = image
-        patternActive2.value = true
+    function setImageToSignBackground(image, colorName){ 
+        if(configDoublePart.value.active){
+            activeSignColor.value = colorName
+            activeSignColorCode1.value = image
+            patternActive1.value = true
+            
+            activeSignFace2Color.value = colorName
+            activeSignColorCode2.value = image
+            patternActive2.value = true
+        }else{
+            activeSignColor.value = colorName
+            activeSignColorCode1.value = image
+            patternActive1.value = true
+        }
         handleSetImageToSignBackground(image);
         // console.log("setImageToSign")
     }
@@ -5124,18 +5114,18 @@
         }
 
         let signObject = handleGetObjectByName("safeObject")
-        if(signObject.type == "group" || signObject.type == "path"){
+        if(signObject.shapeType == "cut-to-shape"){
+        // if(signObject.type == "group" || signObject.type == "path"){
             currentSizeValues.value = handleMiseAEchelle(sizees.value[0].width, sizees.value[0].height)
             console.log(currentSizeValues.value, "999999999")
             handleGetShape(shape)
             let sizee = sizees.value[0]
 
             handleChangeSize(sizee.width, sizee.height, sizee.name, sizee.maxTextChar)
-
             currentSizeName.value = sizee.label
             currentSizeData.value = {label: sizee.label, width:sizee.width, height:sizee.height}
         }else{
-            currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height)
+            currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, (setting.shapeSize ? setting.shapeSize : null))
             // currentSizeData.value = {
             //     name: "",
             //     width: realSize.width,
@@ -6918,14 +6908,14 @@
             canvas.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color", "shapeType"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
             canvasBack.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color", "shapeType"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
