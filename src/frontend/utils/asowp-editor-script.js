@@ -3163,7 +3163,7 @@ let cutlinesData = {
   },
   second: { 
     color:'white',
-    size: 20,
+    size: 30,
     borderColor: 'red',
     borderSize: 10,
   },

@@ -58,9 +58,47 @@ function formatPrice(price) {
 
   return formattedPrice;
 }
+function addformatToPrice(price) {
+  let formattedPrice = parseFloat( price ).toFixed(asowp_configurator_data.decimals);
+
+  switch (asowp_configurator_data.currency_pos) {
+    case "left":
+      formattedPrice = asowp_configurator_data.currencySymbol + formattedPrice;
+      break;
+    case "right":
+      formattedPrice = formattedPrice + asowp_configurator_data.currencySymbol;
+      break;
+    case "left_space":
+      formattedPrice =
+        asowp_configurator_data.currencySymbol + " " + formattedPrice;
+      break;
+    case "right_space":
+      formattedPrice =
+        formattedPrice + " " + asowp_configurator_data.currencySymbol;
+      break;
+  }
+
+  // Remplacez le séparateur décimal et des milliers
+  formattedPrice = formattedPrice.replace(
+    ".",
+    asowp_configurator_data.decimalSep
+  );
+  formattedPrice = formattedPrice.replace(
+    /(\d)(?=(\d{3})+(?!\d))/g,
+    "$1" + asowp_configurator_data.thousandSep
+  );
+
+  return formattedPrice;
+}
+// const qtyInput = document.getElementById('asowp-quantity');
+// qtyInput.addEventListener('input', () => {
+//   if (qtyInput.value < 1) {
+//     qtyInput.value = 1;
+//   }
+// });
 
 function setScrollColor(color) {
   document.documentElement.style.setProperty("--asowp-scrollBar-color", color);
 }
 
-export { add_to_cart, formatPrice, setScrollColor };
+export { add_to_cart, formatPrice, addformatToPrice, setScrollColor };

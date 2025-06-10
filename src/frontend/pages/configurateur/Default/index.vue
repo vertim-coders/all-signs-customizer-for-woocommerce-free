@@ -17,7 +17,7 @@
                     <div v-show="!isLoaded" :class="`asowp-hidden lg:asowp-flex asowp-w-1/3 asowp-justify-start asowp-pl-3 asowp-text-base lg:asowp-text-2xl asowp-font-bold asowp-text-center asowp-text-[${configColors.bars.titleColor}]`">
                         {{ configVisualiserTexts.titleHeader && configVisualiserTexts.titleHeader.trim() !== '' ? configVisualiserTexts.titleHeader : props.config.name }}
                     </div>
-                    <div @click="() => showStateButtons = !showStateButtons" v-show="!isLoaded" :class="`asowp-relative asowp-flex lg:asowp-hidden asowp-w-1/3 asowp-pl-2 asowp-justify-start asowp-text-[${configColors.bars.titleColor}]`">
+                    <div @click="() => showStateButtons = !showStateButtons" v-show="!isLoaded" :class="`asowp-relative asowp-flex lg:asowp-hidden asowp-w-1/4 asowp-pl-2 asowp-justify-start asowp-text-[${configColors.bars.titleColor}]`">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
@@ -88,15 +88,23 @@
                             </div>
                         </div>
                     </div>
-        
-                    <div v-show="!isLoaded" id="asowp-price" :class="`asowp-flex asowp-w-2/3 lg:asowp-w-1/3 asowp-justify-end asowp-pr-2 asowp-items-center asowp-space-x-2 asowp-bg-[${configColors.bars.price.backgroundColor}]`">
+
+                    
+                    <div v-show="!isLoaded" id="asowp-price" :class="`asowp-flex asowp-w-3/4 lg:asowp-w-1/3 asowp-justify-end asowp-pr-2 asowp-items-center asowp-space-x-2 asowp-bg-[${configColors.bars.price.backgroundColor}]`">
+                        <div v-show="!isLoaded" class="asowp-flex asowp-full-center asowp-space-x-1">
+                            <p class="asowp-hidden lg:asowp-flex asowp-text-xs">Quantity:</p>
+                            <p class="lg:asowp-hidden asowp-flex asowp-text-xs">Qty:</p>
+                            <input type="number" id="asowp-quantity" name="asowp-quantity" class="asowp-w-[60px] asowp-h-[40px] asowp-p-1" min="1" v-model="configQuantity" @input="(e)=>{setQuantity()}" style=" height: 20px; width: 50px; padding: 5px">
+                        </div>
+
                         <div :class="`asowp-text-center asowp-text-lg asowp-font-semibold asowp-text-[${configColors.bars.price.textBeforeColor}]`">
                             {{configVisualiserTexts.textBeforePrice}}
                         </div>
-                        <div :class="`asowp-flex asowp-text-lg lg:asowp-text-3xl asowp-font-bold asowp-text-center asowp-text-[${configColors.bars.price.textColor}]`">
-                            {{formatPrice(finalPrices)}} 
+                        <div :class="`asowp-flex asowp-text-lg lg:asowp-text-2xl asowp-font-bold asowp-text-center asowp-text-[${configColors.bars.price.textColor}]`">
+                            <!-- {{formatPrice(finalPrices)}}  -->
+                             {{addformatToPrice(finalPrice)}}
                         </div>
-                        <div :class="`asowp-text-center asowp-text-lg asowp-font-semibold asowp-text-[${configColors.bars.price.textAfterColor}]`">
+                        <div :class="`asowp-text-center asowp-text- asowp-font-semibold asowp-text-[${configColors.bars.price.textAfterColor}]`">
                             {{configVisualiserTexts.textAfterPrice}}
                         </div>
                     </div>
@@ -325,10 +333,12 @@
                             </div>
 
                             <div v-if="(materialType == 'simple' && currentMaterialTextImages.enableQrCode && (sizees.length > 0 || customSizeActive) ) || materialType == 'advance' && advancedComponent.options.length > 0" @click="showOptions('qr-code')" :class="`${step === 'qr-code' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-w-fit asowp-h-[90%] asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1  asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg lg:asowp-shadow-[-10px_0px_10px_-1px_#e0e0e0] asowp-base-animation asowp-cursor-pointer asowp-cardDiv`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                <svg v-if="!configSectionIcons?.changeIconQrCode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
                                 </svg>
+                                <img v-if="configSectionIcons?.changeIconQrCode" :src="configSectionIcons.changeIconImage" class="aso-w-6 aso-h-6" />
+
                                 <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
                                     Qr Code
                                 </div>
@@ -2104,6 +2114,11 @@
                         </div>
                     </p>
                 </div>
+
+                <div :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
+                    <p :class="`asowp-text-[16px] asowp-font-semibold`">{{ configVisualiserTexts.textQuantity ?? 'Quantity' }}</p>
+                    <p :class="`asowp-text-[14px] lowercase first-letter:uppercase`">{{configQuantity}}</p>
+                </div>
                 
                 <div v-if=" selectedMaterial != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
                     <p :class="`asowp-text-[16px] asowp-font-semibold`">{{ configVisualiserTexts.textMaterial ?? 'Material' }}</p>
@@ -2426,7 +2441,10 @@
             </div>
 
             <div class="asowp-h-[15%] asowp-flex asowp-flex-col asowp-text-[16px] asowp-leading-normal">
-                <div :class="`asowp-h-[40%] asowp-flex asowp-text-center asowp-justify-center asowp-items-center asowp-text-[${configColors.recaps.optionTextColor}] asowp-bg-transparent asowp-text-xl asowp-font-bold`">{{formatPrice(finalPrices)}} </div>
+                <div :class="`asowp-h-[40%] asowp-flex asowp-text-center asowp-justify-center asowp-items-center asowp-text-[${configColors.recaps.optionTextColor}] asowp-bg-transparent asowp-text-xl asowp-font-bold`">
+                    <!-- {{formatPrice(finalPrices)}} -->
+                    {{addformatToPrice(finalPrice)}}
+                </div>
                 
                 <div class="asowp-flex asowp-h-[60%]">
                     <button :disabled="isAddingToCart" @click="() => finish = false" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonEditTextColor}] hover:asowp-text-[${configColors.recaps.buttonEditHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation asowp-cursor-pointer`" >
@@ -2561,7 +2579,7 @@
         showLoader,
         handleGetCutlineData,
     } from '@/frontend/utils/asowp-editor-script.js';
-    import { add_to_cart, formatPrice, setScrollColor } from '@/frontend/utils/functions.js'
+    import { add_to_cart, formatPrice, addformatToPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
     import { useRoute } from "vue-router";
     import api from "@/admin/Api/api";
@@ -4382,9 +4400,9 @@
     var currentMaterialId = ref(0)
     var currentMaterialTextImages = ref({})
     var selectedMaterial = ref('')
+    var currentMaterialDiscounts = ref([])
     var materialType = ref('')
     var firstLoad = ref(false);
-
     function selectMaterial(material, id){
         currentMaterial.value = material
         currentMaterialId.value = id
@@ -4417,8 +4435,6 @@
             fixinggs.value = material.data.fixingMethods
             colorrs.value = material.data.colors
             borderrs.value = material.data.borders
-        // console.log(borderrs.value, "selectMaterial", material)
-
             additionalComponents.value = material.data.additionalOptions
             addComponentSelected.value = []
 
@@ -4455,6 +4471,21 @@
             if(firstLoad.value){
                 selectAdvanceFirstValue()
             }
+        }
+
+        if(material.discounts){
+            currentMaterialDiscounts.value = material.discounts
+        }else{
+            currentMaterialDiscounts.value = [
+                { 
+                    quantity: 5,
+                    discountPercentage:10
+                },
+                { 
+                    quantity: 10,
+                    discountPercentage:20
+                },
+            ]
         }
 
         firstLoad.value = true
@@ -5001,9 +5032,8 @@
                 // console.log(matchingSettings, "resultat")
         
                 customSizeTextValues.value = {
+                    ...matchingSettings, 
                     textNumber: 0, 
-                    charPrice: matchingSettings.charPrice, 
-                    basePrice: matchingSettings.basePrice, 
                     maxTextChar: -1, 
                     startPriceAtChar: 0
                 }
@@ -6423,6 +6453,7 @@
     var optionsPrices = ref([])
     var textsPrices = ref(0)
     var finalPrices = ref(0)
+    var finalPrice = ref(0)
     function getOptionPrice(priceObject){
         textsPrices.value = handleSetPrice()
         function addUniqueObject(arr, obj, key) {
@@ -6526,6 +6557,7 @@
             }
         }
         finalPrices.value = sumOptionsPrice(optionsPrices.value, 'price') + textsPrices.value;
+        setQuantity();
     }
 
     var finish = ref(false)
@@ -6711,6 +6743,7 @@
                 label: "qr Codes",
                 value: addedObject.qrCodes,
             },
+            quantity: configQuantity.value,
             additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
             additionalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
             designImages: await generateOutputImage(designImagesFace1, canvas),
@@ -6860,6 +6893,7 @@
                         face2 :face2AddedObject.qrCodes
                     }
                 },
+                quantity: configQuantity.value,
                 additionalComponents: (addComponentSelected.value.length > 0 ? addComponentSelected.value : []),
                 additionnalOptions: (customAdditionalValues.value.length > 0 ? customAdditionalValues.value : []),
                 designImages: {
@@ -9241,8 +9275,11 @@
             recaps:{
                 ...configData.value,
                 custom_price: parseFloat(
-                    finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
+                    finalPrice.value
                 ).toFixed(asowp_configurator_data.decimals)
+                // custom_price: parseFloat(
+                //     finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
+                // ).toFixed(asowp_configurator_data.decimals)
             },
             variation_id:asowp_configurator_data.productID,
             quantity:1
@@ -9278,6 +9315,46 @@
         }
     }
 
+    let configQuantity = ref(1)
+    function cleanDecimalInput(input) {
+        let cleaned = input.replace(/[^\d.,]/g, '');
+
+        const match = cleaned.match(/[.,]/);
+        if (!match) {
+            return parseFloat(cleaned.replace(/\D/g, '')) || 0;
+        }
+
+        const sepIndex = match.index;
+        const separator = match[0];
+
+        // Construire la partie entière et décimale
+        const integerPart = cleaned.slice(0, sepIndex).replace(/\D/g, '');
+        const decimalPart = cleaned.slice(sepIndex + 1).replace(/\D/g, '');
+
+        const numberString = `${integerPart}.${decimalPart}`;
+        return parseFloat(numberString) || 0;
+    }
+    function setQuantity() {
+        if (configQuantity.value < 1) {
+          configQuantity.value = 1
+        }
+
+        let prixTotal = cleanDecimalInput(formatPrice(finalPrices.value)) * configQuantity.value;
+
+        let discountApplicable = 0;
+        for (const discount of currentMaterialDiscounts.value) {
+            if (configQuantity.value >= discount.quantity) {
+                discountApplicable = Math.max(discountApplicable, discount.discountPercentage);
+            }
+        }
+
+        if (discountApplicable > 0) {
+            prixTotal = prixTotal * (1 - discountApplicable / 100);
+        }
+
+        finalPrice.value = prixTotal
+        return prixTotal;
+    }
 
     onMounted(async() => {
 
@@ -9339,7 +9416,7 @@
             if(props.config.data.settings.customizerSign.images.selectedCutline){
                 handleGetCutlineData(
                     props.config.data.settings.customizerSign.images.selectedCutline,
-                    props.config.data.settings.customizerSign.images.cutlinesData,
+                    props.config.data.settings.customizerSign.images.cutlines,
                 )
             }
 
