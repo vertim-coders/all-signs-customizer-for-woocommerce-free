@@ -4966,22 +4966,17 @@
     
     function selectCustomSize(customSize){
         function checkInterval(pricings, value){
-            let newPricing = {
-                type: "range",
-                range: [...pricings],
-                rangePricingPerUnit: true,
-            }
-            if(newPricing.type){
-                if(newPricing.type == "range"){
-                    let settings = newPricing.range[0];
-                    for (let i = 0; i < newPricing.range.length; i++) {
-                        if (value <= newPricing.range[i].surface) {
+            if(pricings.type){
+                if(pricings.type == "range"){
+                    let settings = pricings.range[0];
+                    for (let i = 0; i < pricings.range.length; i++) {
+                        if (value <= pricings.range[i].surface) {
                             // settings = pricings.range[i];
-                            settings = { perRange: (newPricing.rangePricingPerUnit && newPricing.rangePricingPerUnit == true) ? newPricing.rangePricingPerUnit : false, ...newPricing.range[i]};
+                            settings = { perRange: (pricings.rangePricingPerUnit && pricings.rangePricingPerUnit == true) ? pricings.rangePricingPerUnit : false, ...pricings.range[i]};
                             break;
                         }
                         // settings = pricings.range[i];
-                        settings = { perRange: (newPricing.rangePricingPerUnit && newPricing.rangePricingPerUnit == true) ? newPricing.rangePricingPerUnit : false, ...newPricing.range[i]};
+                        settings = { perRange: (pricings.rangePricingPerUnit && pricings.rangePricingPerUnit == true) ? pricings.rangePricingPerUnit : false, ...pricings.range[i]};
                     }
                     return settings;   
                 }else if(pricings.type == "unit"){

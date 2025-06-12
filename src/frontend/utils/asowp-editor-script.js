@@ -2496,9 +2496,7 @@ function handleChangeSignColor( name, pattern, textColor, defTextColor, restart 
               signBackground2 = "pattern";
               patternUrl2 = pattern.url;
             }
-            if(selectedShape != "cut-to-shape"){
-              setPattern(canva, pattern.url);
-            }
+            setPattern(canva, pattern.url);
           } else {
             if (canva.name == "front-face") {
               signBackground1 = "color";
@@ -2509,13 +2507,10 @@ function handleChangeSignColor( name, pattern, textColor, defTextColor, restart 
               object.set("fill", pattern.codeHex);
             }else{
               let pathObjects = object._objects
-              const target = ` L ${canva.getWidth()} ${canva.getHeight()} `;
-              console.log(pathObjects, "3333")
 
-              if(pathObjects && pathObjects.length > 0){
+              if(pathObjects){
                 pathObjects.forEach(path => {
                   const d = path.d;
-                  // if (d && !d.includes(target)) {
                   if (path.name == "outline") {
                     path.set({
                       fill: pattern.codeHex,
@@ -2570,11 +2565,11 @@ function setPattern(canva, image) {
   // const imgElement = new Image();
   // imgElement.crossOrigin = "anonymous";
   // imgElement.src = image;
+  // console.log(image, "setPattern")
   // var object = handleGetObjectByName('safeObject', canvas)
   canva.getObjects().forEach((object, index) => {
     if (object.name === "safeObject") {
-      if(image){
-        console.log("pattern")
+      if(selectedShape != "cut-to-shape"){
         handleConvertImageToDataURI(image, function (dataURI) {
           fabric.util.loadImage( dataURI, function (img) {
               var scaleX = object.width / img.width;
@@ -2585,10 +2580,9 @@ function setPattern(canva, image) {
                 patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
               });
   
-              
+              // console.log(pattern)
+  
               object.set("fill", pattern);
-              // object.set("fill", "green");
-              console.log(pattern, object)
               // canvas.add(pattern);
               canva.renderAll();
             },
@@ -2596,8 +2590,28 @@ function setPattern(canva, image) {
           );
         });
       }else{
-        console.log("no pattern")
-        object.set("fill", "darkgrey");
+        let pathObjects = object._objects
+
+        pathObjects.forEach(path => {
+          if (path.name == "outline") {
+            handleConvertImageToDataURI(image, function (dataURI) {
+              fabric.util.loadImage( dataURI, function (img) {
+                  var scaleX = path.width / img.width;
+                  var scaleY = path.height / img.height;
+                  var pattern = new fabric.Pattern({
+                    source: img,
+                    repeat: "no-repeat",
+                    patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                  });
+            
+                  path.set("fill", pattern);
+                  canva.renderAll();
+                },
+                { crossOrigin: "anonymous" }
+              );
+            });
+          }
+        });
       }
     }
   });
