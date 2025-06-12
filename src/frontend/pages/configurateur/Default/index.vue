@@ -337,7 +337,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
                                 </svg>
-                                <img v-if="configSectionIcons?.changeIconQrCode" :src="configSectionIcons.changeIconImage" class="aso-w-6 aso-h-6" />
+                                <img v-if="configSectionIcons?.changeIconQrCode" :src="configSectionIcons.changeIconImage" class="asowp-w-6 asowp-h-6" />
 
                                 <div class="asowp-text-[10px] lg:asowp-text-[13px] asowp-font-medium">
                                     Qr Code
@@ -567,18 +567,7 @@
                             <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textShape}}</p>    
         
                             <div class="asowp-w-full asowp-h-full lg:asowp-py-2 asowp-overflow-auto asowp-scrollBar">
-                                <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-w-full asowp-full-center asowp-p-1">
-                                    <div class="asowp-w-full asowp-flex">
-                                        <input type="radio" id="cut-to-shape-0" name="asowp-shape" class="peer asowp-hidden" @change="selectShape('cut-to-shape', {additionalPrice: 0}, 0)">
-                                        <label for="cut-to-shape-0" :class="`${selectedShape == 'cut-to-shape' ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}]`} 
-                                            asowp-w-full asowp-h-full asowp-flex asowp-flex-col asowp-space-y-1 asowp-full-center asowp-whitespace-nowrap asowp-font-semibold asowp-text-sm hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-rounded-md asowp-p-2 asowp-text-center asowp-cursor-pointer asowp-transition-all asowp-ease-in-out asowp-duration-500`"
-                                        >
-                                            <div :class="`asowp-bg-lime-500 asowp-w-16 asowp-h-16`">
-                                            </div>
-                                            <p>cut-to-shape</p>
-                                        </label>
-                                    </div>
-
+                                <div class="asowp-grid asowp-grid-cols-3 lg:asowp-grid-cols-3 asowp-gap-2 asowp-full-center asowp-p-1">
                                     <div v-for="(shapee, id) in shapees">
                                         <div v-for="(shape, index) in allShapes" :key="shape.name" class="asowp-w-full asowp-flex">
                                             <div class="asowp-w-full asowp-flex" v-if="shapee.shapeId == index">
@@ -4556,16 +4545,6 @@
 
         //selection de la couleur
         setImageToSignBackground(model.image, model.color.name)
-        if(configDoublePart.value.active){
-            activeSignColor.value = model.color.name
-            activeSignColorCode1.value = model.image
-            
-            activeSignFace2Color.value = model.color.name
-             activeSignColorCode2.value = model.image
-        }else{
-            activeSignColor.value = model.color.name
-            activeSignColorCode1.value = model.image
-        }
 
         // selection de la couleur
         colorrs.value = [{color: model.color, image: model.image}]
@@ -4584,14 +4563,20 @@
         handleReadyToSaveState(true, true);
     }
 
-    function setImageToSignBackground(image, colorName){
-        activeSignColor.value = colorName
-        activeSignColorCode1.value = image
-        patternActive1.value = true
-
-        activeSignFace2Color.value = colorName
-        activeSignColorCode2.value = image
-        patternActive2.value = true
+    function setImageToSignBackground(image, colorName){  
+        if(configDoublePart.value.active){
+            activeSignColor.value = colorName
+            activeSignColorCode1.value = image
+            patternActive1.value = true
+            
+            activeSignFace2Color.value = colorName
+            activeSignColorCode2.value = image
+            patternActive2.value = true
+        }else{
+            activeSignColor.value = colorName
+            activeSignColorCode1.value = image
+            patternActive1.value = true
+        }
         handleSetImageToSignBackground(image);
         // console.log("setImageToSign")
     }
@@ -4870,7 +4855,6 @@
         addedTexts.value = currentSizeValues.value.texts
 
         if(sizeSetting){
-            console.log(sizeSetting, 'azer')
             if(sizeSetting.perRange && sizeSetting.perRange == true){
                 var sizeBasePrice = sizeSetting.basePrice
                 var surface = customSizeValues.value.width * customSizeValues.value.height
@@ -4974,7 +4958,6 @@
     }
     
     function selectCustomSize(customSize){
-        // console.log(customSize, "custom size")
         function checkInterval(pricings, value){
             if(pricings.type){
                 if(pricings.type == "range"){
@@ -5050,8 +5033,9 @@
             changeSize(customSizeValues.value, customSizeTextValues.value)
         }
 
-        simulateCanvasClick()
+        // simulateCanvasClick()
     }
+
 
     var currentThickValue = ref(0)
     function selectSizeThickness(thick){
@@ -5119,18 +5103,16 @@
         }
 
         let signObject = handleGetObjectByName("safeObject")
-        if(signObject.type == "group" || signObject.type == "path"){
+        if(signObject.shapeType == "cut-to-shape"){
             currentSizeValues.value = handleMiseAEchelle(sizees.value[0].width, sizees.value[0].height)
-            console.log(currentSizeValues.value, "999999999")
             handleGetShape(shape)
             let sizee = sizees.value[0]
 
             handleChangeSize(sizee.width, sizee.height, sizee.name, sizee.maxTextChar)
-
             currentSizeName.value = sizee.label
             currentSizeData.value = {label: sizee.label, width:sizee.width, height:sizee.height}
         }else{
-            currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height)
+            currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, (setting.shapeSize ? setting.shapeSize : null))
             // currentSizeData.value = {
             //     name: "",
             //     width: realSize.width,
@@ -6916,14 +6898,14 @@
             canvas.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
+            var jsonData1 = canvas.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color", "shapeType"])
             var canvas1AsJson = JSON.stringify(jsonData1)
             var current1State = JSON.parse(canvas1AsJson);
 
             canvasBack.getObjects().forEach((obj, index) => {
                 obj.zIndex = index;
             });
-            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color"])
+            var jsonData2 = canvasBack.toJSON(['fill', 'name', 'id', 'selectable', 'canvasName', 'priceId', 'uniScaleTransform', 'centeredScaling', 'lockScalingFlip',"lockMoving", "lockScale", "lockRotate", "lockEdition", "fixingRatio", "fixingScale", "ratioScale", "source", "objectType", "imageUrl", "fontFamilyUrl", "neonColor", "glowRadius", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor", "zIndex", "prevWidth", "prevHeight", "fromData", "color", "shapeType"])
             var canvas2AsJson = JSON.stringify(jsonData2)
             var current2State = JSON.parse(canvas2AsJson);
 
@@ -7129,37 +7111,36 @@
             if(configOutputSettings.value.waterMark && configOutputSettings.value.waterMark != ''){
                 await genImageWithWatermark(canvas, 'svg', 'download', 1317, 622);
             }else{
-                
-                console.log(currentSizeData.value, "11111")
-                let size = {
-                    width: convertToPixels(currentSizeData.value.width, configUnit.value),
-                    height: convertToPixels(currentSizeData.value.height, configUnit.value),
-                }
-                let designURL = await genSvgDesignImg(canvas, size.width, size.height);
-                let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(designURL)));
+                await genImage(canvas, 'svg', 'download');
+                // console.log(currentSizeData.value, "11111")
+                // let size = {
+                //     width: convertToPixels(currentSizeData.value.width, configUnit.value),
+                //     height: convertToPixels(currentSizeData.value.height, configUnit.value),
+                // }
+                // let designURL = await genSvgDesignImg(canvas, size.width, size.height);
+                // let svgUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(designURL)));
 
-                // const stickerCanvas = await genPrintReadyFileInSheet(designURL, 10)
-                let paperSize = {
-                    // width: convertToPixels(41, "cm"),
-                    // height: convertToPixels(49.7, "cm"),
-                    width: convertToPixels(210, configUnit.value),
-                    height: convertToPixels(297, configUnit.value),
-                }
-                // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, 2480, 3508, 20)
-                const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
+                // // const stickerCanvas = await genPrintReadyFileInSheet(designURL, 10)
+                // let paperSize = {
+                //     // width: convertToPixels(41, "cm"),
+                //     // height: convertToPixels(49.7, "cm"),
+                //     width: convertToPixels(210, configUnit.value),
+                //     height: convertToPixels(297, configUnit.value),
+                // }
+                // // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, 2480, 3508, 20)
+                // const stickerCanvas = await genPrintReadyFileInSheet(svgUrl, 20, paperSize.width, paperSize.height, 20)
                 
-
-                // Exporter en image si besoin :
-                const dataURL = stickerCanvas.toDataURL({
-                    format: 'png',
-                    quality: 1.0
-                });
-                const link = document.createElement('a');
-                link.href = dataURL;
-                link.download = 'img'+'.'+'png';
-                // link.href = svgUrl;
-                // link.download = 'img'+'.'+'svg';
-                link.click();
+                // // Exporter en image si besoin :
+                // const dataURL = stickerCanvas.toDataURL({
+                //     format: 'png',
+                //     quality: 1.0
+                // });
+                // const link = document.createElement('a');
+                // link.href = dataURL;
+                // link.download = 'img'+'.'+'png';
+                // // link.href = svgUrl;
+                // // link.download = 'img'+'.'+'svg';
+                // link.click();
             }
         }
     }
