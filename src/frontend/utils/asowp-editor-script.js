@@ -1436,29 +1436,6 @@ function handleChangeThickness(active, thick) {
   showThicknessObject(backCanvas, active);
 }
 
-// function lockToCanvas(activeObj){
-//     var Objects = canvas.getObjects();
-//     Objects.forEach(function(object){
-//         if(object.type != 'line'){
-//             if(object.name == 'safeObject'){
-
-//                 activeObj.on('moving', function() {
-//                     if (!object.containsPoint(activeObj.getCenterPoint())) {
-//                         // Si le centre du rectangle est en dehors de la zone clipée, annuler le déplacement
-//                         activeObj.set({
-//                             left: activeObj._originalLeft,
-//                             top: activeObj._originalTop
-//                         });
-//                     } else {
-//                         // Si le déplacement est autorisé, enregistrer la nouvelle position comme originale
-//                         activeObj._originalLeft = activeObj.left;
-//                         activeObj._originalTop = activeObj.top;
-//                     }
-//                 });
-//             }
-//         }
-//     })
-// }
 function lockToCanvas(activeObj) {
   var objects = activeCanvas.getObjects();
   objects.forEach(function (object) {
@@ -2592,26 +2569,28 @@ function setPattern(canva, image) {
       }else{
         let pathObjects = object._objects
 
-        pathObjects.forEach(path => {
-          if (path.name == "outline") {
-            handleConvertImageToDataURI(image, function (dataURI) {
-              fabric.util.loadImage( dataURI, function (img) {
-                  var scaleX = path.width / img.width;
-                  var scaleY = path.height / img.height;
-                  var pattern = new fabric.Pattern({
-                    source: img,
-                    repeat: "no-repeat",
-                    patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
-                  });
-            
-                  path.set("fill", pattern);
-                  canva.renderAll();
-                },
-                { crossOrigin: "anonymous" }
-              );
-            });
-          }
-        });
+        if(pathObjects){
+          pathObjects.forEach(path => {
+            if (path.name == "outline") {
+              handleConvertImageToDataURI(image, function (dataURI) {
+                fabric.util.loadImage( dataURI, function (img) {
+                    var scaleX = path.width / img.width;
+                    var scaleY = path.height / img.height;
+                    var pattern = new fabric.Pattern({
+                      source: img,
+                      repeat: "no-repeat",
+                      patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                    });
+              
+                    path.set("fill", pattern);
+                    canva.renderAll();
+                  },
+                  { crossOrigin: "anonymous" }
+                );
+              });
+            }
+          });
+        }
       }
     }
   });
@@ -2751,10 +2730,11 @@ function handleGetShape(shape, fixing) {
     activeFixingMethode = fixing;
   }
 }
-async function handleSelectShape(shape, nwidth = 100, nheight = 100, shapeSizes) {
+async function handleSelectShape(shape, nwidth = 100, nheight = 100, shapeSizes = null) {
   selectedShape = shape;
   if(shapeSizes && shapeSizes != null){
     shapeSize = shapeSizes
+    strokeSize = shapeSize.medium
   }
 
   async function setShape(canvas) {
@@ -3190,13 +3170,13 @@ async function handleChangeOutlineSize(size, sizeData){
   }
   if(size == "small"){
     strokeSize = shapeSize.small
-    await handleSelectShape(selectedShape)
+    await handleSelectShape("cut-to-shape")
   }else if(size == "medium"){
     strokeSize = shapeSize.medium
-    await handleSelectShape(selectedShape)
+    await handleSelectShape("cut-to-shape")
   }else if(size == "large"){
     strokeSize = shapeSize.large
-    await handleSelectShape(selectedShape)
+    await handleSelectShape("cut-to-shape")
   }
 }
 let selectedCutline = "none"
@@ -3485,6 +3465,7 @@ async function handleShowCutline(canva){
       canva.add(cutline1, cutline2)
   
       let realValues = handleReverseMiseAEchelle(sign[0])
+      console.log(realValues, "ppp")
       setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
     }else{
       setOutlineMeasurmentValue({}, 0, 0)
@@ -9301,36 +9282,70 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
     
             if (templateObject[0].name === "safeObject") {
               rect = await templateObject[0];
-              if (typeof templateObject[0].fill !== "string") {
-                templateObject[0].fill = "transparent";
-                // console.log('WARNING:')
-                var image;
-                if (canva.name === "front-face") {
-                  signBackground1 = "pattern";
-                  patternUrl1 = templateData.color.face1.codeHex;
-                  image = templateData.color.face1.codeHex;
-                }
-                if (canva.name === "back-face") {
-                  signBackground2 = "pattern";
-                  patternUrl2 = templateData.color.face2.codeHex;
-                  image = templateData.color.face2.codeHex;
-                }
-                fabric.util.loadImage(
-                  image,
-                  function (img) {
-                    var scaleX = templateObject[0].width / img.width;
-                    var scaleY = templateObject[0].height / img.height;
-                    var pattern = new fabric.Pattern({
-                      source: img,
-                      repeat: "no-repeat",
-                      patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
-                    });
-                    templateObject[0].set("fill", pattern);
-                    // canvas.add(pattern);
-                    canva.renderAll();
+              if(templateData.shape != "cut-to-shape"){
+                if (typeof templateObject[0].fill !== "string") {
+                  templateObject[0].fill = "transparent";
+                  // console.log('WARNING:')
+                  var image;
+                  if (canva.name === "front-face") {
+                    signBackground1 = "pattern";
+                    patternUrl1 = templateData.color.face1.codeHex;
+                    image = templateData.color.face1.codeHex;
                   }
-                  // { crossOrigin: "anonymous" }
-                );
+                  if (canva.name === "back-face") {
+                    signBackground2 = "pattern";
+                    patternUrl2 = templateData.color.face2.codeHex;
+                    image = templateData.color.face2.codeHex;
+                  }
+                  fabric.util.loadImage( image, function (img) {
+                      var scaleX = templateObject[0].width / img.width;
+                      var scaleY = templateObject[0].height / img.height;
+                      var pattern = new fabric.Pattern({
+                        source: img,
+                        repeat: "no-repeat",
+                        patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                      });
+                      templateObject[0].set("fill", pattern);
+                      // canvas.add(pattern);
+                      canva.renderAll();
+                    }
+                    // { crossOrigin: "anonymous" }
+                  );
+                }
+              }else{
+                let pathObjects = templateObject[0]._objects
+                pathObjects.forEach(path => {
+                  if (path.name == "outline") {
+                    if (typeof path.fill !== "string") {
+                      path.fill = "transparent";
+                      var image;
+                      if (canva.name === "front-face") {
+                        signBackground1 = "pattern";
+                        patternUrl1 = templateData.color.face1.codeHex;
+                        image = templateData.color.face1.codeHex;
+                      }
+                      if (canva.name === "back-face") {
+                        signBackground2 = "pattern";
+                        patternUrl2 = templateData.color.face2.codeHex;
+                        image = templateData.color.face2.codeHex;
+                      }
+                      fabric.util.loadImage( image, function (img) {
+                          var scaleX = templateObject[0].width / img.width;
+                          var scaleY = templateObject[0].height / img.height;
+                          var pattern = new fabric.Pattern({
+                            source: img,
+                            repeat: "no-repeat",
+                            patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                          });
+                          path.set("fill", pattern);
+                          // canvas.add(pattern);
+                          canva.renderAll();
+                        }
+                        // { crossOrigin: "anonymous" }
+                      );
+                    }
+                  }
+                });
               }
             }
     

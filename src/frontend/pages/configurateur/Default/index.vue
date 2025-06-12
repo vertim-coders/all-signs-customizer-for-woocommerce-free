@@ -5147,7 +5147,7 @@
     let currentOutineSize = ref("medium")
     async function changeOutlineSize(size){
         currentOutineSize.value = size
-        await handleChangeOutlineSize(size)
+        await handleChangeOutlineSize(size, )
 
         if(firstSetLoad.value){
             saveStep('select shape')
