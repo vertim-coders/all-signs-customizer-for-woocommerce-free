@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
     <div class="asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
+=======
+    <div class="asowp-translate-y-7">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         <!-- Loading State -->
         <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
             <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="Loading...">
@@ -7,6 +11,7 @@
 
         <!-- Main Content -->
         <div class="asowp-space-y-1" v-if="!isFetching">
+<<<<<<< HEAD
             <div class=" asowp-px-4 asowp-py-6 asowp-rounded-lg asowp-shadow-sm">
                 
                 <!-- Header 
@@ -14,6 +19,15 @@
                     <h3 class="asowp-text-lg asowp-font-semibold asowp-text-[#333333] asowp-mb-2">Discount Configuration</h3>
                     <p class="asowp-text-sm asowp-text-[#666666]">Set up quantity-based discounts for your products</p>
                 </div>-->
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-6 asowp-rounded-lg asowp-shadow-sm">
+                
+                <!-- Header -->
+                <div class="asowp-mb-6">
+                    <h3 class="asowp-text-lg asowp-font-semibold asowp-text-[#333333] asowp-mb-2">Discount Configuration</h3>
+                    <p class="asowp-text-sm asowp-text-[#666666]">Set up quantity-based discounts for your products</p>
+                </div>
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
 
                 <!-- Discounts List or Empty State -->
                 <div v-if="!isEdit">
@@ -40,13 +54,22 @@
 
                     <!-- Discounts List -->
                     <div v-else class="asowp-space-y-4">
+<<<<<<< HEAD
                         <div class="asowp-relative " 
+=======
+                        <div class="asowp-bg-white asowp-rounded-lg asowp-border asowp-border-[#E5E7EB] asowp-p-4 asowp-relative asowp-shadow-sm hover:asowp-shadow-md asowp-transition-shadow asowp-duration-200" 
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                              v-for="(discount, key) in discounts" :key="key">
                             
                             <!-- Delete Button -->
                             <button @click="handleDeleteDiscount(key)" 
+<<<<<<< HEAD
                                     class="asowp-absolute asowp-right-0 asowp-top-0 asowp-p-1 asowp-rounded-full asowp-text-[#666666] hover:asowp-text-red-500 hover:asowp-bg-red-50 asowp-transition-all asowp-duration-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
+=======
+                                    class="asowp-absolute asowp-right-3 asowp-top-3 asowp-p-1 asowp-rounded-full asowp-text-[#666666] hover:asowp-text-red-500 hover:asowp-bg-red-50 asowp-transition-all asowp-duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
@@ -61,9 +84,14 @@
                                         type="number" 
                                         v-model="discounts[key].quantity" 
                                         placeholder="Enter minimum quantity"
+<<<<<<< HEAD
                                         class="asowp-w-full asowp-h-[35px] asowp-px-3 asowp-py-2 asowp-border asowp-text-sm focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-[#016464] asowp-transition-all asowp-duration-200"
                                         :class="{'asowp-border-red-400 focus:asowp-ring-red-400 focus:asowp-border-red-400': errors[key]?.quantity}"
                                         style="border-radius: 5px !important;"
+=======
+                                        class="asowp-w-full asowp-px-3 asowp-py-2 asowp-border asowp-rounded-lg asowp-text-sm focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-[#016464] asowp-transition-all asowp-duration-200"
+                                        :class="{'asowp-border-red-400 focus:asowp-ring-red-400 focus:asowp-border-red-400': errors[key]?.quantity}"
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                         @blur="validateQuantity(key)"
                                         @input="validateQuantity(key)">
                                     <span v-if="errors[key]?.quantity" class="asowp-text-red-500 asowp-text-xs asowp-block">
@@ -83,9 +111,14 @@
                                             placeholder="Enter discount percentage"
                                             min="0" 
                                             max="100"
+<<<<<<< HEAD
                                             class="asowp-w-full asowp-h-[35px] asowp-px-3 asowp-py-2 asowp-pr-8 asowp-border asowp-text-sm focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-[#016464] asowp-transition-all asowp-duration-200"
                                             :class="{'asowp-border-red-400 focus:asowp-ring-red-400 focus:asowp-border-red-400': errors[key]?.discountPercentage}"
                                             style="border-radius: 5px !important;"
+=======
+                                            class="asowp-w-full asowp-px-3 asowp-py-2 asowp-pr-8 asowp-border asowp-rounded-lg asowp-text-sm focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-[#016464] asowp-transition-all asowp-duration-200"
+                                            :class="{'asowp-border-red-400 focus:asowp-ring-red-400 focus:asowp-border-red-400': errors[key]?.discountPercentage}"
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                             @blur="validateDiscountPercentage(key)"
                                             @input="validateDiscountPercentage(key)">
                                         <span class="asowp-absolute asowp-right-3 asowp-top-2 asowp-text-[#666666] asowp-text-sm">%</span>
@@ -110,7 +143,11 @@
                         <div class="asowp-pt-4 asowp-border-t asowp-border-[#E5E7EB]">
                             <button @click="handleAddMaterialDiscount" 
                                     :disabled="isLoading"
+<<<<<<< HEAD
                                     class="asowp-flex asowp-items-center asowp-cursor-pointer asowp-space-x-2 asowp-border asowp-border-[#016464] asowp-px-4 asowp-py-2 asowp-rounded-lg asowp-bg-[#016464] asowp-text-white asowp-transition-all asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed">
+=======
+                                    class="asowp-flex asowp-items-center asowp-space-x-2 asowp-text-[#016464] asowp-border asowp-border-[#016464] asowp-px-4 asowp-py-2 asowp-rounded-lg hover:asowp-bg-[#016464] hover:asowp-text-white asowp-transition-all asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
@@ -122,10 +159,17 @@
             </div>
 
             <!-- Actions Footer -->
+<<<<<<< HEAD
             <div class=" asowp-flex asowp-justify-end asowp-px-4 asowp-py-4 asowp-rounded-lg asowp-shadow-sm">
                 <button @click="updateMaterialDiscounts" 
                         :disabled="isLoading || !isFormValid"
                         class="asowp-flex asowp-items-center asowp-space-x-2 asowp-cursor-pointer asowp-bg-[#016464] asowp-text-white asowp-px-6 asowp-py-3 asowp-rounded-lg asowp-font-medium hover:asowp-bg-[#014d4d] asowp-transition-all asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-justify-end asowp-px-4 asowp-py-4 asowp-rounded-lg asowp-shadow-sm">
+                <button @click="updateMaterialDiscounts" 
+                        :disabled="isLoading || !isFormValid"
+                        class="asowp-flex asowp-items-center asowp-space-x-2 asowp-bg-[#016464] asowp-text-white asowp-px-6 asowp-py-3 asowp-rounded-lg asowp-font-medium hover:asowp-bg-[#014d4d] asowp-transition-all asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         :class="{'asowp-opacity-50 asowp-cursor-not-allowed': !isFormValid}">
                     <div v-if="isLoading" class="asowp-w-4 asowp-h-4">
                         <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-full asowp-h-full" alt="Loading..."/>

@@ -34,7 +34,11 @@ const api = {
 
   //function related to maretials
 
+<<<<<<< HEAD
   updateMaterial: async (configId, materialId, material) => {
+=======
+  updateMarerial: async (configId, materialId, material) => {
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
     const edit = await axios.put(
       asowp_api_url + "/configs/" + configId + "/materials/" + materialId,
       material

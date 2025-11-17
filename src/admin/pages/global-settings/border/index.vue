@@ -1,15 +1,25 @@
 <template>
     <div class="asowp-h-[100vh]">
+<<<<<<< HEAD
         <div class="asowp-space-y-1 asowp-translate-y-6" v-if="!isNewBorder">
             <div class="asowp-bg-[#fff] asowp-flex asowp-flex-col asowp-space-y-3 asowp-px-3 asowp-py-8 asowp-border-solid asowp-border-2 asowp-border-[#D1D1D1] asowp-rounded-[10px]">
                 <div class="asowp-bg-[#F8F9FB] asowp-text-[14px] asowp-font-bold asowp-px-4 asowp-py-4">
+=======
+        <div class="asowp-space-y-1 asowp-py-10" v-if="!isNewBorder">
+            <div>
+                <div class="asowp-bg-[#F8F9FB] asowp-text-[14px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     List of Borders
                 </div>   
                 <div class="asowp-relative" id="monTableau">
                     <table class="asowp-text-center asowp-w-full asowp-border asowp-border-collapse asowp-border-0">
                         <thead class="asowp-bg-[#f0f0f1]">
                             <tr class="">
+<<<<<<< HEAD
                                 <th scope="col" class="asowp-px-6 asowp-text-left asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+=======
+                                <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     Title
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
@@ -30,7 +40,11 @@
                                 </td>
                             </tr>
                             <tr  v-for="border, key in borders" :key=key class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
+<<<<<<< HEAD
                                 <td class="asowp-px-6 asowp-text-[14px] asowp-py-2 asowp-flex asowp-justify-left asowp-space-x-2">
+=======
+                                <td class="asowp-px-6 asowp-text-[14px] asowp-py-2 asowp-flex asowp-justify-center asowp-space-x-2">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     {{border.name}}
                                 </td>
                                 <td class="asowp-px-6 asowp-py-2 asowp-text-center asowp-text-[11px]">
@@ -50,6 +64,7 @@
 
             </div>
         </div>
+<<<<<<< HEAD
         <div class="asowp-space-y-2 asowp-translate-y-6 asowp-bg-[#fff] asowp-flex asowp-flex-col asowp-space-y-3 asowp-px-3 asowp-py-8 asowp-border-solid asowp-border-2 asowp-border-[#D1D1D1] asowp-rounded-[10px]" v-if="isNewBorder">
             <div class="asowp-text-[16px] asowp-font-bold">
                 {{isEdit ? 'Edit Border' :'Add new border'}}
@@ -68,6 +83,25 @@
                             <div class="asowp-flex asowp-space-x-2 asowp-justify-between asowp-border asowp-border-solid asowp-border-[#000] asowp-rounded-[5px] asowp-p-1">
                                 <button @click="selectBorderIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
+=======
+        <div class="asowp-space-y-2" v-if="isNewBorder">
+            <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]">
+                {{isEdit ? 'Edit Border' :'Add new border'}}
+            </div>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-4">
+                <h3 class="asowp-text-[16px]">Edit border</h3>
+                <div class="asowp-flex asowp-justify-between">
+                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-3">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Title</label>
+                        <input type="text" v-model="border.name" class="asowp-w-full"/>
+                    </div>
+                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">Upload icon</label>
+                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
+                            <div class="asowp-flex asowp-space-x-2">
+                                <button @click="selectBorderIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
+                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="border.icon != ''" :src="border.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="border.icon != ''" @click="()=>{border.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -80,8 +114,12 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <hr class="Polaris-Divider asowp-w-full" style="border: 1px solid #ebebeb;">
             <div class="asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -34,12 +34,16 @@ class ASOWP_Admin
             if (current_user_can($capability)) {
                 $submenu[$slug][] = array(__('Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/');
                 $submenu[$slug][] = array(__('Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configurations');
+<<<<<<< HEAD
                 $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/global-settings/output');
                 $submenu[$slug][] = array(__('Templates', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');                
                 $submenu[$slug][] = array(__('Manage Fonts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-fonts');
                 $submenu[$slug][] = array(__('Manage Cliparts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
 
 
+=======
+                $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/global-settings/license');
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             }
 
             add_action('load-' . $hook, [$this, 'init_hooks']);
@@ -74,7 +78,10 @@ class ASOWP_Admin
 
         wp_enqueue_style('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.css', false, ASOWP_VERSION);
         wp_enqueue_script('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.js', [], ASOWP_VERSION, true);
+<<<<<<< HEAD
         wp_enqueue_script('asowp-sortable', ASOWP_ASSETS . '/utilities/sortable.js', [], ASOWP_VERSION, true);
+=======
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         wp_enqueue_media();
     }
 

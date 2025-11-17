@@ -1,18 +1,31 @@
 <template>
     <div>
+<<<<<<< HEAD
         <div class="asowp-space-y-4 asowp-py-6" v-if="!isNewShapes">
             <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]">
                 <div class="asowp-bg-[#F8F9FB] asowp-text-[14px] asowp-font-bold asowp-px-4 asowp-py-4">
+=======
+        <div class="asowp-space-y-4 asowp-py-10" v-if="!isNewShapes">
+            <div>
+                <div class="asowp-bg-[#F8F9FB] asowp-text-[14px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     List of shapes
                 </div>   
                 <div class="asowp-relative" id="monTableau" >
                     <table class="asowp-text-center asowp-w-full asowp-border asowp-border-collapse asowp-border-0">
                         <thead class="asowp-bg-[#f0f0f1]">
                             <tr class="">
+<<<<<<< HEAD
                                 <!--<th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
                                     ID
                                 </th>-->
                                 <th scope="col" class="asowp-text-left asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+=======
+                                <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                    ID
+                                </th>
+                                <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     Title
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
@@ -33,10 +46,17 @@
                                 </td>
                             </tr>
                             <tr  v-for="shape, key in manageShapes" :key=key class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
+<<<<<<< HEAD
                                 <!--<td>
                                     {{key}}
                                 </td>-->
                                 <td class="asowp-px-6 asowp-text-[14px] asowp-py-2 asowp-text-left asowp-space-x-2">
+=======
+                                <td>
+                                    {{key}}
+                                </td>
+                                <td class="asowp-px-6 asowp-text-[14px] asowp-py-2 asowp-text-center asowp-space-x-2">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     {{shape.name}}
                                 </td>
                                 <td class="asowp-px-6 asowp-py-2 asowp-text-center asowp-text-[11px]">
@@ -55,6 +75,7 @@
 
             </div>
         </div>
+<<<<<<< HEAD
         <div class="asowp-translate-y-5 asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]" v-if="isNewShapes">
             <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4">
                 {{isEdit ? 'Edit Shapes' :'Add new shape'}}
@@ -77,6 +98,23 @@
                                 upload Icon
                             </button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
+=======
+        <div class="" v-if="isNewShapes">
+            <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]">
+                {{isEdit ? 'Edit Shapes' :'Add new shape'}}
+            </div>
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-justify-between asowp-px-8 asowp-py-8">
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-3">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">Title</label>
+                    <input type="text" v-model="shape.name" class="asowp-w-full"/>
+                </div>
+                <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">Upload Icon</label>
+                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
+                        <div class="asowp-flex asowp-space-x-2">
+                            <button @click="selectShapeIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
+                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                 <img v-if="shape.icon != ''" :src="shape.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                 <button v-if="shape.icon != ''" @click="()=>{shape.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -88,8 +126,12 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <div class="asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

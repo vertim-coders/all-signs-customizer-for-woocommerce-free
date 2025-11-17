@@ -1,7 +1,11 @@
 <template>
     <div class="asowp-mt-4">
         <div class="asowp-space-y-1"  v-if="!isNewComponentAdvance">
+<<<<<<< HEAD
             <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div v-if="config.trim() != ''" class="asowp-font-bold asowp-text-[16px]">
                     {{config}}
                 </div>
@@ -14,6 +18,7 @@
                     {{material}}
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]">
                 <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
                 
@@ -133,6 +138,124 @@
                         <div class="asowp-flex asowp-space-x-2 asowp-border asowp-border-solid asowp-rounded-[5px] asowp-border-[#000] asowp-p-1">
                             <button @click="selectComponentAdvanceIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
+=======
+            <div class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
+                
+                <button :disabled="isLoading" :class="`${isLoading ? 'asowp-opacity-50 asowp-cursor-not-allowed' : '' } asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer`" @click="newComponentAdvance">
+                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="plus-lg">
+                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                        </g>
+                    </svg>
+                    <div class="asowp-text-[14px]">
+                        Add New Component
+                    </div>
+                </button>
+            </div>
+            
+            <div class="asowp-relative" id="monTableau">
+                <table class="asowp-text-center asowp-border asowp-border-collapse asowp-border-0 asowp-w-full">
+                    <thead class="asowp-bg-[#f0f0f1]">
+                        <tr class="">
+                            
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                Title
+                            </th>
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                Description
+                            </th>
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                icon
+                            </th>
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                Default
+                            </th>
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                Action
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody class="asowp-bg-white">
+                        <tr v-if="isFetching">
+                            <td colspan="5">
+                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[200px] p-4">
+                                    <img class="asowp-w-[100px] asowp-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-if="componentAdvances.length == 0 && !isFetching">
+                            <td colspan="5">
+                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[150px]">
+                                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
+                                        <p class="asowp-text-2xl asowp-font-bold">{{noComponentAdvancesFound}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-for="(componentAdvance,key) in componentAdvances" :key="key" class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
+                            <td class="asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center asowp-space-x-2">
+                                <span class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black ">
+                                    <span class="asowp-text-[12px]">{{getInitials(componentAdvance.name)}}</span> 
+                                </span>
+                                <span class="asowp-py-1 asowp-text-[14px]">
+                                    {{componentAdvance.name}}
+                                </span>
+                            </td>
+                            <td class="asowp-px-6 asowp-py-2 asowp-text-center asowp-text-[11px]">
+                                {{componentAdvance.description}}
+                            </td>
+                            <td class="asowp-px-6 asowp-justify-center asowp-translate-y-1">
+                                <img v-if="componentAdvance.icon.trim() != ''" class="asowp-w-10 asowp-h-10" :src="componentAdvance.icon" />
+                            </td>
+                            <td class="asowp-pl-10 asowp-py-2">
+                                <span class="asowp-w-fit asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
+                                    <label for="asowp-toggle" @click="!isLoading?selectDefault(key):''" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
+                                        <div :class="{'asowp-translate-x-[100%]': componentAdvances[key].isDefault, 'asowp-bg-active': componentAdvances[key].isDefault }" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-border-[#008000] asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
+                                    </label>
+                                </span>
+                            </td>
+                            <td class="asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center asowp-space-x-2">
+                                <button class="asowp-bg-[#FFC7D8] asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex" @click="$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/advance/'+componentAdvance.name+'/'+key+'/options')">
+                                    <img class="asowp-w-4 asowp-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
+                                    <span class="asowp-text-[12px]">
+                                        add options
+                                    </span>
+                                </button>
+                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer">
+                                    <img class="asowp-w-5 asowp-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectComponentAdvance(key,componentAdvance)">
+                                </button>
+                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer">
+                                    <img class="asowp-w-5 asowp-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectComponentAdvance(key,componentAdvance,true)">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="asowp-space-y-1" v-if="isNewComponentAdvance">
+            <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 ">
+                Add component
+            </div>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-pb-20">
+                <div class="asowp-flex asowp-justify-between asowp-px-4 asowp-py-4">
+                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
+                        <label for="" class="asowp-font-normal">Title</label>
+                        <input type="text" v-model="componentAdvance.name" class="asowp-rounded asowp-w-full asowp-h-[30px]">
+                    </div>
+                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
+                        <label for="" class="asowp-font-normal">Description</label>
+                        <input type="text" v-model="componentAdvance.description" class="asowp-rounded asowp-w-full asowp-h-[30px]">
+                    </div>
+                </div>
+                <div class="asowp-space-y-2 asowp-px-4 asowp-flex asowp-flex-col asowp-text-[12px]">
+                    <label for="" class="asowp-font-normal">Upload icon</label>
+                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
+                        <div class="asowp-flex asowp-space-x-2">
+                            <button @click="selectComponentAdvanceIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
+                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="componentAdvance.icon != ''" :src="componentAdvance.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="componentAdvance.icon != ''" @click="()=>{componentAdvance.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -147,8 +270,12 @@
                 </div>
                 
             </div>
+<<<<<<< HEAD
             <hr class="Polaris-Divider asowp-w-full" style="border: 1px solid #ebebeb;">
             <div class="asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

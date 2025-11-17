@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="asowp-fixed asowp-z-[9999] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-top-[32px] asowp-h-[2.9rem] asowp-px-2 asowp-bg-white asowp-flex asowp-justify-start asowp-items-center asowp-header" style="width: 86.5% !important;">
         <div class="asowp-relative asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
             <div class="pl-[40px] asowp-flex asowp-w-full asowp-cursor-pointer" @click="goToHome">
@@ -17,6 +18,24 @@
             <div class=" asowp-flex asowp-justify-center asowp-items-center asowp-w-full">
                 <div class="asowp-w-full asowp-justify-end asowp-flex asowp-items-center">
                     <div class="asowp-flex asowp-items-center asowp-justify-center asowp-space-x-2">
+=======
+    <div class="asowp-fixed asowp-z-[9999] asowp-top-[32px] asowp-w-full asowp-h-[50px] asowp-px-2 asowp-bg-white asowp-flex asowp-justify-start asowp-items-center asowp-shadow asowp-header">
+        <div class="asowp-relative asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
+            <div class="pl-[40px] asowp-cursor-pointer" @click="goToHome">
+                <span>
+                    <img class="asowp-w-[110px]" src="../../../../assets/images/im_asowp-icon2.png" alt="">
+                </span>
+            </div>
+            <div class=" asowp-flex px-2 asowp-justify-center asowp-items-center asowp-w-full">
+                <div class="asowp-w-full asowp-justify-evenly asowp-flex asowp-items-center">
+                    <div class="asowp-flex asowp-items-center asowp-justify-center asowp-space-x-2">
+                        <button @click="goToPreview" v-if="$route.path.includes('configs') && $route.name  != 'preview-back'" class="asowp-p-2 asowp-border-none asowp-bg-transparent asowp-cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        </button>
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         <span class="asowp-p-2 asowp-border-2 asowp-text-[#466801] asowp-bg-[#FFFFFF] asowp-rounded asowp-border-[#466801] asowp-border asowp-border-solid" v-if="($route.path.includes('configs') &&( $route.path.includes('materials') ||  $route.path.includes('settings') || $route.path.includes('additional-options'))) || $route.name == 'preview-back'">{{ $router.currentRoute.value.params.configId }}ID</span>
                         <button @click="()=>$router.push('/configs/'+$router.currentRoute.value.params.config+'/'+$router.currentRoute.value.params.configId+'/settings/generals')" v-if="($route.path.includes('configs') && ($route.path.includes('materials') ||$route.path.includes('additional-options'))) || $route.name == 'preview-back'" class="asowp-p-2 asowp-border-2 asowp-border-solid asowp-border-[#016464] asowp-text-[#016464] asowp-rounded asowp-cursor-pointer">
                             <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="asowp-w-3 asowp-h-3">
@@ -36,25 +55,39 @@
                             </svg>
                             Material
                         </button>
+<<<<<<< HEAD
                         <button @click="goToPreview" v-if="$route.path.includes('configs') && $route.name  != 'preview-back'" class="asowp-p-2 asowp-border-none asowp-bg-[#016464] asowp-text-[#fff] asowp-rounded-[5px] asowp-cursor-pointer">
                             Preview
                         </button>
+=======
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     </div>
                     
                 </div>
             </div>
+<<<<<<< HEAD
             <!--<div class="asowp-pr-[40px]">
                 <span class="asowp-text-[20px] asowp-font-bold">
                     V{{ ASOWP_VERSION }}
                 </span>
             </div>-->
+=======
+            <div class="asowp-pr-[40px]">
+                <span class="asowp-text-[20px] asowp-font-bold">
+                    V{{ ASOWP_VERSION }}
+                </span>
+            </div>
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         </div>
     </div>
 </template>
 <script setup>
 import router from '@/admin/router';
 import {ref} from 'vue';
+<<<<<<< HEAD
 import { useRoute } from 'vue-router';
+=======
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
 const ASOWP_VERSION = ref(asowp_data.version);
 const goToPreview = ()=>{
     router.push('/configs/'+router.currentRoute.value.params.config+'/preview/'+router.currentRoute.value.params.configId)
@@ -69,12 +102,17 @@ const goToMaterials = ()=>{
     })
 }
 function goToHome() {
+<<<<<<< HEAD
   router.push({ name: 'configurations' })
 }
 //const configID = ref(route.params.configId)
 const route = useRoute()
 
 const config =route.params.config.replace(/-/,' ');
+=======
+  router.push({ name: 'home' })
+}
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
 </script>
 <style lang="">
     

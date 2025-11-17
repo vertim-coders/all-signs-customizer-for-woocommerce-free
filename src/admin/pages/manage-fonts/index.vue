@@ -1,11 +1,17 @@
 <template>
     <div class="">
+<<<<<<< HEAD
         <div class="asowp-space-y-1 asowp-translate-y-1" v-if="!createFont">
             <div class="asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
+=======
+        <div class="asowp-space-y-1 asowp-translate-y-9" v-if="!createFont">
+            <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <span class="asowp-font-bold">
                     Manage Font
                 </span>
             </div>
+<<<<<<< HEAD
             <div class="asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
                 <div v-if="!isFetching" class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
                     <button class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="addFont">
@@ -76,6 +82,75 @@
                 Add a font from Google Font or upload your own
             </div>-->
             <!--<div class="asowp-flex asowp-space-x-4 asowp-w-full asowp-p-8 asowp-px-6">
+=======
+            <div v-if="!isFetching" class="asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2">
+                <button class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="addFont">
+                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="plus-lg">
+                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                        </g>
+                    </svg>
+                    <div class="asowp-text-[14px]">
+                        Add new font
+                    </div>
+                </button>
+            </div>
+            
+            <div class="asowp-relative" id="monTableau" >
+                <table class="asowp-text-center asowp-w-full asowp-border asowp-border-collapse asowp-border-0">
+                    <thead class="asowp-bg-[#f0f0f1]">
+                        <tr class="">
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                Label
+                            </th>
+                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="asowp-bg-white">
+                        <tr v-if="isFetching">
+                            <td colspan="2">
+                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
+                                    <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr  v-if="fonts.length == 0 && !isFetching">
+                            <td colspan="2">
+                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[306px]">
+                                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
+                                        <p class="asowp-text-2xl asowp-font-bold">{{noFontsFound}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-if="!isFetching" v-for="(font,key) in fonts" :key="key" class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
+                            <td class="asowp-px-6 asowp-text-[14px] asowp-py-2 asowp-text-center asowp-space-x-2">
+                               {{font.label}}
+                            </td>
+                            <td class="asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center asowp-space-x-2">
+                                <button @click="()=>selectedFont(key,font)" class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer">
+                                    <img class="asowp-w-5 asowp-h-5" src="../../../../assets/icons/ic_edit.svg" alt="">
+                                </button>
+                                <button @click="()=>selectedFont(key,font,true)" class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer">
+                                    <img class="asowp-w-5 asowp-h-5" src="../../../../assets/icons/ic_delete.svg" alt="">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="asowp-space-y-1 asowp-translate-y-9" v-if="createFont">
+            <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 ">
+                Add new font
+            </div>
+            <div class="asowp-px-6 asowp-translate-y-4 asowp-text-[14px]">
+                Add a font from Google Font or upload your own
+            </div>
+            <div class="asowp-flex asowp-space-x-4 asowp-w-full asowp-p-8 asowp-px-6">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
                     <p class="asowp-text-md asowp-font-medium asowp-text-black">Google Font</p>
                     <label for="uploadFont" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer">
@@ -91,8 +166,13 @@
                     <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3.5 asowp-border asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[80%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[0px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-rounded-full after:asowp-h-5 after:asowp-w-5 after:asowp-transition-all after:asowp-shadow-lg"></div>
                     </label>
                 </div>
+<<<<<<< HEAD
             </div>-->
             <!--<div v-if="font.isGoogleFont" class="asowp-px-6 asowp-py-6 -asowp-translate-y-8">
+=======
+            </div>
+            <div v-if="font.isGoogleFont" class="asowp-px-6 asowp-py-6 -asowp-translate-y-8">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-flex asowp-justify-between">
                     <div class="asowp-w-2/5 asowp-py-3 asowp-space-y-3">
                         <label class="asowp-text-md asowp-font-medium asowp-text-black">Choose Google font</label>
@@ -133,6 +213,7 @@
                     <label for="file_input" :class="`asowp-text-md asowp-font-medium asowp-text-black`">Font Label</label>
                     <input type="text" v-model="font.label" :class="`asowp-w-[40%] asowp-h-[35px] ${emptyFontLabel ? 'asowp-border-red-500 asowp-text-red-500 asowp-border-solid ':''} `"/>
                 </div>
+<<<<<<< HEAD
             </div>-->
             <div class="asowp-space-x-2 -asowp-translate-y-1 asowp-py-2">
                 <div :class="`${emptyFontLabel?'asowp-border-red-500 asowp-text-red-500':''} asowp-flex asowp-justify-between asowp-px-6`">
@@ -158,12 +239,34 @@
                     <div class="asowp-space-y-3 asowp-w-2/5">
                         <label class="asowp-text-md asowp-font-medium asowp-text-black asowp-flex asowp-flex-col">Label</label>
                         <input type="text" v-model="font.label" :class="`${emptyFontLabel?'asowp-border-red-500 asowp-text-red-500 asowp-border-solid':''} asowp-w-full asowp-h-[39px]`" style="border-radius: 10px !important;"/>
+=======
+            </div>
+            <div class="asowp-space-x-2 -asowp-translate-y-6 asowp-py-12" v-if="!font.isGoogleFont">
+                <div :class="`${emptyFontLabel?'asowp-border-red-500 asowp-text-red-500':''} asowp-flex asowp-justify-between asowp-px-6`">
+                    
+                    <div class="asowp-w-2/5 asowp-space-y-3">
+                        <label for="file_input" :class="`asowp-text-md asowp-font-medium asowp-text-black ${emptyFontLabel?'asowp-border-red-500 asowp-text-red-500 asowp-border-solid ':''}`">Upload here your own font</label>
+                        <div class="asowp-flex asowp-space-x-2">
+                            <button @click="uploadFontFile" :class="`asowp-w-1/3 asowp-h-fit asowp-p-2.5 asowp-px-2 asowp-rounded-md asowp-shadow-zinc-400 asowp-shadow-lg asowp-font-medium asowp-transition-all asowp-ease-in-out asowp-duration-1000 asowp-border-solid asowp-border-[#016464] asowp-bg-[#016464] asowp-text-white asowp-cursor-pointer`">
+                                Choose a font
+                            </button>
+                            <input type="text" name="" id="" class="asowp-text-white asowp-w-full asowp-h-[39px]" readonly v-model="font.url">
+                        </div>
+                    </div>
+                    <div class="asowp-space-y-3 asowp-w-2/5">
+                        <label class="asowp-text-md asowp-font-medium asowp-text-black asowp-flex asowp-flex-col">Label Font</label>
+                        <input type="text" v-model="font.label" :class="`${emptyFontLabel?'asowp-border-red-500 asowp-text-red-500 asowp-border-solid':''} asowp-w-full asowp-h-[39px]`"/>
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     </div>
                     
                 </div>
             </div>
+<<<<<<< HEAD
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <div class="asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+=======
+            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

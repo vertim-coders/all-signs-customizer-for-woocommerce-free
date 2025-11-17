@@ -1,5 +1,6 @@
 <template>
     <div id="asowp-backend-app" class="asowp-h-[100vh]">
+<<<<<<< HEAD
         <Headerbar v-if="$route.name === 'Simple-Sizes' || 
         $route.name === 'Simple-Colors' || 
         $route.name === 'Simple-Shapes' || 
@@ -13,6 +14,11 @@
         $route.name == 'config-additional-options' " />
         <!--<Sidebar v-if="$route.name !== 'home'"/>-->
         <div v-if="activateProduct" :class="$route.name !== 'home' ? `asowp-w-full asowp-pt-[10px] asowp-mt-[40px]` : 'asowp-w-full asowp-px-[10px] asowp-pt-[10px]'">
+=======
+        <Headerbar v-if="$route.name!=='preview-back'"/>
+        <Sidebar v-if="$route.name !== 'home'"/>
+        <div v-if="activateProduct" :class="$route.name !== 'home' ? `asowp-w-[calc(100%-85px)] asowp-pl-[10px] asowp-pt-[10px] asowp-mt-[40px]` : 'asowp-w-full asowp-px-[10px] asowp-pt-[10px]'">
+>>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             <router-view />
         </div>
         <div v-if="!activateProduct" :class="`asowp-w-[calc(100%-85px)] asowp-pl-[10px] asowp-pt-[10px] asowp-mt-[40px]`">
