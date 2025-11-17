@@ -1,0 +1,224 @@
+/*!*********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/global/scss/style.scss ***!
+  \*********************************************************************************************************************/
+@charset "UTF-8";
+table.wp-list-table #is_asowp_customizable {
+  width: 90px;
+}
+
+td.is_asowp_customizable.column-is_asowp_customizable {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+#toplevel_page_asowp .wp-menu-image {
+  position: relative !important;
+  text-align: unset !important;
+  margin: 0 2px 0 0px !important;
+}
+
+#toplevel_page_asowp .wp-menu-image img {
+  position: absolute !important;
+  padding: 0 0 0 2px !important;
+}
+
+.asowp-config-page-error {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  text-align: justify;
+  border-radius: 5px;
+  padding: 20px 15px !important;
+  box-shadow: 0px 0px 3px 0px #cf4b4b !important;
+  margin: 0 0 10px;
+  font-weight: 800;
+}
+.asowp-config-page-error p {
+  margin: 0 !important;
+}
+
+.asowp-config-page-error-title {
+  position: absolute;
+  font-size: 10px !important;
+  font-weight: 400;
+  z-index: 10;
+  top: -10px;
+  padding: 5px;
+  left: 20px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 1px solid #bd6161;
+}
+
+.asowp-notice-nux {
+  background: #e7f5f9;
+  display: flex;
+  align-items: center;
+}
+
+.asowp-notice-nux .asowp-icon {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 100%;
+  margin: 20px 17px 20px 5px;
+  flex-shrink: 0;
+}
+
+.asowp-notice-nux h2 {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  margin-top: 0 !important;
+}
+
+.asowp-notice-nux .asowp-icon img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 12px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.asowp-product-links {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+}
+
+.asowp-product-links .asowp-cart-product-preview,
+.asowp-product-links a {
+  text-decoration: none !important;
+  background-color: gray;
+  padding: 5px 10px;
+  border-radius: 2px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer !important;
+}
+
+.asowp-custom-options-info {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-right: solid 0px transparent;
+  border-left: solid 0px transparent;
+  border-top: solid rgb(175, 173, 173) 2px;
+  padding: 10px 0 10px 5px;
+  gap: 10px;
+}
+
+.asowp-custom-options-info-infos {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  border-right: solid 0px transparent;
+  border-left: solid 0px transparent;
+  border-bottom: solid rgb(175, 173, 173) 1px;
+  padding: 10px 0 10px 5px;
+  gap: 10px;
+}
+
+.asowp-custom-options-info label {
+  font-size: medium;
+  font-weight: 600;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.asowp-custom-options-info .asowp-cart-color-option {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.asowp_config_data div {
+  padding: 5px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-content: center !important;
+  align-items: center !important;
+}
+
+.asowp_config_data div h2 {
+  color: rgb(20, 20, 20) !important;
+  font-weight: 500 !important;
+}
+
+.asowp_config_data div select {
+  background-color: rgba(238, 237, 240, 0.872) !important;
+  padding: 5px !important;
+}
+
+.asowp-grid {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.asowp-col {
+  border: 1px solid #ccc; /* Ajoutez une bordure pour distinguer les éléments */
+  padding: 10px; /* Ajoutez un peu d'espacement interne pour le contenu */
+}
+
+.single-product .summary.entry-summary > .asowp-buttons-wrap-simple,
+.single-product .summary.entry-summary > .asowp-buttons-wrap-variation {
+  display: none;
+}
+
+.asowp-buttons-url {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.asowp-buttons-url .button {
+  float: none !important;
+}
+
+@keyframes pulseGradient {
+  0%, 100% {
+    background-size: 200% 100%;
+    background-position: 200% 50%;
+    opacity: 0.5; /* Plus transparent */
+  }
+  50% {
+    background-size: 200% 100%;
+    background-position: -100% 50%;
+    opacity: 1; /* Pleine visibilité */
+  }
+}
+#asowp-configurator-loader .asowp-loader-container,
+#asowp-templates-loader .asowp-loader-container {
+  animation: pulseGradient 1.5s ease infinite;
+}
+
+#asowp-templates-loader {
+  width: 100%;
+  height: 50vh;
+}
+
+.asowp-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  #asowp-templates-loader {
+    width: 100%;
+    height: 60vh;
+  }
+  .asowp-grid-container {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+  }
+}

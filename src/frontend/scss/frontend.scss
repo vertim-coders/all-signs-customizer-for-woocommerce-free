@@ -1,0 +1,102 @@
+:root {
+  --asowp-scrollBar-color: #000000;
+}
+.asowp-configurator-container {
+  height: 100vh;
+}
+.asowp-templates-customize_button {
+  color: white !important;
+  text-decoration: none !important;
+}
+#asowp-frontend-app {
+  p {
+    margin: 0 !important;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+    overflow: auto;
+  }
+
+  .asowp-scrollBar::-webkit-scrollbar {
+    width: 6px;
+    height: 4px;
+    overflow: scroll;
+  }
+  .asowp-scrollBar::-webkit-scrollbar-thumb {
+    background-color: var(--asowp-scrollBar-color);
+    border-radius: 20px;
+  }
+
+  .asowp-base-animation {
+    transition-property: all;
+    transition-duration: 500ms;
+    // cursor: pointer;
+  }
+  .asowp-buttons-rad-none {
+    border-radius: 0px !important;
+    border: 0px;
+  }
+  .asowp-full-center {
+    justify-content: center !important;
+    align-items: center !important;
+    /* white-space: nowrap; */
+  }
+
+  .asowp-option-buton {
+    width: fit-content;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    width: -moz-fit-content;
+  }
+
+  .asowp-new-border {
+    border: solid 1px !important;
+  }
+
+  .asowp-inputImage {
+    /* asowp-text-md  */
+    display: flex !important;
+    padding: 8px 14px 8px 14px !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+  }
+  .asowp-inputImage svg,
+  .asowp-inputImage p {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+}
+#asowp-showPreview{
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none
+}
+.asowp-text-size {
+  padding: 0 !important;
+  height: 100% !important;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.asowp-inputColor-hide {
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.asowp-scrollDiv {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.asowp-cardDiv {
+  // display: inline-block;
+}
+.asowp-disabled-div {
+  pointer-events: none;
+  opacity: 0.5;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: not-allowed;
+}
