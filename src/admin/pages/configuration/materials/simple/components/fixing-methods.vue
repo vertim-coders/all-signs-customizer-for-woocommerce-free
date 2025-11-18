@@ -1,12 +1,7 @@
 <template>
     <div>
-<<<<<<< HEAD
         <div class="asowp-space-y-1 asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]" v-if="!isNewFixing">
             <div class="asowp-flex asowp-justify-end  asowp-px-4 asowp-py-4 asowp-pb-2" v-if="manageFixingMethods.length < 0">
-=======
-        <div class="asowp-space-y-1 asowp-translate-y-7" v-if="!isNewFixing">
-            <div class="asowp-flex asowp-justify-end asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-pb-2" v-if="manageFixingMethods.length > 0">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <button :disabled="isLoading" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 ${isLoading?'asowp-cursor-not-allowed':'asowp-cursor-pointer'}`" @click="newFixing">
                     <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="plus-lg">
@@ -91,7 +86,6 @@
                 </table>
             </div>
         </div>
-<<<<<<< HEAD
         <div class="asowp-space-y-2 asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]" v-if="isNewFixing">
             <!--<div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 ">
                 {{isEdit ? 'Edit fixing methiod' : 'Add new fixing methods' }}
@@ -100,15 +94,6 @@
             <div class="asowp-flex asowp-flex-col asowp-py-4 asowp-space-y-2" v-if="isEdit">
                 <div class="asowp-flex asowp-space-x-2 asowp-justify-between">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col">
-=======
-        <div class="asowp-space-y-2 asowp-translate-y-7" v-if="isNewFixing">
-            <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]">
-                {{isEdit ? 'Edit fixing methiod' : 'Add new fixing methods' }}
-            </div>
-            <div class="asowp-flex asowp-flex-col asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" v-if="isEdit">
-                <div class="asowp-flex asowp-justify-between">
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Select fixing method</label>
                         <Multiselect
                             v-model="fixingMethod.fixingMethodId"
@@ -116,10 +101,7 @@
                             :options="notSelectedManageFixingMethods"
                             label="name"
                             trackBy="name"
-<<<<<<< HEAD
                             class="asowp-h-[35px] asowp-rounded-[5px]"
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         >
                             <template v-slot:singleLabel="{ value }">
                                 <div class="multiselect-single-label">
@@ -132,7 +114,6 @@
                             </template>
                         </Multiselect>
                     </div>
-<<<<<<< HEAD
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col">
                         <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
                         <input type="number" v-model="fixingMethod.additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 5px;" @blur="isNaN(fixingMethod.additionalPrice)?fixingMethod.additionalPrice=0:''">
@@ -171,43 +152,6 @@
             </div>
             <div v-if="!isEdit">
                 <div class="asowp-relative asowp-flex asowp-flex-col asowp-justify-between asowp-py-4 asowp-space-y-2" :key="key" v-for="(fx,key) in addNewFixingMethods">
-=======
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
-                        <input type="number" v-model="fixingMethod.additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(fixingMethod.additionalPrice)?fixingMethod.additionalPrice=0:''">
-                    </div>
-                </div>
-                <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col">
-                    <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude shapes</label>
-                    <Multiselect
-                        v-model="fixingMethod.excludeShapes" 
-                        placeholder="Select shapes"
-                        label="name"
-                        trackBy="id"
-                        :options="MaterialSimpleShapes"
-                        mode="tags"
-                    />
-                    <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the shapes of this fixing Method</span>
-                    
-                </div>
-                <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col">
-                    <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude size</label>
-                    <Multiselect
-                        v-model="fixingMethod.excludeSizes" 
-                        placeholder="Select Sizes"
-                        label="name"
-                        trackBy="id"
-                        :options="MaterialSimpleSizes"
-                        mode="tags"
-                    />
-                    <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the sizes of this fixing Method</span>
-                    
-                </div>
-                
-            </div>
-            <div v-if="!isEdit">
-                <div class="asowp-relative asowp-flex asowp-flex-col asowp-justify-between asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB]" :key="key" v-for="(fx,key) in addNewFixingMethods">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     <div v-if="!dropdownFixingMethods[key]" class="asowp-flex asowp-space-x-4">
                         <h2 class="asowp-text-[15px] asowp-font-bold">{{ key+1 }}.</h2>
                         <div class="asowp-translate-y-3.5">
@@ -215,13 +159,8 @@
                             <span class="asowp-text-[15px] asowp-font-bold"> - {{ addNewFixingMethods[key].additionalPrice }}</span>
                         </div>
                     </div>
-<<<<<<< HEAD
                     <div class="asowp-flex asowp-space-x-2 asowp-justify-between" v-show="dropdownFixingMethods[key]">
                         <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col">
-=======
-                    <div class="asowp-flex asowp-justify-between" v-show="dropdownFixingMethods[key]">
-                        <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                             <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Select fixing method</label>
                             <Multiselect
                                 v-model="addNewFixingMethods[key].fixingMethodId"
@@ -241,7 +180,6 @@
                                 </template>
                             </Multiselect>
                         </div>
-<<<<<<< HEAD
                         <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col">
                             <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
                             <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 5px;" @blur="isNaN(addNewFixingMethods[key].additionalPrice)?addNewFixingMethods[key].additionalPrice=0:''">
@@ -273,37 +211,6 @@
                             <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the sizes of this fixing Method</span>
                             
                         </div>
-=======
-                        <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Additional Price</label>
-                            <input type="number" v-model="addNewFixingMethods[key].additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]" @blur="isNaN(addNewFixingMethods[key].additionalPrice)?addNewFixingMethods[key].additionalPrice=0:''">
-                        </div>
-                    </div>
-                    <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col" v-show="dropdownFixingMethods[key]">
-                        <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude shapes</label>
-                        <Multiselect
-                            v-model="addNewFixingMethods[key].excludeShapes" 
-                            placeholder=""
-                            label="name"
-                            trackBy="id"
-                            :options="MaterialSimpleShapes"
-                            mode="tags"
-                        />
-                        <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the shapes of this fixing Method</span>
-                    </div>
-                    <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col" v-show="dropdownFixingMethods[key]">
-                        <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude size</label>
-                        <Multiselect
-                            v-model="addNewFixingMethods[key].excludeSizes" 
-                            placeholder=""
-                            label="name"
-                            trackBy="id"
-                            :options="MaterialSimpleSizes"
-                            mode="tags"
-                        />
-                        <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the sizes of this fixing Method</span>
-                        
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     </div>
                     <div @click="handleDeleteNewFixMethod(key)" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center asowp-right-2 asowp-top-0 asowp-shadow-md asowp-rounded-full asowp-cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
@@ -331,12 +238,8 @@
                     </button>
                 </div>
             </div>
-<<<<<<< HEAD
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <div class=" asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
-=======
-            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

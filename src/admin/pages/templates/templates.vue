@@ -1,7 +1,6 @@
 <template>
     <div class="asowp-pt-5">
         <div v-if="!isNewTemplate">
-<<<<<<< HEAD
             <div class="asowp-sticky asowp-top-[80px] asowp-z-[999] asowp-rounded-xl asowp-bg-[#fff]  asowp-bg-[#fff] asowp-border asowp-border-solid asowp-border-[#e6e6e6] ">
                 <div class="asowp-px-4 asowp-flex">
                     <div class="asowp-font-bold asowp-py-5 asowp-w-[50%]">
@@ -38,19 +37,11 @@
             </div>
             <div v-if="!isFetching" class="asowp-bg-[#fff] asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e6e6e6] asowp-mt-4 asowp-p-8 asowp-grid asowp-grid-cols-4">
                 <!--<div class="asowp-cursor-pointer asowp-bg-[#d3d3d3] asowp-border-[1px] asowp-border-solid asowp-border-[#d3d3d3] asowp-flex asowp-flex-col asowp-justify-center asowp-items-center" :class="templates.length==0 ? 'asowp-h-[100px]' :''" @click="isNewTemplate = true">
-=======
-            <div v-if="!isFetching" class="asowp-bg-[#F8F9FB] asowp-p-4 asowp-grid asowp-grid-cols-4">
-                <div class="asowp-cursor-pointer asowp-bg-[#d3d3d3] asowp-border-[1px] asowp-border-solid asowp-border-[#d3d3d3] asowp-flex asowp-flex-col asowp-justify-center asowp-items-center" :class="templates.length==0 ? 'asowp-h-[100px]' :''" @click="isNewTemplate = true">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-9 ">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                     <span class="0 asowp-text-[17px]">Add new template</span>
-<<<<<<< HEAD
                 </div>-->
-=======
-                </div>
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div v-for="tem in templates" class="asowp-border-[1px] asowp-border-[#d3d3d3] asowp-border-solid asowp-p-3 asowp-bg-white">
                     <div class="asowp-flex asowp-justify-center asowp-items-center pb-2 asowp-h-[200px]">
                         <div class="asowp-w-full asowp-h-full asowp-flex asowp-items-center asowp-justify-center asowp-overflow-hidden asowp-object-cover">
@@ -94,26 +85,16 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div v-if="isFetching" class="asowp-bg-white asowp-mt-4 asowp-rounded-xl asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[200px] p-4">
                 <img class="asowp-w-[100px] asowp-h-[100px]" src="../../../../assets/icons/ic_loading.svg" alt="">
             </div>
         </div>
         <div class="asowp-space-y-1 asowp-bg-[#fff] asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e6e6e6]" v-if="isNewTemplate">
             <div class="asowp-px-4 asowp-py-5">
-=======
-            <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[200px] p-4">
-                <img class="asowp-w-[100px] asowp-h-[100px]" src="../../../../assets/icons/ic_loading.svg" alt="">
-            </div>
-        </div>
-        <div class="asowp-space-y-1 " v-if="isNewTemplate">
-            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <span class="asowp-text-[16px] asowp-font-bold">
                     {{isEdit ? 'Edit template' : 'Create template'}}
                 </span>
             </div>
-<<<<<<< HEAD
             <hr class="Polaris-Divider asowp-mx-4" style="border: 1px solid #ebebeb;">
             <div class="asowp-px-6 asowp-py-4 asowp-space-y-3">
                 <div class="asowp-flex asowp-space-x-3">
@@ -154,66 +135,6 @@
                                     <div>upload preview image</div>
                                 </button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[29px] asowp-rounded-md asowp-overflow-hidden`">
-=======
-            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-y-2">
-                <div class="asowp-flex asowp-flex-col asowp-space-y-2">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">Select category</label>
-                    <Multiselect
-                        v-model="template.categoryId"
-                        placeholder="Select category"
-                        noOptionsText="No category found"
-                        :options="categories"
-                        label="name"
-                        trackBy="name"
-                    />
-                </div>
-                <div class="asowp-flex asowp-justify-end asowp-text-[12px]">
-                    <button class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="openCategoryModal = true">
-                        <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="plus-lg">
-                            <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                            </g>
-                        </svg>
-                        <div class="asowp-text-[14px]">
-                            Add new category
-                        </div>
-                    </button>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-space-y-2" :class="`${isEmptyConfig ? 'asowp-field-required asowp-font-bold' :''}`" >
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">Select Configuration</label>
-                    <div  v-if="!isEdit">
-                        <Multiselect
-                            v-model="template.configId"
-                            placeholder="Select configuration"
-                            :options="configurations"
-                            label="name"
-                            trackBy="name"
-                        />
-                    </div>
-                    <select disabled="disabled" v-if="isEdit" v-model="template.configId">
-                        <option :value="config.value" v-for="config in configurations">{{ config.name }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-8 asowp-space-y-8">
-                <div class="asowp-flex asowp-justify-between">
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-                        <label for="" :class="`${isEmptyName ? 'asowp-text-red-500 asowp-font-bold' :'asowp-font-normal'}`">Name template</label>
-                        <input type="text" v-model="template.name" :class="`${isEmptyName ? 'asowp-field-required asowp-font-bold' :''} asowp-rounded asowp-w-full asowp-h-[30px]`" @blur="template.name.trim()==''?isEmptyName =true : isEmptyName=false">
-                    </div>
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Base Price</label>
-                        <input type="number" v-model="template.basePrice" @blur="isNaN(template.basePrice)? template.basePrice =0 : ''" class="asowp-rounded asowp-w-full asowp-h-[32px]">                        
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-justify-between ">
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload Template Preview Image</label>
-                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
-                            <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectTemplatePrevImg" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload PopupImg</button>
-                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="template.prevImg != ''" :src="template.prevImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="template.prevImg != ''" @click="()=>{template.prevImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -224,7 +145,6 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
 
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
                         <label for="" class="asowp-font-normal">Upload Real Image</label>
@@ -239,28 +159,6 @@
                                     <div>upload real image</div>
                                 </button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[29px] asowp-rounded-md asowp-overflow-hidden`">
-=======
-                    
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Enable add to cart on this design</label>
-                        <div class="asowp-flex asowp-justify-start asowp-items-center asowp-space-x-4">
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">No</p>
-                            <label for="yesNo" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="yesNo" type="checkbox" class="asowp-sr-only asowp-peer" v-model="template.enableAddToCart">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[125%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-2px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                            <p class="asowp-text-md asowp-font-medium asowp-text-black">Yes</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-justify-between ">
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload Template Usage Image</label>
-                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
-                            <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectTemplateRealImg" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload PopupImg</button>
-                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="template.realImg" :src="template.realImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="!template.realImg" @click="()=>{template.realImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -271,7 +169,6 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
                     
                     
                 </div>
@@ -328,11 +225,6 @@
             
             <hr class="Polaris-Divider asowp-mx-4" style="border: 1px solid #ebebeb;">
             <div class="asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
-=======
-                </div>
-            </div>
-            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" @click="back" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -421,12 +313,8 @@ const template = ref({
     basePrice:0,
     prevImg:'',
     realImg:'',
-<<<<<<< HEAD
     enableAddToCart:true,
     enablePreviewImage:false,
-=======
-    enableAddToCart:false,
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
     data:{
         templateData:{},
         cartData:{}
@@ -572,10 +460,7 @@ const saveTemplate = async ()=>{
                 prevImg:'',
                 realImg:'',
                 enableAddToCart:false,
-<<<<<<< HEAD
                 enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 data:{
                     templateData:{},
                     cartData:{}
@@ -593,10 +478,7 @@ const saveTemplate = async ()=>{
                 prevImg:'',
                 realImg:'',
                 enableAddToCart:false,
-<<<<<<< HEAD
                 enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 data:{
                     templateData:{},
                     cartData:{}
@@ -645,10 +527,7 @@ const updateTemplate = async ()=>{
                 prevImg:'',
                 realImg:'',
                 enableAddToCart:false,
-<<<<<<< HEAD
                 enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 data:{
                     templateData:{},
                     cartData:{}
@@ -668,10 +547,7 @@ const updateTemplate = async ()=>{
                 prevImg:'',
                 realImg:'',
                 enableAddToCart:false,
-<<<<<<< HEAD
                 enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 data:{
                     templateData:{},
                     cartData:{}
@@ -708,10 +584,7 @@ const deleteTemplate = async ()=>{
             prevImg:'',
             realImg:'',
             enableAddToCart:false,
-<<<<<<< HEAD
             enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             data:{
                 templateData:{},
                 cartData:{}
@@ -731,10 +604,7 @@ const deleteTemplate = async ()=>{
             realImg:'',
             prevImg:'',
             enableAddToCart:false,
-<<<<<<< HEAD
             enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             data:{
                 templateData:{},
                 cartData:{}
@@ -757,10 +627,7 @@ const back = () =>{
         prevImg:'',
         realImg:'',
         enableAddToCart:false,
-<<<<<<< HEAD
         enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         data:{
             templateData:{},
             cartData:{}
@@ -784,10 +651,7 @@ const closeModal = ()=>{
         prevImg:'',
         realImg:'',
         enableAddToCart:false,
-<<<<<<< HEAD
         enablePreviewImage:false,
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         data:{
             templateData:{},
             cartData:{}

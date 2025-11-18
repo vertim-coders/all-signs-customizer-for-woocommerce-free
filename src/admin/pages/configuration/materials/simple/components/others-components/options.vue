@@ -1,10 +1,6 @@
 <template>
     <div>
-<<<<<<< HEAD
         <div class="asowp-space-y-1 asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]" v-if="!isNewOptions">
-=======
-        <div class="asowp-space-y-1" v-if="!isNewOptions">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             <div class="asowp-flex asowp-justify-end asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-pb-2">
                 <button :disabled="isLoading" class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="addOption">
                     <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +104,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
         <div class="asowp-space-y-1 asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]" v-if="isNewOptions">
             <div class="asowp-text-[16px] asowp-font-bold asowp-py-4">
                 Edit options
@@ -131,29 +126,6 @@
                         <div class="asowp-flex asowp-space-x-2 asowp-justify-between asowp-rounded-[5px] asowp-border asowp-border-solid asowp-border-[#000] asowp-p-1">
                             <button @click="selectOptionsIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
-=======
-        <div class="asowp-space-y-1" v-if="isNewOptions">
-            <div class="asowp-text-[16px] asowp-font-bold asowp-px-8 asowp-py-4 asowp-bg-[#F8F9FB]">
-                Add options
-            </div>
-            <div class="asowp-px-4 asowp-py-4 asowp-bg-[#F8F9FB] asowp-space-y-6">
-                <div class="asowp-flex asowp-justify-between">
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Title <span class="asowp-text-red-500">*</span></label>
-                        <input type="text" v-model="option.title" :class="`${emptyLabel?'asowp-field-required':''} asowp-rounded asowp-w-full asowp-h-[30px]`">
-                    </div>
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Description</label>
-                        <input type="text" v-model="option.description" class="asowp-rounded asowp-w-full asowp-h-[30px]">
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-justify-between">
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload icon</label>
-                        <div class="asowp-flex asowp-space-x-2">
-                            <button @click="selectOptionsIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="option.icon != ''" :src="option.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="option.icon != ''" @click="()=>{option.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -164,19 +136,11 @@
                         </div>
                         
                     </div>
-<<<<<<< HEAD
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
                         <label for="" class="asowp-font-normal">Upload Image</label>
                         <div class="asowp-flex asowp-space-x-2 asowp-justify-between asowp-rounded-[5px] asowp-border asowp-border-solid asowp-border-[#000] asowp-p-1">
                             <button @click="selectOptionsPopImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Image</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
-=======
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Example Image</label>
-                        <div class="asowp-flex asowp-space-x-2">
-                            <button @click="selectOptionsPopImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Image</button>
-                            <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="option.popImg != ''" :src="option.popImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="option.popImg != ''" @click="()=>{option.popImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -186,11 +150,7 @@
                                 </div>
                         </div>
                     </div>
-<<<<<<< HEAD
                     <!-- <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-=======
-                    <!-- <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         <label for="" class="asowp-font-normal">Background / image</label>
                         <div class="asowp-flex asowp-space-x-2">
                             <button @click="selectOptionsBackgroundImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Image</button>
@@ -205,7 +165,6 @@
                         </div>
                     </div> -->
                 </div>
-<<<<<<< HEAD
                 <div class="asowp-flex asowp-space-x-2">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col">
                         <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude Material Colors</label>
@@ -240,38 +199,6 @@
             </div>
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <div class=" asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
-=======
-                <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col">
-                    <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude Material Colors</label>
-                    <Multiselect
-                            v-model="option.excludeColors"
-                            placeholder="Select colors"
-                            :options="MaterialColors"
-                            label="name"
-                            trackBy="name"
-                            mode="tags"
-                        >
-                            <template v-slot:singleLabel="{ value }">
-                                <div class="multiselect-single-label ">
-                                    <div :class="`asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2 asowp-bg-[${value.codeHex}]`"> </div>
-                                    {{ value.name }}
-                                </div>
-                            </template>
-    
-                            <template v-slot:option="{ option }">
-                                <div :class="`asowp-w-6 asowp-h-6 asowp-rounded asowp-mr-2 asowp-bg-[${option.codeHex}]`"> </div>
-                                    {{ option.name }}
-                            </template>
-                        </Multiselect>
-                    <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the material colors for this options</span>   
-                </div>
-                <div class="asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
-                    <label for="" class="asowp-font-normal">Additional Price</label>
-                    <input type="number" v-model="option.additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[30px]">
-                </div>
-            </div>
-            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

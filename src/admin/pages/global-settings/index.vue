@@ -1,22 +1,13 @@
 <template>
     <div class="asowp-sticky asowp-z-[999] asowp-w-full asowp-top-[83.5px] asowp-shadow-md">
-<<<<<<< HEAD
         <div class="asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
-=======
-        <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             <div class="asowp-text-[16px] asowp-font-bold">
                 Global settings
             </div>
         </div>
         
-<<<<<<< HEAD
         <div class="asowp-bg-white asowp-translate-y-2 asowp-bg-[#fff] asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9] asowp-justify-center asowp-items-center asowp-flex">
             <!--<div class="">
-=======
-        <div class="asowp-bg-white asowp-justify-center asowp-items-center asowp-flex">
-            <div class="">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <button @click="router.push('/global-settings/license')" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-p-4 asowp-bg-transparent asowp-text-black ${route.name == 'global-settings-license' ? 'asowp-border-b-[2px] asowp-border-r-0 asowp-border-l-0 asowp-border-t-0 asowp-border-solid asowp-border-b-[#016464] asowp-text-[#016464] asowp-bg-[#F9F9F9]' : 'asowp-border-none'} hover:asowp-border-b-[2px] hover:asowp-border-r-0 hover:asowp-border-l-0 hover:asowp-border-t-0 hover:asowp-border-solid hover:asowp-border-b-[#016464] hover:asowp-bg-[#F9F9F9] hover:asowp-text-[#016464] asowp-cursor-pointer`">
                     <svg class="asowp-w-5 asowp-h-5 asowp-translate-y-0.5" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 9C6.436 9 5.96167 8.80767 5.577 8.423C5.19233 8.03833 5 7.564 5 7C5 6.436 5.19233 5.96167 5.577 5.577C5.96167 5.19233 6.436 5 7 5C7.564 5 8.03833 5.19233 8.423 5.577C8.80767 5.96167 9 6.436 9 7C9 7.564 8.80767 8.03833 8.423 8.423C8.03833 8.80767 7.564 9 7 9ZM7 16.962L3.037 18.146C2.78033 18.2373 2.54333 18.2007 2.326 18.036C2.10867 17.87 2 17.6493 2 17.374V11.87C1.36667 11.2473 0.875 10.5167 0.525 9.678C0.175 8.83933 0 7.94667 0 7C0 5.046 0.677667 3.39067 2.033 2.034C3.389 0.678 5.04367 0 6.997 0C8.95033 0 10.6057 0.678 11.963 2.034C13.321 3.39133 14 5.04667 14 7C14 7.94667 13.825 8.83967 13.475 9.679C13.125 10.5177 12.6333 11.248 12 11.87V17.374C12 17.6493 11.8913 17.8693 11.674 18.034C11.4567 18.1993 11.22 18.2363 10.964 18.145L7 16.962ZM7 13C8.66667 13 10.0833 12.4167 11.25 11.25C12.4167 10.0833 13 8.66667 13 7C13 5.33333 12.4167 3.91667 11.25 2.75C10.0833 1.58333 8.66667 1 7 1C5.33333 1 3.91667 1.58333 2.75 2.75C1.58333 3.91667 1 5.33333 1 7C1 8.66667 1.58333 10.0833 2.75 11.25C3.91667 12.4167 5.33333 13 7 13Z" fill="currentColor"/>
@@ -35,11 +26,7 @@
                         Configuration page
                     </div>
                 </button>
-<<<<<<< HEAD
             </div>-->
-=======
-            </div>
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             <div class="">
                 <button @click="router.push('/global-settings/output')" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-p-4 asowp-px-6 asowp-bg-transparent asowp-space-x-2 asowp-text-black ${route.name == 'global-settings-output' ? 'asowp-border-b-[2px] asowp-border-r-0 asowp-border-l-0 asowp-border-t-0 asowp-border-solid asowp-border-b-[#016464] asowp-text-[#016464] asowp-bg-[#F9F9F9]' : 'asowp-border-none'} hover:asowp-border-b-[2px] hover:asowp-border-r-0 hover:asowp-border-l-0 hover:asowp-border-t-0 hover:asowp-border-solid hover:asowp-border-b-[#016464] hover:asowp-bg-[#F9F9F9] hover:asowp-text-[#016464] asowp-cursor-pointer`">
                     <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,13 +77,8 @@
     </div>
         
     <div>
-<<<<<<< HEAD
         <!--<Licences v-if="$route.name == 'global-settings-license'"/>
         <ConfigurationPage v-if="$route.name == 'global-settings-configuration-page'"/>-->
-=======
-        <Licences v-if="$route.name == 'global-settings-license'"/>
-        <ConfigurationPage v-if="$route.name == 'global-settings-configuration-page'"/>
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         <Output v-if="$route.name == 'global-settings-output'"/>
         <Shapes v-if="$route.name == 'global-settings-shapes'"/>
         <FixingMethods v-if="$route.name === 'global-settings-fixing-methods'"/>
@@ -104,13 +86,8 @@
     </div>
 </template>
 <script setup>
-<<<<<<< HEAD
 //import Licences from './license/index.vue'
 //import ConfigurationPage from './configuration-page/index.vue'
-=======
-import Licences from './license/index.vue'
-import ConfigurationPage from './configuration-page/index.vue'
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
 import Output from './output/index.vue'
 import Shapes from './shapes/index.vue'
 import FixingMethods from './fixing-methods/index.vue'

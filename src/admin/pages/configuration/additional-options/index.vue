@@ -1,14 +1,8 @@
 
 <template>
-<<<<<<< HEAD
     <div class="asowp-mt-[10px]">
         <div class="" v-show="!news">
             <!--<div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
-=======
-    <div class="asowp-mt-[60px]">
-        <div class="" v-show="!news">
-            <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div  v-if="config.trim() != ''" class="asowp-font-bold asowp-text-[16px]">
                     {{config}}
                 </div>
@@ -16,7 +10,6 @@
                 <div class="asowp-text-[16px]">
                     Additional Options
                 </div>
-<<<<<<< HEAD
             </div>-->
             <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]">
                 <div v-if="!isFetching" class="asowp-flex asowp-justify-end asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-pb-2">
@@ -100,89 +93,6 @@
             </div>
         </div>
         <div v-if="news" class="asowp-sticky asowp-space-y-2 asowp-top-[80px] asowp-z-[999]">
-=======
-            </div>
-            <div v-if="!isFetching" class="asowp-flex asowp-justify-end asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-pb-2">
-                <button class="asowp-cursor-pointer asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100" @click="newAdditionalOptions">
-                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="plus-lg">
-                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                        </g>
-                    </svg>
-                    <div class="asowp-text-[14px]">
-                        Additional Options
-                    </div>
-                </button>
-            </div>
-            <div class="asowp-relative" id="monTableau">
-                <table class="asowp-text-center asowp-w-full asowp-border asowp-border-collapse asowp-border-0">
-                    <thead class="asowp-bg-[#f0f0f1]">
-                        <tr class="">
-                            <th></th>
-                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                Label
-                            </th>
-                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                Type
-                            </th>
-                            <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody ref="additionalsListTable" @change="sortable.options.onEnd" class="asowp-bg-white">
-                        <tr v-if="isFetching">
-                            <td colspan="4">
-                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[200px] p-4">
-                                    <img class="asowp-w-[100px] asowp-h-[100px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-if="!isFetching && additionals.length==0">
-                            <td colspan="4">
-                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[150px]">
-                                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
-                                        <p class="asowp-text-2xl asowp-font-bold">{{noAdditionalsOptionsFound}}</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-for="(adn , key) in additionals" :key="key" :data-id="key" class="asowp-cursor-grab asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
-                            <td>
-                                <img src="../../../../../assets/images/additional-options/img_drag-and-drop.png" class="asowp-w-6 asowp-h-6"/>
-                            </td>
-                            <td class="asowp-text-center asowp-px-6 asowp-p-4">
-                                {{ adn.label }}
-                            </td>
-                            <td class="asowp-text-center asowp-px-6 asowp-p-4">
-                                {{ adn.type }}
-                            </td>
-                            <td class="asowp-px-6 asowp-text-center">
-                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer" @click="selectAdditionalOptions(adn,key)">
-                                    <img class="asowp-w-5 asowp-h-5" src="../../../../../assets/icons/ic_edit.svg" alt="">
-                                </button>
-                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer" @click="selectAdditionalOptions(adn,key,true)">
-                                    <img class="asowp-w-5 asowp-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="" >
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class=" asowp-flex asowp-items-center asowp-justify-end asowp-p-2 asowp-text-black" v-if="additionals.length>1">
-                    <button @click="updateSortOptions" :disabled="isLoading" :class="`asowp-bg-[#016464] asowp-flex asowp-items-center asowp-justify-center asowp-space-x-2 asowp-p-2 asowp-rounded-md asowp-shadow-xl asowp-text-white asowp-font-medium asowp-transition-all asowp-ease-in-out asowp-duration-1000 asowp-border-none asowp-cursor-pointer`">
-                        <div v-if="isLoading" class="p-0">
-                            <img src="../../../../../assets/icons/ic_loading_gray.svg" alt="" class="asowp-w-6 asowp-h-6 "/>
-                        </div>
-                        <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
-                        </svg>
-                        Save Sort
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div v-if="news" class="asowp-sticky asowp-top-[80px] asowp-z-[999]">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <div class="asowp-font-bold asowp-text-[16px]">
                     Additional Options
@@ -192,14 +102,11 @@
                     {{edit ? 'Edit additional option' :'Add new additional option'}}
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <div class="asowp-font-bold asowp-text-[16px]">
                     Create new additional option
                 </div>
             </div>
-=======
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
             <div class="asowp-bg-white asowp-sticky asowp-shadow-md asowp-px-4 asowp-py-2">
                 <p class="asowp-text-[14px] asowp-font-bold asowp-m-0">1- Choose an Input Type</p>
                 <p class="asowp-text-[12px] asowp-m-0">This text will display above the input options.</p>

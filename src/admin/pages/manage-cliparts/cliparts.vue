@@ -1,6 +1,5 @@
 <template>
     <div class="asowp-h-[100vh]">
-<<<<<<< HEAD
         <div class="asowp-bg-[#fff] asowp-flex asowp-px-3 asowp-py-3 asowp-border-solid asowp-border-2 asowp-border-[#D1D1D1] asowp-rounded-[10px] asowp-space-x-2">
             <div class="asowp-text-[16px] asowp-font-bold asowp-cursor-pointer" @click="$router.push('/manage-cliparts')" >
                 Clipart groups
@@ -103,117 +102,12 @@
                 </div>
                 <div class="asowp-flex asowp-items-center asowp-space-x-4 asowp-font-semibold asowp-px-2 asowp-py-1">
                     <label>Use Cliparts API</label>
-=======
-        <div class="asowp-space-y-2 asowp-translate-y-1" v-show="!isNew">
-            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-px-4 asowp-py-4 asowp-space-x-2 asowp-sticky asowp-top-[80px] asowp-z-[999]">
-                <div class="asowp-text-[16px] asowp-font-bold asowp-cursor-pointer" @click="$router.push('/manage-cliparts')" >
-                    Clipart groups
-                </div>
-                <img class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../assets/icons/ic_crochet.svg" alt="">
-                <div class="asowp-text-[14px] asowp-text-[#292C33] asowp-translate-y-0.5">
-                    {{groupTitle}}
-                </div>
-            </div>
-            <div  class="asowp-sticky asowp-top-[120px] asowp-flex asowp-justify-end asowp-space-x-2 asowp-w-4/4 asowp-bg-[#F8F9FB] asowp-text-[12px] asowp-px-4 asowp-py-4 asowp-pb-2 asowp-sticky asowp-top-[130px] asowp-z-[999]">
-                <button v-if="!isFetching" class="asowp-flex asowp-w-fit asowp-h-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="addClipart">
-                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="plus-lg">
-                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                        </g>
-                    </svg>
-                    <div class="asowp-text-[14px]">
-                        Add new cliparts
-                    </div>
-                </button>
-            </div>
-            <div id="monTableau" class="">
-                <table class="asowp-text-center asowp-border asowp-border-collapse asowp-border-0 asowp-w-full">
-                    <thead class="asowp-text-[14px] asowp-bg-[#f0f0f1] asowp-sticky asowp-top-[185px] asowp-z-[999]">
-                        <tr class="">
-                            <th scope="col" class="asowp-font-normal asowp-px-6 asowp-py-3">
-                            </th>
-                            <th scope="col" class="asowp-font-normal asowp-px-6 asowp-py-3">
-                                Title
-                            </th>
-                            <th scope="col" class="asowp-font-normal asowp-px-6 asowp-py-3">
-                                Image
-                            </th>
-                            <th scope="col" class="asowp-font-normal asowp-px-6 asowp-py-3">
-                                Additional Price
-                            </th>
-                            <th scope="col" class="asowp-font-normal asowp-px-6 asowp-py-3">
-                                Action
-                            </th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody class="asowp-bg-white">
-                        <tr v-if="isFetching">
-                            <td colspan="5">
-                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
-                                    <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../assets/icons/ic_loading.svg" alt="">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr  v-if="clipartGroups.length == 0 && !isFetching">
-                            <td colspan="5">
-                                <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-12 asowp-justify-center asowp-items-center asowp-py-10 asowp-h-[306px]">
-                                    <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center">
-                                        <p class="asowp-text-2xl asowp-font-bold">{{notFoundMessage}}</p>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr v-for="(clipart,key) in clipartGroups" :key="key" class="asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-2 asowp-border-solid asowp-border-[#f0f0f1]">
-                            <td class="asowp-px-6 asowp-text-[14px] asowp-py-2">
-                                {{(key+1)+'.'}}
-                            </td>
-                            <td class="asowp-px-6 asowp-text-[14px] asowp-py-2">
-                                {{clipart.title}}
-                            </td>
-                            <td class="asowp-px-6 asowp-justify-center asowp-translate-y-1">
-                                <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="clipart.url" alt="" v-if="clipart.url != ''">
-
-                            </td>
-                            <td class="asowp-px-6 asowp-text-[12px] asowp-py-2 asowp-space-x-2">
-                                <span class="asowp-w-fit asowp-rounded-lg asowp-text-center asowp-p-1 asowp-px-2 asowp-bg-[#9ACD321F] asowp-text-[#466801] asowp-border-none">
-                                    {{clipart.additionalPrice + ' '+ currency_symbol}}
-                                </span>
-                            </td>
-                            <td class="asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center">
-                                <button :class="`asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer ${$route.path == '/groups-cliparts' ? ``: ``}`" @click="selectClipart(key,clipart)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                </button>
-                                <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer" @click="selectClipart(key,clipart,true)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="asowp-space-y-2 asowp-translate-y-1" v-if="isNew">
-            <div class="asowp-z-[999] asowp-bg-[#F8F9FB] asowp-shadow-t-xl asowp-flex asowp-px-4 asowp-py-4 asowp-space-x-2  asowp-sticky asowp-top-[80px]">
-                <div class="asowp-text-[16px] asowp-font-bold">
-                    {{isEdit ? 'Edit clipart' :'Add cliparts'}}
-                </div>
-            </div>
-            <div class="asowp-z-[999] asowp-shadow-sm asowp-flex asowp-sticky asowp-justify-between asowp-top-[120px] asowp-bg-[#F8F9FB] asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4" v-if="!isEdit">
-                <div class="asowp-flex  asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4">
-                    <label>Upload Images</label>
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                         <label for="toggleUploadImage" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                             <input id="toggleUploadImage" type="checkbox" name="toggleUploadImage" class="asowp-sr-only asowp-peer" v-model="useApi">
                             <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
                         </label>
                     </div>
-<<<<<<< HEAD
                     <button v-if="!useApi && !isEdit" :disabled="isLoading" @click="selectClipartImages" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-2 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -228,17 +122,6 @@
                 
                 
                 <div class="asowp-flex  asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4">
-=======
-                    <label>Use Cliparts API</label>
-                </div>
-                <button v-if="!useApi && !isEdit" :disabled="isLoading" @click="selectClipartImages" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        <span class="asowp-font-semibold asowp-text-[16px]">Add many Images</span>
-                </button>
-                <div v-if="useApi && !isEdit" class="asowp-flex  asowp-space-x-10 asowp-font-semibold asowp-px-4 asowp-py-4">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     <label>Select All</label>
                     <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                         <label for="toggleUploadImages" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -248,7 +131,6 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="asowp-px-4 asowp-py-4 asowp-space-y-8" v-if="!useApi && isEdit">
                 <div class="asowp-flex asowp-space-x-2 asowp-justify-between">
                     <div class="asowp-w-[33.33%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
@@ -261,20 +143,6 @@
                             <div class="asowp-flex asowp-border asowp-border-solid asowp-border-[#000] asowp-rounded-[5px] asowp-p-1">
                                 <button @click="selectClipartImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload image</button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
-=======
-            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-y-8" v-if="!useApi && isEdit">
-                <div class="asowp-flex asowp-justify-between">
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Title</label>
-                        <input type="text" v-model="clipart.title"  class="asowp-rounded asowp-w-full asowp-h-[35px]">
-                    </div>
-                    <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload icon</label>
-                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
-                            <div class="asowp-flex">
-                                <button @click="selectClipartImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-3 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload image</button>
-                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="clipart.url != ''" :src="clipart.url" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="clipart.url != ''" @click="()=>{clipart.url = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -285,7 +153,6 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
                     <div class="asowp-w-[33.33%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
                         <label for="" class="asowp-font-normal">Additional Price</label>
                         <input type="number" v-model="clipart.additionalPrice" class="asowp-rounded asowp-w-[1/3] asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(clipart.additionalPrice)?clipart.additionalPrice=0:''"/>
@@ -305,30 +172,6 @@
                             <div class="asowp-flex asowp-border asowp-border-solid asowp-border-[#000] asowp-rounded-[5px] asowp-p-1">
                                 <button @click="(e)=>selectClipartImage(e,key)" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload image</button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
-=======
-                </div>
-                <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-                    <label for="" class="asowp-font-normal">Additional Price</label>
-                    <input type="number" v-model="clipart.additionalPrice" class="asowp-rounded asowp-w-[1/3] asowp-h-[35px]" @blur="isNaN(clipart.additionalPrice)?clipart.additionalPrice=0:''"/>
-                </div>
-            </div>
-            <div class="asowp-relative asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-y-2" v-if="!useApi && !isEdit">
-                <div class="asowp-flex asowp-justify-between asowp-items-center asowp-relative asowp-space-x-2" :key="key" v-for="(clipart,key) in cliparts">
-                    <div class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Title</label>
-                        <input type="text" v-model="cliparts[key].title"  class="asowp-rounded asowp-w-full asowp-h-[35px]">
-                    </div>
-                    <div class="asowp-w-1/4 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Additional Price</label>
-                        <input type="number" v-model="cliparts[key].additionalPrice" class="asowp-rounded asowp-w-[1/3] asowp-h-[35px]" @blur="isNaN(cliparts[key].additionalPrice)?cliparts[key].additionalPrice=0:''"/>
-                    </div>
-                    <div class="asowp-w-1/4 asowp-flex asowp-flex-col asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload icon</label>
-                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2">
-                            <div class="asowp-flex">
-                                <button @click="(e)=>selectClipartImage(e,key)" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-3 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload image</button>
-                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                                     <img v-if="cliparts[key].url != ''" :src="cliparts[key].url" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="cliparts[key].url != ''" @click="()=>{cliparts[key].url = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
@@ -339,27 +182,19 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
                     <div class="asowp-w-[33.33%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
                         <label for="" class="asowp-font-normal">Additional Price</label>
                         <input type="number" v-model="cliparts[key].additionalPrice" class="asowp-rounded asowp-w-[1/3] asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(cliparts[key].additionalPrice)?cliparts[key].additionalPrice=0:''"/>
                     </div>
                     
                     <div @click="handleDeleteClipartSelected(key)" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center asowp-right-0 asowp-top-0 asowp-shadow-md asowp-rounded-full">
-=======
-                    <div @click="handleDeleteClipartSelected(key)" class="asowp-flex asowp-absolute asowp-justify-center asowp-items-center asowp-right-2 asowp-top-2 asowp-shadow-md asowp-rounded-full">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
                     </div>
                 </div>
                 <div class="asowp-pt-4">
-<<<<<<< HEAD
                     <button :disabled="isLoading" @click="handleAddClipart" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-2 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-=======
-                    <button :disabled="isLoading" @click="handleAddClipart" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
@@ -367,15 +202,9 @@
                     </button>
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="asowp-px-4 asowp-py-4 asowp-space-y-8" v-if="useApi && !makeChoice">
                 <div class="asowp-flex asowp-justify-start asowp-items-center">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-=======
-            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-y-8" v-if="useApi && !makeChoice">
-                <div class="asowp-flex asowp-justify-start asowp-items-center">
-                    <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                         <select id="" v-model="selectedCategory" class="asowp-h-[40px]">
                             <option value="animals">Animals</option>
                             <option value="arrows">Arrows</option>
@@ -422,11 +251,7 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
                 <div class="asowp-flex asowp-justify-end asowp-items-center asowp-shadow-xl asowp-sticky asowp-bottom-0" v-if="Object.keys(clipartsSelected).length > 0">
-=======
-                <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-justify-end asowp-items-center asowp-shadow-xl asowp-sticky asowp-bottom-0" v-if="Object.keys(clipartsSelected).length > 0">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                     <div class="asowp-bg-[#016464] asowp-rounded">
                         <button @click="displayAllChoice" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                             <span class="asowp-font-semibold asowp-text-[16px]">I made my choices</span>
@@ -434,11 +259,7 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="asowp-px-4 asowp-py-4 asowp-space-x-4 asowp-sticky asowp-bottom-[20px] asowp-shadow-sm" v-if="makeChoice">
-=======
-            <div class="asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-4 asowp-space-x-4 asowp-sticky asowp-bottom-[20px] asowp-shadow-sm" v-if="makeChoice">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-grid asowp-grid-cols-3 asowp-py-4 asowp-px-4 asowp-mt-28">
                     <div class="asowp-flex asowp-justify-between asowp-items-center asowp-relative asowp-space-x-2" :key="key" v-for="(clipart,key) in cliparts">
                         <div class="asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
@@ -448,11 +269,7 @@
                             </div>
                         </div>
                         <div class="asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-<<<<<<< HEAD
                             <label for="" class="asowp-font-normal">Label</label>
-=======
-                            <label for="" class="asowp-font-normal">Title</label>
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                             <input type="text" v-model="cliparts[key].title" class="asowp-rounded asowp-w-full asowp-h-[35px]">
                         </div>
                         <div class=" asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
@@ -467,13 +284,8 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <hr class="Polaris-Divider asowp-w-full" style="border: 1px solid #ebebeb;">
             <div v-if="!useApi || (useApi && makeChoice)" class="asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end asowp-sticky asowp-bottom-0">
-=======
-            
-            <div v-if="!useApi || (useApi && makeChoice)" class="asowp-shadow-xl asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end asowp-sticky asowp-bottom-0">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-p-2 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer" @click="back">
                         <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

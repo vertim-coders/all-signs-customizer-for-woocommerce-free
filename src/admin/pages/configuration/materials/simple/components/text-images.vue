@@ -1,18 +1,10 @@
 <template>
-<<<<<<< HEAD
     <div class="asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
-=======
-    <div class="asowp-translate-y-7">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
         <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
             <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
         </div>
         <div class="asowp-space-y-1" v-if="!isFetching">
-<<<<<<< HEAD
             <div class="asowp-flex  asowp-px-4 asowp-py-12 asowp-space-x-12">
-=======
-            <div class="asowp-flex asowp-bg-[#F8F9FB] asowp-px-4 asowp-py-12 asowp-space-x-12">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 
                 <div class="asowp-flex asowp-font-semibold">
                     Enable texte
@@ -39,12 +31,8 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <div class=" asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
-=======
-            <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
->>>>>>> 5550fb22cb3f0a2454b4bdd690703964730bfc18
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" @click="updateMaterialTextImages" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                         <div class="asowp-translate-y-1">
