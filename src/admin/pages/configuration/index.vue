@@ -1,8 +1,8 @@
 <template>
-  <div class="asowp-py-4 asowp-space-y-2 asowp-w-full">
+  <div class="asowp-space-y-2 asowp-w-full">
     <div v-if="step == 0 && !openModal" class="asowp-space-y-2">
       <div
-        class="asowp-sticky asowp-top-[80px] asowp-z-[999] asowp-rounded-xl asowp-bg-[#fff] asowp-bg-[#fff] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
+        class="asowp-sticky asowp-top-[20px] asowp-w-full asowp-z-[999] asowp-rounded-xl asowp-bg-[#fff] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
       >
         <div class="asowp-px-4 asowp-flex">
           <div class="asowp-font-bold asowp-py-4 asowp-w-[50%]">
@@ -40,20 +40,20 @@
         </div>
       </div>
       <!-- Table which display all configurations -->
-      <div class="asowp-w-full asowp-overflow-x-auto">
+      <div class="asowp-w-full">
         <div
-          class="asowp-overflow-hidden asowp-w-full asowp-bg-white asowp-rounded-xl asowp-border-solid asowp-border asowp-border-[#D1D1D1]"
+          class="asowp-overflow-hidden asowp-w-[98%] asowp-p-3 asowp-bg-white asowp-rounded-xl asowp-bg-[#fff] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
         >
           <div
             v-if="!isFetching && configs.length > 0"
-            class="asowp-grid asowp-grid-cols-3 asowp-justify-center asowp-items-center asowp-p-2 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-bg-[#f7f7f7] asowp-border-b-1 asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
+            class="asowp-grid asowp-grid-cols-5 asowp-justify-center asowp-items-center asowp-p-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-bg-[#f7f7f7] asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
           >
-            <div class="asowp-flex asowp-items-center">Name Configuration</div>
+            <div class="asowp-flex asowp-items-center">Name</div>
             <div class="asowp-flex asowp-items-center asowp-justify-center">
               Description
             </div>
-            <!-- <div class="asowp-flex asowp-items-center asowp-justify-center">Icon</div>
-                        <div class="asowp-flex asowp-items-center asowp-justify-center">PopupImg</div> -->
+            <div class="asowp-flex asowp-items-center asowp-justify-center">Icon</div>
+            <div class="asowp-flex asowp-items-center asowp-justify-center">Material type</div>
             <div class="asowp-flex asowp-items-center asowp-justify-center">
               Actions
             </div>
@@ -98,10 +98,10 @@
             v-for="(config, key) in configs"
             :key="key"
             @click="goToMaterial(config)"
-            class="asowp-cursor-pointer hover:asowp-bg-[#f7f7f7] asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-3 asowp-px-4 asowp-py-3 asowp-text-sm asowp-text-gray-700 asowp-border-b-1 asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
+            class="asowp-cursor-pointer hover:asowp-bg-[#f7f7f7] asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-5 asowp-px-4 asowp-py-2 asowp-text-sm asowp-text-black asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
           >
             <div
-              class="asowp-text-gray-500 asowp-flex dark:asowp-text-gray-400 asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4"
+              class="asowp-text-black asowp-flex dark:asowp-text-black asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4"
             >
               <span
                 class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-items-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black"
@@ -116,16 +116,16 @@
               >
             </div>
             <div
-              class="asowp-text-gray-500 asowp-justify-center asowp-items-center asowp-flex dark:asowp-text-gray-400 asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis"
+              class="asowp-text-black asowp-justify-center asowp-items-center asowp-flex dark:asowp-text-black asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis"
             >
               <span>{{ config.description }}</span>
             </div>
-            <!-- <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
-                            <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
-                        </div>  -->
-            <!-- <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
-                            <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="config.popImg" alt="" v-if="config.popImg!=''">
-                        </div> -->
+            <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
+                <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
+            </div>
+            <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
+                <span>{{ config.data.materials[0]?.type }}</span>
+            </div>
             <div
               class="asowp-flex asowp-space-x-2 asowp-justify-center asowp-items-center asowp-text-gray-500 dark:asowp-text-gray-400"
             >
@@ -135,7 +135,7 @@
               
               <button
                 class="asowp-border-none asowp-z-[1] asowp-bg-white asowp-relative"
-                @click="handleOpenConfigParams(key)"
+                @click.stop="handleOpenConfigParams(key)"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -156,30 +156,27 @@
                   v-if="showParams[key]"
                   @click.self="showPrams[key] = false"
                 >
-                <button
+                  <button
+                    class="asowp-bg-transparent asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex"
+                    @click.stop="goToPreview(config)"
+                  >
+                    <img class="asowp-w-5 asowp-h-5" src="../../../../assets/icons/ic_preview.svg" alt="" />
+                    <span class="asowp-text-[12px]"> Preview </span>
+                  </button>
+                  <button
                     class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer"
-                    @click="selectEditConfig(config)"
-                >
+                    @click.stop="selectEditConfig(config)"
+                  >
                     <img
-                    class="asowp-w-5 asowp-h-5"
-                    src="../../../../assets/icons/ic_edit.svg"
-                    alt=""
+                      class="asowp-w-5 asowp-h-5"
+                      src="../../../../assets/icons/ic_edit.svg"
+                      alt=""
                     />
-                </button>
-                <button
-                    class="asowp-bg-[#FFC7D8] asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex"
-                    @click="goToMaterial(config)"
-                >
-                    <img
-                    class="asowp-w-4 asowp-h-4"
-                    src="../../../../assets/icons/ic_manage.svg"
-                    alt=""
-                    />
-                    <span class="asowp-text-[12px]"> Manage </span>
-                </button>
+                    <span class="asowp-text-[12px]"> Edit </span>
+                  </button>
                   <button
                     class="asowp-bg-transparent asowp-border-none asowp-text-[#FF6600] asowp-cursor-pointer"
-                    @click="selectEditConfig(config, true)"
+                    @click.stop="selectEditConfig(config, true)"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -195,16 +192,18 @@
                         d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
                       />
                     </svg>
+                    <span class="asowp-text-[12px]"> Duplicate </span>
                   </button>
                   <button
                     class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer"
-                    @click="selectDeleteConfig(config.id, config.name)"
+                    @click.stop="selectDeleteConfig(config.id, config.name)"
                   >
                     <img
                       class="asowp-w-5 asowp-h-5"
                       src="../../../../assets/icons/ic_delete.svg"
                       alt=""
                     />
+                    <span class="asowp-text-[12px]"> Delete </span>
                   </button>
                 </div>
               </button>
@@ -9574,7 +9573,7 @@ const addNewConfig = async (configuration) => {
         description: "Automatically created default material",
         icon: "",
         popImg: "",
-        type: "simple",
+        type: wizard.value.materialType, // Use the wizard's material type
         data: metaConfigs.value.acrylic.materials[0].data
       };
 
@@ -9654,11 +9653,18 @@ const addNewConfig = async (configuration) => {
 const includeMetaData = async (state) => {
   if (state) {
     isLoading.value = true;
+    let materialsData = JSON.parse(JSON.stringify(metaConfigs.value[selectedDemo.value].materials));
+    
+    // Override material type with the one selected in the wizard
+    materialsData.forEach(material => {
+      material.type = wizard.value.materialType;
+    });
+
     let configuration = {
       ...newConfig.value,
       data: {
         ...defaultSettings.value,
-        materials: metaConfigs.value[selectedDemo.value].materials,
+        materials: materialsData,
       },
     };
     if (manageFonts.value.length > 0) {
@@ -9854,7 +9860,7 @@ const selectEditConfig = (config, duplicate = false) => {
       icon: config.icon,
       popImg: config.popImg,
     };
-    step.value = 1;
+    step.value = 5;
     isEdit.value = true;
   }
 };
@@ -9902,9 +9908,51 @@ const delConfig = async () => {
   }
   closeModal();
 };
-const goToMaterial = (c) => {
-  router
-    .push("/configs/" + c.name.replace(/ /, "-") + "/" + c.id + "/materials");
+const goToMaterial = (config) => {
+  const firstMaterial = config.data.materials?.[0]; // Get the first material
+  if (!firstMaterial) {
+    console.warn("No materials found for configuration:", config.name);
+    // Fallback to a generic materials list for the config if no materials are found
+    router.push("/configs/" + config.name.toLowerCase().replace(/ /g, '-') + "/" + config.id + "/materials");
+    return;
+  }
+
+  const materialType = firstMaterial.type;
+  const materialId = 0; // Assuming the first material is at index 0
+  const materialName = firstMaterial.name.toLowerCase().replace(/\s+/g, '-');
+
+  if (materialType === 'advance') {
+    router.push({
+      name: 'Material-Advance',
+      params: {
+        configId: config.id,
+        config: config.name.toLowerCase().replace(/ /g, '-'),
+        materialId: materialId,
+        material: materialName,
+      }
+    });
+  } else if (materialType === 'simple') {
+    router.push({
+      name: 'Simple-Sizes',
+      params: {
+        configId: config.id,
+        config: config.name.toLowerCase().replace(/ /g, '-'),
+        materialId: materialId,
+        material: materialName,
+      }
+    });
+  } else {
+    console.warn("Unknown material type for navigation:", materialType);
+    // Fallback to a generic materials list for the config if type is unknown
+    router.push("/configs/" + config.name.toLowerCase().replace(/ /g, '-') + "/" + config.id + "/materials");
+  }
+};
+
+const goToPreview = (config) => {
+  // Placeholder for now, assuming a route like /configs/:name/:id/preview
+  // You would replace this with actual router.push to the preview page
+  alert('Previewing configuration: ' + config.name + ' (ID: ' + config.id + ')');
+  console.log('Preview config:', config);
 };
 
 /** Modal Function */

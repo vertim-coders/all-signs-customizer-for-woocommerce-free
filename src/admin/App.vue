@@ -12,7 +12,7 @@
         $route.name == 'Simple-OthersComponents-Options' ||
         $route.name == 'config-additional-options' " />
         <!--<Sidebar v-if="$route.name !== 'home'"/>-->
-        <div v-if="activateProduct" :class="$route.name !== 'home' ? `asowp-w-full asowp-pt-[10px] asowp-mt-[40px]` : 'asowp-w-full asowp-px-[10px] asowp-pt-[10px]'">
+        <div v-if="activateProduct" :class="$route.name !== 'home' ? `asowp-w-full ` : 'asowp-w-full asowp-px-[10px] asowp-pt-[10px]'">
             <router-view />
         </div>
         <div v-if="!activateProduct" :class="`asowp-w-[calc(100%-85px)] asowp-pl-[10px] asowp-pt-[10px] asowp-mt-[40px]`">
