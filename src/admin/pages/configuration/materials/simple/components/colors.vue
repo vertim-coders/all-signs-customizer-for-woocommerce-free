@@ -64,7 +64,7 @@
                                 
                                 <td class="asowp-text-[12px] asowp-px-6">
                                     <div class="asowp-text-[12px] asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center asowp-items-center">
-                                        <span v-if="!color.textColor.active" class="asowp-w-fit asowp-rounded-lg asowp-text-center asowp-px-2 asowp-p-1 asowp-bg-[#F8E7E7] asowp-text-[#EF5A35] asowp-border-none">
+                                        <span v-if="!color.textColor.active" class="asowp-w-fit asowp-rounded-lg asowp-text-center asowp-px-2 asowp-p-1 asowp-bg-[#f0f0f0] asowp-text-[#686868] asowp-border-none">
                                             Disable
                                         </span>
                                         <div v-if="color.textColor.active" :class="`asowp-text-center asowp-bg-[${color.textColor.codeHex}] asowp-border-solid asowp-border-[#000000] asowp-rounded asowp-w-[50px] asowp-h-[50px]`"></div>
@@ -79,7 +79,7 @@
                                     </div>
                                 </td>
                                 <td class="asowp-text-[12px] asowp-px-6 asowp-py-2">
-                                    <span class="asowp-w-fit asowp-rounded-lg asowp-text-center asowp-px-2 asowp-p-1 asowp-bg-[#9ACD321F] asowp-text-[#466801] asowp-border-none">
+                                    <span class="asowp-w-fit asowp-rounded-lg asowp-text-center asowp-px-2 asowp-p-1 asowp-bg-[#f0f0f0] asowp-text-[#686868] asowp-border-none">
                                         {{color.additionalPrice}}
                                     </span>
                                 </td>
@@ -91,12 +91,79 @@
                                     </span>
                                 </td>
                                 <td class="asowp-px-6 asowp-text-center">
-                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer">
-                                        <img class="asowp-w-5 asowp-h-5" src="../../../../../../../assets/icons/ic_edit.svg" alt="" @click="selectMaterialColor(key,color)">
-                                    </button>
-                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer">
-                                        <img class="asowp-w-5 asowp-h-5" src="../../../../../../../assets/icons/ic_delete.svg" alt="" @click="selectMaterialColor(key,color,true)">
-                                    </button>
+                                    <div class="asowp-flex asowp-justify-center asowp-items-center asowp-relative">
+                                        <button
+                                            class="asowp-w-7 asowp-h-7 asowp-bg-white asowp-cursor-pointer asowp-border asowp-border-gray-300 asowp-rounded-lg asowp-flex asowp-items-center asowp-justify-center asowp-shadow-sm hover:asowp-bg-gray-100 asowp-transition"
+                                            @click.stop="handleOpenColorParams(key)"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="1.5"
+                                                stroke="currentColor"
+                                                class="asowp-w-6 asowp-h-6"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                                                />
+                                            </svg>
+                                        </button>
+                                        <div
+                                            class="asowp-absolute asowp-top-0 asowp-right-0 asowp-w-40 asowp-bg-white asowp-shadow-lg asowp-rounded-xl asowp-py-2 asowp-z-[999] asowp-border asowp-border-gray-100"
+                                            style="max-width: 6rem; max-height: 31.25rem; border-radius: 0.75rem; padding: 0.375rem;"
+                                            v-if="showParams[key]"
+                                            @click.self="showParams[key] = false"
+                                        >
+                                            <!-- Edit -->
+                                            <button
+                                                class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-4 asowp-py-2 asowp-flex asowp-items-center asowp-gap-3 asowp-hover asowp-transition"
+                                                style="padding: .25rem .375rem; border-radius: .5rem;"
+                                                @click.stop="selectMaterialColor(key, color); showParams[key] = false"
+                                            >
+                                                <svg 
+                                                    viewBox="0 0 20 20" 
+                                                    class="asowp-w-5 asowp-h-5 asowp-text-[#303030]" 
+                                                    focusable="false" 
+                                                    fill="#303030"
+                                                    aria-hidden="true">
+                                                    <path 
+                                                        fill-rule="evenodd" 
+                                                        d="M15.655 4.344a2.695 2.695 0 0 0-3.81 0l-.599.599-.009-.009-1.06 1.06.008.01-5.88 5.88a2.75 2.75 0 0 0-.805 1.944v1.922a.75.75 0 0 0 .75.75h1.922a2.75 2.75 0 0 0 1.944-.806l7.54-7.539a2.695 2.695 0 0 0 0-3.81Zm-4.409 2.72-5.88 5.88a1.25 1.25 0 0 0-.366.884v1.172h1.172c.331 0 .65-.132.883-.366l5.88-5.88-1.689-1.69Zm2.75.629.599-.599a1.195 1.195 0 1 0-1.69-1.689l-.598.599 1.69 1.689Z">
+                                                    </path>
+                                                </svg>
+                                                <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Edit</span>
+                                            </button>
+
+                                            <!-- Delete -->
+                                            <button
+                                                class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-4 asowp-py-2 asowp-flex asowp-items-center asowp-gap-3 asowp-hover-delete asowp-transition"
+                                                style="padding: .25rem .375rem; border-radius: .5rem;"
+                                                @click.stop="selectMaterialColor(key, color, true); showParams[key] = false"
+                                            >
+                                                <svg 
+                                                    viewBox="0 0 20 20" 
+                                                    class="asowp-w-5 asowp-h-5" 
+                                                    fill="rgb(142, 31, 11)"
+                                                    focusable="false" 
+                                                    aria-hidden="true">
+                                                    <path 
+                                                        d="M11.5 8.25a.75.75 0 0 1 .75.75v4.25a.75.75 0 0 1-1.5 0v-4.25a.75.75 0 0 1 .75-.75Z">
+                                                    </path>
+                                                    <path 
+                                                        d="M9.25 9a.75.75 0 0 0-1.5 0v4.25a.75.75 0 0 0 1.5 0v-4.25Z">
+                                                    </path>
+                                                    <path 
+                                                        fill-rule="evenodd" 
+                                                        d="M7.25 5.25a2.75 2.75 0 0 1 5.5 0h3a.75.75 0 0 1 0 1.5h-.75v5.45c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311c-.642.327-1.482.327-3.162.327h-.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162v-5.45h-.75a.75.75 0 0 1 0-1.5h3Zm1.5 0a1.25 1.25 0 1 1 2.5 0h-2.5Zm-2.25 1.5h7v5.45c0 .865-.001 1.423-.036 1.848-.033.408-.09.559-.128.633a1.5 1.5 0 0 1-.655.655c-.074.038-.225.095-.633.128-.425.035-.983.036-1.848.036h-.4c-.865 0-1.423-.001-1.848-.036-.408-.033-.559-.09-.633-.128a1.5 1.5 0 0 1-.656-.655c-.037-.074-.094-.225-.127-.633-.035-.425-.036-.983-.036-1.848v-5.45Z">
+                                                    </path>
+                                                </svg>
+                                                <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">Delete</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -566,6 +633,7 @@ const isEdit = ref(false);
 const openModal = ref(false);
 const openAlert = ref(false);
 const noColorsFound = ref('');
+const showParams = ref([]);
 const color = ref({
     isDefault:false,
     name:'',
@@ -613,8 +681,22 @@ const fetchMaterialColors = async () => {
     if(result.message){
         noColorsFound.value = result.message;
         colors.value = result.colors;
+        
+        // Initialize showParams array
+        let tab = [];
+        for (let index = 0; index < colors.value.allColors.length; index++) {
+            tab.push(false);
+        }
+        showParams.value = tab;
     }else{
         colors.value = result;
+        
+        // Initialize showParams array
+        let tab = [];
+        for (let index = 0; index < colors.value.allColors.length; index++) {
+            tab.push(false);
+        }
+        showParams.value = tab;
     }
 };
 
@@ -759,6 +841,7 @@ const addMaterialColor = async () => {
     for (let index = 0; index < addColors.value.length; index++) {
         colors.value.allColors.push(addColors.value[index]);
     }
+    // showParams will be initialized in fetchMaterialColors after updateMaterialColor
     await updateMaterialColor();
 }
 
@@ -771,6 +854,7 @@ const updateColorInMaterialColor = async () => {
 const deleteMaterialColor = async () => {
     isLoading.value = true;
     colors.value.allColors.splice(colorId.value,1);
+    // showParams will be initialized in fetchMaterialColors after updateMaterialColor
     await updateMaterialColor();
 }
 
@@ -991,4 +1075,15 @@ const selectMaterialPrevImage = async(e,key=-1) => {
         )
         .open();
 }
+
+const handleOpenColorParams = (key) => {
+    for (let index = 0; index < showParams.value.length; index++) {
+        if (key != index) {
+            showParams.value[index] = false;
+        } else {
+            showParams.value[key] = !showParams.value[key];
+        }
+    }
+}
+
 </script>

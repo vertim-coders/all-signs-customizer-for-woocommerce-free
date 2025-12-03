@@ -149,8 +149,10 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                 if (in_array($new_material['type'], ['simple', 'advance'])) {
                     if ($new_material['type'] === 'simple') {
                         if (isset($new_material['data'])) {
+                            // Material with existing data (like default material from config creation)
                             $material = $new_material;
                         } else {
+                            // New material added by user - create empty structure with no default data
                             $material = [
                                 "name" => $new_material['name'],
                                 "description" => $new_material['description'],
@@ -180,9 +182,11 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                                     ],
                                     'borders' => [
                                         "settings" => [
+                                            "borderColorsLabel" => "Borders Colors",
                                             "colors" => [],
-                                            "enableBorderWidth" => true,
-                                            "enableBorderColor" => true,
+                                            "enableBorderWidth" => false,
+                                            "enableBorderColor" => false,
+                                            "customColorsPrevImg" => ""
                                         ],
                                         "allBorders" => [],
                                     ],
@@ -191,7 +195,7 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                                     'fixingMethods' => [],
                                     'colors' => [
                                         "customColors" => [
-                                            "active" => true,
+                                            "active" => false,
                                             "label" => "Custom Colors",
                                             "prevImg" => "",
                                         ],

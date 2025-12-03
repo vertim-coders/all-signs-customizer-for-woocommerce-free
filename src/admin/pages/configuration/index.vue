@@ -1,6 +1,6 @@
 <template>
   <div class="asowp-space-y-2 asowp-w-full">
-    <div v-if="step == 0 && !openModal" class="asowp-space-y-2">
+    <div v-if="step == 0 && !openModal && !isWizard" class="asowp-space-y-2">
       <div
         class="asowp-sticky asowp-top-[20px] asowp-w-full asowp-z-[999] asowp-rounded-xl asowp-bg-[#fff] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
       >
@@ -40,15 +40,15 @@
         </div>
       </div>
       <!-- Table which display all configurations -->
-      <div class="asowp-w-full">
+      <div class="asowp-w-full asowp-relative">
         <div
           class="asowp-overflow-hidden asowp-w-[98%] asowp-p-3 asowp-bg-white asowp-rounded-xl asowp-bg-[#fff] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
         >
           <div
             v-if="!isFetching && configs.length > 0"
-            class="asowp-grid asowp-grid-cols-5 asowp-justify-center asowp-items-center asowp-p-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-bg-[#f7f7f7] asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
+            class="asowp-grid asowp-grid-cols-5 asowp-justify-center asowp-items-center asowp-p-3 asowp-text-[.75rem] asowp-text-[#616161] asowp-font-[550] asowp-bg-[#f7f7f7] asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
           >
-            <div class="asowp-flex asowp-items-center">Name</div>
+            <div class="asowp-flex asowp-items-center">Name configuration</div>
             <div class="asowp-flex asowp-items-center asowp-justify-center">
               Description
             </div>
@@ -98,33 +98,38 @@
             v-for="(config, key) in configs"
             :key="key"
             @click="goToMaterial(config)"
-            class="asowp-cursor-pointer hover:asowp-bg-[#f7f7f7] asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-5 asowp-px-4 asowp-py-2 asowp-text-sm asowp-text-black asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
+            class="asowp-cursor-pointer hover:asowp-bg-[#f7f7f7] asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-5 asowp-px-4 asowp-py-2 asowp-text-[.8125rem] asowp-text-[#303030] asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16"
           >
             <div
-              class="asowp-text-black asowp-flex dark:asowp-text-black asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4"
+              class="asowp-text-[#303030] asowp-flex dark:asowp-text-[#303030] asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4"
             >
               <span
                 class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-items-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black"
               >
-                <span class="asowp-text-[12px]">{{
+                <span class="asowp-text-[.8125rem]">{{
                   getInitials(config.name)
                 }}</span>
               </span>
               <span
-                class="asowp-flex asowp-justify-center asowp-items-center"
+                class="asowp-flex asowp-justify-center asowp-items-center asowp-text-[.8125rem]"
                 >{{ config.name }}</span
               >
             </div>
             <div
-              class="asowp-text-black asowp-justify-center asowp-items-center asowp-flex dark:asowp-text-black asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis"
+              class="asowp-text-[#303030] asowp-justify-center asowp-items-center asowp-flex dark:asowp-text-[#303030] asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis"
             >
               <span>{{ config.description }}</span>
             </div>
             <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
                 <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
             </div>
-            <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
-                <span>{{ config.data.materials[0]?.type }}</span>
+            <div class="asowp-flex asowp-justify-center asowp-items-center">
+                <span 
+                    style="padding: .125rem .5rem;" 
+                    :class="config.data.materials[0]?.type === 'advance' 
+                        ? 'asowp-text-[#0c5132] asowp-bg-[#b4fed2] asowp-rounded-[.5rem] asowp-text-[.75rem] asowp-leading-[1rem]'
+                        : 'asowp-text-[#003a5a] asowp-bg-[#d5ebff] asowp-rounded-[.5rem] asowp-text-[.75rem] asowp-leading-[1rem]'"
+                >{{ config.data.materials[0]?.type }}</span>
             </div>
             <div
               class="asowp-flex asowp-space-x-2 asowp-justify-center asowp-items-center asowp-text-gray-500 dark:asowp-text-gray-400"
@@ -134,7 +139,7 @@
                             </button> -->
               
               <button
-                class="asowp-border-none asowp-z-[1] asowp-bg-white asowp-relative"
+                class="asowp-w-7 asowp-h-7 asowp-bg-white asowp-cursor-pointer asowp-border asowp-border-gray-300 asowp-rounded-lg asowp-flex asowp-items-center asowp-justify-center asowp-shadow-sm hover:asowp-bg-gray-100 asowp-transition"
                 @click.stop="handleOpenConfigParams(key)"
               >
                 <svg
@@ -143,7 +148,7 @@
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="asowp-w-6 asowp-rotate-90 asowp-h-6"
+                  class="asowp-w-6 asowp-h-6"
                 >
                   <path
                     stroke-linecap="round"
@@ -152,60 +157,105 @@
                   />
                 </svg>
                 <div
-                  class="asowp-bg-white asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-space-x-2 asowp-p-2 asowp-absolute -asowp-top-12 asowp-z-[999] asowp-right-0 asowp-rounded"
+                  class="asowp-absolute asowp-top-0 asowp-right-0 asowp-w-40 asowp-bg-white asowp-shadow-lg asowp-rounded-xl asowp-py-2 asowp-z-[999] asowp-border asowp-border-gray-100"
+                  style="max-width: 6rem; max-height: 31.25rem;  border-radius: 0.75rem; padding: 0.375rem;"
                   v-if="showParams[key]"
-                  @click.self="showPrams[key] = false"
+                  @click.self="showParams[key] = false"
                 >
+                  <!-- Preview -->
                   <button
-                    class="asowp-bg-transparent asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex"
+                    class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-4 asowp-py-2 asowp-flex asowp-items-center asowp-gap-3 asowp-hover asowp-transition"
+                    style="padding: .25rem .375rem; border-radius: .5rem;"
                     @click.stop="goToPreview(config)"
                   >
-                    <img class="asowp-w-5 asowp-h-5" src="../../../../assets/icons/ic_preview.svg" alt="" />
-                    <span class="asowp-text-[12px]"> Preview </span>
+                    <svg 
+                      viewBox="0 0 20 20" 
+                      class="asowp-w-5 asowp-h-5" 
+                      fill="#303030"
+                      focusable="false" 
+                      aria-hidden="true">
+                      <path 
+                        fill-rule="evenodd" 
+                        d="M13 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-1.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z">
+                      </path>
+                      <path 
+                        fill-rule="evenodd" 
+                        d="M10 4c-2.476 0-4.348 1.23-5.577 2.532a9.266 9.266 0 0 0-1.4 1.922 5.98 5.98 0 0 0-.37.818c-.082.227-.153.488-.153.728s.071.501.152.728c.088.246.213.524.371.818.317.587.784 1.27 1.4 1.922 1.229 1.302 3.1 2.532 5.577 2.532 2.476 0 4.348-1.23 5.577-2.532a9.265 9.265 0 0 0 1.4-1.922 5.98 5.98 0 0 0 .37-.818c.082-.227.153-.488.153-.728s-.071-.501-.152-.728a5.984 5.984 0 0 0-.371-.818 9.269 9.269 0 0 0-1.4-1.922c-1.229-1.302-3.1-2.532-5.577-2.532Zm-5.999 6.002v-.004c.004-.02.017-.09.064-.223a4.5 4.5 0 0 1 .278-.608 7.768 7.768 0 0 1 1.17-1.605c1.042-1.104 2.545-2.062 4.487-2.062 1.942 0 3.445.958 4.486 2.062a7.77 7.77 0 0 1 1.17 1.605c.13.24.221.447.279.608.047.132.06.203.064.223v.004c-.004.02-.017.09-.064.223a4.503 4.503 0 0 1-.278.608 7.768 7.768 0 0 1-1.17 1.605c-1.042 1.104-2.545 2.062-4.487 2.062-1.942 0-3.445-.958-4.486-2.062a7.766 7.766 0 0 1-1.17-1.605 4.5 4.5 0 0 1-.279-.608c-.047-.132-.06-.203-.064-.223Z">
+                      </path>
+                    </svg>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Preview</span>
                   </button>
+
+                  <!-- Edit -->
                   <button
-                    class="asowp-bg-transparent asowp-border-none asowp-text-[#2DD05B] asowp-cursor-pointer"
+                    class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-4 asowp-py-2 asowp-flex asowp-items-center asowp-gap-3 asowp-hover asowp-transition"
+                    style="padding: .25rem .375rem; border-radius: .5rem;"
                     @click.stop="selectEditConfig(config)"
                   >
-                    <img
-                      class="asowp-w-5 asowp-h-5"
-                      src="../../../../assets/icons/ic_edit.svg"
-                      alt=""
-                    />
-                    <span class="asowp-text-[12px]"> Edit </span>
+                    <svg 
+                      viewBox="0 0 20 20" 
+                      class="asowp-w-5 asowp-h-5 asowp-text-[#303030]" 
+                      focusable="false" 
+                      fill="#303030"
+                      aria-hidden="true">
+                      <path 
+                        fill-rule="evenodd" 
+                        d="M15.655 4.344a2.695 2.695 0 0 0-3.81 0l-.599.599-.009-.009-1.06 1.06.008.01-5.88 5.88a2.75 2.75 0 0 0-.805 1.944v1.922a.75.75 0 0 0 .75.75h1.922a2.75 2.75 0 0 0 1.944-.806l7.54-7.539a2.695 2.695 0 0 0 0-3.81Zm-4.409 2.72-5.88 5.88a1.25 1.25 0 0 0-.366.884v1.172h1.172c.331 0 .65-.132.883-.366l5.88-5.88-1.689-1.69Zm2.75.629.599-.599a1.195 1.195 0 1 0-1.69-1.689l-.598.599 1.69 1.689Z">
+                      </path>
+                    </svg>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Edit</span>
                   </button>
+
+                  <!-- Duplicate -->
                   <button
-                    class="asowp-bg-transparent asowp-border-none asowp-text-[#FF6600] asowp-cursor-pointer"
+                    class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-4 asowp-py-2 asowp-flex asowp-items-center asowp-gap-3 asowp-hover asowp-transition"
+                    style="padding: .25rem .375rem; border-radius: .5rem;"
                     @click.stop="selectEditConfig(config, true)"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="asowp-w-6 asowp-h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
-                      />
+                    <svg 
+                      viewBox="0 0 20 20" 
+                      class="asowp-w-5 asowp-h-5" 
+                      fill="#303030"
+                      focusable="false" 
+                      aria-hidden="true">
+                      <path 
+                        d="M11.25 8.5c-.414 0-.75.336-.75.75v1.25h-1.25c-.414 0-.75.336-.75.75s.336.75.75.75h1.25v1.25c0 .414.336.75.75.75s.75-.336.75-.75v-1.25h1.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-1.25v-1.25c0-.414-.336-.75-.75-.75Z">
+                      </path>
+                      <path 
+                        fill-rule="evenodd" 
+                        d="M8.75 16.5c-1.438 0-2.618-1.104-2.74-2.51-1.406-.122-2.51-1.302-2.51-2.74v-5c0-1.519 1.231-2.75 2.75-2.75h5c1.438 0 2.618 1.104 2.74 2.51 1.406.122 2.51 1.302 2.51 2.74v5c0 1.519-1.231 2.75-2.75 2.75h-5Zm0-10.5c-1.519 0-2.75 1.231-2.75 2.75v3.725c-.57-.116-1-.62-1-1.225v-5c0-.69.56-1.25 1.25-1.25h5c.605 0 1.11.43 1.225 1h-3.725Zm0 1.5c-.69 0-1.25.56-1.25 1.25v5c0 .69.56 1.25 1.25 1.25h5c.69 0 1.25-.56 1.25-1.25v-5c0-.69-.56-1.25-1.25-1.25h-5Z">
+                      </path>
                     </svg>
-                    <span class="asowp-text-[12px]"> Duplicate </span>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Duplicate</span>
                   </button>
+
+                  <!-- Delete -->
                   <button
-                    class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer"
+                    class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-w-full asowp-px-4 asowp-py-2 asowp-flex asowp-items-center asowp-gap-3 asowp-hover-delete asowp-transition"
+                    style="padding: .25rem .375rem; border-radius: .5rem;"
                     @click.stop="selectDeleteConfig(config.id, config.name)"
                   >
-                    <img
-                      class="asowp-w-5 asowp-h-5"
-                      src="../../../../assets/icons/ic_delete.svg"
-                      alt=""
-                    />
-                    <span class="asowp-text-[12px]"> Delete </span>
+                    <svg 
+                      viewBox="0 0 20 20" 
+                      class="asowp-w-5 asowp-h-5" 
+                      fill="rgb(142, 31, 11)"
+                      focusable="false" 
+                      aria-hidden="true">
+                      <path 
+                        d="M11.5 8.25a.75.75 0 0 1 .75.75v4.25a.75.75 0 0 1-1.5 0v-4.25a.75.75 0 0 1 .75-.75Z">
+                      </path>
+                      <path 
+                        d="M9.25 9a.75.75 0 0 0-1.5 0v4.25a.75.75 0 0 0 1.5 0v-4.25Z">
+                      </path>
+                      <path 
+                        fill-rule="evenodd" 
+                        d="M7.25 5.25a2.75 2.75 0 0 1 5.5 0h3a.75.75 0 0 1 0 1.5h-.75v5.45c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311c-.642.327-1.482.327-3.162.327h-.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162v-5.45h-.75a.75.75 0 0 1 0-1.5h3Zm1.5 0a1.25 1.25 0 1 1 2.5 0h-2.5Zm-2.25 1.5h7v5.45c0 .865-.001 1.423-.036 1.848-.033.408-.09.559-.128.633a1.5 1.5 0 0 1-.655.655c-.074.038-.225.095-.633.128-.425.035-.983.036-1.848.036h-.4c-.865 0-1.423-.001-1.848-.036-.408-.033-.559-.09-.633-.128a1.5 1.5 0 0 1-.656-.655c-.037-.074-.094-.225-.127-.633-.035-.425-.036-.983-.036-1.848v-5.45Z">
+                      </path>
+                    </svg>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">Delete</span>
                   </button>
                 </div>
+
               </button>
             </div>
           </div>
@@ -288,26 +338,26 @@
     <!-- create a new configuration -->
     <!-- WIZARD: header + stepper -->
     <div
-      v-if="isWizard"
-      class="asowp-sticky asowp-border asowp-rounded-[13px] asowp-top-[70px] asowp-z-[50] asowp-bg-white asowp-border-[#e6e6e6]"
+      v-if="isWizard || (isEdit && step === 4)"
+      class="asowp-sticky asowp-border asowp-rounded-[13px] asowp-top-[20px] asowp-z-[50] asowp-bg-white asowp-border-[#e6e6e6]"
       style="border: 1px solid #e6e6e6"
     >
       <div class="asowp-px-4 asowp-pt-4 asowp-pb-3">
-        <h2 class="asowp-m-0 asowp-text-[18px] asowp-font-bold">
-          Create new configuration
+        <h2 class="asowp-m-0 asowp-text-[1.25rem] asowp-font-bold asowp-text-[#303030]">
+          {{ isEdit ? 'Edit configuration' : 'Create new configuration' }}
         </h2>
-        <div class="asowp-mt-2 asowp-text-[12px]">
-          Step {{ wizard.step }} of 5
+        <div class="asowp-mt-[0.2rem] asowp-text-[12px]">
+          Step {{ isEdit ? 4 : wizard.step }} of 4
         </div>
         <div
-          class="asowp-flex asowp-items-center asowp-space-x-2 asowp-mt-2 asowp-h-[6px]"
+          class="asowp-flex asowp-items-center asowp-space-x-2 asowp-mt-[0.3rem] asowp-h-[6px]"
         >
           <div
-            v-for="n in 5"
+            v-for="n in 4"
             :key="n"
             :class="[
               'asowp-h-[6px] asowp-rounded-full asowp-transition-all',
-              n <= wizard.step
+              n <= (isEdit ? 4 : wizard.step)
                 ? 'asowp-bg-[#016464] asowp-w-16'
                 : 'asowp-bg-[#e5e7eb] asowp-w-10',
             ]"
@@ -321,282 +371,433 @@
       v-if="isWizard && wizard.step === 1"
       class="asowp-p-4 asowp-border asowp-rounded-[13px] asowp-border-[#e6e6e6] asowp-bg-[#fff]"
     >
-      <div class="asowp-text-[16px] asowp-font-semibold">
-        Choose a product category
+      <div class="asowp-text-[1.25rem] asowp-font-bold asowp-text-[#303030]">
+         Select the signage domain
+         <span v-if="wizard.category" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+           {{ categories.find((c) => c.id === wizard.category)?.tag }}
+         </span>
       </div>
       <p
-        class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-[15px] asowp-mb-[35px]"
+        class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-[8px] asowp-mb-[25px]"
       >
-        Select a category to automatically load the right options (dimensions,
-        print areas, materials, etc.)
+        Select a domain so we can prepare the matching product types for your next step.
       </p>
 
       <div
-        class="asowp-grid asowp-grid-cols-1 md:asowp-grid-cols-3 asowp-gap-4"
+        class="asowp-grid asowp-grid-cols-1 md:asowp-grid-cols-3" style="gap: 1rem !important;"
       >
-        <button
-          v-for="cat in categories"
-          :key="cat.id"
-          :disabled="cat.disabled"
-          @click="!cat.disabled && (wizard.category = cat.id)"
-          :class="[
-            'asowp-text-left asowp-pl-[0px] asowp-pr-[0px] asowp-rounded-xl asowp-border asowp-shadow-sm asowp-overflow-hidden',
-            wizard.category === cat.id
-              ? 'asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
-              : 'asowp-border-[#e5e7eb]',
-            cat.comingSoon
-              ? 'asowp-opacity-60 asowp-cursor-not-allowed'
-              : 'asowp-cursor-pointer',
-          ]"
-        >
-          <!-- header avec gradient spécifique -->
+        <template v-for="cat in categories" :key="cat.id">
+          <!-- Style spécial pour Signs, Apparel et Objects -->
           <div
+            v-if="cat.id === 'signage' || cat.id === 'apparel' || cat.id === 'objects'"
+            @click="!cat.disabled && (wizard.category = cat.id)"
             :class="[
-              'asowp-p-4 asowp-pb-[80px] asowp-bg-gradient-to-br',
-              cat.gradient,
+              'asowp-flex asowp-flex-col asowp-gap-[10px] asowp-cursor-pointer asowp-bg-[rgb(245,245,245)] asowp-text-black asowp-rounded-[20px] asowp-border-[0.07em] asowp-border-solid asowp-border-[rgb(189,189,189)] asowp-transition-[50ms] asowp-overflow-hidden',
+              wizard.category === cat.id
+                ? 'asowp-shadow-[rgba(1,100,100,0.8)_0px_0px_4px_2px]'
+                : '',
+              cat.disabled ? 'asowp-cursor-not-allowed' : '',
             ]"
           >
-            <span
-              class="asowp-inline-block asowp-font-semibold asowp-text-[11px] asowp-px-2 asowp-py-[2px] asowp-rounded-full asowp-bg-[#fff] asowp-text-gray-700"
-            >
-              {{ cat.tag }}
-            </span>
+            <!-- header avec gradient spécifique -->
             <div
-              class="asowp-float-right asowp-w-[2.5rem] asowp-h-[2.5rem] asowp-rounded-[15px] asowp-bg-white asowp-flex asowp-items-center asowp-justify-center asowp-shadow"
+              :class="[
+                'asowp-relative asowp-w-full asowp-h-[150px]',
+                cat.id === 'signage'
+                  ? 'asowp-bg-gradient-to-br asowp-from-[rgb(220,220,220)] asowp-via-[rgb(235,248,225)] asowp-to-[rgb(235,248,225)]'
+                  : cat.id === 'apparel'
+                    ? 'asowp-bg-gradient-to-br asowp-from-[rgb(178,223,219)] asowp-via-[rgb(224,242,241)] asowp-to-[rgb(235,248,225)]'
+                    : 'asowp-bg-gradient-to-br asowp-from-[rgb(248,187,208)] asowp-via-[rgb(252,228,236)] asowp-to-[rgb(235,248,225)]',
+              ]"
             >
-              <component :is="CategoryIcons[cat.icon]" />
-            </div>
-          </div>
-
-          <!-- body -->
-          <div class="asowp-p-4">
-            <div class="asowp-text-[16px] asowp-font-semibold asowp-mb-1">
-              {{ cat.title }}
               <span
-                v-if="cat.comingSoon"
-                class="asowp-ml-2 asowp-text-[11px] asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-px-2 asowp-py-[2px] asowp-rounded"
+                class="asowp-absolute asowp-top-[15px] asowp-left-[15px] asowp-flex asowp-bg-white asowp-text-[rgb(66,66,66)] asowp-text-[12px] asowp-rounded-[20px] asowp-px-[10px] asowp-py-[1px]"
               >
-                Coming soon
+                {{ cat.tag }}
               </span>
               <span
-                v-else-if="wizard.category === cat.id"
-                class="asowp-ml-2 asowp-text-[11px] asowp-bg-[#e6fbf1] asowp-text-[#059669] asowp-px-2 asowp-py-[2px] asowp-rounded"
+                class="asowp-absolute asowp-top-[25px] asowp-right-[25px] asowp-flex asowp-bg-white asowp-text-[rgb(66,66,66)] asowp-text-[12px] asowp-rounded-[16px] asowp-p-[10px] asowp-shadow-[rgb(189,189,189)_0px_1px_4px]"
               >
-                selected
-              </span>
-            </div>
-            <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mb-3">
-              This category covers various products such as:
-            </p>
-            <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-mb-4">
-              <span
-                v-for="t in cat.examples"
-                :key="t"
-                class="asowp-text-[11px] asowp-px-2 asowp-py-[2px] asowp-rounded-full asowp-bg-[#e0f2f1] asowp-text-gray-700"
-              >
-                {{ t }}
-              </span>
-            </div>
-            <div class="asowp-flex asowp-justify-between asowp-items-center">
-              <span class="asowp-text-[12px] asowp-text-gray-500"
-                >Click to choose</span
-              >
-              <span
-                class="asowp-w-8 asowp-h-8 asowp-rounded-[7px] asowp-border asowp-flex asowp-items-center asowp-justify-center"
-                :class="
-                  wizard.category === cat.id
-                    ? 'asowp-border-[#016464] asowp-text-[#016464]'
-                    : 'asowp-border-gray-300 asowp-text-gray-400'
-                "
-                style="border: 1px solid"
-              >
+                <!-- SVG pour Signs (desktop) -->
                 <svg
-                  class="asowp-w-4 asowp-h-4"
+                  v-if="cat.id === 'signage'"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="14" x="2" y="3" rx="2"></rect>
+                  <line x1="8" x2="16" y1="21" y2="21"></line>
+                  <line x1="12" x2="12" y1="17" y2="21"></line>
+                </svg>
+                <!-- SVG pour Textile (tshirt) -->
+                <svg
+                  v-else-if="cat.id === 'apparel'"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"></path>
+                </svg>
+                <!-- SVG pour Goodies (cup/trash) -->
+                <svg
+                  v-else-if="cat.id === 'objects'"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"></path>
+                  <path d="M5 8h14"></path>
+                  <path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"></path>
+                  <path d="m12 8 1-6h2"></path>
+                </svg>
+              </span>
+            </div>
+
+            <!-- body -->
+            <div class="asowp-flex asowp-flex-col asowp-px-[15px] asowp-pt-[6px] asowp-pb-[6px]">
+              <div class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-flex-wrap">
+                <p class="asowp-text-[18px] asowp-m-[0px] asowp-font-[600]">{{ cat.title }}</p>
+                <span
+                  v-if="cat.comingSoon"
+                  class="asowp-flex asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-text-[11px] asowp-px-2 asowp-py-[2px] asowp-rounded"
+                >
+                  Coming soon
+                </span>
+                <span
+                  v-else-if="wizard.category === cat.id"
+                  class="asowp-flex asowp-bg-[rgba(1,100,100,0.2)] asowp-text-[rgba(1,100,100,0.8)] asowp-text-[10px] asowp-rounded-[20px] asowp-px-1 asowp-py-[0.5px]"
+                >
+                  selected
+                </span>
+              </div>
+              <div class="asowp-flex asowp-flex-col">
+                <p class="asowp-text-[rgb(66,66,66)] asowp-my-[10px] asowp-font-normal">
+                  This domain covers various products such as:
+                </p>
+                <div class="asowp-flex asowp-gap-[5px]">
+                  <span
+                    v-for="t in cat.examples"
+                    :key="t"
+                    class="asowp-flex asowp-bg-[rgb(224,242,241)] asowp-text-[rgb(66,66,66)] asowp-text-[11.5px] asowp-rounded-[20px] asowp-px-2 asowp-py-[1px] asowp-border-2 asowp-border-solid asowp-border-[rgb(224,224,224)]"
+                  >
+                    {{ t }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- footer -->
+            <div
+              class="asowp-flex asowp-gap-[10px] asowp-justify-between asowp-items-center asowp-px-[15px] asowp-py-[10px]"
+            >
+              <p class="asowp-text-gray-500 asowp-text-[12px] asowp-font-normal">
+                Click to choose
+              </p>
+              <span
+                :class="[
+                  'asowp-flex asowp-p-[5px] asowp-border-2 asowp-border-solid asowp-rounded-[10px]',
+                  cat.disabled || cat.comingSoon
+                    ? 'asowp-border-[rgb(220,220,220)]'
+                    : 'asowp-border-[rgba(1,100,100,0.8)]',
+                ]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="asowp-w-5 asowp-h-5"
                 >
                   <path
-                    d="M9 5l7 7-7 7"
-                    stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
+                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
                   />
                 </svg>
               </span>
             </div>
           </div>
-        </button>
-      </div>
-      <p
-        class="asowp-text-[12px] asowp-text-gray-500 asowp-mt-[25px] asowp-mb-[30px]"
-      >
-        Tip: you will refine the type and the personalization level in the next
-        steps.
-      </p>
 
+          <!-- Style original pour les autres catégories -->
+          <button
+            v-else
+            :disabled="cat.disabled"
+            @click="!cat.disabled && (wizard.category = cat.id)"
+            :class="[
+              'asowp-text-left asowp-pl-[0px] asowp-pr-[0px] asowp-rounded-xl asowp-border asowp-shadow-sm asowp-overflow-hidden',
+              wizard.category === cat.id
+                ? 'asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
+                : 'asowp-border-[#e5e7eb]',
+              cat.comingSoon
+                ? 'asowp-opacity-60 asowp-cursor-not-allowed'
+                : 'asowp-cursor-pointer',
+            ]"
+          >
+            <!-- header avec gradient spécifique -->
+            <div
+              :class="[
+                'asowp-p-4 asowp-pb-[80px] asowp-bg-gradient-to-br',
+                cat.gradient,
+              ]"
+            >
+              <span
+                class="asowp-inline-block asowp-font-semibold asowp-text-[11px] asowp-px-2 asowp-py-[2px] asowp-rounded-full asowp-bg-[#fff] asowp-text-gray-700"
+              >
+                {{ cat.tag }}
+              </span>
+              <div
+                class="asowp-float-right asowp-w-[2.5rem] asowp-h-[2.5rem] asowp-rounded-[15px] asowp-bg-white asowp-flex asowp-items-center asowp-justify-center asowp-shadow"
+              >
+                <component :is="CategoryIcons[cat.icon]" />
+              </div>
+            </div>
+
+            <!-- body -->
+            <div class="asowp-p-4">
+              <div class="asowp-text-[16px] asowp-font-semibold asowp-mb-1">
+                {{ cat.title }}
+                <span
+                  v-if="cat.comingSoon"
+                  class="asowp-ml-2 asowp-text-[11px] asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-px-2 asowp-py-[2px] asowp-rounded"
+                >
+                  Coming soon
+                </span>
+                <span
+                  v-else-if="wizard.category === cat.id"
+                  class="asowp-ml-2 asowp-text-[11px] asowp-bg-[#e6fbf1] asowp-text-[#059669] asowp-px-2 asowp-py-[2px] asowp-rounded"
+                >
+                  selected
+                </span>
+              </div>
+              <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mb-3">
+                This domain covers various products such as:
+              </p>
+              <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-mb-4">
+                <span
+                  v-for="t in cat.examples"
+                  :key="t"
+                  class="asowp-text-[11px] asowp-px-2 asowp-py-[2px] asowp-rounded-full asowp-bg-[#e0f2f1] asowp-text-gray-700"
+                >
+                  {{ t }}
+                </span>
+              </div>
+              <div class="asowp-flex asowp-justify-between asowp-items-center">
+                <span class="asowp-text-[12px] asowp-text-gray-500"
+                  >Click to choose</span
+                >
+                <span
+                  class="asowp-w-8 asowp-h-8 asowp-rounded-[7px] asowp-border asowp-flex asowp-items-center asowp-justify-center"
+                  :class="
+                    wizard.category === cat.id
+                      ? 'asowp-border-[#016464] asowp-text-[#016464]'
+                      : 'asowp-border-gray-300 asowp-text-gray-400'
+                  "
+                  style="border: 1px solid"
+                >
+                  <svg
+                    class="asowp-w-4 asowp-h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="M9 5l7 7-7 7"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </button>
+        </template>
+      </div>
       <!-- footer actions -->
       <div
-        class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-4"
+        class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-[25px]"
       >
-        <button
-          @click="goBack"
-          class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
-        >
-          <svg
-            class="asowp-w-5 asowp-h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
+        <p class="asowp-text-[12px] asowp-text-gray-500 asowp-m-0">
+          Tip: The next steps will let you pick the product type and how customers can personalize it
+        </p>
+        <div class="asowp-flex asowp-gap-3 asowp-items-center">
+          <button
+            @click="goBack"
+            class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-gray-600 asowp-bg-white asowp-border asowp-border-gray-300 asowp-rounded-lg asowp-px-4 asowp-py-2 asowp-hover:asowp-bg-gray-50"
           >
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Back
-        </button>
-        <button
-          @click="goNext"
-          :disabled="!canNext"
-          :class="[
-            'asowp-rounded-lg asowp-cursor-pointer asowp-px-5 asowp-py-2 asowp-text-white',
-            canNext
-              ? 'asowp-bg-[#016464] hover:asowp-bg-[#028383]'
-              : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
-          ]"
-        >
-          Next
-        </button>
+            Back
+          </button>
+          <button
+            @click="goNext"
+            :disabled="!canNext"
+            :class="[
+              'asowp-rounded-lg asowp-cursor-pointer asowp-px-5 asowp-py-2 asowp-text-white',
+              canNext
+                ? 'asowp-bg-[#016464] hover:asowp-bg-[#028383]'
+                : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
+            ]"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
 
     <!-- STEP 2: Select product type -->
     <div
       v-if="isWizard && wizard.step === 2"
-      class="asowp-p-4 asowp-rounded-[13px] asowp-bg-[#fff]"
-      style="border: 1px solid #e6e6e6"
+      class="asowp-bg-white asowp-p-6 asowp-rounded-xl asowp-border asowp-border-[#e5e7eb]"
     >
-      <div class="asowp-text-[16px] asowp-font-semibold asowp-mb-[10px]">
-        Select product type
-      </div>
-      <p class="asowp-text-[13px] asowp-text-gray-600 asowp-m-[0px]">
-        Now pick a subtype that best matches your product within
-        <span class="asowp-font-semibold">
-          {{
-            categories.find((c) => c.id === wizard.category)?.title || "Signs"
-          }}
-        </span>
-      </p>
+      <!-- Header -->
+      <header class="asowp-mb-6">
+        <h1 class="asowp-gap-1 asowp-flex" style="font-size: 1.25rem; font-weight: 600; color: #303030;">
+          What product would you like to sell? <span v-if="wizard.category" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+             {{ categories.find((c) => c.id === wizard.category)?.tag }}
+           </span>
+           <span class="asowp-font-medium">/</span>
+           <span v-if="currentProductCategory?.name" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+             {{ currentProductCategory.name }}
+           </span>
+           <span class="asowp-font-medium">/</span>
+           <span v-if="selectedProduct" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+             {{ selectedProduct }}
+           </span>
+        </h1>
 
+        <p class="asowp-text-sm asowp-text-gray-600 asowp-mt-1">
+          Pick the product category and a sample that best represents what you’re selling.
+          <!--<span class="asowp-font-semibold">{{ currentProductCategory?.name || 'Signboard' }}</span>.
+          You will fine-tune material behaviour in the next step.-->
+        </p>
+      </header>
+
+      <!-- Pills Navigation (Signboard, Banners, Stickers) -->
       <div
-        class="asowp-grid asowp-grid-cols-1 md:asowp-grid-cols-3 asowp-gap-4 asowp-mt-[30px]"
+        v-if="wizard.category === 'signage'"
+        class="asowp-flex asowp-gap-2 asowp-flex-wrap asowp-mb-6"
       >
         <button
-          v-for="pt in productTypesByCategory[wizard.category] || []"
-          :key="pt.id"
-          :disabled="pt.disabled"
-          @click="!pt.disabled && (wizard.productType = pt.id)"
+          v-for="cat in signageOption.productCategories"
+          :key="cat.type"
+          @click="() => {
+            wizard.productType = cat.type;
+            selectedSubCategory = cat.productGroups?.[0]?.name;
+            selectedProduct = cat.productGroups?.[0]?.products?.[0]?.name;
+          }"
           :class="[
-            'asowp-w-full asowp-pl-[0px] asowp-pr-[0px] asowp-text-left asowp-rounded-xl asowp-border asowp-overflow-hidden asowp-transition-all asowp-shadow-sm',
-            wizard.productType === pt.id
-              ? 'asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
-              : 'asowp-border-[#e5e7eb]',
-            pt.disabled
-              ? 'asowp-opacity-60 asowp-cursor-not-allowed'
-              : 'asowp-cursor-pointer',
+            'asowp-px-4 asowp-py-1 asowp-cursor-pointer asowp-text-sm asowp-font-semibold asowp-rounded-full asowp-border transition-all',
+            wizard.productType === cat.type
+              ? 'asowp-bg-[#e0f2f1] asowp-text-[#016464] asowp-border-[#016464]'
+              : 'asowp-bg-gray-100 asowp-text-gray-700 asowp-border-transparent hover:asowp-bg-gray-200'
           ]"
         >
-          <div
-            class="asowp-p-4 asowp-h-full asowp-bg-[#f8fafc] hover:asowp-bg-[#e9e9ed]"
-          >
-            <div class="asowp-flex asowp-items-center asowp-justify-between">
-              <div class="asowp-text-[16px] asowp-font-semibold">
-                {{ pt.title }}
-                <span
-                  v-if="pt.comingSoon"
-                  class="asowp-ml-2 asowp-align-middle asowp-text-[11px] asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-px-2 asowp-py-[2px] asowp-rounded"
-                >
-                  Coming soon
-                </span>
-              </div>
-              <span
-                class="asowp-w-8 asowp-h-8 asowp-rounded-[5px] asowp-border asowp-flex asowp-items-center asowp-justify-center"
-                :class="
-                  wizard.productType === pt.id
-                    ? 'asowp-border-[#016464] asowp-text-[#016464]'
-                    : 'asowp-border-gray-300 asowp-text-gray-400'
-                "
-                style="border: 1px solid"
-              >
-                <svg
-                  class="asowp-w-4 asowp-h-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path
-                    d="M9 5l7 7-7 7"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </span>
-            </div>
-
-            <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-1">
-              {{ pt.desc }}
-              <a
-                class="asowp-underline asowp-text-[12px] asowp-ml-1 asowp-text-gray-500"
-                href="javascript:void(0)"
-                >See more</a
-              >
-            </p>
-          </div>
+          {{ cat.name }}
         </button>
       </div>
 
-      <p
-        class="asowp-text-[12px] asowp-text-gray-500 asowp-mt-[30px] asowp-mb-[30px]"
-      >
-        Tip: after choosing a subtype, you'll proceed to Level 3 (Simple /
-        Advanced / Layers).
-      </p>
-
-      <!-- footer actions -->
+      <!-- Tabs (Business & Office, Retail & Outdoor...) -->
       <div
-        class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-4"
+        v-if="currentProductCategory"
+        class="asowp-flex asowp-gap-1 asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b asowp-border-b-[1px] asowp-border-solid asowp-border-[#e6e6e6] asowp-mb-6"
       >
         <button
-          @click="goBack"
-          class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
+          v-for="group in currentProductCategory.productGroups"
+          :key="group.name"
+          @click="() => {
+            selectedSubCategory = group.name;
+            selectedProduct = group.products?.[0]?.name;
+          }"
+          :class="[
+            'asowp-px-4 asowp-cursor-pointer asowp-py-2 asowp-text-sm asowp-font-semibold asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-b-[1px] transition-colors asowp-flex asowp-items-center asowp-gap-2',
+            selectedSubCategory === group.name
+              ? 'asowp-border-b-[#016464] asowp-text-[#016464] asowp-bg-[#e0f2f1]'
+              : 'asowp-border-b-[#e6e6e6] asowp-border-b-[0px] asowp-bg-transparent asowp-text-gray-600 hover:asowp-text-[#016464]'
+          ]"
         >
-          <svg
-            class="asowp-w-5 asowp-h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
+          <span v-if="group.icon" v-html="group.icon" class="asowp-inline-flex asowp-items-center"></span>
+          {{ group.name }}
+        </button>
+      </div>
+
+      <!-- Product Cards -->
+      <section v-if="currentProducts.length" class="asowp-mb-8">
+        <div class="asowp-grid asowp-gap-4 md:asowp-grid-cols-4">
+          <div
+            v-for="product in currentProducts"
+            :key="product.name"
+            @click="selectedProduct = product.name"
+            :class="[
+              'asowp-bg-[#f5f5f5] asowp-rounded-2xl asowp-border asowp-border-gray-200 asowp-p-4 asowp-shadow-sm asowp-cursor-pointer transition-all',
+              selectedProduct === product.name
+                ? 'asowp-border-[#016464] asowp-ring-2 asowp-ring-[#016464]/20'
+                : 'hover:asowp-shadow-md hover:asowp-border-gray-300 asowp-border-[1px] asowp-border-solid asowp-border-[#dbdbdb]'
+            ]"
           >
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+            <h3 class="asowp-text-sm asowp-font-semibold asowp-text-gray-900 asowp-m-[0px]">
+              {{ product.name }}
+            </h3>
+
+            <p class="asowp-text-xs asowp-text-gray-600 asowp-mt-1 asowp-mb-3 asowp-h-[25px]">
+              {{ product.description || currentProductGroup?.description }}
+            </p>
+
+            <div class="asowp-flex asowp-items-center asowp-justify-between asowp-text-[11px] asowp-text-gray-500">
+              <span>Click to select</span>
+              <button
+                @click.stop
+                class="asowp-text-[#016464] asowp-cursor-pointer asowp-font-semibold asowp-bg-transparent asowp-border-none"
+              >
+                Preview
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tip -->
+      <footer class="asowp-text-xs asowp-text-gray-500">
+        Tip: You’ll configure the demo content and the user interaction mode in the next step.
+      </footer>
+
+      <!-- Actions -->
+      <div class="asowp-flex asowp-justify-end asowp-gap-3 asowp-mt-8">
+        <button
+          @click="goBack"
+          class="asowp-bg-white asowp-cursor-pointer asowp-border asowp-border-gray-300 asowp-text-gray-700 asowp-px-4 asowp-py-2 asowp-rounded-lg hover:asowp-bg-gray-50"
+        >
           Back
         </button>
+
         <button
           @click="goNext"
           :disabled="!canNext"
           :class="[
-            'asowp-rounded-lg asowp-cursor-pointer asowp-px-5 asowp-py-2 asowp-text-white',
+            'asowp-px-5 asowp-cursor-pointer asowp-py-2 asowp-rounded-lg asowp-font-medium',
             canNext
-              ? 'asowp-bg-[#016464] hover:asowp-bg-[#028383]'
-              : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
+              ? 'asowp-bg-[#016464] asowp-text-white hover:asowp-bg-[#028383]'
+              : 'asowp-bg-gray-300 asowp-text-white asowp-cursor-not-allowed'
           ]"
         >
           Next
@@ -604,18 +805,68 @@
       </div>
     </div>
 
-    <!-- STEP 3: Select material type -->
+
+    <!-- STEP 3: Select material type and Include demo data -->
     <div
       v-if="isWizard && wizard.step === 3"
       class="asowp-p-4 asowp-rounded-[13px] asowp-bg-[#fff]"
       style="border: 1px solid #e6e6e6"
     >
-      <div class="asowp-text-[16px] asowp-font-semibold">
-        Select material type
+        <div class="asowp-text-[18px] asowp-font-semibold">Add product template for fast setup <span v-if="wizard.category" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+          {{ categories.find((c) => c.id === wizard.category)?.tag }}
+          </span>
+          <span class="asowp-font-medium">/</span>
+          <span v-if="currentProductCategory?.name" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+            {{ currentProductCategory.name }}
+          </span>
+          <span class="asowp-font-medium">/</span>
+          <span v-if="selectedProduct" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#f3f4f6] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
+            {{ selectedProduct }}
+          </span>
+        </div>
+        <p
+          class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-[8px] asowp-mb-[20px]"
+        >
+          Choose a starter template whose demo content matches your product.
+        </p>
+        <!-- Include Demo Data Section -->
+      <div class="asowp-mt-[20px]">
+        <!-- Toggle Yes / No -->
+        <div class="asowp-border asowp-rounded-[15px] asowp-bg-[#f5f5f5] asowp-p-5" style="border:1px solid #bdbdbd;">
+          <div class="asowp-flex asowp-items-center asowp-justify-between">
+            <div>
+              <div class="asowp-text-[16px] asowp-font-bold asowp-mb-[15px]">Include demo data?</div>
+              <div class="asowp-text-[13px] asowp-text-[#616161]">
+                Preload a template to start faster. You can still customize everything later.
+              </div>
+            </div>
+
+            <div class="asowp-flex asowp-gap-2">
+              <button type="button"
+                  @click="wizard.includeDemo=false"
+                  :class="['asowp-min-w-[30px] asowp-cursor-pointer asowp-rounded-md asowp-border asowp-px-3 asowp-py-1.5',
+                          !wizard.includeDemo ? 'asowp-text-[#016464] asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
+                                              : 'asowp-text-gray-700 asowp-border-[#e5e7eb]']">
+                  No
+              </button>
+              <button type="button"
+                  @click="openDemoModal()"
+                  :class="['asowp-min-w-[30px] asowp-cursor-pointer asowp-rounded-md asowp-border asowp-px-3 asowp-py-1.5',
+                          wizard.includeDemo ? 'asowp-text-[#016464] asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
+                                              : 'asowp-text-gray-700 asowp-border-[#e5e7eb]']">
+                  Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Material Type Section -->
+      <div class="asowp-text-[16px] asowp-font-semibold asowp-mt-8 asowp-mb-4">
+         Select how user can customize the product
       </div>
 
       <div
-        class="asowp-grid asowp-grid-cols-1 md:asowp-grid-cols-3 asowp-gap-4 asowp-mt-[30px]"
+        class="asowp-grid asowp-grid-cols-1 md:asowp-grid-cols-3 asowp-gap-4 asowp-mt-[10px]"
       >
         <button
           v-for="mt in materialTypes"
@@ -623,17 +874,17 @@
           :disabled="mt.disabled"
           @click="!mt.disabled && (wizard.materialType = mt.id)"
           :class="[
-            'asowp-w-full asowp-pl-[0px] asowp-pr-[0px] asowp-text-left asowp-rounded-xl asowp-border asowp-overflow-hidden asowp-transition-all asowp-shadow-sm',
+            'asowp-w-full asowp-pl-[0px] asowp-pr-[0px] asowp-text-left asowp-h-full asowp-bg-[#f8fafc] asowp-rounded-xl asowp-border-solid asowp-border-[1px] asowp-overflow-hidden asowp-transition-all',
             wizard.materialType === mt.id
               ? 'asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
               : 'asowp-border-[#e5e7eb]',
             mt.disabled
-              ? 'asowp-opacity-60 asowp-cursor-not-allowed'
+              ? ''
               : 'asowp-cursor-pointer',
           ]"
         >
           <div
-            class="asowp-p-4 asowp-h-full asowp-bg-[#f8fafc] hover:asowp-bg-[#e9e9ed]"
+            class="asowp-p-3 asowp-bg-[#f8fafc] asowp-h-full hover:asowp-bg-[#e9e9ed]"
           >
             <div class="asowp-flex asowp-items-center asowp-justify-between">
               <div class="asowp-text-[16px] asowp-font-semibold">
@@ -646,10 +897,10 @@
                 </span>
               </div>
               <span
-                class="asowp-w-8 asowp-h-8 asowp-rounded-[5px] asowp-border asowp-flex asowp-items-center asowp-justify-center"
+                class="asowp-w-8 asowp-h-8 asowp-rounded-full asowp-border asowp-flex asowp-items-center asowp-justify-center"
                 :class="
                   wizard.materialType === mt.id
-                    ? 'asowp-border-[#016464] asowp-text-[#016464]'
+                    ? 'asowp-border-[#70b8b8] asowp-text-[#016464]'
                     : 'asowp-border-gray-300 asowp-text-gray-400'
                 "
                 style="border: 1px solid"
@@ -670,101 +921,13 @@
               </span>
             </div>
 
-            <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-1">
+            <p class="asowp-text-[13px] asowp-text-gray-600 asowp-m-[0px] asowp-mr-[40px]">
               {{ mt.desc }}
             </p>
           </div>
         </button>
       </div>
 
-      <p
-        class="asowp-text-[12px] asowp-text-gray-500 asowp-mt-[30px] asowp-mb-[30px]"
-      >
-        Tip: select a level and you can move on to Demo Data / Templates next.
-      </p>
-
-      <!-- footer actions -->
-      <div
-        class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-4"
-      >
-        <button
-          @click="goBack"
-          class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
-        >
-          <svg
-            class="asowp-w-5 asowp-h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-          >
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-          Back
-        </button>
-        <button
-          @click="goNext"
-          :disabled="!canNext"
-          :class="[
-            'asowp-rounded-lg asowp-cursor-pointer asowp-px-5 asowp-py-2 asowp-text-white',
-            canNext
-              ? 'asowp-bg-[#016464] hover:asowp-bg-[#028383]'
-              : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
-          ]"
-        >
-          Next
-        </button>
-      </div>
-    </div>
-
-    <!-- STEP 4: Include demo data -->
-    <div
-      v-if="isWizard && wizard.step === 4"
-      class="asowp-p-4 asowp-rounded-[13px] asowp-bg-[#fff]"
-      style="border: 1px solid #e6e6e6"
-    >
-      <div class="asowp-text-[18px] asowp-font-bold">Include demo data</div>
-      <p
-        class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-[15px] asowp-mb-[30px]"
-      >
-        Decide whether to preload demo content. If enabled, choose a starting
-        template for faster setup.
-      </p>
-
-      <!-- … ton Step 4 au-dessus … -->
-
-    <!-- Toggle Yes / No -->
-    <div class="asowp-border asowp-rounded-[15px] asowp-bg-[#f5f5f5] asowp-p-5" style="border:1px solid #bdbdbd;">
-    <div class="asowp-flex asowp-items-center asowp-justify-between">
-        <div>
-        <div class="asowp-text-[16px] asowp-font-bold asowp-mb-[15px]">Include demo data?</div>
-        <div class="asowp-text-[13px] asowp-text-[#616161]">
-            Preload a template to start faster. You can still customize everything later.
-        </div>
-        </div>
-
-        <div class="asowp-flex asowp-gap-2">
-        <button type="button"
-            @click="wizard.includeDemo=false"
-            :class="['asowp-min-w-[30px] asowp-cursor-pointer asowp-rounded-md asowp-border asowp-px-3 asowp-py-1.5',
-                    !wizard.includeDemo ? 'asowp-text-[#016464] asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
-                                        : 'asowp-text-gray-700 asowp-border-[#e5e7eb]']">
-            No
-        </button>
-        <button type="button"
-            @click="openDemoModal()"
-            :class="['asowp-min-w-[30px] asowp-cursor-pointer asowp-rounded-md asowp-border asowp-px-3 asowp-py-1.5',
-                    wizard.includeDemo ? 'asowp-text-[#016464] asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
-                                        : 'asowp-text-gray-700 asowp-border-[#e5e7eb]']">
-            Yes
-        </button>
-        </div>
-    </div>
-    </div>
 
     <!-- ===== Modal: Select a demo ===== -->
     <div v-if="showDemoModal"
@@ -867,45 +1030,37 @@
       <p
         class="asowp-text-[12px] asowp-text-gray-500 asowp-mt-[20px] asowp-mb-[30px]"
       >
-        Tip: selecting a template speeds up onboarding, but you can also start
-        from scratch.
+        Tip: On the next step, You will finish by adding a name and linking a product of your store.
       </p>
 
       <!-- footer -->
       <div
-        class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-4"
+        class="asowp-flex asowp-justify-end asowp-gap-2 asowp-items-center asowp-mt-4"
       >
         <button
           @click="goBack"
           class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
         >
-          <svg
-            class="asowp-w-5 asowp-h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-          >
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
           Back
         </button>
         <button
           @click="goNext"
-          class="asowp-rounded-lg asowp-cursor-pointer asowp-px-5 asowp-py-2 asowp-text-white asowp-bg-[#016464] hover:asowp-bg-[#028383]"
+          :disabled="!canNext"
+          :class="[
+            'asowp-rounded-lg asowp-cursor-pointer asowp-px-5 asowp-py-2 asowp-text-white',
+            canNext
+              ? 'asowp-bg-[#016464] hover:asowp-bg-[#028383]'
+              : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
+          ]"
         >
           Next
         </button>
       </div>
     </div>
 
-    <!-- STEP 5: Finalize -->
+    <!-- STEP 4: Finalize -->
     <div
-      v-if="isWizard && wizard.step === 5"
+      v-if="(isWizard && wizard.step === 4) || (isEdit && step === 4)"
       class="asowp-p-4 asowp-rounded-[13px] asowp-bg-[#fff]"
       style="border: 1px solid #e6e6e6"
     >
@@ -1083,30 +1238,17 @@
 
       <!-- footer -->
       <div
-        class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-6"
+        class="asowp-flex asowp-justify-end asowp-gap-2 asowp-items-center asowp-mt-6"
       >
         <button
           @click="goBack"
           class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
         >
-          <svg
-            class="asowp-w-5 asowp-h-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-          >
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
           Back
         </button>
 
         <button
-          @click="includeMetaData(wizard.includeDemo)"
+          @click="isEdit ? updateConfig() : includeMetaData(wizard.includeDemo)"
           :disabled="!newConfig.name?.trim() || isLoading"
           :class="[
             'asowp-rounded-lg asowp-px-5 asowp-py-2 asowp-text-white',
@@ -1115,7 +1257,7 @@
               : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
           ]"
         >
-          {{ isLoading ? "Saving…" : "Finish" }}
+          {{ isLoading ? "Saving…" : (isEdit ? "Update" : "Finish") }}
         </button>
       </div>
     </div>
@@ -1331,13 +1473,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted, h, ref } from "vue";
+import { computed, onMounted, h, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
 import Multiselect from "@vueform/multiselect";
 import router from "@/admin/router";
 
-const isNewConfig = ref(false);
+const route = useRoute();
+// Initialize wizard mode immediately if 'new' parameter is present
+const isNewConfig = ref(route.query.new === 'true');
 const showParams = ref([]);
 const openCloneModal = ref(false);
 const newConfig = ref({
@@ -9119,7 +9264,8 @@ const isFetching = ref(false);
 const canAddNew = ref(false);
 const isLoading = ref(false);
 const search = ref("");
-const step = ref(0);
+// Initialize step to 1 if we're creating a new config from query param
+const step = ref(route.query.new === 'true' ? 1 : 0);
 const isEdit = ref(false);
 const openModal = ref(false);
 const manageFonts = ref([]);
@@ -9129,12 +9275,14 @@ const manageFonts = ref([]);
  */
 // --- WIZARD (new flow) ---
 const isWizard = computed(() => isNewConfig.value && !isEdit.value);
+const isWizardOrEdit = computed(() => isNewConfig.value || isEdit.value);
 
+// Initialize wizard if we're creating a new config from query param
 const wizard = ref({
-  step: 1, // 1..5
+  step: route.query.new === 'true' ? 1 : 1, // 1..4
   category: "signage", // signage | apparel | objects
   productType: null, // signboard | banners | sticker | lettering | lightbox
-  materialType: null, // simple | advance | layers
+  materialType: "simple", // simple | advance | layers
   includeDemo: false,
 });
 
@@ -9143,7 +9291,7 @@ const categories = [
     id: "signage",
     tag: "Signage",
     title: "Signs",
-    examples: ["Banner", "Sticker", "Lightbox"],
+    examples: ["Signboard","Banner", "Sticker"],
     disabled: false,
     icon: "desktop",
     gradient: "asowp-from-[#dddedc] asowp-to-[#ebf8e1]", // vert clair
@@ -9261,25 +9409,452 @@ const productTypesByCategory = {
   apparel: [], // (coming soon)
   objects: [], // (coming soon)
 };
+
+// --- SIGNAGE OPTION DATA STRUCTURE (Step 2) ---
+const signageOption = {
+  name: "Signage",
+  type: "signage",
+  productCategories: [
+    {
+      name: "Signboard",
+      type: "signboard",
+      description: "Rigid panel / PVC/ Aluminum/ Plexiglass/ Wood/ Painted or stainless metal",
+      demoLink: "https://demos.signsdesigner.us/aso-templates-page/asowp-templates/196/#/",
+      productGroups: [
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 6V4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v2" />
+                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                  <path d="M2 12h20" />
+                </svg>`,
+          name: "Bussiness & Office",
+          products: [
+            {
+              name: "Door signs",
+              description: "Office doors, meeting rooms, name plates.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Name badges",
+              description: "Name tags for staff and reception.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Labels and plates",
+              description: "Small information or identification plates.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Acrylic signs",
+              description: "Premium plexiglass plates for offices.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+          ]
+        },
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l1-5h16l1 5" />
+                  <path d="M3 9a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4" />
+                  <path d="M5 22V12" />
+                  <path d="M19 22V12" />
+                </svg>`,
+          name: "Retail & Outdoor",
+          products: [
+            {
+              name: "Plastic signs",
+              description: "PVC / Eco board signs for shops and events.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Wood signs",
+              description: "Decorative wood boards for cafés & boutiques.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Aluminium signs",
+              description: "Rigid aluminium or Dibond® panels.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "House signs",
+              description: "Outdoor house numbers and name plaques.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Double-sided signs",
+              description: "Hanging or projecting double-sided panels.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Contour-cut signs",
+              description: "Shaped signs following the logo outline.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Magnetic signs",
+              description: "Removable magnetic panels for vehicles.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+          ]
+        },
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14.7 6.3a4 4 0 1 0-5.4 5.4l7 7a2 2 0 0 0 2.8-2.8l-7-7" />
+                </svg>`,
+          name: "Specialized & Industrial",
+          products: [
+            {
+              name: "Brass signs",
+              description: "Engraved brass plates for professionals.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },  
+            {
+              name: "Stainless steel signs",
+              description: "Durable plates for factories & technical areas.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Cable tags",
+              description: "Technical labels and cable identification tags.",
+              type: "",
+              demoData: "",
+              materialType: "simple"
+            },
+          ]
+        },
+      ]
+    },
+    {
+      name: "Banners",
+      type: "banners",
+      description: "PVC/ Mesh/ Double‑sided/ fabric, etc..",
+      demoLink: "https://demos.signsdesigner.us/aso-templates-page/asowp-templates/222/#/",
+      productGroups: [
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M2 10h20" />
+                </svg>`,
+          name: "Standard banners",
+          products: [
+            {
+              name: "Vinyl / PVC banners",
+              description: "Standard promotional banners (indoor / outdoor).",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Mesh / fabric banners",
+              description: "Wind-proof or textile banners for façades and events.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Posters",
+              description: "Large format posters used like lightweight banners.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            }
+          ]
+        },
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="M8 2v4" />
+                  <path d="M16 2v4" />
+                  <path d="M2 10h20" />
+                  <path d="M12 20v-6" />
+                </svg>`,
+          name: "With structure",
+          products: [
+            {
+              name: "Pull-up banners",
+              description: "Roll-up banners with cassette and stand.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "X-banners",
+              description: "X-frame banners for events and exhibitions.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Stickers",
+      type: "sticker",
+      description: "Vinyl/ die-cut/ Self‑adhesive paper/ matte/ glossy/ UV‑resistant, etc..",
+      demoLink: "https://demos.signsdesigner.us/aso-templates-page/asowp-templates/885/#/",
+      productGroups: [
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                  <path d="M3 6h18" />
+                  <path d="M16 10a4 4 0 0 1-8 0" />
+                </svg>`,
+          name: "General stickers",
+          products: [
+            {
+              name: "Vinyl lettering",
+              description: "Cut vinyl text for windows, doors, or walls.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Decals",
+              description: "Printed decals for logos, products, or branding.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            }
+          ]
+        },
+        {
+          icon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 9V2h12v7" />
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                  <path d="M6 14h12" />
+                  <path d="M22 10l-7 7" />
+                </svg>`,
+          name: "Cut & special use",
+          products: [
+            {
+              name: "Contour-cut / die-cut",
+              description: "Stickers following the exact shape of the design.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Sheet of stickers",
+              description: "Multiple designs on a single sticker sheet.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Transparent / decal sticker",
+              description: "Clear stickers for glass, bottles, or packaging.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            },
+            {
+              name: "Floor / wall sticker",
+              description: "Non-slip or large surface stickers for floors and walls.",
+              type: "",
+              demoData: "",
+              materialType: "all"
+            }
+          ]
+        }
+      ]
+    },
+  ]
+};
+
+// --- SUB-CATEGORIES and PRODUCTS (Step 2) ---
+const subCategoriesByProductType = {
+  signboard: [
+    {
+      id: "business-office",
+      title: "Business & Office",
+      icon: "briefcase",
+    },
+    {
+      id: "retail-outdoor",
+      title: "Retail & Outdoor",
+      icon: "building",
+    },
+    {
+      id: "specialized-industrial",
+      title: "Specialized & Industrial",
+      icon: "paperclip",
+    },
+  ],
+  banners: [
+    {
+      id: "standard-banners",
+      title: "Standard banners",
+      icon: "folder",
+    },
+    {
+      id: "with-structure",
+      title: "With structure",
+      icon: "structure",
+    },
+  ],
+  sticker: [
+    {
+      id: "general-stickers",
+      title: "General stickers",
+      icon: "folder",
+    },
+    {
+      id: "cut-special-use",
+      title: "Cut & special use",
+      icon: "scissors",
+    },
+  ],
+};
+
+const productsBySubCategory = {
+  "business-office": [
+    {
+      id: "door-signs",
+      title: "Door signs",
+      desc: "Office doors, meeting rooms, name plates.",
+    },
+    {
+      id: "acrylic-office-plates",
+      title: "Acrylic office plates",
+      desc: "Premium plexiglass plates for receptions.",
+    },
+  ],
+  "retail-outdoor": [
+    {
+      id: "storefront-signs",
+      title: "Storefront signs",
+      desc: "Outdoor signs for retail shops and stores.",
+    },
+  ],
+  "specialized-industrial": [
+    {
+      id: "stainless-metal-signs",
+      title: "Stainless metal signs",
+      desc: "Durable plates for factories & technical areas.",
+    },
+    {
+      id: "cable-tags-label-plates",
+      title: "Cable tags / label plates",
+      desc: "Technical labels, identification plates.",
+    },
+  ],
+  "standard-banners": [
+    {
+      id: "vinyl-banners",
+      title: "Vinyl banners",
+      desc: "Promotional indoor / outdoor banners.",
+    },
+    {
+      id: "mesh-banners",
+      title: "Mesh banners",
+      desc: "Wind-proof mesh for façades & stadiums.",
+    },
+  ],
+  "with-structure": [
+    {
+      id: "roll-up-banners",
+      title: "Roll-up banners",
+      desc: "Portable roll-up with cassette.",
+    },
+    {
+      id: "x-banner-kakemono",
+      title: "X-banner / Kakemono",
+      desc: "Vertical banners on X-frame.",
+    },
+  ],
+  "general-stickers": [
+    {
+      id: "standard-vinyl-stickers",
+      title: "Standard vinyl stickers",
+      desc: "Rectangular or circular logo stickers.",
+    },
+    {
+      id: "sticker-sheets",
+      title: "Sticker sheets",
+      desc: "Several designs on one sheet.",
+    },
+  ],
+  "cut-special-use": [
+    {
+      id: "contour-cut-die-cut",
+      title: "Contour-cut / die-cut",
+      desc: "Stickers following the logo shape.",
+    },
+    {
+      id: "floor-wall-stickers",
+      title: "Floor / wall stickers",
+      desc: "Non-slip or large surface stickers.",
+    },
+  ],
+};
+
+// Sous-catégorie et produit sélectionnés
+const selectedSubCategory = ref(null);
+const selectedProduct = ref(null);
+
+// Computed properties pour la nouvelle structure signageOption
+const currentProductCategory = computed(() => {
+  if (!wizard.value.productType || !signageOption.productCategories) return null;
+  return signageOption.productCategories.find(cat => cat.type === wizard.value.productType);
+});
+
+const currentProductGroup = computed(() => {
+  if (!currentProductCategory.value || !selectedSubCategory.value) return null;
+  return currentProductCategory.value.productGroups.find(group => 
+    group.name === selectedSubCategory.value
+  );
+});
+
+const currentProducts = computed(() => {
+  return currentProductGroup.value?.products || [];
+});
+
 // --- MATERIAL TYPES (Step 3) ---
 const materialTypes = [
   {
     id: "simple",
     title: "Simple",
-    desc: "All material options are customizable for the customer",
+    desc: "User can control the all option of the product like shape, size, color, etc…",
     disabled: false,
   },
   {
     id: "advance",
-    title: "Advance",
-    desc: "Size, shape and background color have default preconfigured values",
+    title: "Advanced",
+    desc: "User can add text and image, not control the shape, size, color  of the product",
     disabled: false,
   },
   {
     id: "layers",
     title: "Layers",
-    desc: "stack multiple layers that can be configured independently",
-    disabled: true, // comme la capture : Coming soon
+    desc: "User can control some part of the product",
+    disabled: false, // comme la capture : Coming soon
     comingSoon: true,
   },
 ];
@@ -9394,12 +9969,10 @@ const canNext = computed(() => {
     case 1:
       return !!wizard.value.category;
     case 2:
-      return !!wizard.value.productType;
+      return !!wizard.value.productType && !!selectedProduct.value;
     case 3:
-      return !!wizard.value.materialType;
+      return !!wizard.value.materialType; // Material type is required, demo data is optional
     case 4:
-      return true; // Yes/No
-    case 5:
       return newConfig.value.name.trim() !== "";
     default:
       return false;
@@ -9408,15 +9981,36 @@ const canNext = computed(() => {
 
 function goNext() {
   if (!canNext.value) return;
-  if (wizard.value.step < 5) {
+  if (wizard.value.step < 4) {
     wizard.value.step++;
-    step.value = wizard.value.step; // garde `step` en phase pour l’UI
+    step.value = wizard.value.step; // garde `step` en phase pour l'UI
   }
 }
 function goBack() {
+  // Si on est en mode édition et au step 4, retourner à la liste
+  if (isEdit.value && step.value === 4) {
+    step.value = 0;
+    wizard.value.step = 1;
+    isEdit.value = false;
+    isNewConfig.value = false;
+    newConfig.value = {
+      name: "",
+      description: "",
+      icon: "",
+      popImg: "",
+    };
+    return;
+  }
+  
+  // Navigation normale dans le wizard
   if (wizard.value.step > 1) {
     wizard.value.step--;
     step.value = wizard.value.step;
+    // Réinitialiser selectedSubCategory et selectedProduct si on revient au step 1
+    if (wizard.value.step === 1) {
+      selectedSubCategory.value = null;
+      selectedProduct.value = null;
+    }
   } else {
     // retour à la liste
     isNewConfig.value = false;
@@ -9424,13 +10018,87 @@ function goBack() {
   }
 }
 
+// Watcher pour initialiser automatiquement le productType au step 2
+watch(
+  () => wizard.value.step,
+  (newStep) => {
+    if (newStep === 2 && wizard.value.category === 'signage') {
+      // Initialiser avec le premier productCategory disponible si pas encore défini
+      if (!wizard.value.productType && signageOption.productCategories && signageOption.productCategories.length > 0) {
+        wizard.value.productType = signageOption.productCategories[0].type;
+      }
+      
+      // Toujours initialiser le premier groupe si pas encore sélectionné
+      if (wizard.value.productType && !selectedSubCategory.value && signageOption.productCategories) {
+        const currentCat = signageOption.productCategories.find(cat => cat.type === wizard.value.productType);
+        if (currentCat && currentCat.productGroups?.length > 0) {
+          const firstGroup = currentCat.productGroups[0];
+          selectedSubCategory.value = firstGroup.name;
+          // Sélectionner automatiquement le premier produit
+          selectedProduct.value = firstGroup.products?.[0]?.name || null;
+        }
+      }
+    }
+  },
+  { immediate: true }
+);
+
+// Watcher pour initialiser automatiquement la première productGroup quand le productType change
+watch(
+  () => wizard.value.productType,
+  (newProductType) => {
+    if (newProductType && wizard.value.category === 'signage' && signageOption.productCategories) {
+      const currentCat = signageOption.productCategories.find(cat => cat.type === newProductType);
+      if (currentCat && currentCat.productGroups?.length > 0) {
+        // Vérifier si la productGroup actuelle appartient toujours à cette catégorie
+        const currentGroupExists = selectedSubCategory.value 
+          ? currentCat.productGroups.find(g => g.name === selectedSubCategory.value)
+          : null;
+        
+        // Initialiser avec la première productGroup si pas de groupe sélectionné ou si le groupe actuel n'existe plus
+        if (!currentGroupExists) {
+          selectedSubCategory.value = currentCat.productGroups[0].name;
+          // Sélectionner automatiquement le premier produit
+          selectedProduct.value = currentCat.productGroups[0].products?.[0]?.name || null;
+        }
+      }
+    }
+  },
+  { immediate: true }
+);
+
+// Watcher pour sélectionner automatiquement le premier produit quand on change de productGroup
+watch(
+  () => selectedSubCategory.value,
+  (newSubCategory) => {
+    if (newSubCategory && currentProductGroup.value?.products?.length) {
+      const firstProduct = currentProductGroup.value.products[0];
+      if (firstProduct && selectedProduct.value !== firstProduct.name) {
+        selectedProduct.value = firstProduct.name;
+      }
+    }
+  },
+  { immediate: true }
+);
+
 ///******
 //  */
 onMounted(async () => {
-  isFetching.value = true;
-  await fetchConfigs();
-  canAddNew.value = true;
-  await fetchFonts();
+  // If we're in wizard mode (from query param), clean up the URL
+  if (route.query.new === 'true') {
+    router.replace({ query: {} });
+    // Still fetch configs in background, but don't wait for them
+    isFetching.value = true;
+    fetchConfigs().then(() => {
+      canAddNew.value = true;
+    });
+    await fetchFonts();
+  } else {
+    isFetching.value = true;
+    await fetchConfigs();
+    canAddNew.value = true;
+    await fetchFonts();
+  }
 });
 
 const closeCloneModal = () => {
@@ -9568,62 +10236,87 @@ const addNewConfig = async (configuration) => {
       const newConfigId = result.post_id;
       const newConfigName = configuration.name;
 
-      const defaultMaterialData = {
-        name: "Default Material",
-        description: "Automatically created default material",
-        icon: "",
-        popImg: "",
-        type: wizard.value.materialType, // Use the wizard's material type
-        data: metaConfigs.value.acrylic.materials[0].data
-      };
+      const hasInitialMaterials =
+        Array.isArray(configuration?.data?.materials) &&
+        configuration.data.materials.length > 0;
 
-      const materialResult = await api.addMaterial(newConfigId, defaultMaterialData);
+      if (!hasInitialMaterials) {
+        const resolvedMaterialType = ["advance", "simple"].includes(
+          wizard.value.materialType
+        )
+          ? wizard.value.materialType
+          : "simple";
 
-      if (materialResult.success) {
-        const materialsForNewConfig = await api.getMaterials(newConfigId);
+        const defaultMaterialData = {
+          name: "Default Material",
+          description: "Start configuring your material options",
+          icon: "",
+          popImg: "",
+          type: resolvedMaterialType,
+        };
 
-        const createdMaterialIndex = materialsForNewConfig.findIndex(
-          (m) => m.name === defaultMaterialData.name && m.type === defaultMaterialData.type
+        const materialResult = await api.addMaterial(
+          newConfigId,
+          defaultMaterialData
         );
 
-        if (createdMaterialIndex !== -1) {
-          const createdMaterial = materialsForNewConfig[createdMaterialIndex];
-          router.push(
-            "/configs/" +
-              newConfigName.replace(/ /, "-") +
-              "/" +
-              newConfigId +
-              "/materials/" +
-              createdMaterial.name.replace(/ /, "-") +
-              "/" +
-              createdMaterialIndex +
-              "/simple/sizes"
-          ).then(() => {
-            window.location.reload();
-          });
+        if (materialResult.success) {
+          const materialsForNewConfig = await api.getMaterials(newConfigId);
+
+          const createdMaterialIndex = materialsForNewConfig.findIndex(
+            (m) =>
+              m.name === defaultMaterialData.name &&
+              m.type === defaultMaterialData.type
+          );
+
+          if (createdMaterialIndex !== -1) {
+            const createdMaterial = materialsForNewConfig[createdMaterialIndex];
+            router
+              .push(
+                "/configs/" +
+                  newConfigName.replace(/ /, "-") +
+                  "/" +
+                  newConfigId +
+                  "/materials/" +
+                  createdMaterial.name.replace(/ /, "-") +
+                  "/" +
+                  createdMaterialIndex +
+                  "/simple/sizes"
+              )
+              .then(() => {
+                window.location.reload();
+              });
+          } else {
+            toastMessage(
+              "Default material not found after creation. Redirecting to materials list.",
+              "warning"
+            );
+            router
+              .push(
+                "/configs/" +
+                  newConfigName.replace(/ /, "-") +
+                  "/" +
+                  newConfigId +
+                  "/materials"
+              )
+              .then(() => {
+                window.location.reload();
+              });
+          }
         } else {
-          toastMessage("Default material not found after creation. Redirecting to materials list.", "warning");
-          router.push(
-            "/configs/" +
-              newConfigName.replace(/ /, "-") +
-              "/" +
-              newConfigId +
-              "/materials"
-          ).then(() => {
-            window.location.reload();
-          });
+          toastMessage(materialResult.message, "error");
+          router
+            .push(
+              "/configs/" +
+                newConfigName.replace(/ /, "-") +
+                "/" +
+                newConfigId +
+                "/materials"
+            )
+            .then(() => {
+              window.location.reload();
+            });
         }
-      } else {
-        toastMessage(materialResult.message, "error");
-        router.push(
-          "/configs/" +
-            newConfigName.replace(/ /, "-") +
-            "/" +
-            newConfigId +
-            "/materials"
-        ).then(() => {
-          window.location.reload();
-        });
       }
     } else {
       await fetchConfigs();
@@ -9853,6 +10546,7 @@ const selectEditConfig = (config, duplicate = false) => {
     newConfig.value = config;
     openCloneModal.value = true;
   } else {
+    // Préparer les données de la configuration pour l'édition
     newConfig.value = {
       id: config.id,
       name: config.name,
@@ -9860,8 +10554,12 @@ const selectEditConfig = (config, duplicate = false) => {
       icon: config.icon,
       popImg: config.popImg,
     };
-    step.value = 5;
+    
+    // Activer le mode édition et afficher le step 4
     isEdit.value = true;
+    isNewConfig.value = true; // Nécessaire pour afficher le wizard
+    step.value = 4;
+    wizard.value.step = 4; // S'assurer que le wizard est au step 4
   }
 };
 const updateConfig = async () => {
@@ -9871,7 +10569,10 @@ const updateConfig = async () => {
     await fetchConfigs();
     toastMessage(result.message);
     step.value = 0;
+    wizard.value.step = 1; // Réinitialiser le wizard
     isLoading.value = false;
+    isEdit.value = false;
+    isNewConfig.value = false;
     newConfig.value = {
       name: "",
       description: "",
@@ -9880,12 +10581,6 @@ const updateConfig = async () => {
     };
   } else {
     isLoading.value = false;
-    newConfig.value = {
-      name: "",
-      description: "",
-      icon: "",
-      popImg: "",
-    };
     toastMessage(result.message, "error");
   }
 };
@@ -9970,7 +10665,7 @@ const addConfig = () => {
     step: 1,
     category: "signage",
     productType: null,
-    materialType: null,
+    materialType: "simple",
     includeDemo: false,
   };
   newConfig.value = { name: "", description: "", icon: "", popImg: "" };
@@ -10068,5 +10763,11 @@ const getInitials = (str) => {
 <style>
 #asowp-search {
   padding: 0px 33px 0 10px !important;
+}
+.asowp-hover:hover{
+ background-color: rgba(241,241,241,1);
+}
+.asowp-hover-delete:hover{
+ background-color: rgba(254, 226, 225, 1);
 }
 </style>

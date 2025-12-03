@@ -4,7 +4,7 @@
     <!-- Top action + Create configuration -->
     <div class="asowp-flex asowp-justify-end">
       <RouterLink
-        to="/configurations"
+        to="/configurations?new=true"
         class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-rounded-md asowp-bg-[#016464] hover:asowp-text-white asowp-no-underline asowp-text-white asowp-text-sm asowp-font-medium asowp-px-4 asowp-py-2">
         Create configuration
       </RouterLink>

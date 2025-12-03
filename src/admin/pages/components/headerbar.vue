@@ -1,5 +1,5 @@
 <template>
-    <div class="asowp-fixed asowp-z-[9999] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-top-[32px] asowp-h-[2.9rem] asowp-px-2 asowp-bg-white asowp-flex asowp-justify-start asowp-items-center asowp-header" style="width: 86.5% !important;">
+    <div class="asowp-fixed asowp-z-[9999] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-top-[32px] asowp-h-[2.9rem] asowp-px-2 asowp-bg-white asowp-flex asowp-justify-start asowp-items-center asowp-header asowp-mt-2" style="width: 84.5% !important;">
         <div class="asowp-relative asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
             <div class="pl-[40px] asowp-flex asowp-w-full asowp-cursor-pointer" @click="goToHome">
                 <!--<span>
@@ -10,7 +10,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
                     </svg>
                 </div>
-                <div  v-if="config.trim() != ''" class="asowp-font-bold">
+                <div  v-if="config.trim() != ''" class="asowp-font-bold asowp-text-[16px]">
                     {{config}}
                 </div>
             </div>
