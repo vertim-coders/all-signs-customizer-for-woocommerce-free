@@ -50,6 +50,7 @@
                     <div v-for="(material,key) in materials" :key="key" class="asowp-cursor-pointer asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-5 asowp-px-4 asowp-py-3 asowp-text-sm asowp-text-gray-700 asowp-border-b-1 asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-16">
                         <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-overflow-hidden asowp-flex asowp-pl-4 asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4">
                             <span class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-items-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black ">
+                                {{console.log(material)}}
                                 <span class="asowp-text-[12px]">{{getInitials(material.name)}}</span> 
                             </span>
                             <span class="asowp-flex asowp-justify-center asowp-items-center">{{ material.name }}</span>
