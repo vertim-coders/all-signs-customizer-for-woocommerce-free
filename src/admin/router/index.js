@@ -1,7 +1,7 @@
+import { createRouter, createWebHashHistory } from "vue-router";
 import Configuration from "@/admin/pages/configuration/index.vue";
-import Materials from "@/admin/pages/configuration/materials/index.vue";
-import Simple from "@/admin/pages/configuration/materials/simple/index.vue";
-import Advance from "@/admin/pages/configuration/materials/advance/index.vue";
+import CreateConfiguration from "@/admin/pages/configuration/CreateConfiguration.vue";
+import MaterialsShell from "@/admin/pages/configuration/materials/simple/index.vue";
 import ManageFonts from "@/admin/pages/manage-fonts/index.vue";
 import ManageCliparts from "@/admin/pages/manage-cliparts/index.vue";
 import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
@@ -13,7 +13,6 @@ import AdditionalOptions from "@/admin/pages/configuration/additional-options/in
 import Preview from "@/admin/pages/preview/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import Home from "@/admin/pages/Home.vue";
-import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -29,64 +28,75 @@ const router = createRouter({
       component: Configuration,
     },
     {
+      path: "/configurations/new",
+      name: "create-configuration",
+      component: CreateConfiguration,
+    },
+    {
+      path: "/configurations/edit/:configId",
+      name: "edit-configuration",
+      component: CreateConfiguration,
+      props: true,
+    },
+    {
       path: "/configs/:config/:configId/materials",
       name: "materials",
-      component: Materials,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/sizes",
       name: "Simple-Sizes",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/borders",
       name: "Simple-Borders",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/colors",
       name: "Simple-Colors",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/fixing-methods",
       name: "Simple-FixingMethods",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/shapes",
       name: "Simple-Shapes",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/discounts",
       name: "Simple-Discounts",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/text-images",
       name: "Simple-TextImages",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components",
       name: "Simple-OthersComponents",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components/:additionalOptionID",
       name: "Simple-OthersComponents-Options",
-      component: Simple,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/advance",
       name: "Material-Advance",
-      component: Advance,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/advance/:component/:componentId/options",
       name: "Material-Advance-options",
-      component: Advance,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/settings/generals",

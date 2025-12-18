@@ -93,7 +93,7 @@ class ASOWP_Admin
                     "rest_url" => $api_url . "asowp/v1",
                     "ajax_url" => esc_url(admin_url('admin-ajax.php')),
                     "site_url" => urlencode(get_site_url()),
-                    "caches" => get_transient('asowp_health-state-checking'),
+                    "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
                     "author" => ASOWP_ID,
                     "assets_url" => ASOWP_ASSETS,
                     "page" => "admin",

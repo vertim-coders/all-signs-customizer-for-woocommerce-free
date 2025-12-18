@@ -684,6 +684,7 @@ final class ASOWP_All_Signs_Options_Pro
     {
 
         add_action('init', array($this, 'init_classes'));
+        add_action('init', array($this, 'check_license_status'));
 
         (new ASOWP_Post_Type())->init_hooks();
         (new ASOWP_Updater())->init_hooks();
@@ -727,6 +728,87 @@ final class ASOWP_All_Signs_Options_Pro
     public function localization_setup()
     {
         load_plugin_textdomain("all-signs-options-pro", false, dirname(plugin_basename(__FILE__)) . '/languages/');
+    }
+
+    public function check_license_status()
+    {
+        $last_check = (int) get_option('asowp_last_license_check_timestamp', 0);
+        $current_time = time();
+
+        if (($current_time - $last_check) < (24 * HOUR_IN_SECONDS)) {
+            return;
+        }
+
+        update_option('asowp_last_license_check_timestamp', $current_time);
+
+        $product = get_option("asowp_product_pro", false);
+        if (empty($product)) {
+            delete_option('asowp_license_data');
+            wp_cache_delete('asowp_license_data', 'options');
+            return;
+        }
+
+        $health_option = get_option('asowp_license_data', false);
+        $should_check_remote = false;
+
+        if (is_array($health_option) && isset($health_option['timestamp'])) {
+            $timestamp = (int) $health_option['timestamp'];
+            $secondsUntil = max(0, $timestamp - $current_time);
+
+            if (($health_option['seconds_until'] ?? null) !== $secondsUntil) {
+                update_option('asowp_license_data', array(
+                    'timestamp' => $timestamp,
+                    'date' => $health_option['date'] ?? '',
+                    'seconds_until' => $secondsUntil,
+                    'last_checked' => $health_option['last_checked'] ?? current_time('mysql')
+                ));
+                wp_cache_delete('asowp_license_data', 'options');
+            }
+
+            if ($timestamp <= 0 || $secondsUntil <= 0) {
+                $should_check_remote = true;
+            }
+        } else {
+            $should_check_remote = true;
+        }
+
+        if (!$should_check_remote) {
+            return;
+        }
+
+        $site_url = get_site_url();
+        $url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde=' . rawurlencode((string) $product) . '&siteurl=' . rawurlencode((string) $site_url) . "&vertim=" . ASOWP_ID;
+        $args = array('timeout' => 120);
+        $response = wp_remote_get($url, $args);
+
+        if (is_wp_error($response)) {
+            return;
+        }
+
+        $remote = json_decode(wp_remote_retrieve_body($response), true);
+        if (is_array($remote) && isset($remote["key"])) {
+            $expiryTimestamp = (int) $remote["key"];
+            $timezone = function_exists('wp_timezone') ? wp_timezone() : new \DateTimeZone('UTC');
+            $date = new \DateTime("@$expiryTimestamp");
+            $date->setTimezone($timezone);
+
+            $secondsUntil = max(0, $expiryTimestamp - time());
+            update_option('asowp_license_data', array(
+                'timestamp' => $expiryTimestamp,
+                'date' => $date->format('Y-m-d H:i:s'),
+                'seconds_until' => $secondsUntil,
+                'last_checked' => current_time('mysql')
+            ));
+            wp_cache_delete('asowp_license_data', 'options');
+        } else {
+            update_option('asowp_license_data', array(
+                'timestamp' => 0,
+                'date' => '',
+                'seconds_until' => 0,
+                'last_checked' => current_time('mysql')
+            ));
+            wp_cache_delete('asowp_license_data', 'options');
+        }
     }
 
     /**

@@ -9,7 +9,7 @@
                 Material
             </div>
             <img v-if="material.trim() != ''" class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
-            <div class="asowp-text-[16px] asowp-cursor-pointer" v-if="material.trim() != ''" @click="()=>$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/advance')">
+            <div class="asowp-text-[16px] asowp-cursor-pointer" v-if="material.trim() != ''" @click="()=>$router.push('/configs/'+slugify(config)+'/'+configId+'/materials/'+slugify(material)+'/'+materialId+'/advance')">
                 {{material}}
             </div>
             <img v-if="componentName.trim()!=''" class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../../../../assets/icons/ic_crochet.svg" alt="">
@@ -339,12 +339,18 @@ import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import router from '@/admin/router'
 const route = useRoute()
+const slugify = (value) =>
+  String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+
 const configId = ref(route.params.configId);
-const config = route.params.config.replace(/-/," ");
+const config = route.params.config.replace(/-/g," ");
 const materialId = ref(route.params.materialId);
-const material = route.params.material.replace(/-/," ");
+const material = route.params.material.replace(/-/g," ");
 const componentId = ref(route.params.componentId);
-const componentName = route.params.component.replace(/-/," ");
+const componentName = route.params.component.replace(/-/g," ");
 const componentAdvance = ref({
     name:"",
     description:"",
@@ -389,7 +395,7 @@ onMounted(async() => {
 });
 
 const goToMaterials = ()=>{
-    router.push('/configs/'+config.replace(/ /,'-')+'/'+configId.value+'/materials').then(() => {
+    router.push('/configs/'+slugify(config)+'/'+configId.value+'/materials').then(() => {
     // Recharger la page après la navigation
     window.location.reload()
     })

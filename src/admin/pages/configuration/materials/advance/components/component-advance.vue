@@ -92,7 +92,7 @@
                                     </span>
                                 </td>
                                 <td class="asowp-px-6 asowp-py-2 asowp-flex asowp-justify-center asowp-space-x-2">
-                                    <button class="asowp-bg-[#FFC7D8] asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex" @click="$router.push('/configs/'+config.replace(/ /,'-')+'/'+configId+'/materials/'+material.replace(/ /,'-')+'/'+materialId+'/advance/'+componentAdvance.name+'/'+key+'/options')">
+                                    <button class="asowp-bg-[#FFC7D8] asowp-p-2 asowp-rounded-md asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex" @click="$router.push('/configs/'+slugify(config)+'/'+configId+'/materials/'+slugify(material)+'/'+materialId+'/advance/'+componentAdvance.name+'/'+key+'/options')">
                                         <img class="asowp-w-4 asowp-h-4" src="../../../../../../../assets/icons/ic_manage.svg" alt="">
                                         <span class="asowp-text-[12px]">
                                             add options
@@ -213,9 +213,17 @@
     import router from '@/admin/router'
 
     const route = useRoute()
+    const slugify = (value) =>
+        String(value ?? '')
+            .trim()
+            .toLowerCase()
+            .split(' ')
+            .filter(Boolean)
+            .join('-')
+
     const configId = ref(route.params.configId);
-    const config = route.params.config.replace(/-/,' ');
-    const material = route.params.material.replace(/-/,' ');
+    const config = route.params.config.replace(/-/g,' ');
+    const material = route.params.material.replace(/-/g,' ');
     const materialId = ref(route.params.materialId);
     const isFetching = ref(false);
     const isNewComponentAdvance = ref(false);
@@ -240,7 +248,7 @@
     });
 
     const goToMaterials = ()=>{
-        router.push('/configs/'+config.replace(/ /,'-')+'/'+configId.value+'/materials').then(() => {
+        router.push('/configs/'+slugify(config)+'/'+configId.value+'/materials').then(() => {
         // Recharger la page après la navigation
         window.location.reload()
         })

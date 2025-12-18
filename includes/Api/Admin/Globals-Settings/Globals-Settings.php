@@ -223,6 +223,7 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
       if ($product != $data["product"]) {
         $option = update_option("asowp_product_pro", $data["product"]);
         if ($option) {
+          $this->clear_license_data();
           return rest_ensure_response(["success" => __("ASO Product Pro saved successfully", "all-signs-options-pro")]);
         } else {
           return rest_ensure_response(["message" => __("Saving ASO Product Pro failed", "all-signs-options-pro")]);
@@ -230,31 +231,12 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
       } else {
         if (isset($data["valid"])) {
           $timestamp = (int) $data["valid"];
-          $date = new DateTime("@$timestamp");
-          $date->setTimezone(new DateTimeZone('UTC'));
-          $wordpressTimezone = get_option('timezone_string');
-          if (empty($wordpressTimezone)) {
-            $gmtOffset = get_option('gmt_offset');
-            $timezoneOffset = $gmtOffset * 3600;
-            $date->modify("+$timezoneOffset seconds");
+          if ($timestamp > 0) {
+            $license_data = $this->process_license_validity($timestamp);
+            $this->save_license_data_robust($license_data);
           } else {
-            // Utilisez le fuseau horaire configuré
-            $date->setTimezone(new DateTimeZone($wordpressTimezone));
+            $this->clear_license_data();
           }
-          $currentTimestamp = time();
-          $secondsUntil = $date->getTimestamp() - $currentTimestamp;
-          if ($secondsUntil > 0) {
-            set_transient('asowp_health-state-checking', $date->getTimestamp(), $secondsUntil);
-            set_transient('asowp_vertim_access', "no", $secondsUntil);
-          } else {
-            set_transient('asowp_health-state-checking', 'notvalid', 0);
-            set_transient('asowp_vertim_access', "no", ASOWP_CHECK_TRANSIENT_EXPIRATION * 2);
-
-          }
-        } else {
-          set_transient('asowp_health-state-checking', 'notvalid', 0);
-          set_transient('asowp_vertim_access', "no", ASOWP_CHECK_TRANSIENT_EXPIRATION * 2);
-
         }
         return rest_ensure_response(["success" => __("ASO Product Pro saved successfully", "all-signs-options-pro")]);
       }
@@ -262,49 +244,34 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
     return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-options-pro")]);
   }
 
-  /**
-   * Check Product validity.
-   *
-   * @return void
-   */
-  /* public function check_product_health()
+  private function process_license_validity($timestamp)
   {
+    $expiryTimestamp = (int) $timestamp;
+    $timezone = function_exists('wp_timezone') ? wp_timezone() : new DateTimeZone('UTC');
+    $date = new DateTime("@$expiryTimestamp");
+    $date->setTimezone($timezone);
 
-    $asowp_health_check = get_transient('asowp_health-state-checking');
-    if ($asowp_health_check === 'valid') {
-      return rest_ensure_response(['asowp_health' => true]);
-    }
+    $secondsUntil = max(0, $expiryTimestamp - time());
 
-    $asowp_product = get_option("asowp_product_pro");
-    $asowp_health = get_option('asowp_health-state');
+    return [
+      'timestamp' => $expiryTimestamp,
+      'date' => $date->format('Y-m-d H:i:s'),
+      'seconds_until' => $secondsUntil,
+      'last_checked' => current_time('mysql')
+    ];
+  }
 
-    if (empty($asowp_product)) {
-      delete_option('asowp_health-state');
-      return rest_ensure_response(['asowp_health' => false]);
-      ;
-    }
+  private function save_license_data_robust($license_data)
+  {
+    update_option('asowp_license_data', $license_data);
+    wp_cache_delete('asowp_license_data', 'options');
+  }
 
-    $site_url = get_site_url();
-    $url = 'https://signsdesigner.us/wp-json/vlc/checking/?lcde=' . $asowp_product . '&siteurl=' . urlencode($site_url) . "&vertim=" . asowp_ID;
-    $args = ['timeout' => 60];
-    $response = wp_remote_get($url, $args);
-
-    if (is_wp_error($response)) {
-      $activate = !empty($asowp_health);
-      return rest_ensure_response(['asowp_health' => $activate]);
-    }
-
-    $data = json_decode($response['body'], true);
-
-    if ($data && isset($data['key']) && !empty($data['key'])) {
-      update_option('asowp_health-state', $data['key']);
-      set_transient('asowp_health-state-checking', 'valid', WEEK_IN_SECONDS);
-      return rest_ensure_response(['asowp_health' => true]);
-    } else {
-      update_option('asowp_health-state', false);
-      return rest_ensure_response(['asowp_health' => false]);
-    }
-  } */
+  private function clear_license_data()
+  {
+    delete_option('asowp_license_data');
+    wp_cache_delete('asowp_license_data', 'options');
+  }
 
   /**
    * Get ASO Product
@@ -575,4 +542,3 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
     return true;
   }
 }
-

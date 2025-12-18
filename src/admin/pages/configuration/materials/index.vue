@@ -76,18 +76,18 @@
                             </button>
                             
                             <div class="asowp-bg-white asowp-relative">
-                                <button class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer" @click="handleOpenMaterialParams(key)">
+                                <button class="asowp-bg-transparent asowp-border-none asowp-cursor-pointer" @click.stop="handleOpenMaterialParams(key)">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-rotate-90 asowp-h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                     </svg>
                                 </button>
-                                <div class="asowp-bg-white asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-space-x-2 asowp-p-2 asowp-absolute -asowp-top-12 asowp-z-[999] asowp-right-0 asowp-rounded" v-if="showParams[key]" @click.self="showParams[key]=false;">
-                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#FF6600] asowp-cursor-pointer"  @click="selectCloneMaterial(material)">
+                                <div class="asowp-bg-white asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-space-x-2 asowp-p-2 asowp-absolute asowp-top-full asowp-mt-2 asowp-z-[999] asowp-right-0 asowp-rounded" v-if="showParams[key]" @click.stop>
+                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#FF6600] asowp-cursor-pointer"  @click="() => { showParams[key] = false; selectCloneMaterial(material) }">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
                                         </svg>
                                     </button>
-                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer"  @click="selectMaterialDelete(key,material.name)">
+                                    <button class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer"  @click="() => { showParams[key] = false; selectMaterialDelete(key, material.name) }">
                                         <img class="asowp-w-5 asowp-h-5" src="../../../../../assets/icons/ic_delete.svg" alt="">
                                     </button>
                                 </div>
@@ -160,10 +160,12 @@
                     </div>
                     <div class="asowp-space-y-2 asowp-pt-2 asowp-flex asowp-flex-col">
                         <label for="" class="asowp-font-bold">Type</label>
-                        <select name="" id="" class="asowp-w-full asowp-h-[35px] asowp-font-normal" style="border-radius: 10px !important;" v-model="newMaterial.type" :disabled="isEdit">
-                            <option value="simple">Simple</option>
-                            <option value="advance">Advance</option>
-                        </select>
+                        <input
+                            disabled
+                            :value="enforcedMaterialType === 'advance' ? 'Advance' : 'Simple'"
+                            class="asowp-w-full asowp-h-[35px] asowp-font-normal asowp-bg-gray-100"
+                            style="border-radius: 10px !important;"
+                        />
                     </div>
                 </div>
                 <hr class="Polaris-Divider asowp-w-full" style="border: 1px solid #ebebeb;">
@@ -276,14 +278,15 @@
   
 <script setup>
 import api from '@/admin/Api/api';
-import {onMounted, ref} from 'vue';
+import {onMounted, onBeforeUnmount, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions'
 import router from '@/admin/router';
 
 const route = useRoute()
 const configID = ref(route.params.configId)
-const config =route.params.config.replace(/-/,' ');
+const config =route.params.config.replace(/-/g,' ');
+const enforcedMaterialType = ref('simple')
 const materials = ref([]);
 const newMaterial = ref({
     name:"",
@@ -307,11 +310,14 @@ const deleteMaterial = ref({
 const emptyLabel = ref(false);
 const notFoundMessage = ref('');
 const showParams = ref([]);
+const closeAllMaterialParams = () => {
+    showParams.value = showParams.value.map(() => false);
+};
 const fetchMaterials = async () => {
     const result = await api.getMaterials(configID.value);
     if(!result.message){
         let tab=[];
-        materials.value = result;
+        materials.value = result.map((m) => ({ ...m, type: enforcedMaterialType.value }))
         for (let index = 0; index < result.length; index++) {
             tab.push(false);
             
@@ -340,6 +346,7 @@ const getInitials = (str) => {
 }
 
 onMounted(async() => {
+    document.addEventListener('click', closeAllMaterialParams);
     tinymce.init({
         selector: '#asowp-admin-tinymce',
         plugins: 'wordpress paste link image media',
@@ -356,14 +363,29 @@ onMounted(async() => {
             });
         }
     });
+    try {
+        const cfg = await api.getConfig(configID.value)
+        if (!cfg?.message && cfg?.materialType === 'advance') {
+            enforcedMaterialType.value = 'advance'
+        } else {
+            enforcedMaterialType.value = 'simple'
+        }
+    } catch (e) {
+        enforcedMaterialType.value = 'simple'
+    }
     isFetching.value = true;
     await fetchMaterials();
 
 });
 
+onBeforeUnmount(() => {
+    document.removeEventListener('click', closeAllMaterialParams);
+});
+
 /**Function for adding */
 
 const addNewMaterial = async () => {
+    newMaterial.value.type = enforcedMaterialType.value
     if(newMaterial.value.name.trim() !== ''){
         isLoading.value = true;
         const result = await api.addMaterial(configID.value,newMaterial.value);
@@ -376,7 +398,7 @@ const addNewMaterial = async () => {
                 description:"",
                 icon:"",
                 popImg:"",
-                type:"simple",
+                type: enforcedMaterialType.value,
             }
             openCloneModal.value=false;
             toastMessage(result.message)
@@ -388,7 +410,7 @@ const addNewMaterial = async () => {
                 description:"",
                 icon:"",
                 popImg:"",
-                type:"simple",
+                type: enforcedMaterialType.value,
             }
             openCloneModal.value=false;
             toastMessage(result.message,"error");
@@ -460,6 +482,7 @@ const selectMaterialIcon = async(e) => {
 const selectMaterialEdit = (material, id) => {
     materialId.value = id;
     newMaterial.value = JSON.parse(JSON.stringify(material));
+    newMaterial.value.type = enforcedMaterialType.value
     isEdit.value = true;
     tinymce.activeEditor.setContent(material.popImg)
     isNewComponent.value = true;
@@ -482,6 +505,7 @@ const updateMaterial = async () => {
     if(newMaterial.value.name.trim() !== ''){
         isLoading.value = true;
         emptyLabel.value = false;
+        newMaterial.value.type = enforcedMaterialType.value
         const result = await api.updateMaterial(configID.value,materialId.value,newMaterial.value);
         if(result.success){
             await fetchMaterials();
@@ -492,7 +516,7 @@ const updateMaterial = async () => {
                 description:"",
                 icon:"",
                 popImg:"",
-                type:"simple",
+                type: enforcedMaterialType.value,
             }
             
             isEdit.value = false;
@@ -505,7 +529,7 @@ const updateMaterial = async () => {
                 description:"",
                 icon:"",
                 popImg:"",
-                type:"simple",
+                type: enforcedMaterialType.value,
             }
             toastMessage(result.message,"error");
         }
@@ -551,7 +575,7 @@ const closeCloneModal = ()=>{
             description:"",
             icon:"",
             popImg:"",
-            type:"simple",
+            type: enforcedMaterialType.value,
         }
     }
 }
@@ -566,7 +590,7 @@ const addComponent = () => {
         description:"",
         icon:"",
         popImg:"",
-        type:"simple",
+        type: enforcedMaterialType.value,
         data: {}
     };
 }
@@ -579,14 +603,14 @@ const back = () => {
         description:"",
         icon:"",
         popImg:"",
-        type:"simple",
+        type: enforcedMaterialType.value,
     }
 }
 
 const redirectToMaterial = (materialId,material,type) => {
     const slugifiedMaterialName = material.replace(/ /g, '-'); // Slugify material name
     const slugifiedConfigName = config.replace(/ /g, '-'); // Slugify config name
-    if(type == 'simple'){
+    if(enforcedMaterialType.value === 'simple'){
         router.push('/configs/'+slugifiedConfigName+'/'+configID.value+'/materials/'+slugifiedMaterialName+'/'+materialId+'/simple/sizes');
     }else{
         router.push('/configs/'+slugifiedConfigName+'/'+configID.value+'/materials/'+slugifiedMaterialName+'/'+materialId+'/advance');

@@ -32,6 +32,25 @@ const api = {
     return post.data;
   },
 
+  // WooCommerce products helpers
+  getUnassignedProducts: async (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    const url =
+      asowp_api_url +
+      "/woocommerce-products/unassigned" +
+      (query ? `?${query}` : "");
+    const res = await axios.get(url);
+    return res.data;
+  },
+
+  getHomeStats: async (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    const url =
+      asowp_api_url + "/stats/home" + (query ? `?${query}` : "");
+    const res = await axios.get(url);
+    return res.data;
+  },
+
   //function related to maretials
 
   updateMaterial: async (configId, materialId, material) => {

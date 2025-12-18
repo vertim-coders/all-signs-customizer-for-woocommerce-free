@@ -201,7 +201,7 @@ class ASOWP_Frontend
                         wp_localize_script('asowp-frontend', 'asowp_data', [
                             'rest_url' => get_rest_url() . 'asowp/v1',
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                            'caches' => get_transient('asowp_health-state-checking'),
+                            'caches' => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
                             'page' => 'configurator',
                             'site_url' => urlencode(get_site_url()),
                             'author' => ASOWP_ID
@@ -294,7 +294,7 @@ class ASOWP_Frontend
                         wp_localize_script('asowp-frontend', 'asowp_data', [
                             "rest_url" => get_rest_url() . "asowp/v1",
                             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                            "caches" => get_transient('asowp_health-state-checking'),
+                            "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
                             "page" => "templates",
                             "site_url" => urlencode(get_site_url()),
                             "author" => ASOWP_ID

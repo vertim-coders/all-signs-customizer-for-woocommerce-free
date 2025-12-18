@@ -11,6 +11,13 @@ use WP_REST_Response;
  */
 class ASOWP_Api_Materials extends WP_REST_Controller
 {
+    private function get_config_forced_material_type($config_id)
+    {
+        $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+        $material_type = (is_array($meta) && isset($meta['materialType'])) ? $meta['materialType'] : 'simple';
+
+        return $material_type === 'advance' ? 'advance' : 'simple';
+    }
 
     /**
      * [__construct description]
@@ -123,7 +130,14 @@ class ASOWP_Api_Materials extends WP_REST_Controller
         if ($config_id != 0) {
             $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
             if (is_array($meta) && !empty($meta["data"]['materials'])) {
-                return rest_ensure_response($meta["data"]['materials']);
+                $forced_type = $this->get_config_forced_material_type($config_id);
+                $materials = $meta["data"]['materials'];
+                foreach ($materials as $idx => $material) {
+                    if (is_array($material)) {
+                        $materials[$idx]["type"] = $forced_type;
+                    }
+                }
+                return rest_ensure_response($materials);
             } else {
                 return rest_ensure_response(["message" => __("No Materials found", "all-signs-options-pro")]);
             }
@@ -146,20 +160,21 @@ class ASOWP_Api_Materials extends WP_REST_Controller
             $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
             if (is_array($meta["data"]["materials"])) {
                 $new_material = json_decode($request->get_body(), true);
-                if (in_array($new_material['type'], ['simple', 'advance'])) {
-                    if ($new_material['type'] === 'simple') {
-                        if (isset($new_material['data'])) {
-                            // Material with existing data (like default material from config creation)
-                            $material = $new_material;
-                        } else {
-                            // New material added by user - create empty structure with no default data
-                            $material = [
-                                "name" => $new_material['name'],
-                                "description" => $new_material['description'],
-                                "icon" => $new_material['icon'],
-                                "popImg" => $new_material['popImg'],
-                                "type" => $new_material['type'],
-                                "data" => [
+                $forced_type = $this->get_config_forced_material_type($config_id);
+                if ($forced_type === 'simple') {
+                    if (isset($new_material['data']) && is_array($new_material['data'])) {
+                        // Material with existing data (like default material from config creation)
+                        $material = $new_material;
+                        $material['type'] = 'simple';
+                    } else {
+                        // New material added by user - create empty structure with no default data
+                        $material = [
+                            "name" => $new_material['name'],
+                            "description" => $new_material['description'],
+                            "icon" => $new_material['icon'],
+                            "popImg" => $new_material['popImg'],
+                            "type" => 'simple',
+                            "data" => [
                                     'sizes' => [
                                         "customSize" => [
                                             "active" => false,
@@ -204,32 +219,30 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                                     "additionalOptions" => []
                                 ]
                             ];
-                        }
-                        array_push($meta["data"]['materials'], $material);
-                    } elseif ($new_material['type'] === 'advance') {
-                        if (isset($new_material['data'])) {
-                            $material = $new_material;
-                        } else {
-                            $material = [
-                                "name" => $new_material['name'],
-                                "description" => $new_material['description'],
-                                "icon" => $new_material['icon'],
-                                "popImg" => $new_material['popImg'],
-                                "type" => $new_material['type'],
-                                "data" => []
-                            ];
-                        }
-                        array_push($meta["data"]['materials'], $material);
                     }
+                    array_push($meta["data"]['materials'], $material);
+                } elseif ($forced_type === 'advance') {
+                    if (isset($new_material['data']) && is_array($new_material['data'])) {
+                        $material = $new_material;
+                        $material['type'] = 'advance';
+                    } else {
+                        $material = [
+                            "name" => $new_material['name'],
+                            "description" => $new_material['description'],
+                            "icon" => $new_material['icon'],
+                            "popImg" => $new_material['popImg'],
+                            "type" => 'advance',
+                            "data" => []
+                        ];
+                    }
+                    array_push($meta["data"]['materials'], $material);
+                }
                     $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
                     if ($update === true) {
                         return rest_ensure_response(["success" => true, "message" => __("Materiel component successfully added", "all-signs-options-pro")]);
                     } else {
                         return rest_ensure_response(["success" => false, "message" => __("Materiel component has not been added", "all-signs-options-pro")]);
                     }
-                } else {
-                    return rest_ensure_response(["success" => false, "message" => __("Materiel component has not been added", "all-signs-options-pro")]);
-                }
             } else {
                 return rest_ensure_response(["success" => false, "message" => __("Materiel component has not been added", "all-signs-options-pro")]);
             }
@@ -252,13 +265,15 @@ class ASOWP_Api_Materials extends WP_REST_Controller
             $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
             if (is_array($meta) && !empty($meta)) {
                 $material = json_decode($request->get_body(), true);
-                if (isset($meta["data"]['materials'][$material_id]) && in_array($material['type'], ['simple', 'advance'])) {
+                if (isset($meta["data"]['materials'][$material_id])) {
+                    $forced_type = $this->get_config_forced_material_type($config_id);
                     $old_material = $meta["data"]['materials'][$material_id];
                     if ($old_material !== $material) {
                         $old_material["name"] = $material['name'];
                         $old_material["description"] = $material['description'];
                         $old_material["icon"] = $material['icon'];
                         $old_material["popImg"] = $material['popImg'];
+                        $old_material["type"] = $forced_type;
                         $meta["data"]['materials'][$material_id] = $old_material;
                         $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
                         if ($update === true) {
@@ -298,6 +313,9 @@ class ASOWP_Api_Materials extends WP_REST_Controller
             if (is_array($meta) && !empty($meta)) {
                 if ($meta["data"]['materials'][$material_id]) {
                     $material = $meta["data"]['materials'][$material_id];
+                    if (is_array($material)) {
+                        $material["type"] = $this->get_config_forced_material_type($config_id);
+                    }
                     return rest_ensure_response($material);
                 } else {
                     return rest_ensure_response(["message" => __("No materials component found", "all-signs-options-pro")]);

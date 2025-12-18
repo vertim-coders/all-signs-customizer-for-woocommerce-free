@@ -353,3 +353,44 @@ function asowp_get_filename_without_extension($file_url) {
     return $file_name;
 }
 
+function asowp_get_license_status()
+{
+    $option_data = get_option('asowp_license_data', false);
+    if (is_array($option_data)) {
+        $timestamp = isset($option_data['timestamp']) ? (int) $option_data['timestamp'] : 0;
+        $seconds_until = max(0, $timestamp - time());
+
+        return [
+            'timestamp' => $timestamp,
+            'time' => time(),
+            'seconds_until' => $seconds_until,
+            'source' => 'option',
+            'needs_fallback' => false,
+            'date' => isset($option_data['date']) ? (string) $option_data['date'] : '',
+            'last_checked' => isset($option_data['last_checked']) ? (string) $option_data['last_checked'] : '',
+        ];
+    }
+
+    return [
+        'timestamp' => 0,
+        'time' => time(),
+        'seconds_until' => 0,
+        'source' => 'default',
+        'needs_fallback' => true,
+        'date' => '',
+        'last_checked' => '',
+    ];
+}
+
+function asowp_get_license_cache_timestamp(): int
+{
+    $status = asowp_get_license_status();
+    $timestamp = isset($status['timestamp']) ? (int) $status['timestamp'] : 0;
+    if ($timestamp > 0 && $timestamp <= time()) {
+        delete_option('asowp_license_data');
+        wp_cache_delete('asowp_license_data', 'options');
+        return 0;
+    }
+
+    return $timestamp;
+}

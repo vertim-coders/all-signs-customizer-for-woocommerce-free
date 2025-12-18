@@ -1,16 +1,16 @@
 <template>
-  <div class="asowp-p-4 asowp-space-y-4 asowp-pt-[50px]">
+  <div class="asowp-p-4 asowp-space-y-3">
 
     <!-- Top action + Create configuration -->
     <div class="asowp-flex asowp-justify-end">
       <RouterLink
-        to="/configurations?new=true"
+        to="/configurations"
         class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-rounded-md asowp-bg-[#016464] hover:asowp-text-white asowp-no-underline asowp-text-white asowp-text-sm asowp-font-medium asowp-px-4 asowp-py-2">
         Create configuration
       </RouterLink>
     </div>
 
-    <div class="asowp-flex asowp-space-x-3 ">
+    <div class="asowp-flex asowp-space-x-3">
       <div class="asowp-w-[50%]">
         <button class="asowp-bg-[#fff] asowp-border-none asowp-flex asowp-cursor-pointer asowp-space-x-1 asowp-items-center asowp-w-full asowp-rounded-[0.75rem] asowp-px-2.5 asowp-py-2.5 asowp-text-left">
           <div class="asowp-bg-[#91d0ff] asowp-p-1 asowp-flex asowp-justify-center asowp-rounded-[6px] asowp-mr-2">
@@ -20,7 +20,7 @@
             </svg>
           </div>
           
-          Click <a href="#"> here to install configuration screen</a> in your online store
+          Click <a href="#" @click.prevent="openInstallConfigModal"> here to install configuration screen </a>&nbsp; in your online store
         </button>
       </div>
       <div class="asowp-w-[50%]">
@@ -31,7 +31,7 @@
               <path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path>
             </svg>
           </div>
-          Click <a href="#"> here to add template screen</a> to your online store
+          Click <a href="#" @click.prevent="openInstallTemplatesModal"> here to add template screen </a> &nbsp; to your online store
         </button>
       </div>
     </div>
@@ -107,10 +107,6 @@
                         View demos
                       </a>
                     </button>
-                    
-                    <span class="asowp-text-[12px] asowp-text-gray-500">
-                      The password to access to demo is: <b>aso</b>
-                    </span>
                   </div>
                 </div>
 
@@ -150,10 +146,15 @@
           <div class="asowp-pl-5 asowp-pr-5 asowp-pb-3  asowp-text-[1em] asowp-text-gray-600" v-if="recentConfigs.length === 0">
             No recent configurations yet.
           </div>
-          <ul v-else class="asowp-p-5 asowp-space-y-3">
-            <li v-for="rc in recentConfigs" :key="rc.id" class="asowp-flex asowp-justify-between asowp-items-center">
-              <div class="asowp-truncate">{{ rc.name }}</div>
-              <RouterLink :to="`/configurations/${rc.id}`" class="asowp-text-[#016464] asowp-text-[12px]">Open</RouterLink>
+          <ul v-else class="asowp-px-5 asowp-py-3 asowp-m-0">
+            <li v-for="rc in recentConfigs" :key="rc.id" class="asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
+              <RouterLink :to="`/configurations/${rc.id}/materials`" class="asowp-text-black asowp-no-underline hover:asowp-text-black asowp-text-[12px] asowp-w-full">
+                <div>ID {{ rc.id }}</div>
+                <div class="asowp-flex asowp-justify-between asowp-items-center">
+                  <div class="asowp-truncate asowp-font-bold">{{ rc.name }}</div>
+                  <div class="asowp-text-gray-500 asowp-bg-[#d5ebff] asowp-text-[11px] asowp-py-1 asowp-px-3 asowp-rounded-full">{{ rc.materialType }}</div>
+                </div>
+              </RouterLink>
             </li>
           </ul>
         </div>
@@ -181,89 +182,75 @@
         </div>
 
         <!-- Useful links -->
-        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-white">
-        <!-- Header -->
-        <div class="asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb] asowp-text-[.8125em] asowp-font-semibold">
-            Useful Links
-        </div>
+        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-white asowp-p-3">
+          <!-- Header -->
+          <div class="asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb] asowp-text-[.8125em] asowp-font-semibold">
+              Useful Links
+          </div>
 
-        <!-- Body -->
-        <div class="asowp-pl-5 asowp-pr-5 asowp-pb-5 asowp-space-y-2 asowp-text-[13px]">
+          <!-- Body -->
+          <div class="asowp-flex asowp-flex-wrap asowp-items-center asowp-gap-3  asowp-text-[13px]">
 
-            <!-- Row 1: Browse demos + password -->
-            <div class="asowp-flex asowp-items-center asowp-gap-3">
-                <button class="asowp-cursor-pointer asowp-flex asowp-w-[39%] asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                    <a
-                        href="https://signsdesigner.us/demos"
-                        target="_blank" rel="noopener"
-                        class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
-                    >
-                        <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M13 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-1.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"></path>
-                        <path fill-rule="evenodd" d="M10 4c-2.476 0-4.348 1.23-5.577 2.532a9.266 9.266 0 0 0-1.4 1.922 5.98 5.98 0 0 0-.37.818c-.082.227-.153.488-.153.728s.071.501.152.728c.088.246.213.524.371.818.317.587.784 1.27 1.4 1.922 1.229 1.302 3.1 2.532 5.577 2.532 2.476 0 4.348-1.23 5.577-2.532a9.265 9.265 0 0 0 1.4-1.922 5.98 5.98 0 0 0 .37-.818c.082-.227.153-.488.153-.728s-.071-.501-.152-.728a5.984 5.984 0 0 0-.371-.818 9.269 9.269 0 0 0-1.4-1.922c-1.229-1.302-3.1-2.532-5.577-2.532Zm-5.999 6.002v-.004c.004-.02.017-.09.064-.223a4.5 4.5 0 0 1 .278-.608 7.768 7.768 0 0 1 1.17-1.605c1.042-1.104 2.545-2.062 4.487-2.062 1.942 0 3.445.958 4.486 2.062a7.77 7.77 0 0 1 1.17 1.605c.13.24.221.447.279.608.047.132.06.203.064.223v.004c-.004.02-.017.09-.064.223a4.503 4.503 0 0 1-.278.608 7.768 7.768 0 0 1-1.17 1.605c-1.042 1.104-2.545 2.062-4.487 2.062-1.942 0-3.445-.958-4.486-2.062a7.766 7.766 0 0 1-1.17-1.605 4.5 4.5 0 0 1-.279-.608c-.047-.132-.06-.203-.064-.223Z"></path>
-                        </svg>
-                        <span class="asowp-text-[.8125em]">Browse Demos</span>
-                    </a>
-                </button>
-            
+              <!-- Row 1: Browse demos + password -->
+              <button class="asowp-cursor-pointer asowp-flex asowp-w-[39%] asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
+                  <a
+                      href="https://signsdesigner.us/demos"
+                      target="_blank" rel="noopener"
+                      class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
+                  >
+                      <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M13 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-1.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"></path>
+                      <path fill-rule="evenodd" d="M10 4c-2.476 0-4.348 1.23-5.577 2.532a9.266 9.266 0 0 0-1.4 1.922 5.98 5.98 0 0 0-.37.818c-.082.227-.153.488-.153.728s.071.501.152.728c.088.246.213.524.371.818.317.587.784 1.27 1.4 1.922 1.229 1.302 3.1 2.532 5.577 2.532 2.476 0 4.348-1.23 5.577-2.532a9.265 9.265 0 0 0 1.4-1.922 5.98 5.98 0 0 0 .37-.818c.082-.227.153-.488.153-.728s-.071-.501-.152-.728a5.984 5.984 0 0 0-.371-.818 9.269 9.269 0 0 0-1.4-1.922c-1.229-1.302-3.1-2.532-5.577-2.532Zm-5.999 6.002v-.004c.004-.02.017-.09.064-.223a4.5 4.5 0 0 1 .278-.608 7.768 7.768 0 0 1 1.17-1.605c1.042-1.104 2.545-2.062 4.487-2.062 1.942 0 3.445.958 4.486 2.062a7.77 7.77 0 0 1 1.17 1.605c.13.24.221.447.279.608.047.132.06.203.064.223v.004c-.004.02-.017.09-.064.223a4.503 4.503 0 0 1-.278.608 7.768 7.768 0 0 1-1.17 1.605c-1.042 1.104-2.545 2.062-4.487 2.062-1.942 0-3.445-.958-4.486-2.062a7.766 7.766 0 0 1-1.17-1.605 4.5 4.5 0 0 1-.279-.608c-.047-.132-.06-.203-.064-.223Z"></path>
+                      </svg>
+                      <span class="asowp-text-[.8125em]">Browse Demos</span>
+                  </a>
+              </button>
 
-                <span class="asowp-text-[12px] asowp-text-gray-500">
-                    The password to access to demo is: <b>aso</b>
-                </span>
-            </div>
+              <!-- Row 2: Learning Center -->
+              
+              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
+                  <a
+                      href="https://docs.signsdesigner.us/docs/aso-wp-documentation/"
+                      target="_blank" rel="noopener"
+                      class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
+                  >
+                      <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M6.75 4.5c-1.283 0-2.213 1.025-2.044 2.127.384 2.498 1.296 4.459 2.707 5.89 1.41 1.43 3.373 2.389 5.96 2.786 1.101.17 2.126-.76 2.126-2.044v-.727a.25.25 0 0 0-.187-.242l-1.9-.498a.25.25 0 0 0-.182.022l-1.067.576c-.69.373-1.638.492-2.422-.056a8.678 8.678 0 0 1-2.071-2.09c-.542-.787-.423-1.735-.045-2.428l.57-1.047a.252.252 0 0 0 .022-.182l-.498-1.9a.25.25 0 0 0-.242-.187h-.726Zm-3.526 2.355c-.334-2.174 1.497-3.856 3.527-3.855h.726a1.75 1.75 0 0 1 1.693 1.306l.498 1.9c.113.43.058.885-.153 1.276l-.001.002-.572 1.05c-.191.351-.169.668-.036.86a7.184 7.184 0 0 0 1.694 1.71c.187.13.498.156.85-.034l1.067-.576a1.75 1.75 0 0 1 1.276-.153l1.9.498a1.75 1.75 0 0 1 1.306 1.693v.727c0 2.03-1.68 3.86-3.854 3.527-2.838-.436-5.12-1.511-6.8-3.216-1.68-1.703-2.701-3.978-3.121-6.715Z"></path>
+                      </svg>
+                      <span class="asowp-text-[.8125em]">Learning Center</span>
+                  </a>
+              </button>
 
-            <!-- Row 2: Learning Center -->
-            <div>
-                <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                    <a
-                        href="https://docs.signsdesigner.us/docs/aso-wp-documentation/"
-                        target="_blank" rel="noopener"
-                        class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
-                    >
-                        <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M6.75 4.5c-1.283 0-2.213 1.025-2.044 2.127.384 2.498 1.296 4.459 2.707 5.89 1.41 1.43 3.373 2.389 5.96 2.786 1.101.17 2.126-.76 2.126-2.044v-.727a.25.25 0 0 0-.187-.242l-1.9-.498a.25.25 0 0 0-.182.022l-1.067.576c-.69.373-1.638.492-2.422-.056a8.678 8.678 0 0 1-2.071-2.09c-.542-.787-.423-1.735-.045-2.428l.57-1.047a.252.252 0 0 0 .022-.182l-.498-1.9a.25.25 0 0 0-.242-.187h-.726Zm-3.526 2.355c-.334-2.174 1.497-3.856 3.527-3.855h.726a1.75 1.75 0 0 1 1.693 1.306l.498 1.9c.113.43.058.885-.153 1.276l-.001.002-.572 1.05c-.191.351-.169.668-.036.86a7.184 7.184 0 0 0 1.694 1.71c.187.13.498.156.85-.034l1.067-.576a1.75 1.75 0 0 1 1.276-.153l1.9.498a1.75 1.75 0 0 1 1.306 1.693v.727c0 2.03-1.68 3.86-3.854 3.527-2.838-.436-5.12-1.511-6.8-3.216-1.68-1.703-2.701-3.978-3.121-6.715Z"></path>
-                        </svg>
-                        <span class="asowp-text-[.8125em]">Learning Center</span>
-                    </a>
-                </button>
-            
-            </div>
+              <!-- Row 3: Pricing -->
+              
+              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
+                  <a
+                      href="https://signsdesigner.us/pricing-all-signs-customizer/"
+                      target="_blank" rel="noopener"
+                      class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
+                  >
+                      <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M5.5 3.5a2 2 0 0 0-2 2v3.75c0 .414.336.75.75.75h2v5.769a.85.85 0 0 0 1.433.618l1.442-1.357 1.611 1.516a.75.75 0 0 0 1.028 0l1.611-1.516 1.442 1.357a.85.85 0 0 0 1.433-.618v-10.269a2 2 0 0 0-2-2h-8.494l.005.017a2.02 2.02 0 0 0-.261-.017Zm-.5 2a.5.5 0 0 1 1 0v3h-1v-3Zm2.75-.48-.006-.02h6.506a.5.5 0 0 1 .5.5v8.764l-.69-.649a1 1 0 0 0-1.37 0l-1.44 1.355-1.44-1.355a1 1 0 0 0-1.37 0l-.69.65v-9.245Zm2 1.48a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Zm-.75 3.75a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Z"></path>
+                      </svg>
+                      <span class="asowp-text-[.8125em]">Pricing</span>
+                  </a>
+              </button>
 
-            <!-- Row 3: Pricing -->
-            <div>
-                <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                    <a
-                        href="https://signsdesigner.us/pricing-all-signs-customizer/"
-                        target="_blank" rel="noopener"
-                        class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
-                    >
-                        <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.5 3.5a2 2 0 0 0-2 2v3.75c0 .414.336.75.75.75h2v5.769a.85.85 0 0 0 1.433.618l1.442-1.357 1.611 1.516a.75.75 0 0 0 1.028 0l1.611-1.516 1.442 1.357a.85.85 0 0 0 1.433-.618v-10.269a2 2 0 0 0-2-2h-8.494l.005.017a2.02 2.02 0 0 0-.261-.017Zm-.5 2a.5.5 0 0 1 1 0v3h-1v-3Zm2.75-.48-.006-.02h6.506a.5.5 0 0 1 .5.5v8.764l-.69-.649a1 1 0 0 0-1.37 0l-1.44 1.355-1.44-1.355a1 1 0 0 0-1.37 0l-.69.65v-9.245Zm2 1.48a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Zm-.75 3.75a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Z"></path>
-                        </svg>
-                        <span class="asowp-text-[.8125em]">Pricing</span>
-                    </a>
-                </button>
-            
-            </div>
+              <!-- Row 4: Get in touch -->            
+              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
+                  <a
+                      href="https://signsdesigner.us/contact"
+                      target="_blank" rel="noopener"
+                      class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
+                  >
+                      <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M5.75 4.5c-1.519 0-2.75 1.231-2.75 2.75v5.5c0 1.519 1.231 2.75 2.75 2.75h8.5c1.519 0 2.75-1.231 2.75-2.75v-5.5c0-1.519-1.231-2.75-2.75-2.75h-8.5Zm-1.25 2.75c0-.69.56-1.25 1.25-1.25h8.5c.69 0 1.25.56 1.25 1.25v5.5c0 .69-.56 1.25-1.25 1.25h-8.5c-.69 0-1.25-.56-1.25-1.25v-5.5Zm2.067.32c-.375-.175-.821-.013-.997.363-.175.375-.013.821.363.997l3.538 1.651c.335.156.723.156 1.058 0l3.538-1.651c.376-.176.538-.622.363-.997-.175-.376-.622-.538-.997-.363l-3.433 1.602-3.433-1.602Z"></path>
+                      </svg>
+                      <span class="asowp-text-[.8125em]">Get in touch</span>
+                  </a>
+              </button>
 
-            <!-- Row 4: Get in touch -->
-            <div>
-                <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                    <a
-                        href="https://signsdesigner.us/contact"
-                        target="_blank" rel="noopener"
-                        class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none"
-                    >
-                        <svg viewBox="0 0 20 20" class="asowp-w-4 asowp-h-4" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.75 4.5c-1.519 0-2.75 1.231-2.75 2.75v5.5c0 1.519 1.231 2.75 2.75 2.75h8.5c1.519 0 2.75-1.231 2.75-2.75v-5.5c0-1.519-1.231-2.75-2.75-2.75h-8.5Zm-1.25 2.75c0-.69.56-1.25 1.25-1.25h8.5c.69 0 1.25.56 1.25 1.25v5.5c0 .69-.56 1.25-1.25 1.25h-8.5c-.69 0-1.25-.56-1.25-1.25v-5.5Zm2.067.32c-.375-.175-.821-.013-.997.363-.175.375-.013.821.363.997l3.538 1.651c.335.156.723.156 1.058 0l3.538-1.651c.376-.176.538-.622.363-.997-.175-.376-.622-.538-.997-.363l-3.433 1.602-3.433-1.602Z"></path>
-                        </svg>
-                        <span class="asowp-text-[.8125em]">Get in touch</span>
-                    </a>
-                </button>
-            
-            </div>
-
-        </div>
+          </div>
         </div>
 
       </div>
@@ -272,21 +259,257 @@
     
 
   </div>
+
+  <!-- Modal: Install Configurator screen -->
+  <div
+    v-if="showInstallConfigModal"
+    class="asowp-fixed asowp-inset-0 asowp-z-[1000] asowp-flex asowp-items-center asowp-justify-center"
+  >
+    <div
+      class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40"
+      @click="closeInstallModals"
+    ></div>
+    <div
+      class="asowp-relative asowp-w-[min(820px,95vw)] asowp-max-h-[calc(100vh-5.75rem)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col"
+    >
+      <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
+        <div class="asowp-text-[14px] asowp-font-semibold">Install the configurator screen</div>
+        <button
+          class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer"
+          @click="closeInstallModals"
+          aria-label="Close"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="asowp-flex-1 asowp-min-h-0 asowp-p-5 asowp-space-y-4 asowp-overflow-y-auto">
+        <div class="asowp-text-[13px] asowp-text-gray-700">
+          You can display the configurator in 2 ways:
+        </div>
+
+          <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
+            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">Option 1 — Buttons on product pages</div>
+            <ol class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700 asowp-space-y-1">
+              <li>1) If the product is not attached to a configuration yet, attach it first (either from the product edit page → All Signs Options selector, or during configuration creation in ASO).</li>
+              <li>2) On the storefront, customers will see the customization buttons on that product page.</li>
+            </ol>
+            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
+              This is the recommended method because it stays linked to the product.
+            </div>
+          </div>
+
+          <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
+            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">Option 2 — Shortcode</div>
+            <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">
+              Add the shortcode inside any WordPress page:
+            </div>
+            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start asowp-justify-between asowp-gap-3">
+              <code class="asowp-text-[12px] asowp-font-mono asowp-text-gray-800 asowp-break-all">
+                [asowp-configurator productid="123"]
+              </code>
+              <button
+                type="button"
+                class="asowp-shrink-0 asowp-text-[12px] asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-[#f8fafc] hover:asowp-bg-[#eef2f7] asowp-px-2 asowp-py-1 asowp-cursor-pointer"
+                @click.stop="copySnippet('[asowp-configurator productid=&quot;123&quot;]', 'cfg-basic')"
+              >
+                {{ copiedKey === 'cfg-basic' ? 'Copied' : 'Copy' }}
+              </button>
+            </div>
+            <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">
+              You can also open a specific demo/template in the configurator:
+            </div>
+            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start asowp-justify-between asowp-gap-3">
+              <code class="asowp-text-[12px] asowp-font-mono asowp-text-gray-800 asowp-break-all">
+                [asowp-configurator productid="123" tplid="240"]
+              </code>
+              <button
+                type="button"
+                class="asowp-shrink-0 asowp-text-[12px] asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-[#f8fafc] hover:asowp-bg-[#eef2f7] asowp-px-2 asowp-py-1 asowp-cursor-pointer"
+                @click.stop="copySnippet('[asowp-configurator productid=&quot;123&quot; tplid=&quot;240&quot;]', 'cfg-tpl')"
+              >
+                {{ copiedKey === 'cfg-tpl' ? 'Copied' : 'Copy' }}
+              </button>
+            </div>
+            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
+              Replace <span class="asowp-font-mono">123</span> with your WooCommerce product ID and <span class="asowp-font-mono">240</span> with the template/demo ID.
+            </div>
+          </div>
+        </div>
+
+      <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
+        <button
+          class="asowp-px-4 asowp-py-1.5 asowp-rounded-md asowp-text-white asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-[13px] asowp-cursor-pointer"
+          @click="closeInstallModals"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Install Templates screen -->
+  <div
+    v-if="showInstallTemplatesModal"
+    class="asowp-fixed asowp-inset-0 asowp-z-[1000] asowp-flex asowp-items-center asowp-justify-center"
+  >
+    <div
+      class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40"
+      @click="closeInstallModals"
+    ></div>
+    <div
+      class="asowp-relative asowp-w-[min(820px,95vw)] asowp-max-h-[calc(100vh-5.75rem)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col"
+    >
+      <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
+        <div class="asowp-text-[14px] asowp-font-semibold">Install the templates screen</div>
+        <button
+          class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer"
+          @click="closeInstallModals"
+          aria-label="Close"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="asowp-flex-1 asowp-min-h-0 asowp-p-5 asowp-space-y-4 asowp-overflow-y-auto">
+        <div class="asowp-text-[13px] asowp-text-gray-700">
+          You can display the templates library in 2 ways:
+        </div>
+
+        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
+          <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">Option 1 — Button on product pages</div>
+          <ol class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700 asowp-space-y-1">
+            <li>1) If the product is not attached to a configuration yet, attach it first (either from the product edit page → All Signs Options selector, or during configuration creation in ASO).</li>
+            <li>2) On the storefront, customers can click the template button to pick a starter template.</li>
+          </ol>
+        </div>
+
+        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
+          <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">Option 2 — Shortcode</div>
+          <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">
+            Add the shortcode inside any WordPress page:
+          </div>
+          <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start asowp-justify-between asowp-gap-3">
+            <code class="asowp-text-[12px] asowp-font-mono asowp-text-gray-800 asowp-break-all">
+              [asowp-templates productid="123" cols="3"]
+            </code>
+            <button
+              type="button"
+              class="asowp-shrink-0 asowp-text-[12px] asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-[#f8fafc] hover:asowp-bg-[#eef2f7] asowp-px-2 asowp-py-1 asowp-cursor-pointer"
+              @click.stop="copySnippet('[asowp-templates productid=&quot;123&quot; cols=&quot;3&quot;]', 'tpl-basic')"
+            >
+              {{ copiedKey === 'tpl-basic' ? 'Copied' : 'Copy' }}
+            </button>
+          </div>
+          <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
+            Replace <span class="asowp-font-mono">123</span> with your WooCommerce product ID. <span class="asowp-font-mono">cols</span> controls the grid columns.
+          </div>
+        </div>
+      </div>
+
+      <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
+        <button
+          class="asowp-px-4 asowp-py-1.5 asowp-rounded-md asowp-text-white asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-[13px] asowp-cursor-pointer"
+          @click="closeInstallModals"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { RouterLink } from 'vue-router';
-import { h } from 'vue' 
+import { h, onMounted, ref } from 'vue'
+import api from '@/admin/Api/api'
 
 const statisticImage = asowp_data.assets_url + '/images/home/im_statistic.png'
 const skinImage      = asowp_data.assets_url + '/images/home/im_home-skin-vue.png'
 
 /** KPI values (branche sur tes vraies métriques si dispo) */
-const kpis = [
-  { key: 'products',  label: 'Products Created', value: 0 },
-  { key: 'rate',      label: 'Conversion Rate',  value: '0%' },
-  { key: 'orders',    label: 'Orders',           value: 0 },
-]
+const kpis = ref([
+  { key: 'orders', label: 'Configured Orders', value: 0 },
+  { key: 'rate', label: 'Rate vs all orders', value: '0%' },
+  { key: 'revenue', label: 'Configured Revenue', value: asowp_data.currencySymbol + '0' },
+])
+
+const kpisLoading = ref(false)
+const recentConfigs = ref([])
+const showInstallConfigModal = ref(false)
+const showInstallTemplatesModal = ref(false)
+const copiedKey = ref(null)
+
+const openInstallConfigModal = () => {
+  showInstallConfigModal.value = true
+  showInstallTemplatesModal.value = false
+}
+
+const openInstallTemplatesModal = () => {
+  showInstallTemplatesModal.value = true
+  showInstallConfigModal.value = false
+}
+
+const closeInstallModals = () => {
+  showInstallConfigModal.value = false
+  showInstallTemplatesModal.value = false
+  copiedKey.value = null
+}
+
+const copySnippet = async (text, key) => {
+  try {
+    const plain = String(text).replace(/&quot;/g, '"')
+    if (navigator?.clipboard?.writeText) {
+      await navigator.clipboard.writeText(plain)
+    } else {
+      const el = document.createElement('textarea')
+      el.value = plain
+      el.setAttribute('readonly', '')
+      el.style.position = 'absolute'
+      el.style.left = '-9999px'
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+    }
+    copiedKey.value = key
+    window.setTimeout(() => {
+      if (copiedKey.value === key) copiedKey.value = null
+    }, 1200)
+  } catch (_) {
+    // no-op (clipboard denied)
+  }
+}
+
+const formatMoney = (amount, symbol) => {
+  const num = Number(amount || 0)
+  try {
+    return `${symbol}${num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  } catch {
+    return `${symbol}${num.toFixed(2)}`
+  }
+}
+
+onMounted(async () => {
+  try {
+    kpisLoading.value = true
+    const stats = await api.getHomeStats()
+    const symbol = stats?.currency_symbol || asowp_data.currencySymbol || ''
+    kpis.value = [
+      { key: 'orders', label: 'Configured Orders', value: stats?.configured_orders ?? 0 },
+      { key: 'rate', label: 'Rate vs all orders', value: `${stats?.configured_rate ?? 0}%` },
+      { key: 'revenue', label: 'Configured Revenue', value: formatMoney(stats?.configured_revenue, symbol) },
+    ]
+  } finally {
+    kpisLoading.value = false
+  }
+
+  try {
+    const res = await api.getConfigs('?per_page=4&order=DESC&page=1')
+    recentConfigs.value = Array.isArray(res?.data) ? res.data.slice(0, 4) : []
+  } finally {
+  }
+})
 
 /** Main menu items */
 const mainMenu = [
@@ -385,9 +608,6 @@ const mainMenu = [
     
   },
 ]
-
-/** Recent configs (branche tes données réelles) */
-const recentConfigs = []
 
 /** Interest tiles */
 const interest = [
