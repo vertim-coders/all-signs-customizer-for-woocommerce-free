@@ -2,14 +2,14 @@
     <div>
         <div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
-                 <div class="asowp-text-[16px] asowp-font-bold">Enable Text Type</div>
+                 <div class="asowp-text-[16px] asowp-font-bold">{{ __("Enable Text Type", "all-signs-options-pro") }}</div>
                 <div class="asowp-grid asowp-grid-cols-5 asowp-gap-y-6">
                     <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
                         <div class="">
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
                                 <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-normal.png" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Normal</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Normal", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="textTypeNormal" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -24,7 +24,7 @@
 
                                 <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-neon.png" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">NEON</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("NEON", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="textTypeNeon" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -38,7 +38,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
                                 <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-3d.png" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">3D</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("3D", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="textType3d" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -51,7 +51,7 @@
                  
                 </div>
                 <div class="asowp-flex asowp-flex-col asowp-w-full">
-                    <label class="asowp-text-[12px]">Select Fonts</label>
+                    <label class="asowp-text-[12px]">{{ __("Select Fonts", "all-signs-options-pro") }}</label>
                     <Multiselect
                         v-model="text.selectedFonts"
                         placeholder=""
@@ -64,19 +64,19 @@
                         
                 </div>                
                 <div class="asowp-flex asowp-flex-col asowp-w-full" >
-                    <label class="asowp-text-[12px]">Define text colors </label>
+                    <label class="asowp-text-[12px]">{{ __("Define text colors", "all-signs-options-pro") }} </label>
                     <div class="asowp-flex asowp-space-x-2 asowp-items-center">
-                        <label for="" class="asowp-text-[12px] asowp-text-[#444444]">Label:</label>
+                        <label for="" class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Label:", "all-signs-options-pro") }}</label>
                         <input type="text" v-model="text.colorsLabel">
                     </div>
                     <div class="asowp-grid asowp-grid-cols-3 asowp-gap-4">
                         <div class="asowp-flex asowp-justify-start asowp-space-x-2" :key="key" v-for="(color,key) in text.colors">
                             <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Name</label>
+                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{ __("Name", "all-signs-options-pro") }}</label>
                                 <input type="text" class="asowp-rounded asowp-w-full asowp-h-[30px]" v-model="text.colors[key].name" autocomplete="off"> 
                             </div>
                             <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">Background color</label>
+                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
                                 <div class="asowp-relative asowp-flex">
                                     <input
                                         id="colorPicker"
@@ -95,7 +95,7 @@
                                 
                             </div>
                             <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">Background color</label>
+                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
                                 <div class="asowp-relative asowp-flex">
                                     <button @click="removeColor(key)" class="asowp-w-[50px] asowp-h-full asowp-border-solid asowp-border-red-600 asowp-rounded asowp-bg-red-600 asowp-cursor-pointer asowp-text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-[70%] asowp-h-[70%]">
@@ -111,13 +111,13 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <span class="asowp-font-semibold asowp-text-[16px]">Add More Color</span>
+                            <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Add More Color", "all-signs-options-pro") }}</span>
                         </button>
                     </div>
                 </div>
                 <div class="asowp-flex asowp-justify-start asowp-space-x-8 asowp-items-center">
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Enable Custom color</div>
+                        <div class="asowp-text-[16px]">{{ __("Enable Custom color", "all-signs-options-pro") }}</div>
                         <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                             <label for="toggleCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                 <input id="toggleCustom" type="checkbox" name="toggleCustom" class="asowp-sr-only asowp-peer" v-model="text.enableCustomColor">
@@ -126,10 +126,10 @@
                         </div>
                     </div>
                     <div class="asowp-w-3/5 asowp-space-x-2 asowp-flex asowp-items-center" v-if="text.enableCustomColor">
-                        <label for="" class="asowp-text-[16px] asowp-text[#444444] asowp-font-normal asowp-w-full">Custom Color Preview Image : </label>
+                        <label for="" class="asowp-text-[16px] asowp-text[#444444] asowp-font-normal asowp-w-full">{{ __("Custom Color Preview Image :", "all-signs-options-pro") }} </label>
                         <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2">
                             <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">Upload image</button>
+                                <button @click="selectColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload image", "all-signs-options-pro") }}</button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="text.colorsPrevImg != ''" :src="text.colorsPrevImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="text.colorsPrevImg != ''" @click="()=>{text.colorsPrevImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -144,7 +144,7 @@
                 </div>
                 <div class="asowp-flex asowp-space-x-6">
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Enable font size</div>
+                        <div class="asowp-text-[16px]">{{ __("Enable font size", "all-signs-options-pro") }}</div>
                         <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                             <label for="toggleEnableFont" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                 <input id="toggleEnableFont" type="checkbox" name="toggleEnableFont" class="asowp-sr-only asowp-peer" v-model="text.enableFontSize.active">
@@ -155,19 +155,19 @@
                 </div>
                 <div class="asowp-flex asowp-justify-between asowp-space-x-6" v-if="text.enableFontSize.active">
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px]">Minimun font size</label>
+                        <label class="asowp-text-[12px]">{{ __("Minimun font size", "all-signs-options-pro") }}</label>
                         <input type="number" v-model="text.enableFontSize.minimumFontSize" @blur="()=>{ if(isNaN(text.enableFontSize.minimumFontSize)) {text.enableFontSize.minimumFontSize=12}}" class="asowp-w-full"/>
                     </div>
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px]">Maximum font size</label>
+                        <label class="asowp-text-[12px]">{{ __("Maximum font size", "all-signs-options-pro") }}</label>
                         <input type="number" v-model="text.enableFontSize.maximumFontSize" @blur="()=>{ if(isNaN(text.enableFontSize.maximumFontSize)) {text.enableFontSize.maximumFontSize=30}}" class="asowp-w-full"/>
                     </div>
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px]">Default size</label>
+                        <label class="asowp-text-[12px]">{{ __("Default size", "all-signs-options-pro") }}</label>
                         <input type="number" v-model="text.enableFontSize.defaultFontSize" @blur="()=>{ if(isNaN(text.enableFontSize.defaultFontSize)) {text.enableFontSize.defaultFontSize=16}}" class="asowp-w-full"/>
                     </div>
                 </div>
-                <div class="asowp-text-[16px] asowp-font-bold">enable text options</div>
+                <div class="asowp-text-[16px] asowp-font-bold">{{ __("enable text options", "all-signs-options-pro") }}</div>
                 <div class="asowp-grid asowp-grid-cols-5 asowp-gap-y-6">
                     <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
                         <div class="">
@@ -176,7 +176,7 @@
                                     <path d="M5.90078 0C8.30078 0 10.1008 0.3 11.3008 1C12.6008 1.7 13.2008 2.9 13.2008 4.6C13.2008 5.6 12.9008 6.5 12.5008 7.2C12.274 7.54193 11.9795 7.83372 11.6355 8.05733C11.2915 8.28093 10.9053 8.43159 10.5008 8.5C11.0724 8.63353 11.6147 8.87079 12.1008 9.2C12.5008 9.5 12.9008 10 13.2008 10.5C13.5137 11.2244 13.6508 12.0125 13.6008 12.8C13.6361 13.5225 13.5006 14.2431 13.2052 14.9033C12.9099 15.5636 12.4629 16.1449 11.9008 16.6C10.4772 17.6167 8.74656 18.1112 7.00078 18H0.300781V0H5.90078ZM6.30078 7.1C7.40078 7.1 8.20078 7 8.60078 6.6C9.10078 6.3 9.30078 5.7 9.30078 5.1C9.30078 4.4 9.00078 3.9 8.50078 3.6C8.00078 3.3 7.20078 3.1 6.10078 3.1H4.10078V7.1H6.30078ZM4.10078 10.1V15H6.60078C7.70078 15 8.60078 14.7 9.00078 14.3C9.50078 13.8 9.70078 13.3 9.70078 12.5C9.7127 12.1977 9.6559 11.8967 9.53465 11.6196C9.4134 11.3424 9.23086 11.0964 9.00078 10.9C8.50078 10.5 7.70078 10.3 6.50078 10.3H4.00078L4.10078 10.1Z" fill="#016464"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">bold</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("bold", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableBold" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -192,7 +192,7 @@
                                     <path d="M3.5 1V6C3.5 7.32608 4.02678 8.59785 4.96447 9.53553C5.90215 10.4732 7.17392 11 8.5 11C9.82608 11 11.0979 10.4732 12.0355 9.53553C12.9732 8.59785 13.5 7.32608 13.5 6V1M1.5 15H15.5" stroke="#016464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">underline</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("underline", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableUnderline" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -208,7 +208,7 @@
                                     <path d="M3.5 5V10C3.5 11.3261 4.02678 12.5979 4.96447 13.5355C5.90215 14.4732 7.17392 15 8.5 15C9.82608 15 11.0979 14.4732 12.0355 13.5355C12.9732 12.5979 13.5 11.3261 13.5 10V5M1.5 1H15.5" stroke="#016464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">overline</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("overline", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableOverline" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -225,7 +225,7 @@
                                     <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="#016464"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Strike- through</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Strike- through", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableStrike" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -241,7 +241,7 @@
                                     <path d="M18.7031 4.21875H8.57812C8.475 4.21875 8.39062 4.31367 8.39062 4.42969V6.11719C8.39062 6.2332 8.475 6.32812 8.57812 6.32812H12.825L9.16875 20.6719H5.36719C5.26406 20.6719 5.17969 20.7668 5.17969 20.8828V22.5703C5.17969 22.6863 5.26406 22.7812 5.36719 22.7812H15.4922C15.5953 22.7812 15.6797 22.6863 15.6797 22.5703V20.8828C15.6797 20.7668 15.5953 20.6719 15.4922 20.6719H11.1187L14.775 6.32812H18.7031C18.8062 6.32812 18.8906 6.2332 18.8906 6.11719V4.42969C18.8906 4.31367 18.8062 4.21875 18.7031 4.21875Z" fill="black"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Italic</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Italic", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableItalic" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -257,7 +257,7 @@
                                     <path d="M10 11V9H11.61C11.85 9.71 12 10.39 12 11H10ZM9.58 5C9.12 4.29 8.65 3.61 8.2 3H8V5H9.58ZM10 9V7H8V9H10ZM10 5.68V7H10.74C10.5 6.56 10.26 6.11 10 5.68ZM6 13V11H8V9H6V7H8V5H6V3H8V2.73C6.9 1.26 6 0.25 6 0.25C6 0.25 0 7 0 11C0 14.31 2.69 17 6 17V15H8V13H6ZM8 16.65C8.75 16.39 9.42 16 10 15.46V15H8V16.65ZM8 13H10V11H8V13ZM10 15H10.46C11 14.42 11.39 13.75 11.65 13H10V15Z" fill="black"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Opacity</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Opacity", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableOpacity" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -273,7 +273,7 @@
                                     <path d="M7 21H9V19H7V21ZM7 13H9V11H7V13ZM11 13H13V11H11V13ZM11 21H13V19H11V21ZM3 17H5V15H3V17ZM3 21H5V19H3V21ZM3 13H5V11H3V13ZM3 9H5V7H3V9ZM11 17H13V15H11V17ZM19 9H21V7H19V9ZM19 13H21V11H19V13ZM3 3V5H21V3H3ZM19 17H21V15H19V17ZM15 21H17V19H15V21ZM11 9H13V7H11V9ZM19 21H21V19H19V21ZM15 13H17V11H15V13Z" fill="black"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Border</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Border", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableBorder" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -301,7 +301,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5">Text Alignment</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5">{{ __("Text Alignment", "all-signs-options-pro") }}</div>
 
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-2">
@@ -316,7 +316,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_curved_up.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">curved up</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("curved up", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableCurvedUp" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -330,7 +330,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_curved_down.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">curved down</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("curved down", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableCurvedDown" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -346,7 +346,7 @@
             <div class="asowp-bg-[#016464] asowp-rounded">
                 <button :disabled="isLoading" @click="updateTextSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
                 </button>
             </div>
         </div>
@@ -358,6 +358,7 @@ import {ref,defineProps, onMounted} from 'vue';
 import { useRoute } from 'vue-router';
 import Multiselect from "@vueform/multiselect";
 import toastMessage from '@/admin/utils/functions';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
     data:Object,
     fetchSettings:Function
@@ -407,9 +408,9 @@ const selectColorPrevImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Custom Text Color Preview Image",
+            title: __("Select Custom Text Color Preview Image", "all-signs-options-pro"),
             button: {
-                text: "Select Image"
+                text: __("Select Image", "all-signs-options-pro")
             },
             multiple: false
         }

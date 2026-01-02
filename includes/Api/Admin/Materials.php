@@ -135,6 +135,9 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                 foreach ($materials as $idx => $material) {
                     if (is_array($material)) {
                         $materials[$idx]["type"] = $forced_type;
+                        if (!array_key_exists('active', $materials[$idx])) {
+                            $materials[$idx]["active"] = true;
+                        }
                     }
                 }
                 return rest_ensure_response($materials);
@@ -166,6 +169,7 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                         // Material with existing data (like default material from config creation)
                         $material = $new_material;
                         $material['type'] = 'simple';
+                        $material['active'] = isset($new_material['active']) ? (bool)$new_material['active'] : true;
                     } else {
                         // New material added by user - create empty structure with no default data
                         $material = [
@@ -174,6 +178,7 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                             "icon" => $new_material['icon'],
                             "popImg" => $new_material['popImg'],
                             "type" => 'simple',
+                            "active" => true,
                             "data" => [
                                     'sizes' => [
                                         "customSize" => [
@@ -225,6 +230,7 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                     if (isset($new_material['data']) && is_array($new_material['data'])) {
                         $material = $new_material;
                         $material['type'] = 'advance';
+                        $material['active'] = isset($new_material['active']) ? (bool)$new_material['active'] : true;
                     } else {
                         $material = [
                             "name" => $new_material['name'],
@@ -232,6 +238,7 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                             "icon" => $new_material['icon'],
                             "popImg" => $new_material['popImg'],
                             "type" => 'advance',
+                            "active" => true,
                             "data" => []
                         ];
                     }
@@ -268,12 +275,27 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                 if (isset($meta["data"]['materials'][$material_id])) {
                     $forced_type = $this->get_config_forced_material_type($config_id);
                     $old_material = $meta["data"]['materials'][$material_id];
+                    $next_active = isset($material['active']) ? (bool)$material['active'] : true;
+
+                    $active_count = 0;
+                    foreach ($meta["data"]['materials'] as $idx => $mat) {
+                        $is_active = isset($mat['active']) ? (bool)$mat['active'] : true;
+                        if ($is_active) {
+                            $active_count++;
+                        }
+                    }
+                    $current_active = isset($old_material['active']) ? (bool)$old_material['active'] : true;
+                    if ($current_active && !$next_active && $active_count <= 1) {
+                        return rest_ensure_response(["success" => false, "message" => __("At least one material must remain active", "all-signs-options-pro")]);
+                    }
+
                     if ($old_material !== $material) {
                         $old_material["name"] = $material['name'];
                         $old_material["description"] = $material['description'];
                         $old_material["icon"] = $material['icon'];
                         $old_material["popImg"] = $material['popImg'];
                         $old_material["type"] = $forced_type;
+                        $old_material["active"] = $next_active;
                         $meta["data"]['materials'][$material_id] = $old_material;
                         $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
                         if ($update === true) {
@@ -315,6 +337,9 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                     $material = $meta["data"]['materials'][$material_id];
                     if (is_array($material)) {
                         $material["type"] = $this->get_config_forced_material_type($config_id);
+                        if (!array_key_exists('active', $material)) {
+                            $material["active"] = true;
+                        }
                     }
                     return rest_ensure_response($material);
                 } else {
@@ -343,6 +368,25 @@ class ASOWP_Api_Materials extends WP_REST_Controller
             $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
             if (is_array($meta) && !empty($meta)) {
                 if ($meta["data"]['materials'][$material_id]) {
+                    if (count($meta["data"]['materials']) <= 1) {
+                        return rest_ensure_response(['success' => false, "message" => __("At least one material must remain", "all-signs-options-pro")]);
+                    }
+
+                    $target = $meta["data"]['materials'][$material_id];
+                    $target_active = isset($target['active']) ? (bool)$target['active'] : true;
+                    $active_remaining = 0;
+                    foreach ($meta["data"]['materials'] as $idx => $mat) {
+                        if ($idx === (int) $material_id) {
+                            continue;
+                        }
+                        $is_active = isset($mat['active']) ? (bool)$mat['active'] : true;
+                        if ($is_active) {
+                            $active_remaining++;
+                        }
+                    }
+                    if ($target_active && $active_remaining < 1) {
+                        return rest_ensure_response(['success' => false, "message" => __("At least one active material must remain", "all-signs-options-pro")]);
+                    }
                     array_splice($meta["data"]['materials'], $material_id, 1);
                     update_post_meta($config_id, "asowp-configs-meta", $meta);
                     return rest_ensure_response(['success' => true, "message" => __("Component successfully deleted", "all-signs-options-pro")]);

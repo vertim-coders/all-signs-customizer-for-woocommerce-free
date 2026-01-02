@@ -9,7 +9,7 @@
                         </g>
                     </svg>
                     <div class="asowp-text-[14px]">
-                        Add new option
+                        {{ __("Add new option", "all-signs-options-pro") }}
                     </div>
                 </button>
             </div>
@@ -18,22 +18,22 @@
                     <thead class="asowp-text-[14px] asowp-bg-[#f0f0f1]">
                         <tr class="">
                             <th scope="col" class="asowp-p-4 asowp-px-8 asowp-font-semibold">
-                                Title 
+                                {{ __("Title", "all-signs-options-pro") }} 
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-semibold">
-                                Icon
+                                {{ __("Icon", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-semibold">
-                                Background Image
+                                {{ __("Background Image", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-semibold">
-                                Additional Price
+                                {{__("Additional Price", "all-signs-options-pro")}}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-semibold">
-                                Default
+                                {{ __("Default", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-semibold">
-                                Action
+                                {{ __("Action", "all-signs-options-pro") }}
                             </th>
                             
                         </tr>
@@ -99,32 +99,32 @@
                             <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
 
-                        <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Back", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
             </div>
         </div>
         <div class="asowp-space-y-1 asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]" v-if="isNewOptions">
             <div class="asowp-text-[16px] asowp-font-bold asowp-py-4">
-                Edit options
+                {{ __("Edit options", "all-signs-options-pro") }}
             </div>
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <div class="asowp-py-4 asowp-space-y-6">
                 <div class="asowp-flex asowp-space-x-2 asowp-justify-between">
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Title <span class="asowp-text-red-500">*</span></label>
+                        <label for="" class="asowp-font-normal">{{ __("Title", "all-signs-options-pro") }} <span class="asowp-text-red-500">*</span></label>
                         <input type="text" v-model="option.title" :class="`${emptyLabel?'asowp-field-required':''} asowp-rounded asowp-w-full asowp-h-[35px]`" style="border-radius: 5px !important;">
                     </div>
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Description</label>
+                        <label for="" class="asowp-font-normal">{{ __("Description", "all-signs-options-pro") }}</label>
                         <input type="text" v-model="option.description" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 5px !important;"> 
                     </div>
                 </div>
                 <div class="asowp-flex asowp-space-x-2 asowp-justify-between">
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload icon</label>
+                        <label for="" class="asowp-font-normal">{{ __("Upload icon", "all-signs-options-pro") }}</label>
                         <div class="asowp-flex asowp-space-x-2 asowp-justify-between asowp-rounded-[5px] asowp-border asowp-border-solid asowp-border-[#000] asowp-p-1">
-                            <button @click="selectOptionsIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Icon</button>
+                            <button @click="selectOptionsIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("upload Icon", "all-signs-options-pro") }}</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="option.icon != ''" :src="option.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="option.icon != ''" @click="()=>{option.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -137,9 +137,9 @@
                         
                     </div>
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload Image</label>
+                        <label for="" class="asowp-font-normal">{{ __("Upload Image", "all-signs-options-pro") }}</label>
                         <div class="asowp-flex asowp-space-x-2 asowp-justify-between asowp-rounded-[5px] asowp-border asowp-border-solid asowp-border-[#000] asowp-p-1">
-                            <button @click="selectOptionsPopImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Image</button>
+                            <button @click="selectOptionsPopImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("upload Image", "all-signs-options-pro") }}</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="option.popImg != ''" :src="option.popImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="option.popImg != ''" @click="()=>{option.popImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -151,9 +151,9 @@
                         </div>
                     </div>
                     <!-- <div class="asowp-w-[50%] asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Background / image</label>
+                        <label for="" class="asowp-font-normal">{{ __("Background / image", "all-signs-options-pro") }}</label>
                         <div class="asowp-flex asowp-space-x-2">
-                            <button @click="selectOptionsBackgroundImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload Image</button>
+                            <button @click="selectOptionsBackgroundImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("upload Image", "all-signs-options-pro") }}</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="option.image != ''" :src="option.image" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="option.image != ''" @click="()=>{option.image = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -167,7 +167,7 @@
                 </div>
                 <div class="asowp-flex asowp-space-x-2">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude Material Colors</label>
+                        <label for="" class="asowp-text-[16px] asowp-font-normal">{{ __("Exclude Material Colors", "all-signs-options-pro") }}</label>
                         <Multiselect
                                 v-model="option.excludeColors"
                                 placeholder="Select colors"
@@ -263,6 +263,7 @@ import router from '@/admin/router'
 import { useRoute } from 'vue-router';
 import toastMessage from "@/admin/utils/functions";
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute()
 const configID = ref(route.params.configId);
 const config = route.params.config;
@@ -496,9 +497,9 @@ const selectOptionsIcon = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Options Icon",
+            title: __("Select Options Icon", "all-signs-options-pro"),
             button: {
-                text: "Select Icon"
+                text: __("Select Icon", "all-signs-options-pro")
             },
             multiple: false
         }
@@ -523,9 +524,9 @@ const selectOptionsPopImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Options Example image",
+            title: __("Select Options Example image", "all-signs-options-pro"),
             button: {
-                text: "Select Example image"
+                text: __("Select Example image", "all-signs-options-pro")
             },
             multiple: false
         }
@@ -550,9 +551,9 @@ const selectOptionsBackgroundImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Options background image",
+            title: __("Select Options background image", "all-signs-options-pro"),
             button: {
-                text: "Select background image"
+                text: __("Select background image", "all-signs-options-pro")
             },
             multiple: false
         }

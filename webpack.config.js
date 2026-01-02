@@ -74,7 +74,12 @@ module.exports = {
     path: exportPath,
     filename: appName,
   },
-
+  externals: {
+    jquery: 'jQuery',
+    underscore: '_',
+    backbone: 'Backbone',
+    '@wordpress/i18n': 'wp.i18n'
+  },
   resolve: {
     fallback: {
       // "fs": require.resolve("browserify-fs"),

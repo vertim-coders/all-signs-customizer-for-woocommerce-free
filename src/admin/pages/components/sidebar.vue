@@ -10,7 +10,7 @@
                     </svg>
 
                     <div :class="`asowp-text-[12px] asowp-text-center asowp-px-2`" >
-                        Manage Font
+                        {{ labels.manageFonts }}
                     </div>
                 </button>
             </div>
@@ -24,7 +24,7 @@
                     </svg>
 
                     <div :class="`asowp-text-[12px] asowp-text-center asowp-px-2`">
-                        Manage Cliparts
+                        {{ labels.manageCliparts }}
                     </div>
                 </button>
                 
@@ -42,7 +42,7 @@
 
 
                     <div class="asowp-text-[12px]">
-                        Configuration
+                        {{ labels.configurations }}
                     </div>
                 </button>
                 
@@ -57,7 +57,7 @@
 
 
                     <div class="asowp-text-[12px]">
-                        Templates
+                        {{ labels.templates }}
                     </div>
                 </button>
                 
@@ -78,7 +78,7 @@
 
 
                     <div class="asowp-text-[12px]">
-                        Global Settings
+                        {{ labels.globalSettings }}
                     </div>
                 </button>
                 
@@ -89,4 +89,12 @@
 
 <script setup>
 
+import { __ } from "@wordpress/i18n";
+const labels = {
+  manageFonts: __('Manage Fonts', "all-signs-options-pro"),
+  manageCliparts: __('Manage Cliparts', "all-signs-options-pro"),
+  configurations: __('Configurations', "all-signs-options-pro"),
+  templates: __('Templates', "all-signs-options-pro"),
+  globalSettings: __('Global Settings', "all-signs-options-pro"),
+};
 </script>

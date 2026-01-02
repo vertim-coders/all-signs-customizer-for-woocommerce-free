@@ -48,6 +48,7 @@ const api = {
     const url =
       asowp_api_url + "/stats/home" + (query ? `?${query}` : "");
     const res = await axios.get(url);
+    console.log("response rt: ", res)
     return res.data;
   },
 

@@ -3,17 +3,17 @@
         <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
             <div class="">
                 <button @click="()=>{showStep = 'product'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'product' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Product
+                    {{ __("Product", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep = 'output'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'output' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Output
+                    {{ __("Output", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep = 'mobiles-options'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'mobiles-options' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Mobile options
+                    {{ __("Mobile options", "all-signs-options-pro") }}
                 </button>
             </div>
         </div>
@@ -35,6 +35,7 @@ import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import api from '@/admin/Api/api';
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const showStep = ref('product');
 const isFetching = ref(false);
 const generals = ref({});

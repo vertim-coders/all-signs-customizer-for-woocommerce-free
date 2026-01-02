@@ -1,64 +1,70 @@
+import { __ } from "@wordpress/i18n";
+
+const asowpSiteUrl =
+  typeof window !== "undefined" && window.asowp_data?.assets_url
+    ? decodeURIComponent(window.asowp_data.assets_url)
+    : "";
+
 const signageOption = {
-  name: "Signage",
+  name: __("Signage", 'all-signs-options-pro'),
   type: "signage",
   productCategories: [
     {
-      name: "Signboard",
+      name: __("Signboard", 'all-signs-options-pro'),
       type: "signboard",
-      description:
-        "Rigid panels (PVC, Alu, Wood, Acrylic) for permanent display.",
+      description: __("Rigid panels (PVC, Alu, Wood, Acrylic) for permanent display.", 'all-signs-options-pro'),
       demoLink:
         "https://demos.signsdesigner.us/aso-templates-page/asowp-templates/196/#/",
       productGroups: [
         {
-          name: "Business & Office",
+          name: __("Business & Office", 'all-signs-options-pro'),
           products: [
             {
-              name: "Door signs",
+              name: __("Door signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/door_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/door_signs/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/door_signs/image_3.webp",
               ],
-              description: "Office doors, meeting rooms, name plates.",
+              description: __("Office doors, meeting rooms, name plates.", 'all-signs-options-pro'),
               type: "door-sign",
               demoData: "",
               materialType: "simple",
             },
             {
-              name: "Name badges",
+              name: __("Name badges", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_3.webp",
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_4.webp",
               ],
-              description: "Name tags for staff and reception.",
+              description: __("Name tags for staff and reception.", 'all-signs-options-pro'),
               type: "name-badge",
               demoData: "",
               materialType: "simple",
               // materialType: "all"
             },
             {
-              name: "Acrylic signs",
+              name: __("Acrylic signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/acrylic_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/acrylic_signs/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/acrylic_signs/image_3.webp",
                 "https://signsdesigner.us/app/aso_products_preview/acrylic_signs/image_4.webp",
               ],
-              description: "Premium plexiglass plates for offices.",
+              description: __("Premium plexiglass plates for offices.", 'all-signs-options-pro'),
               type: "acrylic-sign",
               demoData: "",
               materialType: "simple",
             },
             {
-              name: "Double-sided signs",
+              name: __("Double-sided signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/double_sided_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/double_sided_signs/image_2.webp",
               ],
-              description: "Hanging or projecting double-sided panels.",
+              description: __("Hanging or projecting double-sided panels.", 'all-signs-options-pro'),
               type: "double-sided-sign",
               demoData: "",
               materialType: "simple",
@@ -66,44 +72,57 @@ const signageOption = {
           ],
         },
         {
-          name: "Retail & Outdoor",
+          name: __("Retail & Outdoor", 'all-signs-options-pro'),
           products: [
             {
-              name: "Wood signs",
+              name: __("Wood signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/wood_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/wood_signs/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/wood_signs/image_3.webp",
               ],
-              description: "Decorative wood boards for cafés & shops.",
+              description: __("Decorative wood boards for cafés & shops.", 'all-signs-options-pro'),
               type: "wood-sign",
               demoData: "",
               materialType: "simple",
             },
             {
-              name: "Magnetic signs",
+              name: __("Magnetic signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/magnetic_signs/image_1.webp",
               ],
-              description: "Removable magnetic panels for vehicles.",
+              description: __("Removable and durable adhesive graphics.", 'all-signs-options-pro'),
               type: "magnetic-sign",
               demoData: "",
               materialType: "simple",
             },
             {
-              name: "House signs",
+              name: __("House signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/house_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/house_signs/image_2.webp",
+                "https://signsdesigner.us/app/aso_products_preview/house_signs/image_3.webp",
+                "https://signsdesigner.us/app/aso_products_preview/house_signs/image_4.webp",
               ],
-              description: "Outdoor house numbers and name plaques.",
+              description: __("Address plates and house numbers.", 'all-signs-options-pro'),
               type: "house-sign",
               demoData: "",
               materialType: "simple",
-              // materialType: "all",
             },
             {
-              name: "Plastic signs",
+              name: __("A-boards", 'all-signs-options-pro'),
+              image: [
+                "https://signsdesigner.us/app/aso_products_preview/aboards/image_1.webp",
+                "https://signsdesigner.us/app/aso_products_preview/aboards/image_2.webp",
+                "https://signsdesigner.us/app/aso_products_preview/aboards/image_3.webp",
+              ],
+              description: __("Retractable banners for trade shows and events.", 'all-signs-options-pro'),
+              type: "aboard",
+              demoData: "",
+              materialType: "simple",
+            },
+            {
+              name: __("Plastic signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/plastic_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/plastic_signs/image_2.webp",
@@ -111,7 +130,7 @@ const signageOption = {
                 "https://signsdesigner.us/app/aso_products_preview/plastic_signs/image_4.webp",
                 "https://signsdesigner.us/app/aso_products_preview/plastic_signs/image_5.webp",
               ],
-              description: "PVC / Eco board signs for shops and events.",
+              description: __("Pre-cut letters and designs for walls and windows.", 'all-signs-options-pro'),
               type: "gate-sign",
               demoData: "",
               materialType: "simple",
@@ -120,48 +139,60 @@ const signageOption = {
           ],
         },
         {
-          name: "Specialized & Industrial",
+          name: __("Specialized & Industrial", 'all-signs-options-pro'),
           products: [
             {
-              name: "Brass signs",
+              name: __("Brass signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/brass_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/brass_signs/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/brass_signs/image_3.webp",
               ],
-              description: "Engraved brass plates for professionals.",
-              type: "plastic-sign",
+              description: __("Elegant engraved brass plates.", 'all-signs-options-pro'),
+              type: "brass-sign",
               demoData: "",
-              materialType: "advance",
+              materialType: "simple",
             },
             {
-              name: "Stainless steel signs",
+              name: __("Aluminum signs", 'all-signs-options-pro'),
+              image: [
+                "https://signsdesigner.us/app/aso_products_preview/aluminum_signs/image_1.webp",
+                "https://signsdesigner.us/app/aso_products_preview/aluminum_signs/image_2.webp",
+                "https://signsdesigner.us/app/aso_products_preview/aluminum_signs/image_3.webp",
+              ],
+              description: __("Durable metal plates for industrial use.", 'all-signs-options-pro'),
+              type: "aluminum-sign",
+              demoData: "",
+              materialType: "simple",
+            },
+            {
+              name: __("Stainless steel signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/stainless_steel_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/stainless_steel_signs/image_2.webp",
               ],
-              description: "Durable plates for factories & technical areas.",
-              type: "warning-sign",
+              description: __("Durable graphics for floors and walls.", 'all-signs-options-pro'),
+              type: "stainless-steel-sign",
               demoData: "",
               materialType: "advance",
               // materialType: "all"
             },
             {
-              name: "Labels and plates",
+              name: __("Labels and plates", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_3.webp",
                 "https://signsdesigner.us/app/aso_products_preview/name_badges/image_4.webp",
               ],
-              description: "Small information or identification plates.",
+              description: __("Small information or identification plates.", 'all-signs-options-pro'),
               type: "brass-sign",
               demoData: "",
               materialType: "simple",
             },
             // {
-            //   name: "Cable tags",
-            //   description: "Technical labels and cable identification tags.",
+            //   name: __("Cable tags", 'all-signs-options-pro'),
+            //   description: __("Technical labels and cable identification tags.", 'all-signs-options-pro'),
             //   type: "reflective-sign",
             //   demoData: "",//   materialType: "advanced"
             // }
@@ -170,45 +201,44 @@ const signageOption = {
       ],
     },
     {
-      name: "Banners",
+      name: __("Banners", 'all-signs-options-pro'),
       type: "banner",
-      description: "Flexible large-format printing for events and promos.",
+      description: __("Flexible large-format printing for events and promos.", 'all-signs-options-pro'),
       demoLink:
         "https://demos.signsdesigner.us/aso-templates-page/asowp-templates/196/#/",
       productGroups: [
         {
-          name: "Standard banners",
+          name: __("Standard banners", 'all-signs-options-pro'),
           products: [
             {
-              name: "Banners signs",
+              name: __("Banners signs", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/banners_signs/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/banners_signs/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/banners_signs/image_3.webp",
                 "https://signsdesigner.us/app/aso_products_preview/banners_signs/image_4.webp",
               ],
-              description: "Standard promotional banners (indoor / outdoor).",
+              description: __("Standard promotional banners (indoor / outdoor).", 'all-signs-options-pro'),
               type: "roll-up",
               demoData: "",
               materialType: "simple",
             },
             // {
-            //   name: "Mesh / Facric banners",
-            //   description: "Wind-proof or textile banners for façades and events.",
+            //   name: __("Mesh / Fabric banners", 'all-signs-options-pro'),
+            //   description: __("Wind-proof or textile banners for façades and events.", 'all-signs-options-pro'),
             //   type: "roll-up",
             //   demoData: "",
             //   materialType: "simple"
             // },
             {
-              name: "Posters",
+              name: __("Posters", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/posters/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/posters/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/posters/image_3.webp",
                 "https://signsdesigner.us/app/aso_products_preview/posters/image_4.webp",
               ],
-              description:
-                "Large format posters used like lightweight banners.",
+              description: __("Large format posters used like lightweight banners.", 'all-signs-options-pro'),
               type: "roll-up",
               demoData: "",
               materialType: "simple",
@@ -216,24 +246,24 @@ const signageOption = {
           ],
         },
         {
-          name: "With structure",
+          name: __("With structure", 'all-signs-options-pro'),
           products: [
             {
-              name: "Pull-up banners",
+              name: __("Pull-up banners", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/pull-up_banners/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/pull-up_banners/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/pull-up_banners/image_3.webp",
               ],
-              description: "Roll-up banners with cassette and stand.",
+              description: __("Custom-shaped stickers with precision cutting.", 'all-signs-options-pro'),
               type: "vinyl-banner",
               demoData: "",
               materialType: "simple",
               // materialType: "all",
             },
             // {
-            //   name: "X-banner",
-            //   description: "X-frame banners for events and exhibitions.",
+            //   name: __("X-banner", 'all-signs-options-pro'),
+            //   description: __("X-frame banners for events and exhibitions.", 'all-signs-options-pro'),
             //   type: "poster",
             //   demoData: "",
             //   materialType: "simple"
@@ -243,33 +273,33 @@ const signageOption = {
       ],
     },
     {
-      name: "Stickers",
+      name: __("Stickers", 'all-signs-options-pro'),
       type: "sticker",
-      description: "Adhesive vinyls and decals for smooth surfaces.",
+      description: __("Adhesive vinyls and decals for smooth surfaces.", 'all-signs-options-pro'),
       demoLink:
         "https://demos.signsdesigner.us/aso-templates-page/asowp-templates/196/#/",
       productGroups: [
         {
-          name: "General stickers",
+          name: __("General stickers", 'all-signs-options-pro'),
           products: [
             {
-              name: "Vinyl lettering",
+              name: __("Vinyl lettering", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/vinyl_lettering/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/vinyl_lettering/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/vinyl_lettering/image_3.webp",
               ],
-              description: "Cut vinyl text for windows, doors, or walls",
+              description: __("Vinyl banners for indoor and outdoor use.", 'all-signs-options-pro'),
               type: "vinyl-lettering",
               demoData: "",
               materialType: "simple",
             },
             {
-              name: "Decals",
+              name: __("Decals", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/decals/image_1.webp",
               ],
-              description: "Printed decals for logos, products, or branding.",
+              description: __("Printed decals for logos, products, or branding.", 'all-signs-options-pro'),
               type: "decal",
               demoData: "",
               materialType: "simple",
@@ -277,41 +307,40 @@ const signageOption = {
           ],
         },
         {
-          name: "Cut & special use",
+          name: __("Cut & special use", 'all-signs-options-pro'),
           products: [
             {
-              name: "Contour-cut / die-cut",
+              name: __("Contour-cut / die-cut", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/contour-cut/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/contour-cut/image_2.webp",
                 "https://signsdesigner.us/app/aso_products_preview/contour-cut/image_3.webp",
               ],
-              description: "Stickers following the exact shape of the design.",
+              description: __("Stickers following the exact shape of the design.", 'all-signs-options-pro'),
               type: "label",
               demoData: "",
               materialType: "simple",
             },
             // {
-            //   name: "Sheet of stickers",
-            //   description: "Multiple designs on a single sticker sheet.",
+            //   name: __("Sheet of stickers", 'all-signs-options-pro'),
+            //   description: __("Multiple designs on a single sticker sheet.", 'all-signs-options-pro'),
             //   type: "cable-label",
             //   demoData: "",
             //   materialType: "simple"
             // },
             // {
-            //   name: "Transparent / decal sticker",
-            //   description: "Clear stickers for glass, bottles, or packaging.",
+            //   name: __("Transparent / decal sticker", 'all-signs-options-pro'),
+            //   description: __("Clear stickers for glass, bottles, or packaging.", 'all-signs-options-pro'),
             //   type: "cable-label",
             //   demoData: "",
             //   materialType: "simple"
             // },
             {
-              name: "Floor / wall stickers",
+              name: __("Floor / wall stickers", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/floor_decals/image_1.webp",
               ],
-              description:
-                "Non-slip or large surface stickers for floors and walls.",
+              description: __("Non-slip or large surface stickers for floors and walls.", 'all-signs-options-pro'),
               type: "cable-label",
               demoData: "",
               materialType: "simple",
@@ -326,9 +355,8 @@ const signageOption = {
 const configurationDemoData = [
   {
     id: 240,
-    name: "Contour-cut / die-cut",
-    description:
-      "Our contour-cut signs offer a stylish and professional appearance, making them an ideal choice for entrances, receptions, offices, restaurants, hotels, and more. They can also be used as decorative elements in homes.",
+    name: __("Contour-cut / die-cut", 'all-signs-options-pro'),
+    description: __("Our contour-cut signs offer a stylish and professional appearance, making them an ideal choice for entrances, receptions, offices, restaurants, hotels, and more. They can also be used as decorative elements in homes.", 'all-signs-options-pro'),
     icon: "",
     popupImg: "",
     data: {
@@ -376,82 +404,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -748,7 +776,7 @@ const configurationDemoData = [
       materials: [
         {
           icon: "https://signsdesigner.us/app/demos/plastic-signs/engraving.svg",
-          name: "Standard",
+          name: __("Standard", 'all-signs-options-pro'),
           type: "simple",
           popImg:
             "<div><h4>Engraving / Foam PVC / Solid PET (PVC free)</h4><img src='https://cdn.skyltmax.se/vite/assets/laser-6173c70e.png' alt='' class='mb-4'><h5>Engraving</h5><p class='paragraph-sm'>Text and motifs are engraved by laser onto a durable multi-layer plastic (acrylic). The engraving ensures that the colour of the bottom plastic layer is visible and forms the text. Engraved signs are available in thicknesses of 0.8 or 1.6 mm.</p><img src='https://cdn.skyltmax.se/vite/assets/print-15b7b58d.png' alt='' class='mb-4'><h5>Foam PVC</h5><p class='paragraph-sm'>Text and motifs are created using colour printing in a UV printer. The material is suitable for indoor use for trade fairs, name badges, information signs, etc. Our foam PVC plastic signs are 3 mm thick and have a minimum size of 70x30 mm and a maximum size of 1000x1000 mm. In other words, a slightly smaller maximum size than solid PET plastic signs.</p><img src='https://cdn.skyltmax.se/vite/assets/solid_plastic-47f03aac.jpg' alt='' class='mb-4'><h5>Solid PET (PVC free)</h5><p class='paragraph-sm'>Text and motifs are created using colour printing in a UV printer on recyclable material. The material is for both indoor and outdoor use. A strong, lightweight, durable and recyclable material. It is often used for house number signs, pram signs, hotel signs, etc. Our solid PET plastic signs are 2 mm thick and have a minimum size of 70x30 mm and a maximum size of 2000x1200 mm.</p></div>",
@@ -926,11 +954,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -943,11 +971,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -960,11 +988,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                   },
                   pattern: {
@@ -977,11 +1005,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                   },
                   pattern: {
@@ -994,11 +1022,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                   },
                   pattern: {
@@ -1011,11 +1039,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f575b",
                   },
                   pattern: {
@@ -1028,12 +1056,12 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     codeHex: "#e15616",
                     sameForBorder: true,
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                   },
                   pattern: {
                     active: false,
@@ -1045,12 +1073,12 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     codeHex: "#ffffff",
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                   },
                   pattern: {
                     active: false,
@@ -1062,11 +1090,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     codeHex: "#b3b3b3",
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     sameForBorder: true,
                   },
                   pattern: {
@@ -1079,11 +1107,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: false,
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#dda440",
                   },
                   pattern: {
@@ -1143,9 +1171,8 @@ const configurationDemoData = [
   },
   {
     id: 238,
-    name: "Decals",
-    description:
-      "Decals, often referred to as stickers, serve a multitude of purposes. We print decals on high-quality vinyl that boasts UV protection, weather resistance, and impressive durability.",
+    name: __("Decals", 'all-signs-options-pro'),
+    description: __("Decals, often referred to as stickers, serve a multitude of purposes. We print decals on high-quality vinyl that boasts UV protection, weather resistance, and impressive durability.", 'all-signs-options-pro'),
     icon: "",
     popupImg: "",
     data: {
@@ -1193,82 +1220,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -1565,7 +1592,7 @@ const configurationDemoData = [
       materials: [
         {
           icon: "",
-          name: "Standard",
+          name: __("Standard", 'all-signs-options-pro'),
           type: "simple",
           popImg: "",
           description: "",
@@ -1881,7 +1908,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -1898,7 +1925,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -1915,7 +1942,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -1932,7 +1959,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -1949,7 +1976,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -1966,7 +1993,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -1983,7 +2010,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2000,7 +2027,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2017,7 +2044,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2034,7 +2061,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2051,7 +2078,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2068,7 +2095,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2085,7 +2112,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -2171,79 +2198,79 @@ const configurationDemoData = [
                 borderColorsLabel: "Borders Colors",
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#e9a956",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#e9e9e9",
                     prevImg: "",
                     additionalPrice: 0,
@@ -2293,7 +2320,7 @@ const configurationDemoData = [
                   {
                     title: "Standard",
                     description: "",
-                    icon: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/demos/ic_none.svg",
+                    icon: asowpSiteUrl + "/images/demos/ic_none.svg",
                     image: "",
                     popupImg: "",
                     excludeColors: [2, 13, 14],
@@ -2322,9 +2349,8 @@ const configurationDemoData = [
   },
   {
     id: 237,
-    name: "Vinyl lettering",
-    description:
-      "Vinyl lettering is precisely cut text and images in vinyl, making it an excellent choice for those who prefer a clean, background-free appearance.",
+    name: __("Vinyl lettering", 'all-signs-options-pro'),
+    description: __("Vinyl lettering is precisely cut text and images in vinyl, making it an excellent choice for those who prefer a clean, background-free appearance.", 'all-signs-options-pro'),
     icon: "",
     popupImg: "",
     data: {
@@ -2372,82 +2398,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -2744,7 +2770,7 @@ const configurationDemoData = [
       materials: [
         {
           icon: "https://signsdesigner.us/app/demos/plastic-signs/engraving.svg",
-          name: "Standard",
+          name: __("Standard", 'all-signs-options-pro'),
           type: "simple",
           popImg:
             "<div><h4>Engraving / Foam PVC / Solid PET (PVC free)</h4><img src='https://cdn.skyltmax.se/vite/assets/laser-6173c70e.png' alt='' class='mb-4'><h5>Engraving</h5><p class='paragraph-sm'>Text and motifs are engraved by laser onto a durable multi-layer plastic (acrylic). The engraving ensures that the colour of the bottom plastic layer is visible and forms the text. Engraved signs are available in thicknesses of 0.8 or 1.6 mm.</p><img src='https://cdn.skyltmax.se/vite/assets/print-15b7b58d.png' alt='' class='mb-4'><h5>Foam PVC</h5><p class='paragraph-sm'>Text and motifs are created using colour printing in a UV printer. The material is suitable for indoor use for trade fairs, name badges, information signs, etc. Our foam PVC plastic signs are 3 mm thick and have a minimum size of 70x30 mm and a maximum size of 1000x1000 mm. In other words, a slightly smaller maximum size than solid PET plastic signs.</p><img src='https://cdn.skyltmax.se/vite/assets/solid_plastic-47f03aac.jpg' alt='' class='mb-4'><h5>Solid PET (PVC free)</h5><p class='paragraph-sm'>Text and motifs are created using colour printing in a UV printer on recyclable material. The material is for both indoor and outdoor use. A strong, lightweight, durable and recyclable material. It is often used for house number signs, pram signs, hotel signs, etc. Our solid PET plastic signs are 2 mm thick and have a minimum size of 70x30 mm and a maximum size of 2000x1200 mm.</p></div>",
@@ -2922,11 +2948,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -2939,11 +2965,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -2956,11 +2982,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                   },
                   pattern: {
@@ -2973,11 +2999,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                   },
                   pattern: {
@@ -2990,11 +3016,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                   },
                   pattern: {
@@ -3007,11 +3033,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f575b",
                   },
                   pattern: {
@@ -3024,12 +3050,12 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     codeHex: "#e15616",
                     sameForBorder: true,
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                   },
                   pattern: {
                     active: false,
@@ -3041,12 +3067,12 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     codeHex: "#ffffff",
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                   },
                   pattern: {
                     active: false,
@@ -3058,11 +3084,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     codeHex: "#b3b3b3",
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     sameForBorder: true,
                   },
                   pattern: {
@@ -3075,11 +3101,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: false,
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#dda440",
                   },
                   pattern: {
@@ -3159,9 +3185,8 @@ const configurationDemoData = [
   },
   {
     id: 236,
-    name: "Pull-up banners",
-    description:
-      "Our roll-ups are designed for hassle-free assembly and transportation, coming complete with a convenient carry case",
+    name: __("Pull-up banners", 'all-signs-options-pro'),
+    description: __("Our roll-ups are designed for hassle-free assembly and transportation, coming complete with a convenient carry case", 'all-signs-options-pro'),
     icon: "",
     popupImg: "",
     data: {
@@ -3209,82 +3234,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -3581,7 +3606,7 @@ const configurationDemoData = [
       materials: [
         {
           icon: "https://signsdesigner.us/app/demos/roll-up-signs/standard.svg",
-          name: "Standard",
+          name: __("Standard", 'all-signs-options-pro'),
           type: "simple",
           popImg: "",
           description:
@@ -3631,7 +3656,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3648,7 +3673,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3665,7 +3690,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3682,7 +3707,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3699,7 +3724,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3716,7 +3741,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3733,7 +3758,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3750,7 +3775,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3767,7 +3792,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3784,7 +3809,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3801,7 +3826,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -3829,67 +3854,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -3943,7 +3968,7 @@ const configurationDemoData = [
         },
         {
           icon: "https://signsdesigner.us/app/demos/roll-up-signs/eco.svg",
-          name: "ECO",
+          name: __("ECO", 'all-signs-options-pro'),
           type: "simple",
           popImg: "",
           description:
@@ -3993,7 +4018,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4010,7 +4035,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4027,7 +4052,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4044,7 +4069,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4061,7 +4086,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4078,7 +4103,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4095,7 +4120,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4112,7 +4137,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4129,7 +4154,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4146,7 +4171,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4163,7 +4188,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -4191,67 +4216,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -4359,82 +4384,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -4713,7 +4738,7 @@ const configurationDemoData = [
       additionalOptions: [],
       materials: [
         {
-          name: "Standard",
+          name: __("Standard", 'all-signs-options-pro'),
           description: "",
           icon: "",
           popImg: "",
@@ -4850,67 +4875,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#1c4fa0",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#d81313",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#298d1c",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#f0e919",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#8a8a8a",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#ff70c3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#5c1ea9",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#eb5505",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#ad5105",
                     additionalPrice: 0,
                     prevImg: "",
@@ -4978,7 +5003,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -4993,7 +5018,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5008,7 +5033,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5023,7 +5048,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5038,7 +5063,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5053,7 +5078,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5068,7 +5093,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5083,7 +5108,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5098,7 +5123,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5113,7 +5138,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5128,7 +5153,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5202,82 +5227,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -5556,7 +5581,7 @@ const configurationDemoData = [
       additionalOptions: [],
       materials: [
         {
-          name: "Standard",
+          name: __("Standard", 'all-signs-options-pro'),
           description: "",
           icon: "",
           popImg: "",
@@ -5717,67 +5742,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#1c4fa0",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#d81313",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#298d1c",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#f0e919",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#8a8a8a",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#ff70c3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#5c1ea9",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#eb5505",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#ad5105",
                     additionalPrice: 0,
                     prevImg: "",
@@ -5839,7 +5864,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5854,7 +5879,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5869,7 +5894,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5884,7 +5909,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5899,7 +5924,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5914,7 +5939,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5929,7 +5954,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5944,7 +5969,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5959,7 +5984,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5974,7 +5999,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -5989,7 +6014,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6169,67 +6194,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#1c4fa0",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#d81313",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#298d1c",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#f0e919",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#8a8a8a",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#ff70c3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#5c1ea9",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#eb5505",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#ad5105",
                     additionalPrice: 0,
                     prevImg: "",
@@ -6291,7 +6316,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6306,7 +6331,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6321,7 +6346,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6336,7 +6361,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6351,7 +6376,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6366,7 +6391,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6381,7 +6406,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6396,7 +6421,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6411,7 +6436,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6426,7 +6451,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6441,7 +6466,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -6618,82 +6643,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -7006,13 +7031,11 @@ const configurationDemoData = [
                   name: "London",
                   description: "Chrome-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/london1-prev.png",
+                  image: asowpSiteUrl + "/images/london1-prev.png",
                   color: {
                     name: "London",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/london1-prev.png",
+                    prevImg: asowpSiteUrl + "/images/london1-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7032,13 +7055,11 @@ const configurationDemoData = [
                   name: "London",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/london2-prev.png",
+                  image: asowpSiteUrl + "/images/london2-prev.png",
                   color: {
                     name: "London",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/london2-prev.png",
+                    prevImg: asowpSiteUrl + "/images/london2-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7058,13 +7079,11 @@ const configurationDemoData = [
                   name: "London",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/london3.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/london3-prev.png",
+                  image: asowpSiteUrl + "/images/london3-prev.png",
                   color: {
                     name: "London",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/london3-prev.png",
+                    prevImg: asowpSiteUrl + "/images/london3-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7084,13 +7103,11 @@ const configurationDemoData = [
                   name: "Oslo",
                   description: "Matte brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/oslo.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/oslo-prev.png",
+                  image: asowpSiteUrl + "/images/oslo-prev.png",
                   color: {
                     name: "Oslo",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/oslo-prev.png",
+                    prevImg: asowpSiteUrl + "/images/oslo-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7110,13 +7127,11 @@ const configurationDemoData = [
                   name: "Paris",
                   description: "Matte brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/paris1-prev.png",
+                  image: asowpSiteUrl + "/images/paris1-prev.png",
                   color: {
                     name: "Paris",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/paris1-prev.png",
+                    prevImg: asowpSiteUrl + "/images/paris1-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7136,13 +7151,11 @@ const configurationDemoData = [
                   name: "Paris",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/paris2-prev.png",
+                  image: asowpSiteUrl + "/images/paris2-prev.png",
                   color: {
                     name: "Paris",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/paris2-prev.png",
+                    prevImg: asowpSiteUrl + "/images/paris2-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7162,13 +7175,11 @@ const configurationDemoData = [
                   name: "Paris",
                   description: "Black/oxide brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/paris3.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/paris3-prev.png",
+                  image: asowpSiteUrl + "/images/paris3-prev.png",
                   color: {
                     name: "Paris",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/paris3-prev.png",
+                    prevImg: asowpSiteUrl + "/images/paris3-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 0,
@@ -7188,13 +7199,11 @@ const configurationDemoData = [
                   name: "Berlin",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/berlin1-prev.png",
+                  image: asowpSiteUrl + "/images/berlin1-prev.png",
                   color: {
                     name: "Berlin",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/berlin1-prev.png",
+                    prevImg: asowpSiteUrl + "/images/berlin1-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7214,13 +7223,11 @@ const configurationDemoData = [
                   name: "Berlin",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/berlin2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/berlin2-prev.png",
+                  image: asowpSiteUrl + "/images/berlin2-prev.png",
                   color: {
                     name: "Berlin",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/berlin2-prev.png",
+                    prevImg: asowpSiteUrl + "/images/berlin2-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7240,13 +7247,11 @@ const configurationDemoData = [
                   name: "Copenhagen",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/copenhagen.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/copenhagen-prev.png",
+                  image: asowpSiteUrl + "/images/copenhagen-prev.png",
                   color: {
                     name: "Copenhagen",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/copenhagen-prev.png",
+                    prevImg: asowpSiteUrl + "/images/copenhagen-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7266,13 +7271,11 @@ const configurationDemoData = [
                   name: "Athens",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/athens.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/athens-prev.png",
+                  image: asowpSiteUrl + "/images/athens-prev.png",
                   color: {
                     name: "Athens",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/athens-prev.png",
+                    prevImg: asowpSiteUrl + "/images/athens-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7292,13 +7295,11 @@ const configurationDemoData = [
                   name: "Amsterdam",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/amsterdam.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/amsterdam-prev.png",
+                  image: asowpSiteUrl + "/images/amsterdam-prev.png",
                   color: {
                     name: "Amsterdam",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/amsterdam-prev.png",
+                    prevImg: asowpSiteUrl + "/images/amsterdam-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7318,13 +7319,11 @@ const configurationDemoData = [
                   name: "Tallinn",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/tallinn.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/tallinn-prev.png",
+                  image: asowpSiteUrl + "/images/tallinn-prev.png",
                   color: {
                     name: "Tallinn",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/tallinn-prev.png",
+                    prevImg: asowpSiteUrl + "/images/tallinn-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7344,13 +7343,11 @@ const configurationDemoData = [
                   name: "Rome",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/rome1-prev.png",
+                  image: asowpSiteUrl + "/images/rome1-prev.png",
                   color: {
                     name: "Rome",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/rome1-prev.png",
+                    prevImg: asowpSiteUrl + "/images/rome1-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7370,13 +7367,11 @@ const configurationDemoData = [
                   name: "Rome",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/rome2-prev.png",
+                  image: asowpSiteUrl + "/images/rome2-prev.png",
                   color: {
                     name: "Rome",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/rome2-prev.png",
+                    prevImg: asowpSiteUrl + "/images/rome2-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7396,13 +7391,11 @@ const configurationDemoData = [
                   name: "Rome",
                   description: "Brushed brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/rome3-prev.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/rome3-prev.png",
+                  image: asowpSiteUrl + "/images/rome3-prev.png",
                   color: {
                     name: "Rome",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/rome3-prev.png",
+                    prevImg: asowpSiteUrl + "/images/rome3-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7422,13 +7415,11 @@ const configurationDemoData = [
                   name: "Sydney",
                   description: "Brushed brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/sydney1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/sydney-prev.png",
+                  image: asowpSiteUrl + "/images/sydney-prev.png",
                   color: {
                     name: "Sydney",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/sydney-prev.png",
+                    prevImg: asowpSiteUrl + "/images/sydney-prev.png",
                   },
                   fixingMethods: [2],
                   shapeId: 1,
@@ -7448,13 +7439,11 @@ const configurationDemoData = [
                   name: "Prague",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/prague.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/prague-prev.png",
+                  image: asowpSiteUrl + "/images/prague-prev.png",
                   color: {
                     name: "Prague",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/prague-prev.png",
+                    prevImg: asowpSiteUrl + "/images/prague-prev.png",
                   },
                   fixingMethods: [0, 1],
                   shapeId: 0,
@@ -7474,13 +7463,11 @@ const configurationDemoData = [
                   name: "Dublin",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/dublin.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/dublin-prev.png",
+                  image: asowpSiteUrl + "/images/dublin-prev.png",
                   color: {
                     name: "Dublin",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/dublin-prev.png",
+                    prevImg: asowpSiteUrl + "/images/dublin-prev.png",
                   },
                   fixingMethods: [0, 1],
                   shapeId: 0,
@@ -7500,13 +7487,11 @@ const configurationDemoData = [
                   name: "Lisbon",
                   description: "Shiny brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/lisbon1-prev.png",
+                  image: asowpSiteUrl + "/images/lisbon1-prev.png",
                   color: {
                     name: "Lisbon",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/lisbon1-prev.png",
+                    prevImg: asowpSiteUrl + "/images/lisbon1-prev.png",
                   },
                   fixingMethods: [0, 1],
                   shapeId: 1,
@@ -7526,13 +7511,11 @@ const configurationDemoData = [
                   name: "Lisbon",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/door-signs/lisbon2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/lisbon2-prev.png",
+                  image: asowpSiteUrl + "/images/lisbon2-prev.png",
                   color: {
                     name: "Lisbon",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/lisbon2-prev.png",
+                    prevImg: asowpSiteUrl + "/images/lisbon2-prev.png",
                   },
                   fixingMethods: [0, 1],
                   shapeId: 1,
@@ -7559,13 +7542,11 @@ const configurationDemoData = [
                   name: "Madrid",
                   description: "Brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/madrid1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/laiton-pattern.png",
+                  image: asowpSiteUrl + "/images/laiton-pattern.png",
                   color: {
                     name: "Madrid",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/laiton-pattern.png",
+                    prevImg: asowpSiteUrl + "/images/laiton-pattern.png",
                   },
                   fixingMethods: [0, 1, 2, 3],
                   shapeId: 3,
@@ -7585,13 +7566,11 @@ const configurationDemoData = [
                   name: "Madrid",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/madrid2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/nickel-pattern.png",
+                  image: asowpSiteUrl + "/images/nickel-pattern.png",
                   color: {
                     name: "Madrid",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/nickel-pattern.png",
+                    prevImg: asowpSiteUrl + "/images/nickel-pattern.png",
                   },
                   fixingMethods: [0, 1, 2, 3],
                   shapeId: 3,
@@ -7611,13 +7590,11 @@ const configurationDemoData = [
                   name: "Kiev",
                   description: "Brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/kiev1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/laiton-pattern.png",
+                  image: asowpSiteUrl + "/images/laiton-pattern.png",
                   color: {
                     name: "Kiev",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/laiton-pattern.png",
+                    prevImg: asowpSiteUrl + "/images/laiton-pattern.png",
                   },
                   fixingMethods: [0, 1, 2],
                   shapeId: 0,
@@ -7637,13 +7614,11 @@ const configurationDemoData = [
                   name: "Kiev",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/kiev2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/nickel-pattern.png",
+                  image: asowpSiteUrl + "/images/nickel-pattern.png",
                   color: {
                     name: "Kiev",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/nickel-pattern.png",
+                    prevImg: asowpSiteUrl + "/images/nickel-pattern.png",
                   },
                   fixingMethods: [0, 1, 2],
                   shapeId: 0,
@@ -7663,13 +7638,11 @@ const configurationDemoData = [
                   name: "Budapest",
                   description: "Brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/budapest1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/laiton-pattern.png",
+                  image: asowpSiteUrl + "/images/laiton-pattern.png",
                   color: {
                     name: "Budapest",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/laiton-pattern.png",
+                    prevImg: asowpSiteUrl + "/images/laiton-pattern.png",
                   },
                   fixingMethods: [0, 1, 2],
                   shapeId: 3,
@@ -7689,13 +7662,11 @@ const configurationDemoData = [
                   name: "Budapest",
                   description: "Brushed nickel-plated brass",
                   icon: "https://signsdesigner.us/app/demos/brass_signs/label-tags/budapest2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/nickel-pattern.png",
+                  image: asowpSiteUrl + "/images/nickel-pattern.png",
                   color: {
                     name: "Budapest",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/nickel-pattern.png",
+                    prevImg: asowpSiteUrl + "/images/nickel-pattern.png",
                   },
                   fixingMethods: [0, 1, 2],
                   shapeId: 3,
@@ -7769,82 +7740,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -8309,11 +8280,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -8326,11 +8297,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -8343,11 +8314,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -8360,11 +8331,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8377,11 +8348,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8394,11 +8365,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8411,11 +8382,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8428,11 +8399,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8445,11 +8416,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -8462,11 +8433,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8479,11 +8450,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8496,11 +8467,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8513,11 +8484,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8530,11 +8501,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -8547,11 +8518,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -8568,7 +8539,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -8855,11 +8826,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -8872,11 +8843,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8889,11 +8860,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8906,11 +8877,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8923,11 +8894,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8940,11 +8911,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8957,11 +8928,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -8974,11 +8945,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -8991,11 +8962,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -9008,11 +8979,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -9025,11 +8996,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -9046,7 +9017,7 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -9059,7 +9030,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -9076,7 +9047,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -9418,7 +9389,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -9435,7 +9406,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -9452,7 +9423,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -9469,7 +9440,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -9486,7 +9457,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -9629,82 +9600,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -10018,13 +9989,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel1.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel1-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel1-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel1-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel1-prev.png",
                   },
                   fixingMethods: [5, 2, 15, 18],
                   shapeId: 10,
@@ -10044,13 +10013,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel2.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel2-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel2-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel2-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel2-prev.png",
                   },
                   fixingMethods: [5, 2, 15, 18],
                   shapeId: 0,
@@ -10070,13 +10037,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel3.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel3-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel3-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel3-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel3-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 3,
@@ -10096,13 +10061,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel4.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel4-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel4-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel4-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel4-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 3,
@@ -10122,13 +10085,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel5.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel5-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel5-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel5-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel5-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 0,
@@ -10148,13 +10109,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel6.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel6-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel6-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel6-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel6-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 3,
@@ -10174,13 +10133,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel7.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel7-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel7-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel7-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel7-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 3,
@@ -10200,13 +10157,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel8.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel8-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel8-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel8-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel8-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 3,
@@ -10226,13 +10181,11 @@ const configurationDemoData = [
                   name: "Stainless steel",
                   description: "Stainless steel",
                   icon: "https://signsdesigner.us/app/demos/stainless-steel-signs/stainless_steel9.png",
-                  image:
-                    "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel9-prev.png",
+                  image: asowpSiteUrl + "/images/stainless_steel9-prev.png",
                   color: {
                     name: "Stainless steel",
                     codeHex: "",
-                    prevImg:
-                      "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/stainless_steel9-prev.png",
+                    prevImg: asowpSiteUrl + "/images/stainless_steel9-prev.png",
                   },
                   fixingMethods: [0, 2, 1],
                   shapeId: 3,
@@ -10306,82 +10259,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -10951,7 +10904,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -10968,7 +10921,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -10985,7 +10938,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11002,7 +10955,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11019,7 +10972,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11036,7 +10989,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11053,7 +11006,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11070,7 +11023,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11087,7 +11040,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11104,7 +11057,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11121,7 +11074,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11138,7 +11091,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -11212,79 +11165,79 @@ const configurationDemoData = [
                 borderColorsLabel: "Borders Colors",
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#e9a956",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#e9e9e9",
                     prevImg: "",
                     additionalPrice: 0,
@@ -11341,7 +11294,7 @@ const configurationDemoData = [
                   {
                     title: "Standard",
                     description: "",
-                    icon: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/demos/ic_none.svg",
+                    icon: asowpSiteUrl + "/images/demos/ic_none.svg",
                     image: "",
                     popupImg: "",
                     excludeColors: [2, 13, 14],
@@ -11420,82 +11373,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -12068,7 +12021,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12102,7 +12055,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12119,7 +12072,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12136,7 +12089,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12153,7 +12106,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12170,7 +12123,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12187,7 +12140,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12204,7 +12157,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12221,7 +12174,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12238,7 +12191,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12255,7 +12208,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12272,7 +12225,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12289,7 +12242,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12352,79 +12305,79 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#e9a956",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#e9e9e9",
                     prevImg: "",
                     additionalPrice: 0,
@@ -12757,7 +12710,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12774,7 +12727,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12791,7 +12744,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12808,7 +12761,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12825,7 +12778,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12842,7 +12795,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12859,7 +12812,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12876,7 +12829,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12893,7 +12846,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12910,7 +12863,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12927,7 +12880,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -12990,67 +12943,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -13372,7 +13325,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13389,7 +13342,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13406,7 +13359,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13423,7 +13376,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13440,7 +13393,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13457,7 +13410,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13474,7 +13427,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13491,7 +13444,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13508,7 +13461,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13525,7 +13478,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13542,7 +13495,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -13605,67 +13558,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -13800,82 +13753,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -14462,7 +14415,7 @@ const configurationDemoData = [
                   pattern: {
                     active: true,
                     codeHex: "#FF8C00",
-                    url: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/im_wood-birch.png",
+                    url: asowpSiteUrl + "/images/im_wood-birch.png",
                   },
                   prevImg:
                     "https://signsdesigner.us/app/demos/wood-signs/wood-birch.png",
@@ -14532,67 +14485,67 @@ const configurationDemoData = [
                     additionalPrice: 0,
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -14985,7 +14938,7 @@ const configurationDemoData = [
                   pattern: {
                     active: true,
                     codeHex: "#FF6600",
-                    url: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/im_wood-oak.png",
+                    url: asowpSiteUrl + "/images/im_wood-oak.png",
                   },
                   prevImg:
                     "https://signsdesigner.us/app/demos/wood-signs/wood-oak.png",
@@ -15055,67 +15008,67 @@ const configurationDemoData = [
                     additionalPrice: 0,
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -15271,82 +15224,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -15959,7 +15912,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -15993,7 +15946,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16010,7 +15963,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16027,7 +15980,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16044,7 +15997,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16061,7 +16014,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16078,7 +16031,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16095,7 +16048,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16112,7 +16065,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16129,7 +16082,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16146,7 +16099,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16163,7 +16116,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16180,7 +16133,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -16254,79 +16207,79 @@ const configurationDemoData = [
                 borderColorsLabel: "Borders Colors",
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#e9a956",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#e9e9e9",
                     prevImg: "",
                     additionalPrice: 0,
@@ -16456,7 +16409,7 @@ const configurationDemoData = [
                   {
                     title: "Standard",
                     description: "",
-                    icon: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/demos/ic_none.svg",
+                    icon: asowpSiteUrl + "/images/demos/ic_none.svg",
                     image: "",
                     popupImg: "",
                     excludeColors: [2, 13, 14],
@@ -16535,82 +16488,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -17076,11 +17029,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -17093,11 +17046,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -17110,11 +17063,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -17127,11 +17080,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17144,11 +17097,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17161,11 +17114,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17178,11 +17131,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17195,11 +17148,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17212,11 +17165,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -17229,11 +17182,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17246,11 +17199,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17263,11 +17216,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17280,11 +17233,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17297,11 +17250,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -17314,11 +17267,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -17335,7 +17288,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -17675,11 +17628,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -17692,11 +17645,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -17709,11 +17662,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -17726,11 +17679,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17743,11 +17696,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17760,11 +17713,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17777,11 +17730,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17794,11 +17747,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17811,11 +17764,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -17828,11 +17781,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17845,11 +17798,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17862,11 +17815,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17879,11 +17832,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -17896,11 +17849,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -17913,11 +17866,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -17934,7 +17887,7 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -18160,82 +18113,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -18614,11 +18567,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -18631,11 +18584,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -18648,11 +18601,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18665,11 +18618,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18682,11 +18635,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18699,11 +18652,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18716,11 +18669,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18733,11 +18686,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -18750,11 +18703,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18767,11 +18720,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18784,11 +18737,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18801,11 +18754,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -18818,11 +18771,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -18835,11 +18788,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -18856,7 +18809,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -19052,7 +19005,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -19065,11 +19018,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -19281,82 +19234,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -19914,7 +19867,7 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -19924,14 +19877,15 @@ const configurationDemoData = [
                   pattern: {
                     active: true,
                     codeHex: "#f0f0f0",
-                    url: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/im_transparent-acrylic-sign.png",
+                    url:
+                      asowpSiteUrl + "/images/im_transparent-acrylic-sign.png",
                   },
                   prevImg: "",
                   additionalPrice: 0,
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -19948,7 +19902,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -19965,7 +19919,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -19982,7 +19936,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -19999,7 +19953,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20016,7 +19970,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20033,7 +19987,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20050,7 +20004,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20067,7 +20021,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20084,7 +20038,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20101,7 +20055,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
@@ -20163,67 +20117,67 @@ const configurationDemoData = [
               settings: {
                 colors: [
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#004f86",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#009251",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#fee900",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Gray",
+                    name: __("Gray", 'all-signs-options-pro'),
                     codeHex: "#4f5756",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#bc4077",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#554585",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#e15616",
                     prevImg: "",
                     additionalPrice: 0,
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#523d2a",
                     prevImg: "",
                     additionalPrice: 0,
@@ -20287,7 +20241,7 @@ const configurationDemoData = [
                   {
                     title: "Standard",
                     description: "",
-                    icon: "http://localhost/wordpress-set/wp-content/plugins/all-signs-options/assets/images/demos/ic_none.svg",
+                    icon: asowpSiteUrl + "/images/demos/ic_none.svg",
                     image: "",
                     popupImg: "",
                     excludeColors: [],
@@ -20365,82 +20319,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -20906,11 +20860,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -20923,11 +20877,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -20940,11 +20894,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -20957,11 +20911,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -20974,11 +20928,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -20991,11 +20945,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21008,11 +20962,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21025,11 +20979,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21042,11 +20996,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -21059,11 +21013,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21076,11 +21030,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21093,11 +21047,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21110,11 +21064,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21127,11 +21081,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -21144,11 +21098,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -21165,7 +21119,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -21467,11 +21421,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -21488,7 +21442,7 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -21501,11 +21455,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21518,11 +21472,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21535,11 +21489,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21552,11 +21506,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21569,11 +21523,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21586,11 +21540,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -21603,11 +21557,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21620,11 +21574,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21637,11 +21591,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -21706,31 +21660,31 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#23429f",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#b50d0d",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#2aa238",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#ebd90f",
                     additionalPrice: 0,
                     prevImg: "",
@@ -21742,37 +21696,37 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#f556b3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#9f2cdd",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#ff7605",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#9d4a06",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#debc17",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#c1bdbd",
                     additionalPrice: 0,
                     prevImg: "",
@@ -22021,11 +21975,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -22038,11 +21992,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -22055,11 +22009,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22072,11 +22026,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22089,11 +22043,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22106,11 +22060,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22123,11 +22077,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22140,11 +22094,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -22157,11 +22111,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22174,11 +22128,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22191,11 +22145,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -22208,7 +22162,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -22260,31 +22214,31 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#23429f",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#b50d0d",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#2aa238",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#ebd90f",
                     additionalPrice: 0,
                     prevImg: "",
@@ -22296,37 +22250,37 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#f556b3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#9f2cdd",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#ff7605",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#9d4a06",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#debc17",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#c1bdbd",
                     additionalPrice: 0,
                     prevImg: "",
@@ -22488,82 +22442,82 @@ const configurationDemoData = [
           },
           text: {
             selectedFonts: [],
-            colorsLabel: "Texts Colors",
+            colorsLabel: __("Texts Colors", 'all-signs-options-pro'),
             colors: [
               {
-                name: "White",
+                name: __("White", 'all-signs-options-pro'),
                 codeHex: "#ffffff",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Black",
+                name: __("Black", 'all-signs-options-pro'),
                 codeHex: "#000000",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Blue",
+                name: __("Blue", 'all-signs-options-pro'),
                 codeHex: "#004f86",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Red",
+                name: __("Red", 'all-signs-options-pro'),
                 codeHex: "#c4271d",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Green",
+                name: __("Green", 'all-signs-options-pro'),
                 codeHex: "#009251",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Yellow",
+                name: __("Yellow", 'all-signs-options-pro'),
                 codeHex: "#fee900",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gray",
+                name: __("Gray", 'all-signs-options-pro'),
                 codeHex: "#4f5756",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Pink",
+                name: __("Pink", 'all-signs-options-pro'),
                 codeHex: "#bc4077",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Purple",
+                name: __("Purple", 'all-signs-options-pro'),
                 codeHex: "#554585",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Orange",
+                name: __("Orange", 'all-signs-options-pro'),
                 codeHex: "#e15616",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Brown",
+                name: __("Brown", 'all-signs-options-pro'),
                 codeHex: "#523d2a",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Gold",
+                name: __("Gold", 'all-signs-options-pro'),
                 codeHex: "#e9a956",
                 prevImg: "",
                 additionalPrice: 0,
               },
               {
-                name: "Silver",
+                name: __("Silver", 'all-signs-options-pro'),
                 codeHex: "#e9e9e9",
                 prevImg: "",
                 additionalPrice: 0,
@@ -23029,11 +22983,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -23046,11 +23000,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -23063,11 +23017,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -23080,11 +23034,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23097,11 +23051,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23114,11 +23068,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23131,11 +23085,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23148,11 +23102,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23165,11 +23119,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -23182,11 +23136,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23199,11 +23153,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23216,11 +23170,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23233,11 +23187,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23250,11 +23204,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -23267,11 +23221,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -23288,7 +23242,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -23628,11 +23582,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -23645,11 +23599,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -23662,11 +23616,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -23679,11 +23633,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23696,11 +23650,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23713,11 +23667,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23730,11 +23684,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23747,11 +23701,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23764,11 +23718,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -23781,11 +23735,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23798,11 +23752,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23815,11 +23769,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23832,11 +23786,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -23849,11 +23803,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -23866,11 +23820,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -23887,7 +23841,7 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -24227,11 +24181,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -24248,7 +24202,7 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -24261,11 +24215,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24278,11 +24232,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24295,11 +24249,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24312,11 +24266,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24329,11 +24283,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24346,11 +24300,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -24363,11 +24317,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24380,11 +24334,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24397,11 +24351,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24466,31 +24420,31 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#23429f",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#b50d0d",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#2aa238",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#ebd90f",
                     additionalPrice: 0,
                     prevImg: "",
@@ -24502,37 +24456,37 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#f556b3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#9f2cdd",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#ff7605",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#9d4a06",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#debc17",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#c1bdbd",
                     additionalPrice: 0,
                     prevImg: "",
@@ -24788,11 +24742,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -24805,11 +24759,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -24822,11 +24776,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24839,11 +24793,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24856,11 +24810,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24873,11 +24827,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24890,11 +24844,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24907,11 +24861,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -24924,11 +24878,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24941,11 +24895,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24958,11 +24912,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -24975,7 +24929,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -25027,31 +24981,31 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#23429f",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#b50d0d",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#2aa238",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#ebd90f",
                     additionalPrice: 0,
                     prevImg: "",
@@ -25063,37 +25017,37 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#f556b3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#9f2cdd",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#ff7605",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#9d4a06",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#debc17",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#c1bdbd",
                     additionalPrice: 0,
                     prevImg: "",
@@ -25267,11 +25221,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -25284,11 +25238,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -25301,11 +25255,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25318,11 +25272,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25335,11 +25289,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25352,11 +25306,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25369,11 +25323,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25386,11 +25340,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -25403,11 +25357,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25420,11 +25374,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25437,11 +25391,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25454,11 +25408,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25471,11 +25425,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gold",
+                  name: __("Gold", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -25488,11 +25442,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Silver",
+                  name: __("Silver", 'all-signs-options-pro'),
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#bbbbbb",
                   },
                   pattern: {
@@ -25509,7 +25463,7 @@ const configurationDemoData = [
                   textColor: {
                     active: true,
                     sameForBorder: true,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -25776,11 +25730,11 @@ const configurationDemoData = [
               allColors: [
                 {
                   isDefault: true,
-                  name: "Transparent",
+                  name: __("Transparent", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
@@ -25793,11 +25747,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "White",
+                  name: __("White", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
@@ -25810,11 +25764,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Black",
+                  name: __("Black", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25827,11 +25781,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Blue",
+                  name: __("Blue", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25844,11 +25798,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Red",
+                  name: __("Red", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25861,11 +25815,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Pink",
+                  name: __("Pink", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25878,11 +25832,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Green",
+                  name: __("Green", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25895,11 +25849,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Yellow",
+                  name: __("Yellow", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Black",
+                    name: __("Black", 'all-signs-options-pro'),
                     codeHex: "#000000",
                   },
                   pattern: {
@@ -25912,11 +25866,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Gray",
+                  name: __("Gray", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25929,11 +25883,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Orange",
+                  name: __("Orange", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25946,11 +25900,11 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Purple",
+                  name: __("Purple", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                   },
                   pattern: {
@@ -25963,7 +25917,7 @@ const configurationDemoData = [
                 },
                 {
                   isDefault: false,
-                  name: "Brown",
+                  name: __("Brown", 'all-signs-options-pro'),
                   textColor: {
                     active: false,
                     codeHex: "#000000",
@@ -26087,31 +26041,31 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#23429f",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#b50d0d",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#2aa238",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#ebd90f",
                     additionalPrice: 0,
                     prevImg: "",
@@ -26123,37 +26077,37 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#f556b3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#9f2cdd",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#ff7605",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#9d4a06",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#debc17",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#c1bdbd",
                     additionalPrice: 0,
                     prevImg: "",
@@ -26400,16 +26354,16 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#c4271d",
                   },
                   pattern: {
                     active: true,
                     codeHex: "#eebc77",
-                    url: "http://localhost/wordpress-set/wp-content/uploads/2025/03/wood-texture-pattern-light-brown-design-background-vector.jpg",
+                    url: "/wp-content/uploads/2025/03/wood-texture-pattern-light-brown-design-background-vector.jpg",
                   },
                   prevImg:
-                    "http://localhost/wordpress-set/wp-content/uploads/2025/03/wood-texture-pattern-light-brown-design-background-vector.jpg",
+                    "/wp-content/uploads/2025/03/wood-texture-pattern-light-brown-design-background-vector.jpg",
                   additionalPrice: 0,
                 },
                 {
@@ -26418,16 +26372,15 @@ const configurationDemoData = [
                   textColor: {
                     active: false,
                     sameForBorder: false,
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#497eaa",
                   },
                   pattern: {
                     active: true,
                     codeHex: "#e49953",
-                    url: "http://localhost/wordpress-set/wp-content/uploads/2025/11/Oak-Wood.jpg",
+                    url: "/wp-content/uploads/2025/11/Oak-Wood.jpg",
                   },
-                  prevImg:
-                    "http://localhost/wordpress-set/wp-content/uploads/2025/11/Oak-Wood.jpg",
+                  prevImg: "/wp-content/uploads/2025/11/Oak-Wood.jpg",
                   additionalPrice: 0,
                 },
               ],
@@ -26484,31 +26437,31 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "White",
+                    name: __("White", 'all-signs-options-pro'),
                     codeHex: "#ffffff",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Blue",
+                    name: __("Blue", 'all-signs-options-pro'),
                     codeHex: "#23429f",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Red",
+                    name: __("Red", 'all-signs-options-pro'),
                     codeHex: "#b50d0d",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Green",
+                    name: __("Green", 'all-signs-options-pro'),
                     codeHex: "#2aa238",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Yellow",
+                    name: __("Yellow", 'all-signs-options-pro'),
                     codeHex: "#ebd90f",
                     additionalPrice: 0,
                     prevImg: "",
@@ -26520,37 +26473,37 @@ const configurationDemoData = [
                     prevImg: "",
                   },
                   {
-                    name: "Pink",
+                    name: __("Pink", 'all-signs-options-pro'),
                     codeHex: "#f556b3",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Purple",
+                    name: __("Purple", 'all-signs-options-pro'),
                     codeHex: "#9f2cdd",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Orange",
+                    name: __("Orange", 'all-signs-options-pro'),
                     codeHex: "#ff7605",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Brown",
+                    name: __("Brown", 'all-signs-options-pro'),
                     codeHex: "#9d4a06",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Gold",
+                    name: __("Gold", 'all-signs-options-pro'),
                     codeHex: "#debc17",
                     additionalPrice: 0,
                     prevImg: "",
                   },
                   {
-                    name: "Silver",
+                    name: __("Silver", 'all-signs-options-pro'),
                     codeHex: "#c1bdbd",
                     additionalPrice: 0,
                     prevImg: "",

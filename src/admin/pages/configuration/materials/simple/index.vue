@@ -1,15 +1,16 @@
 <template>
     <div class="asowp-w-full">
-        <div class="asowp-overflow-hidden asowp-w-[84.5%] asowp-justify-between asowp-flex asowp-cursor-pointer asowp-items-center asowp-bg-white asowp-py-2 asowp-text-sm asowp-text-gray-700 asowp-gap-2 asowp-fixed asowp-z-[9999] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-top-[96px] asowp-px-2 asowp-bg-white asowp-items-center">
+        <div :class="['asowp-w-full asowp-flex asowp-items-center asowp-gap-3 asowp-bg-white asowp-py-2 asowp-text-sm asowp-text-gray-700 asowp-fixed asowp-z-[15000] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-px-2 asowp-shadow-lg', materialsBarTopClass]" style="width: 84.5% !important;">
             <!--<div class="asowp-grid asowp-grid-cols-5 asowp-justify-center asowp-items-center asowp-p-4 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-bg-gray-100 asowp-border-t asowp-border-b asowp-border-gray-200 asowp-gap-x-16">
-                <div class="asowp-flex asowp-items-center asowp-justify-center">Material Name</div>
-                <div class="asowp-flex asowp-items-center asowp-justify-center">Description</div>
-                <div class="asowp-flex asowp-items-center asowp-justify-center">Icon</div>
-                <div class="asowp-flex asowp-items-center asowp-justify-center">Behavior (type)</div>
-                <div class="asowp-flex asowp-items-center asowp-justify-center">Actions</div>
+                <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Material Name", "all-signs-options-pro") }}</div>
+                <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Description", "all-signs-options-pro") }}</div>
+                <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Icon", "all-signs-options-pro") }}</div>
+                <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Behavior (type)", "all-signs-options-pro") }}</div>
+                <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Actions", "all-signs-options-pro") }}</div>
             </div>-->
             
-            <div class="asowp-flex asowp-space-x-2">
+           
+            <div class="asowp-overflow-x-auto asowp-overflow-y-visible asowp-flex asowp-space-x-2 asowp-flex-nowrap asowp-w-full asowp-py-1 asowp-materials-scroll asowp-pr-[280px] asowp-items-center asowp-relative">
                 <div
                     v-for="(material, key) in materials"
                     :key="key"
@@ -19,9 +20,11 @@
                         ? 'asowp-bg-[#016464] asowp-text-white'
                         : 'asowp-bg-transparent '
                     ]"
+                    class="asowp-relative"
                 >
                     
-                    <button
+                    <div
+                        role="button"
                         :class="[
                             'asowp-flex asowp-space-x-2 asowp-bg-transparent asowp-border-none asowp-rounded-[5px] asowp-justify-center asowp-items-center asowp-w-full asowp-cursor-pointer',
                             key === activeMaterialIndex ? 'asowp-text-white' : ''
@@ -39,17 +42,31 @@
                             ]">
                                 {{ material.name }}
                             </span>
+                            <span
+                              :class="[
+                                'asowp-text-[11px] asowp-px-2 asowp-rounded-full asowp-border asowp-border-solid',
+                                isMaterialActive(material)
+                                  ? 'asowp-text-[#0f5132] asowp-border-[#0f5132] asowp-bg-[#d1e7dd]'
+                                  : 'asowp-text-[#842029] asowp-border-[#842029] asowp-bg-[#f8d7da]'
+                              ]"
+                            >
+                              {{ isMaterialActive(material) ? __('Active', 'all-signs-options-pro') : __('Inactive', 'all-signs-options-pro') }}
+                            </span>
                         </div>
                         
-                        <div class="asowp-relative">
-                            <button class="asowp-bg-white asowp-rounded-[5px] asowp-p-0 asowp-flex asowp-justify-center asowp-border-none asowp-cursor-pointer" @click.stop="handleOpenMaterialParams(key)" style="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);">
+                        <div class="asowp-relative" @click.stop>
+                            <button class="asowp-bg-white asowp-rounded-[5px] asowp-p-0 asowp-flex asowp-justify-center asowp-border-none asowp-cursor-pointer" @click="(e) => handleOpenMaterialParams(key, e)" style="box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.25);">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 </svg>
                             </button>
                             <div
                                 v-if="showParams[key]"
-                                class="asowp-bg-white asowp-shadow-md asowp-flex asowp-flex-col asowp-p-2 asowp-absolute asowp-top-full asowp-mt-2 asowp-z-[9999] asowp-right-0 asowp-rounded asowp-min-w-[140px]"
+                                class="asowp-bg-white asowp-shadow-lg asowp-flex asowp-flex-col asowp-p-2 asowp-fixed asowp-z-[20000] asowp-rounded asowp-min-w-[160px] asowp-border asowp-border-gray-200"
+                                :style="{
+                                  top: dropdownPositions[key]?.top ? `${dropdownPositions[key].top}px` : 'auto',
+                                  left: dropdownPositions[key]?.left ? `${dropdownPositions[key].left}px` : 'auto'
+                                }"
                                 @click.stop
                             >
                                 <button
@@ -57,38 +74,50 @@
                                     @click="() => { showParams[key] = false; selectMaterialEdit(material, key) }"
                                 >
                                     <img class="asowp-w-5 asowp-h-5" src="../../../../../../assets/icons/ic_edit.svg" alt="">
-                                    <span>Edit</span>
+                                    <span>{{__("Edit", "all-signs-options-pro")}}</span>
+                                </button>
+                                <button
+                                    class="asowp-bg-transparent asowp-border-none asowp-text-[#0F5132] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-2 asowp-py-1 asowp-px-2 hover:asowp-bg-gray-100 asowp-rounded"
+                                    @click="() => { showParams[key] = false; toggleMaterialStatus(key) }"
+                                >
+                                    <svg v-if="isMaterialActive(material)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                    </svg>
+                                    <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                    <span>{{ isMaterialActive(material) ? __('Deactivate', 'all-signs-options-pro') : __('Activate', 'all-signs-options-pro') }}</span>
                                 </button>
                                 <button
                                     class="asowp-bg-transparent asowp-border-none asowp-text-[#A00000] asowp-cursor-pointer asowp-flex asowp-items-center asowp-gap-2 asowp-py-1 asowp-px-2 hover:asowp-bg-gray-100 asowp-rounded"
                                     @click="() => { showParams[key] = false; selectMaterialDelete(key, material.name) }"
                                 >
                                     <img class="asowp-w-5 asowp-h-5" src="../../../../../../assets/icons/ic_delete.svg" alt="">
-                                    <span>Delete</span>
+                                    <span>{{__("Delete", "all-signs-options-pro")}}</span>
                                 </button>
                             </div>
                             
                         </div>
                         
-                    </button>
+                    </div>
                     
                 </div>
 
             </div>
-            <button class="asowp-flex asowp-w-fit asowp-h-[fit] asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer" @click="addComponent">
-                <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g id="plus-lg">
-                    <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                    </g>
-                </svg>
-                <div class="asowp-text-[14px]">
-                    Add new Material
-                </div>
-            </button>
-        </div>
-        
+            <div class="asowp-h-full asowp-flex asowp-items-center asowp-justify-center asowp-absolute asowp-right-0 asowp-top-0 asowp-bg-white asowp-w-[220px] asowp-shadow-md asowp-rounded-r-[10px]">
+                <button class="asowp-flex asowp-w-fit asowp-h-[fit] asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer asowp-flex-shrink-0" @click="addComponent">
+                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="plus-lg">
+                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
+                        </g>
+                    </svg>
+                    <div class="asowp-text-[14px]">
+                        {{__("Add new Material", "all-signs-options-pro")}}
+                    </div>
+                </button>
+            </div>
+        </div>        
     </div>
-
 
     <div class="">
         <div class="asowp-flex asowp-space-x-2" v-if="contentComponent">
@@ -102,7 +131,7 @@
                         </svg>
                         
                         <div class="asowp-text-[14px]">
-                            Sizes
+                            {{__("Sizes", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -115,7 +144,7 @@
                         </svg>
     
                         <div class="asowp-text-[14px]">
-                            Colors
+                            {{__("Colors", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -128,7 +157,7 @@
                         </svg>
     
                         <div class="asowp-text-[14px]">
-                            Shapes
+                            {{__("Shapes", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -140,7 +169,7 @@
                             </g>
                         </svg>
                         <div class="asowp-text-[14px]">
-                            Borders
+                            {{__("Borders", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -152,7 +181,7 @@
                             </g>
                         </svg>
                         <div class="asowp-text-[14px]">
-                            Fixing Methods
+                            {{__("Fixing Methods", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -171,7 +200,7 @@
                             </defs>
                         </svg>
                         <div class="asowp-text-[14px]">
-                            Text/Image
+                            {{__("Text/Image", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -184,7 +213,7 @@
                         </svg>
     
                         <div class="asowp-text-[14px]">
-                            Discounts
+                            {{__("Discounts", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -196,7 +225,7 @@
     
     
                         <div class="asowp-text-[14px]">
-                            Additional components
+                            {{__("Additional components", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -206,7 +235,7 @@
                     <div class="asowp-text-[16px] asowp-font-semibold">{{ activeName }}</div>
                     <div v-if="activeDescription" class="asowp-text-[12px] asowp-text-gray-600 asowp-mt-1">{{ activeDescription }}</div>
                 </div>
-                <AdvanceMaterial v-if="isAdvanceRoute" />
+                <AdvanceMaterial v-if="isAdvanceRoute" :key="'adv-'+activeId" />
                 <template v-else>
                     <Sizes v-if="route.name==='Simple-Sizes' " :material-id="activeId" :key="'sizes-'+activeId"/>
                     <Colors v-if="route.name==='Simple-Colors' " :material-id="activeId" :key="'colors-'+activeId"/>
@@ -228,25 +257,25 @@
         <div class="asowp-space-y-2 asowp-translate-y-28" v-if="isNewComponent">
             
             <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-bg-[#F8F9FB] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-p-0 asowp-w-[97%] asowp-h-[2.9rem] asowp-mt-3 asowp-bg-white asowp-px-2 asowp-flex asowp-justify-start asowp-items-center">
-                Create new material
+                {{__("Create new material", "all-signs-options-pro")}}
             </div>
             <div class="asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-bg-white asowp-px-4 asowp-py-4 asowp-pb-8 asowp-space-y-6">
                 <div class="asowp-flex asowp-justify-between">
                     <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Name <span class="asowp-text-red-500">*</span></label>
+                        <label for="" class="asowp-font-normal">{{__("Name", "all-signs-options-pro")}} <span class="asowp-text-red-500">*</span></label>
                         <input type="text" v-model="newMaterial.name" :class="`${emptyLabel?'asowp-field-required':''} asowp-rounded asowp-w-full asowp-h-[35px]`">
                     </div>
                     <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[14px]">
-                        <label for="" class="asowp-font-normal">Description</label>
+                        <label for="" class="asowp-font-normal">{{__("Description", "all-signs-options-pro")}}</label>
                         <input type="text" v-model="newMaterial.description" class="asowp-rounded asowp-w-full asowp-h-[35px]">
                     </div>
                 </div>
                 <div class="asowp-flex asowp-justify-between">
                     <div class="asowp-w-2/5 asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                        <label for="" class="asowp-font-normal">Upload icon</label>
+                        <label for="" class="asowp-font-normal">{{__("Upload icon", "all-signs-options-pro")}}</label>
                         <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-p-1 asowp-border asowp-border-solid asowp-border-[#000] asowp-w-[99%] asowp-rounded">
                             <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectMaterialIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload PopupImg</button>
+                                <button @click="selectMaterialIcon" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{__("Upload icon", "all-signs-options-pro")}}</button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="newMaterial.icon != ''" :src="newMaterial.icon" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="newMaterial.icon != ''" @click="()=>{newMaterial.icon = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -275,7 +304,7 @@
                         </div>
                     </div>-->
                     <div class="asowp-space-y-2 asowp-pt-2 asowp-flex asowp-flex-col asowp-w-2/5">
-                        <label for="" class="asowp-font-bold">Type</label>
+                        <label for="" class="asowp-font-bold">{{__("Type", "all-signs-options-pro")}}</label>
                         <input
                             disabled
                             :value="enforcedMaterialType === 'advance' ? 'Advance' : 'Simple'"
@@ -291,19 +320,19 @@
                                 <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                             </svg>
     
-                            <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{__("Back", "all-signs-options-pro")}}</div>
                         </button>
                     </div>
                     <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
                         <button @click="updateMaterial" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
                             <!--<img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>-->
-                            <div class="asowp-font-semibold asowp-text-[16px]">Update</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{__("Update", "all-signs-options-pro")}}</div>
                         </button>
                     </div>
                     <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
                         <button @click="addNewMaterial" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white  asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer">
                             <!--<img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>-->
-                            <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{__("Save", "all-signs-options-pro")}}</div>
                         </button>
                     </div>
                 </div>
@@ -317,19 +346,19 @@
                         <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="asowp-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">{{__("Close modal", "all-signs-options-pro")}}</span>
                     </button>
                     <div class="asowp-p-4 md:p-5 asowp-text-center">
                         <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this configuration?</h3>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{__("Are you sure you want to delete this configuration?", "all-signs-options-pro")}}</h3>
                         <input v-model="deleteMaterial.name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                         <button @click="delMaterial" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            Yes, I'm sure
+                            {{__("Yes, I'm sure", "all-signs-options-pro")}}
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{__("No, cancel", "all-signs-options-pro")}}</button>
                     </div>
                 </div>
             </div>
@@ -342,7 +371,7 @@
                         <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="asowp-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">{{__("Close modal", "all-signs-options-pro")}}</span>
                     </button>
                     <div class="asowp-p-4 md:p-5 asowp-text-center">
                         <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -355,9 +384,9 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-w-5" v-if="!isLoading">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                             </svg>
-                            Clone
+                            {{__("Clone", "all-signs-options-pro")}}
                         </button>
-                        <button @click.stop="closeCloneModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">Cancel</button>
+                        <button @click.stop="closeCloneModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{__("Cancel", "all-signs-options-pro")}}</button>
                     </div>
                 </div>
             </div>
@@ -381,9 +410,9 @@
                     <div class="asowp-p-4 md:p-5 asowp-text-center">
                         <button @click="savePopImg" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-[#016464] asowp-cursor-pointer' :'asowp-bg-[#016464] asowp-cursor-not-allowed'} hover:asowp-bg-[#016464] focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            Save
+                            {{__("Save", "all-signs-options-pro")}}
                         </button>
-                        <button @click.stop="closeTnymceModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeTnymceModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{__("No, cancel", "all-signs-options-pro")}}</button>
                     </div>
                 </div>
             </div>
@@ -405,6 +434,7 @@ import { onMounted, onBeforeUnmount, ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '@/admin/router';
 
+import { __ } from "@wordpress/i18n";
 const route = useRoute()
 const slugify = (value) =>
   String(value ?? '')
@@ -430,8 +460,12 @@ const materialSlug = computed(() => String(route.params.material ?? slugify(mate
 const isAdvanceRoute = computed(
   () => route.name === 'Material-Advance' || route.name === 'Material-Advance-options'
 )
+const materialsBarTopClass = computed(() =>
+  isAdvanceRoute.value ? 'asowp-top-[96px]' : 'asowp-top-[96px]'
+)
 const enforcedMaterialType = ref('simple')
 const showParams = ref([]);
+const dropdownPositions = ref([]);
 const openModal = ref(false);
 const openTnyMce = ref(false);
 const openCloneModal = ref(false);
@@ -444,6 +478,9 @@ const activeMaterial = computed(() => materials.value[activeMaterialIndex.value]
 const activeId       = computed(() => activeMaterial.value?.id ?? activeMaterialIndex.value) // id à passer aux enfants
 const activeName     = computed(() => activeMaterial.value?.name ?? '')
 const activeDescription = computed(() => activeMaterial.value?.description ?? '')
+const activeMaterialsCount = computed(() =>
+  materials.value.filter((material) => (material?.active ?? true)).length
+)
 
 import toastMessage from '@/admin/utils/functions';
 const deleteMaterial = ref({
@@ -459,16 +496,22 @@ const newMaterial = ref({
     icon:"",
     popImg:"",
     type:"simple",
+    active: true,
 });
 const isNewComponent = ref(false);
 const contentComponent = ref(true);
+const isMaterialActive = (material) => material?.active ?? true;
 
 const fetchMaterials = async () => {
     const result = await api.getMaterials(configID.value);
     console.log(result);
     if(!result.message){
         let tab=[];
-        materials.value = result.map((m) => ({ ...m, type: enforcedMaterialType.value }))
+        materials.value = result.map((m) => ({
+          ...m,
+          type: enforcedMaterialType.value,
+          active: m?.active ?? true,
+        }))
         for (let index = 0; index < result.length; index++) {
             tab.push(false);
             
@@ -490,12 +533,19 @@ const syncActiveIndexFromRoute = () => {
   }
 }
 
-const handleOpenMaterialParams  = (key)=>{
+const handleOpenMaterialParams  = (key, event)=>{
+    const buttonRect = event?.currentTarget?.getBoundingClientRect?.()
     for (let index = 0; index < showParams.value.length; index++) {
        if(key!=index){
         showParams.value[index]=false;
        }else{
         showParams.value[key]=!showParams.value[key];
+        if (showParams.value[key] && buttonRect) {
+          dropdownPositions.value[key] = {
+            top: buttonRect.bottom + 8 + window.scrollY,
+            left: buttonRect.right + window.scrollX - 140,
+          }
+        }
        }
     }
 }
@@ -571,6 +621,7 @@ const addNewMaterial = async () => {
                 icon:"",
                 popImg:"",
                 type: enforcedMaterialType.value,
+                active: true,
             }
             openCloneModal.value=false;
             toastMessage(result.message)
@@ -584,6 +635,7 @@ const addNewMaterial = async () => {
                 icon:"",
                 popImg:"",
                 type: enforcedMaterialType.value,
+                active: true,
             }
             openCloneModal.value=false;
             toastMessage(result.message,"error");
@@ -598,6 +650,9 @@ const addNewMaterial = async () => {
 const selectMaterialEdit = (material, id) => {
     materialId.value = id;
     newMaterial.value = JSON.parse(JSON.stringify(material));
+    if (typeof newMaterial.value.active === 'undefined') {
+      newMaterial.value.active = true
+    }
     newMaterial.value.type = enforcedMaterialType.value
     isEdit.value = true;
     contentComponent.value = false;
@@ -619,9 +674,9 @@ const selectMaterialIcon = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Material Icon",
+            title: __("Select Material Icon", "all-signs-options-pro"),
             button: {
-                text: "Select Icon"
+                text: __("Select Icon", "all-signs-options-pro")
             },
             multiple: false
         }
@@ -661,6 +716,7 @@ const updateMaterial = async () => {
                 icon:"",
                 popImg:"",
                 type: enforcedMaterialType.value,
+                active: true,
             }
             
             isEdit.value = false;
@@ -675,6 +731,7 @@ const updateMaterial = async () => {
                 icon:"",
                 popImg:"",
                 type: enforcedMaterialType.value,
+                active: true,
             }
             toastMessage(result.message,"error");
         }
@@ -700,21 +757,58 @@ const back = () => {
         icon:"",
         popImg:"",
         type: enforcedMaterialType.value,
+        active: true,
     }
+}
+
+const toggleMaterialStatus = async (materialIndex) => {
+  const material = materials.value[materialIndex]
+  if (!material) return
+  const nextStatus = !isMaterialActive(material)
+  if (!nextStatus && activeMaterialsCount.value <= 1) {
+    toastMessage('At least one material must remain active', 'warning')
+    return
+  }
+
+  const payload = { ...material, active: nextStatus, type: enforcedMaterialType.value }
+  const result = await api.updateMaterial(configID.value, materialIndex, payload)
+  if (result.success) {
+    materials.value[materialIndex].active = nextStatus
+    toastMessage(nextStatus ? 'Material activated' : 'Material deactivated')
+    if (!isMaterialActive(activeMaterial.value)) {
+      const nextActiveIndex = materials.value.findIndex((m) => isMaterialActive(m))
+      if (nextActiveIndex !== -1) {
+        const next = materials.value[nextActiveIndex]
+        redirectToMaterial(nextActiveIndex, next.name, next.type)
+      }
+    }
+  } else {
+    toastMessage(result.message || 'Unable to update status', 'error')
+  }
 }
 
 
 
 /** Function for deleting */
 const selectMaterialDelete = (id, name) => {
+    const material = materials.value[id]
+    if (isMaterialActive(material) && activeMaterialsCount.value <= 1) {
+      toastMessage('At least one material must remain active', 'warning')
+      return
+    }
     deleteMaterial.value = {id: id, name: name};
-    closeModal();
+    openModal.value = true;
 }
 const delMaterial = async () => {
     isLoading.value = true;
     const result = await api.deleteMaterial(configID.value,deleteMaterial.value.id);
     if(result.success){
         await fetchMaterials();
+        const nextActiveIndex = materials.value.findIndex((m) => isMaterialActive(m))
+        if (nextActiveIndex !== -1) {
+          const next = materials.value[nextActiveIndex]
+          redirectToMaterial(nextActiveIndex, next.name, next.type)
+        }
         isLoading.value =false;
         toastMessage(result.message)
     }else{
@@ -726,7 +820,7 @@ const delMaterial = async () => {
 }
 const closeModal = ()=>{
     if(!isLoading.value){        
-        openModal.value = !openModal.value;
+        openModal.value = false;
     }
 }
 const closeCloneModal = ()=>{
@@ -738,6 +832,7 @@ const closeCloneModal = ()=>{
             icon:"",
             popImg:"",
             type: enforcedMaterialType.value,
+            active: true,
         }
     }
 }
@@ -756,5 +851,12 @@ const redirectToMaterial = (key, name, type) => {
 }
 </script>
 <style>
-    
+.asowp-materials-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-y: visible;
+}
+.asowp-materials-scroll::-webkit-scrollbar {
+    display: none;
+}
 </style>

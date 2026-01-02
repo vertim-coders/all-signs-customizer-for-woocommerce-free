@@ -49,6 +49,7 @@ import { add_to_cart } from '@/frontend/utils/functions';
 import { onMounted, ref } from 'vue';
 import api from '../../../admin/Api/api';
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const templates = ref(asowp_templates.data);
 const allTemplates = asowp_templates.data;
 const categories = asowp_templates.categories;

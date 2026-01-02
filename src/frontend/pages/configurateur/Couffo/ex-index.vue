@@ -92,7 +92,8 @@
 
     var FontFaceObserver = require('fontfaceobserver');
 
-    const route = useRoute();
+    import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+const route = useRoute();
     const template_config_id = route.params.configId;
     const template_id = route.params.templateId;
     const template = ref({});

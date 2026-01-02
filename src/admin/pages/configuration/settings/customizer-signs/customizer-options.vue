@@ -5,37 +5,37 @@
                 <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
                     <div class="asowp-flex asowp-justify-between">
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5">
-                            <label class="asowp-text-[12px]">Measurement Unit</label>
+                            <label class="asowp-text-[12px]">{{ __("Measurement Unit", "all-signs-options-pro") }}</label>
                             <select v-model="customizer.measurementUnit">
-                                <option value="mm">Millimeters</option>
-                                <option value="cm">Centimeters</option>
-                                <option value="m">Meters</option>
-                                <option value="in">Inches</option>
+                                <option value="mm">{{ __("Millimeters", "all-signs-options-pro") }}</option>
+                                <option value="cm">{{ __("Centimeters", "all-signs-options-pro") }}</option>
+                                <option value="m">{{ __("Meters", "all-signs-options-pro") }}</option>
+                                <option value="in">{{ __("Inches", "all-signs-options-pro") }}</option>
                             </select>
                         </div>
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5">
-                            <label class="asowp-text-[12px]">Show/hide Measurements</label>
+                            <label class="asowp-text-[12px]">{{ __("Show/hide Measurements", "all-signs-options-pro") }}</label>
                             <select v-model="customizer.showHideMeasurements">
-                                <option value="both">show both width and height</option>
-                                <option value="none">Do not show measurements</option>
-                                <option value="only-height">show only height</option>
-                                <option value="only-width">show only width</option>
+                                <option value="both">{{ __("show both width and height", "all-signs-options-pro") }}</option>
+                                <option value="none">{{ __("Do not show measurements", "all-signs-options-pro") }}</option>
+                                <option value="only-height">{{ __("show only height", "all-signs-options-pro") }}</option>
+                                <option value="only-width">{{ __("show only width", "all-signs-options-pro") }}</option>
                             </select>
                         </div>
                     </div>
                     <div class="asowp-flex asowp-justify-between">
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5">
-                            <label class="asowp-text-[12px]">Decimal Format of Measurements</label>
+                            <label class="asowp-text-[12px]">{{ __("Decimal Format of Measurements", "all-signs-options-pro") }}</label>
                             <select v-model="customizer.decimalFormatMeasurements">
-                                <option value="with-decimal">with decimal</option>
-                                <option value="no-decimal">No decimal</option>
+                                <option value="with-decimal">{{ __("with decimal", "all-signs-options-pro") }}</option>
+                                <option value="no-decimal">{{ __("No decimal", "all-signs-options-pro") }}</option>
                             </select>
                         </div>
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5">
-                            <label class="asowp-text-[12px]">Desktop Column Order</label>
+                            <label class="asowp-text-[12px]">{{ __("Desktop Column Order", "all-signs-options-pro") }}</label>
                             <select v-model="customizer.desktopColumnOrder">
-                                <option value="right">Right</option>
-                                <option value="left">Left</option>
+                                <option value="right">{{ __("Right", "all-signs-options-pro") }}</option>
+                                <option value="left">{{ __("Left", "all-signs-options-pro") }}</option>
                             </select>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" @click="updateCustomizerSettings" class=" asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                         <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                        <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
             </div>
@@ -59,6 +59,7 @@ import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions';
 
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute();
 const configId = ref(route.params.configId);
 const isLoading =ref(false);

@@ -8,6 +8,7 @@ import '@/frontend/utils/tailwindcss.min.js';
 import '../../assets/utilities/fabric.min.js';
 import '../../assets/utilities/hammerjs.js';
 import api from '@/admin/Api/api.js';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 // import '@/frontend/utils/asowp-editor-script.js';
 const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
 

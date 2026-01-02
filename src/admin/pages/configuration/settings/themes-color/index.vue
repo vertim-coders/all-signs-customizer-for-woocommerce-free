@@ -1,9 +1,9 @@
 <template>
     <div v-if="!isFetching" class="asowp-space-y-1 asowp-sticky asowp-top-[124px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#F4F4F4] asowp-translate-y-2">
         <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex">
-            <button @click="state='skins'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'skins' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Choose Skin</button>
-            <button @click="state='colors'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'colors' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Colors</button>
-            <button @click="state='custom'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'custom' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >Custom CSS</button>
+            <button @click="state='skins'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'skins' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >{{ __("Choose Skin", "all-signs-options-pro") }}</button>
+            <button @click="state='colors'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'colors' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >{{ __("Colors", "all-signs-options-pro") }}</button>
+            <button @click="state='custom'" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ state == 'custom' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`" >{{ __("Custom CSS", "all-signs-options-pro") }}</button>
         </div>
     </div>
     <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
@@ -12,7 +12,7 @@
     <div v-if="!isFetching">
         <div class="" v-show="state=='skins'">
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
-                <h3 class="asowp-text-[16px]">Choose your customizer appearance</h3>
+                <h3 class="asowp-text-[16px]">{{ __("Choose your customizer appearance", "all-signs-options-pro") }}</h3>
                 <div class="asowp-p-6">
                     <div class="asowp-flex asowp-justify-evenly asowp-items-center">
                         <div class="asowp-flex-col asowp-space-y-4 asowp-px-2 asowp-rounded asowp-w-[320px]" :class="themes.skin == 'default' ? 'asowp-ring-2 asowp-ring-[#016464]' : ''">
@@ -22,7 +22,7 @@
                                     <img src="../../../../../../assets/images/skin-default.png" alt="Image 1" class="asowp-w-auto asowp-h-full asowp-cursor-pointer asowp-absolute">
                                 </div>
                                 <div class="asowp-flex asowp-items-center asowp-justify-between asowp-bg-white asowp-rounded-b">
-                                   <label for="default" class="asowp-text-base asowp-font-semibold asowp-text-black">Default skin</label>
+                                   <label for="default" class="asowp-text-base asowp-font-semibold asowp-text-black">{{ __("Default skin", "all-signs-options-pro") }}</label>
                                     <input type="radio" id="default" name="skin-1" value="default" v-model="themes.skin" :checked="themes.skin == 'default'">
                                 </div>
                             </label>
@@ -34,7 +34,7 @@
                                     <img src="../../../../../../assets/images/skin-couffo.png" alt="Image 1" class="asowp-w-auto asowp-h-full asowp-cursor-pointer asowp-absolute">
                                 </div>
                                 <div class="asowp-flex asowp-items-center asowp-justify-between asowp-bg-white asowp-rounded-b">
-                                    <label for="couffo" class="asowp-text-base asowp-font-semibold asowp-text-black">Couffo Skin</label>
+                                    <label for="couffo" class="asowp-text-base asowp-font-semibold asowp-text-black">{{ __("Couffo Skin", "all-signs-options-pro") }}</label>
                                     <input type="radio" id="couffo" name="skin-2" value="couffo" v-model="themes.skin" :checked="themes.skin == 'couffo'">
                                 </div>
                             </label>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="asowp-flex asowp-justify-between" v-show="dropdownColorsSections['canvas']">
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Canvas Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Canvas Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Canvas Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Canvas Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -88,7 +88,7 @@
                 </div>
                 <div class="asowp-flex asowp-justify-between" v-show="dropdownColorsSections['canvas']">
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Bars Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Bars Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Bars Title Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Bars Title Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -138,11 +138,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Price Section</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Price Section", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-2 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['price']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Before Price</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Before Price", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text After Price Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text After Price Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -228,11 +228,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Reset Button</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Reset Button", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-4 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['resetButton']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -250,7 +250,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -268,7 +268,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -286,7 +286,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -304,7 +304,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -322,7 +322,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -340,7 +340,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -358,7 +358,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Container Modal Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Container Modal Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -376,7 +376,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -394,7 +394,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Yes Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Yes Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -412,7 +412,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Yes Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Yes Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -430,7 +430,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">No Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -448,7 +448,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">No Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -480,11 +480,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Undo and Redo Button</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Undo and Redo Button", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['undoRedo']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -502,7 +502,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -520,7 +520,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -538,7 +538,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -556,7 +556,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -574,7 +574,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -606,11 +606,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Preview Button</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Preview Button", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['previewButton']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -628,7 +628,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -646,7 +646,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -664,7 +664,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -682,7 +682,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -700,7 +700,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -732,11 +732,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative">
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">help Button</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("help Button", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['helpButton']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -754,7 +754,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -772,7 +772,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -790,7 +790,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -808,7 +808,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -826,7 +826,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Border Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Border Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -859,11 +859,11 @@
             
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Options SideBar</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Options SideBar", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['optionsSideBar']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -881,7 +881,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Scroll Buttons Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -899,7 +899,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Scroll Buttons Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -917,7 +917,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Scroll Buttons Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -935,7 +935,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Scroll Buttons Text Hover Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Scroll Buttons Text Hover Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -953,7 +953,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Options Buttons Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -971,7 +971,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Options Buttons Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -989,7 +989,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Options Buttons Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1007,7 +1007,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Options Buttons Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Options Buttons Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1039,11 +1039,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Options Modals</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Options Modals", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['optionsModals']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1061,7 +1061,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1079,7 +1079,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Header Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Header Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1097,7 +1097,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Header Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Header Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1115,7 +1115,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Buttons Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Buttons Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1133,7 +1133,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Buttons Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Buttons Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1151,7 +1151,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modals Buttons Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modals Buttons Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1169,7 +1169,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modals Buttons Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modals Buttons Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1201,11 +1201,11 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Option in Modal</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Option in Modal", "all-signs-options-pro") }}</h2>
                 </div>
                 <div class="asowp-grid asowp-grid-cols-2 w-full gap-4 asowp-justify-between asowp-items-center" v-if="dropdownColorsSections['modalsOption']">
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Option Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1223,7 +1223,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Hover Background Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Option Hover Background Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1241,7 +1241,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Hover Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Option Hover Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1259,7 +1259,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Modal Option Active Text Color</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Option Active Text Color", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative asowp-flex">
                             <input
                                 id="colorPicker"
@@ -1291,12 +1291,12 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pt-8 asowp-space-y-6 asowp-relative" >
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Objects Options</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Objects Options", "all-signs-options-pro") }}</h2>
                 </div>
                 <div v-show="dropdownColorsSections['objectsOptions']">
                     <div class="asowp-grid asowp-grid-cols-3 w-full gap-4 asowp-justify-between asowp-items-center">
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1314,7 +1314,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Edit Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Edit Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1332,7 +1332,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Hover Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Hover Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1350,7 +1350,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Edit Button Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Edit Button Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1368,7 +1368,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Edit Button Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Edit Button Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1386,7 +1386,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Clone Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1404,7 +1404,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Hover Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Clone Hover Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1422,7 +1422,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Button Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Clone Button Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1440,7 +1440,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Clone Button Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Clone Button Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1458,7 +1458,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Delete Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1476,7 +1476,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Hover Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Delete Hover Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1494,7 +1494,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Button Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Delete Button Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1512,7 +1512,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Delete Button Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Delete Button Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1530,7 +1530,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Center Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1548,7 +1548,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Hover Button Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Center Hover Button Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1566,7 +1566,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Button Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Center Button Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1584,7 +1584,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Center Button Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Center Button Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1617,12 +1617,12 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-relative" >
                 <div class="asowp-flex asowp-space-x-4">
-                    <h2 class="asowp-text-[15px] asowp-font-bold">Recaps Section</h2>
+                    <h2 class="asowp-text-[15px] asowp-font-bold">{{ __("Recaps Section", "all-signs-options-pro") }}</h2>
                 </div>
                 <div v-show="dropdownColorsSections['recaps']">
                     <div class="asowp-grid asowp-grid-cols-4 w-full gap-4 asowp-justify-between asowp-items-center">
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1640,7 +1640,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Header Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Header Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1658,7 +1658,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Header Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Header Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1676,7 +1676,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Hover Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Recaps Option Hover Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1694,7 +1694,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Hover Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Recaps Option Hover Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1712,7 +1712,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Recaps Option Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1730,7 +1730,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Border Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Recaps Option Border Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1748,7 +1748,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Recaps Option Border Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Recaps Option Border Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1766,7 +1766,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Finish Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1784,7 +1784,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Hover Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Finish Hover Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1802,7 +1802,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Finish Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1820,7 +1820,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Finish Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Finish Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1838,7 +1838,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button AddToCart Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1856,7 +1856,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Hover Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button AddToCart Hover Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1874,7 +1874,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button AddToCart Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1892,7 +1892,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button AddToCart Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button AddToCart Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1910,7 +1910,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Edit Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1928,7 +1928,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Hover Background Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Edit Hover Background Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1946,7 +1946,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Text Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Edit Text Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -1964,7 +1964,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-flex-col w-1/4 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Button Edit Text Hover Color</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Button Edit Text Hover Color", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input
                                     id="colorPicker"
@@ -2005,7 +2005,7 @@
             <div class="asowp-bg-[#016464] asowp-rounded">
                 <button :disabled="isLoading" @click="updateThemesSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
                 </button>
             </div>
         </div>
@@ -2018,6 +2018,7 @@ import {ref, onMounted} from 'vue';
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions';
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute();
 const configId = ref(route.params.configId);
 const isFetching = ref(false);

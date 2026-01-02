@@ -35,7 +35,7 @@ class ASOWP_Admin
                 $submenu[$slug][] = array(__('Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/');
                 $submenu[$slug][] = array(__('Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configurations');
                 $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/global-settings/output');
-                $submenu[$slug][] = array(__('Templates', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');                
+                $submenu[$slug][] = array(__('Templates', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');
                 $submenu[$slug][] = array(__('Manage Fonts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-fonts');
                 $submenu[$slug][] = array(__('Manage Cliparts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
 
@@ -69,7 +69,8 @@ class ASOWP_Admin
         wp_enqueue_style('asowp-admin', ASOWP_ASSETS . '/css/admin.css', false, ASOWP_VERSION);
         wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
 
-        wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
+        wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
+        wp_set_script_translations( 'asowp-admin', "all-signs-options-pro" );
         wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
 
         wp_enqueue_style('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.css', false, ASOWP_VERSION);
@@ -86,25 +87,25 @@ class ASOWP_Admin
     public function plugin_page()
     {
         $api_url = get_rest_url(); ?>
-                <div class="wrap">
-                    <div id="asowp-admin-app"></div>
-                </div>
-                <?php wp_localize_script("asowp-admin", "asowp_data", [
-                    "rest_url" => $api_url . "asowp/v1",
-                    "ajax_url" => esc_url(admin_url('admin-ajax.php')),
-                    "site_url" => urlencode(get_site_url()),
-                    "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
-                    "author" => ASOWP_ID,
-                    "assets_url" => ASOWP_ASSETS,
-                    "page" => "admin",
-                    "version" => ASOWP_VERSION,
-                    'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
-                    'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
-                ]);
-                wp_localize_script("asowp-admin", "asowp_configurator_data", array(
-                    "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
-                    "borders_url" => ASOWP_ASSETS . '/images/borders',
-                ));
+        <div class="wrap">
+            <div id="asowp-admin-app"></div>
+        </div>
+        <?php wp_localize_script("asowp-admin", "asowp_data", [
+            "rest_url" => $api_url . "asowp/v1",
+            "ajax_url" => esc_url(admin_url('admin-ajax.php')),
+            "site_url" => urlencode(get_site_url()),
+            "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
+            "author" => ASOWP_ID,
+            "assets_url" => ASOWP_ASSETS,
+            "page" => "admin",
+            "version" => ASOWP_VERSION,
+            'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
+            'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
+        ]);
+        wp_localize_script("asowp-admin", "asowp_configurator_data", array(
+            "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
+            "borders_url" => ASOWP_ASSETS . '/images/borders',
+        ));
     }
 
     public function asowp_add_custom_mime_types($mimes)

@@ -2,24 +2,24 @@
 <template>
     <div class="asowp-space-y-1">
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-6">
-            <p class="asowp-text-[14px] asowp-font-bold">2- Set the Label and Description</p>
-            <p class="asowp-text-[12px]">This text will display above the input options.</p>
+            <p class="asowp-text-[14px] asowp-font-bold">2- {{ __('Set the Label and Description', 'all-signs-options-pro') }}</p>
+            <p class="asowp-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-options-pro') }}</p>
             <div class="asowp-flex asowp-justify-between asowp-space-x-12">
                 <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>Label</label>
+                    <label>{{ __('Label', 'all-signs-options-pro') }}</label>
                     <input v-model="includedOption.label" type="text" :class="`asowp-w-full ${emptyLabel?'asowp-field-required':''}`" value="Remote control (Dimmer)"/>
                 </div>
                 <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>Description</label>
+                    <label>{{ __('Description', 'all-signs-options-pro') }}</label>
                     <input v-model="includedOption.description" type="text" class="asowp-w-full" value="A remote control is included free with every sign"/>
                 </div>
             </div>
         </div>
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-6">
-            <p class="asowp-text-[14px] asowp-font-bold">4- Popup Image (optional)</p>
-            <p class="asowp-text-[12px]">Example Image - displayed as popup</p>
+            <p class="asowp-text-[14px] asowp-font-bold">4- {{ __('Popup Image (optional)', 'all-signs-options-pro') }}</p>
+            <p class="asowp-text-[12px]">{{ __('Example Image - displayed as popup', 'all-signs-options-pro') }}</p>
             <div class="asowp-flex asowp-w-full asowp-space-x-2">
-                <button @click="selectPopupImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[12px] asowp-cursor-pointer">choose a picture</button>
+                <button @click="selectPopupImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[12px] asowp-cursor-pointer">{{ __('choose a picture', 'all-signs-options-pro') }}</button>
                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
                     <img v-if="includedOption.popImg != ''" :src="includedOption.popImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                     <button v-if="includedOption.popImg != ''" @click="()=>{includedOption.popImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none asowp-cursor-pointer`">
@@ -31,10 +31,10 @@
             </div>
         </div>
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-6">
-            <p class="asowp-text-[14px] asowp-font-bold">Pricing (optional) </p>
+            <p class="asowp-text-[14px] asowp-font-bold">{{ __('Pricing (optional)', 'all-signs-options-pro') }}</p>
             <div class="asowp-flex asowp-space-x-4">
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">None</p>
+                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __('None', 'all-signs-options-pro') }}</p>
                     <label for="none" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                         <input id="none" type="radio" name="none" class="asowp-sr-only asowp-peer" value="none" v-model="includedOption.price.type">
                         <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg`"></div>
@@ -42,14 +42,14 @@
                 </div>
                 
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">Base Price</p>
+                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __('Base Price', 'all-signs-options-pro') }}</p>
                     <label for="base" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                     <input id="base" type="radio" name="base" class="asowp-sr-only asowp-peer" value="base" v-model="includedOption.price.type">
                     <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
                     </label>
                 </div>
                 <div class="asowp-flex asowp-justify-center asowp-items-center asowp-space-x-4">
-                    <p class="asowp-text-md asowp-font-medium asowp-text-black">Price Multiplier</p>
+                    <p class="asowp-text-md asowp-font-medium asowp-text-black">{{ __('Price Multiplier', 'all-signs-options-pro') }}</p>
                     <label for="multiplier" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                     <input id="multiplier" type="radio" name="multiplier" class="asowp-sr-only asowp-peer" value="multiplier" v-model="includedOption.price.type">
                     <div class="peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[112%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-3px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-3 after:asowp-w-3 after:asowp-transition-all after:asowp-shadow-lg"></div>
@@ -59,7 +59,7 @@
             <div v-if="includedOption.price.type!='none'">
                 <div class="flex flex-col space-y-1 w-10/12 pt-4 pb-8 px-8">
                     <input type="number" class="border rounded p-2 h-[35px]" v-model="includedOption.price.value" @blur="isNaN(includedOption.price.value)? includedOption.price.value=0 : ''">
-                    <p class="text-[11px] w-2/3">{{includedOption.price.type == 'base'? 'Additional cost when selected by customer (e.g. $10.00).' : "Multiply the final price of the sign when selected (e.g. 2 x 100)."}}</p>
+                    <p class="text-[11px] w-2/3">{{includedOption.price.type == 'base'? __('Additional cost when selected by customer (e.g. $10.00).', 'all-signs-options-pro') : __('Multiply the final price of the sign when selected (e.g. 2 x 100).', 'all-signs-options-pro')}}</p>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                     <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                 </svg>
 
-                <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                <div class="asowp-font-semibold asowp-text-[16px]">{{ __('Back', 'all-signs-options-pro') }}</div>
             </button>
         </div>
         <div :class="`${props.action? !isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500':'asowp-bg-[#016464]'} asowp-rounded`">
@@ -83,7 +83,7 @@
                     </svg>
                 </div>
 
-                <span class="asowp-font-semibold asowp-text-[16px]">{{props.action? 'Update': 'Save'}}</span>
+                <span class="asowp-font-semibold asowp-text-[16px]">{{props.action? __('Update', 'all-signs-options-pro') : __('Save', 'all-signs-options-pro') }}</span>
             </button>
         </div>
     </div>
@@ -92,6 +92,7 @@
 import {ref,onMounted,defineProps} from 'vue';
 import api from '@/admin/Api/api';
 import { useRoute } from 'vue-router';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute()
 import toastMessage from '@/admin/utils/functions';
 const props = defineProps({
@@ -117,9 +118,9 @@ const selectPopupImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "choose a picture",
+            title: __('choose a picture', 'all-signs-options-pro'),
             button: {
-                text: "choose a picture"
+                text: __('choose a picture', 'all-signs-options-pro')
             },
             multiple: false
         }
@@ -163,9 +164,9 @@ onMounted(()=>{
 const uploadPopupImage = () => { 
     var uploader = wp.media(
         {
-            title: 'Please set the picture',
+            title: __('Please set the picture', 'all-signs-options-pro'),
             button: {
-                text: "Select picture(s)"
+                text: __('Select picture(s)', 'all-signs-options-pro')
             },
             multiple: false
         }
@@ -204,7 +205,7 @@ const setBack = () => {
 const saveAdditional = async () => {
     if(includedOption.value.label.trim() == ''){
         emptyLabel.value = true;
-        toastMessage("Label must not be empty","warning");
+        toastMessage(__('Label must not be empty', 'all-signs-options-pro'), 'warning');
     }else{
         isLoading.value = true;
         const op = await api.addCustomAdditional(route.params.configId,includedOption.value);
@@ -223,7 +224,7 @@ const saveAdditional = async () => {
 const updateAdditional = async () => {
     if(includedOption.value.label.trim() == ''){
         emptyLabel.value = true;
-        toastMessage("The Label must not be empty","warning");
+        toastMessage(__('The Label must not be empty', 'all-signs-options-pro'), 'warning');
     }else{
         isLoading.value = true;    
         const op = await api.updateCustomAdditional(route.params.configId,props.id,includedOption.value);

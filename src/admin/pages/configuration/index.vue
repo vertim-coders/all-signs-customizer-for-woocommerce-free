@@ -6,7 +6,7 @@
       >
         <div class="asowp-px-4 asowp-flex">
           <div class="asowp-font-bold asowp-py-4 asowp-w-[50%]">
-            Configurations list
+            {{ __("Configurations list", "all-signs-options-pro") }}
           </div>
           <div
             class="asowp-flex asowp-justify-end asowp-items-center asowp-w-[50%]"
@@ -19,7 +19,7 @@
                 @click="openBulkDeleteModal = true"
                 class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-rounded-md asowp-bg-white asowp-border asowp-border-[#e5e7eb] hover:asowp-bg-[#f8fafc] asowp-no-underline asowp-text-[#8e1f0b] asowp-text-sm asowp-font-medium asowp-px-4 asowp-py-2 asowp-cursor-pointer"
               >
-                Delete selected ({{ selectedConfigIds.length }})
+                {{ __("Delete selected", "all-signs-options-pro") }} ({{ selectedConfigIds.length }})
               </button>
               <RouterLink
                 to="/configurations/new"
@@ -41,7 +41,7 @@
                     />
                   </g>
                 </svg>
-                Add new configuration
+                {{ __("Add new configuration", "all-signs-options-pro") }}
               </RouterLink>
                
             </div>
@@ -65,14 +65,14 @@
                 @change="toggleSelectAll($event.target.checked)"
               />
             </div>
-            <div class="asowp-flex asowp-items-center">Name configuration</div>
+            <div class="asowp-flex asowp-items-center">{{ __("Name configuration", "all-signs-options-pro") }}</div>
             <div class="asowp-flex asowp-items-center asowp-justify-center">
-              Description
+              {{ __("Description", "all-signs-options-pro") }}
             </div>
-            <div class="asowp-flex asowp-items-center asowp-justify-center">Icon</div>
-            <div class="asowp-flex asowp-items-center asowp-justify-center">Material type</div>
+            <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Icon", "all-signs-options-pro") }}</div>
+            <div class="asowp-flex asowp-items-center asowp-justify-center">{{ __("Material type", "all-signs-options-pro") }}</div>
             <div class="asowp-flex asowp-items-center asowp-justify-center">
-              Actions
+              {{ __("Actions", "all-signs-options-pro") }}
             </div>
           </div>
 
@@ -103,15 +103,15 @@
                 </svg>
               </div>
               <p class="asowp-text-[1.25rem] asowp-font-bold">
-                No Configurations found
+                {{ __("No Configurations found", "all-signs-options-pro") }}
               </p>
               <p class="asowp-text-[1em]">
-                Try changing the filters or search term
+                {{ __("Try changing the filters or search term", "all-signs-options-pro") }}
               </p>
             </div>
           </div>
           <div
-            v-if="!isFetching"
+            
             v-for="(config, key) in configs"
             :key="key"
             @click="goToMaterial(config)"
@@ -204,7 +204,7 @@
                         d="M10 4c-2.476 0-4.348 1.23-5.577 2.532a9.266 9.266 0 0 0-1.4 1.922 5.98 5.98 0 0 0-.37.818c-.082.227-.153.488-.153.728s.071.501.152.728c.088.246.213.524.371.818.317.587.784 1.27 1.4 1.922 1.229 1.302 3.1 2.532 5.577 2.532 2.476 0 4.348-1.23 5.577-2.532a9.265 9.265 0 0 0 1.4-1.922 5.98 5.98 0 0 0 .37-.818c.082-.227.153-.488.153-.728s-.071-.501-.152-.728a5.984 5.984 0 0 0-.371-.818 9.269 9.269 0 0 0-1.4-1.922c-1.229-1.302-3.1-2.532-5.577-2.532Zm-5.999 6.002v-.004c.004-.02.017-.09.064-.223a4.5 4.5 0 0 1 .278-.608 7.768 7.768 0 0 1 1.17-1.605c1.042-1.104 2.545-2.062 4.487-2.062 1.942 0 3.445.958 4.486 2.062a7.77 7.77 0 0 1 1.17 1.605c.13.24.221.447.279.608.047.132.06.203.064.223v.004c-.004.02-.017.09-.064.223a4.503 4.503 0 0 1-.278.608 7.768 7.768 0 0 1-1.17 1.605c-1.042 1.104-2.545 2.062-4.487 2.062-1.942 0-3.445-.958-4.486-2.062a7.766 7.766 0 0 1-1.17-1.605 4.5 4.5 0 0 1-.279-.608c-.047-.132-.06-.203-.064-.223Z">
                       </path>
                     </svg>
-                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Preview</span>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">{{ __("Preview", "all-signs-options-pro") }}</span>
                   </button>
 
                   <!-- Edit -->
@@ -224,7 +224,7 @@
                         d="M15.655 4.344a2.695 2.695 0 0 0-3.81 0l-.599.599-.009-.009-1.06 1.06.008.01-5.88 5.88a2.75 2.75 0 0 0-.805 1.944v1.922a.75.75 0 0 0 .75.75h1.922a2.75 2.75 0 0 0 1.944-.806l7.54-7.539a2.695 2.695 0 0 0 0-3.81Zm-4.409 2.72-5.88 5.88a1.25 1.25 0 0 0-.366.884v1.172h1.172c.331 0 .65-.132.883-.366l5.88-5.88-1.689-1.69Zm2.75.629.599-.599a1.195 1.195 0 1 0-1.69-1.689l-.598.599 1.69 1.689Z">
                       </path>
                     </svg>
-                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Edit</span>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">{{ __("Edit", "all-signs-options-pro") }}</span>
                   </button>
 
                   <!-- Duplicate -->
@@ -244,10 +244,14 @@
                       </path>
                       <path
                         fill-rule="evenodd"
-                        d="M8.75 16.5c-1.438 0-2.618-1.104-2.74-2.51-1.406-.122-2.51-1.302-2.51-2.74v-5c0-1.519 1.231-2.75 2.75-2.75h5c1.438 0 2.618 1.104 2.74 2.51 1.406.122 2.51 1.302 2.51 2.74v5c0 1.519-1.231 2.75-2.75 2.75h-5Zm0-10.5c-1.519 0-2.75 1.231-2.75 2.75v3.725c-.57-.116-1-.62-1-1.225v-5c0-.69.56-1.25 1.25-1.25h5c.605 0 1.11.43 1.225 1h-3.725Zm0 1.5c-.69 0-1.25.56-1.25 1.25v5c0 .69.56 1.25 1.25 1.25h5c.69 0 1.25-.56 1.25-1.25v-5c0-.69-.56-1.25-1.25-1.25h-5Z">
+                        d="M9.25 9a.75.75 0 0 0-1.5 0v4.25a.75.75 0 0 0 1.5 0v-4.25Z">
+                      </path>
+                      <path
+                        fill-rule="evenodd"
+                        d="M7.25 5.25a2.75 2.75 0 0 1 5.5 0h3a.75.75 0 0 1 0 1.5h-.75v5.45c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311c-.642.327-1.482.327-3.162.327h-.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162v-5.45h-.75a.75.75 0 0 1 0-1.5h3Zm1.5 0a1.25 1.25 0 1 1 2.5 0h-2.5Zm-2.25 1.5h7v5.45c0 .865-.001 1.423-.036 1.848-.033.408-.09.559-.128.633a1.5 1.5 0 0 1-.655.655c-.074.038-.225.095-.633.128-.425.035-.983.036-1.848.036h-.4c-.865 0-1.423-.001-1.848-.036-.408-.033-.559-.09-.633-.128a1.5 1.5 0 0 1-.656-.655c-.037-.074-.094-.225-.127-.633-.035-.425-.036-.983-.036-1.848v-5.45Z">
                       </path>
                     </svg>
-                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Duplicate</span>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">{{ __("Duplicate", "all-signs-options-pro") }}</span>
                   </button>
 
                   <!-- Delete -->
@@ -273,7 +277,7 @@
                         d="M7.25 5.25a2.75 2.75 0 0 1 5.5 0h3a.75.75 0 0 1 0 1.5h-.75v5.45c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311c-.642.327-1.482.327-3.162.327h-.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162v-5.45h-.75a.75.75 0 0 1 0-1.5h3Zm1.5 0a1.25 1.25 0 1 1 2.5 0h-2.5Zm-2.25 1.5h7v5.45c0 .865-.001 1.423-.036 1.848-.033.408-.09.559-.128.633a1.5 1.5 0 0 1-.655.655c-.074.038-.225.095-.633.128-.425.035-.983.036-1.848.036h-.4c-.865 0-1.423-.001-1.848-.036-.408-.033-.559-.09-.633-.128a1.5 1.5 0 0 1-.656-.655c-.037-.074-.094-.225-.127-.633-.035-.425-.036-.983-.036-1.848v-5.45Z">
                       </path>
                     </svg>
-                    <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">Delete</span>
+                    <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">{{ __("Delete", "all-signs-options-pro") }}</span>
                   </button>
                 </div>
               </button>
@@ -292,22 +296,22 @@
     <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeEditModal"></div>
     <div class="asowp-relative asowp-w-[min(700px,95vw)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
       <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
-        <div class="asowp-text-[14px] asowp-font-semibold">Edit configuration</div>
+        <div class="asowp-text-[14px] asowp-font-semibold">{{ __("Edit configuration", "all-signs-options-pro") }}</div>
         <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeEditModal" aria-label="Close">✕</button>
       </div>
       <div class="asowp-p-5 asowp-space-y-4">
         <div>
-          <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">Name</label>
+          <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">{{ __("Name", "all-signs-options-pro") }}</label>
           <input v-model.trim="editForm.name" type="text" class="asowp-mt-2 asowp-w-full asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-3 asowp-py-2" />
         </div>
         <div>
-          <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">Description</label>
+          <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">{{ __("Description", "all-signs-options-pro") }}</label>
           <textarea v-model="editForm.description" rows="3" class="asowp-mt-2 asowp-w-full asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-3 asowp-py-2"></textarea>
         </div>
       </div>
       <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
-        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeEditModal">Cancel</button>
-        <button class="asowp-rounded-md asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !editForm.name?.trim()" @click="saveEdit">Save</button>
+        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeEditModal">{{ __("Cancel", "all-signs-options-pro") }}</button>
+        <button class="asowp-rounded-md asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !editForm.name?.trim()" @click="saveEdit">{{ __("Save", "all-signs-options-pro") }}</button>
       </div>
     </div>
   </div>
@@ -320,16 +324,16 @@
     <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeDuplicateModal"></div>
     <div class="asowp-relative asowp-w-[min(700px,95vw)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
       <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
-        <div class="asowp-text-[14px] asowp-font-semibold">Duplicate configuration</div>
+        <div class="asowp-text-[14px] asowp-font-semibold">{{ __("Duplicate configuration", "all-signs-options-pro") }}</div>
         <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeDuplicateModal" aria-label="Close">✕</button>
       </div>
       <div class="asowp-p-5 asowp-space-y-2">
-        <div class="asowp-text-[13px] asowp-text-gray-700">Choose a name for the duplicated configuration.</div>
+        <div class="asowp-text-[13px] asowp-text-gray-700">{{ __("Choose a name for the duplicated configuration.", "all-signs-options-pro") }}</div>
         <input v-model.trim="duplicateName" type="text" class="asowp-mt-2 asowp-w-full asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-3 asowp-py-2" />
       </div>
       <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
-        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeDuplicateModal">Cancel</button>
-        <button class="asowp-rounded-md asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !duplicateName?.trim()" @click="confirmDuplicate">Duplicate</button>
+        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeDuplicateModal">{{ __("Cancel", "all-signs-options-pro") }}</button>
+        <button class="asowp-rounded-md asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !duplicateName?.trim()" @click="confirmDuplicate">{{ __("Duplicate", "all-signs-options-pro") }}</button>
       </div>
     </div>
   </div>
@@ -342,21 +346,21 @@
     <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeModal"></div>
     <div class="asowp-relative asowp-w-[min(520px,95vw)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
       <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
-        <div class="asowp-text-[14px] asowp-font-semibold">Delete configuration</div>
+        <div class="asowp-text-[14px] asowp-font-semibold">{{ __("Delete configuration", "all-signs-options-pro") }}</div>
         <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeModal" aria-label="Close">✕</button>
       </div>
       <div class="asowp-p-5 asowp-space-y-2">
-        <div class="asowp-text-[13px] asowp-text-gray-700">Are you sure you want to delete this configuration?</div>
+        <div class="asowp-text-[13px] asowp-text-gray-700">{{ __("Are you sure you want to delete this configuration?", "all-signs-options-pro") }}</div>
         <div class="asowp-rounded-lg asowp-bg-[#fafafa] asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">
           {{ deleteConfig.name }}
         </div>
         <div class="asowp-text-[12px] asowp-text-gray-600">
-          This will detach associated products (their config-id will be set to 0).
+          {{ __("This will detach associated products (their config-id will be set to 0).", "all-signs-options-pro") }}
         </div>
       </div>
       <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
-        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeModal">Cancel</button>
-        <button class="asowp-rounded-md asowp-bg-[#8e1f0b] hover:asowp-bg-[#7a1a09] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="delConfig">Delete</button>
+        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeModal">{{ __("Cancel", "all-signs-options-pro") }}</button>
+        <button class="asowp-rounded-md asowp-bg-[#8e1f0b] hover:asowp-bg-[#7a1a09] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="delConfig">{{ __("Delete", "all-signs-options-pro") }}</button>
       </div>
     </div>
   </div>
@@ -369,20 +373,20 @@
     <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeBulkDeleteModal"></div>
     <div class="asowp-relative asowp-w-[min(520px,95vw)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
       <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
-        <div class="asowp-text-[14px] asowp-font-semibold">Delete selected configurations</div>
+        <div class="asowp-text-[14px] asowp-font-semibold">{{ __("Delete selected configurations", "all-signs-options-pro") }}</div>
         <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeBulkDeleteModal" aria-label="Close">✕</button>
       </div>
       <div class="asowp-p-5 asowp-space-y-2">
         <div class="asowp-text-[13px] asowp-text-gray-700">
-          You are about to delete {{ selectedConfigIds.length }} configuration(s).
+          {{ __("You are about to delete", "all-signs-options-pro") }} {{ selectedConfigIds.length }} {{ __("configuration(s).", "all-signs-options-pro") }}
         </div>
         <div class="asowp-text-[12px] asowp-text-gray-600">
-          Products attached to these configurations will be detached (config-id set to 0).
+          {{ __("Products attached to these configurations will be detached (config-id set to 0).", "all-signs-options-pro") }}
         </div>
       </div>
       <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
-        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeBulkDeleteModal">Cancel</button>
-        <button class="asowp-rounded-md asowp-bg-[#8e1f0b] hover:asowp-bg-[#7a1a09] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !selectedConfigIds.length" @click="confirmBulkDelete">Delete all</button>
+        <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeBulkDeleteModal">{{ __("Cancel", "all-signs-options-pro") }}</button>
+        <button class="asowp-rounded-md asowp-bg-[#8e1f0b] hover:asowp-bg-[#7a1a09] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !selectedConfigIds.length" @click="confirmBulkDelete">{{ __("Delete all", "all-signs-options-pro") }}</button>
       </div>
     </div>
   </div>
@@ -393,7 +397,7 @@ import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
-
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const router = useRouter();
 const route = useRoute();
 

@@ -5,25 +5,26 @@
   >
     <!-- Header -->
     <header class="asowp-mb-6">
-      <h1 class="asowp-gap-1 asowp-flex" style="font-size: 1.25rem; font-weight: 600; color: #303030;">
-        What product would you like to sell?
-        <span
-          v-if="wizard?.category"
-          class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm"
-        >
-          {{ categories.find((c) => c.id === wizard.category)?.tag }}
-        </span>
-        <span class="asowp-font-medium">/</span>
-        <span
-          v-if="currentProductCategory?.name"
-          class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm"
-        >
-          {{ currentProductCategory.name }}
+      <h1 class="asowp-gap-2 asowp-flex asowp-flex-wrap asowp-items-center" style="font-size: 1.25rem; font-weight: 600; color: #303030;">
+        {{ __('What product would you like to sell?', 'all-signs-options-pro') }}
+        <span class="asowp-inline-flex asowp-gap-2 asowp-flex-wrap">
+          <span
+            v-for="(crumb, idx) in breadcrumbTags"
+            :key="`crumb-${idx}`"
+            :class="[
+              'asowp-font-semibold asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm',
+              idx === breadcrumbTags.length - 1
+                ? 'asowp-bg-[#b4fed2] asowp-text-[#303030]'
+                : 'asowp-bg-[#e5e7eb] asowp-text-[#6b7280]'
+            ]"
+          >
+            {{ crumb }}
+          </span>
         </span>
       </h1>
 
       <p class="asowp-text-sm asowp-text-gray-600 asowp-mt-1">
-        Pick the product category and a sample that best represents what you’re selling.
+        {{ __('Pick the product category and a sample that best represents what you’re selling.', 'all-signs-options-pro') }}
       </p>
     </header>
 
@@ -91,12 +92,12 @@
           </p>
 
           <div class="asowp-flex asowp-items-center asowp-justify-between asowp-text-[11px] asowp-text-gray-500">
-            <span>Click to select</span>
+            <span>{{ __('Click to select', 'all-signs-options-pro') }}</span>
             <button
               @click.stop="openPreview(product)"
               class="asowp-text-[#016464] asowp-cursor-pointer asowp-font-semibold asowp-bg-transparent asowp-border-none"
             >
-              Preview
+              {{ __('Preview', 'all-signs-options-pro') }}
             </button>
           </div>
         </div>
@@ -105,7 +106,7 @@
 
     <!-- Tip -->
     <footer class="asowp-text-xs asowp-text-gray-500">
-      Tip: You’ll configure the demo content and the user interaction mode in the next step.
+      {{ __('Tip: You’ll configure the demo content and the user interaction mode in the next step.', 'all-signs-options-pro') }}
     </footer>
 
     <!-- Actions -->
@@ -114,7 +115,7 @@
         @click="emit('go-back')"
         class="asowp-bg-white asowp-cursor-pointer asowp-border asowp-border-gray-300 asowp-text-gray-700 asowp-px-4 asowp-py-2 asowp-rounded-lg hover:asowp-bg-gray-50"
       >
-        Back
+        {{ __('Back', 'all-signs-options-pro') }}
       </button>
 
       <button
@@ -127,7 +128,7 @@
             : 'asowp-bg-gray-300 asowp-text-white asowp-cursor-not-allowed'
         ]"
       >
-        Next
+        {{ __('Next', 'all-signs-options-pro') }}
       </button>
     </div>
 
@@ -173,7 +174,7 @@
                 :alt="previewProduct?.name"
                 class="asowp-object-contain asowp-max-h-full asowp-max-w-full"
               />
-              <div v-else class="asowp-text-gray-500 asowp-text-sm">No preview available</div>
+              <div v-else class="asowp-text-gray-500 asowp-text-sm">{{ __('No preview available', 'all-signs-options-pro') }}</div>
             </div>
 
             <button
@@ -186,11 +187,11 @@
           </div>
 
           <div class="asowp-text-center asowp-text-sm asowp-text-gray-600">
-            {{ hasImages ? `${activePreviewIndex + 1} / ${previewImages.length}` : '—' }}
+            {{ hasImages ? `${activePreviewIndex + 1} / ${previewImages.length}` : __('—', 'all-signs-options-pro') }}
           </div>
 
           <div class="asowp-text-[12px] asowp-text-gray-600">
-            Suggested interaction mode for this product:
+            {{ __('Suggested interaction mode for this product:', 'all-signs-options-pro') }}
             <span class="asowp-font-semibold asowp-text-[#016464]">
               {{ previewProduct?.materialType || 'simple' }}
             </span>
@@ -202,7 +203,7 @@
             class="asowp-px-4 asowp-py-1.5 asowp-rounded-md asowp-text-white asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-[13px] asowp-cursor-pointer"
             @click="closePreview"
           >
-            Close
+            {{ __('Close', 'all-signs-options-pro') }}
           </button>
         </div>
       </div>
@@ -213,7 +214,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import {signageOption} from "@/admin/utils/create-config.data";
-
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
   wizard: {
     type: Object,
@@ -256,6 +257,23 @@ const showPreview = ref(false);
 const currentProductCategory = computed(() => {
   if (props.wizard.category !== "signage" || !props.wizard.productType) return null;
   return signageOption.productCategories?.find((cat) => cat.type === props.wizard.productType) || null;
+});
+
+const breadcrumbTags = computed(() => {
+  const crumbs = [];
+  if (props.wizard?.category) {
+    const found = props.categories?.find?.((c) => c.id === props.wizard.category);
+    crumbs.push(found?.tag || props.wizard.category);
+  }
+  if (currentProductCategory.value?.name) {
+    crumbs.push(currentProductCategory.value.name);
+  }
+  if (props.selectedProduct) {
+    crumbs.push(props.selectedProduct);
+  } else if (props.selectedSubCategory) {
+    crumbs.push(props.selectedSubCategory);
+  }
+  return crumbs;
 });
 
 const currentProductGroup = computed(() => {

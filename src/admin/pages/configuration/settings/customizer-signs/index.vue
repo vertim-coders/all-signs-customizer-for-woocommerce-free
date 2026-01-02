@@ -3,22 +3,22 @@
         <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
             <div class="">
                 <button @click="()=>{showStep='customizer-options'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'customizer-options' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Customizer options
+                    {{ __("Customizer options", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep='sign-part'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'sign-part' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Sign Part
+                    {{ __("Sign Part", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep='text'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'text' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Text
+                    {{ __("Text", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep='image'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'image' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Image
+                    {{ __("Image", "all-signs-options-pro") }}
                 </button>
             </div>
         </div>
@@ -41,6 +41,7 @@ import CustomizerOptions from './customizer-options.vue';
 import Image from './image.vue';
 import SignPart from './sign-part.vue';
 import Text from './text.vue';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const showStep = ref('customizer-options');
 const isFetching = ref(false);
 const customizerSigns = ref({});

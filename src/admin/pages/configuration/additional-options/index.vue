@@ -1,6 +1,6 @@
 
 <template>
-    <div class="asowp-mt-[10px]">
+    <div class="asowp-mt-[70px]">
         <div class="" v-show="!news">
             <!--<div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <div  v-if="config.trim() != ''" class="asowp-font-bold asowp-text-[16px]">
@@ -8,7 +8,7 @@
                 </div>
                 <img class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
                 <div class="asowp-text-[16px]">
-                    Additional Options
+                    {{ __("Additional Options", "all-signs-options-pro") }}
                 </div>
             </div>-->
             <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1]">
@@ -20,7 +20,7 @@
                             </g>
                         </svg>
                         <div class="asowp-text-[14px]">
-                            Additional Options
+                            {{ __("Additional Options", "all-signs-options-pro") }}
                         </div>
                     </button>
                 </div>
@@ -30,13 +30,13 @@
                             <tr class="">
                                 <th></th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                    Label
+                                    {{ __('Label', 'all-signs-options-pro') }}
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                    Type
+                                    {{ __('Type', 'all-signs-options-pro') }}
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                    Action
+                                    {{ __('Action', 'all-signs-options-pro') }}
                                 </th>
                             </tr>
                         </thead>
@@ -86,7 +86,7 @@
                             <svg v-if="!isLoading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
                             </svg>
-                            Save Sort
+                            {{ __("Save Sort", "all-signs-options-pro") }}
                         </button>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
         <div v-if="news" class="asowp-sticky asowp-space-y-2 asowp-top-[80px] asowp-z-[999]">
             <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <div class="asowp-font-bold asowp-text-[16px]">
-                    Additional Options
+                    {{ __("Additional Options", "all-signs-options-pro") }}
                 </div>
                 <img class="asowp-w-4 asowp-h-4 asowp-py-1" src="../../../../../assets/icons/ic_crochet.svg" alt="">
                 <div class="asowp-text-[16px]">
@@ -104,32 +104,32 @@
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <div class="asowp-font-bold asowp-text-[16px]">
-                    Create new additional option
+                    {{ __("Create new additional option", "all-signs-options-pro") }}
                 </div>
             </div>
             <div class="asowp-bg-white asowp-sticky asowp-shadow-md asowp-px-4 asowp-py-2">
-                <p class="asowp-text-[14px] asowp-font-bold asowp-m-0">1- Choose an Input Type</p>
-                <p class="asowp-text-[12px] asowp-m-0">This text will display above the input options.</p>
+                <p class="asowp-text-[14px] asowp-font-bold asowp-m-0">1- {{ __('Choose an Input Type', 'all-signs-options-pro') }}</p>
+                <p class="asowp-text-[12px] asow-m-0">{{ __('This text will display above the input options.', 'all-signs-options-pro') }}</p>
                 <div class="asowp-flex asowp-justify-evenly asowp-items-center">
                     <button @click="()=>{type='yes/no'}" :class="`asowp-w-[120px] ${type=='yes/no'?'asowp-border-2 asowp-border-[#016464]':'asowp-border-none'} asowp-flex asowp-p-2 asowp-flex-col asowp-cursor-pointer asowp-justify-center asowp-items-center asowp-rounded-md asowp-w-fit asowp-h-fit asowp-bg-transparent`">
                         <img src="../../../../../assets/images/additional-options/im_yesNo.png" alt="" class="asowp-w-[50px] asowp-h-[50px]"/>
-                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">Yes or no</label>
+                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">{{ __('Yes or no', 'all-signs-options-pro') }}</label>
                     </button>
                     <button @click="()=>{type='image-input'}" :class="`asowp-w-[120px] ${type=='image-input'?'asowp-border-2 asowp-border-[#016464]':'asowp-border-none'} asowp-flex asowp-p-2 asowp-flex-col asowp-cursor-pointer asowp-justify-center asowp-items-center asowp-rounded-md asowp-w-fit asowp-h-fit asowp-bg-transparent`">
                         <img src="../../../../../assets/images/additional-options/im_image-row.png" alt="" class="asowp-w-[50px] asowp-h-[50px]"/>
-                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">Image-Input</label>
+                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">{{ __('Image-Input', 'all-signs-options-pro') }}</label>
                     </button>
                     <button @click="()=>{type='dropdown'}" :class="`asowp-w-[120px] ${type=='dropdown'?'asowp-border-2 asowp-border-[#016464]':'asowp-border-none'} asowp-flex asowp-p-2 asowp-flex-col asowp-cursor-pointer asowp-justify-center asowp-items-center asowp-rounded-md asowp-w-fit asowp-h-fit asowp-bg-transparent`">
                             <img src="../../../../../assets/images/additional-options/im_select.png" alt="" class="asowp-w-[50px] asowp-h-[50px]"/>
-                            <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">Dropdown</label>
+                            <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">{{ __('Dropdown', 'all-signs-options-pro') }}</label>
                     </button>
                     <button @click="()=>{type='note'}" :class="`asowp-w-[120px] ${type=='note'?'asowp-border-2 asowp-border-[#016464]':'asowp-border-none'} asowp-flex asowp-p-2 asowp-flex-col asowp-cursor-pointer asowp-justify-center asowp-items-center asowp-rounded-md asowp-w-fit asowp-h-fit asowp-bg-transparent`">
                         <img src="../../../../../assets/images/additional-options/im_text-box.png" alt="" class="asowp-w-[50px] asowp-h-[50px]"/>
-                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">Note</label>
+                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">{{ __('Note', 'all-signs-options-pro') }}</label>
                     </button>
                     <button @click="()=>{type='include-type'}" :class="`asowp-w-[120px] ${type=='include-type'?'asowp-border-2 asowp-border-[#016464]':'asowp-border-none'} asowp-flex asowp-p-2 asowp-flex-col asowp-cursor-pointer asowp-justify-center asowp-items-center asowp-rounded-md asowp-w-fit asowp-h-fit asowp-bg-transparent`">
                         <img src="../../../../../assets/images/additional-options/im_includeType.png" alt="" class="asowp-w-[50px] asowp-h-[50px]"/>
-                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">Option included</label>
+                        <label class="asowp-cursor-pointer asowp-text-sm asowp-text-[11px] -asowp-translate-y-4">{{ __('Option included', 'all-signs-options-pro') }}</label>
                     </button>
                 </div>
             </div>
@@ -149,19 +149,19 @@
                     <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
-                    <span class="asowp-sr-only">Close modal</span>
+                    <span class="asowp-sr-only">{{ __("Close modal", "all-signs-options-pro") }}</span>
                 </button>
                 <div class="asowp-p-4 md:p-5 asowp-text-center">
                     <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this option?</h3>
+                    <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{ __('Are you sure you want to delete this option?', 'all-signs-options-pro') }}</h3>
                     <input v-model="additionals[additionalOptionId].label" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                     <button @click="deleteAdditional" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:asowp-bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                         <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                        Yes, I'm sure
+                        {{ __("Yes, I'm sure", "all-signs-options-pro") }}
                     </button>
-                    <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
+                    <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{ __("No, cancel", "all-signs-options-pro") }}</button>
                 </div>
             </div>
         </div>
@@ -178,6 +178,7 @@ import { useRoute } from 'vue-router';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 
+import { __ } from "@wordpress/i18n";
 const route = useRoute();
 const configId = route.params.configId;
 var news = ref(false);

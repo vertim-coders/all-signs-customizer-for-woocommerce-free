@@ -3,7 +3,7 @@
         <div class="asowp-space-y-1 asowp-translate-y-1" v-if="!createFont">
             <div class="asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9] asowp-text-[16px] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
                 <span class="asowp-font-bold">
-                    Manage Font
+                    {{ __("Manage Font", "all-signs-options-pro") }}
                 </span>
             </div>
             <div class="asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
@@ -15,7 +15,7 @@
                             </g>
                         </svg>
                         <div class="asowp-text-[14px]">
-                            Add new font
+                            {{ __("Add new font", "all-signs-options-pro") }}
                         </div>
                     </button>
                 </div>
@@ -25,10 +25,10 @@
                         <thead class="asowp-bg-[#f0f0f1]">
                             <tr class="">
                                 <th scope="col" class="asowp-text-left asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                    Title
+                                    {{ __("Title", "all-signs-options-pro") }}
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-text-[14px] asowp-font-semibold">
-                                    Action
+                                    {{ __("Action", "all-signs-options-pro") }}
                                 </th>
                             </tr>
                         </thead>
@@ -69,7 +69,7 @@
         </div>
         <div class="asowp-space-y-1 asowp-translate-y-1 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]" v-if="createFont">
             <div class="asowp-text-[16px] asowp-font-bold asowp-px-4 asowp-py-4 ">
-                Update font
+                {{ __("Update font", "all-signs-options-pro") }}
             </div>
             <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
             <!--<div class="asowp-px-6 asowp-translate-y-4 asowp-text-[14px]">
@@ -144,7 +144,7 @@
                                 <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">        
                                     <path d="M22.4375 12.2809V18.5309C22.4375 18.9453 22.2729 19.3427 21.9799 19.6357C21.6868 19.9288 21.2894 20.0934 20.875 20.0934H2.125C1.7106 20.0934 1.31317 19.9288 1.02015 19.6357C0.72712 19.3427 0.5625 18.9453 0.5625 18.5309V12.2809C0.5625 11.8665 0.72712 11.4691 1.02015 11.176C1.31317 10.883 1.7106 10.7184 2.125 10.7184H6.8125C7.0197 10.7184 7.21841 10.8007 7.36493 10.9472C7.51144 11.0937 7.59375 11.2924 7.59375 11.4996C7.59375 11.7068 7.51144 11.9056 7.36493 12.0521C7.21841 12.1986 7.0197 12.2809 6.8125 12.2809H2.125V18.5309H20.875V12.2809H16.1875C15.9803 12.2809 15.7816 12.1986 15.6351 12.0521C15.4886 11.9056 15.4062 11.7068 15.4062 11.4996C15.4062 11.2924 15.4886 11.0937 15.6351 10.9472C15.7816 10.8007 15.9803 10.7184 16.1875 10.7184H20.875C21.2894 10.7184 21.6868 10.883 21.9799 11.176C22.2729 11.4691 22.4375 11.8665 22.4375 12.2809ZM7.36523 6.58362L10.7188 3.22913V11.4996C10.7188 11.7068 10.8011 11.9056 10.9476 12.0521C11.0941 12.1986 11.2928 12.2809 11.5 12.2809C11.7072 12.2809 11.9059 12.1986 12.0524 12.0521C12.1989 11.9056 12.2812 11.7068 12.2812 11.4996V3.22913L15.6348 6.58362C15.7814 6.73022 15.9802 6.81257 16.1875 6.81257C16.3948 6.81257 16.5936 6.73022 16.7402 6.58362C16.8868 6.43703 16.9692 6.2382 16.9692 6.03089C16.9692 5.82357 16.8868 5.62475 16.7402 5.47815L12.0527 0.790654C11.9802 0.718016 11.894 0.660392 11.7992 0.621076C11.7043 0.58176 11.6027 0.561523 11.5 0.561523C11.3973 0.561523 11.2957 0.58176 11.2008 0.621076C11.106 0.660392 11.0198 0.718016 10.9473 0.790654L6.25977 5.47815C6.11317 5.62475 6.03082 5.82357 6.03082 6.03089C6.03082 6.2382 6.11317 6.43703 6.25977 6.58362C6.40636 6.73022 6.60518 6.81257 6.8125 6.81257C7.01982 6.81257 7.21864 6.73022 7.36523 6.58362ZM18.5312 15.4059C18.5312 15.1741 18.4625 14.9475 18.3338 14.7548C18.205 14.5621 18.022 14.4119 17.8078 14.3232C17.5937 14.2345 17.3581 14.2113 17.1308 14.2565C16.9034 14.3017 16.6946 14.4134 16.5307 14.5772C16.3668 14.7411 16.2552 14.9499 16.21 15.1773C16.1648 15.4046 16.188 15.6402 16.2767 15.8543C16.3654 16.0685 16.5156 16.2515 16.7083 16.3803C16.901 16.509 17.1276 16.5778 17.3594 16.5778C17.6702 16.5778 17.9682 16.4543 18.188 16.2345C18.4078 16.0148 18.5312 15.7167 18.5312 15.4059Z" fill="white"/>        
                                 </svg>
-                                Upload font file 
+                                {{__("Upload font file", "all-signs-options-pro")}} 
                                 
                             </button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
@@ -152,11 +152,11 @@
                             </div>
                             
                         </div>
-                        <p>.ttf, .otf Font File Type (Required)</p>
+                        <p>{{ __(".ttf, .otf Font File Type (Required)", "all-signs-options-pro") }}</p>
                     </div>
                     
                     <div class="asowp-space-y-3 asowp-w-2/5">
-                        <label class="asowp-text-md asowp-font-medium asowp-text-black asowp-flex asowp-flex-col">Label</label>
+                        <label class="asowp-text-md asowp-font-medium asowp-text-black asowp-flex asowp-flex-col">{{ __("Label", "all-signs-options-pro") }}</label>
                         <input type="text" v-model="font.label" :class="`${emptyFontLabel?'asowp-border-red-500 asowp-text-red-500 asowp-border-solid':''} asowp-w-full asowp-h-[39px]`" style="border-radius: 10px !important;"/>
                     </div>
                     
@@ -170,19 +170,19 @@
                             <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                         </svg>
 
-                        <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Back", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
                 <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
                     <button @click="updateFont" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
                         <img src="../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                        <div class="asowp-font-semibold asowp-text-[16px]">Update</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Update", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
                 <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
                     <button @click="addNewFont" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                         <img src="../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                        <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
             </div>
@@ -196,19 +196,19 @@
                         <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="asowp-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">{{ __("Close modal", "all-signs-options-pro") }}</span>
                     </button>
                     <div class="asowp-p-4 md:p-5 asowp-text-center">
                         <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this font?</h3>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{ __('Are you sure you want to delete this font?', 'all-signs-options-pro') }}</h3>
                         <input v-model="font.label" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                         <button @click="deleteFont" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            Yes, I'm sure
+                            {{ __("Yes, I'm sure", "all-signs-options-pro") }}
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{ __("No, cancel", "all-signs-options-pro") }}</button>
                     </div>
                 </div>
             </div>
@@ -224,7 +224,8 @@
     import toastMessage from '@/admin/utils/functions';
 
     const openModal = ref(false);
-    const listFont = ref(true);
+    import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+const listFont = ref(true);
     const createFont = ref(false);
     const fonts = ref([]);
     const noFontsFound = ref('');
@@ -276,9 +277,9 @@
         e.preventDefault();
         var uploader = wp.media(
             {
-                title: 'Please set the tff fonts file',
+                title: __('Please set the ttf fonts file',"all-signs-options-pro"),
                 button: {
-                    text: "Select font"
+                    text: __("Select font","all-signs-options-pro")
                 },
                 multiple: false
             }
@@ -294,7 +295,7 @@
                             font.value.label =attachment.name;
                             font.value.url=attachment.url;
                         }else{
-                            toastMessage("Sorry, ASO does not support woff or woff2 fonts. You can convert your font to one of these formats ttf or otf","warning");
+                            toastMessage(__("Sorry, ASO does not support woff or woff2 fonts. You can convert your font to one of these formats ttf or otf", "all-signs-options-pro"),"warning");
                         }
                     }
                 );
@@ -311,7 +312,7 @@
         if(font.value.label.trim() == ''){
             emptyFontLabel.value = true;
             isLoading.value = false;
-            toastMessage("Label must not be empty","warning");
+            toastMessage(__("Label must not be empty", "all-signs-options-pro"),"warning");
         }else{
             emptyFontLabel.value = false;
             const result = await api.addManagefont({many:false,font:font.value});
@@ -383,7 +384,7 @@
         if(font.value.label.trim() == ''){
             emptyFontLabel.value = true;
             isLoading.value = false;
-            toastMessage("Label must not be empty","warning");
+            toastMessage(__("Label must not be empty", "all-signs-options-pro"),"warning");
         }else{
             emptyFontLabel.value = false;
             const result = await api.updateManagefont(fontId.value,font.value);

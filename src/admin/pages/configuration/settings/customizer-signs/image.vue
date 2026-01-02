@@ -4,7 +4,7 @@
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
                 
                 <div class="asowp-flex asowp-space-x-3">
-                    <div class="asowp-text-[16px]">Enable download Image</div>
+                    <div class="asowp-text-[16px]">{{ __("Enable download Image", "all-signs-options-pro") }}</div>
                     <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                         <label for="toggleEnableUpload" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                             <input id="toggleEnableUpload" type="checkbox" class="asowp-sr-only asowp-peer" v-model="image.enableDownloadImage">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="asowp-flex asowp-space-x-3">
-                    <div class="asowp-text-[16px]">Enable upload Image</div>
+                    <div class="asowp-text-[16px]">{{ __("Enable upload Image", "all-signs-options-pro") }}</div>
                     <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                         <label for="toggleEnableUpload" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                             <input id="toggleEnableUpload" type="checkbox" name="toggleEnableUpload" class="asowp-sr-only asowp-peer" v-model="image.enableUploadImage">
@@ -24,11 +24,11 @@
                 <div>
                     <div class="asowp-flex asowp-justify-between asowp-space-x-6 asowp-space-y-2">
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Upload min width (px)</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Upload min width (px)", "all-signs-options-pro") }}</label>
                             <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="asowp-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMinWidth)){image.fileUploadScript.uploadMinWidth=100}}"/>
                         </div>
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">Upload Max width (px)</label>
+                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Upload Max width (px)", "all-signs-options-pro") }}</label>
                             <input type="number" v-model="image.fileUploadScript.uploadMaxWidth" class="asowp-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMaxWidth)){image.fileUploadScript.uploadMaxWidth =1024}}"/>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                 </div> 
                 <div class="asowp-space-y-3">
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Enable clipart</div>
+                        <div class="asowp-text-[16px]">{{ __("Enable clipart", "all-signs-options-pro") }}</div>
                         <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                             <label for="toggleEnableClipart" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                 <input id="toggleEnableClipart" type="checkbox" name="toggleEnableClipart" class="asowp-sr-only asowp-peer" v-model="image.enableClipart.active">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="asowp-space-y-2" v-if="image.enableClipart.active">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">Select clipart  group</label>
+                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Select clipart group", "all-signs-options-pro") }}</label>
                         <Multiselect
                             v-model="image.enableClipart.selectedClipartGroups"
                             placeholder=""
@@ -69,7 +69,7 @@
                 </div>
                 <div class="asowp-flex asowp-justify-start asowp-space-x-8 asowp-items-center">
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Enable Custom color</div>
+                        <div class="asowp-text-[16px]">{{ __("Enable Custom color", "all-signs-options-pro") }}</div>
                         <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                             <label for="toggleCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                 <input id="toggleCustom" type="checkbox" name="toggleCustom" class="asowp-sr-only asowp-peer" v-model="image.enableCustomColor">
@@ -78,10 +78,10 @@
                         </div>
                     </div>
                     <div class="asowp-w-3/5 asowp-space-x-2 asowp-flex asowp-items-center" v-if="image.enableCustomColor">
-                        <label for="" class="asowp-text-[16px] asowp-text[#444444] asowp-font-normal asowp-w-full">Custom Color Preview Image : </label>
+                        <label for="" class="asowp-text-[16px] asowp-text[#444444] asowp-font-normal asowp-w-full">{{ __("Custom Color Preview Image :", "all-signs-options-pro") }} </label>
                         <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2">
                             <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">Upload image</button>
+                                <button @click="selectColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload image", "all-signs-options-pro") }}</button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="image.colorsPrevImg != ''" :src="image.colorsPrevImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                     <button v-if="image.colorsPrevImg != ''" @click="()=>{image.colorsPrevImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -95,15 +95,15 @@
                     </div>
                 </div>
                 <div class="asowp-space-y-2">
-                    <label class="asowp-text-[16px] asowp-font-bold">Colors for uploaded svg (only for uploaded images that are svg)</label>
+                    <label class="asowp-text-[16px] asowp-font-bold">{{ __("Colors for uploaded svg (only for uploaded images that are svg)", "all-signs-options-pro") }}</label>
                     <div class="asowp-grid asowp-grid-cols-3 asowp-gap-4" v-if="image.colors.length>0">
                         <div class="asowp-flex asowp-justify-start asowp-space-x-2" :key="key" v-for="(color,key) in image.colors">
                             <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Name</label>
+                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{ __("Name", "all-signs-options-pro") }}</label>
                                 <input type="text" class="asowp-rounded asowp-w-full asowp-h-[30px]" v-model="image.colors[key].name" autocomplete="off"> 
                             </div>
                             <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">Background color</label>
+                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
                                 <div class="asowp-relative asowp-flex">
                                     <input
                                         id="colorPicker"
@@ -122,7 +122,7 @@
                                 
                             </div>
                             <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">Background color</label>
+                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
                                 <div class="asowp-relative asowp-flex">
                                     <button @click="removeColor(key)" class="asowp-w-[50px] asowp-h-full asowp-border-solid asowp-border-red-600 asowp-rounded asowp-bg-red-600 asowp-cursor-pointer asowp-text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-[70%] asowp-h-[70%]">
@@ -138,13 +138,13 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <span class="asowp-font-semibold asowp-text-[16px]">Add More Color</span>
+                            <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Add More Color", "all-signs-options-pro") }}</span>
                         </button>
                     </div>
                 </div>
                 <div>
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Preview scenes</div>
+                        <div class="asowp-text-[16px]">{{ __("Preview scenes", "all-signs-options-pro") }}</div>
                     </div>
                     <div>
                         <div class="asowp-flex asowp-justify-center asowp-items-center asowp-pt-8 asowp-pb-3 asowp-px-8">
@@ -156,7 +156,7 @@
                                         </g>
                                     </svg>
                                     <div class="asowp-text-[14px]">
-                                        Add Preview Scenes
+                                        {{ __("Add Preview Scenes", "all-signs-options-pro") }}
                                     </div>
                                 </button>
                             </div>
@@ -177,11 +177,11 @@
                 </div>
                 <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2">
                     <!-- Titre principal -->
-                    <h3 class="asowp-text-sm asowp-font-semibold asowp-text-gray-800">Cutlines Settings</h3>
+                    <h3 class="asowp-text-sm asowp-font-semibold asowp-text-gray-800">{{ __("Cutlines Settings", "all-signs-options-pro") }}</h3>
                     
                     <!-- Sélection du type de cutline -->
                     <div class="asowp-flex asowp-flex-col asowp-space-y-2">
-                        <label for="cutlineType" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">Cutline Type</label>
+                        <label for="cutlineType" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">{{ __("Cutline Type", "all-signs-options-pro") }}</label>
                         <select id="cutlineType" v-model="image.selectedCutline" class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-h-[30px] asowp-w-full">
                             <option v-for="cutline in cutlines" :key="cutline" :value="cutline">{{ cutline }}</option>
                         </select>
@@ -189,10 +189,10 @@
                     
                     <!-- Section First Cutline -->
                     <div class="">
-                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">First Cutline</h4>
+                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">{{ __("First Cutline", "all-signs-options-pro") }}</h4>
                         <div class="asowp-flex asowp-space-x-4">
                             <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="firstBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Size (px)</label>
+                                <label for="firstBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Size (px)", "all-signs-options-pro") }}</label>
                                 <input 
                                     id="firstBorderSize"
                                     type="number" 
@@ -204,7 +204,7 @@
                                 > 
                             </div>
                             <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="firstBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Color</label>
+                                <label for="firstBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Color", "all-signs-options-pro") }}</label>
                                 <input
                                     id="firstBorderColor"
                                     type="color"
@@ -218,12 +218,12 @@
                     
                     <!-- Section Second Cutline -->
                     <div class="">
-                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">Second Cutline</h4>
+                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">{{ __("Second Cutline", "all-signs-options-pro") }}</h4>
                         
                         <!-- Row 1: Size et Color entre les cutlines -->
                         <div class="asowp-flex asowp-space-x-4 asowp-mb-2">
                             <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Space Between Cutlines (px)</label>
+                                <label for="secondSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Space Between Cutlines (px)", "all-signs-options-pro") }}</label>
                                 <input 
                                     id="secondSize"
                                     type="number" 
@@ -235,7 +235,7 @@
                                 > 
                             </div>
                             <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondSpaceColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Space Color</label>
+                                <label for="secondSpaceColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Space Color", "all-signs-options-pro") }}</label>
                                 <input
                                     id="secondSpaceColor"
                                     type="color"
@@ -249,7 +249,7 @@
                         <!-- Row 2: Border Size et Border Color -->
                         <div class="asowp-flex asowp-space-x-4">
                             <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Size (px)</label>
+                                <label for="secondBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Size (px)", "all-signs-options-pro") }}</label>
                                 <input 
                                     id="secondBorderSize"
                                     type="number" 
@@ -261,7 +261,7 @@
                                 > 
                             </div>
                             <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">Border Color</label>
+                                <label for="secondBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Color", "all-signs-options-pro") }}</label>
                                 <input
                                     id="secondBorderColor"
                                     type="color"
@@ -275,7 +275,7 @@
                 </div>
                 <div>
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Filter</div>
+                        <div class="asowp-text-[16px]">{{ __("Filter", "all-signs-options-pro") }}</div>
                         <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                             <label for="toggleEnableFilter" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                 <input id="toggleEnableFilter" type="checkbox" name="toggleEnableFilter" class="asowp-sr-only asowp-peer" v-model="image.filter.active">
@@ -292,7 +292,7 @@
                                     <path d="M10 11V9H11.61C11.85 9.71 12 10.39 12 11H10ZM9.58 5C9.12 4.29 8.65 3.61 8.2 3H8V5H9.58ZM10 9V7H8V9H10ZM10 5.68V7H10.74C10.5 6.56 10.26 6.11 10 5.68ZM6 13V11H8V9H6V7H8V5H6V3H8V2.73C6.9 1.26 6 0.25 6 0.25C6 0.25 0 7 0 11C0 14.31 2.69 17 6 17V15H8V13H6ZM8 16.65C8.75 16.39 9.42 16 10 15.46V15H8V16.65ZM8 13H10V11H8V13ZM10 15H10.46C11 14.42 11.39 13.75 11.65 13H10V15Z" fill="black"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Greyscale</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Greyscale", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableGreyscale" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -309,7 +309,7 @@
                                     <path d="M10 11V9H11.61C11.85 9.71 12 10.39 12 11H10ZM9.58 5C9.12 4.29 8.65 3.61 8.2 3H8V5H9.58ZM10 9V7H8V9H10ZM10 5.68V7H10.74C10.5 6.56 10.26 6.11 10 5.68ZM6 13V11H8V9H6V7H8V5H6V3H8V2.73C6.9 1.26 6 0.25 6 0.25C6 0.25 0 7 0 11C0 14.31 2.69 17 6 17V15H8V13H6ZM8 16.65C8.75 16.39 9.42 16 10 15.46V15H8V16.65ZM8 13H10V11H8V13ZM10 15H10.46C11 14.42 11.39 13.75 11.65 13H10V15Z" fill="black"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Opacity</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Opacity", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableOpacity" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -325,7 +325,7 @@
                                     <path d="M11.9995 5.00001C10.7051 5.00009 9.43008 5.31425 8.28382 5.91552C7.13756 6.51679 6.15432 7.38722 5.41847 8.4521C4.68263 9.51698 4.21616 10.7445 4.05911 12.0293C3.90205 13.3142 4.0591 14.6179 4.51677 15.8287C4.97445 17.0394 5.71907 18.1211 6.68675 18.9808C7.65442 19.8404 8.81625 20.4525 10.0725 20.7643C11.3288 21.0762 12.6419 21.0786 13.8993 20.7713C15.1567 20.464 16.3207 19.8562 17.2915 19H11.9995V18H18.2445C18.4975 17.685 18.7265 17.351 18.9295 17H11.9995V16H19.4185C19.5501 15.6743 19.6601 15.3402 19.7475 15H11.9995V14H19.9375C19.9789 13.6683 19.9996 13.3343 19.9995 13H11.9995V12H19.9375C19.8956 11.663 19.8321 11.329 19.7475 11H11.9995V10H19.4185C19.2787 9.65566 19.1149 9.32151 18.9285 9.00001H11.9995V8.00001H18.2445C17.9561 7.63996 17.6373 7.30539 17.2915 7.00001H11.9995V6.00001H15.8755C14.6897 5.34212 13.3556 4.99791 11.9995 5.00001Z" fill="black"/>
                                 </svg>
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Blur</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Blur", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableBlur" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -339,7 +339,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Sepia</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Sepia", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableSepia" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -353,7 +353,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">sharpen</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("sharpen", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableSharpen" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -367,7 +367,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Emboss</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Emboss", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableEmbross" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -382,7 +382,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Greenify</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Greenify", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableGreenify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -396,7 +396,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Pinkify</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Pinkify", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnablePinkify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -410,7 +410,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Orangeify</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Orangeify", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableOrangeify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -424,7 +424,7 @@
                             <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
                                 <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
                             </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">Blueify</div>
+                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Blueify", "all-signs-options-pro") }}</div>
                         </div>
                         <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
                             <label for="toggleEnableBlueify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
@@ -442,7 +442,7 @@
             <div class="asowp-bg-[#016464] asowp-rounded">
                 <button :disabled="isLoading" @click="updateImageSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
                 </button>
             </div>
         </div>
@@ -454,6 +454,7 @@ import {ref,defineProps, onMounted} from 'vue';
 import { useRoute } from 'vue-router';
 import Multiselect from "@vueform/multiselect";
 import toastMessage from '@/admin/utils/functions';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
     data:Object,
     fetchSettings:Function
@@ -531,9 +532,9 @@ const selectColorPrevImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Custom Svg Color Preview Image",
+            title: __("Select Custom Svg Color Preview Image","all-signs-options-pro"),
             button: {
-                text: "Select Image"
+                text: __("Select Image","all-signs-options-pro")
             },
             multiple: false
         }
@@ -586,9 +587,9 @@ const addNewColor = ()=> {
 const addImage = () => {
     var uploader = wp.media(
             {
-                title: 'Please set the picture',
+                title: __("Please set the picture", "all-signs-options-pro"),
                 button: {
-                    text: "Select picture(s)"
+                    text: __("Select picture(s)", "all-signs-options-pro")
                 },
                 multiple: true
             }

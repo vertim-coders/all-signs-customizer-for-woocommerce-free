@@ -569,7 +569,7 @@ class ASOWP_Design
 		if (isset($order_data) && !empty($order_data)) {
 			ob_start();
 			$recaps = $order_data["recaps"];
-			include ASOWP_INCLUDES . '/purchase-mail.php';
+			include ASOWP_INCLUDES . '/purchase-email.php';
 			echo wp_kses_post(ob_get_clean());
 		}
 

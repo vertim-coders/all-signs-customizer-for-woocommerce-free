@@ -8,7 +8,7 @@
                 <div class="asowp-bg-[#fff] asowp-flex asowp-flex-col asowp-space-y-3 asowp-px-8 asowp-py-8 asowp-border-solid asowp-border-2 asowp-border-[#D1D1D1] asowp-rounded-[10px]">
                     <div class="asowp-space-y-1">
                         <div class="asowp-flex asowp-space-x-2">
-                            <label class="asowp-font-semibold ">Use ider id as zip name</label>
+                            <label class="asowp-font-semibold ">{{ __('Use order id as zip name', 'all-signs-options-pro') }}</label>
                             <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                                 <label for="toggleZipName" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                     <input id="toggleZipName" type="checkbox" name="toggleZipName" class="asowp-sr-only asowp-peer" v-model="output.zipName">
@@ -17,21 +17,13 @@
                             </div>
                         </div>
                         <div class="asowp-text-[14px] asowp-py-2">
-                            Use the command id as the name of the zip file that will contain the uploaded files during customization
+                            {{ __('Use the command id as the name of the zip file that will contain the uploaded files during customization', 'all-signs-options-pro') }}
                         </div>
                     </div>
-                    <!-- <div class="asowp-flex asowp-space-x-2">
-                        <label>Calculate retina output</label>
-                        <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
-                            <label for="toggleEnableCalculateOutput" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableCalculateOutput" type="checkbox" name="toggleEnableCalculateOutput" class="asowp-sr-only asowp-peer" v-model="output.calculateOutput">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div> -->
+
                     <div class="asowp-flex asowp-space-x-8">
                         <div class="asowp-flex asowp-space-x-2">
-                            <label class="asowp-font-semibold ">Enable sending mail to customer</label>
+                            <label class="asowp-font-semibold ">{{ __('Enable sending mail to customer', 'all-signs-options-pro') }}</label>
                             <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                                 <label for="toggleMailCustomer" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                     <input id="toggleMailCustomer" type="checkbox" name="toggleMailCustomer" class="asowp-sr-only asowp-peer" v-model="output.mailCustomer">
@@ -40,7 +32,7 @@
                             </div>
                         </div>
                         <div class="asowp-flex asowp-space-x-2">
-                            <label class="asowp-font-semibold ">Enable sending mail to admin</label>
+                            <label class="asowp-font-semibold ">{{ __('Enable sending mail to admin', 'all-signs-options-pro') }}</label>
                             <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                                 <label for="toggleMailAdmin" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                     <input id="toggleMailAdmin" type="checkbox" name="toggleMailAdmin" class="asowp-sr-only asowp-peer" v-model="output.mailAdmin">
@@ -50,7 +42,7 @@
                         </div>
                     </div>
                     <div class="asowp-w-full asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-bold asowp-font-normal">List of mails to send output</label>
+                        <label for="" class="asowp-bold asowp-font-normal">{{ __('List of mails to send output', 'all-signs-options-pro') }}</label>
                         <input type="text"  class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px;">
                     </div>
 
@@ -65,7 +57,7 @@
                                     </svg>
                                 </div>
 
-                                <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
+                                <span class="asowp-font-semibold asowp-text-[16px]">{{ __('Save', 'all-signs-options-pro') }}</span>
                             </button>
                         </div>
                     </div>
@@ -82,6 +74,8 @@
 import { ref,onMounted } from "vue";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+// Import du helper
 
 
 const isFetching = ref(false);

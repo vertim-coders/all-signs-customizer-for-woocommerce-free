@@ -10,7 +10,7 @@
                             </g>
                         </svg>
                         <div class="asowp-text-[14px]">
-                            Add new border
+                            {{__("Add new border", "all-signs-options-pro")}}
                         </div>
                     </button>
                 </div>
@@ -19,19 +19,19 @@
                         <thead class="asowp-text-[14px] asowp-bg-[#f0f0f1]">
                             <tr class="">
                                 <th scope="col" class="asowp-p-4 asowp-px-8 asowp-w-12 asowp-font-normal">
-                                    Title 
+                                    {{__("Title", "all-signs-options-pro")}} 
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                    Icons
+                                    {{__("Icons", "all-signs-options-pro")}}
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                    Additional Price
+                                    {{__("Additional Price", "all-signs-options-pro")}}
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                    Default
+                                    {{__("Default", "all-signs-options-pro")}}
                                 </th>
                                 <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                    Action
+                                    {{__("Action", "all-signs-options-pro")}}
                                 </th>
                                 
                             </tr>
@@ -116,7 +116,7 @@
                                                         d="M15.655 4.344a2.695 2.695 0 0 0-3.81 0l-.599.599-.009-.009-1.06 1.06.008.01-5.88 5.88a2.75 2.75 0 0 0-.805 1.944v1.922a.75.75 0 0 0 .75.75h1.922a2.75 2.75 0 0 0 1.944-.806l7.54-7.539a2.695 2.695 0 0 0 0-3.81Zm-4.409 2.72-5.88 5.88a1.25 1.25 0 0 0-.366.884v1.172h1.172c.331 0 .65-.132.883-.366l5.88-5.88-1.689-1.69Zm2.75.629.599-.599a1.195 1.195 0 1 0-1.69-1.689l-.598.599 1.69 1.689Z">
                                                     </path>
                                                 </svg>
-                                                <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Edit</span>
+                                                <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">{{__("Edit", "all-signs-options-pro")}}</span>
                                             </button>
 
                                             <!-- Delete -->
@@ -142,7 +142,7 @@
                                                         d="M7.25 5.25a2.75 2.75 0 0 1 5.5 0h3a.75.75 0 0 1 0 1.5h-.75v5.45c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311c-.642.327-1.482.327-3.162.327h-.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162v-5.45h-.75a.75.75 0 0 1 0-1.5h3Zm1.5 0a1.25 1.25 0 1 1 2.5 0h-2.5Zm-2.25 1.5h7v5.45c0 .865-.001 1.423-.036 1.848-.033.408-.09.559-.128.633a1.5 1.5 0 0 1-.655.655c-.074.038-.225.095-.633.128-.425.035-.983.036-1.848.036h-.4c-.865 0-1.423-.001-1.848-.036-.408-.033-.559-.09-.633-.128a1.5 1.5 0 0 1-.656-.655c-.037-.074-.094-.225-.127-.633-.035-.425-.036-.983-.036-1.848v-5.45Z">
                                                     </path>
                                                 </svg>
-                                                <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">Delete</span>
+                                                <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">{{__("Delete", "all-signs-options-pro")}}</span>
                                             </button>
                                         </div>
                                     </div>
@@ -155,20 +155,20 @@
             </div>
             
             <div v-show="!isFetching" class="asowp-w-[96%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-py-2 asowp-px-4 asowp-bg-[#fff] asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
-                <label for="" class="asowp-text-[16px] asowp-font-semibold">Borders settings</label>
-                <span class="asowp-text-[12px] asowp-text-[#444444] asowp-font-[600]">Define border colors</span>
+                <label for="" class="asowp-text-[16px] asowp-font-semibold">{{__("Borders settings", "all-signs-options-pro")}}</label>
+                <span class="asowp-text-[12px] asowp-text-[#444444] asowp-font-[600]">{{__("Define border colors", "all-signs-options-pro")}}</span>
                 <div class="asowp-flex asowp-flex-col asowp-space-y-2">
-                    <label for="" class="asowp-text-[12px] asowp-text-[#444444]">Label:</label>
+                    <label for="" class="asowp-text-[12px] asowp-text-[#444444]">{{__("Label", "all-signs-options-pro")}}:</label>
                     <input type="text" class="asowp-w-[35%] asowp-h-[35px]" style="border-radius: 10px !important;" v-model="borders.settings.borderColorsLabel">
                 </div>
                 <div class="asowp-grid asowp-grid-cols-2 asowp-gap-4">
                     <div class="asowp-flex asowp-justify-start asowp-space-x-2" :key="key" v-for="(color,key) in borders.settings.colors">
                         <div class="asowp-w-[30%] asowp-space-y-2 asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Name</label>
+                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{__("Name", "all-signs-options-pro")}}</label>
                             <input type="text" class="asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;" v-model="borders.settings.colors[key].name" autocomplete="off"> 
                         </div>
                         <div class="asowp-w-[30%] asowp-space-y-2 asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">price</label>
+                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{__("price", "all-signs-options-pro")}}</label>
                             <div class="asowp-relative asowp-flex asowp-border asowp-p-1 asowp-border-solid asowp-border-[#000] asowp-rounded-[10px]">
                                 <input
                                     id="colorPicker"
@@ -189,13 +189,13 @@
                             
                         </div>
                         <div class="asowp-w-[30%] asowp-space-y-2 asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Price</label>
+                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{__("Price", "all-signs-options-pro")}}</label>
                             <div class="asowp-relative asowp-flex">
                                 <input type="number" class="asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;" v-model="borders.settings.colors[key].additionalPrice" @blur="isNaN(borders.settings.colors[key].additionalPrice) ? borders.settings.colors[key].additionalPrice = 0 : ''"> 
                             </div>
                         </div>
                         <div class="asowp-w-[10%] asowp-space-y-2 asowp-flex asowp-flex-col">
-                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">Price</label>
+                            <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Price", "all-signs-options-pro") }}</label>
                             <div class="asowp-relative asowp-flex">
                                 <button @click="removeBordersColor(key)" class="asowp-w-[50px] asowp-h-full asowp-bg-transparent asowp-border-none asowp-cursor-pointer asowp-text-white">
                                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">    
@@ -211,12 +211,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        <span class="asowp-font-semibold asowp-text-[16px]">Add Colors</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">{{__("Add Colors", "all-signs-options-pro")}}</span>
                     </button>
                 </div>
                 <div v-show="!isFetching" class="asowp-flex asowp-py-4 asowp-px-4 asowp-space-x-16">
                     <div class="asowp-flex asowp-font-semibold">
-                        Enable border width
+                        {{__("Enable border width", "all-signs-options-pro")}}
                         <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                             <label for="asowp-toggle" @click="enableBorderWidth" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                                 <div :class="borders.settings.enableBorderWidth ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -224,7 +224,7 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-font-semibold">
-                        Enable border Color
+                        {{__("Enable border Color", "all-signs-options-pro")}}
                         <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                             <label for="asowp-toggle" @click="enableBorderColor" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                             <div :class="borders.settings.enableBorderColor ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -234,14 +234,14 @@
                 </div>
                 <div v-show="!isFetching && borders.settings.enableBorderColor" class="asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-start asowp-items-center">
                     <div class="asowp-w-[50%] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">Custom Color Preview Image</label>
+                        <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{__("Custom Color Preview Image", "all-signs-options-pro")}}</label>
                         <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2">
                             <div class="asowp-flex asowp-space-x-2 asowp-border asowp-p-1 asowp-border-solid asowp-border-[#000] asowp-rounded-[5px]">
                                 <button @click="selectCustomBorderColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-2 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">
                                     <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">        
                                         <path d="M22.4375 12.2809V18.5309C22.4375 18.9453 22.2729 19.3427 21.9799 19.6357C21.6868 19.9288 21.2894 20.0934 20.875 20.0934H2.125C1.7106 20.0934 1.31317 19.9288 1.02015 19.6357C0.72712 19.3427 0.5625 18.9453 0.5625 18.5309V12.2809C0.5625 11.8665 0.72712 11.4691 1.02015 11.176C1.31317 10.883 1.7106 10.7184 2.125 10.7184H6.8125C7.0197 10.7184 7.21841 10.8007 7.36493 10.9472C7.51144 11.0937 7.59375 11.2924 7.59375 11.4996C7.59375 11.7068 7.51144 11.9056 7.36493 12.0521C7.21841 12.1986 7.0197 12.2809 6.8125 12.2809H2.125V18.5309H20.875V12.2809H16.1875C15.9803 12.2809 15.7816 12.1986 15.6351 12.0521C15.4886 11.9056 15.4062 11.7068 15.4062 11.4996C15.4062 11.2924 15.4886 11.0937 15.6351 10.9472C15.7816 10.8007 15.9803 10.7184 16.1875 10.7184H20.875C21.2894 10.7184 21.6868 10.883 21.9799 11.176C22.2729 11.4691 22.4375 11.8665 22.4375 12.2809ZM7.36523 6.58362L10.7188 3.22913V11.4996C10.7188 11.7068 10.8011 11.9056 10.9476 12.0521C11.0941 12.1986 11.2928 12.2809 11.5 12.2809C11.7072 12.2809 11.9059 12.1986 12.0524 12.0521C12.1989 11.9056 12.2812 11.7068 12.2812 11.4996V3.22913L15.6348 6.58362C15.7814 6.73022 15.9802 6.81257 16.1875 6.81257C16.3948 6.81257 16.5936 6.73022 16.7402 6.58362C16.8868 6.43703 16.9692 6.2382 16.9692 6.03089C16.9692 5.82357 16.8868 5.62475 16.7402 5.47815L12.0527 0.790654C11.9802 0.718016 11.894 0.660392 11.7992 0.621076C11.7043 0.58176 11.6027 0.561523 11.5 0.561523C11.3973 0.561523 11.2957 0.58176 11.2008 0.621076C11.106 0.660392 11.0198 0.718016 10.9473 0.790654L6.25977 5.47815C6.11317 5.62475 6.03082 5.82357 6.03082 6.03089C6.03082 6.2382 6.11317 6.43703 6.25977 6.58362C6.40636 6.73022 6.60518 6.81257 6.8125 6.81257C7.01982 6.81257 7.21864 6.73022 7.36523 6.58362ZM18.5312 15.4059C18.5312 15.1741 18.4625 14.9475 18.3338 14.7548C18.205 14.5621 18.022 14.4119 17.8078 14.3232C17.5937 14.2345 17.3581 14.2113 17.1308 14.2565C16.9034 14.3017 16.6946 14.4134 16.5307 14.5772C16.3668 14.7411 16.2552 14.9499 16.21 15.1773C16.1648 15.4046 16.188 15.6402 16.2767 15.8543C16.3654 16.0685 16.5156 16.2515 16.7083 16.3803C16.901 16.509 17.1276 16.5778 17.3594 16.5778C17.6702 16.5778 17.9682 16.4543 18.188 16.2345C18.4078 16.0148 18.5312 15.7167 18.5312 15.4059Z" fill="white"/>        
                                     </svg>
-                                    Upload image
+                                    {{__("Upload image", "all-signs-options-pro")}}
                                 </button>
                                 <div :class="`asowp-relative asowp-w-[82px] asowp-h-[30px] asowp-rounded-md asowp-overflow-hidden`">
                                     <img v-if="borders.settings.customColorsPrevImg != ''" :src="borders.settings.customColorsPrevImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
@@ -265,7 +265,7 @@
                                     <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                                 </svg>
                             </div>
-                            <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
+                            <span class="asowp-font-semibold asowp-text-[16px]">{{__("Save", "all-signs-options-pro")}}</span>
                         </button>
                     </div>
                 </div>
@@ -278,10 +278,10 @@
                 
                 <div class="asowp-flex asowp-space-x-2 asowp-justify-between">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-font-normal">Select border</label>
+                        <label for="" class="asowp-font-normal">{{__("Select border", "all-signs-options-pro")}}</label>
                         <Multiselect
                             v-model="border.manageBorderId"
-                            placeholder="Select Border"
+                            :placeholder="__('Select Border', 'all-signs-options-pro')"
                             :options="notSelectedManageBorders"
                             label="name"
                             trackBy="name"
@@ -299,7 +299,7 @@
                         </Multiselect>
                     </div>
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-font-normal">Additional Price</label>
+                        <label for="" class="asowp-font-normal">{{__('Additional Price','all-signs-options-pro')}}</label>
                         <input type="number" v-model="border.additionalPrice" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius:5px;">
                     </div>
                 </div>
@@ -307,7 +307,7 @@
                     <label for="" class="asowp-text-[16px] asowp-font-normal asowp-font-[600]">Exclude Shapes</label>
                     <Multiselect
                             v-model="border.excludeShapes"
-                            placeholder="Select shapes"
+                            :placeholder="__('Select shapes','all-signs-options-pro')"
                             :options="MaterialSimpleShapes"
                             label="name"
                             trackBy="name"
@@ -327,17 +327,17 @@
                     <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the shapes for this border</span>   
                 </div>
                 <div class="asowp-w-full asowp-space-y-2 asowp-flex asowp-flex-col">
-                    <label for="" class="asowp-text-[16px] asowp-font-normal">Exclude size</label>
+                    <label for="" class="asowp-text-[16px] asowp-font-normal">{{ __('Exclude size','all-signs-options-pro')}}</label>
                     <Multiselect
                         v-model="border.excludeSizes" 
-                        placeholder="Select Sizes"
+                        :placeholder="__('Select Sizes','all-signs-options-pro')"
                         label="name"
                         trackBy="id"
                         :options="MaterialSimpleSizes"
                         mode="tags"
                         class="asowp-h-[35px] asowp-rounded-[5px]"
                     />
-                    <span class="asowp-text-[#444444] asowp-text-[12px]">exclude the sizes of this border</span>
+                    <span class="asowp-text-[#444444] asowp-text-[12px]">{{__("exclude the sizes of this border",'all-signs-options-pro')}}</span>
                     
                 </div>
                 <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
@@ -348,13 +348,13 @@
                                 <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                             </svg>
 
-                            <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{__("Back",'all-signs-options-pro')}}</div>
                         </button>
                     </div>
                     <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
                         <button @click="updateMaterialBorders" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <div class="asowp-font-semibold asowp-text-[16px]">Update</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{__("Update",'all-signs-options-pro')}}</div>
                         </button>
                     </div>
                     <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
@@ -365,7 +365,7 @@
                                     <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                                 </svg>
                             </div>
-                            <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
+                            <span class="asowp-font-semibold asowp-text-[16px]">{{__("Save",'all-signs-options-pro')}}</span>
                         </button>
                     </div>
                 </div>
@@ -380,19 +380,19 @@
                         <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="asowp-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">{{__("Close modal", "all-signs-options-pro")}}</span>
                     </button>
                     <div class="asowp-p-4 md:p-5 asowp-text-center">
                         <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this border?</h3>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{__("Are you sure you want to delete this border?", "all-signs-options-pro")}}</h3>
                         <input v-model="manageBorders[borderId].name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                         <button @click="deleteBorders" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            Yes, I'm sure
+                            {{__("Yes, I'm sure",'all-signs-options-pro')}}
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{__("No, cancel", "all-signs-options-pro")}}</button>
                     </div>
                 </div>
             </div>
@@ -405,8 +405,7 @@ import api from "@/admin/Api/api";
 import { ref,onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import toastMessage from "@/admin/utils/functions";
-
-
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute()
 const configID = ref(route.params.configId);
 const materialId = ref(route.params.materialId);
@@ -567,9 +566,9 @@ const selectCustomBorderColorPrevImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select Custom Border Color Preview Image",
+            title: __("Select Custom Border Color Preview Image", "all-signs-options-pro"),
             button: {
-                text: "Select Image"
+                text: __("Select Image", "all-signs-options-pro")
             },
             multiple: false
         }
@@ -632,7 +631,7 @@ const newBorder = () => {
     if(notSelectedManageBorders.value.length>0)
         isNewBorder.value = true;
     else
-        toastMessage("No more choice of border","warning");
+        toastMessage(__("No more choice of border", "all-signs-options-pro"),"warning");
 }
 const back = () => {
     isNewBorder.value = false;

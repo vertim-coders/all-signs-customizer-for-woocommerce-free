@@ -64,48 +64,6 @@ class ASOWP_Api_Home_Stats extends WP_REST_Controller
         return $out;
     }
 
-    private function get_total_orders_count(array $statuses): int
-    {
-        $total = 0;
-        if (function_exists('wc_orders_count')) {
-            foreach ($statuses as $status) {
-                $total += absint(wc_orders_count($status));
-            }
-            return $total;
-        }
-
-        if (!function_exists('wc_get_orders')) {
-            return 0;
-        }
-        $ids = wc_get_orders(array(
-            'status' => $statuses,
-            'return' => 'ids',
-            'limit' => -1,
-        ));
-        return is_array($ids) ? count($ids) : 0;
-    }
-
-    private function get_configured_order_ids(): array
-    {
-        global $wpdb;
-        $order_itemmeta = $wpdb->prefix . 'woocommerce_order_itemmeta';
-        $order_items = $wpdb->prefix . 'woocommerce_order_items';
-
-        $sql = $wpdb->prepare(
-            "SELECT DISTINCT oi.order_id
-             FROM {$order_itemmeta} oim
-             INNER JOIN {$order_items} oi ON oi.order_item_id = oim.order_item_id
-             WHERE oim.meta_key = %s",
-            'asowp_meta_data'
-        );
-
-        $ids = $wpdb->get_col($sql);
-        if (!is_array($ids)) {
-            return array();
-        }
-        return array_values(array_unique(array_map('absint', $ids)));
-    }
-
     public function get_home_stats($request)
     {
         if (!function_exists('wc_get_orders')) {
@@ -127,41 +85,49 @@ class ASOWP_Api_Home_Stats extends WP_REST_Controller
             }
         }
 
-        $total_orders = $this->get_total_orders_count($statuses);
+        $orders_ids = wc_get_orders(array(
+            'status' => $statuses,
+            'return' => 'ids',
+            'limit' => -1,
+        ));
+        $orders_ids = is_array($orders_ids) ? array_values(array_map('absint', $orders_ids)) : array();
+        $total_orders = count($orders_ids);
 
-        $configured_order_ids = $this->get_configured_order_ids();
-        $configured_orders = array();
+        $configured_orders_count = 0;
         $configured_items = 0;
         $configured_revenue = 0.0;
         $configured_revenue_incl_tax = 0.0;
+        $total_orders_revenue = 0.0;
+        $total_orders_revenue_incl_tax = 0.0;
 
-        if (!empty($configured_order_ids)) {
-            $configured_orders = wc_get_orders(array(
-                'include' => $configured_order_ids,
-                'status' => $statuses,
-                'limit' => -1,
-            ));
-        }
+        foreach ($orders_ids as $order_id) {
+            $order = wc_get_order($order_id);
+            if (!$order) {
+                continue;
+            }
+            $order_has_configured_item = false;
+            foreach ($order->get_items('line_item') as $item) {
+                $line_total = (float) $item->get_total();
+                $line_tax = (float) $item->get_total_tax();
+                $total_orders_revenue += $line_total;
+                $total_orders_revenue_incl_tax += $line_total + $line_tax;
 
-        if (is_array($configured_orders)) {
-            foreach ($configured_orders as $order) {
-                foreach ($order->get_items('line_item') as $item) {
-                    $meta = $item->get_meta('asowp_meta_data', true);
-                    if (empty($meta) || !is_array($meta)) {
-                        continue;
-                    }
-                    if (!isset($meta['recaps'])) {
-                        continue;
-                    }
-                    $configured_items++;
-                    $configured_revenue += (float) $item->get_total();
-                    $configured_revenue_incl_tax += (float) $item->get_total() + (float) $item->get_total_tax();
+                $meta = $item->get_meta('asowp_meta_data', true);
+                if (empty($meta) || !is_array($meta) || !isset($meta['recaps'])) {
+                    continue;
                 }
+
+                $order_has_configured_item = true;
+                $configured_items++;
+                $configured_revenue += $line_total;
+                $configured_revenue_incl_tax += $line_total + $line_tax;
+            }
+            if ($order_has_configured_item) {
+                $configured_orders_count++;
             }
         }
 
-        $configured_orders_count = is_array($configured_orders) ? count($configured_orders) : 0;
-        $rate = $total_orders > 0 ? round(($configured_orders_count / $total_orders) * 100, 2) : 0.0;
+        $rate = $total_orders_revenue > 0 ? round(($configured_revenue / $total_orders_revenue) * 100, 2) : 0.0;
 
         $payload = array(
             'total_orders' => $total_orders,
@@ -170,6 +136,8 @@ class ASOWP_Api_Home_Stats extends WP_REST_Controller
             'configured_items' => $configured_items,
             'configured_revenue' => round($configured_revenue, 2),
             'configured_revenue_incl_tax' => round($configured_revenue_incl_tax, 2),
+            'total_orders_revenue' => round($total_orders_revenue, 2),
+            'total_orders_revenue_incl_tax' => round($total_orders_revenue_incl_tax, 2),
             'currency' => function_exists('get_woocommerce_currency') ? get_woocommerce_currency() : '',
             'currency_symbol' => function_exists('get_woocommerce_currency_symbol') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
             'statuses' => $statuses,
@@ -183,4 +151,3 @@ class ASOWP_Api_Home_Stats extends WP_REST_Controller
         return rest_ensure_response($payload);
     }
 }
-

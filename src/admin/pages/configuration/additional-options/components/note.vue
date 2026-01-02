@@ -2,25 +2,25 @@
 <template>
     <div class="asowp-space-y-1">
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-4">
-            <p class="asowp-text-[14px] asowp-font-bold">2- Set the Label and Description</p>
-            <p class="asowp-text-[12px]">This text will display above the input options.</p>
+            <p class="asowp-text-[14px] asowp-font-bold">2- {{ __('Set the Label and Description', 'all-signs-options-pro') }}</p>
+            <p class="asowp-text-[12px]">{{ __('This text will display above the input options.', 'all-signs-options-pro') }}</p>
             <div class="asowp-flex asowp-justify-between asowp-space-x-12">
                 <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>Label</label>
+                    <label>{{ __('Label', 'all-signs-options-pro') }}</label>
                     <input v-model="noteType.label" type="text" :class="`asowp-w-full ${emptyLabel?'asowp-field-required':''}`" value=""/>
                 </div>
                 <div class="asowp-w-2/5 asowp-space-y-2">
-                    <label>Description</label>
+                    <label>{{ __('Description', 'all-signs-options-pro') }}</label>
                     <input v-model="noteType.description" type="text" class="asowp-w-full" value=""/>
                 </div>
             </div>
         </div>
         <div class="asowp-bg-white asowp-shadow-md asowp-justify-center asowp-items-center asowp-px-4 asowp-py-4">
-            <p class="asowp-text-[14px] asowp-font-bold">3- Note Input</p>
-            <p class="asowp-text-[12px]">Character limit (optional)</p>
-            <p class="asowp-text-[12px]">Displays as a textarea field for customers to type any additional requirements.</p>
+            <p class="asowp-text-[14px] asowp-font-bold">3- {{ __('Note Input', 'all-signs-options-pro') }}</p>
+            <p class="asowp-text-[12px]">{{ __('Character limit (optional)', 'all-signs-options-pro') }}</p>
+            <p class="asowp-text-[12px]">{{ __('Displays as a textarea field for customers to type any additional requirements.', 'all-signs-options-pro') }}</p>
             <input v-model="noteType.noteLimitChar" type="number" class="asowp-w-3/4" value=""/>
-            <p class="asowp-text-[12px]">The maximum number of text characters for notes.</p>
+            <p class="asowp-text-[12px]">{{ __('The maximum number of text characters for notes.', 'all-signs-options-pro') }}</p>
         </div>
     </div>
     <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end asowp-sticky asowp-z-[999] asowp-bottom-0">
@@ -30,7 +30,7 @@
                     <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                 </svg>
 
-                <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                <div class="asowp-font-semibold asowp-text-[16px]">{{ __('Back', 'all-signs-options-pro') }}</div>
             </button>
         </div>
         <div :class="`${props.action? !isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500':'asowp-bg-[#016464]'} asowp-rounded`">
@@ -42,7 +42,7 @@
                     </svg>
                 </div>
 
-                <span class="asowp-font-semibold asowp-text-[16px]">{{props.action? 'Update': 'Save'}}</span>
+                <span class="asowp-font-semibold asowp-text-[16px]">{{props.action? __('Update', 'all-signs-options-pro') : __('Save', 'all-signs-options-pro') }}</span>
             </button>
         </div>
     </div>
@@ -53,6 +53,7 @@ import {ref,onMounted,defineProps} from 'vue';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { useRoute } from 'vue-router';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute()
 
 const props = defineProps({

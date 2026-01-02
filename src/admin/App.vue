@@ -39,6 +39,10 @@ import Headerbar from './pages/components/headerbar.vue';
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import api from './Api/api';
+import toastMessage from './utils/functions';
+import { t } from './utils/i18n';
+
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
 const showProductContent = computed(() => {
     if (!activateProduct.value && !$route) return false;
@@ -58,12 +62,12 @@ const activateLicenseKey = async () => {
             activateProduct.value = true;
             await api.saveGlobalSettingsProduct(licenses.value);
         }else if(response.data.message){
-            toastMessage(response.data.message, 'error');
+            toastMessage(t(response.data.message), 'error');
         }else{
-            toastMessage(response.data, 'error');
+            toastMessage(t(response.data), 'error');
         }
     } catch (error) {
-        toastMessage(error, "error");
+        toastMessage(__('An unknown error occurred.', 'all-signs-options-pro'), "error");
     }
 }
 

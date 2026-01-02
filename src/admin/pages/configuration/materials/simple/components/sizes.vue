@@ -9,7 +9,7 @@
                         </g>
                     </svg>
                     <div class="asowp-text-[14px]">
-                        Add new size
+                        {{ __("Add new size", "all-signs-options-pro") }}
                     </div>
                 </button>
             </div>
@@ -18,22 +18,22 @@
                     <thead class="asowp-text-[14px] asowp-bg-[#f0f0f1]">
                         <tr class="">
                             <th scope="col" class="asowp-p-4 asowp-w-12 asowp-font-normal">
-                                Title 
+                                {{ __("Title", "all-signs-options-pro") }} 
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                width
+                                {{ __("width", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                Height
+                                {{ __("Height", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                Base Price
+                                {{ __("Base Price", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                Default
+                                {{ __("Default", "all-signs-options-pro") }}
                             </th>
                             <th scope="col" class="asowp-px-6 asowp-py-3 asowp-font-normal">
-                                Action
+                                {{ __("Action", "all-signs-options-pro") }}
                             </th>
                             
                         </tr>
@@ -125,7 +125,7 @@
                                                     d="M15.655 4.344a2.695 2.695 0 0 0-3.81 0l-.599.599-.009-.009-1.06 1.06.008.01-5.88 5.88a2.75 2.75 0 0 0-.805 1.944v1.922a.75.75 0 0 0 .75.75h1.922a2.75 2.75 0 0 0 1.944-.806l7.54-7.539a2.695 2.695 0 0 0 0-3.81Zm-4.409 2.72-5.88 5.88a1.25 1.25 0 0 0-.366.884v1.172h1.172c.331 0 .65-.132.883-.366l5.88-5.88-1.689-1.69Zm2.75.629.599-.599a1.195 1.195 0 1 0-1.69-1.689l-.598.599 1.69 1.689Z">
                                                 </path>
                                             </svg>
-                                            <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">Edit</span>
+                                            <span class="asowp-text-[.8125rem] asowp-font-[450] asowp-text-[#303030]">{{ __("Edit", "all-signs-options-pro") }}</span>
                                         </button>
 
                                         <!-- Delete -->
@@ -151,7 +151,7 @@
                                                     d="M7.25 5.25a2.75 2.75 0 0 1 5.5 0h3a.75.75 0 0 1 0 1.5h-.75v5.45c0 1.68 0 2.52-.327 3.162a3 3 0 0 1-1.311 1.311c-.642.327-1.482.327-3.162.327h-.4c-1.68 0-2.52 0-3.162-.327a3 3 0 0 1-1.311-1.311c-.327-.642-.327-1.482-.327-3.162v-5.45h-.75a.75.75 0 0 1 0-1.5h3Zm1.5 0a1.25 1.25 0 1 1 2.5 0h-2.5Zm-2.25 1.5h7v5.45c0 .865-.001 1.423-.036 1.848-.033.408-.09.559-.128.633a1.5 1.5 0 0 1-.655.655c-.074.038-.225.095-.633.128-.425.035-.983.036-1.848.036h-.4c-.865 0-1.423-.001-1.848-.036-.408-.033-.559-.09-.633-.128a1.5 1.5 0 0 1-.656-.655c-.037-.074-.094-.225-.127-.633-.035-.425-.036-.983-.036-1.848v-5.45Z">
                                                 </path>
                                             </svg>
-                                            <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">Delete</span>
+                                            <span class="asowp-text-[.8125rem] asowp-font-[450]" style="color:rgb(142, 31, 11);">{{ __("Delete", "all-signs-options-pro") }}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
         <div class="asowp-space-y-2 asowp-translate-y-7 asowp-mt-3" v-if="!isFetching && !isNewSize">
             <div class="asowp-bg-[#fff] asowp-p-5 asowp-space-y-8 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9] asowp-pt-9">
                 <div class="asowp-flex asowp-w-1/2 asowp-text-[16px]">
-                    <label for="" class="asowp-text-[14px] asowp-font-bold">Enable thickness</label>
+                    <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Enable thickness", "all-signs-options-pro") }}</label>
                     <div class="asowp-flex asowp-items-center">
                         <span class="asowp-w-fit asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                             <label for="asowp-toggle" @click="sizes.thickness.active = !sizes.thickness.active" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
@@ -174,7 +174,7 @@
                         </span>
                     </div>
                 </div>
-                <label for="" class="asowp-text-[14px] asowp-font-bold asowp-invisible">Values</label>
+                <label for="" class="asowp-text-[14px] asowp-font-bold asowp-invisible">{{ __("Values", "all-signs-options-pro") }}</label>
                 <div v-if="sizes.thickness.active" class="asowp-grid asowp-grid-cols-5 asowp-gap-4 asowp-mt-4">
                     <div class="asowp-relative asowp-space-y-2 asowp-py-2 asowp-flex asowp-flex-col asowp-text-[12px]" :key="key" v-for="thick,key in sizes.thickness.values">
                         <input type="number" v-model="sizes.thickness.values[key]" class="asowp-rounded asowp-w-[80%] asowp-h-[30px]">
@@ -189,14 +189,14 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                             </svg>
-                            <span class="asowp-font-semibold asowp-text-[16px]">Add Thickness</span>
+                            <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Add Thickness", "all-signs-options-pro") }}</span>
                         </button>
                     </div>
                 </div>
                 <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
                 <div class="asowp-text-[16px] asowp-font-medium">
                     <div class="asowp-flex ">
-                        Custom size
+                        {{ __("Custom size", "all-signs-options-pro") }}
                         <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                             <label for="asowp-toggle" @click="changeCustomSizeActive" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                                 <div :class="sizes.customSize.active ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -206,35 +206,35 @@
                     <div class="asowp-space-y-6 asowp-pt-8" v-if="sizes.customSize.active">
                         <div class="asowp-grid asowp-grid-cols-2 asowp-items-center" style="gap: 1rem !important;">
                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-bold asowp-font-normal">Width label</label>
+                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Width label", "all-signs-options-pro") }}</label>
                                 <input type="text" v-model="sizes.customSize.width.label" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;">
                             </div>
                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-bold asowp-font-normal">Height label</label>
+                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Height label", "all-signs-options-pro") }}</label>
                                 <input type="text" v-model="sizes.customSize.height.label" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;">
                             </div>
                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-bold asowp-font-normal">Min width</label>
+                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Min width", "all-signs-options-pro") }}</label>
                                 <div class="">
                                     <input type="number" v-model="sizes.customSize.width.min" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;">
                                 </div>
                             </div>
                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-bold asowp-font-normal">Min Height</label>
+                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Min Height", "all-signs-options-pro") }}</label>
                                 <div class="">
                                     <input type="number" v-model="sizes.customSize.height.min" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;">
                                 </div>
                             </div>
                             
                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-bold asowp-font-normal">Max Width</label>
+                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Max Width", "all-signs-options-pro") }}</label>
                                 <div class="">
                                     <input type="number" v-model="sizes.customSize.width.max" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;">
                                 </div>
                                 
                             </div>
                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-bold asowp-font-normal">Max height</label>
+                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Max height", "all-signs-options-pro") }}</label>
                                 <div class="">
                                     <input type="number" v-model="sizes.customSize.height.max" class="asowp-rounded asowp-w-full asowp-h-[40px]" style="border-radius: 10px !important;">
                                 </div>
@@ -243,7 +243,7 @@
                         <div class="asowp-space-y-2">
                             <div class="asowp-space-x-8 asowp-flex asowp-relative asowp-pe-8 asowp-items-center">
                                 <div class="asowp-space-x-8 asowp-flex  asowp-items-center">
-                                    <label>Pricings</label>
+                                    <label>{{ __("Pricings", "all-signs-options-pro") }}</label>
                                     <!--<div @click="showPricingModal = true" class="asowp-cursor-pointer asowp-w-7 asowp-h-7 asowp-rounded-full asowp-bg-blue-500 asowp-text-white asowp-flex asowp-items-center asowp-justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
@@ -251,7 +251,7 @@
                                     </div>-->  
                                 </div>  
                                 <div class="asowp-flex asowp-items-center">
-                                    Price per Surface
+                                    {{ __("Price per Surface", "all-signs-options-pro") }}
                                     <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                                         <label for="asowp-toggle" @click="()=>changePricingType('unit')" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                                             <div :class="sizes.customSize.pricings.type == 'unit' ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -259,7 +259,7 @@
                                     </div>
                                 </div>
                                 <div class="asowp-flex asowp-items-center asowp-pl-6">
-                                    Price per interval of surface
+                                    {{ __("Price per interval of surface", "all-signs-options-pro") }}
                                     <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                                         <label for="asowp-toggle" @click="()=>changePricingType('range')" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                                             <div :class="sizes.customSize.pricings.type == 'range' ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -272,13 +272,13 @@
                                             <!-- Modal header -->
                                             <div class="asowp-flex asowp-items-center asowp-justify-between asowp-p-2 asowp-border-solid  asowp-border-t-0 asowp-border-x-0 asowp-border-b asowp-rounded-t dark:border-gray-600">
                                                 <h3 class="asowp-text-xl asowp-font-semibold asowp-text-gray-900 dark:text-white">
-                                                    Custom Sizes Pricing Rules
+                                                    {{ __("Custom Sizes Pricing Rules", "all-signs-options-pro") }}
                                                 </h3>
                                                 <button @click="showPricingModal = false" class="asowp-text-gray-400 asowp-bg-transparent hover:asowp-bg-gray-200 hover:asowp-text-gray-900 asowp-rounded-lg asowp-text-sm asowp-w-8 asowp-h-8 asowp-ms-auto asowp-inline-flex asowp-justify-center asowp-items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
                                                     <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                     </svg>
-                                                    <span class="asowp-sr-only">Close modal</span>
+                                                    <span class="asowp-sr-only">{{ __("Close modal", "all-signs-options-pro") }}</span>
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
@@ -294,10 +294,10 @@
                             </div>
                             <div v-if="sizes.customSize.pricings.type == 'range'" class="asowp-space-x-8 asowp-pt-4 asowp-flex asowp-relative asowp-pe-2 asowp-items-center">
                                 <div class="asowp-space-x-8 asowp-flex  asowp-items-center">
-                                    <label> Interval  pricing type :</label>
+                                    <label> {{ __("Interval pricing type :", "all-signs-options-pro") }}</label>
                                 </div>  
                                 <div class="asowp-flex asowp-items-center">
-                                    Additional price
+                                    {{__("Additional Price", "all-signs-options-pro")}}
                                     <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                                         <label for="asowp-toggle" @click="()=>enableRangePricingPerUnit()" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                                             <div :class="!sizes.customSize.pricings.rangePricingPerUnit ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -305,7 +305,7 @@
                                     </div>
                                 </div>
                                 <div class="asowp-flex asowp-items-center asowp-pl-6">
-                                    Price per unit of surface
+                                    {{ __("Price per unit of surface", "all-signs-options-pro") }}
                                     <div class="asowp-flex asowp-items-center asowp-translate-x-5 asowp-translate-y-0.5">
                                         <label for="asowp-toggle" @click="()=>enableRangePricingPerUnit()" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                                             <div :class="sizes.customSize.pricings.rangePricingPerUnit ? 'asowp-translate-x-[120%] asowp-border-[#016464]':'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -318,7 +318,7 @@
                                     <div>
                                         <div class="asowp-py-2 asowp-grid asowp-grid-cols-4 asowp-gap-4 asowp-text-[12px]">   
                                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                                <label for="" class="asowp-bold asowp-font-normal">Surface maximum</label>
+                                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Surface maximum", "all-signs-options-pro") }}</label>
                                                 <div class="asowp-relative">
                                                     <input min="0" type="number" v-model="sizes.customSize.pricings.range[key].surface" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" :class="`${!isValidPricing(key)?'asowp-field-required':''}`">
                                                     <span class="asowp-absolute asowp-top-[2px] asowp-right-[10%]">{{ measurementUnit }}<sup>2</sup></span>
@@ -334,13 +334,13 @@
                                                 </div>
                                             </div>
                                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                                <label for="" class="asowp-bold asowp-font-normal">Char Price</label>
+                                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Char Price", "all-signs-options-pro") }}</label>
                                                 <div class="asowp-relative">
                                                     <input min="0" type="number" v-model="sizes.customSize.pricings.range[key].charPrice" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(sizes.customSize.pricings.range[key].charPrice) ? sizes.customSize.pricings.range[key].charPrice=0 : ''">
                                                 </div>
                                             </div>
                                             <div>
-                                                <label for="" class="asowp-bold asowp-font-normal asowp-invisible">Delete pricing</label>
+                                                <label for="" class="asowp-bold asowp-font-normal asowp-invisible">{{ __("Delete pricing", "all-signs-options-pro") }}</label>
                                                 <div class="asowp-flex asowp-justify-start asowp-items-start asowp-h-full asowp-pt-1">
                                                     <div @click="handleDeletePricing(key)" class="asowp-flex asowp-items-center asowp-justify-center asowp-bg-red-500 asowp-text-white asowp-flex asowp-justify-center asowp-items-center asowp-shadow-md asowp-rounded-md asowp-cursor-pointer asowp-w-1/4 asowp-h-[30px]">
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-[70%] asowp-h-[70%]">
@@ -358,7 +358,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                         </svg>
-                                        <span class="asowp-font-semibold asowp-text-[16px]">Add pricing</span>
+                                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Add pricing", "all-signs-options-pro") }}</span>
                                     </button>
                                 </div>
                             </div>
@@ -368,20 +368,20 @@
                                     <div>
                                         <div class="asowp-py-2 asowp-grid asowp-grid-cols-4 asowp-gap-4 asowp-text-[12px]">   
                                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                                <label for="" class="asowp-bold asowp-font-normal">Surface</label>
+                                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Surface", "all-signs-options-pro") }}</label>
                                                 <div class="asowp-relative">
                                                     <input min="0" type="number" v-model="sizes.customSize.pricings.unit.surface" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;">
                                                     <span class="asowp-absolute asowp-top-[2px] asowp-right-[10%]">{{ measurementUnit }}<sup>2</sup></span>
                                                 </div>
                                             </div>
                                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                                <label for="" class="asowp-bold asowp-font-normal">Price for  this surface</label>
+                                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Price for this surface", "all-signs-options-pro") }}</label>
                                                 <div class="asowp-relative">
                                                     <input min="0" type="number" v-model="sizes.customSize.pricings.unit.basePrice" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(sizes.customSize.pricings.unit.basePrice) ? sizes.customSize.pricings.unit.basePrice=0 : ''">
                                                 </div>
                                             </div>
                                             <div class="asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                                                <label for="" class="asowp-bold asowp-font-normal">Char Price</label>
+                                                <label for="" class="asowp-bold asowp-font-normal">{{ __("Char Price", "all-signs-options-pro") }}</label>
                                                 <div class="asowp-relative">
                                                     <input min="0" type="number" v-model="sizes.customSize.pricings.unit.charPrice" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(sizes.customSize.pricings.unit.charPrice) ? sizes.customSize.pricings.unit.charPrice=0 : ''">
                                                 </div>
@@ -404,7 +404,7 @@
                             </svg>
                         </div>
 
-                        <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</span>
                     </button>
                 </div>
             </div>
@@ -413,7 +413,7 @@
             <div class="asowp-bg-[#fff] asowp-p-6 asowp-space-y-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
                 <div class="asowp-space-y-4">
                     <div class="asowp-flex asowp-flex-col asowp-justify-between">
-                        <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">Label</label>
+                        <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">{{ __("Label", "all-signs-options-pro") }}</label>
                         <input v-model.trim="size.label" 
                             type="text"
                             class="asowp-mt-2 asowp-w-full asowp-rounded-md asowp-border"  style="padding: 4px;border-radius: 10px;"
@@ -421,7 +421,7 @@
                         <div v-if="!size.label?.trim()"
                             class="asowp-flex asowp-items-center asowp-gap-1 asowp-text-[#b91c1c] asowp-text-[12px] asowp-mt-1">
                         <span class="asowp-inline-block asowp-w-[6px] asowp-h-[6px] asowp-rounded-full asowp-bg-[#b91c1c]"></span>
-                        size name is required
+                        {{ __("size name is required", "all-signs-options-pro") }}
                         </div>
 
 
@@ -429,41 +429,41 @@
                     </div>
                     <div class="asowp-flex asowp-space-x-4 asowp-justify-between">
                         <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[14px]">
-                            <label for="" class="asowp-text-[14px] asowp-font-bold">Width</label>
+                            <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Width", "all-signs-options-pro") }}</label>
                             <input type="number" v-model="size.width"  class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.width)?size.width=0:''">
                         </div>
                         <div class="asowp-w-[50%] asowp-space-y-2 asowp-flex asowp-flex-col asowp-text-[12px]">
-                            <label for="" class="asowp-text-[14px] asowp-font-bold">Height</label>
+                            <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Height", "all-signs-options-pro") }}</label>
                             <input type="number"  v-model="size.height"  class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.height)?size.height=0:''">
                         </div>
                     </div>
                 </div>
                 <div class="asowp-flex asowp-space-x-4 asowp-justify-between">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[14px] asowp-font-bold">Text number</label>
+                        <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Text number", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative">
                             <input type="number" v-model="size.textNumber" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.textNumber)? size.textNumber=0:''">
                         </div>
                         
                     </div>
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[14px] asowp-font-bold">Max text char</label>
+                        <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Max text char", "all-signs-options-pro") }}</label>
                         <div class="">
                             <input type="number" v-model="size.maxTextChar"  class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.maxTextChar)? size.maxTextChar=-1:''">
                         </div>
-                        <p class="asowp-text-[11px]">Max number of characters in text, for without limit set to -1</p>
+                        <p class="asowp-text-[11px]">{{ __("Max number of characters in text, for without limit set to -1", "all-signs-options-pro") }}</p>
                     </div>
                 </div>
                 <div class="asowp-flex asowp-justify-between asowp-space-x-4">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[14px] asowp-font-bold">Base Price</label>
+                        <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Base Price", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative">
                             <input type="number" v-model="size.basePrice" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.basePrice)? size.basePrice=0:''">
                         </div>
                         
                     </div>
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[14px] asowp-font-bold">Number at start pricing char</label>
+                        <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Number at start pricing char", "all-signs-options-pro") }}</label>
                         <div class="">
                             <input type="number" v-model="size.startPriceAtChar" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.startPriceAtChar)? size.startPriceAtChar=0:''">
                         </div>
@@ -472,7 +472,7 @@
                 </div>
                 <div class="asowp-flex asowp-justify-between asowp-space-x-4">
                     <div class="asowp-w-[50%] asowp-space-y-2 asowp-text-[12px] asowp-flex asowp-flex-col">
-                        <label for="" class="asowp-text-[14px] asowp-font-bold">Char Price</label>
+                        <label for="" class="asowp-text-[14px] asowp-font-bold">{{ __("Char Price", "all-signs-options-pro") }}</label>
                         <div class="asowp-relative">
                             <input type="number" v-model="size.charPrice" class="asowp-rounded asowp-w-full asowp-h-[35px]" style="border-radius: 10px !important;" @blur="isNaN(size.charPrice)? size.charPrice=0:''">
                         </div>
@@ -487,13 +487,13 @@
                                 <path d="M1 12L5 8V11L17.17 11C17.3756 10.414 17.7586 9.90661 18.2657 9.54821C18.7729 9.18981 19.379 8.9982 20 9C20.7956 9 21.5587 9.31607 22.1213 9.87868C22.6839 10.4413 23 11.2044 23 12C23 12.7956 22.6839 13.5587 22.1213 14.1213C21.5587 14.6839 20.7956 15 20 15C18.69 15 17.58 14.17 17.17 13L5 13V16L1 12Z" fill="currentColor"/>
                             </svg>
     
-                            <div class="asowp-font-semibold asowp-text-[16px]">Back</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Back", "all-signs-options-pro") }}</div>
                         </button>
                     </div>
                     <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
                         <button @click="updateSizeInMaterialSize" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <div class="asowp-font-semibold asowp-text-[16px]">Update</div>
+                            <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Update", "all-signs-options-pro") }}</div>
                         </button>
                     </div>
                     <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
@@ -505,7 +505,7 @@
                                 </svg>
                             </div>
     
-                            <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
+                            <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</span>
                         </button>
                     </div>
                 </div>
@@ -520,19 +520,19 @@
                         <svg class="asowp-w-3 asowp-h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                        <span class="asowp-sr-only">Close modal</span>
+                        <span class="asowp-sr-only">{{ __("Close modal", "all-signs-options-pro") }}</span>
                     </button>
                     <div class="asowp-p-4 md:p-5 asowp-text-center">
                         <svg class="asowp-mx-auto asowp-mb-4 asowp-text-gray-400 asowp-w-12 asowp-h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">Are you sure you want to delete this size?</h3>
+                        <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{ __("Are you sure you want to delete this size?", "all-signs-options-pro") }}</h3>
                         <input v-model="size.label" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                         <button @click="deleteMaterialSize" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
                             <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            Yes, I'm sure
+                            {{ __("Yes, I'm sure", "all-signs-options-pro") }}
                         </button>
-                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">No, cancel</button>
+                        <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{ __("No, cancel", "all-signs-options-pro") }}</button>
                     </div>
                 </div>
             </div>
@@ -545,6 +545,7 @@ import { ref,onMounted } from "vue";
 import { useRoute } from 'vue-router';
 import toastMessage from "@/admin/utils/functions";
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute()
 const configID = ref(route.params.configId);
 const materialId = ref(route.params.materialId);
@@ -610,32 +611,31 @@ onMounted(async ()=>{
 
 const fetchMaterialSizes = async () => {
     const result = await api.getMaterialSimpleSizes(configID.value,materialId.value);
-    if(!result.success){
-        if(result.message){
-            noSizesFound.value = result.message;
-        }
-        if( !result.materialSizes.customSize.pricings?.type){
-            result.materialSizes.customSize.pricings =  {
-                type:"unit",
-                unit:{
-                basePrice:0,
-                surface:0,
-                charPrice:0
+    if (result?.materialSizes) {
+        if (!result.materialSizes.customSize.pricings?.type) {
+            result.materialSizes.customSize.pricings = {
+                type: "unit",
+                unit: {
+                    basePrice: 0,
+                    surface: 0,
+                    charPrice: 0,
                 },
-                range:[],
-                rangePricingPerUnit:false
+                range: [],
+                rangePricingPerUnit: false,
             };
         }
         sizes.value = result.materialSizes;
-        measurementUnit.value = result.measurementUnit;
-        
-        // Initialize showParams array
-        let tab = [];
-        for (let index = 0; index < sizes.value.allSizes.length; index++) {
-            tab.push(false);
-        }
-        showParams.value = tab;
+        measurementUnit.value = result.measurementUnit || measurementUnit.value;
+    } else if (result?.message) {
+        noSizesFound.value = result.message;
     }
+
+    // Initialize showParams array even when empty
+    let tab = [];
+    for (let index = 0; index < sizes.value.allSizes.length; index++) {
+        tab.push(false);
+    }
+    showParams.value = tab;
 }
 
 const checkIfThereDefault = ()=> {

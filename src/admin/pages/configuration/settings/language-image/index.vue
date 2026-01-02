@@ -3,17 +3,17 @@
         <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
             <div class="">
                 <button @click="()=>{showStep = 'visualizer'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'visualizer' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Visualizer
+                    {{ __("Visualizer", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep = 'upload-design'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'upload-design' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Upload design
+                    {{ __("Upload design", "all-signs-options-pro") }}
                 </button>
             </div>
             <div class="">
                 <button @click="()=>{showStep = 'images'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'images' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    Images
+                    {{ __("Images", "all-signs-options-pro") }}
                 </button>
             </div>
         </div>
@@ -35,6 +35,7 @@ import api from '@/admin/Api/api';
 import Visualizer from './visualizer.vue';
 import Images from './images.vue';
 import UploadDesign from './upload-design.vue';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const showStep = ref('visualizer');
 const isFetching = ref(false);
 const languageImages = ref({});

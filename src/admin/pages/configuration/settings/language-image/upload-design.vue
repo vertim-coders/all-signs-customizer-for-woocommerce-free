@@ -3,9 +3,9 @@
             
         <div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
-                <h3 class="asowp-text-[16px] asowp-semibold">Custom design link</h3>
+                <h3 class="asowp-text-[16px] asowp-semibold">{{ __('Custom design link', 'all-signs-options-pro') }}</h3>
                 <div class="asowp-flex asowp-space-x-3">
-                    <div class="asowp-text-[11px]">Enable custom design link</div>
+                    <div class="asowp-text-[11px]">{{ __('Enable custom design link', 'all-signs-options-pro') }}</div>
                     <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                         <label for="toggleEnableCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                             <input id="toggleEnableCustom" type="checkbox" name="toggleEnableCustom" class="asowp-sr-only asowp-peer" v-model="uploadDesign.activate">
@@ -14,22 +14,22 @@
                     </div>
                 </div>
                 <div class="asowp-text-[11px] asowp-text-[#444444]">
-                    Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.
+                    {{ __('Enable this to display a link to direct customers to another page on your site, this will display as one of the first options on desktop and mobile.', 'all-signs-options-pro') }}
                 </div>
                 <div class="asowp-flex asowp-flex-col asowp-w-3/5 asowp-space-y-2" v-if="uploadDesign.activate">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">Custom Design Link</label>
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __('Custom Design Link', 'all-signs-options-pro') }}</label>
                     <input type="text" v-model="uploadDesign.link" class="asowp-w-full"/>
-                    <span class="asowp-text-[12px] asowp-text-[#444444]">URL to redirect customers on your store that will allow for more complex graphic design quote submissions.</span>
+                    <span class="asowp-text-[12px] asowp-text-[#444444]">{{ __('URL to redirect customers on your store that will allow for more complex graphic design quote submissions.', 'all-signs-options-pro') }}</span>
                 </div>
                 <div class="asowp-flex asowp-flex-col asowp-w-3/5 asowp-space-y-2" v-if="uploadDesign.activate">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">Phrase for link to submit custom design page</label>
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __('Phrase for link to submit custom design page', 'all-signs-options-pro') }}</label>
                     <input type="text" v-model="uploadDesign.phraseSubmitCustom" class="asowp-w-full"/>
 
                 </div>
                 
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-pb-8 asowp-space-y-6 asowp-translate-y-8">
-                <h3 class="asowp-text-[16px] asowp-semibold asowp-m-0">The message to be displayed when the help button is clicked</h3>
+                <h3 class="asowp-text-[16px] asowp-semibold asowp-m-0">{{ __('The message to be displayed when the help button is clicked', 'all-signs-options-pro') }}</h3>
                 <div class="asowp-relative asowp-w-full asowp-max-h-fit">
                     <div class="asowp-px-4">
                         <div class="asowp-px-[10px] asowp-pt-[5px]">
@@ -43,7 +43,7 @@
             <div class="asowp-bg-[#016464] asowp-rounded">
                 <button :disabled="isLoading" @click="updateUploadDesignSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                     <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __('Save', 'all-signs-options-pro') }}</div>
                 </button>
             </div>
         </div>
@@ -54,6 +54,7 @@ import {ref,defineProps, onMounted} from 'vue';
 import api from '@/admin/Api/api';
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
     data:Object,
     fetchSettings:Function

@@ -6,7 +6,7 @@
         <div v-if="!isFetching" class="asowp-space-y-4 asowp-py-10">
             <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-2">
                 <div class="asowp-flex asowp-flex-col asowp-space-y-3">
-                    <label class="asowp-text-[12px] asowp-text-[#444444]">Enter the licence key</label>
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __('Enter the licence key', 'all-signs-options-pro') }}</label>
                     <input type="text" v-model="licenses.product" class="asowp-w-full"/>
                 </div>
             </div>
@@ -20,7 +20,7 @@
                             </svg>
                         </div>
 
-                        <span class="asowp-font-semibold asowp-text-[16px]">Save & Activate</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __('Save & Activate', 'all-signs-options-pro') }}</span>
                     </button>
                 </div>
             </div>
@@ -32,6 +32,9 @@ import api from '@/admin/Api/api';
 import {ref, onMounted} from 'vue';
 import toastMessage from '@/admin/utils/functions';
 import axios from 'axios';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+// Import du helper de traduction
+
 const isFetching = ref(false);
 const isLoading = ref(false);
 const licenses = ref({
@@ -68,7 +71,7 @@ const activateLicenseKey = async () => {
         if (response.data.key) {
             licenses.value.valid = response.data.key;
             await api.saveGlobalSettingsProduct(licenses.value);
-            toastMessage("Activation successful! Your product is ready to use");
+            toastMessage(__("Activation successful! Your product is ready to use", "all-signs-options-pro"));
             document.location.href = 'admin.php?page=asowp#/'
             document.location.reload(true);
         }else if(response.data.message){
@@ -79,7 +82,7 @@ const activateLicenseKey = async () => {
             toastMessage(response.data, 'error');
         }
     } catch (error) {
-        toastMessage(error, "error");
+        toastMessage(__('An unknown error occurred.', 'all-signs-options-pro'), "error");
     }
 }
-</script> 
+</script>

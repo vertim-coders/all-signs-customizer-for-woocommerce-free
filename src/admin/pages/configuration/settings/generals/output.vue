@@ -2,24 +2,24 @@
     <div>
         <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-4 asowp-translate-y-10">
             <div class="asowp-flex asowp-flex-col asowp-space-y-3">
-                <label class="asowp-text-[14px] asowp-font-bold">Output files format</label>
-                <span class="asowp-pt-4 asowp-text-[11px]">What is your desired output files format ?</span>
+                <label class="asowp-text-[14px] asowp-font-bold">{{ __("Output files format", "all-signs-options-pro") }}</label>
+                <span class="asowp-pt-4 asowp-text-[11px]">{{ __("What is your desired output files format ?", "all-signs-options-pro") }}</span>
                 <select v-model="Output.filesFormat">
-                    <option value="png">PNG</option>
-                    <option value="jpeg">JPEG</option>
-                    <option value="svg">SVG</option>
-                    <option value="png+jpeg">PNG + JPEG</option>
-                    <option value="png+svg">PNG + SVG</option>
-                    <option value="jpeg+svg">JPEG + SVG</option>
+                    <option value="png">{{ __("PNG", "all-signs-options-pro") }}</option>
+                    <option value="jpeg">{{ __("JPEG", "all-signs-options-pro") }}</option>
+                    <option value="svg">{{ __("SVG", "all-signs-options-pro") }}</option>
+                    <option value="png+jpeg">{{ __("PNG + JPEG", "all-signs-options-pro") }}</option>
+                    <option value="png+svg">{{ __("PNG + SVG", "all-signs-options-pro") }}</option>
+                    <option value="jpeg+svg">{{ __("JPEG + SVG", "all-signs-options-pro") }}</option>
                 </select>
             </div>
             <div class="asowp-flex asowp-flex-col asowp-space-y-3 asowp-pt-4">
-                <label class="asowp-text-[14px] asowp-font-bold">Watermark</label>
+                <label class="asowp-text-[14px] asowp-font-bold">{{ __("Watermark", "all-signs-options-pro") }}</label>
                 <div class=" asowp-flex asowp-flex-col asowp-space-y-2 asowp-text-[12px]">
-                    <label for="" class="asowp-font-normal">Upload Image</label>
+                    <label for="" class="asowp-font-normal">{{ __("Upload Image", "all-signs-options-pro") }}</label>
                     <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2 asowp-w-1/2">
                         <div class="asowp-flex asowp-space-x-2">
-                            <button @click="selectWaterMarkImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">upload PopupImg</button>
+                            <button @click="selectWaterMarkImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("upload PopupImg", "all-signs-options-pro") }}</button>
                             <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
                                 <img v-if="Output.waterMark != ''" :src="Output.waterMark" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
                                 <button v-if="Output.waterMark != ''" @click="()=>{Output.waterMark = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
@@ -34,7 +34,7 @@
             </div>
             <div class="asowp-flex asowp-flex-col asowp-space-y-3 asowp-py-10">
                 <div class="asowp-flex asowp-space-x-2">
-                    <label class="asowp-text-[16px] asowp-font-semibold">Zip output files</label>
+                    <label class="asowp-text-[16px] asowp-font-semibold">{{ __("Zip output files", "all-signs-options-pro") }}</label>
                     <div class="asowp-flex asowp-items-center">
                         <label for="toggleZip" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                             <input id="toggleZip" type="checkbox" name="toggleZip" class="asowp-sr-only asowp-peer" v-model="Output.zipOutputFiles.active">
@@ -43,14 +43,14 @@
                     </div>
                 </div>
                 <div v-if="Output.zipOutputFiles.active" class="asowp-flex asowp-flex-col asowp-space-y-3">
-                    <span>Zip output folder prefix</span>
+                    <span>{{ __("Zip output folder prefix", "all-signs-options-pro") }}</span>
                     <input type="text" v-model="Output.zipOutputFiles.zipOutFolderPrefix" class="asowp-full"/>
                 </div>
                 
             </div>
             <div class="asowp-space-y-3">
                 <div class="asowp-flex asowp-space-x-3">
-                    <label class="asowp-text-[16px] asowp-font-semibold">Design composition</label>
+                    <label class="asowp-text-[16px] asowp-font-semibold">{{ __("Design composition", "all-signs-options-pro") }}</label>
                     <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                         <label for="toggleDesign" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                             <input id="toggleDesign" type="checkbox" name="toggleDesign" class="asowp-sr-only asowp-peer" v-model="Output.designComposition">
@@ -60,7 +60,7 @@
                     
                 </div>
                 <div class="asowp-text-[11px] asowp-text-[#444444]">
-                    This option allows you to display or not design composition in the order
+                    {{ __("This option allows you to display or not design composition in the order", "all-signs-options-pro") }}
                 </div>
                 
             </div>
@@ -70,7 +70,7 @@
         <div class="asowp-bg-[#016464] asowp-rounded">
             <button :disabled="isLoading" @click="updateOutputSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                 <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
             </button>
         </div>
     </div>
@@ -80,6 +80,7 @@ import api from '@/admin/Api/api';
 import {ref,defineProps, onMounted} from 'vue'
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
     data:Object,
     fetchSettings:Function
@@ -122,9 +123,9 @@ const selectWaterMarkImage = async(e) => {
     e.preventDefault();
     var uploader = wp.media(
         {
-            title: "Select WaterMark Image",
+            title: __("Select WaterMark Image","all-signs-options-pro"),
             button: {
-                text: "Select Image"
+                text: __("Select Image","all-signs-options-pro")
             },
             multiple: false
         }

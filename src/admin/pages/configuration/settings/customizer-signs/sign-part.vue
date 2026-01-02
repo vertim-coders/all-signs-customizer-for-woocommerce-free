@@ -4,7 +4,7 @@
             <div>
                 <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
                     <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">Activate the double-sided option</div>
+                        <div class="asowp-text-[16px]">{{ __("Activate the double-sided option", "all-signs-options-pro") }}</div>
                         <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
                             <label for="toggleActivate" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
                                 <input id="toggleActivate" type="checkbox" name="toggleActivate" class="asowp-sr-only asowp-peer" v-model="signPart.doublePart.active">
@@ -13,16 +13,16 @@
                         </div>
                     </div>
                     <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2"  v-if="signPart.doublePart.active">
-                        <label class="asowp-font-semibold asowp-text-[16px]">Label of option to change face</label>
+                        <label class="asowp-font-semibold asowp-text-[16px]">{{ __("Label of option to change face", "all-signs-options-pro") }}</label>
                         <input type="text" v-model="signPart.doublePart.label" class="asowp-w-3/5"/>
                     </div>
                     <div class="asowp-flex asowp-justify-between" v-if="signPart.doublePart.active">
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                            <label class="asowp-font-semibold asowp-text-[16px]">Part 1</label>
+                            <label class="asowp-font-semibold asowp-text-[16px]">{{ __("Part 1", "all-signs-options-pro") }}</label>
                             <input type="text" v-model="signPart.doublePart.part1" class="asowp-w-full"/>
                         </div>
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                            <label class="asowp-font-semibold asowp-text-[16px]">Part 2</label>
+                            <label class="asowp-font-semibold asowp-text-[16px]">{{ __("Part 2", "all-signs-options-pro") }}</label>
                             <input type="text" v-model="signPart.doublePart.part2" class="asowp-w-full"/>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" @click="updateSignPartSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                         <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                        <div class="asowp-font-semibold asowp-text-[16px]">Save</div>
+                        <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
             </div>
@@ -44,6 +44,7 @@ import api from '@/admin/Api/api';
 import {ref,defineProps, onMounted} from 'vue'
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions';
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
     data:Object,
     fetchSettings:Function

@@ -11,6 +11,7 @@ import Couffo from "./configurateur/Couffo/index.vue"
 import Templates from './Templates/index.vue'
 import { useRoute } from "vue-router";
 import api from "@/admin/Api/api";
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute();
 const skin = ref('');
 var configData = ref();
@@ -41,6 +42,8 @@ onMounted(async() => {
   }else{
     if(asowp_data.page == 'configurator'){
       skin.value = asowp_configurator_data.skin;
+      // skin.value = "mono";
+      // skin.value = "couffo";
       // console.log(asowp_configurator_data, 'skin actif');
       configData.value = asowp_configurator_data.currentConfig;
       manageData.value = asowp_configurator_data.managesData;

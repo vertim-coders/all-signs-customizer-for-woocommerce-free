@@ -7,7 +7,7 @@
             <div class="asowp-flex  asowp-px-4 asowp-py-12 asowp-space-x-12">
                 
                 <div class="asowp-flex asowp-font-semibold">
-                    Enable texte
+                    {{ __('Enable text', 'all-signs-options-pro') }}
                     <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                         <label for="asowp-toggle" @click="changeTextImageEnableText" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                             <div :class="textImages.enableText ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="asowp-flex asowp-font-semibold">
-                    Enable image
+                    {{ __('Enable image', 'all-signs-options-pro') }}
                     <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                         <label for="asowp-toggle" @click="changeTextImageEnableImage" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                         <div :class="textImages.enableImage ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="asowp-flex asowp-font-semibold">
-                    Enable QR Code
+                    {{ __('Enable QR Code', 'all-signs-options-pro') }}
                     <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
                         <label for="asowp-toggle" @click="handleEnableQrCode" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
                         <div :class="textImages.enableQrCode ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
@@ -42,7 +42,7 @@
                             </svg>
                         </div>
 
-                        <span class="asowp-font-semibold asowp-text-[16px]">Save</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __('Save', 'all-signs-options-pro') }}</span>
                     </button>
                 </div>
             </div>
@@ -55,8 +55,8 @@
     import api from "@/admin/Api/api";
     import { useRoute } from 'vue-router';
     import toastMessage from "@/admin/utils/functions";
-
-    const route = useRoute()
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+const route = useRoute()
     const configID = ref(route.params.configId);
     const materialId = ref(route.params.materialId);
     const textImages = ref({

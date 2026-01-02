@@ -10,18 +10,18 @@
       <div class="asowp-px-4 asowp-pt-4 asowp-pb-3">
         <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-3">
           <h2 class="asowp-m-0 asowp-text-[1.25rem] asowp-font-bold asowp-text-[#303030]">
-            {{ isEdit ? 'Edit configuration' : 'Create new configuration' }}
+            {{ isEdit ? __('Edit configuration', 'all-signs-options-pro') : __('Create new configuration', 'all-signs-options-pro') }}
           </h2>
           <button
             type="button"
             class="asowp-bg-transparent asowp-border asowp-border-solid asowp-border-[#016464] asowp-text-[#016464] asowp-rounded-md asowp-px-3 asowp-py-1 asowp-text-[12px] asowp-font-semibold asowp-cursor-pointer hover:asowp-bg-[#016464] hover:asowp-text-white"
             @click="router.push({ name: 'configurations' })"
           >
-            Back to configurations
+            {{ __("Back to configurations", "all-signs-options-pro") }}
           </button>
         </div>
         <div class="asowp-mt-[0.2rem] asowp-text-[12px]">
-          Step {{ isEdit ? 4 : wizard.step }} of 4
+          {{ __("Step", "all-signs-options-pro") }} {{ isEdit ? 4 : wizard.step }} {{ __("of 4", "all-signs-options-pro") }}
         </div>
         <div
           class="asowp-flex asowp-items-center asowp-space-x-2 asowp-mt-[0.3rem] asowp-h-[6px]"
@@ -46,7 +46,7 @@
       class="asowp-p-4 asowp-border asowp-rounded-[13px] asowp-border-[#e6e6e6] asowp-bg-[#fff]"
     >
       <div class="asowp-text-[1.25rem] asowp-font-bold asowp-text-[#303030]">
-         Select the signage domain
+         {{ __("Select the signage domain", "all-signs-options-pro") }}
          <span v-if="wizard.category" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
            {{ categories.find((c) => c.id === wizard.category)?.tag }}
          </span>
@@ -54,7 +54,7 @@
       <p
         class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-[8px] asowp-mb-[25px]"
       >
-        Select a domain so we can prepare the matching product types for your next step.
+        {{ __("Select a domain so we can prepare the matching product types for your next step.", "all-signs-options-pro") }}
       </p>
 
       <div
@@ -156,18 +156,18 @@
                   v-if="cat.comingSoon"
                   class="asowp-flex asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-text-[11px] asowp-px-2 asowp-py-[2px] asowp-rounded"
                 >
-                  Coming soon
+                  {{ __("Coming soon", "all-signs-options-pro") }}
                 </span>
                 <span
                   v-else-if="wizard.category === cat.id"
                   class="asowp-flex asowp-bg-[rgba(1,100,100,0.2)] asowp-text-[rgba(1,100,100,0.8)] asowp-text-[10px] asowp-rounded-[20px] asowp-px-1 asowp-py-[0.5px]"
                 >
-                  selected
+                  {{ __("selected", "all-signs-options-pro") }}
                 </span>
               </div>
               <div class="asowp-flex asowp-flex-col">
                 <p class="asowp-text-[rgb(66,66,66)] asowp-my-[10px] asowp-font-normal">
-                  This domain covers various products such as:
+                  {{ __("This domain covers various products such as:", "all-signs-options-pro") }}
                 </p>
                 <div class="asowp-flex asowp-gap-[5px]">
                   <span
@@ -186,7 +186,7 @@
               class="asowp-flex asowp-gap-[10px] asowp-justify-between asowp-items-center asowp-px-[15px] asowp-py-[10px]"
             >
               <p class="asowp-text-gray-500 asowp-text-[12px] asowp-font-normal">
-                Click to choose
+                {{ __("Click to choose", "all-signs-options-pro") }}
               </p>
               <span
                 :class="[
@@ -256,17 +256,17 @@
                   v-if="cat.comingSoon"
                   class="asowp-ml-2 asowp-text-[11px] asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-px-2 asowp-py-[2px] asowp-rounded"
                 >
-                  Coming soon
+                  {{ __("Coming soon", "all-signs-options-pro") }}
                 </span>
                 <span
                   v-else-if="wizard.category === cat.id"
                   class="asowp-ml-2 asowp-text-[11px] asowp-bg-[#e6fbf1] asowp-text-[#059669] asowp-px-2 asowp-py-[2px] asowp-rounded"
                 >
-                  selected
+                  {{ __("selected", "all-signs-options-pro") }}
                 </span>
               </div>
               <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mb-3">
-                This domain covers various products such as:
+                {{ __("This domain covers various products such as:", "all-signs-options-pro") }}
               </p>
               <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-mb-4">
                 <span
@@ -279,7 +279,7 @@
               </div>
               <div class="asowp-flex asowp-justify-between asowp-items-center">
                 <span class="asowp-text-[12px] asowp-text-gray-500"
-                  >Click to choose</span
+                  >{{ __("Click to choose", "all-signs-options-pro") }}</span
                 >
                 <span
                   class="asowp-w-8 asowp-h-8 asowp-rounded-[7px] asowp-border asowp-flex asowp-items-center asowp-justify-center"
@@ -314,14 +314,14 @@
         class="asowp-flex asowp-justify-between asowp-items-center asowp-mt-[25px]"
       >
         <p class="asowp-text-[12px] asowp-text-gray-500 asowp-m-0">
-          Tip: The next steps will let you pick the product type and how customers can personalize it
+          {{ __("Tip: The next steps will let you pick the product type and how customers can personalize it", "all-signs-options-pro") }}
         </p>
         <div class="asowp-flex asowp-gap-3 asowp-items-center">
           <button
             @click="goBack"
             class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-gray-600 asowp-bg-white asowp-border asowp-border-gray-300 asowp-rounded-lg asowp-px-4 asowp-py-2 asowp-hover:asowp-bg-gray-50"
           >
-            Back
+            {{ __("Back", "all-signs-options-pro") }}
           </button>
           <button
             @click="goNext"
@@ -333,7 +333,7 @@
                 : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
             ]"
           >
-            Next
+            {{ __("Next", "all-signs-options-pro") }}
           </button>
         </div>
       </div>
@@ -359,36 +359,26 @@
       style="border: 1px solid #e6e6e6"
     >
         <div class="asowp-text-[18px] asowp-font-semibold">
-          Add product template for fast setup 
-          <span
-            v-if="wizard?.category"
-            class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm"
-          >
-            {{ categories.find((c) => c.id === wizard.category)?.tag }}
-          </span>
-          <span class="asowp-font-medium" v-if="productTypeLabel || selectedSubCategory || selectedProduct">/</span>
-          <span
-            v-if="productTypeLabel"
-            class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm"
-          >
-            {{ productTypeLabel }}
-          </span>
-          <span class="asowp-font-medium" v-if="selectedSubCategory || selectedProduct">/</span>
-          <span
-            v-if="selectedSubCategory"
-            class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm"
-          >
-            {{ selectedSubCategory }}
-          </span>
-          <span class="asowp-font-medium" v-if="selectedProduct">/</span>
-          <span v-if="selectedProduct" class="asowp-font-semibold asowp-text-[#303030] asowp-bg-[#b4fed2] asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm">
-            {{ selectedProduct }}
+          {{ __("Add product template for fast setup", "all-signs-options-pro") }} 
+          <span class="asowp-inline-flex asowp-gap-2 asowp-flex-wrap asowp-align-middle">
+            <span
+              v-for="(crumb, idx) in breadcrumbTags"
+              :key="`crumb-${idx}`"
+              :class="[
+                'asowp-font-semibold asowp-rounded-full asowp-px-4 asowp-py-1 asowp-text-sm',
+                idx === breadcrumbTags.length - 1
+                  ? 'asowp-bg-[#b4fed2] asowp-text-[#303030]'
+                  : 'asowp-bg-[#e5e7eb] asowp-text-[#6b7280]'
+              ]"
+            >
+              {{ crumb }}
+            </span>
           </span>
         </div>
         <p
           class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-[8px] asowp-mb-[20px]"
         >
-          Choose a starter template whose demo content matches your product.
+          {{ __("Choose a starter template whose demo content matches your product.", "all-signs-options-pro") }}
         </p>
         <!-- Include Demo Data Section -->
       <div class="asowp-mt-[20px]">
@@ -398,7 +388,7 @@
             <div>
               <div class="asowp-text-[16px] asowp-font-bold asowp-mb-[15px]">Include demo data?</div>
               <div class="asowp-text-[13px] asowp-text-[#616161]">
-                Preload a template to start faster. You can still customize everything later.
+                {{ __("Preload a template to start faster. You can still customize everything later.", "all-signs-options-pro") }}
               </div>
             </div>
 
@@ -408,25 +398,25 @@
                   :class="['asowp-min-w-[30px] asowp-cursor-pointer asowp-rounded-md asowp-border asowp-px-3 asowp-py-1.5',
                           !wizard.includeDemo ? 'asowp-text-[#016464] asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
                                               : 'asowp-text-gray-700 asowp-border-[#e5e7eb]']">
-                  No
+                  {{ __("No", "all-signs-options-pro") }}
               </button>
               <button type="button"
                   @click="enableDemoInline()"
                   :class="['asowp-min-w-[30px] asowp-cursor-pointer asowp-rounded-md asowp-border asowp-px-3 asowp-py-1.5',
                           wizard.includeDemo ? 'asowp-text-[#016464] asowp-border-[#70b8b8] asowp-ring-2 asowp-ring-[#016464]/50'
                                               : 'asowp-text-gray-700 asowp-border-[#e5e7eb]']">
-                  Yes
+                  {{  __("Yes", "all-signs-options-pro") }}
               </button>
             </div>
           </div>
         </div>
         <div v-if="wizard.includeDemo" class="asowp-mt-3 asowp-text-[13px] asowp-text-[#303030]">
-          Demo data selected: <span class="asowp-font-semibold">{{ selectedProduct }}</span>
+          {{ __("Demo data selected:", "all-signs-options-pro") }} <span class="asowp-font-semibold">{{ selectedProduct }}</span>
         </div>
       </div>
       <!-- Material Type Section -->
       <div class="asowp-text-[16px] asowp-font-semibold asowp-mt-8 asowp-mb-4">
-         Select how user can customize the product
+         {{ __("Select how user can customize the product", "all-signs-options-pro") }}
       </div>
 
       <div
@@ -457,7 +447,7 @@
                     v-if="mt.comingSoon"
                     class="asowp-ml-2 asowp-align-middle asowp-text-[11px] asowp-bg-[#e5f0ff] asowp-text-[#2563eb] asowp-px-2 asowp-py-[2px] asowp-rounded"
                   >
-                    Coming soon
+                    {{ __("Coming soon", "all-signs-options-pro") }}
                   </span>
                 </div>
                 <span
@@ -504,7 +494,7 @@
     <div class="asowp-relative asowp-mt-6 asowp-w-[min(750px,95vw)] asowp-max-h-[calc(100vh-5.75rem)] asowp-max-w-[61.25rem] asowp-rounded-[1rem] asowp-bg-white asowp-shadow-xl asowp-overflow-hidden">
         <!-- Header -->
         <div class="asowp-flex asowp-items-center asowp-bg-[#f3f3f3] asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-solid asowp-border-b asowp-border-r asowp-border-l asowp-border-t asowp-border-[#e5e5e5]">
-            <div class="asowp-text-[14px] asowp-font-semibold">Select a demo</div>
+            <div class="asowp-text-[14px] asowp-font-semibold">{{ __("Select a demo", "all-signs-options-pro") }}</div>
                 <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer"
                         @click="closeDemoModal()" aria-label="Close">
                     ✕
@@ -579,12 +569,12 @@
                 <div class="asowp-flex asowp-absolute asowp-bg-[#fff] asowp-w-full asowp-bottom-0 asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
                     <button class="asowp-px-3 asowp-py-1.5 asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white asowp-text-[13px] asowp-cursor-pointer"
                             @click="closeDemoModal()">
-                        Cancel
+                        {{__("Cancel", "all-signs-options-pro")}}
                     </button>
                     <button class="asowp-px-4 asowp-py-1.5 asowp-mr-[40px] asowp-rounded-md asowp-text-white asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-[13px] asowp-cursor-pointer"
                             :disabled="!selectedDemo"
                             @click="confirmDemo()">
-                        Done
+                        {{__("Done", "all-signs-options-pro")}}
                     </button>
                 </div>
             </div>
@@ -595,7 +585,7 @@
       <p
         class="asowp-text-[12px] asowp-text-gray-500 asowp-mt-[20px] asowp-mb-[30px]"
       >
-        Tip: On the next step, You will finish by adding a name and linking a product of your store.
+        {{ __("Tip: On the next step, You will finish by adding a name and linking a product of your store.", "all-signs-options-pro") }}
       </p>
 
       <!-- footer -->
@@ -606,7 +596,7 @@
           @click="goBack"
           class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
         >
-          Back
+          {{ __("Back", "all-signs-options-pro") }}
         </button>
         <button
           @click="goNext"
@@ -618,7 +608,7 @@
               : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
           ]"
         >
-          Next
+          {{("Next")}}
         </button>
       </div>
     </div>
@@ -639,7 +629,7 @@
           >
             <label
               class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium"
-              >Name configuration</label
+              >{{ __("Name configuration", "all-signs-options-pro") }}</label
             >
             <input
               v-model.trim="newConfig.name"
@@ -659,7 +649,7 @@
               <span
                 class="asowp-inline-block asowp-w-[6px] asowp-h-[6px] asowp-rounded-full asowp-bg-[#b91c1c]"
               ></span>
-              configuration name required
+              {{ __("configuration name required", "all-signs-options-pro") }}
             </div>
           </div>
 
@@ -671,7 +661,7 @@
             >
               <label
                 class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium"
-                >Description</label
+                >{{ __("Description", "all-signs-options-pro") }}</label
               >
               <textarea
                 v-model="newConfig.description"
@@ -687,7 +677,7 @@
             >
               <label
                 class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium"
-                >Upload image</label
+                >{{ __("Upload image", "all-signs-options-pro") }}</label
               >
               <div class="asowp-flex asowp-items-center asowp-gap-3 asowp-mt-2">
                 <button
@@ -708,39 +698,13 @@
                     />
                   </svg>
 
-                  Upload image
+                  {{ __("Upload image", "all-signs-options-pro") }}
                 </button>
                 <div
                   v-if="newConfig.icon"
                   class="asowp-text-[12px] asowp-text-gray-600 asowp-truncate asowp-max-w-[60%]"
                 >
                   {{ newConfig.icon }}
-                </div>
-              </div>
-            </div>
-
-            <!-- Popup image -->
-            <div
-              class="asowp-bg-[#f5f5f5] asowp-p-4 asowp-rounded-[13px]"
-              style="border:  1px solid #e0e0e0"
-            >
-              <label
-                class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium"
-                >Popup image (optional)</label
-              >
-              <div class="asowp-flex asowp-items-center asowp-gap-2 asowp-mt-2">
-                <button
-                  type="button"
-                  @click="selectConfigPopImg"
-                  class="asowp-text-[13px] asowp-cursor-pointer asowp-rounded-md asowp-bg-[#016464] asowp-text-[#fff] asowp-px-3 asowp-py-1.5"
-                >
-                  select
-                </button>
-                <div
-                  v-if="newConfig.popImg"
-                  class="asowp-text-[12px] asowp-text-gray-600 asowp-truncate asowp-max-w-[60%]"
-                >
-                  {{ newConfig.popImg }}
                 </div>
               </div>
             </div>
@@ -752,7 +716,7 @@
             style="border: 1px solid #e0e0e0"
           >
             <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">
-              Products associated with configuration
+              {{ __("Products associated with configuration","all-signs-options-pro") }}
             </label>
             <div class="asowp-mt-2">
               <Multiselect
@@ -764,11 +728,11 @@
                 :loading="wooProductsLoading"
                 valueProp="value"
                 label="label"
-                placeholder="Select WooCommerce products…"
+                :placeholder="__('Select WooCommerce products…', 'all-signs-options-pro')"
                 class="asowp-bg-white asowp-rounded-md"
               />
               <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-                Only products not already assigned to an ASO configuration are listed.
+                {{ __('Only products not already assigned to an ASO configuration are listed.', 'all-signs-options-pro') }}
               </div>
               <div v-if="wooProductsError" class="asowp-mt-2 asowp-text-[12px] asowp-text-red-600">
                 {{ wooProductsError }}
@@ -785,34 +749,34 @@
           <div class="asowp-text-[14px] asowp-font-bold asowp-mb-2">Summary</div>
           <dl class="asowp-text-[13px] asowp-text-gray-700 asowp-space-y-2">
             <div class="asowp-flex asowp-text-[#777777]">
-              <dt>Domain:</dt>
+              <dt>{{ __("Domain:","all-signs-options-pro") }}</dt>
               <dd class="asowp-font-bold asowp-ml-1">
                 {{ categories.find((c) => c.id === wizard.category)?.title || "—" }}
               </dd>
             </div>
             <div class="asowp-flex asowp-text-[#777777]">
-              <dt>Category type:</dt>
+              <dt>{{ __("Category type:", "all-signs-options-pro") }}</dt>
               <dd class="asowp-font-bold asowp-ml-1">
                 {{ productTypeLabel || "—" }}
               </dd>
             </div>
             <div class="asowp-flex asowp-text-[#777777]">
-              <dt>Product sample:</dt>
+              <dt>{{ __("Product sample:","all-signs-options-pro") }}</dt>
               <dd class="asowp-font-bold asowp-ml-1">
                 {{ selectedProduct || "—" }}
               </dd>
             </div>
             <div class="asowp-flex asowp-text-[#777777]">
-              <dt>Material type:</dt>
+              <dt>{{ __("Material type:", "all-signs-options-pro") }}</dt>
               <dd class="asowp-font-bold asowp-ml-1">
                 {{ materialTypes.find((m) => m.id === wizard.materialType)?.title || "—" }}
               </dd>
             </div>
             <div class="asowp-flex asowp-text-[#777777]">
-              <dt>Demo data:</dt>
+              <dt>{{ __("Demo data:", "all-signs-options-pro") }}</dt>
               <dd class="asowp-font-bold asowp-ml-1">
                 <template v-if="wizard.includeDemo">
-                  Yes
+                  {{ __("Yes", "all-signs-options-pro") }}
                   <span v-if="selectedDemoLabel">
                     ({{ selectedDemoLabel }})
                   </span>
@@ -820,11 +784,11 @@
                     ({{ selectedProduct }})
                   </span>
                 </template>
-                <template v-else>No</template>
+                <template v-else>{{ __("No", "all-signs-options-pro") }}</template>
               </dd>
             </div>
             <div class="asowp-flex asowp-text-[#777777]">
-              <dt>Name:</dt>
+              <dt>{{ __("Name:", "all-signs-options-pro") }}</dt>
               <dd class="asowp-font-bold asowp-ml-1">{{ newConfig.name || "—" }}</dd>
             </div>
           </dl>
@@ -839,7 +803,7 @@
           @click="goBack"
           class="asowp-flex asowp-cursor-pointer asowp-items-center asowp-gap-2 asowp-text-[#016464] asowp-bg-white asowp-border asowp-border-[#016464] asowp-rounded-lg asowp-px-4 asowp-py-2"
         >
-          Back
+          {{ __("Back", "all-signs-options-pro") }}
         </button>
 
         <button
@@ -852,7 +816,7 @@
               : 'asowp-bg-gray-300 asowp-cursor-not-allowed',
           ]"
         >
-          {{ isLoading ? "Saving…" : (isEdit ? "Update" : "Finish") }}
+          {{ isLoading ? __("Saving…", "all-signs-options-pro") : (isEdit ? __("Update", "all-signs-options-pro") : __("Finish", "all-signs-options-pro")) }}
         </button>
       </div>
     </div>
@@ -869,6 +833,7 @@ import router from "@/admin/router";
 import { signageOption, configurationDemoData } from "@/admin/utils/create-config.data";
 import SignageProductSelector from "@/admin/pages/configuration/components/SignageProductSelector.vue";
 
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const props = defineProps({
   isEdit: {
     type: Boolean,
@@ -889,7 +854,6 @@ const newConfig = ref({
   name: "",
   description: "",
   icon: "",
-  popImg: "",
   materialType: "simple",
 });
 
@@ -1039,6 +1003,17 @@ const wizard = ref({
   materialType: 'simple',
   includeDemo: true,
 });
+const breadcrumbTags = computed(() => {
+  const crumbs = [];
+  if (wizard.value?.category) {
+    const found = categories.find((c) => c.id === wizard.value.category);
+    crumbs.push(found?.tag || wizard.value.category);
+  }
+  if (productTypeLabel.value) crumbs.push(productTypeLabel.value);
+  if (selectedSubCategory.value) crumbs.push(selectedSubCategory.value);
+  if (selectedProduct.value) crumbs.push(selectedProduct.value);
+  return crumbs;
+});
 
 // Categories fallback: Signage active, others coming soon
 const categories = (signageOption && signageOption.categories && signageOption.categories.length)
@@ -1145,6 +1120,20 @@ const stripIdsDeep = (value) => {
   return value;
 };
 
+const clearArraysDeep = (value) => {
+  if (Array.isArray(value)) {
+    return [];
+  }
+  if (value && typeof value === 'object') {
+    const out = {};
+    Object.keys(value).forEach((k) => {
+      out[k] = clearArraysDeep(value[k]);
+    });
+    return out;
+  }
+  return value;
+};
+
 const demoTemplates = computed(() => {
   if (!demoSearch.value) {
     return allDemoTemplates;
@@ -1183,6 +1172,13 @@ const normalizeKey = (value) =>
   String(value || "")
     .trim()
     .toLowerCase();
+
+const ensureSelectedDemo = () => {
+  if (!selectedDemo.value) {
+    selectedDemo.value = pickDemoTemplateId();
+  }
+  return allDemoTemplates.find((t) => t.id === selectedDemo.value) || null;
+};
 
 const pickDemoTemplateId = () => {
   if (!selectedProduct.value) return allDemoTemplates[0]?.id || null;
@@ -1446,25 +1442,36 @@ const updateConfig = async () => {
 
 const includeMetaData = (isInclude) => {
   newConfig.value.materialType = wizard.value.materialType;
+  const tpl = ensureSelectedDemo();
   if (isInclude) {
-    if (!selectedDemo.value) {
-      enableDemoInline();
-    }
-    const tpl = allDemoTemplates.find((t) => t.id === selectedDemo.value);
     const payload = tpl?.data || defaultSettings.value;
     newConfig.value.data = stripIdsDeep(payload);
     addNewConfig(newConfig.value);
   } else {
-    newConfig.value.data = stripIdsDeep(defaultSettings.value);
+    const payload = {
+      settings: stripIdsDeep(tpl?.data?.settings || defaultSettings.value.settings),
+      additionalOptions: [],
+      materials: [],
+    };
+
+    const firstMaterial = tpl?.data?.materials?.[0];
+    if (firstMaterial) {
+      const material = clearArraysDeep(stripIdsDeep({ ...firstMaterial }));
+      payload.materials.push({
+        ...material,
+      });
+    }
+
+    newConfig.value.data = payload;
     addNewConfig(newConfig.value);
   }
 };
 
 const selectImage = (callback) => {
   const uploader = wp.media({
-    title: "Select or Upload an Image",
+    title: __("Select or Upload an Image", "all-signs-options-pro"),
     button: {
-      text: "Use this image",
+      text: __("Use this image", "all-signs-options-pro"),
     },
     multiple: false,
   });

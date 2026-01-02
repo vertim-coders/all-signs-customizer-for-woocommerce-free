@@ -5,7 +5,9 @@
     </div>
 </template>
 <script setup>
-    import OthersComponents from './components.vue'
+    
+import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+import OthersComponents from './components.vue'
     import Options from './options.vue'
 </script>
 <style lang="">
