@@ -310,7 +310,7 @@ const signageOption = {
           name: __("Cut & special use", 'all-signs-options-pro'),
           products: [
             {
-              name: __("Contour-cut / die-cut", 'all-signs-options-pro'),
+              name: __("Contour-cut and die-cut", 'all-signs-options-pro'),
               image: [
                 "https://signsdesigner.us/app/aso_products_preview/contour-cut/image_1.webp",
                 "https://signsdesigner.us/app/aso_products_preview/contour-cut/image_2.webp",
@@ -355,7 +355,7 @@ const signageOption = {
 const configurationDemoData = [
   {
     id: 240,
-    name: __("Contour-cut / die-cut", 'all-signs-options-pro'),
+    name: __("Contour-cut and die-cut", 'all-signs-options-pro'),
     description: __("Our contour-cut signs offer a stylish and professional appearance, making them an ideal choice for entrances, receptions, offices, restaurants, hotels, and more. They can also be used as decorative elements in homes.", 'all-signs-options-pro'),
     icon: "",
     popupImg: "",

@@ -12,6 +12,7 @@ class ASOWP_Post_Type
 		add_filter('init', array($this, 'asowp_add_design_page_rewrite_rules'), 99);
 		add_filter('init', array($this, 'asowp_add_template_page_rewrite_rules'), 99);
 		add_filter('query_vars', array($this, 'asowp_add_query_vars'));
+		add_action('template_redirect', array($this, 'redirect_if_no_product_id'));
 	}
 
 	/**
@@ -161,6 +162,63 @@ class ASOWP_Post_Type
 		}
 		return $content;
 	}
+
+	public function redirect_if_no_product_id()
+	{
+		global $wp_query;
+		$page_settings = get_option("asowp_config_page");
+
+		// If no configuration page is set, or the setting is invalid, do nothing.
+		if (empty($page_settings) || !is_array($page_settings) || !isset($page_settings["configuratorPage"]) || empty($page_settings["configuratorPage"])) {
+			return;
+		}
+
+		// Check if we are on the configurator page and if no product ID is set
+		if (is_page($page_settings["configuratorPage"]) && !isset($wp_query->query_vars['asowp-product-id'])) {
+
+			$product_id_to_redirect = 0;
+
+			$args = array(
+				'post_type' => 'product',
+				'posts_per_page' => -1,
+				'meta_query' => array(
+					array(
+						'key' => 'product-asowp-metas',
+						'compare' => 'EXISTS',
+					),
+				),
+				'fields' => 'ids',
+			);
+			$products = new \WP_Query($args);
+
+			if ($products->have_posts()) {
+				foreach ($products->posts as $product_id) {
+					$meta = get_post_meta($product_id, 'product-asowp-metas', true);
+					if (is_array($meta) && isset($meta[$product_id]['config-id']) && !empty($meta[$product_id]['config-id'])) {
+						$product_id_to_redirect = $product_id;
+						break;
+					}
+				}
+			}
+			wp_reset_postdata();
+
+			if ($product_id_to_redirect > 0) {
+				$redirect_url = get_permalink($page_settings["configuratorPage"]);
+				if (get_option('permalink_structure')) {
+					if (substr($redirect_url, -1) !== '/') {
+						$redirect_url .= '/';
+					}
+					$redirect_url .= 'asowp-design/' . $product_id_to_redirect . '/';
+				} else {
+					$redirect_url = add_query_arg('asowp-product-id', $product_id_to_redirect, $redirect_url);
+				}
+
+				wp_redirect($redirect_url);
+				exit;
+			}
+		}
+	}
+	
 	public function asowp_add_query_vars($a_vars)
 	{
 		$a_vars[] = 'asowp-product-id';

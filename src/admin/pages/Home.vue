@@ -200,34 +200,47 @@
     <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeInstallModals"></div>
     <div class="asowp-relative asowp-w-[min(820px,95vw)] asowp-max-h-[calc(100vh-5.75rem)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
       <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
-        <div class="asowp-text-[14px] asowp-font-semibold">{{ __('Install the configurator screen', 'all-signs-options-pro') }}</div>
+        <div class="asowp-text-[14px] asowp-font-semibold">{{ __('Install the configurator screen', 'all-signs-options-free') }}</div>
         <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeInstallModals">✕</button>
       </div>
       <div class="asowp-flex-1 asowp-min-h-0 asowp-p-5 asowp-space-y-4 asowp-overflow-y-auto">
-        <div class="asowp-text-[13px] asowp-text-gray-700">{{ __('You can display the configurator in 2 ways:', 'all-signs-options-pro') }}</div>
+        <div class="asowp-text-[13px] asowp-text-gray-700">{{ __('You can display the configurator in 2 ways:', 'all-signs-options-free') }}</div>
           <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
-            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 1 — Buttons on product pages', 'all-signs-options-pro') }}</div>
-            <ol class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700 asowp-space-y-1">
-              <li>{{ __('1) If the product is not attached to a configuration yet, attach it first.', 'all-signs-options-pro') }}</li>
-              <li>{{ __('2) On the storefront, customers will see the customization buttons on that product page.', 'all-signs-options-pro') }}</li>
-            </ol>
+            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 1 — Buttons on product pages', 'all-signs-options-free') }}</div>
+            <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700 asowp-space-y-1">
+              <span>{{ __('1) If the product is not attached to a configuration yet, attach it first.', 'all-signs-options-free') }}</span>
+              <span>{{ __('2) On the storefront, customers will see the customization buttons on that product page.', 'all-signs-options-free') }}</span>
+            </div>
+            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start justify-between">
+              <code class="asowp-text-[12px]">{{ '<!-- Buttons will appear on product pages or storefront -->' }}</code>        
+            </div>
+            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
+               {{ __('No code is needed for this option. Just attach configurations to products.', 'all-signs-options-free') }}
+            </div>
+
+            <div>
+              <span class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Note: ', 'all-signs-options-free') }}</span>
+              <span class="asowp-text-[12px] asowp-text-gray-600">
+                {{ __('If a user attempts to access the page defined as the configuration page, the system will attempt to find a configurable product and display the configurator; otherwise, an error message will be displayed.', 'all-signs-options-free') }}
+              </span>
+            </div>
           </div>
           <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
-            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 2 — Shortcode', 'all-signs-options-pro') }}</div>
-            <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">{{ __('Add the shortcode inside any WordPress page:', 'all-signs-options-pro') }}</div>
+            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 2 — Shortcode', 'all-signs-options-free') }}</div>
+            <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">{{ __('Add the shortcode inside any WordPress page:', 'all-signs-options-free') }}</div>
             <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start justify-between">
               <code class="asowp-text-[12px]">[asowp-configurator productid="123"]</code>
               <button class="asowp-px-2 asowp-py-1" @click="copySnippet('[asowp-configurator productid=&quot;123&quot;]', 'cfg-basic')">
-                {{ copiedKey === 'cfg-basic' ? __('Copied', 'all-signs-options-pro') : __('Copy', 'all-signs-options-pro') }}
+                {{ copiedKey === 'cfg-basic' ? __('Copied', 'all-signs-options-free') : __('Copy', 'all-signs-options-free') }}
               </button>
             </div>
             <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-               {{ sprintf(__('Replace %s with your WooCommerce product ID.', 'all-signs-options-pro'), '123') }}
+               {{ sprintf(__('Replace %s with your WooCommerce product ID.', 'all-signs-options-free'), '123') }}
             </div>
           </div>
       </div>
       <div class="asowp-flex asowp-justify-end asowp-px-5 asowp-py-3 asowp-border-t">
-        <button class="asowp-px-4 asowp-py-1.5 asowp-text-white asowp-bg-[#016464] asowp-rounded-md" @click="closeInstallModals">{{ __('Got it', 'all-signs-options-pro') }}</button>
+        <button class="asowp-px-4 asowp-py-1.5 asowp-text-white asowp-bg-[#016464] asowp-rounded-md" @click="closeInstallModals">{{ __('Got it', 'all-signs-options-free') }}</button>
       </div>
     </div>
   </div>

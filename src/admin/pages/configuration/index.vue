@@ -309,6 +309,34 @@
           <textarea v-model="editForm.description" rows="3" class="asowp-mt-2 asowp-w-full asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-3 asowp-py-2"></textarea>
         </div>
       </div>
+      <div
+        class="asowp-bg-[#f5f5f5] asowp-p-4 asowp-rounded-[13px]"
+        style="border: 1px solid #e0e0e0"
+      >
+        <label class="asowp-text-[13px] asowp-text-[#3c3c3c] asowp-font-medium">
+          {{ __("Products associated with configuration","all-signs-options-pro") }}
+        </label>
+        <div class="asowp-mt-2">
+          <Multiselect
+            v-model="selectedWooProductIds"
+            mode="tags"
+            :searchable="true"
+            :close-on-select="false"
+            :options="wooProductsOptions"
+            :loading="wooProductsLoading"
+            valueProp="value"
+            label="label"
+            :placeholder="__('Select WooCommerce products…', 'all-signs-options-pro')"
+            class="asowp-bg-white asowp-rounded-md"
+          />
+          <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
+            {{ __('Only products not already assigned to an ASO configuration are listed.', 'all-signs-options-pro') }}
+          </div>
+          <div v-if="wooProductsError" class="asowp-mt-2 asowp-text-[12px] asowp-text-red-600">
+            {{ wooProductsError }}
+          </div>
+        </div>
+      </div>
       <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-px-5 asowp-py-3 asowp-border-t asowp-border-[#e5e7eb]">
         <button class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading" @click="closeEditModal">{{ __("Cancel", "all-signs-options-pro") }}</button>
         <button class="asowp-rounded-md asowp-bg-[#016464] hover:asowp-bg-[#028383] asowp-text-white asowp-text-[13px] asowp-px-4 asowp-py-2 asowp-cursor-pointer" :disabled="isLoading || !editForm.name?.trim()" @click="saveEdit">{{ __("Save", "all-signs-options-pro") }}</button>
@@ -397,6 +425,7 @@ import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
+import Multiselect from "@vueform/multiselect";
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const router = useRouter();
 const route = useRoute();
@@ -492,12 +521,47 @@ const openEditModalFor = (config) => {
     name: config.name || "",
     description: config.description || "",
   };
+  loadWooProducts();
   openEditModal.value = true;
 };
 
 const closeEditModal = () => {
   if (isLoading.value) return;
   openEditModal.value = false;
+};
+
+const selectedWooProductIds = ref([]);
+const wooProductsOptions = ref([]);
+const wooProductsLoading = ref(false);
+const wooProductsError = ref('');
+const wooProductsLoaded = ref(false);
+
+const loadWooProducts = async () => {
+  if (wooProductsLoaded.value || wooProductsLoading.value) return;
+  wooProductsLoading.value = true;
+  wooProductsError.value = '';
+  try {
+    const params = { include_variations: true, per_page: 200 };
+    
+      params.config_id = editForm.value.id;
+    
+    const res = await api.getUnassignedProducts(params);
+    const items = Array.isArray(res?.data) ? res.data : [];
+    wooProductsOptions.value = items.map((p) => ({
+      value: p.id,
+      label: p.sku ? `${p.title} (SKU: ${p.sku})` : p.title,
+    }));
+    if (editForm.value?.id) {
+      selectedWooProductIds.value = items
+        .filter((p) => p.assigned_config_id === editForm.value.id)
+        .map((p) => p.id);
+    }
+    wooProductsLoaded.value = true;
+  } catch (e) {
+    wooProductsError.value = 'Failed to load WooCommerce products.';
+  } finally {
+    wooProductsLoading.value = false;
+  }
 };
 
 const saveEdit = async () => {
@@ -509,6 +573,7 @@ const saveEdit = async () => {
       id: editForm.value.id,
       name: editForm.value.name,
       description: editForm.value.description,
+      product_ids: selectedWooProductIds.value
     });
     if (res.success) {
       toastMessage(res.message);
