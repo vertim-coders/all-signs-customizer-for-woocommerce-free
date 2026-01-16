@@ -2,6 +2,8 @@
   <Templates v-if="isTemplates"/>
   <Default v-if="skin == 'default'" :config="configData" :manage="manageData" :currency="currencySymbol" :template="templateData" />
   <Couffo v-if="skin == 'couffo'" :config="configData" :manage="manageData" :currency="currencySymbol" :template="templateData" />
+ 
+  <!-- <Modal v-if="skin == 'mono'" :config="configData" :manage="manageData" :currency="currencySymbol" :template="templateData" /> -->
 </template>
 
 <script setup>
@@ -11,7 +13,6 @@ import Couffo from "./configurateur/Couffo/index.vue"
 import Templates from './Templates/index.vue'
 import { useRoute } from "vue-router";
 import api from "@/admin/Api/api";
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const route = useRoute();
 const skin = ref('');
 var configData = ref();

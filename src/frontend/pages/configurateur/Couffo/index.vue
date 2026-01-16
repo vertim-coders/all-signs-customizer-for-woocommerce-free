@@ -582,28 +582,30 @@
                         <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textMaterial}} </p>    
     
                         <div class="asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
-                            <div v-for="(material, index) in props.config.data.materials" class="asowp-space-y-3">
-                                <input type="radio" :id="material.name + index" name="asowp-material" class=" peer asowp-hidden" @change="selectMaterial(material, index)">
-                                <label :for="material.name + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
-                                    <div :class="`${material.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : ``} asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
-                                        <img v-if="material.icon != ''" :src="material.icon" class="asowp-w-auto asowp-h-full" />
-                                    </div>                                
-                                    <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
-                                        <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ material.name }}</p>
-                                        <p class="asowp-text-xs">{{ material.description }}</p>
-                                        <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
-                                            <span v-if="material.popImg.trim() != ''" @click="showMaterialExample(true, material.popImg)" :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-underline asowp-cursor-pointer`">example</span>
-                                            <span v-if="material.popImg.trim() == ''" class="asowp-invisible">example</span>                                        
-                                            <span :class="`${selectedMaterial == material.name ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
-                                                <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
-                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
-                                                </svg>
-                                            </span>      
+                            <div v-for="(material, index) in props.config.data.materials" :key="index">
+                                <div v-if="material.active !== false" class="asowp-space-y-3">
+                                    <input type="radio" :id="material.name + index" name="asowp-material" class=" peer asowp-hidden" @change="selectMaterial(material, index)">
+                                    <label :for="material.name + index" :class="`asowp-flex asowp-full-center asowp-space-x-2 asowp-cursor-pointer asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.option.hoverBackgroundColor}]/50  hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.hoverTextColor}] asowp-p-2 asowp-base-animation`">
+                                        <div :class="`${material.icon === '' ? `asowp-bg-[${configColors.backgroundColorHeader}]` : ``} asowp-w-1/4 asowp-h-20 asowp-flex asowp-full-center`">
+                                            <img v-if="material.icon != ''" :src="material.icon" class="asowp-w-auto asowp-h-full" />
+                                        </div>                                
+                                        <div :class="`asowp-w-3/4 asowp-flex asowp-flex-col asowp-space-y-1`">
+                                            <p class="asowp-text-sm asowp-font-medium first-letter:asowp-uppercase">{{ material.name }}</p>
+                                            <p class="asowp-text-xs">{{ material.description }}</p>
+                                            <div class="asowp-w-full asowp-flex asowp-items-center asowp-justify-between">
+                                                <span v-if="material.popImg.trim() != ''" @click="showMaterialExample(true, material.popImg)" :class="`asowp-text-xs asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-underline asowp-cursor-pointer`">example</span>
+                                                <span v-if="material.popImg.trim() == ''" class="asowp-invisible">example</span>                                        
+                                                <span :class="`${selectedMaterial == material.name ? `asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}]` : `asowp-text-transparent asowp-border-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-border-solid asowp-border-2`} asowp-flex asowp-w-fit asowp-h-fit asowp-rounded-full`">
+                                                    <svg fill="currentColor" class="asowp-w-6 asowp-h-6" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" stroke="currentColor">
+                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <g id="SVGRepo_iconCarrier"> <g> <g> <path d="M256,0C114.837,0,0,114.843,0,256s114.837,256,256,256s256-114.843,256-256S397.163,0,256,0z M376.239,227.501 L257.348,346.391c-13.043,13.043-34.174,13.044-47.218,0l-68.804-68.804c-13.044-13.038-13.044-34.179,0-47.218 c13.044-13.044,34.174-13.044,47.218,0l45.195,45.19l95.282-95.278c13.044-13.044,34.174-13.044,47.218,0 C389.283,193.321,389.283,214.462,376.239,227.501z"/> </g> </g> </g>
+                                                    </svg>
+                                                </span>      
+                                            </div>
                                         </div>
-                                    </div>
-                                </label>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
@@ -618,7 +620,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'materials'" @click="nextOption('materials')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'materials'" @click="nextOption('materials')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -652,7 +654,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && (lastActiveOption != 'material' || (lastActiveOption == 'material' && advancedComponentId != (currentMaterial?.data?.length - 1)))" @click="nextOption('components')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && (lastActiveOption != 'material' || (lastActiveOption == 'material' && advancedComponentId != (currentMaterial?.data?.length - 1)))" @click="nextOption('components')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -754,7 +756,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'sizes'" @click="nextOption('sizes')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'sizes'" @click="nextOption('sizes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -836,7 +838,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'shapes'" @click="nextOption('shapes')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'shapes'" @click="nextOption('shapes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -915,7 +917,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'fixing-methodes'" @click="nextOption('fixing-methodes')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'fixing-methodes'" @click="nextOption('fixing-methodes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -977,7 +979,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'colors'" @click="nextOption('colors')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'colors'" @click="nextOption('colors')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -985,7 +987,7 @@
                     <div v-show="step == 'border'" class="asowp-flex asowp-flex-col lg:asowp-space-y-2 asowp-w-full asowp-h-full" id="asowp-borders-section">
                         <p :class="`asowp-hidden lg:asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.headerBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.headerTextColor}] asowp-text-lg asowp-font-semibold asowp-p-2 asowp-px-4`">{{configVisualiserTexts.textBorder}}</p>    
     
-                        <div  class="asowp-borders-div asowp-w-full asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
+                        <div  class="asowp-borders-div asowp-h-full asowp-p-2 asowp-overflow-auto asowp-scrollBar">
                             <div class="asowp-flex asowp-flex-wrap asowp-gap-2 asowp-p-1">
                                 <div v-if="activeFace === 'front-face'" v-for="(borderr, id) in borderrs.allBorders">
                                     <div v-for="(border, index) in allBorders" :key="border.name" class="asowp-w-full asowp-flex">
@@ -1085,7 +1087,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'borders'" @click="nextOption('borders')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'borders'" @click="nextOption('borders')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -1451,7 +1453,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'texts'" @click="nextOption('texts')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'texts'" @click="nextOption('texts')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -1479,7 +1481,7 @@
                             </span>
 
                             <label v-if="configImageSettings.enableUploadImage  && !clipartSection && !editImage" :class="`asowp-w-3/4 asowp-inputImage asowp-full-center asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-text-md`">
-                                <input @click="addImageToSign()" class="asowp-hidden" id="asowp-iamge-input" type="file" name="asowp-pickImages" :accept="configImagesFormat" style="display: none;"/>
+                                <input @click="addImageToSign()" class="asowp-hidden" id="asowp-image-input" type="file" name="asowp-pickImages" :accept="configImagesFormat" style="display: none;"/>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                 </svg>
@@ -1748,7 +1750,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'images'" @click="nextOption('images')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'images'" @click="nextOption('images')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -1853,7 +1855,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'qrcodes'" @click="nextOption('qrcodes')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'qrcodes'" @click="nextOption('qrcodes')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -1900,7 +1902,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && (lastActiveOption != 'additional-components' && addComponentId != (additionalComponents.length - 1))" @click="nextOption('additional-components')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && (lastActiveOption != 'additional-components' && addComponentId != (additionalComponents.length - 1))" @click="nextOption('additional-components')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -2096,7 +2098,7 @@
                             </div>
                         </div>
 
-                        <span v-if="allowNextButton && lastActiveOption != 'additional-options'" @click="nextOption('additional-options')" :class="`asowp-absolute asowp-bottom-0 asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
+                        <span v-if="allowNextButton && lastActiveOption != 'additional-options'" @click="nextOption('additional-options')" :class="`asowp-absolute asowp-bottom-0 asowp-translate-y-[100%] asowp-left-0 asowp-w-full asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] font-semibold asowp-text-md asowp-full-center asowp-border asowp-py-1 asowp-base-animation asowp-cursor-pointer`">
                             Next
                         </span>
                     </div>
@@ -2732,8 +2734,7 @@
     import { load } from 'opentype.js'
     import { forAliasRE } from '@vue/compiler-core';
 
-    import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-const route = useRoute();
+    const route = useRoute();
     const template_config_id = route.params.configId;
     const template_id = route.params.templateId;
     const template = ref({});
@@ -5130,7 +5131,7 @@ const route = useRoute();
                 if(pricings.type == "range"){
                     let settings = pricings.range[0];
                     for (let i = 0; i < pricings.range.length; i++) {
-                        if (value <= pricings.range[i].surface) {
+                        if (value <= (pricings.range[i].surface * pricings.range[i].surface)) {
                             // settings = pricings.range[i];
                             settings = { perRange: (pricings.rangePricingPerUnit && pricings.rangePricingPerUnit == true) ? pricings.rangePricingPerUnit : false, ...pricings.range[i]};
                             break;
@@ -9444,7 +9445,7 @@ const route = useRoute();
         }
     }
 
-    let configQuantity = ref(1)
+    let configQuantity = ref(props.config.data?.settings?.generals?.quantityLimits?.enableQuantityLimits ? (props.config.data?.settings?.generals?.quantityLimits?.minQuantity || 1) : 1)
     function cleanDecimalInput(input) {
         let cleaned = input.replace(/[^\d.,]/g, '');
 
@@ -9463,8 +9464,21 @@ const route = useRoute();
         return parseFloat(numberString) || 0;
     }
     function setQuantity() {
-        if (configQuantity.value < 1) {
-          configQuantity.value = 1
+        const quantityLimits = props.config.data?.settings?.generals?.quantityLimits;
+        const enableQuantityLimits = quantityLimits?.enableQuantityLimits;
+        const minQuantity = enableQuantityLimits ? (quantityLimits?.minQuantity || 1) : 1;
+        const maxQuantity = enableQuantityLimits ? quantityLimits?.maxQuantity : null;
+
+        // Validate minimum quantity only if limits are enabled
+        if (enableQuantityLimits && configQuantity.value < minQuantity) {
+            configQuantity.value = minQuantity;
+            toastMessage(`Minimum quantity is ${minQuantity}`, "warning");
+        }
+
+        // Validate maximum quantity only if limits are enabled
+        if (enableQuantityLimits && maxQuantity && configQuantity.value > maxQuantity) {
+            configQuantity.value = maxQuantity;
+            toastMessage(`Maximum quantity is ${maxQuantity}`, "warning");
         }
 
         let prixTotal = cleanDecimalInput(formatPrice(finalPrices.value)) * configQuantity.value;
@@ -9535,7 +9549,7 @@ const route = useRoute();
 
     let activeConfigOptionAfterCondition = ref([])
     let lastActiveOption = ref('')
-    let allowNextButton = ref(true)
+    let allowNextButton = ref(false)
     function getActiveConfigSections(configOptions) {
         return configOptions.filter(option => {
             if (!option.active) return false;

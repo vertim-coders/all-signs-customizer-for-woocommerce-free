@@ -1,11 +1,13 @@
 var FontFaceObserver = require("fontfaceobserver");
-import opentype from "opentype.js";
-import { load } from "opentype.js";
-import { generateGlobalContour } from "./canvasUtils/contour";
-import { generateQRCodeObject } from "./canvasUtils/qrCodeInFabric";
-import { genSvgPath } from "./canvasUtils/util-contour";
-import { removeBackground } from "@imgly/background-removal";
+import opentype from 'opentype.js'
+import { load } from 'opentype.js'
+import { generateGlobalContour } from "./canvasUtils/contour"
+import { generateQRCodeObject } from "./canvasUtils/qrCodeInFabric"
+import { genSvgPath } from "./canvasUtils/util-contour"
+import { removeBackground }  from "@imgly/background-removal"
 import { __ } from "@wordpress/i18n";
+
+
 var fixingUrl = "";
 var borderUrl = "";
 
@@ -53,11 +55,11 @@ function handleCheckTemplate(statut) {
   isTemplate = statut;
 }
 
-let widthVisibility = false;
-let heightVisibility = false;
-function handleGetMeasurementVibility(width, height) {
-  widthVisibility = width;
-  heightVisibility = height;
+let widthVisibility = false
+let heightVisibility = false
+function handleGetMeasurementVibility(width, height){
+  widthVisibility = width
+  heightVisibility = height
 }
 
 function handleCloneCanvas() {
@@ -100,125 +102,122 @@ function handleCloneCanvas() {
   ]);
 
   // Cloner directement avec loadFromJSON
-  backCanvas.loadFromJSON(jsonData, function () {
+  backCanvas.loadFromJSON(jsonData, function() {
     backCanvas.renderAll();
     // console.log('Canvas cloné avec succès');
   });
 
-  backCanvas.name = "back-face";
+  backCanvas.name = "back-face"
 }
 
 // Méthode alternative 2 : Clonage objet par objet (si vous avez besoin de plus de contrôle)
 function handleCloneCanvasAlternative() {
   return new Promise((resolve, reject) => {
     backCanvas.clear();
-
+    
     const objects = canvas.getObjects();
     const clonedObjects = [];
-
+    
     if (objects.length === 0) {
       backCanvas.renderAll();
       resolve();
       return;
     }
-
+    
     let processedCount = 0;
-
+    
     objects.forEach((obj, index) => {
-      obj.clone(
-        function (clonedObj) {
-          // Préserver toutes les propriétés personnalisées
-          clonedObj.set({
-            name: obj.name,
-            id: obj.id,
-            selectable: obj.selectable,
-            canvasName: obj.canvasName,
-            priceId: obj.priceId,
-            uniScaleTransform: obj.uniScaleTransform,
-            centeredScaling: obj.centeredScaling,
-            lockScalingFlip: obj.lockScalingFlip,
-            lockMoving: obj.lockMoving,
-            lockScale: obj.lockScale,
-            lockRotate: obj.lockRotate,
-            lockEdition: obj.lockEdition,
-            fixingRatio: obj.fixingRatio,
-            fixingScale: obj.fixingScale,
-            ratioScale: obj.ratioScale,
-            objectType: obj.objectType,
-            imageUrl: obj.imageUrl,
-            fontFamilyUrl: obj.fontFamilyUrl,
-            neonColor: obj.neonColor,
-            glowRadius: obj.glowRadius,
-            secondStrokeWidth: obj.secondStrokeWidth,
-            secondStroke: obj.secondStroke,
-            activeSide: obj.activeSide,
-            sideColor: obj.sideColor,
-            zIndex: obj.zIndex,
-            prevWidth: obj.prevWidth,
-            prevHeight: obj.prevHeight,
-            fromData: obj.fromData,
-            color: obj.color,
-            shapeType: obj.shapeType,
+      obj.clone(function(clonedObj) {
+        // Préserver toutes les propriétés personnalisées
+        clonedObj.set({
+          name: obj.name,
+          id: obj.id,
+          selectable: obj.selectable,
+          canvasName: obj.canvasName,
+          priceId: obj.priceId,
+          uniScaleTransform: obj.uniScaleTransform,
+          centeredScaling: obj.centeredScaling,
+          lockScalingFlip: obj.lockScalingFlip,
+          lockMoving: obj.lockMoving,
+          lockScale: obj.lockScale,
+          lockRotate: obj.lockRotate,
+          lockEdition: obj.lockEdition,
+          fixingRatio: obj.fixingRatio,
+          fixingScale: obj.fixingScale,
+          ratioScale: obj.ratioScale,
+          objectType: obj.objectType,
+          imageUrl: obj.imageUrl,
+          fontFamilyUrl: obj.fontFamilyUrl,
+          neonColor: obj.neonColor,
+          glowRadius: obj.glowRadius,
+          secondStrokeWidth: obj.secondStrokeWidth,
+          secondStroke: obj.secondStroke,
+          activeSide: obj.activeSide,
+          sideColor: obj.sideColor,
+          zIndex: obj.zIndex,
+          prevWidth: obj.prevWidth,
+          prevHeight: obj.prevHeight,
+          fromData: obj.fromData,
+          color: obj.color,
+          shapeType: obj.shapeType
+        });
+        
+        clonedObjects[index] = clonedObj;
+        processedCount++;
+        
+        // Ajouter l'objet dans l'ordre correct
+        if (processedCount === objects.length) {
+          clonedObjects.forEach(clonedObj => {
+            if (clonedObj) {
+              backCanvas.add(clonedObj);
+            }
           });
-
-          clonedObjects[index] = clonedObj;
-          processedCount++;
-
-          // Ajouter l'objet dans l'ordre correct
-          if (processedCount === objects.length) {
-            clonedObjects.forEach((clonedObj) => {
-              if (clonedObj) {
-                backCanvas.add(clonedObj);
-              }
-            });
-            backCanvas.renderAll();
-            resolve();
-          }
-        },
-        [
-          "fill",
-          "name",
-          "id",
-          "selectable",
-          "canvasName",
-          "priceId",
-          "uniScaleTransform",
-          "centeredScaling",
-          "lockScalingFlip",
-          "lockMoving",
-          "lockScale",
-          "lockRotate",
-          "lockEdition",
-          "fixingRatio",
-          "fixingScale",
-          "ratioScale",
-          "objectType",
-          "imageUrl",
-          "fontFamilyUrl",
-          "neonColor",
-          "glowRadius",
-          "secondStrokeWidth",
-          "secondStroke",
-          "activeSide",
-          "sideColor",
-          "zIndex",
-          "prevWidth",
-          "prevHeight",
-          "fromData",
-          "color",
-          "shapeType",
-        ]
-      );
+          backCanvas.renderAll();
+          resolve();
+        }
+      }, [
+        "fill",
+        "name",
+        "id",
+        "selectable",
+        "canvasName",
+        "priceId",
+        "uniScaleTransform",
+        "centeredScaling",
+        "lockScalingFlip",
+        "lockMoving",
+        "lockScale",
+        "lockRotate",
+        "lockEdition",
+        "fixingRatio",
+        "fixingScale",
+        "ratioScale",
+        "objectType",
+        "imageUrl",
+        "fontFamilyUrl",
+        "neonColor",
+        "glowRadius",
+        "secondStrokeWidth",
+        "secondStroke",
+        "activeSide",
+        "sideColor",
+        "zIndex",
+        "prevWidth",
+        "prevHeight",
+        "fromData",
+        "color",
+        "shapeType"
+      ]);
     });
   });
 }
 // Méthode 3 : Synchronisation en temps réel (optionnelle)
 function setupCanvasSync() {
   // Synchroniser automatiquement lors des modifications
-  canvas.on("object:added", syncToBackCanvas);
-  canvas.on("object:removed", syncToBackCanvas);
-  canvas.on("object:modified", syncToBackCanvas);
-  canvas.on("path:created", syncToBackCanvas); // Pour les dessins libres
+  canvas.on('object:added', syncToBackCanvas);
+  canvas.on('object:removed', syncToBackCanvas);
+  canvas.on('object:modified', syncToBackCanvas);
+  canvas.on('path:created', syncToBackCanvas); // Pour les dessins libres
 }
 
 function syncToBackCanvas() {
@@ -233,15 +232,15 @@ function syncToBackCanvas() {
 function verifyCloning() {
   const mainObjects = canvas.getObjects();
   const backObjects = backCanvas.getObjects();
-
+  
   console.log(`Canvas principal: ${mainObjects.length} objets`);
   console.log(`Canvas arrière: ${backObjects.length} objets`);
-
+  
   if (mainObjects.length !== backObjects.length) {
-    console.warn("Le nombre d'objets ne correspond pas !");
+    console.warn('Le nombre d\'objets ne correspond pas !');
     return false;
   }
-
+  
   return true;
 }
 
@@ -281,6 +280,7 @@ function verifyCloning() {
 //   ]);
 //   var canvasAsJson = JSON.stringify(jsonData);
 
+
 //   const currentState = JSON.parse(canvasAsJson);
 //   backCanvas.clear();
 //   currentState.objects.forEach(function (obj) {
@@ -293,14 +293,7 @@ function verifyCloning() {
 
 var currentUnit = "";
 var defaultFontSize = 0;
-function handleGetCurrentUnit(
-  unit,
-  fontSize,
-  minFontSize,
-  maxFontSize,
-  textFontFam,
-  textFontFamUrl
-) {
+function handleGetCurrentUnit( unit, fontSize, minFontSize, maxFontSize, textFontFam, textFontFamUrl) {
   currentUnit = unit;
   defaultFontSize = fontSize;
 
@@ -317,8 +310,8 @@ var visualizerText = {};
 function handleGetDefaultText(object) {
   visualizerText = object;
 }
-var textType = "normal";
-function handleGetTextType(type) {
+var textType = "normal"
+function handleGetTextType(type){
   textType = type;
 }
 
@@ -470,10 +463,7 @@ function updateModifications(good, position) {
 
     // console.log(frontJsonData)
 
-    if (
-      currentConfig.currentStateIndex <
-      currentConfig.canvasState.length - 1
-    ) {
+    if ( currentConfig.currentStateIndex < currentConfig.canvasState.length - 1 ) {
       var indexToBeInserted = currentConfig.currentStateIndex + 1;
       currentConfig.canvasState[indexToBeInserted] = {
         front: canvasAsJson,
@@ -493,10 +483,7 @@ function updateModifications(good, position) {
       currentConfig.canvasObjects.push(objects);
     }
     currentConfig.currentStateIndex = currentConfig.canvasState.length - 1;
-    if (
-      currentConfig.currentStateIndex == currentConfig.canvasState.length - 1 &&
-      currentConfig.currentStateIndex != -1
-    ) {
+    if ( currentConfig.currentStateIndex == currentConfig.canvasState.length - 1 && currentConfig.currentStateIndex != -1 ) {
       // currentConfig.redoButton.disabled= "disabled";
     }
   }
@@ -536,10 +523,7 @@ function handleUndo() {
                     prevObject[0].fill = "transparent";
                   }
                 }
-                if (
-                  prevObject[0].name === "asowp-SignText" ||
-                  prevObject[0].type === "neon-Text"
-                ) {
+                if (prevObject[0].name === "asowp-SignText" || prevObject[0].type === "neon-Text") {
                   prevObject[0].on("editing:entered", () => {
                     handleGetAddedTextValues(prevObject[0]);
                   });
@@ -558,27 +542,29 @@ function handleUndo() {
                     handleGetAddedTextValues(prevObject[0]);
                     reScaleText(prevObject[0]);
                   });
-                  prevObject[0].name = "asowp-SignText";
-                  prevObject[0].canvasName = canva.name;
-                  prevObject[0].clipPath = null;
-                  (prevObject[0].uniScaleTransform = true),
-                    (prevObject[0].centeredScaling = true),
-                    (prevObject[0].lockScalingFlip = true),
-                    (prevObject[0].evented = true),
-                    (prevObject[0].originX = "center"),
-                    (prevObject[0].originY = "center"),
-                    prevObject[0].setControlsVisibility({
-                      mt: false, // Middle top
-                      mb: false, // Middle bottom
-                      ml: false, // Middle left
-                      mr: false, // Middle right
-                      bl: true, // Bottom left
-                      br: true, // Bottom right
-                      tl: true, // Top left
-                      tr: true, // Top right
-                    });
+                  prevObject[0].name = "asowp-SignText"
+                  prevObject[0].canvasName = canva.name
+                  prevObject[0].clipPath = null
+                  prevObject[0].uniScaleTransform = true,
+                  prevObject[0].centeredScaling = true,
+                  prevObject[0].lockScalingFlip = true,
+                  prevObject[0].evented = true,
+                  prevObject[0].originX = "center",
+                  prevObject[0].originY = "center",
 
-                  console.log(prevObject[0], "asowp-SignText");
+                  prevObject[0].setControlsVisibility({
+                    mt: false, // Middle top
+                    mb: false, // Middle bottom
+                    ml: false, // Middle left
+                    mr: false, // Middle right
+                    bl: true, // Bottom left
+                    br: true, // Bottom right
+                    tl: true, // Top left
+                    tr: true, // Top right
+                  });
+
+                  console.log(prevObject[0], "asowp-SignText")
+
                 }
                 if (prevObject[0].name === "asowp-SignImage") {
                   prevObject[0].on("mousedown", function () {
@@ -604,37 +590,17 @@ function handleUndo() {
             });
           }
 
-          recreateState(
-            canvas,
-            currentConfig.canvasState[currentConfig.currentStateIndex - 1].front
-          );
-          recreateState(
-            backCanvas,
-            currentConfig.canvasState[currentConfig.currentStateIndex - 1].back
-          );
+          recreateState( canvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].front );
+          recreateState( backCanvas, currentConfig.canvasState[currentConfig.currentStateIndex - 1].back );
 
-          selectedShape =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .shape;
+          selectedShape = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].shape
 
           if (activeSignFace === "front") {
-            handleSelectBorder(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face1.type
-            );
-            handlechangeBorderColor(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face1.color
-            );
+            handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face1.type );
+            handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face1.color );
           } else {
-            handleSelectBorder(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face2.type
-            );
-            handlechangeBorderColor(
-              currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-                .border.face2.color
-            );
+            handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face2.type );
+            handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].border.face2.color );
           }
 
           addedTexts = [];
@@ -652,31 +618,17 @@ function handleUndo() {
           });
 
           // addedTexts = [...currentConfig.canvasObjects[currentConfig.currentStateIndex-1].texts]
-          maxTextCharForSize =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .maxChars;
-          addedImages =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .images;
-          addedQRCodes =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .qrCodes;
+          maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].maxChars;
+          addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].images;
+          addedQRCodes = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].qrCodes;
 
-          fixScale =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .fixScale;
-          sizeRatio =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .sizeRatio;
 
-          activeFixingMethode =
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .fixingMethode;
+          fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixScale;
+          sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].sizeRatio;
 
-          handleSelectFixingMethode(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex - 1]
-              .fixingMethode
-          );
+          activeFixingMethode = currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixingMethode
+
+          handleSelectFixingMethode(currentConfig.canvasObjects[currentConfig.currentStateIndex - 1].fixingMethode)
 
           currentConfig.undoStatus = false;
           currentConfig.currentStateIndex -= 1;
@@ -765,10 +717,7 @@ function handleRedo() {
                   prevObject[0].fill = "transparent";
                 }
               }
-              if (
-                prevObject[0].name === "asowp-SignText" ||
-                prevObject[0].type === "neon-Text"
-              ) {
+              if (prevObject[0].name === "asowp-SignText" || prevObject[0].type === "neon-Text") {
                 prevObject[0].on("editing:entered", () => {
                   handleGetAddedTextValues(prevObject[0]);
                 });
@@ -787,25 +736,26 @@ function handleRedo() {
                   handleGetAddedTextValues(prevObject[0]);
                   reScaleText(prevObject[0]);
                 });
-                prevObject[0].name = "asowp-SignText";
-                prevObject[0].canvasName = canva.name;
-                prevObject[0].clipPath = null;
-                (prevObject[0].uniScaleTransform = true),
-                  (prevObject[0].centeredScaling = true),
-                  (prevObject[0].lockScalingFlip = true),
-                  (prevObject[0].evented = true),
-                  (prevObject[0].originX = "center"),
-                  (prevObject[0].originY = "center"),
-                  prevObject[0].setControlsVisibility({
-                    mt: false, // Middle top
-                    mb: false, // Middle bottom
-                    ml: false, // Middle left
-                    mr: false, // Middle right
-                    bl: true, // Bottom left
-                    br: true, // Bottom right
-                    tl: true, // Top left
-                    tr: true, // Top right
-                  });
+                prevObject[0].name = "asowp-SignText"
+                prevObject[0].canvasName = canva.name
+                prevObject[0].clipPath = null
+                prevObject[0].uniScaleTransform = true,
+                prevObject[0].centeredScaling = true,
+                prevObject[0].lockScalingFlip = true,
+                prevObject[0].evented = true,
+                prevObject[0].originX = "center",
+                prevObject[0].originY = "center",
+
+                prevObject[0].setControlsVisibility({
+                  mt: false, // Middle top
+                  mb: false, // Middle bottom
+                  ml: false, // Middle left
+                  mr: false, // Middle right
+                  bl: true, // Bottom left
+                  br: true, // Bottom right
+                  tl: true, // Top left
+                  tr: true, // Top right
+                });
               }
               if (prevObject[0].name === "asowp-SignImage") {
                 prevObject[0].on("mousedown", function () {
@@ -840,28 +790,14 @@ function handleRedo() {
           currentConfig.canvasState[currentConfig.currentStateIndex + 1].back
         );
 
-        selectedShape =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .shape;
+        selectedShape = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].shape
 
         if (activeSignFace === "front") {
-          handleSelectBorder(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face1.type
-          );
-          handlechangeBorderColor(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face1.color
-          );
+          handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face1.type );
+          handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face1.color );
         } else {
-          handleSelectBorder(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face2.type
-          );
-          handlechangeBorderColor(
-            currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-              .border.face2.color
-          );
+          handleSelectBorder( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face2.type );
+          handlechangeBorderColor( currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].border.face2.color );
         }
 
         addedTexts = [];
@@ -879,31 +815,17 @@ function handleRedo() {
         });
 
         // addedTexts = currentConfig.canvasObjects[currentConfig.currentStateIndex+1].texts
-        maxTextCharForSize =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .maxChars;
-        addedImages =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .images;
-        addedQRCodes =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .qrCodes;
+        maxTextCharForSize = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].maxChars;
+        addedImages = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].images;
+        addedQRCodes = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].qrCodes;
 
-        fixScale =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .fixScale;
-        sizeRatio =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .sizeRatio;
 
-        activeFixingMethode =
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .fixingMethode;
+        fixScale = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixScale;
+        sizeRatio = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].sizeRatio;
 
-        handleSelectFixingMethode(
-          currentConfig.canvasObjects[currentConfig.currentStateIndex + 1]
-            .fixingMethode
-        );
+        activeFixingMethode = currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixingMethode
+
+        handleSelectFixingMethode(currentConfig.canvasObjects[currentConfig.currentStateIndex + 1].fixingMethode)
 
         currentConfig.redoStatus = false;
         currentConfig.currentStateIndex += 1;
@@ -913,7 +835,7 @@ function handleRedo() {
         currentConfig.redoFinishedStatus = 1;
         if (
           currentConfig.currentStateIndex ==
-            currentConfig.canvasState.length - 1 &&
+          currentConfig.canvasState.length - 1 &&
           currentConfig.currentStateIndex != -1
         ) {
           //   currentConfig.redoButton.disabled= "disabled";
@@ -1059,11 +981,11 @@ function handleReadyToSaveState(statut, start) {
 function centerSign(canva) {
   // 1. Désactiver temporairement le rendu
   canva.renderOnAddRemove = false;
-
-  let targetZoom = canva.getZoom();
-  let newWidth = canva.getWidth();
-  let newHeight = canva.getHeight();
-
+  
+  let targetZoom = canva.getZoom()
+  let newWidth = canva.getWidth()
+  let newHeight = canva.getHeight()
+  
   // 2. Trouver l'objet de référence
   const safeObject = handleGetObjectByName("safeObject", canva);
   if (!safeObject) return;
@@ -1075,27 +997,25 @@ function centerSign(canva) {
   const objectCenter = safeObject.getCenterPoint();
   const canvasCenter = {
     x: newWidth / 2,
-    y: newHeight / 2,
+    y: newHeight / 2
   };
   const offset = {
     x: canvasCenter.x - objectCenter.x,
-    y: canvasCenter.y - objectCenter.y,
+    y: canvasCenter.y - objectCenter.y
   };
 
   // 4. Réinitialiser le viewport (essential pour éviter l'accumulation d'erreurs)
   canva.setViewportTransform([1, 0, 0, 1, 0, 0]);
-
+  
   // 5. Appliquer le zoom au centre exact
-  canva.zoomToPoint({ x: canvasCenter.x, y: canvasCenter.y }, targetZoom);
+  canva.zoomToPoint( { x: canvasCenter.x, y: canvasCenter.y }, targetZoom );
 
   // 6. Déplacer TOUS les objets simultanément
-  canva.getObjects().forEach((obj) => {
-    obj
-      .set({
-        left: obj.left + offset.x,
-        top: obj.top + offset.y,
-      })
-      .setCoords();
+  canva.getObjects().forEach(obj => {
+    obj.set({
+      left: obj.left + offset.x,
+      top: obj.top + offset.y
+    }).setCoords();
     if (obj.name === "asowp-signText") {
       if (obj.isEditing) {
         obj.exitEditing();
@@ -1114,16 +1034,13 @@ function centerSign(canva) {
 
   // Vérification visuelle (debug)
   const finalPos = safeObject.getCenterPoint();
-  console.log(
-    "Centrage réussi:",
-    Math.round(finalPos.x) === Math.round(canvasCenter.x) &&
+  console.log("Centrage réussi:", 
+      Math.round(finalPos.x) === Math.round(canvasCenter.x) && 
       Math.round(finalPos.y) === Math.round(canvasCenter.y),
-    `Objet: (${Math.round(finalPos.x)},${Math.round(
-      finalPos.y
-    )}) | Canvas: (${Math.round(canvasCenter.x)},${Math.round(canvasCenter.y)})`
+      `Objet: (${Math.round(finalPos.x)},${Math.round(finalPos.y)}) | Canvas: (${Math.round(canvasCenter.x)},${Math.round(canvasCenter.y)})`
   );
 
-  handleGetNewPosition(safeObject.left, safeObject.top);
+  handleGetNewPosition(safeObject.left, safeObject.top)
 }
 
 function convertToPx(dimension, unit) {
@@ -1181,6 +1098,7 @@ var fixScale = 0;
 var sizeRatio = "";
 var ratioScale = 0;
 
+
 function handleMiseAEchelle(rW, rH) {
   const maxWidth = 1000;
   const maxHeight = 370;
@@ -1189,13 +1107,22 @@ function handleMiseAEchelle(rW, rH) {
   const signWPx = convertToPx(rW, currentUnit);
   const signHPx = convertToPx(rH, currentUnit);
 
+  // var adaptiveScale = (REFERENCE_WIDTH_MM / signRealWidthMM) * BASE_SCALE;
+  const BASE_SCALE = 0.52;
+  var adaptiveScale = (1000 / signWPx) * BASE_SCALE;
+  var minScale = 0.15;
+  var maxScale = 1.5;
+  adaptiveScale = Math.min(Math.max(adaptiveScale, minScale), maxScale);
+
   // Déterminer le scale de base
-  fixScale = signWPx > 10000 || signHPx > 10000 ? 0.25 : 0.35;
-  sizeRatio = signHPx >= signWPx / 2 ? "big" : "small";
+  // fixScale = (signWPx > 10000 || signHPx > 10000) ? 0.25 : 0.35;
+  fixScale = adaptiveScale
+  sizeRatio = ((signHPx >= signWPx / 2) && (signHPx >= (convertToPx(25, "cm")))) ? "big" : "small";
+  // sizeRatio = (signHPx >= (convertToPx(20, "cm"))) ? "big" : "small";
 
   // Calculer le ratio principal
   let ratio, scaledWidth, scaledHeight;
-
+  
   if (signWPx > signHPx) {
     ratio = maxWidth / signWPx;
     scaledWidth = maxWidth;
@@ -1208,11 +1135,10 @@ function handleMiseAEchelle(rW, rH) {
 
   // Vérifier si un ajustement supplémentaire est nécessaire
   if (scaledWidth > maxWidth || scaledHeight > maxHeight) {
-    const secondRatio =
-      scaledWidth > maxWidth
-        ? maxWidth / scaledWidth
-        : maxHeight / scaledHeight;
-
+    const secondRatio = scaledWidth > maxWidth 
+      ? maxWidth / scaledWidth 
+      : maxHeight / scaledHeight;
+    
     scaledWidth *= secondRatio;
     scaledHeight *= secondRatio;
     ratio *= secondRatio;
@@ -1229,7 +1155,7 @@ function handleMiseAEchelle(rW, rH) {
     height: scaledHeight,
     fixScale,
     sizeRatio,
-    ratioScale: ratio,
+    ratioScale: ratio
   };
 }
 function handleReverseMiseAEchelle(canvaSign) {
@@ -1237,38 +1163,38 @@ function handleReverseMiseAEchelle(canvaSign) {
   // const { fixingScale, ratioScale } = canvas;
 
   //controle
-  let canvasW, canvasH;
-  if (canvaSign.type != "path") {
-    canvasW = canvaSign.width;
-    canvasH = canvaSign.height;
-  } else {
-    let scaleX = canvaSign.scaleX * canvaSign.group.scaleX;
-    let scaleY = canvaSign.scaleY * canvaSign.group.scaleX;
-    canvasW = (canvaSign.width + strokeSize) * scaleX;
-    canvasH = (canvaSign.height + strokeSize) * scaleY;
-    console.log(scaleX, scaleY, "777");
+  let canvasW, canvasH
+  if(canvaSign.type != 'path'){
+    canvasW = canvaSign.width
+    canvasH = canvaSign.height
+  }else{
+    let scaleX = canvaSign.scaleX * canvaSign.group.scaleX
+    let scaleY = canvaSign.scaleY * canvaSign.group.scaleX
+    canvasW = (canvaSign.width + strokeSize) * scaleX
+    canvasH = (canvaSign.height + strokeSize) * scaleY
+    console.log(scaleX, scaleY, "777")
   }
-
+  
   // 2. Annuler le ratio final (signRatio)
-  const intermediateW = canvasW;
-  const intermediateH = canvasH;
+  const intermediateW = canvasW ;
+  const intermediateH = canvasH ;
   // const intermediateW = canvasW / ratioScale;
   // const intermediateH = canvasH / ratioScale;
-
+  
   // 3. Annuler le scale de base
   const realWidthPx = intermediateW;
   const realHeightPx = intermediateH;
-
+  
   // 4. Convertir en unité réelle
   const realWidth = parseInt(convertFromPx(realWidthPx, currentUnit));
   const realHeight = parseInt(convertFromPx(realHeightPx, currentUnit));
-
+  
   return {
     realWidth,
     realHeight,
     realWidthPx,
     realHeightPx,
-    usedScale: ratioScale, // Le scale total appliqué
+    usedScale: ratioScale // Le scale total appliqué
   };
 }
 
@@ -1276,7 +1202,7 @@ function setMeasurmentValue(canvas, mainObject) {
   var Objects = canvas.getObjects();
   Objects.forEach((object) => {
     if (object.name == "heightLine") {
-      object.visible = heightVisibility;
+      object.visible = heightVisibility
       object.set({
         x1: mainObject.left + mainObject.width + 30,
         y1: mainObject.top,
@@ -1285,7 +1211,7 @@ function setMeasurmentValue(canvas, mainObject) {
       });
     }
     if (object.name == "widthLine") {
-      object.visible = widthVisibility;
+      object.visible = widthVisibility
       object.set({
         x1: mainObject.left,
         y1: mainObject.top + mainObject.height + 28.5,
@@ -1294,13 +1220,13 @@ function setMeasurmentValue(canvas, mainObject) {
       });
     }
     if (object.name == "height-value") {
-      object.visible = heightVisibility;
+      object.visible = heightVisibility
       object.text = String(currentSize.height + " " + currentUnit);
       object.top = mainObject.top + mainObject.height / 2;
       object.left = mainObject.left + mainObject.width + 55;
     }
     if (object.name == "width-value") {
-      object.visible = widthVisibility;
+      object.visible = widthVisibility
       object.text = String(currentSize.width + " " + currentUnit);
       object.left = mainObject.left + mainObject.width / 2 - object.width / 2;
       object.top = mainObject.top + (mainObject.height + 35);
@@ -1318,13 +1244,7 @@ function setMeasurmentValue(canvas, mainObject) {
 function setOutlineMeasurmentValue(sign, width, height) {
   var Objects = activeCanvas.getObjects();
   Objects.forEach((object) => {
-    if (
-      object.name == "heightLine" ||
-      object.name == "widthLine" ||
-      object.name == "height-value" ||
-      object.name == "width-value" ||
-      object.name == "thickness-value"
-    ) {
+    if (object.name == "heightLine" || object.name == "widthLine" || object.name == "height-value" || object.name == "width-value" || object.name == "thickness-value") {
       object.set("visible", false);
     }
     // if (object.name == "thickness-value") {
@@ -1342,16 +1262,16 @@ function setOutlineMeasurmentValue(sign, width, height) {
   var inputWidth = document.getElementById("outlineSizeWidth");
   var inputHeight = document.getElementById("outlineSizeHeight");
 
-  if (widthVisibility === true && outlineWidth != null) {
-    outlineWidth.textContent = width;
-    if (inputWidth) {
-      inputWidth.value = parseInt(width);
+  if(widthVisibility === true && outlineWidth != null){
+    outlineWidth.textContent = width
+    if(inputWidth){
+      inputWidth.value = parseInt(width)
     }
   }
-  if (heightVisibility === true && outlineHeight != null) {
-    outlineHeight.textContent = height;
-    if (inputHeight) {
-      inputHeight.value = height;
+  if(heightVisibility === true && outlineHeight != null){
+    outlineHeight.textContent = height
+    if(inputHeight){
+      inputHeight.value = height
     }
   }
 }
@@ -1488,7 +1408,7 @@ function handleChangeSize(width, height, name, maxChar) {
   signData.width = width;
   signData.height = height;
 
-  let scaleValues = handleMiseAEchelle(width, height);
+  let scaleValues = handleMiseAEchelle(width, height)
 
   sizeRatio = scaleValues.sizeRatio;
   fixScale = scaleValues.fixScale;
@@ -1530,28 +1450,22 @@ function handleChangeSize(width, height, name, maxChar) {
             obj.text = obj.text.slice(0, obj.text.length - charsToRemove);
             obj.set("text", obj.text);
 
-            if (textType === "3D") {
-              var textLayer = null;
+            if(textType === "3D"){
+              var textLayer = null
               var objects = activeCanvas.getObjects();
-              objects.forEach(function (object) {
-                if (
-                  object.id == obj.id &&
-                  object.name == "asowp-SignTextLayer"
-                ) {
-                  textLayer = object;
+              objects.forEach(function(object) {
+                if(object.id == obj.id && object.name == "asowp-SignTextLayer"){
+                  textLayer = object
                 }
-              });
-
-              activeCanvas.remove(textLayer);
-
-              textLayer.text = textLayer.text.slice(
-                0,
-                obj.text.length - charsToRemove
-              );
+              })
+        
+              activeCanvas.remove(textLayer)
+              
+              textLayer.text = textLayer.text.slice( 0, obj.text.length - charsToRemove);
               textLayer.set("text", obj.text);
-
-              activeCanvas.add(textLayer);
-            }
+        
+              activeCanvas.add(textLayer)
+            } 
 
             canva.add(obj);
             obj.set("scaleX", obj.scaleX + 0.001);
@@ -1566,11 +1480,7 @@ function handleChangeSize(width, height, name, maxChar) {
 
             canva.getObjects().forEach(function (obj) {
               if (obj.name === "asowp-SignText") {
-                function syncTextObjectsByFace(
-                  bigArray,
-                  textObjects,
-                  targetFace
-                ) {
+                function syncTextObjectsByFace( bigArray, textObjects, targetFace ) {
                   // Parcourir les objets du grand tableau qui ont la face cible
                   bigArray.forEach((bigObj, index) => {
                     // console.log(bigObj.canvasName,"can")
@@ -1594,11 +1504,7 @@ function handleChangeSize(width, height, name, maxChar) {
 
                   return bigArray;
                 }
-                addedTexts = syncTextObjectsByFace(
-                  addedTexts,
-                  textObjects,
-                  canva.name
-                );
+                addedTexts = syncTextObjectsByFace( addedTexts, textObjects, canva.name );
                 // console.log(addedTexts, "1969089151")
               }
             });
@@ -1621,7 +1527,7 @@ function handleChangeSize(width, height, name, maxChar) {
     BtextObjects = handleGetTextObjects2("asowp-SignText");
   }
 
-  handleSelectShape(selectedShape, newSignWidth, newSignHeight);
+  handleSelectShape( selectedShape, newSignWidth, newSignHeight );
 
   handleCalcTextPrice();
 
@@ -1641,7 +1547,7 @@ function handleGetSignPosition() {
   var width = signData.width;
   var height = signData.height;
   currentSize = { width: width, height: height, label: currentSizeName };
-  let scaleValues = handleMiseAEchelle(width, height);
+  let scaleValues = handleMiseAEchelle(width, height)
 
   sizeRatio = scaleValues.sizeRatio;
   fixScale = scaleValues.fixScale;
@@ -1651,15 +1557,10 @@ function handleGetSignPosition() {
   currentHeight = scaleValues.height;
 
   return {
-    width:
-      sign.type == "path" || sign.type == "group" ? sign.prevWidth : sign.width,
-    height:
-      sign.type == "path" || sign.type == "group"
-        ? sign.prevHeight
-        : sign.height,
-    top: sign.type == "path" || sign.type == "group" ? sign.prevLeft : sign.top,
-    left:
-      sign.type == "path" || sign.type == "group" ? sign.prevTop : sign.left,
+    width: (sign.type == "path" || sign.type == "group") ? sign.prevWidth : sign.width,
+    height: (sign.type == "path" || sign.type == "group") ? sign.prevHeight : sign.height,
+    top: (sign.type == "path" || sign.type == "group") ? sign.prevLeft : sign.top,
+    left: (sign.type == "path" || sign.type == "group") ? sign.prevTop : sign.left,
     maxChar: maxTextCharForSize,
     sizeName: currentSizeName,
 
@@ -1719,13 +1620,13 @@ function handleDeleteObject(object) {
   var target = object;
   var canvas = target.canvas;
   canvas.discardActiveObject();
-  if (textType == "3D") {
+  if(textType == "3D"){
     var objects = canvas.getObjects();
-    objects.forEach((obj) => {
-      if (obj.name === "asowp-SignTextLayer" && obj.id === object.id) {
+    objects.forEach((obj)=>{
+      if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
         canvas.remove(obj);
       }
-    });
+    })
   }
   canvas.remove(target);
   canvas.requestRenderAll();
@@ -1784,7 +1685,7 @@ function handleCloneObject(object, imageId) {
   var target = object;
   var canvas = target.canvas;
   target.clone(function (cloned) {
-    cloned.clipPath = null;
+    cloned.clipPath = null
     cloned.left += 10;
     cloned.top += 10;
     if (cloned.type == "i-text" || cloned.type == "neon-Text") {
@@ -1795,21 +1696,21 @@ function handleCloneObject(object, imageId) {
         secondStroke: object.secondStroke,
         activeSide: object.activeSide,
         sideColor: object.sideColor,
-      };
+      }
       cloned.set("canvas", canvas);
       // console.log(cloned.canvas, "cloned canvas");
-      if (textType == "3D") {
+      if(textType == "3D"){
         var objects = canvas.getObjects();
-        objects.forEach((obj) => {
-          if (obj.name === "asowp-SignTextLayer" && obj.id === object.id) {
-            obj.clone((layerClone) => {
+        objects.forEach((obj)=>{
+          if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+            obj.clone((layerClone)=>{
               layerClone.left += 10;
               layerClone.top += 10;
               handleAddTextToSign(customAttribut, cloned, layerClone);
-            });
+            })
           }
-        });
-      } else {
+        })
+      }else{
         handleAddTextToSign(customAttribut, cloned);
       }
     }
@@ -1879,13 +1780,13 @@ function handleCenterVertically(object) {
       var newTop = containerCoords.y;
       target.top = newTop;
 
-      if (textType == "3D") {
+      if(textType == "3D"){
         var objets = activeCanvas.getObjects();
-        objets.forEach((obj) => {
-          if (obj.name === "asowp-SignTextLayer" && obj.id === object.id) {
+        objets.forEach((obj)=>{
+          if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
             obj.top = newTop;
           }
-        });
+        })
       }
     }
   });
@@ -1907,13 +1808,13 @@ function handleCenterHorizontally(object) {
       var newLeft = containerCoords.x;
       target.left = newLeft;
 
-      if (textType == "3D") {
+      if(textType == "3D"){
         var objects = activeCanvas.getObjects();
-        objects.forEach((obj) => {
-          if (obj.name === "asowp-SignTextLayer" && obj.id === object.id) {
+        objects.forEach((obj)=>{
+          if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
             obj.left = newLeft;
           }
-        });
+        })
       }
     }
   });
@@ -2266,20 +2167,20 @@ function setNormalBorber(canva, size, color) {
     shadow: selectedCutline != "2x" ? defaultShadow : null,
     stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
     strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
-  });
+  })
 
   return border;
 }
 
 async function handleSelectBorder(border, color) {
   // console.log("handleSelectBorder", border, color);
-  let exCutline1 = handleGetObjectByName("aswop-cutline1", activeCanvas);
-  let exCutline2 = handleGetObjectByName("aswop-cutline2", activeCanvas);
-  if (exCutline1) {
-    activeCanvas.remove(exCutline1);
+  let exCutline1 = handleGetObjectByName("aswop-cutline1", activeCanvas)
+  let exCutline2 = handleGetObjectByName("aswop-cutline2", activeCanvas)
+  if(exCutline1){
+    activeCanvas.remove(exCutline1)
   }
-  if (exCutline2) {
-    activeCanvas.remove(exCutline2);
+  if(exCutline2){
+    activeCanvas.remove(exCutline2)
   }
 
   if (!firstLoad || restartBorderSet) {
@@ -2289,11 +2190,11 @@ async function handleSelectBorder(border, color) {
       activeBorderColor = color;
       activeBorderColor2 = color;
     }
-    if (selectedShape != "cut-to-shape") {
+    if(selectedShape != "cut-to-shape"){
       setBorder(canvas, activeBorder, activeBorderColor);
       setBorder(backCanvas, activeBorder2, activeBorderColor2);
-    } else {
-      await handleShowCutline(activeCanvas);
+    }else{
+      await handleShowCutline(activeCanvas)
     }
   } else {
     if (activeSignFace === "front") {
@@ -2301,11 +2202,11 @@ async function handleSelectBorder(border, color) {
       if (color) {
         activeBorderColor = color;
       }
-      if (selectedShape != "cut-to-shape") {
+      if(selectedShape != "cut-to-shape"){
         setBorder(canvas, activeBorder, activeBorderColor);
         setBorder(backCanvas, activeBorder2, activeBorderColor2);
-      } else {
-        await handleShowCutline(canvas);
+      }else{
+        await handleShowCutline(canvas)
       }
     }
     if (activeSignFace === "back") {
@@ -2313,11 +2214,11 @@ async function handleSelectBorder(border, color) {
       if (color) {
         activeBorderColor2 = color;
       }
-      if (selectedShape != "cut-to-shape") {
+      if(selectedShape != "cut-to-shape"){
         setBorder(canvas, activeBorder, activeBorderColor);
         setBorder(backCanvas, activeBorder2, activeBorderColor2);
-      } else {
-        await handleShowCutline(canvas);
+      }else{
+        await handleShowCutline(canvas)
       }
     }
   }
@@ -2337,11 +2238,11 @@ async function handleSelectBorder(border, color) {
             var border = setNormalBorber(canva, 10, activeColor);
             canva.add(border);
             border.sendToBack();
-            if (selectedCutline != "none") {
+            if(selectedCutline != "none"){
               border.set({
-                left: border.left - cutlinesData.first.borderSize / 2,
-                top: border.top - cutlinesData.first.borderSize / 2,
-              });
+                left: border.left - (cutlinesData.first.borderSize/2),
+                top: border.top - (cutlinesData.first.borderSize/2),
+              })
               // let cutline1 = handleGetObjectByName("asowp-cutline1", canva)
               // let cutline2 = handleGetObjectByName("asowp-cutline2", canva)
               // if(cutline1 != null){
@@ -2624,7 +2525,7 @@ async function handleSelectBorder(border, color) {
     // console.log(canva.getObjects())
     canva.renderAll();
 
-    await handleShowCutline(canva);
+    await handleShowCutline(canva)
   }
   firstBorderCheck = false;
 
@@ -2662,20 +2563,21 @@ function handlechangeBorderColor(color, position) {
           var borderNormal = setNormalBorber(canva, 10, color);
           canva.add(borderNormal);
           borderNormal.sendToBack();
-          if (selectedCutline != "none") {
+          if(selectedCutline != "none"){
             borderNormal.set({
-              left: borderNormal.left - cutlinesData.first.borderSize / 2,
-              top: borderNormal.top - cutlinesData.first.borderSize / 2,
-            });
-            let cutline1 = handleGetObjectByName("asowp-cutline1", canva);
-            let cutline2 = handleGetObjectByName("asowp-cutline2", canva);
-            if (cutline1 != null) {
-              cutline1.sendToBack();
+              left: borderNormal.left - (cutlinesData.first.borderSize/2),
+              top: borderNormal.top - (cutlinesData.first.borderSize/2),
+            })
+            let cutline1 = handleGetObjectByName("asowp-cutline1", canva)
+            let cutline2 = handleGetObjectByName("asowp-cutline2", canva)
+            if(cutline1 != null){
+              cutline1.sendToBack()
             }
-            if (cutline2 != null) {
-              cutline2.sendToBack();
+            if(cutline2 != null){
+              cutline2.sendToBack()
             }
           }
+          
         }
       }
       if (border === "old-world") {
@@ -2707,13 +2609,7 @@ var signBackground1 = "color";
 var signBackground2 = "color";
 var patternUrl1 = "";
 var patternUrl2 = "";
-function handleChangeSignColor(
-  name,
-  pattern,
-  textColor,
-  defTextColor,
-  restart
-) {
+function handleChangeSignColor( name, pattern, textColor, defTextColor, restart ) {
   console.log();
   currentSignColor = name;
   var stop = true;
@@ -2737,22 +2633,22 @@ function handleChangeSignColor(
             } else {
               signBackground2 = "color";
             }
-            if (selectedShape != "cut-to-shape") {
+            if(selectedShape != "cut-to-shape"){
               object.set("fill", pattern.codeHex);
-            } else {
-              let pathObjects = object._objects;
+            }else{
+              let pathObjects = object._objects
 
-              if (pathObjects) {
-                pathObjects.forEach((path) => {
+              if(pathObjects){
+                pathObjects.forEach(path => {
                   const d = path.d;
                   if (path.name == "outline") {
                     path.set({
                       fill: pattern.codeHex,
                       // stroke: pattern.codeHex,
-                    });
+                    })
                   }
                 });
-              } else {
+              }else{
                 object.set("fill", pattern.codeHex);
               }
             }
@@ -2798,11 +2694,9 @@ function handleChangeSignColor(
 function setPattern(canva, image) {
   canva.getObjects().forEach((object, index) => {
     if (object.name === "safeObject") {
-      if (selectedShape != "cut-to-shape") {
+      if(selectedShape != "cut-to-shape"){
         handleConvertImageToDataURI(image, function (dataURI) {
-          fabric.util.loadImage(
-            dataURI,
-            function (img) {
+          fabric.util.loadImage( dataURI, function (img) {
               var scaleX = object.width / img.width;
               var scaleY = object.height / img.height;
               var pattern = new fabric.Pattern({
@@ -2810,7 +2704,7 @@ function setPattern(canva, image) {
                 repeat: "no-repeat",
                 patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
               });
-
+  
               object.set("fill", pattern);
               // canvas.add(pattern);
               canva.renderAll();
@@ -2818,16 +2712,14 @@ function setPattern(canva, image) {
             { crossOrigin: "anonymous" }
           );
         });
-      } else {
-        let pathObjects = object._objects;
+      }else{
+        let pathObjects = object._objects
 
-        if (pathObjects) {
-          pathObjects.forEach((path) => {
+        if(pathObjects){
+          pathObjects.forEach(path => {
             if (path.name == "outline") {
               handleConvertImageToDataURI(image, function (dataURI) {
-                fabric.util.loadImage(
-                  dataURI,
-                  function (img) {
+                fabric.util.loadImage( dataURI, function (img) {
                     var scaleX = path.width / img.width;
                     var scaleY = path.height / img.height;
                     var pattern = new fabric.Pattern({
@@ -2835,7 +2727,7 @@ function setPattern(canva, image) {
                       repeat: "no-repeat",
                       patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
                     });
-
+              
                     path.set("fill", pattern);
                     canva.renderAll();
                   },
@@ -2857,6 +2749,10 @@ function handleSetImageToSignBackground(image) {
   // updateModifications(true, 'changer sign color')
 }
 
+
+
+
+
 function sortByOffset(arr) {
   return arr.sort((a, b) => {
     if (a.offsetX !== b.offsetX) {
@@ -2867,126 +2763,113 @@ function sortByOffset(arr) {
 
 async function createPreciseContourPath(size) {
   // 1. Filtrer les objets dans la zone avec précision
-  const objectsInZone = canvas
-    .getObjects()
-    .filter(
-      (obj) =>
-        obj.name == "asowp-SignText" ||
-        obj.name == "asowp-SignImage" ||
-        obj.name == "asowp-QRCode"
-    );
+  const objectsInZone = canvas.getObjects().filter(obj => obj.name == "asowp-SignText" || obj.name == "asowp-SignImage" || obj.name == "asowp-QRCode");
 
   if (objectsInZone.length === 0) return null;
 
-  objectsInZone.forEach((object) => {
-    object.clipPath = null;
-    activeCanvas.renderAll();
-  });
+  objectsInZone.forEach(object =>{
+    object.clipPath = null
+    activeCanvas.renderAll()
+  })
 
   // 2. Extraire les points de contour précis
   // console.log(size, "2222", objectsInZone)
   let allPoints = await extractExactPaths(objectsInZone);
-  let sortedPaths = sortByOffset(allPoints);
+  let sortedPaths = sortByOffset(allPoints)
+  
 
   let canvaSize = {
     width: activeCanvas.getWidth(),
-    height: activeCanvas.getHeight(),
-  };
-  let currentZoom = activeCanvas.getZoom();
+    height: activeCanvas.getHeight()
+  }
+  let currentZoom = activeCanvas.getZoom()
 
-  let mergedPath = await generateGlobalContour(
-    sortedPaths,
-    canvaSize,
-    currentZoom,
-    size
-  );
+  let mergedPath = await generateGlobalContour(sortedPaths, canvaSize, currentZoom, size)
 
-  return mergedPath;
+
+  return mergedPath
 }
 
-function cloneObjectForOutline(object) {
+function cloneObjectForOutline(object){
   return new Promise(async (resolve, reject) => {
+    
     var target = object;
     var canvas = target.canvas;
-    let activeFilters = target.name == "asowp-SignImage" ? target.filters : [];
-    if (target.name == "asowp-SignImage") {
-      target.filters = [];
+    let activeFilters = target.name == 'asowp-SignImage' ? target.filters : []
+    if(target.name == 'asowp-SignImage'){
+      target.filters = []
     }
     target.clone(function (cloned) {
       // console.log("333", cloned)
-      cloned.clipPath = null;
+      cloned.clipPath = null
       if (cloned.type == "i-text" || cloned.type == "neon-Text") {
-        if (textType == "3D") {
+        if(textType == "3D"){
           var objects = canvas.getObjects();
-          objects.forEach((obj) => {
-            if (obj.name === "asowp-SignTextLayer" && obj.id === object.id) {
-              obj.clone((layerClone) => {
+          objects.forEach((obj)=>{
+            if(obj.name === "asowp-SignTextLayer" && obj.id === object.id){
+              obj.clone((layerClone)=>{
                 layerClone.left += 5;
                 layerClone.top += 5;
 
                 resolve({
                   textType: "3D",
                   text: cloned,
-                  side: layerClone,
-                });
-              });
+                  side: layerClone
+                })
+              })
+  
             }
-          });
-        } else {
-          resolve(cloned);
+          })
+        }else{
+          resolve(cloned)
         }
       }
-      if (
-        cloned.type == "image" ||
-        cloned.type == "path" ||
-        cloned.type == "group"
-      ) {
+      if ( cloned.type == "image" || cloned.type == "path" || cloned.type == "group" ) {
         cloned.originX = "center";
         cloned.originY = "center";
 
-        resolve(cloned);
+        resolve(cloned)
       }
     });
-    if (target.name == "asowp-SignImage") {
-      target.filters = activeFilters;
+    if(target.name == 'asowp-SignImage'){
+      target.filters = activeFilters
     }
-  });
+  })
 }
 
 async function extractExactPaths(objects) {
-  return Promise.all(
-    objects.map((obj) => {
-      return new Promise(async (resolve, reject) => {
-        if (obj.name === "asowp-SignText") {
-          let clone = await cloneObjectForOutline(obj);
-          resolve(clone);
-        }
-        if (obj.name === "asowp-SignImage") {
-          let clone = await cloneObjectForOutline(obj);
-          clone.filters = [];
-          resolve(clone);
-        }
-        if (obj.name === "asowp-QRCode") {
-          let clone = await cloneObjectForOutline(obj);
-          resolve(clone);
-        }
-      });
-    })
-  );
+  return Promise.all(objects.map(obj => {
+    return new Promise(async (resolve, reject) => {
+      if(obj.name === "asowp-SignText"){
+        let clone = await cloneObjectForOutline(obj)
+        resolve(clone)
+      }
+      if(obj.name === "asowp-SignImage"){
+        let clone = await cloneObjectForOutline(obj)
+        clone.filters = []
+        resolve(clone)
+      }
+      if(obj.name === "asowp-QRCode"){
+        let clone = await cloneObjectForOutline(obj)
+        resolve(clone)
+      }
+    });
+  }));
 }
 
-async function setBlankSvg() {
+async function setBlankSvg(){
   return new Promise(async (resolve, reject) => {
     let blankSign = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
         <rect x="50" y="50" width="100" height="100" fill="transparent" />
       </svg>
-      `;
+      `
     fabric.loadSVGFromString(blankSign, function (image) {
       const img = fabric.util.groupSVGElements(image);
-      resolve(img);
-    });
+      resolve(img)
+    })
   });
 }
+
 
 var selectedShape = "";
 function handleGetShape(shape, fixing) {
@@ -3012,7 +2895,7 @@ function handleGetShape(shape, fixing) {
 //     var width = nwidth;
 //     var height = nheight;
 //     var objectfill;
-
+    
 //     let newObject
 //     if(safeObject != null){
 //       if (typeof safeObject.fill !== "string") {
@@ -3021,7 +2904,7 @@ function handleGetShape(shape, fixing) {
 //         objectfill = safeObject.fill;
 //       }
 //       var objectId = safeObject.id;
-
+  
 //       safeObject.setCoords();
 
 //       await resetCutline(canvas)
@@ -3225,7 +3108,7 @@ function handleGetShape(shape, fixing) {
 //             id: objectId,
 //           });
 //           break;
-
+        
 //         case "cut-to-shape":
 //           let safeObjet = {
 //             height: height,
@@ -3236,7 +3119,7 @@ function handleGetShape(shape, fixing) {
 //           if(newObject != null){
 //             let pathObjects = newObject._objects
 //             const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
-
+  
 //             pathObjects.forEach(path => {
 //               const d = path.d;
 //               if (d && !d.includes(target)) {
@@ -3248,7 +3131,7 @@ function handleGetShape(shape, fixing) {
 //                 })
 //               }
 //             });
-
+  
 //             newObject.set({
 //               fill: objectfill,
 //               stroke: objectfill,
@@ -3283,7 +3166,7 @@ function handleGetShape(shape, fixing) {
 //           }
 //           break;
 //       }
-
+      
 //       canvas.remove(safeObject);
 //       canvas.add(newObject);
 //       newObject.sendToBack();
@@ -3315,7 +3198,7 @@ function handleGetShape(shape, fixing) {
 //           currentSize.label = 'sticker'
 //         }else{
 //           setOutlineMeasurmentValue({}, 0, 0)
-
+  
 //           currentSize.width = 0
 //           currentSize.height = 0
 //           currentSize.label = 'sticker'
@@ -3326,6 +3209,7 @@ function handleGetShape(shape, fixing) {
 //         // setMeasurmentValue(canvas, newObject)
 //       }
 
+      
 //       // function setMeasurmentValue(canvas, mainObject) {
 //       //   var Objects = canvas.getObjects();
 //       //   Objects.forEach((object) => {
@@ -3369,10 +3253,11 @@ function handleGetShape(shape, fixing) {
 //       //   });
 //       //   canvas.renderAll();
 //       // }
-
+  
 //     }
 
 //     canvas.renderAll();
+
 
 //   }
 
@@ -3411,34 +3296,28 @@ function handleGetShape(shape, fixing) {
 //   return currentSize
 // }
 
-async function handleSelectShape(
-  shape,
-  nwidth = 100,
-  nheight = 100,
-  shapeSizes = null
-) {
+
+async function handleSelectShape(shape, nwidth = 100, nheight = 100, shapeSizes = null) {
   selectedShape = shape;
-  if (shapeSizes && (shapeSizes != null || shapeSizes != -1)) {
-    shapeSize = shapeSizes;
-    strokeSize = shapeSize.medium;
-    console.log(shapeSize, strokeSize, "cutline");
+  if(shapeSizes && (shapeSizes != null || shapeSizes != -1)){
+    shapeSize = shapeSizes
+    strokeSize = shapeSize.medium
+    console.log(shapeSize, strokeSize, "cutline")
   }
 
   async function setShape(targetCanvas, isBackCanvas = false) {
     resetFixing(targetCanvas);
-
+    
     // Rechercher l'objet safeObject existant
-    let safeObject = targetCanvas
-      .getObjects()
-      .find((obj) => obj.name === "safeObject");
-
+    let safeObject = targetCanvas.getObjects().find(obj => obj.name === "safeObject");
+    
     var width = nwidth;
     var height = nheight;
     var objectfill;
-
+    
     let newObject = null;
-
-    if (safeObject != null) {
+    
+    if(safeObject != null){
       if (typeof safeObject.fill !== "string") {
         objectfill = "transparent";
       } else {
@@ -3453,31 +3332,24 @@ async function handleSelectShape(
       await resetCutline(targetCanvas);
 
       // Créer le nouvel objet selon la forme sélectionnée
-      newObject = await createShapeObject(
-        shape,
-        width,
-        height,
-        objectfill,
-        objectId,
-        targetCanvas
-      );
-
+      newObject = await createShapeObject(shape, width, height, objectfill, objectId, targetCanvas);
+      
       if (newObject) {
         // Supprimer l'ancien objet safeObject
         targetCanvas.remove(safeObject);
-
+        
         // Ajouter le nouvel objet
         targetCanvas.add(newObject);
         newObject.sendToBack();
         newObject.set({
-          shapeType: shape,
+          shapeType: shape
         });
-
+        
         // Positionnement spécial pour cut-to-shape
-        if (shape == "cut-to-shape") {
+        if(shape == "cut-to-shape"){
           const bounds = newObject.getBoundingRect(false);
-          const scaleX = targetCanvas.getWidth() / bounds.width;
-          const scaleY = targetCanvas.getHeight() / bounds.height;
+          const scaleX = (targetCanvas.getWidth()) / (bounds.width);
+          const scaleY = (targetCanvas.getHeight()) / (bounds.height);
           newObject.set({
             left: 0,
             top: 0,
@@ -3491,20 +3363,18 @@ async function handleSelectShape(
           // Gestion des mesures pour cut-to-shape
           if (!isBackCanvas) {
             const target = ` L ${targetCanvas.getWidth()} ${targetCanvas.getHeight()} `;
-            let sign = newObject._objects?.filter(
-              (path) => path.d && !path.d.includes(target)
-            );
+            let sign = newObject._objects?.filter(path => path.d && !path.d.includes(target));
 
-            if (sign != undefined && sign.length > 0) {
+            if(sign != undefined && sign.length > 0){
               let realValues = handleReverseMiseAEchelle(sign[0]);
               currentSize.width = realValues.realWidth;
               currentSize.height = realValues.realHeight;
-              currentSize.label = "sticker";
+              currentSize.label = 'sticker';
             } else {
               setOutlineMeasurmentValue({}, 0, 0);
               currentSize.width = 0;
               currentSize.height = 0;
-              currentSize.label = "sticker";
+              currentSize.label = 'sticker';
             }
           }
         } else {
@@ -3518,16 +3388,9 @@ async function handleSelectShape(
   }
 
   // Fonction pour créer l'objet de forme
-  async function createShapeObject(
-    shape,
-    width,
-    height,
-    objectfill,
-    objectId,
-    targetCanvas
-  ) {
+  async function createShapeObject(shape, width, height, objectfill, objectId, targetCanvas) {
     let newObject = null;
-
+    
     switch (shape) {
       case "square":
         newObject = new fabric.Rect({
@@ -3726,21 +3589,21 @@ async function handleSelectShape(
           id: objectId,
         });
         break;
-
+      
       case "cut-to-shape":
         newObject = await createPreciseContourPath(strokeSize);
 
-        if (newObject != null) {
+        if(newObject != null){
           let pathObjects = newObject._objects;
           const target = ` L ${targetCanvas.getWidth()} ${targetCanvas.getHeight()} `;
 
-          pathObjects.forEach((path) => {
+          pathObjects.forEach(path => {
             const d = path.d;
             if (d && !d.includes(target)) {
               path.set({
                 fill: objectfill,
-                strokeLineJoin: "round",
-                strokeLineCap: "round",
+                strokeLineJoin: 'round',
+                strokeLineCap: 'round',
                 name: "outline",
               });
             }
@@ -3754,8 +3617,8 @@ async function handleSelectShape(
             id: objectId,
             width: targetCanvas.getWidth(true),
             height: targetCanvas.getHeight(true),
-            strokeLineJoin: "round",
-            strokeLineCap: "round",
+            strokeLineJoin: 'round',
+            strokeLineCap: 'round',
             selectable: false,
             prevWidth: width,
             prevHeight: height,
@@ -3769,8 +3632,8 @@ async function handleSelectShape(
             id: objectId,
             width: targetCanvas.getWidth(true),
             height: targetCanvas.getHeight(true),
-            strokeLineJoin: "round",
-            strokeLineCap: "round",
+            strokeLineJoin: 'round',
+            strokeLineCap: 'round',
             selectable: false,
             prevWidth: width,
             prevHeight: height,
@@ -3779,19 +3642,19 @@ async function handleSelectShape(
         }
         break;
     }
-
+    
     return newObject;
   }
 
   // Exécution principale
-  console.log("Début changement de forme:", shape);
-
+  console.log('Début changement de forme:', shape);
+  
   // Mettre à jour le canvas principal
   await setShape(canvas, false);
-
+  
   // Si double face, utiliser la fonction de clonage pour synchroniser
-  if (doubleFace) {
-    console.log("Synchronisation avec backCanvas...");
+  if(doubleFace) {
+    console.log('Synchronisation avec backCanvas...');
     await setShape(backCanvas, false);
     // Attendre un peu pour que le canvas principal soit stable
     // setTimeout(() => {
@@ -3811,13 +3674,13 @@ async function handleSelectShape(
   if (!firstLoad && !isTemplate) {
     removeBorder(canvas);
     await handleSelectBorder(activeBorder, activeBorderColor);
-
-    if (doubleFace) {
+    
+    if(doubleFace) {
       removeBorder(backCanvas);
       await handleSelectBorder(activeBorder, activeBorderColor);
     }
   }
-
+  
   if (firstLoad) {
     if (activeSignFace === "front") {
       removeBorder(canvas);
@@ -3831,409 +3694,368 @@ async function handleSelectShape(
 
   handleSelectFixingMethode(activeFixingMethode);
 
-  console.log("Changement de forme terminé");
+  console.log('Changement de forme terminé');
   return currentSize;
 }
 
 // Fonction utilitaire pour vérifier la synchronisation
 function verifyShapeSync() {
   if (!doubleFace) return true;
-
-  const mainSafeObject = canvas
-    .getObjects()
-    .find((obj) => obj.name === "safeObject");
-  const backSafeObject = backCanvas
-    .getObjects()
-    .find((obj) => obj.name === "safeObject");
-
+  
+  const mainSafeObject = canvas.getObjects().find(obj => obj.name === "safeObject");
+  const backSafeObject = backCanvas.getObjects().find(obj => obj.name === "safeObject");
+  
   if (!mainSafeObject || !backSafeObject) {
-    console.warn("Objet safeObject manquant sur un des canvas");
+    console.warn('Objet safeObject manquant sur un des canvas');
     return false;
   }
-
+  
   if (mainSafeObject.shapeType !== backSafeObject.shapeType) {
-    console.warn("Les formes ne correspondent pas entre les deux canvas");
+    console.warn('Les formes ne correspondent pas entre les deux canvas');
     return false;
   }
-
-  console.log("Synchronisation des formes OK");
+  
+  console.log('Synchronisation des formes OK');
   return true;
 }
-let selectedMaterialType = "simple";
-function handleGetMaterialType(type) {
-  selectedMaterialType = type;
+let selectedMaterialType = "simple"
+function handleGetMaterialType(type){
+  selectedMaterialType = type
 }
 
-async function showLoader(statut) {
-  let loader = document.getElementById("asowp-loader");
-  if (loader) {
-    if (statut == true) {
-      loader.style.display = "flex";
-    } else {
-      loader.style.display = "none";
+async function showLoader(statut){
+  let loader = document.getElementById("asowp-loader")
+  if(loader){
+    if(statut == true){
+      loader.style.display = "flex"
+    }else{
+      loader.style.display = "none"
     }
   }
 }
 
-let strokeSize = 20;
+let strokeSize = 20
 let shapeSize = {
   small: 10,
   medium: 20,
   large: 30,
-};
-function handleGetOutlineSize(sizeData) {
-  shapeSize = sizeData;
-  strokeSize = shapeSize.medium;
-  console.log(shapeSize, strokeSize, "cutline data");
 }
-async function handleChangeOutlineSize(size, sizeData) {
-  if (sizeData) {
-    shapeSize = sizeData;
+function handleGetOutlineSize(sizeData){
+  shapeSize = sizeData
+  strokeSize = shapeSize.medium
+  console.log(shapeSize, strokeSize, "cutline data")
+
+}
+async function handleChangeOutlineSize(size, sizeData){
+  if(sizeData){
+    shapeSize = sizeData
   }
-  console.log(shapeSize, "4444");
-  if (size == "small") {
-    strokeSize = shapeSize.small;
-    await handleSelectShape("cut-to-shape");
-  } else if (size == "medium") {
-    strokeSize = shapeSize.medium;
-    await handleSelectShape("cut-to-shape");
-  } else if (size == "large") {
-    strokeSize = shapeSize.large;
-    await handleSelectShape("cut-to-shape");
+  console.log(shapeSize, "4444")
+  if(size == "small"){
+    strokeSize = shapeSize.small
+    await handleSelectShape("cut-to-shape")
+  }else if(size == "medium"){
+    strokeSize = shapeSize.medium
+    await handleSelectShape("cut-to-shape")
+  }else if(size == "large"){
+    strokeSize = shapeSize.large
+    await handleSelectShape("cut-to-shape")
   }
 }
-let selectedCutline = "none";
+let selectedCutline = "none"
 let cutlinesData = {
   first: {
     borderSize: 10,
-    color: "green",
+    color: 'green'
   },
-  second: {
-    color: "white",
+  second: { 
+    color:'white',
     size: 30,
-    borderColor: "red",
+    borderColor: 'red',
     borderSize: 10,
   },
-};
-function handleGetCutlineData(cutline, cutlineDatas) {
-  selectedCutline = cutline;
-  cutlinesData = cutlineDatas;
 }
-function handleSetCutline(size) {
-  let safeObject = handleGetObjectByName("safeObject");
-  let outline = null;
-  let pathObjects = safeObject._objects;
-  pathObjects.forEach((path) => {
+function handleGetCutlineData(cutline, cutlineDatas){
+  selectedCutline = cutline
+  cutlinesData = cutlineDatas
+}
+function handleSetCutline(size){
+  let safeObject = handleGetObjectByName("safeObject")
+  let outline = null
+  let pathObjects = safeObject._objects
+  pathObjects.forEach(path => {
     if (path.name == "outline") {
-      outline = path;
+      outline = path
     }
   });
 
-  let cutline1 = handleGetObjectByName("asowp-cutline1");
-  let cutline2 = handleGetObjectByName("asowp-cutline2");
-  let sign = handleGetObjectByName("safeObject");
-  if (size == "1x") {
-    cutline1.visible = false;
-    cutline2.visible = false;
+  let cutline1 = handleGetObjectByName("asowp-cutline1")
+  let cutline2 = handleGetObjectByName("asowp-cutline2")
+  let sign = handleGetObjectByName("safeObject")
+  if(size == "1x"){
+    cutline1.visible = false
+    cutline2.visible = false
 
-    cutline1.shadow = null;
-    cutline2.shadow = null;
+    cutline1.shadow = null
+    cutline2.shadow = null
 
-    sign.shadow = defaultShadow;
+
+    sign.shadow = defaultShadow
     outline.set({
       stroke: cutlinesData.first.color,
       strokeWidth: cutlinesData.first.borderSize,
-    });
-  } else if (size == "2x") {
-    cutline1.visible = true;
-    cutline2.visible = true;
+    })
 
-    cutline2.shadow = defaultShadow;
-    sign.shadow = null;
+  }else if(size == "2x"){
+    cutline1.visible = true
+    cutline2.visible = true
 
-    let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize;
-    let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize;
+    cutline2.shadow = defaultShadow
+    sign.shadow = null
+
+    let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
+    let cutStroke2 = cutlinesData.second.size + cutlinesData.second.borderSize
 
     cutline1.set({
       stroke: cutlinesData.second.color,
       strokeWidth: cutStroke1,
-    });
+    })
     cutline2.set({
       stroke: cutlinesData.second.borderColor,
       strokeWidth: cutStroke2,
-    });
-  } else {
-    cutline1.visible = false;
-    cutline2.visible = false;
-
-    cutline1.shadow = null;
-    cutline2.shadow = null;
-    sign.shadow = defaultShadow;
+    })
+  }else{
+    cutline1.visible = false
+    cutline2.visible = false
+    
+    cutline1.shadow = null
+    cutline2.shadow = null
+    sign.shadow = defaultShadow
   }
 
-  activeCanvas.renderAll();
+  activeCanvas.renderAll()
 }
-function cloneOutline(object) {
+function cloneOutline(object){
   return new Promise(async (resolve, reject) => {
     var target = object;
-    if (target != null) {
+    if(target != null){
       target.clone(function (cloned) {
-        resolve(cloned);
-      });
+        resolve(cloned)
+      }); 
     }
-  });
+  })
 }
 
-async function resetCutline(canva) {
-  return new Promise((resolve, reject) => {
-    if (selectedShape != "cut-to-shape") {
-      let exCutline1 = handleGetObjectByName("asowp-cutline1", canva);
-      let exCutline2 = handleGetObjectByName("asowp-cutline2", canva);
-      if (exCutline1) {
-        canva.remove(exCutline1);
+async function resetCutline(canva){
+  return new Promise((resolve, reject)=>{
+    if(selectedShape != "cut-to-shape"){
+      let exCutline1 = handleGetObjectByName("asowp-cutline1", canva)
+      let exCutline2 = handleGetObjectByName("asowp-cutline2", canva)
+      if(exCutline1){
+        canva.remove(exCutline1)
       }
-      if (exCutline2) {
-        canva.remove(exCutline2);
+      if(exCutline2){
+        canva.remove(exCutline2)
       }
-      let safeObject = handleGetObjectByName("safeObject", canva);
+      let safeObject = handleGetObjectByName("safeObject", canva)
       safeObject.set({
         stroke: "black",
-        strokeWidth: 0,
-      });
-    } else {
-      let exCutline1 = handleGetObjectByName("asowp-cutline1", canva);
-      let exCutline2 = handleGetObjectByName("asowp-cutline2", canva);
-      if (exCutline1) {
-        canva.remove(exCutline1);
+        strokeWidth: 0
+      })
+    }else{
+      let exCutline1 = handleGetObjectByName("asowp-cutline1", canva)
+      let exCutline2 = handleGetObjectByName("asowp-cutline2", canva)
+      if(exCutline1){
+        canva.remove(exCutline1)
       }
-      if (exCutline2) {
-        canva.remove(exCutline2);
+      if(exCutline2){
+        canva.remove(exCutline2)
       }
     }
-    resolve(true);
-  });
+    resolve(true)
+  })
 }
-async function handleShowCutline(canva) {
-  await resetCutline(canvas);
+async function handleShowCutline(canva){
+  await resetCutline(canvas)
 
-  let safeObject = handleGetObjectByName("safeObject", canva);
-  let cutline1 = null;
-  let cutline2 = null;
-  if (selectedShape != "cut-to-shape") {
-    if (activeBorder == "normal") {
-      let borderObject = handleGetObjectByName("normal-border", canva);
-      cutline1 = await cloneOutline(borderObject);
-      cutline2 = await cloneOutline(borderObject);
-      let signStroke = safeObject.strokeWidth;
+  let safeObject = handleGetObjectByName("safeObject", canva)
+  let cutline1 = null
+  let cutline2 = null
+  if(selectedShape != "cut-to-shape"){
+    
+    if(activeBorder == "normal"){
+      let borderObject = handleGetObjectByName("normal-border", canva)
+      cutline1 = await cloneOutline(borderObject)
+      cutline2 = await cloneOutline(borderObject)
+      let signStroke = safeObject.strokeWidth
       safeObject.set({
         stroke: "black",
         strokeWidth: 0,
         shadow: null,
-      });
+      })
       // canva.centerObject(safeObject)
       borderObject.set({
         stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
-        strokeWidth:
-          selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
-        left:
-          selectedCutline != "none"
-            ? borderObject.left - cutlinesData.first.borderSize / 2
-            : borderObject.left,
-        top:
-          selectedCutline != "none"
-            ? borderObject.top - cutlinesData.first.borderSize / 2
-            : borderObject.top,
+        strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+        left: selectedCutline != 'none' ? borderObject.left - (cutlinesData.first.borderSize/2) : borderObject.left,
+        top: selectedCutline != 'none' ? borderObject.top - (cutlinesData.first.borderSize/2) : borderObject.top,
         shadow: selectedCutline != "2x" ? defaultShadow : null,
-      });
+      })
 
-      let cutStroke2 =
-        borderObject.strokeWidth +
-        cutlinesData.second.size +
-        cutlinesData.second.borderSize +
-        cutlinesData.first.borderSize;
+      let cutStroke2 = borderObject.strokeWidth + cutlinesData.second.size + cutlinesData.second.borderSize + cutlinesData.first.borderSize
       cutline2.set({
         stroke: cutlinesData.second.borderColor,
         strokeWidth: cutStroke2,
-        left: cutline2.left - cutStroke2 / 2,
-        top: cutline2.top - cutStroke2 / 2,
+        left: cutline2.left - (cutStroke2/2),
+        top: cutline2.top - (cutStroke2/2),
         shadow: selectedCutline == "2x" ? defaultShadow : null,
         selectable: false,
         name: "asowp-cutline2",
-        visible: selectedCutline == "2x" ? true : false,
-      });
+        visible: selectedCutline == "2x" ? true : false
+      })
 
-      let cutStroke1 =
-        borderObject.strokeWidth +
-        cutlinesData.second.size +
-        cutlinesData.first.borderSize;
+      let cutStroke1 = borderObject.strokeWidth + cutlinesData.second.size + cutlinesData.first.borderSize
       cutline1.set({
         stroke: cutlinesData.second.color,
         strokeWidth: cutStroke1,
-        left: cutline1.left - cutStroke1 / 2,
-        top: cutline1.top - cutStroke1 / 2,
+        left: cutline1.left - (cutStroke1/2),
+        top: cutline1.top - (cutStroke1/2),
         selectable: false,
         name: "asowp-cutline1",
         visible: selectedCutline == "2x" ? true : false,
-      });
-
-      if (selectedCutline != "2x") {
-        setMeasurmentValue(canva, safeObject);
-      } else {
+      })
+    
+      if(selectedCutline != "2x"){
+        setMeasurmentValue(canva, safeObject)
+      }else{
         let positionData = {
-          left: cutline2.left + cutline2.strokeWidth,
-          top: cutline2.top + cutline2.strokeWidth,
+          left: cutline2.left + (cutline2.strokeWidth),
+          top: cutline2.top + (cutline2.strokeWidth),
           width: cutline2.width,
-          height: cutline2.height,
-        };
+          height: cutline2.height
+        }
         // setMeasurmentValue(canva, cutline2)
-        setMeasurmentValue(canva, positionData);
+        setMeasurmentValue(canva, positionData)
       }
 
-      canva.add(cutline1, cutline2);
-    } else {
-      cutline1 = await cloneOutline(safeObject);
-      cutline2 = await cloneOutline(safeObject);
+      canva.add(cutline1, cutline2)
 
+    }else{
+      cutline1 = await cloneOutline(safeObject)
+      cutline2 = await cloneOutline(safeObject)
+      
       safeObject.set({
         stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
-        strokeWidth:
-          selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
-        left:
-          selectedCutline != "none"
-            ? safeObject.left - cutlinesData.first.borderSize / 2
-            : safeObject.left,
-        top:
-          selectedCutline != "none"
-            ? safeObject.top - cutlinesData.first.borderSize / 2
-            : safeObject.top,
+        strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+        left: selectedCutline != 'none' ? safeObject.left - (cutlinesData.first.borderSize/2) : safeObject.left,
+        top: selectedCutline != 'none' ? safeObject.top - (cutlinesData.first.borderSize/2) : safeObject.top,
         shadow: selectedCutline != "2x" ? defaultShadow : null,
-      });
+      })
 
-      let cutStroke2 =
-        safeObject.strokeWidth +
-        cutlinesData.second.size +
-        cutlinesData.second.borderSize +
-        cutlinesData.first.borderSize;
+      let cutStroke2 = safeObject.strokeWidth + cutlinesData.second.size + cutlinesData.second.borderSize + cutlinesData.first.borderSize
       cutline2.set({
         stroke: cutlinesData.second.borderColor,
         strokeWidth: cutStroke2,
-        left: cutline2.left - cutStroke2 / 2,
-        top: cutline2.top - cutStroke2 / 2,
+        left: cutline2.left - (cutStroke2/2),
+        top: cutline2.top - (cutStroke2/2),
         shadow: selectedCutline == "2x" ? defaultShadow : null,
         selectable: false,
         name: "asowp-cutline2",
-        visible: selectedCutline == "2x" ? true : false,
-      });
+        visible: selectedCutline == "2x" ? true : false
+      })
 
-      let cutStroke1 =
-        safeObject.strokeWidth +
-        cutlinesData.second.size +
-        cutlinesData.first.borderSize;
+      let cutStroke1 = safeObject.strokeWidth + cutlinesData.second.size + cutlinesData.first.borderSize
       cutline1.set({
         stroke: cutlinesData.second.color,
         strokeWidth: cutStroke1,
-        left: cutline1.left - cutStroke1 / 2,
-        top: cutline1.top - cutStroke1 / 2,
+        left: cutline1.left - (cutStroke1/2),
+        top: cutline1.top - (cutStroke1/2),
         selectable: false,
         name: "asowp-cutline1",
         visible: selectedCutline == "2x" ? true : false,
-      });
-
-      if (selectedCutline != "2x") {
-        setMeasurmentValue(canva, safeObject);
-      } else {
+      })
+    
+      if(selectedCutline != "2x"){
+        setMeasurmentValue(canva, safeObject)
+      }else{
         let positionData = {
-          left: cutline2.left + cutline2.strokeWidth,
-          top: cutline2.top + cutline2.strokeWidth,
+          left: cutline2.left + (cutline2.strokeWidth),
+          top: cutline2.top + (cutline2.strokeWidth),
           width: cutline2.width,
-          height: cutline2.height,
-        };
+          height: cutline2.height
+        }
         // setMeasurmentValue(canva, cutline2)
-        setMeasurmentValue(canva, positionData);
+        setMeasurmentValue(canva, positionData)
       }
 
-      canva.add(cutline1, cutline2);
+      canva.add(cutline1, cutline2)
     }
-  } else {
-    cutline1 = await cloneOutline(safeObject);
-    cutline2 = await cloneOutline(safeObject);
+
+  }else{
+    cutline1 = await cloneOutline(safeObject)
+    cutline2 = await cloneOutline(safeObject)
 
     const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
-    let sign = safeObject._objects?.filter(
-      (path) => path.d && !path.d.includes(target)
-    );
-    let signCut1 = cutline1._objects?.filter(
-      (path) => path.fill == sign[0].fill
-    );
-    let signCut2 = cutline2._objects?.filter(
-      (path) => path.fill == sign[0].fill
-    );
+    let sign = safeObject._objects?.filter(path => path.d && !path.d.includes(target))
+    let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0].fill)
+    let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0].fill)
 
     // console.log(sign, "****")
 
-    if (sign != undefined && sign[0] && selectedCutline != "none") {
-      let pathObjects = safeObject._objects;
-
-      pathObjects.forEach((path) => {
+    if(sign != undefined &&  sign[0] && selectedCutline != "none"){
+      let pathObjects = safeObject._objects
+  
+      pathObjects.forEach(path => {
         if (path.name == "outline") {
           path.set({
-            stroke:
-              selectedCutline != "none" ? cutlinesData.first.color : "black",
-            strokeWidth:
-              selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
-            left: path.left - cutlinesData.first.borderSize / 2,
-            top: path.top - cutlinesData.first.borderSize / 2,
-          });
+            stroke: selectedCutline != "none" ? cutlinesData.first.color : "black",
+            strokeWidth: selectedCutline != "none" ? cutlinesData.first.borderSize : 0,
+            left: path.left - (cutlinesData.first.borderSize/2),
+            top: path.top - (cutlinesData.first.borderSize/2),
+          })
         }
       });
     }
-
-    if (sign != undefined) {
+  
+    if(sign != undefined){
       cutline2.set({
         shadow: selectedCutline == "2x" ? defaultShadow : null,
         selectable: false,
         name: "asowp-cutline2",
-        visible: selectedCutline == "2x" ? true : false,
-      });
+        visible: selectedCutline == "2x" ? true : false
+      })
       cutline1.set({
         selectable: false,
         name: "asowp-cutline1",
         visible: selectedCutline == "2x" ? true : false,
-      });
-
-      let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize;
+      })
+    
+      let cutStroke1 = cutlinesData.second.size + cutlinesData.first.borderSize
       signCut1[0].set({
         stroke: cutlinesData.second.color,
         strokeWidth: cutStroke1,
-        left: signCut1[0].left - cutStroke1 / 2,
-        top: signCut1[0].top - cutStroke1 / 2,
-      });
-      let cutStroke2 =
-        cutlinesData.first.borderSize +
-        cutlinesData.second.size +
-        cutlinesData.second.borderSize;
+        left: signCut1[0].left - (cutStroke1/2),
+        top: signCut1[0].top - (cutStroke1/2),
+      })
+      let cutStroke2 = cutlinesData.first.borderSize + cutlinesData.second.size + cutlinesData.second.borderSize
       signCut2[0].set({
         stroke: cutlinesData.second.borderColor,
         strokeWidth: cutStroke2,
-        left: signCut2[0].left - cutStroke2 / 2,
-        top: signCut2[0].top - cutStroke2 / 2,
-      });
-
-      canva.add(cutline1, cutline2);
-
-      let realValues = handleReverseMiseAEchelle(sign[0]);
-      console.log(realValues, "ppp");
-      setOutlineMeasurmentValue(
-        sign[0],
-        realValues.realWidth,
-        realValues.realHeight
-      );
-    } else {
-      setOutlineMeasurmentValue({}, 0, 0);
+        left: signCut2[0].left - (cutStroke2/2),
+        top: signCut2[0].top - (cutStroke2/2),
+      })
+    
+      canva.add(cutline1, cutline2)
+  
+      let realValues = handleReverseMiseAEchelle(sign[0])
+      console.log(realValues, "ppp")
+      setOutlineMeasurmentValue(sign[0], realValues.realWidth, realValues.realHeight)
+    }else{
+      setOutlineMeasurmentValue({}, 0, 0)
     }
   }
-  cutline1.sendToBack();
-  cutline2.sendToBack();
+  cutline1.sendToBack()
+  cutline2.sendToBack()
 }
 
 //fonctions concernant les fixings methode
@@ -7097,7 +6919,7 @@ function handleSelectFixingMethode(methode) {
     canva.renderAll();
   }
 
-  if (selectedShape != "cut-to-shape") {
+  if(selectedShape != "cut-to-shape"){
     setFixing(canvas);
     setFixing(backCanvas);
   }
@@ -7115,55 +6937,50 @@ function handleSelectFixingMethode(methode) {
 }
 
 // fonctions concernant l'ajout de text à la sign
-function getObjectValueToUnit(
-  container,
-  obj,
-  objWidth,
-  objHeight,
-  objLeft,
-  objTop
-) {
-  // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
+function getObjectValueToUnit(container, obj, objWidth, objHeight, objLeft, objTop) {
+ // 1. Récupérer les paramètres stockés lors de la mise à l'échelle
   // const { fixingScale, signRatio } = canvas;
-
+    
   // 2. Annuler le ratio final (signRatio)
-  let intermediateW, intermediateH, intermediateLeft, intermediateTop;
-
+  let intermediateW , intermediateH, intermediateLeft, intermediateTop
+  
   // 3. Annuler le scale de base (fixingScale)
-  let realWidthPx, realHeightPx;
+  let realWidthPx , realHeightPx
 
   // 3.5
-  let intermediateSignW, intermediateSignH, realSignWidth, realSignHeight;
-  let scaleX, scaleY;
-  if (container.type != "path") {
+  let intermediateSignW, intermediateSignH , realSignWidth , realSignHeight
+  let scaleX, scaleY
+  if(container.type != 'path'){
     intermediateSignW = container.width / ratioScale;
     intermediateSignH = container.height / ratioScale;
     realSignWidth = convertFromPx(intermediateSignW, currentUnit);
     realSignHeight = convertFromPx(intermediateSignH, currentUnit);
 
-    // 2. Annuler le ratio final (signRatio)
+      // 2. Annuler le ratio final (signRatio)
     intermediateW = objWidth / ratioScale;
     intermediateH = objHeight / ratioScale;
     intermediateLeft = objLeft / ratioScale;
     intermediateTop = objTop / ratioScale;
+    
+    realWidthPx = intermediateW 
+    realHeightPx = intermediateH 
+  }else{
+    realWidthPx = objWidth 
+    realHeightPx = objHeight 
 
-    realWidthPx = intermediateW;
-    realHeightPx = intermediateH;
-  } else {
-    realWidthPx = objWidth;
-    realHeightPx = objHeight;
 
-    scaleX = container.scaleX * container.group.scaleX;
-    scaleY = container.scaleY * container.group.scaleX;
-    intermediateSignW = (container.width + strokeSize) * scaleX;
-    intermediateSignH = (container.height + strokeSize) * scaleY;
+
+    scaleX = container.scaleX * container.group.scaleX
+    scaleY = container.scaleY * container.group.scaleX
+    intermediateSignW = ((container.width + strokeSize) * scaleX);
+    intermediateSignH = ((container.height + strokeSize) * scaleY);
     // intermediateSignW = ((container.width + strokeSize) * scaleX) / ratioScale;
     // intermediateSignH = ((container.height + strokeSize) * scaleY) / ratioScale;
     realSignWidth = convertFromPx(intermediateSignW, currentUnit);
     realSignHeight = convertFromPx(intermediateSignH, currentUnit);
   }
   // console.log(realSignWidth, realSignHeight, "787878", container)
-
+  
   // 4. Convertir en unité réelle
   const realWidth = convertFromPx(realWidthPx, currentUnit);
   const realHeight = convertFromPx(realHeightPx, currentUnit);
@@ -7171,52 +6988,53 @@ function getObjectValueToUnit(
   const realTop = convertFromPx(intermediateTop, currentUnit);
   const realRight = realSignWidth - (realWidth + realLeft);
   const realBottom = realSignHeight - (realHeight + realTop);
-
-  // 8. Mise à jour UI
-  updateDimensionUI({
-    width: realWidth,
-    height: realHeight,
-    left: realLeft,
-    right: realRight,
-    top: realTop,
-    bottom: realBottom,
-    angle: obj.angle,
-  });
-
-  return {
-    width: Math.round(realWidth * 10) / 10, // 1 décimale
-    height: Math.round(realHeight * 10) / 10,
-    left: Math.round(realLeft * 10) / 10,
-    right: Math.round(realRight * 10) / 10,
-    top: Math.round(realTop * 10) / 10,
-    bottom: Math.round(realBottom * 10) / 10,
-    angle: Math.round(obj.angle),
-  };
+    
+    // 8. Mise à jour UI
+    updateDimensionUI({
+      width: realWidth,
+      height: realHeight,
+      left: realLeft,
+      right: realRight,
+      top: realTop,
+      bottom: realBottom,
+      angle: obj.angle
+    });
+    
+    return {
+        width: Math.round(realWidth * 10) / 10, // 1 décimale
+        height: Math.round(realHeight * 10) / 10,
+        left: Math.round(realLeft * 10) / 10,
+        right: Math.round(realRight * 10) / 10,
+        top: Math.round(realTop * 10) / 10,
+        bottom: Math.round(realBottom * 10) / 10,
+        angle: Math.round(obj.angle)
+    };
 }
 
 // Fonction utilitaire pour mettre à jour l'UI
 function updateDimensionUI(values) {
-  let ids;
-  if (selectedShape != "cut-to-shape") {
-    ids = ["width", "height", "left", "right", "top", "bottom", "angle"];
-  } else {
-    ids = ["width", "height", "angle"];
+  let ids 
+  if(selectedShape != "cut-to-shape"){ 
+   ids = ['width', 'height', 'left', 'right', 'top', 'bottom', 'angle'];
+  }else{
+    ids = ['width', 'height','angle'];
   }
 
-  ids.forEach((id) => {
+  ids.forEach(id => {
     const element = document.getElementById(`text-${id}`);
     if (element) element.textContent = Math.round(values[id]);
   });
 
   // Gestion spéciale pour les images
   const activeObj = canvas.getActiveObject();
-  if (activeObj && ["image", "path", "group"].includes(activeObj.type)) {
-    const imgWidth = document.getElementById("image-width");
-    const imgHeight = document.getElementById("image-height");
+  if (activeObj && ['image', 'path', 'group'].includes(activeObj.type)) {
+    const imgWidth = document.getElementById('image-width');
+    const imgHeight = document.getElementById('image-height');
     if (imgWidth) imgWidth.textContent = Math.round(values.width);
     if (imgHeight) imgHeight.textContent = Math.round(values.height);
   }
 }
+
 
 //function for get added text value
 var selectedText = {
@@ -7241,22 +7059,22 @@ var selectedText = {
 
 function handleGetAddedTextValues(transform) {
   var sign = handleGetObjectByName("safeObject");
-  let container;
-  if (sign.type != "path" && sign.type != "group") {
-    container = sign;
-  } else {
-    let pathObjects = sign._objects;
+  let container
+  if(sign.type != "path" && sign.type != "group"){
+    container = sign
+  }else{
+    let pathObjects = sign._objects
     const target = ` L ${activeCanvas.getWidth()} ${activeCanvas.getHeight()} `;
-
-    pathObjects.forEach((path) => {
+    
+    pathObjects.forEach(path => {
       const d = path.d;
       if (path.name == "outline") {
-        container = path;
+        container = path
       }
     });
   }
 
-  let values;
+  let values
 
   if (transform.type == "i-text" || transform.type == "neon-Text") {
     var obj = transform;
@@ -7272,30 +7090,25 @@ function handleGetAddedTextValues(transform) {
     var objTop = objBounds.top;
 
     // Calculer par rapport aux dimensions du container
-    let objLeftInContainer,
-      objRightInContainer,
-      objTopInContainer,
-      objBottomInContainer;
-    if (container.type != "path" && container.type != "group") {
+    let objLeftInContainer, objRightInContainer, objTopInContainer, objBottomInContainer
+    if(container.type != "path" && container.type != "group"){
       objLeftInContainer = obj.left - objWidht / 2 - container.left;
       objRightInContainer = container.width - (objLeftInContainer + objWidht);
       objTopInContainer = obj.top - objHeight / 2 - container.top;
       objBottomInContainer = container.height - (objTopInContainer + objHeight);
-    } else {
+    }else{
       const centerPoint = container.getCenterPoint();
       const objectGlobal = fabric.util.transformPoint(
         centerPoint,
         sign.calcTransformMatrix()
       );
-      let scaleX = sign.scaleX * container.scaleX;
-      let scaleY = sign.scaleY * container.scaleX;
-
+      let scaleX = sign.scaleX * container.scaleX
+      let scaleY = sign.scaleY * container.scaleX
+  
       objLeftInContainer = obj.left - objWidht / 2 - objectGlobal.x;
-      objRightInContainer =
-        container.width * scaleX - (objLeftInContainer + objWidht);
+      objRightInContainer = (container.width * scaleX) - (objLeftInContainer + objWidht);
       objTopInContainer = obj.top - objHeight / 2 - objectGlobal.y;
-      objBottomInContainer =
-        container.height * scaleY - (objTopInContainer + objHeight);
+      objBottomInContainer = (container.height * scaleY) - (objTopInContainer + objHeight);
     }
 
     selectedText.object = obj;
@@ -7314,14 +7127,7 @@ function handleGetAddedTextValues(transform) {
     var sizeEditor = document.getElementById("asowp-text-size");
     sizeEditor.value = parseInt(selectedText.size * 12);
 
-    values = getObjectValueToUnit(
-      container,
-      obj,
-      objWidht,
-      objHeight,
-      objLeftInContainer,
-      objTopInContainer
-    );
+    values = getObjectValueToUnit( container, obj, objWidht, objHeight, objLeftInContainer, objTopInContainer );
 
     handleCalcTextPrice();
   } else {
@@ -7340,30 +7146,25 @@ function handleGetAddedTextValues(transform) {
     // obj.set('left', container.left)
     // canvas.renderAll()
 
-    let objLeftInContainer,
-      objRightInContainer,
-      objTopInContainer,
-      objBottomInContainer;
-    if (container.type != "path" && container.type != "group") {
+    let objLeftInContainer, objRightInContainer, objTopInContainer, objBottomInContainer
+    if(container.type != "path" && container.type != "group"){
       objLeftInContainer = obj.left - objWidht / 2 - container.left;
       objRightInContainer = container.width - (objLeftInContainer + objWidht);
       objTopInContainer = obj.top - objHeight / 2 - container.top;
       objBottomInContainer = container.height - (objTopInContainer + objHeight);
-    } else {
+    }else{
       const centerPoint = container.getCenterPoint();
       const objectGlobal = fabric.util.transformPoint(
         centerPoint,
         sign.calcTransformMatrix()
       );
-      let scaleX = sign.scaleX * container.scaleX;
-      let scaleY = sign.scaleY * container.scaleX;
-
+      let scaleX = sign.scaleX * container.scaleX
+      let scaleY = sign.scaleY * container.scaleX
+  
       objLeftInContainer = obj.left - objWidht / 2 - objectGlobal.x;
-      objRightInContainer =
-        container.width * scaleX - (objLeftInContainer + objWidht);
+      objRightInContainer = (container.width * scaleX) - (objLeftInContainer + objWidht);
       objTopInContainer = obj.top - objHeight / 2 - objectGlobal.y;
-      objBottomInContainer =
-        container.height * scaleY - (objTopInContainer + objHeight);
+      objBottomInContainer = (container.height * scaleY) - (objTopInContainer + objHeight);
     }
 
     if (obj.type == "i-text" || obj.type == "neon-Text") {
@@ -7378,14 +7179,7 @@ function handleGetAddedTextValues(transform) {
       selectedText.linethrough = obj.linethrough;
       selectedText.overline = obj.overline;
 
-      values = getObjectValueToUnit(
-        container,
-        obj,
-        objWidht,
-        objHeight,
-        objLeftInContainer,
-        objTopInContainer
-      );
+      values = getObjectValueToUnit( container, obj, objWidht, objHeight, objLeftInContainer, objTopInContainer );
     }
     handleCalcTextPrice();
 
@@ -7394,15 +7188,15 @@ function handleGetAddedTextValues(transform) {
     var sizeEditor = document.getElementById("asowp-text-size");
     sizeEditor.value = parseInt(selectedText.size + 12);
   }
-
+  
   return values;
 }
 fabric.NeonText = fabric.util.createClass(fabric.Text, {
-  type: "neon-Text",
+  type: 'neon-Text',
 
-  initialize: function (text, options) {
+  initialize: function(text, options) {
     options = options || {};
-    this.neonColor = options.neonColor || "white";
+    this.neonColor = options.neonColor || 'white';
     this.glowRadius = options.glowRadius || 20;
     this.id = options.id;
     this.name = options.name;
@@ -7411,20 +7205,20 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
     this.canvasName = options.canvasName;
 
     // Assurez-vous que `text` est une chaîne de caractères
-    this.text = typeof text === "string" ? text : "";
+    this.text = typeof text === 'string' ? text : '';
 
-    this.callSuper("initialize", this.text, options);
+    this.callSuper('initialize', this.text, options);
   },
 
-  _render: function (ctx) {
-    this.callSuper("_render", ctx);
+  _render: function(ctx) {
+    this.callSuper('_render', ctx);
     ctx.save();
 
-    const lines = this.text.split("\n");
+    const lines = this.text.split('\n');
     const lineHeight = this.fontSize * this.lineHeight;
 
     const originX = -this.width / 2;
-    let originY = -this.height / 2 + this.fontSize / 2 + this.fontSize * 0.38;
+    let originY = -this.height / 2 + this.fontSize / 2 + (this.fontSize * 0.38);
 
     lines.forEach((line, lineIndex) => {
       const lineWidth = this.__lineWidths[lineIndex];
@@ -7433,10 +7227,10 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
       const lineY = originY + lineIndex * lineHeight;
 
       let lineX = originX;
-      const newLineOrigin = this.width / 2 - lineWidth / 2;
-      if (this.textAlign === "center") {
+      const newLineOrigin = (this.width / 2 - lineWidth / 2);
+      if (this.textAlign === 'center') {
         lineX += newLineOrigin;
-      } else if (this.textAlign === "right") {
+      } else if (this.textAlign === 'right') {
         lineX += newLineOrigin * 2;
       }
 
@@ -7448,15 +7242,15 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
       }
 
       ctx.shadowBlur = 0;
-      ctx.shadowColor = "transparent";
+      ctx.shadowColor = 'transparent';
     });
 
-    this.callSuper("_render", ctx);
+    this.callSuper('_render', ctx);
     ctx.restore();
   },
 
-  toObject: function () {
-    return fabric.util.object.extend(this.callSuper("toObject"), {
+  toObject: function() {
+    return fabric.util.object.extend(this.callSuper('toObject'), {
       neonColor: this.neonColor,
       glowRadius: this.glowRadius,
       id: this.id,
@@ -7465,23 +7259,20 @@ fabric.NeonText = fabric.util.createClass(fabric.Text, {
       fontFamilyUrl: this.fontFamilyUrl,
       canvasName: this.canvasName,
     });
-  },
+  }
 });
 
 fabric.NeonText.fromObject = function (object, callback) {
   // Assurez-vous que `object.text` est une chaîne de caractères
-  object.text = typeof object.text === "string" ? object.text : "";
+  object.text = typeof object.text === 'string' ? object.text : '';
   return callback(new fabric.NeonText(object.text, object));
 };
 
+
 function loadFont(fontName, fontUrl) {
-  if (!fontUrl) {
-    return Promise.resolve();
-  }
   return new Promise((resolve, reject) => {
     const font = new FontFace(fontName, `url(${fontUrl})`);
-    font
-      .load()
+    font.load()
       .then((loadedFont) => {
         document.fonts.add(loadedFont);
         resolve();
@@ -7502,11 +7293,7 @@ function resizeText(textObject) {
 
   var totalCharacters = 0;
 
-  if (
-    maxTextCharForSize !== -1 &&
-    ((activeSignFace === "back" && backTextCharLength > maxTextCharForSize) ||
-      (activeSignFace === "front" && maxTextCharForSize < frontTextCharLength))
-  ) {
+  if ( maxTextCharForSize !== -1 && ((activeSignFace === "back" && backTextCharLength > maxTextCharForSize) || (activeSignFace === "front" && maxTextCharForSize < frontTextCharLength)) ) {
     if (activeSignFace === "front") {
       totalCharacters = frontTextCharLength;
     }
@@ -7519,37 +7306,29 @@ function resizeText(textObject) {
     activeCanvas.discardActiveObject();
     activeCanvas.remove(textObject);
 
-    var textLayer = null;
+    var textLayer = null
 
+    
     // Supprimer les caractères en trop de cet objet
-    textObject.text = textObject.text.slice(
-      0,
-      textObject.text.length - charsToRemove
-    );
+    textObject.text = textObject.text.slice( 0, textObject.text.length - charsToRemove );
     textObject.set("text", textObject.text);
 
-    console.log("resize text");
-    if (textType === "3D") {
+    console.log("resize text")
+    if(textType === "3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          object.id == textObject.id &&
-          object.name == "asowp-SignTextLayer"
-        ) {
-          textLayer = object;
+      objects.forEach(function(object) {
+        if(object.id == textObject.id && object.name == "asowp-SignTextLayer"){
+          textLayer = object
         }
-      });
+      })
 
-      activeCanvas.remove(textLayer);
-
-      textLayer.text = textLayer.text.slice(
-        0,
-        textObject.text.length - charsToRemove
-      );
+      activeCanvas.remove(textLayer)
+      
+      textLayer.text = textLayer.text.slice( 0, textObject.text.length - charsToRemove );
       textLayer.set("text", textObject.text);
 
-      activeCanvas.add(textLayer);
-    }
+      activeCanvas.add(textLayer)
+    } 
 
     activeCanvas.add(textObject);
 
@@ -7563,47 +7342,36 @@ function resizeText(textObject) {
   }
 }
 function reScaleText(textObject) {
-  if (
-    textObject.scaleX * 12 > maxTextSize ||
-    textObject.scaleY * 12 > maxTextSize
-  ) {
+  if ( textObject.scaleX * 12 > maxTextSize || textObject.scaleY * 12 > maxTextSize ) {
     textObject.scaleX = maxTextSize / 12;
     textObject.scaleY = maxTextSize / 12;
   }
-  if (
-    textObject.scaleX * 12 < minTextSize ||
-    textObject.scaleX * 12 < minTextSize
-  ) {
+  if ( textObject.scaleX * 12 < minTextSize || textObject.scaleX * 12 < minTextSize ) {
     textObject.scaleX = minTextSize / 12;
     textObject.scaleY = minTextSize / 12;
   }
-  if (textType === "3D") {
+  if(textType === "3D"){
     var objects = activeCanvas.getObjects();
-    objects.forEach(function (object) {
-      if (object.id == textObject.id && object.name == "asowp-SignTextLayer") {
-        if (
-          object.scaleX * 12 > maxTextSize ||
-          object.scaleY * 12 > maxTextSize
-        ) {
+    objects.forEach(function(object) {
+      if(object.id == textObject.id && object.name == "asowp-SignTextLayer"){
+        if ( object.scaleX * 12 > maxTextSize || object.scaleY * 12 > maxTextSize ) {
           object.scaleX = maxTextSize / 12;
           object.scaleY = maxTextSize / 12;
         }
-        if (
-          object.scaleX * 12 < minTextSize ||
-          object.scaleX * 12 < minTextSize
-        ) {
+        if ( object.scaleX * 12 < minTextSize || object.scaleX * 12 < minTextSize ) {
           object.scaleX = minTextSize / 12;
           object.scaleY = minTextSize / 12;
         }
       }
-    });
-  }
+    })
+  } 
   activeCanvas.renderAll();
 }
-async function handleAddTextToSign(custom = {}, clone, layerClone) {
+async function handleAddTextToSign(custom, clone, layerClone) {
   // console.log("handleAddTextToSign", newId, layerClone)
 
-  var newTextId = (newId += 1);
+
+  var newTextId = newId += 1
   if (
     maxTextCharForSize === -1 ||
     (activeSignFace === "back" && backTextCharLength < maxTextCharForSize) ||
@@ -7612,17 +7380,10 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
     if (clone) {
       var cloneCanvas = clone.canvas;
 
-      var text1JSON = clone.toJSON([
-        "fontFamilyUrl",
-        "neonColor",
-        "secondStrokeWidth",
-        "secondStroke",
-        "activeSide",
-        "sideColor",
-      ]);
+      var text1JSON = clone.toJSON(["fontFamilyUrl", "neonColor", "secondStrokeWidth", "secondStroke", "activeSide", "sideColor"]);
       // console.log(text1JSON);
       delete text1JSON.evented;
-      if (layerClone) {
+      if(layerClone){
         var text1LayerJSON = layerClone.toJSON(["fontFamilyUrl"]);
         // console.log(text1JSON);
         delete text1LayerJSON.evented;
@@ -7645,7 +7406,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         fill: text1JSON.fill,
         textAlign: text1JSON.textAlign,
         fontFamily: text1JSON.fontFamily,
-        fontFamilyUrl: custom.fontFamilyUrl || "",
+        fontFamilyUrl: custom.fontFamilyUrl,
         fontWeight: text1JSON.fontWeight,
         fontStyle: text1JSON.fontStyle,
         uniScaleTransform: true,
@@ -7667,7 +7428,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         sideColor: custom.sideColor,
       });
 
-      if (textType == "3D") {
+      if(textType == "3D"){
         var text2Layer = new fabric.IText(text1LayerJSON.text, {
           id: newTextId,
           name: "asowp-SignTextLayer",
@@ -7686,7 +7447,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
           fill: text1LayerJSON.fill,
           textAlign: text1LayerJSON.textAlign,
           fontFamily: text1LayerJSON.fontFamily,
-          fontFamilyUrl: custom.fontFamilyUrl || "",
+          fontFamilyUrl: custom.fontFamilyUrl,
           fontWeight: text1LayerJSON.fontWeight,
           fontStyle: text1LayerJSON.fontStyle,
           uniScaleTransform: true,
@@ -7705,8 +7466,8 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
           // mouseUpHandler: handleGetAddedTextValues,
         });
       }
-
-      if (textType == "neon") {
+      
+      if(textType == "neon"){
         var neonText2 = new fabric.NeonText(text1JSON.text, {
           id: newTextId,
           name: "asowp-SignText",
@@ -7732,13 +7493,15 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
           evented: true,
           originX: "center",
           originY: "center",
-
+  
           // fontSize: 50,
           fill: text1JSON.fill,
           neonColor: text1JSON.neonColor,
           glowRadius: 25,
         });
       }
+
+
 
       text2.lockMoving = {
         x: false,
@@ -7758,8 +7521,8 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
       text2.set("canvas", cloneCanvas);
       text2.on("editing:entered", () => {
         handleGetAddedTextValues(text2);
-        if (textType == "3D") {
-          text2.exitEditing();
+        if(textType == "3D"){
+          text2.exitEditing()
         }
       });
       text2.on("editing:exited", () => {
@@ -7778,7 +7541,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         reScaleText(text2);
       });
 
-      if (textType == "neon") {
+      if(textType == "neon"){
         neonText2.lockMoving = {
           x: false,
           y: false,
@@ -7815,32 +7578,30 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
       }
 
       // activeCanvas.add(text2);
-      if (textType == "normal") {
+      if(textType == "normal"){
         activeCanvas.add(text2);
-      } else if (textType == "3D") {
+      }else if(textType == "3D"){
         activeCanvas.add(text2Layer, text2);
-      } else if (textType == "neon") {
+      }else if(textType == "neon"){
         activeCanvas.add(neonText2);
       }
 
+
       // addedTexts.push(text2);
-      if (textType != "neon") {
+      if(textType != "neon"){
         addedTexts.push(text2);
-      } else if (textType == "neon") {
+      }else if(textType == "neon"){
         addedTexts.push(neonText2);
       }
-
-      if (textType != "neon") {
+      
+      if(textType != "neon"){
         activeCanvas.setActiveObject(text2);
-      } else if (textType == "neon") {
+      }else if(textType == "neon"){
         activeCanvas.setActiveObject(neonText2);
       }
       // lockToCanvas(text2)
     } else {
-      await loadFont(
-        currenTextFontFam.replaceAll(/\s+/g, "-"),
-        currenTextFontFamUrl || ""
-      );
+      await loadFont(currenTextFontFam.replaceAll(/\s+/g, '-'), currenTextFontFamUrl)
 
       var sign = handleGetObjectByName("safeObject");
       var solidSide = new fabric.Shadow({
@@ -7852,7 +7613,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         affectStroke: true,
       });
 
-      var newText = new fabric.IText(textType == "normal" ? "" : "new text", {
+      var newText = new fabric.IText((textType == 'normal' ? "" : "new text"), {
         id: newTextId,
         name: "asowp-SignText",
         canvasName: activeCanvas.name,
@@ -7861,7 +7622,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         top: sign.top + sign.height / 3,
         left: sign.left + sign.width / 3,
         fill: currentSignTextColor,
-        fontFamily: currenTextFontFam.replaceAll(/\s+/g, "-"),
+        fontFamily: currenTextFontFam.replaceAll(/\s+/g, '-'),
         fontFamilyUrl: currenTextFontFamUrl,
         // fontSize: defaultFontSize,
         scaleX: defaultFontSize / 12,
@@ -7877,10 +7638,10 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         originX: "center",
         originY: "center",
 
-        stroke: "#000000",
-        strokeWidth: textType == "3D" ? 1 : 0,
-        strokeLineJoin: "round",
-        paintFirst: "stroke",
+        stroke: '#000000',
+        strokeWidth: ( textType == '3D' ? 1 : 0),
+        strokeLineJoin: 'round',
+        paintFirst: 'stroke',
         strokeUniform: true,
 
         secondStrokeWidth: textType == "3D" ? 5 : 0,
@@ -7889,48 +7650,46 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         sideColor: textType == "3D" ? "#000000" : "transparent",
 
         renderControls: false,
+
       });
-      if (textType === "3D") {
-        var newTextLayer = new fabric.IText(
-          textType == "normal" ? "" : "new text",
-          {
-            id: newTextId,
-            name: "asowp-SignTextLayer",
-            canvasName: activeCanvas.name,
-            selectable: false,
-            selectOnEdit: false,
-            top: sign.top + sign.height / 3,
-            left: sign.left + sign.width / 3,
-
-            fill: currentSignTextColor,
-            fontFamily: currenTextFontFam.replaceAll(/\s+/g, "-"),
-            fontFamilyUrl: currenTextFontFamUrl,
-            scaleX: defaultFontSize / 12,
-            scaleY: defaultFontSize / 12,
-            uniScaleTransform: true,
-            centeredScaling: true,
-            lockScalingFlip: true,
-            evented: true,
-            showITextBorder: true,
-
-            originX: "center",
-            originY: "center",
-
-            renderControls: false,
-
-            layerType: "text-layer",
-            stroke: "#c4271d",
-            strokeWidth: 5,
-            strokeLineJoin: "round",
-            paintFirst: "stroke",
-            // strokeUniform: true,
-            strokeDashOffset: 1,
-            shadow: solidSide,
-          }
-        );
+      if(textType === "3D"){
+        var newTextLayer = new fabric.IText((textType == 'normal' ? "" : "new text"), {
+          id: newTextId,
+          name: "asowp-SignTextLayer",
+          canvasName: activeCanvas.name,
+          selectable: false,
+          selectOnEdit: false,
+          top: sign.top + sign.height / 3,
+          left: sign.left + sign.width / 3,
+  
+          fill: currentSignTextColor,
+          fontFamily: currenTextFontFam.replaceAll(/\s+/g, '-'),
+          fontFamilyUrl: currenTextFontFamUrl,
+          scaleX: defaultFontSize / 12,
+          scaleY: defaultFontSize / 12,
+          uniScaleTransform: true,
+          centeredScaling: true,
+          lockScalingFlip: true,
+          evented: true,
+          showITextBorder: true,
+  
+          originX: "center",
+          originY: "center",
+  
+          renderControls: false,
+  
+          layerType: 'text-layer',
+          stroke: '#c4271d',
+          strokeWidth: 5,
+          strokeLineJoin: 'round',
+          paintFirst: 'stroke',
+          // strokeUniform: true,
+          strokeDashOffset: 1,
+          shadow: solidSide,
+        });
       }
-      if (textType == "neon") {
-        var neonText = new fabric.NeonText("new text", {
+      if(textType == "neon"){
+        var neonText = new fabric.NeonText('new text', {
           id: newTextId,
           name: "asowp-SignText",
           canvasName: activeCanvas.name,
@@ -7939,7 +7698,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
           top: sign.top + sign.height / 3,
           left: sign.left + sign.width / 3,
           fill: currentSignTextColor,
-          fontFamily: currenTextFontFam.replaceAll(/\s+/g, "-"),
+          fontFamily: currenTextFontFam.replaceAll(/\s+/g, '-'),
           fontFamilyUrl: currenTextFontFamUrl,
           // fontSize: defaultFontSize,
           scaleX: defaultFontSize / 12,
@@ -7950,10 +7709,10 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
           evented: true,
           originX: "center",
           originY: "center",
-
+  
           // fontSize: 50,
-          fill: "white", // Couleur intérieure du texte
-          neonColor: "orange",
+          fill: 'white', // Couleur intérieure du texte
+          neonColor: 'orange',
           glowRadius: 25,
         });
       }
@@ -7964,7 +7723,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
       };
       newText.lockScale = false;
 
-      if (textType == "neon") {
+      if(textType == "neon"){
         neonText.lockMoving = {
           x: false,
           y: false,
@@ -7984,8 +7743,8 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
       });
       newText.on("editing:entered", () => {
         handleGetAddedTextValues(newText);
-        if (textType == "3D") {
-          newText.exitEditing();
+        if(textType == "3D"){
+          newText.exitEditing()
         }
       });
       newText.on("editing:exited", () => {
@@ -8005,7 +7764,7 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         reScaleText(newText);
       });
 
-      if (textType == "neon") {
+      if(textType == "neon"){
         neonText.setControlsVisibility({
           mt: false, // Middle top
           mb: false, // Middle bottom
@@ -8036,34 +7795,34 @@ async function handleAddTextToSign(custom = {}, clone, layerClone) {
         });
       }
 
-      if (textType == "normal") {
+      if(textType == "normal"){
         activeCanvas.add(newText);
-      } else if (textType == "3D") {
+      }else if(textType == "3D"){
         activeCanvas.add(newTextLayer, newText);
-      } else if (textType == "neon") {
+      }else if(textType == "neon"){
         activeCanvas.add(neonText);
       }
 
-      if (textType == "normal") {
+      if(textType == 'normal'){
         newText.enterEditing();
       }
 
-      if (textType == "normal" || textType == "3D") {
+      if(textType == 'normal' ||textType == '3D'){
         handleCenterHorizontally(newText);
         handleCenterVertically(newText);
       }
-      if (textType == "3D") {
+      if(textType == '3D'){
         handleCenterHorizontally(newTextLayer);
         handleCenterVertically(newTextLayer);
-      } else if (textType == "neon") {
+      }else if(textType == "neon"){
         handleCenterHorizontally(neonText);
         handleCenterVertically(neonText);
       }
 
-      if (textType != "neon") {
+      if(textType != "neon"){
         addedTexts.push(newText);
       }
-      if (textType == "neon") {
+      if(textType == "neon"){
         addedTexts.push(neonText);
       }
       // handleChangeTextFontFam( currenTextFontFam.replaceAll(/\s+/g, "-"), currenTextFontFamUrl );
@@ -8105,16 +7864,13 @@ function handleChangeTextValue(event) {
   ) {
     selectedText.value = event.target.value;
     currentText.set("text", String(selectedText.value));
-    if (textType === "3D") {
+    if(textType === "3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          object.id == currentText.id &&
-          object.name == "asowp-SignTextLayer"
-        ) {
+      objects.forEach(function(object) {
+        if(object.id == currentText.id && object.name == "asowp-SignTextLayer"){
           object.set("text", String(selectedText.value));
         }
-      });
+      })
     }
 
     activeCanvas.requestRenderAll();
@@ -8130,19 +7886,16 @@ function handleChangeTextValue(event) {
       selectedText.value = event.target.value;
       currentText.set("text", String(selectedText.value));
 
-      if (textType === "3D") {
-        console.log("azerty");
+      if(textType === "3D"){
+        console.log('azerty')
         var objects = activeCanvas.getObjects();
-        objects.forEach(function (object) {
-          if (
-            (currentText.id == object.id &&
-              object.name == "asowp-SignTextLayer") ||
-            object.name == "asowp-SignTextLight"
-          ) {
+        objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
             object.set("text", String(selectedText.value));
           }
-        });
+        })
       }
+
 
       activeCanvas.requestRenderAll();
       handleGetAddedTextValues(currentText);
@@ -8159,17 +7912,15 @@ function handleChangeTextValue(event) {
 function handleChangeTextAlign(align) {
   var currentText = selectedText.object;
   currentText.set("textAlign", align);
-  if (textType == "3D") {
+  if(textType == "3D"){
     var objects = activeCanvas.getObjects();
-    objects.forEach(function (object) {
-      if (
-        (currentText.id == object.id && object.name == "asowp-SignTextLayer") ||
-        object.name == "asowp-SignTextLight"
-      ) {
+    objects.forEach(function(object) {
+      if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
         object.set("textAlign", align);
       }
-    });
+    })
   }
+
 
   activeCanvas.requestRenderAll();
   selectedText.align = currentText.textAlign;
@@ -8181,31 +7932,23 @@ function handleChangeTextWeight() {
   var currentText = selectedText.object;
   if (selectedText.weight == "normal") {
     currentText.set("fontWeight", "bold");
-    if (textType == "3D") {
+    if(textType == "3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          (currentText.id == object.id &&
-            object.name == "asowp-SignTextLayer") ||
-          object.name == "asowp-SignTextLight"
-        ) {
-          object.set("fontWeight", "bold");
-        }
-      });
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontWeight", "bold");
+          }
+      })
     }
   } else if (selectedText.weight == "bold") {
     currentText.set("fontWeight", "normal");
-    if (textType == "3D") {
+    if(textType == "3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          (currentText.id == object.id &&
-            object.name == "asowp-SignTextLayer") ||
-          object.name == "asowp-SignTextLight"
-        ) {
-          object.set("fontWeight", "normal");
-        }
-      });
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontWeight", "normal");
+          }
+      })
     }
   }
   // console.log("current");
@@ -8219,32 +7962,24 @@ function handleChangeTextStyle() {
   if (selectedText.style == "normal") {
     currentText.set("fontStyle", "italic");
 
-    if ("3D") {
+    if("3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          (currentText.id == object.id &&
-            object.name == "asowp-SignTextLayer") ||
-          object.name == "asowp-SignTextLight"
-        ) {
-          object.set("fontStyle", "italic");
-        }
-      });
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontStyle", "italic");
+          }
+      })
     }
   } else if (selectedText.style == "italic") {
     currentText.set("fontStyle", "normal");
 
-    if ("3D") {
+    if("3D"){
       var objects = canvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          (currentText.id == object.id &&
-            object.name == "asowp-SignTextLayer") ||
-          object.name == "asowp-SignTextLight"
-        ) {
-          object.set("fontStyle", "normal");
-        }
-      });
+      objects.forEach(function(object) {
+          if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
+            object.set("fontStyle", "normal");
+          }
+      })
     }
   }
   activeCanvas.requestRenderAll();
@@ -8262,17 +7997,14 @@ function handleChangeTextSize(size, minSize, maxSize) {
     currentText.set("scaleX", selectedText.size / 12);
     currentText.set("scaleY", selectedText.size / 12);
 
-    if (textType == "3D") {
+    if(textType == "3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          object.name == "asowp-SignTextLayer" &&
-          object.id == currentText.id
-        ) {
+      objects.forEach(function(object) {
+        if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
           object.set("scaleX", selectedText.size / 12);
           object.set("scaleY", selectedText.size / 12);
         }
-      });
+      })
     }
     activeCanvas.renderAll();
     handleGetAddedTextValues(currentText);
@@ -8290,21 +8022,17 @@ async function handleChangeTextFontFam(font, url) {
 
     currentText.set("fontFamily", font);
     currentText.set("fontFamilyUrl", url);
-
-    if (textType == "3D") {
+    
+    if(textType == "3D"){
       var objects = activeCanvas.getObjects();
-      objects.forEach(function (object) {
-        if (
-          (currentText.id == object.id &&
-            object.name == "asowp-SignTextLayer") ||
-          object.name == "asowp-SignTextLight"
-        ) {
+      objects.forEach(function(object) {
+        if(currentText.id == object.id && object.name == "asowp-SignTextLayer" || object.name == "asowp-SignTextLight"){
           object.set("fontFamily", font);
           object.set("fontFamilyUrl", url);
         }
-      });
+      })
     }
-
+    
     activeCanvas.renderAll();
     handleGetAddedTextValues(currentText);
   } catch (e) {
@@ -8358,24 +8086,25 @@ function handleOverlineText(color) {
   return selectedText.overline;
 }
 
-function handleChangeTextBorder(layer, value) {
+function handleChangeTextBorder(layer, value){
   var currentText = selectedText.object;
 
-  if (layer) {
+  if(layer){
     currentText.set("strokeWidth", value);
-  } else {
+  }else{
     currentText.set("secondStrokeWidth", value);
     var objects = activeCanvas.getObjects();
-    objects.forEach(function (object) {
-      if (object.name == "asowp-SignTextLayer" && object.id == currentText.id) {
-        object.set("strokeWidth", value);
-      }
-    });
+    objects.forEach(function(object) {
+        if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+            object.set("strokeWidth", value);
+        }
+    })
   }
+
 
   activeCanvas.renderAll();
 }
-function handleChangeTextBorderColor(layer, color) {
+function handleChangeTextBorderColor(layer, color){
   var currentText = selectedText.object;
 
   // if (color.endsWith('.jpg') || color.endsWith('.png') || color.endsWith('.webp') || color.endsWith('.svg') || color.startsWith('data:image')) {
@@ -8407,51 +8136,52 @@ function handleChangeTextBorderColor(layer, color) {
   //   });
   // }else{
   // }
-  if (layer) {
+  if(layer){
     currentText.set("stroke", color);
-  } else {
+  }else{
     currentText.set("secondStroke", color);
 
     var objects = activeCanvas.getObjects();
-    objects.forEach(function (object) {
-      if (object.name == "asowp-SignTextLayer" && object.id == currentText.id) {
-        object.set("stroke", color);
-      }
-    });
+    objects.forEach(function(object) {
+        if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+            object.set("stroke", color);
+        }
+    })
   }
 
-  activeCanvas.renderAll();
-}
-function handleShow3dSide(state) {
-  var currentText = selectedText.object;
-  /////////////
-  var objects = activeCanvas.getObjects();
-  objects.forEach(function (object) {
-    if (object.id == currentText.id && object.name === "asowp-SignTextLayer") {
-      if (state) {
-        currentText.set("activeSide", true);
-        object.shadow.offsetX = 2;
-        object.shadow.offsetY = 2;
-      } else {
-        currentText.set("activeSide", false);
-        object.shadow.offsetX = 0;
-        object.shadow.offsetY = 0;
-      }
-    }
-  });
 
   activeCanvas.renderAll();
 }
-function handleChange3dSideColor(color) {
+function handleShow3dSide(state){
   var currentText = selectedText.object;
-  currentText.set("sideColor", color);
   /////////////
   var objects = activeCanvas.getObjects();
-  objects.forEach(function (object) {
-    if (object.name == "asowp-SignTextLayer" && object.id == currentText.id) {
-      object.shadow.color = color;
-    }
-  });
+  objects.forEach(function(object) {
+    if(object.id == currentText.id && object.name === "asowp-SignTextLayer"){
+        if(state){
+          currentText.set("activeSide", true)
+          object.shadow.offsetX = 2
+          object.shadow.offsetY = 2
+        }else{
+          currentText.set("activeSide", false)
+          object.shadow.offsetX = 0
+          object.shadow.offsetY = 0
+        }
+      }
+  })
+
+  activeCanvas.renderAll();
+}
+function handleChange3dSideColor(color){
+  var currentText = selectedText.object;
+  currentText.set("sideColor", color);
+/////////////
+  var objects = activeCanvas.getObjects();
+  objects.forEach(function(object) {
+      if(object.name == "asowp-SignTextLayer" && object.id == currentText.id){
+        object.shadow.color = color
+      }
+  })
   activeCanvas.renderAll();
 }
 
@@ -8460,34 +8190,32 @@ function handleChangeTextLightColor(color) {
   selectedText.color = color;
   currentText.set("neonColor", "black");
   currentText.set("neonColor", color);
-  simulateCanvasClick();
+  simulateCanvasClick()
   activeCanvas.renderAll();
   handleGetAddedTextValues(currentText);
 
   return selectedText.color;
 }
 
-let addedQRCodes = [];
-async function handleAddQRCode(data, clone) {
-  var newCodeId = (newId += 1);
-  let object = clone
-    ? await generateQRCodeObject(data, clone.color)
-    : await generateQRCodeObject(data);
+let addedQRCodes = []
+async function handleAddQRCode(data, clone){
+  var newCodeId = newId += 1
+  let object = clone ? await generateQRCodeObject(data, clone.color) : await generateQRCodeObject(data)
 
   object.set({
     id: newCodeId,
     name: "asowp-QRCode",
-    canvasName: activeCanvas.name,
-  });
+    canvasName: activeCanvas.name
+  })
   object.on("mousedown", function () {
     handleGetAddedImageValues(object);
   });
   object.on("mouseup", function () {
     handleGetAddedImageValues(object);
   });
-
-  activeCanvas.add(object);
-  if (clone) {
+  
+  activeCanvas.add(object)
+  if(clone){
     object.set({
       left: clone.left + 10,
       top: clone.top + 10,
@@ -8495,36 +8223,32 @@ async function handleAddQRCode(data, clone) {
       scaleX: clone.scaleX,
       scaleY: clone.scaleY,
       angle: clone.angle,
-    });
-  } else {
-    activeCanvas.centerObject(object);
+    })
+  }else{
+    activeCanvas.centerObject(object)
   }
-  if (object) {
-    activeCanvas.discardActiveObject();
+  if(object){
+    activeCanvas.discardActiveObject()
     activeCanvas.setActiveObject(object);
   }
 
   // addedQRCodes.push(object)
-  addedQRCodes.push({
-    id: newCodeId,
-    text: object.fromData,
-    url: object.imgUrl,
-    object: object,
-  });
+  addedQRCodes.push({id: newCodeId, text: object.fromData, url:object.imgUrl, object: object})
 
   updateModifications(true, "==ajout de QRCode==");
   return {
     codes: addedQRCodes,
-    activeCode: object,
-  };
+    activeCode: object
+  }
 }
-async function handleEditQRCode(code, value, color) {
-  let activeObject = activeCanvas.getActiveObject();
-  if (activeObject && activeObject.id == code.id) {
-    activeCanvas.remove(activeObject);
+async function handleEditQRCode(code, value, color){
+
+  let activeObject = activeCanvas.getActiveObject()
+  if(activeObject && activeObject.id == code.id){
+    activeCanvas.remove(activeObject)
   }
 
-  let object = await generateQRCodeObject(value, color);
+  let object = await generateQRCodeObject(value, color)
 
   object.set({
     id: code.id,
@@ -8535,36 +8259,30 @@ async function handleEditQRCode(code, value, color) {
     scaleX: code.scaleX,
     scaleY: code.scaleY,
     angle: code.angle,
-  });
+  })
   object.on("mousedown", function () {
     handleGetAddedImageValues(object);
   });
   object.on("mouseup", function () {
     handleGetAddedImageValues(object);
   });
-
-  activeCanvas.add(object);
+  
+  activeCanvas.add(object)
   activeCanvas.setActiveObject(object);
 
-  let objectData = {
-    id: object.id,
-    text: object.fromData,
-    url: object.imgUrl,
-    object: object,
-  };
-  addedQRCodes = addedQRCodes.map((obj) =>
-    obj.id === code.id ? objectData : obj
-  );
+  let objectData = {id: object.id, text: object.fromData, url:object.imgUrl, object: object}
+  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? objectData : obj)
 
-  return addedQRCodes;
+  return addedQRCodes
 }
-async function handleChangeQRCodeColor(code, color) {
-  let activeObject = activeCanvas.getActiveObject();
-  if (activeObject && activeObject.id == code.id) {
-    activeCanvas.remove(activeObject);
+async function handleChangeQRCodeColor(code, color){
+
+  let activeObject = activeCanvas.getActiveObject()
+  if(activeObject && activeObject.id == code.id){
+    activeCanvas.remove(activeObject)
   }
 
-  let object = await generateQRCodeObject(code.fromData, color);
+  let object = await generateQRCodeObject(code.fromData, color)
 
   object.set({
     id: code.id,
@@ -8575,51 +8293,46 @@ async function handleChangeQRCodeColor(code, color) {
     scaleX: code.scaleX,
     scaleY: code.scaleY,
     angle: code.angle,
-  });
+  })
   object.on("mousedown", function () {
     handleGetAddedImageValues(object);
   });
   object.on("mouseup", function () {
     handleGetAddedImageValues(object);
   });
-
-  activeCanvas.add(object);
+  
+  activeCanvas.add(object)
   activeCanvas.setActiveObject(object);
 
-  let objectData = {
-    id: object.id,
-    text: object.fromData,
-    url: object.imgUrl,
-    object: object,
-  };
-  addedQRCodes = addedQRCodes.map((obj) =>
-    obj.id === code.id ? objectData : obj
-  );
+  let objectData = {id: object.id, text: object.fromData, url:object.imgUrl, object: object}
+  addedQRCodes = addedQRCodes.map(obj => obj.id === code.id ? objectData : obj)
 
-  return addedQRCodes;
+  return addedQRCodes
 }
 
-var defaultRadius = 25;
-function handleTurnLightOnOff(state) {
-  var radius = state == true ? defaultRadius : 0;
+
+var defaultRadius = 25
+function handleTurnLightOnOff(state){
+  var radius = (state == true ? defaultRadius : 0)
   var currentText = selectedText.object;
-  let alignment = currentText.textAlign;
+  let alignment = currentText.textAlign
 
-  currentText.set("textAlign", "");
-  currentText.set("textAlign", alignment);
 
-  currentText.set("glowRadius", radius);
+  currentText.set("textAlign", "")
+  currentText.set("textAlign", alignment)
 
-  simulateCanvasClick();
+  currentText.set("glowRadius", radius)
+
+  simulateCanvasClick()
   activeCanvas.renderAll();
   handleGetAddedTextValues(currentText);
 
   return selectedText.color;
 }
-function simulateCanvasClick() {
-  activeCanvas.fire("mouse:down", {
-    e: new MouseEvent("click", { clientX: 100, clientY: 100 }), // Coordonnées du clic
-    pointer: { x: 100, y: 100 }, // Position du clic
+function simulateCanvasClick(){
+  activeCanvas.fire('mouse:down', {
+      e: new MouseEvent('click', { clientX: 100, clientY: 100 }), // Coordonnées du clic
+      pointer: { x: 100, y: 100 }, // Position du clic
   });
 }
 
@@ -8641,16 +8354,16 @@ function handleGetImageSettings(settings) {
 }
 function handleGetAddedImageValues(object) {
   var sign = handleGetObjectByName("safeObject");
-  let container;
-  if (sign.type != "path" && sign.type != "group") {
-    container = sign;
-  } else {
-    let pathObjects = sign._objects;
-
-    pathObjects.forEach((path) => {
+  let container
+  if(sign.type != "path" && sign.type != "group"){
+    container = sign
+  }else{
+    let pathObjects = sign._objects
+    
+    pathObjects.forEach(path => {
       const d = path.d;
       if (path.name == "outline") {
-        container = path;
+        container = path
       }
     });
   }
@@ -8666,38 +8379,26 @@ function handleGetAddedImageValues(object) {
   var objTop = objBounds.top;
 
   // Calculer par rapport aux dimensions du container
-  let objLeftInContainer,
-    objRightInContainer,
-    objTopInContainer,
-    objBottomInContainer;
-  if (container.type != "path" && container.type != "group") {
+  let objLeftInContainer, objRightInContainer, objTopInContainer, objBottomInContainer
+  if(container.type != "path" && container.type != "group"){
     objLeftInContainer = object.left - objWidht / 2 - container.left;
     objRightInContainer = container.width - (objLeftInContainer + objWidht);
     objTopInContainer = object.top - objHeight / 2 - container.top;
     objBottomInContainer = container.height - (objTopInContainer + objHeight);
-  } else {
+  }else{
     const outlineCenterPoint = container.getCenterPoint();
-    const outlineGlobal = fabric.util.transformPoint(
-      outlineCenterPoint,
-      sign.calcTransformMatrix()
-    );
-    let scaleX = sign.scaleX * container.scaleX;
-    let scaleY = sign.scaleY * container.scaleX;
+    const outlineGlobal = fabric.util.transformPoint( outlineCenterPoint, sign.calcTransformMatrix() );
+    let scaleX = sign.scaleX * container.scaleX
+    let scaleY = sign.scaleY * container.scaleX
 
-    let objCenter = object.getCenterPoint();
-    let objPoint = fabric.util.transformPoint(
-      objCenter,
-      object.calcTransformMatrix()
-    );
+    let objCenter = object.getCenterPoint()
+    let objPoint = fabric.util.transformPoint( objCenter, object.calcTransformMatrix() );
 
-    objLeftInContainer = objPoint.x - (outlineGlobal.x - strokeSize);
-    objRightInContainer =
-      (container.width + strokeSize) * scaleX - (objLeftInContainer + objWidht);
-    objTopInContainer = objPoint.y - (outlineGlobal.y - strokeSize);
-    objBottomInContainer =
-      (container.height + strokeSize) * scaleY -
-      (objTopInContainer + objHeight);
-    // console.log(objPoint, "898989", outlineGlobal)
+    objLeftInContainer = objPoint.x - (outlineGlobal.x - (strokeSize));
+    objRightInContainer = ((container.width + strokeSize) * scaleX) - (objLeftInContainer + objWidht);
+    objTopInContainer = objPoint.y - (outlineGlobal.y - (strokeSize));
+    objBottomInContainer = ((container.height + strokeSize) * scaleY) - (objTopInContainer + objHeight);
+    // console.log(objPoint, "898989", outlineGlobal)  
   }
 
   selectedImage.width = parseInt(objWidht);
@@ -8709,14 +8410,7 @@ function handleGetAddedImageValues(object) {
   selectedImage.angle = parseInt(object.angle);
 
   // let values = getObjectValueToUnit( container, objWidht, objHeight, objLeftInContainer, objTopInContainer, object.angle );
-  let values = getObjectValueToUnit(
-    container,
-    object,
-    objWidht,
-    objHeight,
-    objLeftInContainer,
-    objTopInContainer
-  );
+  let values = getObjectValueToUnit( container, object, objWidht, objHeight, objLeftInContainer, objTopInContainer );
 
   return values;
 }
@@ -8748,34 +8442,34 @@ function hasFontFaceInSVG(svgString) {
   const fontFaceRegex = /@font-face\s*{[^}]+}/g;
   return fontFaceRegex.test(svgString);
 }
-async function getSvgStringFromUrl(url) {
+async function getSvgStringFromUrl(url){
   return new Promise((resolve, reject) => {
     fetch(url)
-      .then((response) => response.text())
-      .then((svgString) => {
-        resolve(svgString);
-      });
-  });
+    .then(response => response.text())
+    .then(svgString => {
+      resolve(svgString)
+    });
+  })
 }
 
 async function sanitizeSVG(svgString) {
   // 1️⃣ Parser le SVG en DOM
   const parser = new DOMParser();
-  const doc = parser.parseFromString(svgString, "image/svg+xml");
+  const doc = parser.parseFromString(svgString, 'image/svg+xml');
 
   // 2️⃣ Supprimer les @font-face dans les balises <style>
-  const styles = doc.querySelectorAll("style");
+  const styles = doc.querySelectorAll('style');
   let fontsToLoad = new Set();
 
   styles.forEach((style) => {
-    let newCSS = style.textContent.replace(/@font-face\s*{[^}]+}/g, ""); // Supprime les @font-face
+    let newCSS = style.textContent.replace(/@font-face\s*{[^}]+}/g, ''); // Supprime les @font-face
     style.textContent = newCSS;
 
     // 3️⃣ Extraire les polices utilisées dans font-family
     const matches = newCSS.match(/font-family:\s*['"]?([\w\s-]+)['"]?/g);
     if (matches) {
       matches.forEach((match) => {
-        let fontName = match.replace(/font-family:\s*['"]?|['"]?/g, "").trim();
+        let fontName = match.replace(/font-family:\s*['"]?|['"]?/g, '').trim();
         fontsToLoad.add(fontName);
       });
     }
@@ -8784,12 +8478,9 @@ async function sanitizeSVG(svgString) {
   // 4️⃣ Charger les polices avant d'afficher le SVG
   await Promise.all(
     [...fontsToLoad].map((font) =>
-      new FontFace(font, `url('${font}.woff2')`)
-        .load()
-        .then((loadedFont) => {
-          document.fonts.add(loadedFont);
-        })
-        .catch(() => console.warn(`Impossible de charger la police: ${font}`))
+      new FontFace(font, `url('${font}.woff2')`).load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+      }).catch(() => console.warn(`Impossible de charger la police: ${font}`))
     )
   );
 
@@ -8804,18 +8495,18 @@ function handleAddImageToSign(image, imageId, price) {
   }
   async function useImage(imgUrl, imgId, price) {
     if (isSVGImage(imgUrl)) {
-      let svgString = await getSvgStringFromUrl(imgUrl);
-      if (hasFontFaceInSVG(svgString)) {
-        svgString = await sanitizeSVG(svgString);
+      let svgString = await getSvgStringFromUrl(imgUrl)
+      if(hasFontFaceInSVG(svgString)){
+        svgString = await sanitizeSVG(svgString)
       }
 
       fabric.loadSVGFromString(svgString, function (image) {
         const img = fabric.util.groupSVGElements(image);
-        let sign = handleGetObjectByName("safeObject", activeCanvas);
-        if (img.width > img.height) {
-          img.scaleToWidth(sign.width / 2);
-        } else {
-          img.scaleToHeight(sign.height / 2);
+        let sign = handleGetObjectByName("safeObject", activeCanvas)
+        if(img.width > img.height){
+          img.scaleToWidth(sign.width/2)
+        }else{
+          img.scaleToHeight(sign.height/2)
         }
 
         img.setCoords();
@@ -8885,10 +8576,10 @@ function handleAddImageToSign(image, imageId, price) {
           dataURI,
           function (img) {
             let sign = handleGetObjectByName("safeObject");
-            if (img.width > img.height) {
-              img.scaleToWidth(sign.width / 2);
-            } else {
-              img.scaleToHeight(sign.height / 2);
+            if(img.width > img.height){
+              img.scaleToWidth(sign.width/2)
+            }else{
+              img.scaleToHeight(sign.height/2)
             }
 
             img.setCoords();
@@ -8961,8 +8652,8 @@ function handleAddImageToSign(image, imageId, price) {
   var itsDone = false;
   var imageError = "";
 
-  var imageInput = document.getElementById("asowp-iamge-input");
-
+  var imageInput = document.getElementById("asowp-image-input");
+  console.log("input image", imageInput)
   function checkImageSize(file, maxWidth, minWidth) {
     return new Promise((resolve, reject) => {
       // Crée une nouvelle image
@@ -9012,22 +8703,16 @@ function handleAddImageToSign(image, imageId, price) {
       await useImage(image, imageId, price);
       resolve({ images: addedImages, error: "" });
     } else {
-      imageInput.addEventListener("change", function (e) {
+      imageInput?.addEventListener("change", function (e) {
         const imgFile = imageInput.files[0];
 
         // console.log(imgFile, imageSettings.fileUploadScript, "upload verif", imageSettings.fileUploadScript.customWithGraphical)
 
         // if (imageSettings.fileUploadScript.customWithGraphical) {
-        // }
-        if (
-          imageSettings.fileUploadScript.uploadMinWidth !== "" &&
-          imageSettings.fileUploadScript.uploadMaxWidth !== ""
-        ) {
-          checkImageSize(
-            imgFile,
-            imageSettings.fileUploadScript.uploadMaxWidth,
-            imageSettings.fileUploadScript.uploadMinWidth
-          )
+          // } 
+        if( imageSettings.fileUploadScript.uploadMinWidth !== "" && imageSettings.fileUploadScript.uploadMaxWidth !== "") {
+
+          checkImageSize( imgFile, imageSettings.fileUploadScript.uploadMaxWidth, imageSettings.fileUploadScript.uploadMinWidth )
             .then((validFile) => {
               const reader = new FileReader();
               reader.onload = async () => {
@@ -9046,7 +8731,7 @@ function handleAddImageToSign(image, imageId, price) {
               resolve({ images: addedImages, error: error });
               // reject({ images: addedImages, error: error });
             });
-        } else {
+        }else{
           const reader = new FileReader();
           reader.onload = async () => {
             const imgBase64 = reader.result;
@@ -9146,152 +8831,138 @@ function handleFlipImage() {
   handleGetAddedImageValues(currentImage);
 }
 
-async function handleRemoveBgImage(imgObject) {
+async function handleRemoveBgImage(imgObject){
   // console.log(imgObject, "333")
-  async function replaceImg(newImage) {
-    fabric.Image.fromURL(
-      newImage,
-      (img) => {
-        img.top = imgObject.top;
-        img.left = imgObject.left;
-        img.width = imgObject.width;
-        img.height = imgObject.height;
+  async function replaceImg(newImage){
+    fabric.Image.fromURL(newImage, (img) => {
+      img.top = imgObject.top;
+      img.left = imgObject.left;
+      img.width = imgObject.width;
+      img.height = imgObject.height;
 
-        img.scaleX = imgObject.scaleX;
-        img.scaleY = imgObject.scaleY;
+      img.scaleX = imgObject.scaleX;
+      img.scaleY = imgObject.scaleY;
 
-        // img.flipX = true
-        img.uniScaleTransform = imgObject.uniScaleTransform;
-        img.centeredScaling = imgObject.centeredScaling;
-        img.lockScalingFlip = imgObject.lockScalingFlip;
-        img.originX = imgObject.originX;
-        img.originY = imgObject.originY;
-
-        img.id = imgObject.id;
-        img.name = "asowp-SignImage";
-        img.canvasName = imgObject.canvasName;
-        img.priceId = imgObject.priceId;
-        img.price = imgObject.price;
-        img.objectType = imgObject.objectType;
-        img.imageUrl = imgObject.imageUrl;
-        img.imageNoBgUrl = newImage;
-        // img.clipPath = handleClipAddedObject(activeCanvas);
-
-        img.lockMoving = imgObject.lockMoving;
-        img.lockScale = imgObject.lockScale;
-        img.lockRotate = imgObject.lockRotate;
-        img.setControlsVisibility({
-          mt: false, // Middle top
-          mb: false, // Middle bottom
-          ml: false, // Middle left
-          mr: false, // Middle right
-          bl: true, // Bottom left
-          br: true, // Bottom right
-          tl: true, // Top left
-          tr: true, // Top right
-        });
-
-        img.on("mousedown", function () {
-          handleGetAddedImageValues(img);
-        });
-        img.on("mouseup", function () {
-          handleGetAddedImageValues(img);
-        });
-
-        addUniqueObject(
-          addedImages,
-          { id: imgObject.id, url: imgObject.imageUrl, object: img },
-          "id"
-        );
-        activeCanvas.remove(imgObject);
-        activeCanvas.add(img);
-
-        return addedImages;
-      },
-      { crossOrigin: "anonymous" }
-    );
+      // img.flipX = true
+      img.uniScaleTransform = imgObject.uniScaleTransform;
+      img.centeredScaling = imgObject.centeredScaling;
+      img.lockScalingFlip = imgObject.lockScalingFlip; 
+      img.originX = imgObject.originX;
+      img.originY = imgObject.originY;
+  
+      img.id = imgObject.id;
+      img.name = "asowp-SignImage";
+      img.canvasName = imgObject.canvasName;
+      img.priceId = imgObject.priceId;
+      img.price = imgObject.price;
+      img.objectType = imgObject.objectType;
+      img.imageUrl = imgObject.imageUrl;
+      img.imageNoBgUrl = newImage;
+      // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+      img.lockMoving = imgObject.lockMoving;
+      img.lockScale = imgObject.lockScale;
+      img.lockRotate = imgObject.lockRotate;
+      img.setControlsVisibility({
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
+      });
+  
+      img.on("mousedown", function () {
+        handleGetAddedImageValues(img);
+      });
+      img.on("mouseup", function () {
+        handleGetAddedImageValues(img);
+      });
+  
+      addUniqueObject(addedImages, { id: imgObject.id, url: imgObject.imageUrl, object: img }, "id" )
+      activeCanvas.remove(imgObject)
+      activeCanvas.add(img);
+  
+      return addedImages
+    },{ crossOrigin: "anonymous" });
   }
-  async function restoreImg(imgUrl) {
-    fabric.Image.fromURL(
-      imgUrl,
-      (img) => {
-        img.top = imgObject.top;
-        img.left = imgObject.left;
-        img.width = imgObject.width;
-        img.height = imgObject.height;
+  async function restoreImg(imgUrl){
+    fabric.Image.fromURL(imgUrl, (img) => {
+      img.top = imgObject.top;
+      img.left = imgObject.left;
+      img.width = imgObject.width;
+      img.height = imgObject.height;
 
-        img.scaleX = imgObject.scaleX;
-        img.scaleY = imgObject.scaleY;
-        // img.flipX = true
-        img.uniScaleTransform = imgObject.uniScaleTransform;
-        img.centeredScaling = imgObject.centeredScaling;
-        img.lockScalingFlip = imgObject.lockScalingFlip;
-        img.originX = imgObject.originX;
-        img.originY = imgObject.originY;
-
-        img.id = imgObject.id;
-        img.name = "asowp-SignImage";
-        img.canvasName = imgObject.canvasName;
-        img.priceId = imgObject.priceId;
-        img.price = imgObject.price;
-        img.objectType = imgObject.objectType;
-        img.imageUrl = imgObject.imageUrl;
-        img.imageNoBgUrl = "";
-        // img.clipPath = handleClipAddedObject(activeCanvas);
-
-        img.lockMoving = imgObject.lockMoving;
-        img.lockScale = imgObject.lockScale;
-        img.lockRotate = imgObject.lockRotate;
-        img.setControlsVisibility({
-          mt: false, // Middle top
-          mb: false, // Middle bottom
-          ml: false, // Middle left
-          mr: false, // Middle right
-          bl: true, // Bottom left
-          br: true, // Bottom right
-          tl: true, // Top left
-          tr: true, // Top right
-        });
-
-        img.on("mousedown", function () {
-          handleGetAddedImageValues(img);
-        });
-        img.on("mouseup", function () {
-          handleGetAddedImageValues(img);
-        });
-
-        addUniqueObject(
-          addedImages,
-          { id: imgObject.id, url: imgObject.imageUrl, object: img },
-          "id"
-        );
-        activeCanvas.remove(imgObject);
-        activeCanvas.add(img);
-
-        return addedImages;
-      },
-      { crossOrigin: "anonymous" }
-    );
+      img.scaleX = imgObject.scaleX;
+      img.scaleY = imgObject.scaleY;
+      // img.flipX = true
+      img.uniScaleTransform = imgObject.uniScaleTransform;
+      img.centeredScaling = imgObject.centeredScaling;
+      img.lockScalingFlip = imgObject.lockScalingFlip; 
+      img.originX = imgObject.originX;
+      img.originY = imgObject.originY;
+  
+      img.id = imgObject.id;
+      img.name = "asowp-SignImage";
+      img.canvasName = imgObject.canvasName;
+      img.priceId = imgObject.priceId;
+      img.price = imgObject.price;
+      img.objectType = imgObject.objectType;
+      img.imageUrl = imgObject.imageUrl;
+      img.imageNoBgUrl = "";
+      // img.clipPath = handleClipAddedObject(activeCanvas);
+  
+      img.lockMoving = imgObject.lockMoving;
+      img.lockScale = imgObject.lockScale;
+      img.lockRotate = imgObject.lockRotate;
+      img.setControlsVisibility({
+        mt: false, // Middle top
+        mb: false, // Middle bottom
+        ml: false, // Middle left
+        mr: false, // Middle right
+        bl: true, // Bottom left
+        br: true, // Bottom right
+        tl: true, // Top left
+        tr: true, // Top right
+      });
+  
+      img.on("mousedown", function () {
+        handleGetAddedImageValues(img);
+      });
+      img.on("mouseup", function () {
+        handleGetAddedImageValues(img);
+      });
+  
+      addUniqueObject(addedImages, { id: imgObject.id, url: imgObject.imageUrl, object: img }, "id" )
+      activeCanvas.remove(imgObject)
+      activeCanvas.add(img);
+  
+      return addedImages
+    },{ crossOrigin: "anonymous" });
   }
 
   return new Promise(async (resolve, reject) => {
     if (!imgObject.imageNoBgUrl || imgObject.imageNoBgUrl == "") {
-      let newImage = await removeBackgroundFromURL(imgObject.imageUrl);
+      let newImage = await removeBackgroundFromURL(imgObject.imageUrl)
 
       await replaceImg(newImage);
       resolve({ images: addedImages, error: "" });
       updateModifications(true, "==retrait du background image==");
-    } else {
+
+    }else{
       await restoreImg(imgObject.imageUrl);
       resolve({ images: addedImages, error: "" });
       updateModifications(true, "==restauration du background image==");
+
     }
-  });
+});
 }
 function loadImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "anonymous"; // important si image externe
+    img.crossOrigin = 'anonymous'; // important si image externe
     img.onload = () => resolve(img);
     img.onerror = reject;
     img.src = url;
@@ -9307,7 +8978,8 @@ function blobToDataURL(blob) {
 }
 async function removeBackgroundFromURL(imageSrc) {
   const resultBlob = await removeBackground(imageSrc);
-  console.log(resultBlob, "444");
+  console.log(resultBlob, "444")
+
 
   // Convertit le Blob en URL pour affichage ou insertion dans une balise <img>
   // const transparentImageUrl = URL.createObjectURL(resultBlob);
@@ -9316,14 +8988,13 @@ async function removeBackgroundFromURL(imageSrc) {
   return transparentImageUrl;
 }
 
+
 // custom filters
 //greenify
-fabric.Image.filters.Greenify = fabric.util.createClass(
-  fabric.Image.filters.BaseFilter,
-  {
-    type: "Greenify",
-
-    fragmentSource: `
+fabric.Image.filters.Greenify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Greenify',
+  
+  fragmentSource: `
       precision highp float;
       uniform sampler2D uTexture;
       varying vec2 vTexCoord;
@@ -9334,25 +9005,18 @@ fabric.Image.filters.Greenify = fabric.util.createClass(
           gl_FragColor = color;
       }
   `,
-
-    isNeutralState: function () {
-      return false;
-    },
-    toObject: function () {
-      return { type: this.type };
-    },
-  }
-);
-fabric.Image.filters.Greenify.fromObject = function (object) {
+  
+  isNeutralState: function() { return false; },
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Greenify.fromObject = function(object) {
   return new fabric.Image.filters.Greenify(object);
 };
 //blueify
-fabric.Image.filters.Blueify = fabric.util.createClass(
-  fabric.Image.filters.BaseFilter,
-  {
-    type: "Blueify",
-
-    fragmentSource: `
+fabric.Image.filters.Blueify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Blueify',
+  
+  fragmentSource: `
       precision highp float;
       uniform sampler2D uTexture;
       varying vec2 vTexCoord;
@@ -9364,24 +9028,17 @@ fabric.Image.filters.Blueify = fabric.util.createClass(
           gl_FragColor = color;
       }
   `,
-
-    isNeutralState: function () {
-      return false;
-    },
-    toObject: function () {
-      return { type: this.type };
-    },
-  }
-);
-fabric.Image.filters.Blueify.fromObject = function (object) {
+  
+  isNeutralState: function() { return false; },
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Blueify.fromObject = function(object) {
   return new fabric.Image.filters.Blueify(object);
 };
 //pinkify
-fabric.Image.filters.Pinkify = fabric.util.createClass(
-  fabric.Image.filters.BaseFilter,
-  {
-    type: "Pinkify",
-    fragmentSource: `
+fabric.Image.filters.Pinkify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Pinkify',
+  fragmentSource: `
       precision highp float;
       uniform sampler2D uTexture;
       varying vec2 vTexCoord;
@@ -9392,20 +9049,15 @@ fabric.Image.filters.Pinkify = fabric.util.createClass(
           gl_FragColor = color;
       }
   `,
-    toObject: function () {
-      return { type: this.type };
-    },
-  }
-);
-fabric.Image.filters.Pinkify.fromObject = function (object) {
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Pinkify.fromObject = function(object) {
   return new fabric.Image.filters.Pinkify(object);
 };
-//Orangeify
-fabric.Image.filters.Orangeify = fabric.util.createClass(
-  fabric.Image.filters.BaseFilter,
-  {
-    type: "Orangeify",
-    fragmentSource: `
+//Orangeify 
+fabric.Image.filters.Orangeify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
+  type: 'Orangeify',
+  fragmentSource: `
       precision highp float;
       uniform sampler2D uTexture;
       varying vec2 vTexCoord;
@@ -9417,14 +9069,12 @@ fabric.Image.filters.Orangeify = fabric.util.createClass(
           gl_FragColor = color;
       }
   `,
-    toObject: function () {
-      return { type: this.type };
-    },
-  }
-);
-fabric.Image.filters.Orangeify.fromObject = function (object) {
+  toObject: function() { return { type: this.type }; }
+});
+fabric.Image.filters.Orangeify.fromObject = function(object) {
   return new fabric.Image.filters.Orangeify(object);
 };
+
 
 function handleSelectFilter(filter) {
   var currentImage = activeCanvas.getActiveObject();
@@ -9474,26 +9124,22 @@ function handleSelectFilter(filter) {
           break;
 
         case "Greenify":
-          let greenify = new fabric.Image.filters.Greenify({
-            name: "greenify",
-          });
+          let greenify = new fabric.Image.filters.Greenify({ name: "greenify", });
           currentImage.filters.push(greenify);
           break;
 
         case "Pinkify":
-          let pinkify = new fabric.Image.filters.Pinkify({ name: "pinkify" });
+          let pinkify = new fabric.Image.filters.Pinkify({ name: "pinkify", });
           currentImage.filters.push(pinkify);
           break;
 
         case "Orangeify":
-          let orangeify = new fabric.Image.filters.Orangeify({
-            name: "orangeify",
-          });
+          let orangeify = new fabric.Image.filters.Orangeify({ name: "orangeify", });
           currentImage.filters.push(orangeify);
           break;
 
         case "Blueify":
-          let blueify = new fabric.Image.filters.Blueify({ name: "blueify" });
+          let blueify = new fabric.Image.filters.Blueify({ name: "blueify", });
           currentImage.filters.push(blueify);
           break;
       }
@@ -9547,26 +9193,22 @@ function handleSelectFilter(filter) {
           break;
 
         case "Greenify":
-          let Greenify = new fabric.Image.filters.Greenify({
-            name: "greenify",
-          });
+          let Greenify = new fabric.Image.filters.Greenify({ name: "greenify", });
           addUniqueFilter(currentImage.filters, Greenify, "name");
           break;
-
+          
         case "Pinkify":
-          let pinkify = new fabric.Image.filters.Pinkify({ name: "pinkify" });
+          let pinkify = new fabric.Image.filters.Pinkify({ name: "pinkify", });
           addUniqueFilter(currentImage.filters, pinkify, "name");
           break;
 
         case "Orangeify":
-          let orangeify = new fabric.Image.filters.Orangeify({
-            name: "orangeify",
-          });
+          let orangeify = new fabric.Image.filters.Orangeify({ name: "orangeify", });
           addUniqueFilter(currentImage.filters, orangeify, "name");
           break;
 
         case "Blueify":
-          let blueify = new fabric.Image.filters.Blueify({ name: "blueify" });
+          let blueify = new fabric.Image.filters.Blueify({ name: "blueify", });
           addUniqueFilter(currentImage.filters, blueify, "name");
           break;
       }
@@ -9582,13 +9224,13 @@ function handleSelectFilter(filter) {
 async function getImageDataFromUrl(imageUrl) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.crossOrigin = "Anonymous"; // nécessaire si image externe
+    img.crossOrigin = 'Anonymous'; // nécessaire si image externe
     img.onload = () => {
-      const canvas = document.createElement("canvas");
+      const canvas = document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
 
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0);
 
       const imageData = ctx.getImageData(0, 0, img.width, img.height);
@@ -9627,8 +9269,8 @@ var charPrice = 0;
 var startPriceAtChar = 0;
 function handleGetCharPrice(price, startAt, maxChar) {
   // console.log(startAt, "charPrice")
-  if (maxChar) {
-    maxTextCharForSize = maxChar;
+  if(maxChar){
+    maxTextCharForSize = maxChar
   }
   charPrice = price;
   startPriceAtChar = startAt;
@@ -9677,9 +9319,9 @@ function handleCalcTextPrice(position) {
   }
 
   textsPrice = (avalaibleFaceChars + avalaibleBackChars) * charPrice;
-  let finalTextPrice = textsPrice;
+  let finalTextPrice = textsPrice
 
-  return finalTextPrice;
+  return finalTextPrice
 }
 function handleSetPrice() {
   return handleCalcTextPrice();
@@ -9880,9 +9522,9 @@ function handleClipAddedObject(canva) {
         selectable: false,
       });
       break;
-
+  
     case "cut-to-shape":
-      clipPath = null;
+      clipPath = null
       break;
   }
 
@@ -10138,38 +9780,30 @@ function handleMoveobject(to) {
   }
 
   activeCanvas.renderAll();
-  simulateCanvasClick();
+  simulateCanvasClick()
   // console.log('Index de l\'image:', index, "last index", lastIndex);
 }
 function findMaxId(tableau) {
   if (!Array.isArray(tableau) || tableau.length === 0) {
-    // throw new Error("Le paramètre doit être un tableau non vide d'objets.");
-    return -1;
+      // throw new Error("Le paramètre doit être un tableau non vide d'objets.");
+    return -1
   }
 
   // Utilisation de la méthode reduce pour trouver l'id maximum
   const maxId = tableau.reduce((max, objet) => {
-    if (typeof objet.id !== "number") {
-      throw new Error(
-        "Tous les objets doivent avoir un attribut 'id' de type nombre."
-      );
-    }
-    return objet.id > max ? objet.id : max;
+      if (typeof objet.id !== 'number') {
+          throw new Error("Tous les objets doivent avoir un attribut 'id' de type nombre.");
+      }
+      return objet.id > max ? objet.id : max;
   }, -Infinity);
 
   return maxId;
 }
 
-async function handleLoadTemplateData(
-  canvas1Json,
-  canvas2Json,
-  templateData,
-  statut,
-  defaultTextColor
-) {
+async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, statut, defaultTextColor) {
   var signData = templateData;
 
-  currentSignTextColor = defaultTextColor;
+  currentSignTextColor = defaultTextColor
 
   function addUniqueObject(arr, obj, key) {
     const index = arr.findIndex((item) => item[key] === obj[key]);
@@ -10182,1439 +9816,1426 @@ async function handleLoadTemplateData(
 
   async function loadFromJSON(canva, canvasJson) {
     let rect;
-
-    for (const object of canvasJson.objects) {
+    
+    for(const object of canvasJson.objects){
       if (object.name === "asowp-SignText") {
         // console.log(object, "asowp-SignText")
-        await loadFont(object.fontFamily, object.fontFamilyUrl);
+        await loadFont(object.fontFamily, object.fontFamilyUrl)
       }
     }
     canva.clear();
     // canvasJson.objects.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
     // canvasJson.objects.forEach(function (obj, index) {
 
-    const objectsToLoad = canvasJson.objects.map((obj) => ({ ...obj }));
+    const objectsToLoad = canvasJson.objects.map(obj => ({...obj}));
     const loadedObjects = await Promise.all(
-      objectsToLoad.map(
-        (obj) =>
-          new Promise((resolve) => {
-            fabric.util.enlivenObjects([obj], async function (templateObject) {
-              if (templateObject[0].name === "asowp-SignText") {
-                // await loadFont(templateObject[0].fontFamily, templateObject[0].fontFamilyUrl)
-                // templateObject[0].set('fontFamily', templateObject[0].fontFamily)
-                // console.log('fontFamily', templateObject[0])
-
-                // templateObject[0].dirty = true
-                // templateObject[0].set('noScaleCache', false);
-                templateObject[0].setControlsVisibility({
-                  mt: false, // Middle top
-                  mb: false, // Middle bottom
-                  ml: false, // Middle left
-                  mr: false, // Middle right
-                  bl: true, // Bottom left
-                  br: true, // Bottom right
-                  tl: true, // Top left
-                  tr: true, // Top right
-                });
-                if (statut !== "making") {
-                  if (templateObject[0].lockMoving.x === true) {
-                    templateObject[0].lockMovementX = true;
-                  }
-                  if (templateObject[0].lockMoving.y === true) {
-                    templateObject[0].lockMovementY = true;
-                  }
-                  if (templateObject[0].lockScale === true) {
-                    templateObject[0].lockScalingX = true;
-                    templateObject[0].lockScalingY = true;
-                  }
-                  if (templateObject[0].lockRotate === true) {
-                    templateObject[0].lockRotation = true;
-                  }
-                  if (templateObject[0].lockEdition === true) {
-                    templateObject[0].editable = false;
-                  }
+      objectsToLoad.map(obj => 
+        new Promise(resolve => {
+          fabric.util.enlivenObjects([obj], async function (templateObject) {
+            if (templateObject[0].name === "asowp-SignText") {
+              // await loadFont(templateObject[0].fontFamily, templateObject[0].fontFamilyUrl)
+              // templateObject[0].set('fontFamily', templateObject[0].fontFamily)
+              // console.log('fontFamily', templateObject[0])
+    
+              // templateObject[0].dirty = true
+              // templateObject[0].set('noScaleCache', false);
+              templateObject[0].setControlsVisibility({
+                mt: false, // Middle top
+                mb: false, // Middle bottom
+                ml: false, // Middle left
+                mr: false, // Middle right
+                bl: true, // Bottom left
+                br: true, // Bottom right
+                tl: true, // Top left
+                tr: true, // Top right
+              });
+              if (statut !== "making") {
+                if (templateObject[0].lockMoving.x === true) {
+                  templateObject[0].lockMovementX = true;
                 }
-
-                templateObject[0].clipPath = null;
-
-                (templateObject[0].uniScaleTransform = true),
-                  (templateObject[0].centeredScaling = true),
-                  (templateObject[0].lockScalingFlip = true),
-                  templateObject[0].on("editing:entered", () => {
-                    handleGetAddedTextValues(templateObject[0]);
-                    if (textType == "3D") {
-                      templateObject[0].exitEditing();
-                    }
-                  });
-                templateObject[0].on("editing:exited", () => {
-                  handleGetAddedTextValues(templateObject[0]);
-                  resizeText(templateObject[0]);
-                });
-                templateObject[0].on("selected", () => {
-                  handleGetAddedTextValues(templateObject[0]);
-                });
-                templateObject[0].on("mousedown", function () {
-                  handleGetAddedTextValues(templateObject[0]);
-                  reScaleText(templateObject[0]);
-                });
-                templateObject[0].on("mouseup", function () {
-                  handleGetAddedTextValues(templateObject[0]);
-                  reScaleText(templateObject[0]);
-                });
-
-                // if(templateObject[0].type == "neon-Text"){
-                //   templateObject[0].glowRadius = 25
-                // }
-
-                addUniqueObject(addedTexts, templateObject[0], "id");
-              }
-
-              if (templateObject[0].name === "safeObject") {
-                rect = await templateObject[0];
-                if (templateData.shape != "cut-to-shape") {
-                  if (typeof templateObject[0].fill !== "string") {
-                    templateObject[0].fill = "transparent";
-                    // console.log('WARNING:')
-                    var image;
-                    if (canva.name === "front-face") {
-                      signBackground1 = "pattern";
-                      patternUrl1 = templateData.color.face1.codeHex;
-                      image = templateData.color.face1.codeHex;
-                    }
-                    if (canva.name === "back-face") {
-                      signBackground2 = "pattern";
-                      patternUrl2 = templateData.color.face2.codeHex;
-                      image = templateData.color.face2.codeHex;
-                    }
-                    fabric.util.loadImage(
-                      image,
-                      function (img) {
-                        var scaleX = templateObject[0].width / img.width;
-                        var scaleY = templateObject[0].height / img.height;
-                        var pattern = new fabric.Pattern({
-                          source: img,
-                          repeat: "no-repeat",
-                          patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
-                        });
-                        templateObject[0].set("fill", pattern);
-                        // canvas.add(pattern);
-                        canva.renderAll();
-                      }
-                      // { crossOrigin: "anonymous" }
-                    );
-                  }
-                } else {
-                  let pathObjects = templateObject[0]._objects;
-                  pathObjects.forEach((path) => {
-                    if (path.name == "outline") {
-                      if (typeof path.fill !== "string") {
-                        path.fill = "transparent";
-                        var image;
-                        if (canva.name === "front-face") {
-                          signBackground1 = "pattern";
-                          patternUrl1 = templateData.color.face1.codeHex;
-                          image = templateData.color.face1.codeHex;
-                        }
-                        if (canva.name === "back-face") {
-                          signBackground2 = "pattern";
-                          patternUrl2 = templateData.color.face2.codeHex;
-                          image = templateData.color.face2.codeHex;
-                        }
-                        fabric.util.loadImage(
-                          image,
-                          function (img) {
-                            var scaleX = templateObject[0].width / img.width;
-                            var scaleY = templateObject[0].height / img.height;
-                            var pattern = new fabric.Pattern({
-                              source: img,
-                              repeat: "no-repeat",
-                              patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
-                            });
-                            path.set("fill", pattern);
-                            // canvas.add(pattern);
-                            canva.renderAll();
-                          }
-                          // { crossOrigin: "anonymous" }
-                        );
-                      }
-                    }
-                  });
+                if (templateObject[0].lockMoving.y === true) {
+                  templateObject[0].lockMovementY = true;
+                }
+                if (templateObject[0].lockScale === true) {
+                  templateObject[0].lockScalingX = true;
+                  templateObject[0].lockScalingY = true;
+                }
+                if (templateObject[0].lockRotate === true) {
+                  templateObject[0].lockRotation = true;
+                }
+                if (templateObject[0].lockEdition === true) {
+                  templateObject[0].editable = false;
                 }
               }
-
-              if (templateObject[0].name === "asowp-SignImage") {
-                templateObject[0].setControlsVisibility({
-                  mt: false, // Middle top
-                  mb: false, // Middle bottom
-                  ml: false, // Middle left
-                  mr: false, // Middle right
-                  bl: true, // Bottom left
-                  br: true, // Bottom right
-                  tl: true, // Top left
-                  tr: true, // Top right
-                });
-                if (statut !== "making") {
-                  if (templateObject[0].lockMoving.x === true) {
-                    templateObject[0].lockMovementX = true;
-                  }
-                  if (templateObject[0].lockMoving.y === true) {
-                    templateObject[0].lockMovementY = true;
-                  }
-                  if (templateObject[0].lockScale === true) {
-                    templateObject[0].lockScalingX = true;
-                    templateObject[0].lockScalingY = true;
-                  }
-                  if (templateObject[0].lockRotate === true) {
-                    templateObject[0].lockRotation = true;
-                  }
+    
+              templateObject[0].clipPath = null;
+    
+              templateObject[0].uniScaleTransform = true,
+              templateObject[0].centeredScaling = true,
+              templateObject[0].lockScalingFlip = true,
+    
+              templateObject[0].on("editing:entered", () => {
+                handleGetAddedTextValues(templateObject[0]);
+                if(textType == "3D"){
+                  templateObject[0].exitEditing()
                 }
-
-                templateObject[0].clipPath = null;
-
-                templateObject[0].on("mousedown", function () {
-                  handleGetAddedImageValues(templateObject[0]);
-                });
-                templateObject[0].on("mouseup", function () {
-                  handleGetAddedImageValues(templateObject[0]);
-                });
-
-                let objectUrl =
-                  templateObject[0].objectType == "svg"
-                    ? templateObject[0].imageUrl
-                    : await templateObject[0].getSrc();
-                addUniqueObject(
-                  addedImages,
-                  {
-                    id: templateObject[0].id,
-                    url: objectUrl,
-                    object: templateObject[0],
-                  },
-                  "id"
-                );
-              }
-
-              if (templateObject[0].name === "asowp-QRCode") {
-                templateObject[0].setControlsVisibility({
-                  mt: false, // Middle top
-                  mb: false, // Middle bottom
-                  ml: false, // Middle left
-                  mr: false, // Middle right
-                  bl: true, // Bottom left
-                  br: true, // Bottom right
-                  tl: true, // Top left
-                  tr: true, // Top right
-                });
-
-                templateObject[0].clipPath = null;
-
-                templateObject[0].on("mousedown", function () {
-                  handleGetAddedImageValues(templateObject[0]);
-                });
-                templateObject[0].on("mouseup", function () {
-                  handleGetAddedImageValues(templateObject[0]);
-                });
-
-                // let objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : await templateObject[0].getSrc();
-                let objectUrl = await templateObject[0].getSrc();
-                addUniqueObject(
-                  addedQRCodes,
-                  // templateObject[0],
-                  {
-                    id: templateObject[0].id,
-                    text: templateObject[0].fromData,
-                    url: objectUrl,
-                    object: templateObject[0],
-                  },
-                  "id"
-                );
-              }
-
-              // if (templateData && templateData.material.type == "simple") {
-              //   if (signData.fixingMethod.type == "screw") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "screw1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //         if (templateObject[0].name === "screw2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "screw1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "screw2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "screw3") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //         if (templateObject[0].name === "screw4") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //       }
-              //     }
-              //     if (signData.shape == "triangle") {
-              //       if (templateObject[0].name === "screw1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width / 2 - newWidth / 2);
-              //         templateObject[0].top = rect.top + newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "screw2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //       if (templateObject[0].name === "screw3") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "oval" ||
-              //       signData.shape == "rotated-square"
-              //     ) {
-              //       if (templateObject[0].name === "screw1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-left" ||
-              //       signData.shape == "arrow-left"
-              //     ) {
-              //       if (templateObject[0].name === "screw1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-right" ||
-              //       signData.shape == "arrow-right"
-              //     ) {
-              //       if (templateObject[0].name === "screw1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (signData.shape == "stop") {
-              //       if (templateObject[0].name === "screw1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "screw-cap") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "screw-cap1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //         if (templateObject[0].name === "screw-cap2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "screw-cap1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "screw-cap2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "screw-cap3") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //         if (templateObject[0].name === "screw-cap4") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //       }
-              //     }
-              //     if (signData.shape == "triangle") {
-              //       if (templateObject[0].name === "screw-cap1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width / 2 - newWidth / 2);
-              //         templateObject[0].top = rect.top + newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "screw-cap2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //       if (templateObject[0].name === "screw-cap3") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "oval" ||
-              //       signData.shape == "rotated-square"
-              //     ) {
-              //       if (templateObject[0].name === "screw-cap1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw-cap2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-left" ||
-              //       signData.shape == "arrow-left"
-              //     ) {
-              //       if (templateObject[0].name === "screw-cap1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw-cap2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-right" ||
-              //       signData.shape == "arrow-right"
-              //     ) {
-              //       if (templateObject[0].name === "screw-cap1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw-cap2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (signData.shape == "stop") {
-              //       if (templateObject[0].name === "screw-cap1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "screw-cap2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "suction-cup") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "suction-cup1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //         if (templateObject[0].name === "suction-cup2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "suction-cup1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "suction-cup2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "suction-cup3") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //         if (templateObject[0].name === "suction-cup4") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //       }
-              //     }
-              //     if (signData.shape == "triangle") {
-              //       if (templateObject[0].name === "suction-cup1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width / 2 - newWidth / 2);
-              //         templateObject[0].top = rect.top + newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "suction-cup2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //       if (templateObject[0].name === "suction-cup3") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "oval" ||
-              //       signData.shape == "rotated-square"
-              //     ) {
-              //       if (templateObject[0].name === "suction-cup1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "suction-cup2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-left" ||
-              //       signData.shape == "arrow-left"
-              //     ) {
-              //       if (templateObject[0].name === "suction-cup1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "suction-cup2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-right" ||
-              //       signData.shape == "arrow-right"
-              //     ) {
-              //       if (templateObject[0].name === "suction-cup1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "suction-cup2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (signData.shape == "stop") {
-              //       if (templateObject[0].name === "suction-cup1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "suction-cup2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "standoff") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "standoff1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //         if (templateObject[0].name === "standoff2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "standoff1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "standoff2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top;
-              //         }
-              //         if (templateObject[0].name === "standoff3") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           templateObject[0].left = rect.left;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //         if (templateObject[0].name === "standoff4") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left + rect.width - newWidth;
-              //           templateObject[0].top = rect.top + (rect.height - newHeight);
-              //         }
-              //       }
-              //     }
-              //     if (signData.shape == "triangle") {
-              //       if (templateObject[0].name === "standoff1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width / 2 - newWidth / 2);
-              //         templateObject[0].top = rect.top + newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "standoff2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //       if (templateObject[0].name === "standoff3") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top = rect.top + (rect.height - newHeight);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "oval" ||
-              //       signData.shape == "rotated-square"
-              //     ) {
-              //       if (templateObject[0].name === "standoff1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "standoff2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-left" ||
-              //       signData.shape == "arrow-left"
-              //     ) {
-              //       if (templateObject[0].name === "standoff1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "standoff2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (
-              //       signData.shape == "turn-right" ||
-              //       signData.shape == "arrow-right"
-              //     ) {
-              //       if (templateObject[0].name === "standoff1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "standoff2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width - newWidth) - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //     if (signData.shape == "stop") {
-              //       if (templateObject[0].name === "standoff1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //       if (templateObject[0].name === "standoff2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width - newWidth);
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "flag") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides" ||
-              //       signData.shape == "turn-right" ||
-              //       signData.shape == "turn-left"
-              //     ) {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "flag1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left - newWidth / 2;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "flag1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left - newWidth / 2;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 4 - newHeight / 2);
-              //         }
-              //         if (templateObject[0].name === "flag2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left = rect.left - newWidth / 2;
-              //           templateObject[0].top =
-              //             rect.top + ((rect.height / 4) * 3 - newHeight / 2);
-              //         }
-              //       }
-              //     }
-              //     if (signData.shape == "turn-left") {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "flag1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left =
-              //             rect.left + rect.width - newWidth / 2;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 2 - newHeight / 2);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "flag1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left =
-              //             rect.left + rect.width - newWidth / 2;
-              //           templateObject[0].top =
-              //             rect.top + (rect.height / 4 - newHeight / 2);
-              //         }
-              //         if (templateObject[0].name === "flag2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-              //           var newWidth =
-              //             templateObject[0].width * templateObject[0].scaleX;
-
-              //           templateObject[0].left =
-              //             rect.left + rect.width - newWidth / 2;
-              //           templateObject[0].top =
-              //             rect.top + ((rect.height / 4) * 3 - newHeight / 2);
-              //         }
-              //       }
-              //     }
-              //     if (signData.shape == "oval" || signData.shape == "stop") {
-              //       if (templateObject[0].name === "flag1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + (rect.height / 2 - newHeight / 2);
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "table-stand") {
-              //     if (
-              //       selectedShape == "square" ||
-              //       selectedShape == "rounded-square"
-              //     ) {
-              //       if (templateObject[0].name === "table-stand") {
-              //         templateObject[0].left = rect.left - 10;
-              //         templateObject[0].top = rect.top + rect.height;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "ceiling") {
-              //     if (
-              //       selectedShape == "square" ||
-              //       selectedShape == "rounded-square" ||
-              //       selectedShape == "rounded-top" ||
-              //       selectedShape == "rounded-sides"
-              //     ) {
-              //       if (templateObject[0].name === "ceiling1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "ceiling2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //     }
-              //     if (selectedShape == "turn-left") {
-              //       if (templateObject[0].name === "ceiling1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left =
-              //           rect.left + (rect.width / 5) * 3.5 - newWidth;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "ceiling2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //     }
-              //     if (selectedShape == "turn-right") {
-              //       if (templateObject[0].name === "ceiling1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "ceiling2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + (rect.width / 5) * 1.5;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //     }
-              //     if (selectedShape == "oval" || selectedShape == "stop") {
-              //       if (templateObject[0].name === "ceiling1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left =
-              //           rect.left + rect.width / 2 - newWidth / 2;
-              //         templateObject[0].top = rect.top - newHeight / 2;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "hanging") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (signData.fixingMethod.ratio == "small") {
-              //         if (templateObject[0].name === "hanging-hole") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           (templateObject[0].left = rect.left + rect.width / 2 - 15),
-              //             (templateObject[0].top = rect.top + 15);
-              //         }
-              //       }
-              //       if (signData.fixingMethod.ratio == "big") {
-              //         if (templateObject[0].name === "hanging-hole1") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           (templateObject[0].left = rect.left + rect.width / 8 - 15),
-              //             (templateObject[0].top = rect.top + 15);
-              //         }
-              //         if (templateObject[0].name === "hanging-hole2") {
-              //           var newHeight =
-              //             templateObject[0].height * templateObject[0].scaleY;
-
-              //           (templateObject[0].left =
-              //             rect.left + (rect.width / 8) * 7 - 15),
-              //             (templateObject[0].top = rect.top + 15);
-              //         }
-              //       }
-              //     }
-              //     if (
-              //       selectedShape == "oval" ||
-              //       selectedShape == "stop" ||
-              //       selectedShape == "triangle" ||
-              //       selectedShape == "rotated-square"
-              //     ) {
-              //       if (templateObject[0].name === "hanging-hole") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         (templateObject[0].left =
-              //           rect.left + rect.width / 2 - rect.height * 0.04),
-              //           (templateObject[0].top = rect.top + 20);
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "pole-attachment") {
-              //     if (templateObject[0].name === "pole") {
-              //       var newHeight =
-              //         templateObject[0].height * templateObject[0].scaleY;
-
-              //       (templateObject[0].left =
-              //         rect.left + rect.width / 2 - rect.width / 4 / 2),
-              //         (templateObject[0].top = rect.top - rect.height / 2);
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "table-clamp") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (templateObject[0].name === "table-clamp1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
-              //         templateObject[0].top = rect.top + rect.height - newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "table-clamp2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
-              //         templateObject[0].top = rect.top + rect.height - newHeight / 2;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "base-support") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       signData.shape == "rounded-square" ||
-              //       signData.shape == "rounded-top" ||
-              //       signData.shape == "rounded-sides"
-              //     ) {
-              //       if (templateObject[0].name === "base-support1") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
-              //         templateObject[0].top = rect.top + rect.height - newHeight + 5;
-              //       }
-              //       if (templateObject[0].name === "base-support2") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
-              //         templateObject[0].top = rect.top + rect.height - newHeight + 5;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "sign-holder") {
-              //     if (signData.shape == "square") {
-              //       if (templateObject[0].name === "sign-holder-top") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top = rect.top - newHeight + newHeight / 2;
-              //       }
-              //       if (templateObject[0].name === "sign-holder-bottom") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top = rect.top + rect.height - newHeight / 2;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "roll-up") {
-              //     if (signData.shape == "square") {
-              //       if (templateObject[0].name === "sign-holder-top") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top = rect.top - newHeight;
-              //       }
-              //       if (templateObject[0].name === "sign-holder-bottom") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-
-              //         templateObject[0].left = rect.left;
-              //         templateObject[0].top = rect.top + rect.height;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "eyelets") {
-              //   }
-              //   if (signData.fixingMethod.type == "keyring") {
-              //     if (
-              //       signData.shape == "square" ||
-              //       selectedShape == "rounded-square" ||
-              //       selectedShape == "rounded-top" ||
-              //       selectedShape == "rounded-sides"
-              //     ) {
-              //       if (templateObject[0].name === "keyring") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left - newWidth / 2.5;
-              //         templateObject[0].top = rect.top - newHeight / 1.4;
-              //       }
-              //       if (templateObject[0].name === "keyring-hole") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left = rect.left + 13;
-              //         templateObject[0].top = rect.top + 13;
-              //       }
-              //     }
-              //     if (signData.shape == "oval" || selectedShape == "stop") {
-              //       if (templateObject[0].name === "keyring") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + rect.width / 2 - newWidth / 2;
-              //         templateObject[0].top = rect.top - newHeight / 1.4;
-              //       }
-              //       if (templateObject[0].name === "keyring-hole") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-              //         var newRadius = rect.height * 0.05;
-
-              //         templateObject[0].left = rect.left + rect.width / 2 - newRadius;
-
-              //         templateObject[0].top = rect.top + 15;
-              //       }
-              //     }
-              //     if (signData.shape == "rotated-square") {
-              //       if (templateObject[0].name === "keyring") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + rect.width / 2 - newWidth / 2;
-              //         templateObject[0].top = rect.top - newHeight / 1.4;
-              //       }
-              //       if (templateObject[0].name === "keyring-hole") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-              //         var newRadius = rect.height * 0.05;
-
-              //         templateObject[0].left = rect.left + rect.width / 2 - newRadius;
-              //         templateObject[0].top = rect.top + 15;
-              //       }
-              //     }
-              //     if (signData.shape == "triangle") {
-              //       if (templateObject[0].name === "keyring") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-
-              //         templateObject[0].left =
-              //           rect.left + rect.width / 2 - newWidth / 2;
-              //         templateObject[0].top =
-              //           rect.top + rect.height / 10 - newHeight / 1.2;
-              //       }
-              //       if (templateObject[0].name === "keyring-hole") {
-              //         var newHeight =
-              //           templateObject[0].height * templateObject[0].scaleY;
-              //         var newWidth =
-              //           templateObject[0].width * templateObject[0].scaleX;
-              //         var newRadius = rect.height * 0.05;
-
-              //         templateObject[0].left = rect.left + rect.width / 2 - newRadius;
-              //         templateObject[0].top = rect.top + rect.height / 10;
-              //       }
-              //     }
-              //   }
-              //   if (signData.fixingMethod.type == "s-hook") {
-              //   }
+              });
+              templateObject[0].on("editing:exited", () => {
+                handleGetAddedTextValues(templateObject[0]);
+                resizeText(templateObject[0]);
+              });
+              templateObject[0].on("selected", () => {
+                handleGetAddedTextValues(templateObject[0]);
+              });
+              templateObject[0].on("mousedown", function () {
+                handleGetAddedTextValues(templateObject[0]);
+                reScaleText(templateObject[0]);
+              });
+              templateObject[0].on("mouseup", function () {
+                handleGetAddedTextValues(templateObject[0]);
+                reScaleText(templateObject[0]);
+              });
+    
+              // if(templateObject[0].type == "neon-Text"){
+              //   templateObject[0].glowRadius = 25
               // }
-
-              let maxTemplateId = Math.max(
-                findMaxId(addedTexts),
-                findMaxId(addedImages)
-              );
-              if (maxTemplateId > newId) {
-                newId = maxTemplateId;
+    
+              addUniqueObject(addedTexts, templateObject[0], "id");
+            }
+    
+            if (templateObject[0].name === "safeObject") {
+              rect = await templateObject[0];
+              if(templateData.shape != "cut-to-shape"){
+                if (typeof templateObject[0].fill !== "string") {
+                  templateObject[0].fill = "transparent";
+                  // console.log('WARNING:')
+                  var image;
+                  if (canva.name === "front-face") {
+                    signBackground1 = "pattern";
+                    patternUrl1 = templateData.color.face1.codeHex;
+                    image = templateData.color.face1.codeHex;
+                  }
+                  if (canva.name === "back-face") {
+                    signBackground2 = "pattern";
+                    patternUrl2 = templateData.color.face2.codeHex;
+                    image = templateData.color.face2.codeHex;
+                  }
+                  fabric.util.loadImage( image, function (img) {
+                      var scaleX = templateObject[0].width / img.width;
+                      var scaleY = templateObject[0].height / img.height;
+                      var pattern = new fabric.Pattern({
+                        source: img,
+                        repeat: "no-repeat",
+                        patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                      });
+                      templateObject[0].set("fill", pattern);
+                      // canvas.add(pattern);
+                      canva.renderAll();
+                    }
+                    // { crossOrigin: "anonymous" }
+                  );
+                }
+              }else{
+                let pathObjects = templateObject[0]._objects
+                pathObjects.forEach(path => {
+                  if (path.name == "outline") {
+                    if (typeof path.fill !== "string") {
+                      path.fill = "transparent";
+                      var image;
+                      if (canva.name === "front-face") {
+                        signBackground1 = "pattern";
+                        patternUrl1 = templateData.color.face1.codeHex;
+                        image = templateData.color.face1.codeHex;
+                      }
+                      if (canva.name === "back-face") {
+                        signBackground2 = "pattern";
+                        patternUrl2 = templateData.color.face2.codeHex;
+                        image = templateData.color.face2.codeHex;
+                      }
+                      fabric.util.loadImage( image, function (img) {
+                          var scaleX = templateObject[0].width / img.width;
+                          var scaleY = templateObject[0].height / img.height;
+                          var pattern = new fabric.Pattern({
+                            source: img,
+                            repeat: "no-repeat",
+                            patternTransform: [scaleX, 0, 0, scaleY, 0, 0],
+                          });
+                          path.set("fill", pattern);
+                          // canvas.add(pattern);
+                          canva.renderAll();
+                        }
+                        // { crossOrigin: "anonymous" }
+                      );
+                    }
+                  }
+                });
               }
+            }
+    
+            if (templateObject[0].name === "asowp-SignImage") {
+              templateObject[0].setControlsVisibility({
+                mt: false, // Middle top
+                mb: false, // Middle bottom
+                ml: false, // Middle left
+                mr: false, // Middle right
+                bl: true, // Bottom left
+                br: true, // Bottom right
+                tl: true, // Top left
+                tr: true, // Top right
+              });
+              if (statut !== "making") {
+                if (templateObject[0].lockMoving.x === true) {
+                  templateObject[0].lockMovementX = true;
+                }
+                if (templateObject[0].lockMoving.y === true) {
+                  templateObject[0].lockMovementY = true;
+                }
+                if (templateObject[0].lockScale === true) {
+                  templateObject[0].lockScalingX = true;
+                  templateObject[0].lockScalingY = true;
+                }
+                if (templateObject[0].lockRotate === true) {
+                  templateObject[0].lockRotation = true;
+                }
+              }
+    
+              templateObject[0].clipPath = null;
+    
+              templateObject[0].on("mousedown", function () {
+                handleGetAddedImageValues(templateObject[0]);
+              });
+              templateObject[0].on("mouseup", function () {
+                handleGetAddedImageValues(templateObject[0]);
+              });
+    
+              let objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : await templateObject[0].getSrc();
+              addUniqueObject( addedImages, 
+                {
+                  id: templateObject[0].id,
+                  url: objectUrl,
+                  object: templateObject[0],
+                }, "id"
+              );
+            }
 
-              // canva.add(...templateObject);
-              resolve(templateObject[0]);
-            });
-          })
+            if (templateObject[0].name === "asowp-QRCode") {
+              templateObject[0].setControlsVisibility({
+                mt: false, // Middle top
+                mb: false, // Middle bottom
+                ml: false, // Middle left
+                mr: false, // Middle right
+                bl: true, // Bottom left
+                br: true, // Bottom right
+                tl: true, // Top left
+                tr: true, // Top right
+              });
+    
+              templateObject[0].clipPath = null;
+    
+              templateObject[0].on("mousedown", function () {
+                handleGetAddedImageValues(templateObject[0]);
+              });
+              templateObject[0].on("mouseup", function () {
+                handleGetAddedImageValues(templateObject[0]);
+              });
+    
+              // let objectUrl = templateObject[0].objectType == "svg" ? templateObject[0].imageUrl : await templateObject[0].getSrc();
+              let objectUrl = await templateObject[0].getSrc();
+              addUniqueObject( addedQRCodes, 
+                // templateObject[0], 
+                {
+                  id: templateObject[0].id,
+                  text: templateObject[0].fromData,
+                  url: objectUrl,
+                  object: templateObject[0],
+                }, 
+                "id"
+              );
+            }
+    
+            // if (templateData && templateData.material.type == "simple") {
+            //   if (signData.fixingMethod.type == "screw") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "screw1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //         if (templateObject[0].name === "screw2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "screw1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "screw2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "screw3") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //         if (templateObject[0].name === "screw4") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //       }
+            //     }
+            //     if (signData.shape == "triangle") {
+            //       if (templateObject[0].name === "screw1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width / 2 - newWidth / 2);
+            //         templateObject[0].top = rect.top + newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "screw2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //       if (templateObject[0].name === "screw3") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "oval" ||
+            //       signData.shape == "rotated-square"
+            //     ) {
+            //       if (templateObject[0].name === "screw1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-left" ||
+            //       signData.shape == "arrow-left"
+            //     ) {
+            //       if (templateObject[0].name === "screw1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-right" ||
+            //       signData.shape == "arrow-right"
+            //     ) {
+            //       if (templateObject[0].name === "screw1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (signData.shape == "stop") {
+            //       if (templateObject[0].name === "screw1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "screw-cap") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "screw-cap1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //         if (templateObject[0].name === "screw-cap2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "screw-cap1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "screw-cap2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "screw-cap3") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //         if (templateObject[0].name === "screw-cap4") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //       }
+            //     }
+            //     if (signData.shape == "triangle") {
+            //       if (templateObject[0].name === "screw-cap1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width / 2 - newWidth / 2);
+            //         templateObject[0].top = rect.top + newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "screw-cap2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //       if (templateObject[0].name === "screw-cap3") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "oval" ||
+            //       signData.shape == "rotated-square"
+            //     ) {
+            //       if (templateObject[0].name === "screw-cap1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw-cap2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-left" ||
+            //       signData.shape == "arrow-left"
+            //     ) {
+            //       if (templateObject[0].name === "screw-cap1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw-cap2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-right" ||
+            //       signData.shape == "arrow-right"
+            //     ) {
+            //       if (templateObject[0].name === "screw-cap1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw-cap2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (signData.shape == "stop") {
+            //       if (templateObject[0].name === "screw-cap1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "screw-cap2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "suction-cup") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "suction-cup1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //         if (templateObject[0].name === "suction-cup2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "suction-cup1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "suction-cup2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "suction-cup3") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //         if (templateObject[0].name === "suction-cup4") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //       }
+            //     }
+            //     if (signData.shape == "triangle") {
+            //       if (templateObject[0].name === "suction-cup1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width / 2 - newWidth / 2);
+            //         templateObject[0].top = rect.top + newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "suction-cup2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //       if (templateObject[0].name === "suction-cup3") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "oval" ||
+            //       signData.shape == "rotated-square"
+            //     ) {
+            //       if (templateObject[0].name === "suction-cup1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "suction-cup2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-left" ||
+            //       signData.shape == "arrow-left"
+            //     ) {
+            //       if (templateObject[0].name === "suction-cup1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "suction-cup2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-right" ||
+            //       signData.shape == "arrow-right"
+            //     ) {
+            //       if (templateObject[0].name === "suction-cup1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "suction-cup2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (signData.shape == "stop") {
+            //       if (templateObject[0].name === "suction-cup1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "suction-cup2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "standoff") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "standoff1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //         if (templateObject[0].name === "standoff2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "standoff1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "standoff2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top;
+            //         }
+            //         if (templateObject[0].name === "standoff3") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           templateObject[0].left = rect.left;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //         if (templateObject[0].name === "standoff4") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left + rect.width - newWidth;
+            //           templateObject[0].top = rect.top + (rect.height - newHeight);
+            //         }
+            //       }
+            //     }
+            //     if (signData.shape == "triangle") {
+            //       if (templateObject[0].name === "standoff1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width / 2 - newWidth / 2);
+            //         templateObject[0].top = rect.top + newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "standoff2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //       if (templateObject[0].name === "standoff3") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top = rect.top + (rect.height - newHeight);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "oval" ||
+            //       signData.shape == "rotated-square"
+            //     ) {
+            //       if (templateObject[0].name === "standoff1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "standoff2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-left" ||
+            //       signData.shape == "arrow-left"
+            //     ) {
+            //       if (templateObject[0].name === "standoff1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "standoff2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (
+            //       signData.shape == "turn-right" ||
+            //       signData.shape == "arrow-right"
+            //     ) {
+            //       if (templateObject[0].name === "standoff1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "standoff2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width - newWidth) - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //     if (signData.shape == "stop") {
+            //       if (templateObject[0].name === "standoff1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //       if (templateObject[0].name === "standoff2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width - newWidth);
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "flag") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides" ||
+            //       signData.shape == "turn-right" ||
+            //       signData.shape == "turn-left"
+            //     ) {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "flag1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left - newWidth / 2;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "flag1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left - newWidth / 2;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 4 - newHeight / 2);
+            //         }
+            //         if (templateObject[0].name === "flag2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left = rect.left - newWidth / 2;
+            //           templateObject[0].top =
+            //             rect.top + ((rect.height / 4) * 3 - newHeight / 2);
+            //         }
+            //       }
+            //     }
+            //     if (signData.shape == "turn-left") {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "flag1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left =
+            //             rect.left + rect.width - newWidth / 2;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 2 - newHeight / 2);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "flag1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left =
+            //             rect.left + rect.width - newWidth / 2;
+            //           templateObject[0].top =
+            //             rect.top + (rect.height / 4 - newHeight / 2);
+            //         }
+            //         if (templateObject[0].name === "flag2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+            //           var newWidth =
+            //             templateObject[0].width * templateObject[0].scaleX;
+    
+            //           templateObject[0].left =
+            //             rect.left + rect.width - newWidth / 2;
+            //           templateObject[0].top =
+            //             rect.top + ((rect.height / 4) * 3 - newHeight / 2);
+            //         }
+            //       }
+            //     }
+            //     if (signData.shape == "oval" || signData.shape == "stop") {
+            //       if (templateObject[0].name === "flag1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + (rect.height / 2 - newHeight / 2);
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "table-stand") {
+            //     if (
+            //       selectedShape == "square" ||
+            //       selectedShape == "rounded-square"
+            //     ) {
+            //       if (templateObject[0].name === "table-stand") {
+            //         templateObject[0].left = rect.left - 10;
+            //         templateObject[0].top = rect.top + rect.height;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "ceiling") {
+            //     if (
+            //       selectedShape == "square" ||
+            //       selectedShape == "rounded-square" ||
+            //       selectedShape == "rounded-top" ||
+            //       selectedShape == "rounded-sides"
+            //     ) {
+            //       if (templateObject[0].name === "ceiling1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "ceiling2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //     }
+            //     if (selectedShape == "turn-left") {
+            //       if (templateObject[0].name === "ceiling1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left =
+            //           rect.left + (rect.width / 5) * 3.5 - newWidth;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "ceiling2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //     }
+            //     if (selectedShape == "turn-right") {
+            //       if (templateObject[0].name === "ceiling1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "ceiling2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + (rect.width / 5) * 1.5;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //     }
+            //     if (selectedShape == "oval" || selectedShape == "stop") {
+            //       if (templateObject[0].name === "ceiling1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left =
+            //           rect.left + rect.width / 2 - newWidth / 2;
+            //         templateObject[0].top = rect.top - newHeight / 2;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "hanging") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (signData.fixingMethod.ratio == "small") {
+            //         if (templateObject[0].name === "hanging-hole") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           (templateObject[0].left = rect.left + rect.width / 2 - 15),
+            //             (templateObject[0].top = rect.top + 15);
+            //         }
+            //       }
+            //       if (signData.fixingMethod.ratio == "big") {
+            //         if (templateObject[0].name === "hanging-hole1") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           (templateObject[0].left = rect.left + rect.width / 8 - 15),
+            //             (templateObject[0].top = rect.top + 15);
+            //         }
+            //         if (templateObject[0].name === "hanging-hole2") {
+            //           var newHeight =
+            //             templateObject[0].height * templateObject[0].scaleY;
+    
+            //           (templateObject[0].left =
+            //             rect.left + (rect.width / 8) * 7 - 15),
+            //             (templateObject[0].top = rect.top + 15);
+            //         }
+            //       }
+            //     }
+            //     if (
+            //       selectedShape == "oval" ||
+            //       selectedShape == "stop" ||
+            //       selectedShape == "triangle" ||
+            //       selectedShape == "rotated-square"
+            //     ) {
+            //       if (templateObject[0].name === "hanging-hole") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         (templateObject[0].left =
+            //           rect.left + rect.width / 2 - rect.height * 0.04),
+            //           (templateObject[0].top = rect.top + 20);
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "pole-attachment") {
+            //     if (templateObject[0].name === "pole") {
+            //       var newHeight =
+            //         templateObject[0].height * templateObject[0].scaleY;
+    
+            //       (templateObject[0].left =
+            //         rect.left + rect.width / 2 - rect.width / 4 / 2),
+            //         (templateObject[0].top = rect.top - rect.height / 2);
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "table-clamp") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (templateObject[0].name === "table-clamp1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
+            //         templateObject[0].top = rect.top + rect.height - newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "table-clamp2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
+            //         templateObject[0].top = rect.top + rect.height - newHeight / 2;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "base-support") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       signData.shape == "rounded-square" ||
+            //       signData.shape == "rounded-top" ||
+            //       signData.shape == "rounded-sides"
+            //     ) {
+            //       if (templateObject[0].name === "base-support1") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + rect.width / 5 - newWidth;
+            //         templateObject[0].top = rect.top + rect.height - newHeight + 5;
+            //       }
+            //       if (templateObject[0].name === "base-support2") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left + (rect.width / 5) * 4;
+            //         templateObject[0].top = rect.top + rect.height - newHeight + 5;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "sign-holder") {
+            //     if (signData.shape == "square") {
+            //       if (templateObject[0].name === "sign-holder-top") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top = rect.top - newHeight + newHeight / 2;
+            //       }
+            //       if (templateObject[0].name === "sign-holder-bottom") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top = rect.top + rect.height - newHeight / 2;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "roll-up") {
+            //     if (signData.shape == "square") {
+            //       if (templateObject[0].name === "sign-holder-top") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top = rect.top - newHeight;
+            //       }
+            //       if (templateObject[0].name === "sign-holder-bottom") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+    
+            //         templateObject[0].left = rect.left;
+            //         templateObject[0].top = rect.top + rect.height;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "eyelets") {
+            //   }
+            //   if (signData.fixingMethod.type == "keyring") {
+            //     if (
+            //       signData.shape == "square" ||
+            //       selectedShape == "rounded-square" ||
+            //       selectedShape == "rounded-top" ||
+            //       selectedShape == "rounded-sides"
+            //     ) {
+            //       if (templateObject[0].name === "keyring") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left - newWidth / 2.5;
+            //         templateObject[0].top = rect.top - newHeight / 1.4;
+            //       }
+            //       if (templateObject[0].name === "keyring-hole") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left = rect.left + 13;
+            //         templateObject[0].top = rect.top + 13;
+            //       }
+            //     }
+            //     if (signData.shape == "oval" || selectedShape == "stop") {
+            //       if (templateObject[0].name === "keyring") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + rect.width / 2 - newWidth / 2;
+            //         templateObject[0].top = rect.top - newHeight / 1.4;
+            //       }
+            //       if (templateObject[0].name === "keyring-hole") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+            //         var newRadius = rect.height * 0.05;
+    
+            //         templateObject[0].left = rect.left + rect.width / 2 - newRadius;
+    
+            //         templateObject[0].top = rect.top + 15;
+            //       }
+            //     }
+            //     if (signData.shape == "rotated-square") {
+            //       if (templateObject[0].name === "keyring") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + rect.width / 2 - newWidth / 2;
+            //         templateObject[0].top = rect.top - newHeight / 1.4;
+            //       }
+            //       if (templateObject[0].name === "keyring-hole") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+            //         var newRadius = rect.height * 0.05;
+    
+            //         templateObject[0].left = rect.left + rect.width / 2 - newRadius;
+            //         templateObject[0].top = rect.top + 15;
+            //       }
+            //     }
+            //     if (signData.shape == "triangle") {
+            //       if (templateObject[0].name === "keyring") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+    
+            //         templateObject[0].left =
+            //           rect.left + rect.width / 2 - newWidth / 2;
+            //         templateObject[0].top =
+            //           rect.top + rect.height / 10 - newHeight / 1.2;
+            //       }
+            //       if (templateObject[0].name === "keyring-hole") {
+            //         var newHeight =
+            //           templateObject[0].height * templateObject[0].scaleY;
+            //         var newWidth =
+            //           templateObject[0].width * templateObject[0].scaleX;
+            //         var newRadius = rect.height * 0.05;
+    
+            //         templateObject[0].left = rect.left + rect.width / 2 - newRadius;
+            //         templateObject[0].top = rect.top + rect.height / 10;
+            //       }
+            //     }
+            //   }
+            //   if (signData.fixingMethod.type == "s-hook") {
+            //   }
+            // }
+    
+            let maxTemplateId = Math.max(findMaxId(addedTexts), findMaxId(addedImages))
+            if(maxTemplateId > newId){
+              newId = maxTemplateId
+            }
+    
+            // canva.add(...templateObject);
+            resolve(templateObject[0]);
+          });
+        })
       )
     );
 
-    loadedObjects.forEach((obj, index) => {
+    loadedObjects.forEach((obj, index) => {      
       canva.add(obj);
       canva.moveTo(obj, index); // Force la position z-index
     });
   }
 
-  addedTexts = [];
-  addedImages = [];
+  addedTexts = []
+  addedImages = []
 
   await loadFromJSON(canvas, canvas1Json);
   activeBorder = signData.border.face1.type;
@@ -11625,8 +11246,8 @@ async function handleLoadTemplateData(
     activeBorderColor2 = signData.border.face2.codeHex;
   }
 
-  var currentSizeValues = handleGetSignPosition();
-  maxTextCharForSize = signData.size.maxChars;
+  var currentSizeValues = handleGetSignPosition()
+  maxTextCharForSize = signData.size.maxChars
 
   handleGetShape(templateData.shape);
   // console.log(currentSizeValues)
@@ -11635,7 +11256,7 @@ async function handleLoadTemplateData(
   sizeRatio = templateData.fixingMethod.ratio;
   fixScale = templateData.fixingMethod.scale;
   ratioScale = templateData.size.ratioScale;
-  activeFixingMethode = templateData.fixingMethod.type;
+  activeFixingMethode = templateData.fixingMethod.type
 
   var sign = handleGetObjectByName("safeObject");
   function setMeasurmentValue(canvas) {
@@ -11687,15 +11308,11 @@ async function handleLoadTemplateData(
     });
     canvas.renderAll();
   }
-  if (templateData.shape != "cut-to-shape") {
+  if(templateData.shape != "cut-to-shape"){
     setMeasurmentValue(canvas);
     setMeasurmentValue(backCanvas);
-  } else {
-    setOutlineMeasurmentValue(
-      sign[0],
-      signData.size.width,
-      signData.size.height
-    );
+  }else{
+    setOutlineMeasurmentValue(sign[0], signData.size.width, signData.size.height)
   }
 
   if (templateData.size.maxChars != -1) {
@@ -11727,25 +11344,22 @@ async function handleLoadTemplateData(
           obj.text = obj.text.slice(0, obj.text.length - charsToRemove);
           obj.set("text", obj.text);
 
-          if (textType === "3D") {
-            var textLayer = null;
+          if(textType === "3D"){
+            var textLayer = null
             var objects = activeCanvas.getObjects();
-            objects.forEach(function (object) {
-              if (object.id == obj.id && object.name == "asowp-SignTextLayer") {
-                textLayer = object;
+            objects.forEach(function(object) {
+              if(object.id == obj.id && object.name == "asowp-SignTextLayer"){
+                textLayer = object
               }
-            });
-
-            activeCanvas.remove(textLayer);
-
-            textLayer.text = textLayer.text.slice(
-              0,
-              obj.text.length - charsToRemove
-            );
+            })
+      
+            activeCanvas.remove(textLayer)
+            
+            textLayer.text = textLayer.text.slice( 0, obj.text.length - charsToRemove);
             textLayer.set("text", obj.text);
-
-            activeCanvas.add(textLayer);
-          }
+      
+            activeCanvas.add(textLayer)
+          } 
 
           canva.add(obj);
           obj.set("scaleX", obj.scaleX + 0.001);
@@ -11760,11 +11374,7 @@ async function handleLoadTemplateData(
 
           canva.getObjects().forEach(function (obj) {
             if (obj.name === "asowp-SignText") {
-              function syncTextObjectsByFace(
-                bigArray,
-                textObjects,
-                targetFace
-              ) {
+              function syncTextObjectsByFace( bigArray, textObjects, targetFace ) {
                 // Parcourir les objets du grand tableau qui ont la face cible
                 bigArray.forEach((bigObj, index) => {
                   // console.log(bigObj.canvasName,"can")
@@ -11788,11 +11398,7 @@ async function handleLoadTemplateData(
 
                 return bigArray;
               }
-              addedTexts = syncTextObjectsByFace(
-                addedTexts,
-                textObjects,
-                canva.name
-              );
+              addedTexts = syncTextObjectsByFace( addedTexts, textObjects, canva.name );
               // console.log(addedTexts, "1969089151")
             }
           });
@@ -11810,17 +11416,17 @@ async function handleLoadTemplateData(
     }
     adjustTextCharacters(FtextObjects, maxChar, canvas);
     adjustTextCharacters(BtextObjects, maxChar, backCanvas);
-  } else {
+  }else{
     FtextObjects = handleGetTextObjects1("asowp-SignText");
     BtextObjects = handleGetTextObjects2("asowp-SignText");
   }
   frontTextCharLength = sumOptionsPrice(FtextObjects, "text").length;
   backTextCharLength = sumOptionsPrice(BtextObjects, "text").length;
-  handleSetPrice();
+  handleSetPrice()
 
-  if (textType == "3D") {
-    replace3DLayer(canvas);
-    replace3DLayer(backCanvas);
+  if(textType == "3D"){
+    replace3DLayer(canvas)
+    replace3DLayer(backCanvas)
   }
 
   firstLoad = true;
@@ -11832,16 +11438,21 @@ async function handleLoadTemplateData(
   };
 }
 
-function replace3DLayer(canva) {}
+function replace3DLayer(canva){
+}
+
+
 
 async function handleGenSvgDesignImg(canva, width, height) {
-  const imageData = canva.getContext().getImageData(0, 0, width, height);
+  const imageData = canva.getContext().getImageData(0, 0, width, height)
 
-  let svgPaths = await genSvgPath(imageData);
+  let svgPaths = await genSvgPath(imageData)
 
-  console.log(svgPaths);
-  return svgPaths;
+  console.log(svgPaths)
+  return svgPaths
 }
+
+
 
 function handleFinishConfiguration(textsTable, imagesTable, qrCodesTable) {
   var textsValues = [];
@@ -11897,14 +11508,8 @@ function handleFinishConfiguration(textsTable, imagesTable, qrCodesTable) {
           fontFamily: text.fontFamily,
           color: text.fill,
           neonColor: textType == "neon" ? text.neonColor : null,
-          firstBorder:
-            textType == "3D"
-              ? { size: text.strokeWidth, color: text.stroke }
-              : null,
-          secondBorder:
-            textType == "3D"
-              ? { size: text.secondStrokeWidth, color: text.secondStroke }
-              : null,
+          firstBorder: textType == "3D" ? {size: text.strokeWidth, color: text.stroke} : null,
+          secondBorder: textType == "3D" ? {size: text.secondStrokeWidth, color: text.secondStroke} : null,
           side: textType == "3D" ? text.activeSide : null,
           sideColor: textType == "3D" ? text.sideColor : null,
           underlined: text.underline,
@@ -12049,5 +11654,5 @@ export {
   handleGenSvgDesignImg,
   showLoader,
   handleGetCutlineData,
-  handleGetMaterialType,
+  handleGetMaterialType
 };
