@@ -2511,6 +2511,42 @@
             </div>
         </div>
 
+        <div v-if="showNoTextModal" class="asowp-absolute asowp-z-20 asowp-top-0 asowp-w-full asowp-h-full asowp-flex asowp-full-center asowp-bg-black/40 asowp-backdrop-blur-sm">
+            <div class="asowp-w-[85%] lg:asowp-w-[35%] asowp-bg-white asowp-rounded-2xl asowp-shadow-2xl asowp-p-6 asowp-space-y-4">
+                <div class="asowp-flex asowp-items-center asowp-justify-between">
+                    <h3 class="asowp-text-lg asowp-font-semibold asowp-text-gray-900">
+                        {{
+                          noTextModalType === 'font'
+                            ? (configVisualiserTexts.textNoFontModalTitle && configVisualiserTexts.textNoFontModalTitle.trim() !== '' ? configVisualiserTexts.textNoFontModalTitle : 'No fonts available')
+                            : (configVisualiserTexts.textNoTextModalTitle && configVisualiserTexts.textNoTextModalTitle.trim() !== '' ? configVisualiserTexts.textNoTextModalTitle : 'Add text to continue')
+                        }}
+                    </h3>
+                    <button @click="closeNoTextModal" class="asowp-text-gray-500 hover:asowp-text-gray-700 asowp-bg-transparent asowp-border-none asowp-cursor-pointer">
+                        ✕
+                    </button>
+                </div>
+                <p class="asowp-text-sm asowp-text-gray-600">
+                    {{
+                      noTextModalType === 'font'
+                        ? (configVisualiserTexts.textNoFontModalMessage && configVisualiserTexts.textNoFontModalMessage.trim() !== '' ? configVisualiserTexts.textNoFontModalMessage : 'Please add at least one font to continue.')
+                        : (configVisualiserTexts.textNoTextModalMessage && configVisualiserTexts.textNoTextModalMessage.trim() !== '' ? configVisualiserTexts.textNoTextModalMessage : 'Please add a text to continue.')
+                    }}
+                </p>
+                <div class="asowp-flex asowp-justify-end">
+                    <button
+                        @click="closeNoTextModal"
+                        :class="`asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-px-5 asowp-py-2 asowp-rounded-full asowp-text-sm asowp-font-semibold asowp-border-none asowp-cursor-pointer asowp-base-animation`"
+                    >
+                        {{
+                          noTextModalType === 'font'
+                            ? (configVisualiserTexts.textNoFontModalButton && configVisualiserTexts.textNoFontModalButton.trim() !== '' ? configVisualiserTexts.textNoFontModalButton : 'Got it')
+                            : (configVisualiserTexts.textNoTextModalButton && configVisualiserTexts.textNoTextModalButton.trim() !== '' ? configVisualiserTexts.textNoTextModalButton : 'Got it')
+                        }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- <div v-if="!finishLoading && !finish" :class="`asowp-absolute asowp-z-20 asowp-top-0 asowp-bg-[${configColors.bars.reset.modalBackgroundColor}]/70 aso asowp-w-full asowp-h-full asowp-flex asowp-full-center`">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="asowp-w-[40%] asowp-h-[30%]" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g>
@@ -2521,6 +2557,24 @@
                 </g>
             </svg>
         </div> -->
+
+        <div v-if="isCutToShapeLoading" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-flex-col asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/30 asowp-backdrop-blur-md asowp-z-20 asowp-gap-3">
+            <span :class="`asowp-flex asowp-text-cyan-600`">
+                <svg class="asowp-w-[120px] aswop-h-[120px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+            </span>
+            <p class="asowp-text-sm asowp-font-semibold asowp-text-white">
+                {{ configVisualiserTexts.textShape && configVisualiserTexts.textShape.trim() !== '' ? configVisualiserTexts.textShape : 'Cut to shape' }}...
+            </p>
+        </div>
+
+        <div v-if="isTextContourLoading" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-flex-col asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/25 asowp-backdrop-blur-sm asowp-z-20 asowp-gap-3">
+            <span :class="`asowp-flex asowp-text-cyan-600`">
+                <svg class="asowp-w-[100px] aswop-h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="currentColor"></stop><stop offset=".3" stop-color="currentColor" stop-opacity=".9"></stop><stop offset=".6" stop-color="currentColor" stop-opacity=".6"></stop><stop offset=".8" stop-color="currentColor" stop-opacity=".3"></stop><stop offset="1" stop-color="currentColor" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="14" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="currentColor" stroke-width="14" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+            </span>
+            <p class="asowp-text-sm asowp-font-semibold asowp-text-white">
+                {{ configVisualiserTexts.textBorder && configVisualiserTexts.textBorder.trim() !== '' ? configVisualiserTexts.textBorder : 'Text border' }}...
+            </p>
+        </div>
 
         <div v-if="isLoading || removeBgImageLoading" class="asowp-absolute asowp-left-0 asowp-top-0 asowp-flex asowp-justify-center asowp-items-center asowp-w-full asowp-h-full asowp-bg-black/30 asowp-backdrop-blur-md asowp-z-10">
             <span :class="`asowp-flex asowp-text-cyan-600`">
@@ -2713,6 +2767,18 @@
         {name: "Blueify", value: "blueify", image: "../../../../../assets/images/filters/im_blueify_filter.png"},
     ])
     var isLoading = ref(false)
+    var isCutToShapeLoading = ref(false)
+    var isTextContourLoading = ref(false)
+    let textContourLoadingTimer = null
+    function startTextContourLoading(){
+        isTextContourLoading.value = true
+        if(textContourLoadingTimer){
+            clearTimeout(textContourLoadingTimer)
+        }
+        textContourLoadingTimer = setTimeout(() => {
+            isTextContourLoading.value = false
+        }, 400)
+    }
 
     var selectText = ref(false);
     var editImage = ref(false);
@@ -3748,6 +3814,15 @@
     var resetAllBool = ref(false)
     function confirmResetAll(value){
         resetAllBool.value = value
+    }
+    var showNoTextModal = ref(false)
+    var noTextModalType = ref('text')
+    function closeNoTextModal(){
+        showNoTextModal.value = false
+    }
+    function openNoTextModal(type = 'text'){
+        noTextModalType.value = type
+        showNoTextModal.value = true
     }
     var resetType = ref("simple")
     async function clearAll() {
@@ -5185,6 +5260,10 @@
     async function selectShape(shape, setting, shapeId){
         // currentShapeId.value = setting.shapeId
         selectedShape.value = shape
+        const shouldShowCutLoader = shape === 'cut-to-shape'
+        if(shouldShowCutLoader){
+            isCutToShapeLoading.value = true
+        }
         currentShapeId.value = shapeId
         if(fixingExcludeShapes.value.includes(shapeId)){
             // if(activeFixingId === matchingFixings.value.length-1){
@@ -5236,22 +5315,28 @@
             }
         }
 
-        let signObject = handleGetObjectByName("safeObject")
-        if(signObject.shapeType == "cut-to-shape"){
-            currentSizeValues.value = handleMiseAEchelle(sizees.value[0].width, sizees.value[0].height)
-            handleGetShape(shape)
-            let sizee = sizees.value[0]
+        try{
+            let signObject = handleGetObjectByName("safeObject")
+            if(signObject.shapeType == "cut-to-shape"){
+                currentSizeValues.value = handleMiseAEchelle(sizees.value[0].width, sizees.value[0].height)
+                handleGetShape(shape)
+                let sizee = sizees.value[0]
 
-            handleChangeSize(sizee.width, sizee.height, sizee.name, sizee.maxTextChar)
-            currentSizeName.value = sizee.label
-            currentSizeData.value = {label: sizee.label, width:sizee.width, height:sizee.height}
-        }else{
-            currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, (setting.shapeSize ? setting.shapeSize : null))
-            // currentSizeData.value = {
-            //     name: "",
-            //     width: realSize.width,
-            //     height: realSize.height,
-            // }
+                handleChangeSize(sizee.width, sizee.height, sizee.name, sizee.maxTextChar)
+                currentSizeName.value = sizee.label
+                currentSizeData.value = {label: sizee.label, width:sizee.width, height:sizee.height}
+            }else{
+                currentSizeData.value = await handleSelectShape(shape, currentSizeValues.value.width, currentSizeValues.value.height, (setting.shapeSize ? setting.shapeSize : null))
+                // currentSizeData.value = {
+                //     name: "",
+                //     width: realSize.width,
+                //     height: realSize.height,
+                // }
+            }
+        }finally{
+            if(shouldShowCutLoader){
+                isCutToShapeLoading.value = false
+            }
         }
 
 
@@ -6182,7 +6267,21 @@
     var textNumberForSize = ref(0)
     var addedTexts = ref([])
     async function addTextToSign(){
-        addedTexts.value =  await handleAddTextToSign()
+        if(allFonts.value.length === 0){
+            openNoTextModal('font')
+            return
+        }
+        const beforeCount = addedTexts.value.length
+        try{
+            addedTexts.value =  await handleAddTextToSign()
+        }catch(e){
+            openNoTextModal('text')
+            return
+        }
+        if(beforeCount === 0 && addedTexts.value.length === 0){
+            openNoTextModal('text')
+            return
+        }
         if(addedTexts.value.length > 0){
             var index = addedTexts.value.length - 1
             if(configTextType.value != "normal"){
@@ -6332,7 +6431,11 @@
         }else{
             borderSize.value = e.target.value
         }
-        handleChangeTextBorder(layer, e.target.value)
+        startTextContourLoading()
+        const value = e.target.value
+        setTimeout(() => {
+            handleChangeTextBorder(layer, value)
+        }, 0)
     }
     var borderLineJoin = ref("round")
     function changeBorderLineJoin(join){
@@ -6348,7 +6451,10 @@
         }else{
             currentTextBorder2Color.value = color
         }
-        handleChangeTextBorderColor(firstBorder.value, color)
+        startTextContourLoading()
+        setTimeout(() => {
+            handleChangeTextBorderColor(firstBorder.value, color)
+        }, 0)
     }
     var active3dSide = ref(true)
     function show3dSide(){

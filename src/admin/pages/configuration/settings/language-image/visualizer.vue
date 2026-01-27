@@ -256,6 +256,41 @@
                 </div>
             </div>
         </div>
+        <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6">
+            <h3 class="asowp-text-[16px]">{{ __("Text Required Modal", "all-signs-options-pro") }}</h3>
+            <div class="asowp-flex asowp-justify-between">
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Title", "all-signs-options-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoTextModalTitle" class="asowp-w-full"/>
+                </div>
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Message", "all-signs-options-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoTextModalMessage" class="asowp-w-full"/>
+                </div>
+            </div>
+            <div class="asowp-flex asowp-justify-between">
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Modal Button Text", "all-signs-options-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoTextModalButton" class="asowp-w-full"/>
+                </div>
+            </div>
+            <div class="asowp-flex asowp-justify-between">
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Font Modal Title", "all-signs-options-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoFontModalTitle" class="asowp-w-full"/>
+                </div>
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Font Modal Message", "all-signs-options-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoFontModalMessage" class="asowp-w-full"/>
+                </div>
+            </div>
+            <div class="asowp-flex asowp-justify-between">
+                <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
+                    <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("No Font Modal Button Text", "all-signs-options-pro") }}</label>
+                    <input type="text" v-model="visualizer.textNoFontModalButton" class="asowp-w-full"/>
+                </div>
+            </div>
+        </div>
         <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
             <div class="asowp-bg-[#016464] asowp-rounded">
                 <button :disabled="isLoading" @click="updateVisualizerSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
@@ -327,6 +362,12 @@ const visualizer = ref({
     resetModalText:"Reset all for real ??",
     resetModalYes:"Yes",
     resetModalNo:"No",
+    textNoTextModalTitle:"Add text to continue",
+    textNoTextModalMessage:"Please add a text to continue.",
+    textNoTextModalButton:"Got it",
+    textNoFontModalTitle:"No fonts available",
+    textNoFontModalMessage:"Please add at least one font in configuration settings to continue.",
+    textNoFontModalButton:"Got it",
 
 });
 

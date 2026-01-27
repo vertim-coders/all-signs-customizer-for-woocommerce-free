@@ -21,86 +21,32 @@ class ASOWP_Frontend
         wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
         wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
         wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
-        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
+        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
         extract(shortcode_atts(['productid' => '0', 'tplid' => false], $atts, 'asowp-products'));
 
         ob_start();
         ?>
-        <div id="asowp-configurator-loader" style="height:90vh;">
-            <div class="asowp-body">
-                <div class="asowp-main">
-                    <div style="width: 100%; height: 10%; margin-top: 10px; display: flex; justify-content: space-between;">
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                        <div style="width: 31.33%; height: 100%; display: flex; justify-content: space-between;">
-                            <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
-                            </div>
-                            <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
-                            </div>
-                            <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
-                            </div>
-                        </div>
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 21.33%; height: 100%;animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                    </div>
-
-                    <div style="width: 100%; height: 90%; margin-top: 20px;">
-                        <div style="width: 100%; height: 80%; display: flex; justify-content: center; align-items: center;">
-                            <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 40%; height: 50%;animation: pulseGradient 1.5s ease infinite;">
-                            </div>
-                        </div>
-
-                        <div
-                            style="width: 100%; height: 20%; display: flex; justify-items: center; justify-content: center; align-items: center;">
-                            <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;animation: pulseGradient 1.5s ease infinite;">
-                            </div>
-                            <div
-                                style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;animation: pulseGradient 1.5s ease infinite;">
-                            </div>
-                            <div
-                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
-                            </div>
-                            <div
-                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
-                            </div>
-                            <div
-                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
-                            </div>
-                            <div
-                                style="animation: pulseGradient 1.5s ease infinite; background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 7%; height: 60%; margin-left: 5px; margin-right: 5px;">
-                            </div>
-                        </div>
-                    </div>
+        <div id="asowp-configurator-loader" class="asowp-configurator-skeleton">
+            <div class="asowp-configurator-skeleton__top">
+                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+            </div>
+            <div class="asowp-configurator-skeleton__main">
+                <div class="asowp-skeleton asowp-skeleton-canvas"></div>
+                <div class="asowp-configurator-skeleton__sidebar">
+                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
+                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
+                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
                 </div>
-                <div class="asowp-sidebar">
-                    <div class="asowp-sideBar-option1"> </div>
-                    <div class="asowp-sideBar-option2">
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 10%; animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 10%; margin-top: 20px; animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                    </div>
-                    <div class="asowp-mobile-options">
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 33%; margin-top: 10px; animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 33%; margin-top: 10px; animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                        <div
-                            style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 90%; height: 33%; margin-top: 10px; animation: pulseGradient 1.5s ease infinite;">
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="asowp-configurator-skeleton__bottom">
+                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                <div class="asowp-skeleton asowp-skeleton-chip"></div>
             </div>
         </div>
         <?php
@@ -224,27 +170,52 @@ class ASOWP_Frontend
         wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
         wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
         wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
-        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
+        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
 
         extract(shortcode_atts(['productid' => '0', 'cols' => '3'], $atts, 'asowp-products'));
 
         ob_start();
         ?>
         <div id="asowp-templates-loader">
-            <div class="asowp-grid-container">
-                <div style="display: flex; flex-direction: column; height: 100%;">
-                    <div class="asowp-loader-container"
-                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+            <div class="asowp-templates-skeleton-grid">
+                <div class="asowp-skeleton-card">
+                    <div class="asowp-skeleton asowp-skeleton-image"></div>
+                    <div class="asowp-skeleton-body">
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column; height: 100%;">
-                    <div class="asowp-loader-container"
-                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                <div class="asowp-skeleton-card">
+                    <div class="asowp-skeleton asowp-skeleton-image"></div>
+                    <div class="asowp-skeleton-body">
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column; height: 100%;">
-                    <div class="asowp-loader-container"
-                        style="background: linear-gradient(to right, #a1a1a1, #e4e4e7, #a1a1a1); width: 100%; height: 100%;">
+                <div class="asowp-skeleton-card">
+                    <div class="asowp-skeleton asowp-skeleton-image"></div>
+                    <div class="asowp-skeleton-body">
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
+                    </div>
+                </div>
+                <div class="asowp-skeleton-card">
+                    <div class="asowp-skeleton asowp-skeleton-image"></div>
+                    <div class="asowp-skeleton-body">
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
+                        <div class="asowp-skeleton asowp-skeleton-button"></div>
                     </div>
                 </div>
             </div>

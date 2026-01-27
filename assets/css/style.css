@@ -203,6 +203,119 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   height: 50vh;
 }
 
+.asowp-skeleton {
+  background: linear-gradient(90deg, #e5e7eb 0%, #f3f4f6 50%, #e5e7eb 100%);
+  background-size: 200% 100%;
+  animation: pulseGradient 1.5s ease infinite;
+}
+
+.asowp-templates-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 12px;
+  width: 100%;
+  height: 100%;
+}
+
+.asowp-skeleton-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.asowp-skeleton-image {
+  height: 220px;
+}
+
+.asowp-skeleton-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.asowp-skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.asowp-skeleton-line--lg {
+  width: 70%;
+}
+
+.asowp-skeleton-line--md {
+  width: 45%;
+}
+
+.asowp-skeleton-line--sm {
+  width: 30%;
+}
+
+.asowp-skeleton-button {
+  height: 32px;
+  border-radius: 8px;
+}
+
+.asowp-configurator-skeleton {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.asowp-configurator-skeleton__top {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.asowp-skeleton-pill {
+  height: 24px;
+  border-radius: 999px;
+}
+
+.asowp-configurator-skeleton__main {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.asowp-skeleton-canvas {
+  height: 60vh;
+  border-radius: 16px;
+}
+
+.asowp-configurator-skeleton__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.asowp-skeleton-panel {
+  height: 120px;
+  border-radius: 12px;
+}
+
+.asowp-configurator-skeleton__bottom {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.asowp-skeleton-chip {
+  width: 70px;
+  height: 24px;
+  border-radius: 999px;
+}
+
 .asowp-grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -216,6 +329,18 @@ td.is_asowp_customizable.column-is_asowp_customizable {
   #asowp-templates-loader {
     width: 100%;
     height: 60vh;
+  }
+  .asowp-templates-skeleton-grid {
+    grid-template-columns: 1fr;
+  }
+  .asowp-skeleton-image {
+    height: 200px;
+  }
+  .asowp-configurator-skeleton__main {
+    grid-template-columns: 1fr;
+  }
+  .asowp-configurator-skeleton__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .asowp-grid-container {
     grid-template-columns: 1fr;
