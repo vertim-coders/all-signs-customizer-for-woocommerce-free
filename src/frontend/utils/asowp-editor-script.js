@@ -3997,8 +3997,9 @@ async function handleShowCutline(canva){
 
     const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
     let sign = safeObject._objects?.filter(path => path.d && !path.d.includes(target))
-    let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0].fill)
-    let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0].fill)
+    console.log(sign, "signcutline")
+    let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0]?.fill)
+    let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0]?.fill)
 
     // console.log(sign, "****")
 
