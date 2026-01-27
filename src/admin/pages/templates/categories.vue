@@ -130,7 +130,12 @@
           {{ __("No categories yet", "all-signs-options-pro") }}
         </h3>
         <p class="asowp-text-sm asowp-text-gray-500 asowp-mb-4">
-          {{ __("Get started by creating your first template category.", "all-signs-options-pro") }}
+          {{
+            __(
+              "Get started by creating your first template category.",
+              "all-signs-options-pro",
+            )
+          }}
         </p>
         <button
           @click="openModal = true"
@@ -157,13 +162,23 @@
         >
           <div class="asowp-mb-6">
             <h3 class="asowp-text-lg asowp-font-bold asowp-text-gray-900">
-              {{ isEdit ? __("Update category", "all-signs-options-pro") : __("Create new category", "all-signs-options-pro") }}
+              {{
+                isEdit
+                  ? __("Update category", "all-signs-options-pro")
+                  : __("Create new category", "all-signs-options-pro")
+              }}
             </h3>
             <p class="asowp-text-sm asowp-text-gray-500 asowp-mt-1">
               {{
                 isEdit
-                  ? __("Change the name of your category below.", "all-signs-options-pro")
-                  : __("Give your new category a descriptive name.", "all-signs-options-pro")
+                  ? __(
+                      "Change the name of your category below.",
+                      "all-signs-options-pro",
+                    )
+                  : __(
+                      "Give your new category a descriptive name.",
+                      "all-signs-options-pro",
+                    )
               }}
             </p>
           </div>
@@ -267,11 +282,16 @@
               {{ __("Delete Category", "all-signs-options-pro") }}
             </h3>
             <p class="asowp-text-sm asowp-text-gray-500 asowp-mt-2">
-              {{ __("Are you sure you want to delete", "all-signs-options-pro") }}
+              {{
+                __("Are you sure you want to delete", "all-signs-options-pro")
+              }}
               <span class="asowp-font-semibold">{{ category }}</span
               >?
               {{
-                __("This action cannot be undone and may affect templates in this category.", "all-signs-options-pro")
+                __(
+                  "This action cannot be undone and may affect templates in this category.",
+                  "all-signs-options-pro",
+                )
               }}
             </p>
           </div>
@@ -288,7 +308,11 @@
               class="asowp-px-4 asowp-py-2 asowp-text-sm asowp-font-medium asowp-text-white asowp-bg-red-600 asowp-rounded-lg asowp-border-none hover:asowp-bg-red-700 asowp-cursor-pointer"
               :disabled="isLoading"
             >
-              {{ isLoading ? __("Deleting...", "all-signs-options-pro") : __("Delete Category", "all-signs-options-pro") }}
+              {{
+                isLoading
+                  ? __("Deleting...", "all-signs-options-pro")
+                  : __("Delete Category", "all-signs-options-pro")
+              }}
             </button>
           </div>
         </div>
@@ -304,7 +328,7 @@ import { toastMessage } from "@/admin/utils/functions";
 import { __ } from "@wordpress/i18n";
 // Import du helper t
 
-const categories = ref([]);
+const categories = ref({});
 const openModal = ref(false);
 const category = ref("");
 const isLoading = ref(false);
@@ -312,16 +336,23 @@ const isEdit = ref(false);
 const category_id = ref("");
 const isDelete = ref(false);
 
+const normalizeCategories = (value) => {
+  if (!value || typeof value !== "object") {
+    return {};
+  }
+  return value;
+};
+
 onMounted(async () => {
-  const res = await api.getCategories();
-  categories.value = res.categories;
+  const res = await api.getAllCategories();
+  categories.value = normalizeCategories(res);
 });
 
 const createCategory = async () => {
   isLoading.value = true;
   const res = await api.createCategory(category.value);
   if (res.success) {
-    categories.value = res.categories;
+    categories.value = normalizeCategories(res?.categories);
     isLoading.value = false;
     closeModal();
     toastMessage(res.message);
@@ -335,7 +366,7 @@ const updateCategory = async () => {
   isLoading.value = true;
   const update = await api.updateCategory(category_id.value, category.value);
   if (update.success) {
-    categories.value = update.categories;
+    categories.value = normalizeCategories(update?.categories);
     isLoading.value = false;
     closeModal();
     if (update.success == true) {
@@ -355,7 +386,7 @@ const deleteCategory = async () => {
   const del = await api.deleteCategory(category_id.value);
   if (del.success) {
     isLoading.value = false;
-    categories.value = del.categories;
+    categories.value = normalizeCategories(del?.categories);
     closeModal();
     toastMessage(del.message);
   } else {

@@ -2,7 +2,7 @@
   <div class="asowp-mt-2">
     <div
       v-if="!isFetching"
-      class="asowp-space-y-1 asowp-rounded-xl asowp-sticky asowp-top-[80px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#f9f9f9] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
+      class="asowp-space-y-1 asowp-rounded-xl asowp-sticky asowp-top-[30px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#f9f9f9] asowp-border asowp-border-solid asowp-border-[#e6e6e6]"
     >
       <div
         class="asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex"

@@ -1168,6 +1168,33 @@ const selectedProductMeta = computed(() => {
 
 const demoManuallySelected = ref(false);
 
+const visualizerDefaults = {
+  textNoTextModalTitle: "Add text to continue",
+  textNoTextModalMessage: "Please add a text to continue.",
+  textNoTextModalButton: "Got it",
+  textNoFontModalTitle: "No fonts available",
+  textNoFontModalMessage:
+    "Please add at least one font in configuration settings to continue.",
+  textNoFontModalButton: "Got it",
+};
+
+const ensureVisualizerDefaults = (settings) => {
+  if (!settings || typeof settings !== "object") return;
+  if (!settings.languageImages || typeof settings.languageImages !== "object") {
+    settings.languageImages = {};
+  }
+  if (
+    !settings.languageImages.visualizer ||
+    typeof settings.languageImages.visualizer !== "object"
+  ) {
+    settings.languageImages.visualizer = {};
+  }
+  settings.languageImages.visualizer = {
+    ...visualizerDefaults,
+    ...settings.languageImages.visualizer,
+  };
+};
+
 const normalizeKey = (value) =>
   String(value || "")
     .trim()
@@ -1445,7 +1472,9 @@ const includeMetaData = (isInclude) => {
   const tpl = ensureSelectedDemo();
   if (isInclude) {
     const payload = tpl?.data || defaultSettings.value;
-    newConfig.value.data = stripIdsDeep(payload);
+    const mergedPayload = stripIdsDeep(payload);
+    ensureVisualizerDefaults(mergedPayload.settings);
+    newConfig.value.data = mergedPayload;
     addNewConfig(newConfig.value);
   } else {
     const payload = {
@@ -1453,6 +1482,7 @@ const includeMetaData = (isInclude) => {
       additionalOptions: [],
       materials: [],
     };
+    ensureVisualizerDefaults(payload.settings);
 
     const firstMaterial = tpl?.data?.materials?.[0];
     if (firstMaterial) {

@@ -7,7 +7,7 @@
         </div>
         
         <div class="asowp-bg-white asowp-translate-y-2 asowp-bg-[#fff] asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9] asowp-justify-center asowp-items-center asowp-flex">
-            <div class="">
+            <div class="" v-if="!actualLink.includes(excludeLink)">
                 <button @click="router.push('/global-settings/license')" :class="`asowp-flex asowp-w-fit asowp-h-fit asowp-p-4 asowp-bg-transparent asowp-text-black ${route.name == 'global-settings-license' ? 'asowp-border-b-[2px] asowp-border-r-0 asowp-border-l-0 asowp-border-t-0 asowp-border-solid asowp-border-b-[#016464] asowp-text-[#016464] asowp-font-bold' : 'asowp-border-none'} asowp-cursor-pointer asowp-space-x-2 asowp-items-center` ">
                     <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 7C13.1 7 14 7.9 14 9C14 10.1 13.1 11 12 11C10.9 11 10 10.1 10 9C10 7.9 10.9 7 12 7ZM15 17H9V15.5C9 14.5 11 13.9 12 13.9C13 13.9 15 14.5 15 15.5V17Z" fill="currentColor"/>
@@ -74,7 +74,7 @@
     </div>
         
     <div>
-        <Licences v-if="$route.name == 'global-settings-license'"/>
+        <Licences v-if="$route.name == 'global-settings-license' && !actualLink.includes(excludeLink)"/>
         <ConfigurationPage v-if="$route.name == 'global-settings-configuration-page'"/>
         <Output v-if="$route.name == 'global-settings-output'"/>
         <Shapes v-if="$route.name == 'global-settings-shapes'"/>
@@ -91,10 +91,11 @@ import FixingMethods from './fixing-methods/index.vue'
 import Border from './border/index.vue'
 import { useRoute } from 'vue-router';
 import router from '@/admin/router'
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 // Import du helper de traduction
-
+var excludeLink = ref("https://signsdesigner.us/public-demos");
+var actualLink = ref(window.location.href)
 const route = useRoute();
 
 onMounted(() => {
