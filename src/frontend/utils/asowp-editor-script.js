@@ -3878,6 +3878,8 @@ async function resetCutline(canva){
 async function handleShowCutline(canva){
   await resetCutline(canvas)
 
+  console.log("Affichage des cutlines:", selectedCutline);
+
   let safeObject = handleGetObjectByName("safeObject", canva)
   let cutline1 = null
   let cutline2 = null
@@ -3997,9 +3999,13 @@ async function handleShowCutline(canva){
 
     const target = ` L ${canvas.getWidth()} ${canvas.getHeight()} `;
     let sign = safeObject._objects?.filter(path => path.d && !path.d.includes(target))
-    console.log(sign, "signcutline")
-    let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0]?.fill)
-    let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0]?.fill)
+    console.log(sign, "signcutline", safeObject)
+    // let signCut1 = cutline1._objects?.filter(path => path.fill == sign[0]?.fill)
+    // let signCut2 = cutline2._objects?.filter(path => path.fill == sign[0]?.fill)
+
+    let signFill = (sign && sign.length > 0) ? sign[0].fill : null;
+    let signCut1 = cutline1._objects?.filter(path => path.fill == signFill)
+    let signCut2 = cutline2._objects?.filter(path => path.fill == signFill)
 
     // console.log(sign, "****")
 
@@ -4018,7 +4024,7 @@ async function handleShowCutline(canva){
       });
     }
   
-    if(sign != undefined){
+    if(sign != undefined && sign.length > 0){
       cutline2.set({
         shadow: selectedCutline == "2x" ? defaultShadow : null,
         selectable: false,
@@ -11260,6 +11266,7 @@ async function handleLoadTemplateData(canvas1Json, canvas2Json, templateData, st
   activeFixingMethode = templateData.fixingMethod.type
 
   var sign = handleGetObjectByName("safeObject");
+  console.log(sign, "signobject in template load");
   function setMeasurmentValue(canvas) {
     var Objects = canvas.getObjects();
     Objects.forEach((object) => {

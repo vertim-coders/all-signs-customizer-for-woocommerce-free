@@ -3079,6 +3079,7 @@
 
 
         var loadedTemplate = await handleLoadTemplateData(data.template.face1, data.template.face2, sign, statut, configTextColor)
+        console.log(loadedTemplate, "loaded template")
         //selection de border
         if(sign.material.type === 'simple'){
             if(borderrs.value.allBorders.length > 0){
@@ -4402,7 +4403,7 @@
         let newObjectWidth = objectWidth + widthDiff
         let newObjectHeight = objectHeight + heightDiff
 
-        console.log(`Canvas: ${canvasWidth}x${canvasHeight} | Objet: ${objectWidth.toFixed(1)}x${objectHeight.toFixed(1)} | Avec marges: ${newObjectWidth.toFixed(1)}x${newObjectHeight.toFixed(1)}`);
+        // console.log(`Canvas: ${canvasWidth}x${canvasHeight} | Objet: ${objectWidth.toFixed(1)}x${objectHeight.toFixed(1)} | Avec marges: ${newObjectWidth.toFixed(1)}x${newObjectHeight.toFixed(1)}`);
 
         // Calculer les ratios de zoom pour la largeur et la hauteur
         
