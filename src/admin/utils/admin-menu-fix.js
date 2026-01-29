@@ -14,13 +14,36 @@ function menuFix(slug) {
 
   const normalize = (path) => String(path || "").replace(/#\/?$/, "#/");
 
+  const getRouteKey = () => {
+    const hash = window.location.hash || "#/";
+    const route = hash.replace(/^#/, "").split("?")[0];
+
+    if (route.startsWith("/templates") || route.startsWith("/configs/template")) {
+      return "templates";
+    }
+    if (route.startsWith("/global-settings")) {
+      return "global-settings";
+    }
+    if (route.startsWith("/manage-fonts")) {
+      return "manage-fonts";
+    }
+    if (route.startsWith("/manage-cliparts")) {
+      return "manage-cliparts";
+    }
+    if (route.startsWith("/configurations") || route.startsWith("/configs")) {
+      return "configurations";
+    }
+    return "home";
+  };
+
   const setActiveFromLocation = () => {
     const currentPath = normalize(getCurrentPath());
     const submenuItems = $("ul.wp-submenu li", menuRoot);
+    const submenuLinks = $("ul.wp-submenu a", menuRoot);
     submenuItems.removeClass("current");
 
     let matched = false;
-    $("ul.wp-submenu a", menuRoot).each(function (index, el) {
+    submenuLinks.each(function (index, el) {
       const href = normalize($(el).attr("href"));
       if (href === currentPath) {
         $(el).parent().addClass("current");
@@ -28,6 +51,29 @@ function menuFix(slug) {
         return false;
       }
     });
+
+    if (!matched) {
+      const routeKey = getRouteKey();
+      const routeMatch = {
+        home: "#/",
+        configurations: "#/configurations",
+        templates: "#/templates",
+        "global-settings": "#/global-settings",
+        "manage-fonts": "#/manage-fonts",
+        "manage-cliparts": "#/manage-cliparts",
+      }[routeKey];
+
+      if (routeMatch) {
+        submenuLinks.each(function (index, el) {
+          const href = String($(el).attr("href") || "");
+          if (href.indexOf(routeMatch) !== -1) {
+            $(el).parent().addClass("current");
+            matched = true;
+            return false;
+          }
+        });
+      }
+    }
 
     if (!matched) {
       $("li.wp-first-item", menuRoot).addClass("current");

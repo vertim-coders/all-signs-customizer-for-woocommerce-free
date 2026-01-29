@@ -11,6 +11,58 @@ use WP_REST_Controller;
  */
 class ASOWP_Api_Templates extends WP_REST_Controller
 {
+    private function get_template_design_images(array $template)
+    {
+        if (isset($template['data']['cartData']['designImages']) && is_array($template['data']['cartData']['designImages'])) {
+            return $template['data']['cartData']['designImages'];
+        }
+        if (isset($template['data']['templateData']['designImages']) && is_array($template['data']['templateData']['designImages'])) {
+            return $template['data']['templateData']['designImages'];
+        }
+        return null;
+    }
+
+    private function extract_preview_url($preview_imgs): string
+    {
+        if (!is_array($preview_imgs)) {
+            return '';
+        }
+        if (isset($preview_imgs['face1']) && is_array($preview_imgs['face1'])) {
+            foreach ($preview_imgs['face1'] as $url) {
+                if (!empty($url)) {
+                    return $url;
+                }
+            }
+        }
+        foreach ($preview_imgs as $url) {
+            if (!empty($url) && !is_array($url)) {
+                return $url;
+            }
+        }
+        return '';
+    }
+
+    private function maybe_apply_auto_preview(array $template): array
+    {
+        $enabled = filter_var($template['enablePreviewImage'] ?? false, FILTER_VALIDATE_BOOLEAN);
+        if (!$enabled) {
+            return $template;
+        }
+        if (!function_exists('asowp_save_prev_images')) {
+            return $template;
+        }
+        $design_images = $this->get_template_design_images($template);
+        if (!$design_images) {
+            return $template;
+        }
+        $preview_imgs = asowp_save_prev_images($design_images);
+        $preview_url = $this->extract_preview_url($preview_imgs);
+        if ($preview_url !== '') {
+            $template['prevImg'] = $preview_url;
+        }
+        return $template;
+    }
+
     private function normalize_show_on_frontend($template, $default = true)
     {
         if (!is_array($template)) {
@@ -243,6 +295,7 @@ class ASOWP_Api_Templates extends WP_REST_Controller
             $post = get_post($config_id);
             if ($post) {
                 $template_data = $this->normalize_show_on_frontend($template_data);
+                $template_data = $this->maybe_apply_auto_preview($template_data);
                 $meta_value = get_post_meta($config_id, 'asowp-templates', true);
                 if (!is_array($meta_value)) {
                     $meta_value = [];
@@ -292,6 +345,7 @@ class ASOWP_Api_Templates extends WP_REST_Controller
                             }
                         }
                         $template = $this->normalize_show_on_frontend($template);
+                        $template = $this->maybe_apply_auto_preview($template);
                         if ($meta_value[$template_id] == $template) {
                             return rest_ensure_response(["success" => "same", "message" => __("No change observed in template", "all-signs-options-pro")]);
                         } else {
