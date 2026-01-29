@@ -481,6 +481,22 @@
                   ></span>
                 </span>
               </label>
+              <label class="asowp-flex asowp-items-center asowp-justify-between asowp-gap-3">
+                <span class="asowp-text-xs asowp-font-semibold asowp-text-gray-700">
+                  {{ __("Show on frontend templates list", "all-signs-options-pro") }}
+                </span>
+                <span class="asowp-relative asowp-inline-flex asowp-items-center">
+                  <input
+                    type="checkbox"
+                    v-model="template.showOnFrontend"
+                    class="asowp-sr-only asowp-peer"
+                  />
+                  <span class="asowp-w-10 asowp-h-5 asowp-rounded-full asowp-bg-gray-300 peer-checked:asowp-bg-[#008060]"></span>
+                  <span
+                    class="asowp-absolute asowp-left-0.5 asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-transition-transform peer-checked:asowp-translate-x-5"
+                  ></span>
+                </span>
+              </label>
             </div>
           </div>
         </div>
@@ -606,6 +622,7 @@ const template = ref({
   realImg: "",
   enableAddToCart: true,
   enablePreviewImage: false,
+  showOnFrontend: true,
   data: {
     templateData: {},
     cartData: {},
@@ -818,6 +835,7 @@ const saveTemplate = async () => {
         realImg: "",
         enableAddToCart: false,
         enablePreviewImage: false,
+        showOnFrontend: true,
         data: {
           templateData: {},
           cartData: {},
@@ -836,6 +854,7 @@ const saveTemplate = async () => {
         realImg: "",
         enableAddToCart: false,
         enablePreviewImage: false,
+        showOnFrontend: true,
         data: {
           templateData: {},
           cartData: {},
@@ -858,7 +877,7 @@ const selectTemplate = async (key, temp, del = false) => {
     isNewTemplate.value = true;
   }
   template_id.value = key;
-  template.value = { ...temp };
+  template.value = { showOnFrontend: true, ...temp };
   delete template.value._index;
   isEmptyName.value = false;
   isEmptyConfig.value = false;
@@ -890,6 +909,7 @@ const updateTemplate = async () => {
         realImg: "",
         enableAddToCart: false,
         enablePreviewImage: false,
+        showOnFrontend: true,
         data: {
           templateData: {},
           cartData: {},
@@ -910,6 +930,7 @@ const updateTemplate = async () => {
         realImg: "",
         enableAddToCart: false,
         enablePreviewImage: false,
+        showOnFrontend: true,
         data: {
           templateData: {},
           cartData: {},
@@ -957,6 +978,7 @@ const deleteTemplate = async () => {
       realImg: "",
       enableAddToCart: false,
       enablePreviewImage: false,
+      showOnFrontend: true,
       data: {
         templateData: {},
         cartData: {},
@@ -977,6 +999,7 @@ const deleteTemplate = async () => {
       prevImg: "",
       enableAddToCart: false,
       enablePreviewImage: false,
+      showOnFrontend: true,
       data: {
         templateData: {},
         cartData: {},
@@ -1000,6 +1023,7 @@ const back = () => {
     realImg: "",
     enableAddToCart: false,
     enablePreviewImage: false,
+    showOnFrontend: true,
     data: {
       templateData: {},
       cartData: {},
@@ -1026,6 +1050,7 @@ const closeModal = () => {
     realImg: "",
     enableAddToCart: false,
     enablePreviewImage: false,
+    showOnFrontend: true,
     data: {
       templateData: {},
       cartData: {},

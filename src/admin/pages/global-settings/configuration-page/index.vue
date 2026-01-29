@@ -61,29 +61,33 @@
                 </div>
             </div>
             <div v-if="state == 'buttons'" class="asowp-px-10">
-                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
-                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">{{ __('Text of design button on product:', 'all-signs-options-pro') }} </label>
-                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.productDesignButton" />
-                </div>
-                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
-                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">{{ __('Text of template button on product:', 'all-signs-options-pro') }} </label>
-                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.productTemplateButton" />
-                </div>
-                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
-                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">{{ __('Text of add to cart button on template:', 'all-signs-options-pro') }} </label>
-                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.templateAddToCartButton" />
-                </div>
-                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
-                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">{{ __('Text of show all templates on template page:', 'all-signs-options-pro') }} </label>
-                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.allTemplatesText" />
-                </div>
-                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
-                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">{{ __('Text of design button on template:', 'all-signs-options-pro') }} </label>
-                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.templateDesignButton" />
-                </div>
-                <div class="asowp-flex asowp-space-x-3 asowp-justify-evenly asowp-my-1 asowp-items-center">
-                    <label class="asowp-w-1/2 asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">{{ __('Text of recap button in cart:', 'all-signs-options-pro') }} </label>
-                    <input type="text" class="asowp-w-1/2 asowp-h-[35px]" v-model="configPages.buttons.recapsButtonOnCart" />
+                <div class="asowp-space-y-3">
+                    <div
+                      v-for="item in buttonItems"
+                      :key="item.key"
+                      class="asowp-flex asowp-items-center asowp-justify-between asowp-p-4 asowp-border asowp-border-[#DDDDDD] asowp-rounded asowp-bg-[#F8F9FB]"
+                    >
+                        <div class="asowp-space-y-1">
+                            <div class="asowp-text-[14px] asowp-font-bold asowp-text-[#444444]">
+                                {{ item.label }}
+                            </div>
+                            <div class="asowp-text-[12px] asowp-text-gray-600">
+                                {{ __('Text:', 'all-signs-options-pro') }} {{ configPages.buttons[item.textKey] }}
+                            </div>
+                            <div v-if="item.note" class="asowp-text-[11px] asowp-text-gray-500">
+                                {{ item.note }}
+                            </div>
+                        </div>
+                        <div class="asowp-flex asowp-items-center asowp-gap-3">
+                            <button
+                              type="button"
+                              @click="openButtonStyleModal(item.key)"
+                              class="asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-rounded asowp-px-4 asowp-py-2 asowp-text-[12px] asowp-font-semibold asowp-text-[#303030] hover:asowp-bg-[#f1f5f9] asowp-cursor-pointer"
+                            >
+                                {{ __('Configure', 'all-signs-options-pro') }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
@@ -124,10 +128,120 @@
                 </div>
             </div>
         </div>
+        <div v-if="buttonStyleModalOpen" class="asowp-z-[999] asowp-bg-black/40 asowp-fixed asowp-inset-0 asowp-flex asowp-items-center asowp-justify-center">
+            <div class="asowp-absolute asowp-inset-0" @click="closeButtonStyleModal"></div>
+            <div class="asowp-relative asowp-w-[min(860px,95vw)] asowp-max-h-[calc(100vh-6rem)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
+                <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
+                    <div class="asowp-text-[14px] asowp-font-semibold">{{ activeButtonLabel }}</div>
+                    <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeButtonStyleModal">✕</button>
+                </div>
+                <div class="asowp-flex-1 asowp-min-h-0 asowp-p-5 asowp-space-y-4 asowp-overflow-y-auto">
+                    <div class="asowp-flex asowp-flex-col md:asowp-flex-row asowp-gap-6">
+                        <div class="asowp-flex-1 asowp-space-y-3">
+                            <label class="asowp-text-[13px] asowp-font-semibold asowp-text-[#444444]">{{ __('Button text', 'all-signs-options-pro') }}</label>
+                            <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttons[activeTextKey]" />
+                            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">{{ __('Live preview (hover to test hover colors)', 'all-signs-options-pro') }}</div>
+                            <div class="asowp-inline-flex asowp-items-center asowp-gap-3">
+                                <button
+                                  type="button"
+                                  :style="previewStyle"
+                                  @mouseenter="hoverPreview=true"
+                                  @mouseleave="hoverPreview=false"
+                                  class="asowp-border-none asowp-cursor-pointer"
+                                >
+                                  {{ configPages.buttons[activeTextKey] }}
+                                </button>
+                                <button type="button" class="asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-rounded asowp-px-3 asowp-py-2 asowp-text-[12px] asowp-font-semibold asowp-text-[#303030]" @click="hoverPreview = !hoverPreview">
+                                    {{ hoverPreview ? __('Normal preview', 'all-signs-options-pro') : __('Hover preview', 'all-signs-options-pro') }}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="asowp-flex-1 asowp-space-y-3">
+                            <label class="asowp-text-[13px] asowp-font-semibold asowp-text-[#444444]">{{ __('Quick style (no CSS needed)', 'all-signs-options-pro') }}</label>
+                            <div class="asowp-grid asowp-grid-cols-2 asowp-gap-3">
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Background', 'all-signs-options-pro') }}</label>
+                                    <input type="color" class="asowp-w-full asowp-h-[38px] asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttonStyles[activeButtonKey].fields.background" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Text color', 'all-signs-options-pro') }}</label>
+                                    <input type="color" class="asowp-w-full asowp-h-[38px] asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttonStyles[activeButtonKey].fields.color" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Border color', 'all-signs-options-pro') }}</label>
+                                    <input type="color" class="asowp-w-full asowp-h-[38px] asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttonStyles[activeButtonKey].fields.borderColor" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Border width', 'all-signs-options-pro') }}</label>
+                                    <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" placeholder="0px" v-model="configPages.buttonStyles[activeButtonKey].fields.borderWidth" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Border radius', 'all-signs-options-pro') }}</label>
+                                    <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" placeholder="8px" v-model="configPages.buttonStyles[activeButtonKey].fields.borderRadius" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Font size', 'all-signs-options-pro') }}</label>
+                                    <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" placeholder="14px" v-model="configPages.buttonStyles[activeButtonKey].fields.fontSize" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Font weight', 'all-signs-options-pro') }}</label>
+                                    <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" placeholder="600" v-model="configPages.buttonStyles[activeButtonKey].fields.fontWeight" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Text transform', 'all-signs-options-pro') }}</label>
+                                    <select class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttonStyles[activeButtonKey].fields.textTransform">
+                                        <option value="none">{{ __('None', 'all-signs-options-pro') }}</option>
+                                        <option value="uppercase">{{ __('Uppercase', 'all-signs-options-pro') }}</option>
+                                        <option value="lowercase">{{ __('Lowercase', 'all-signs-options-pro') }}</option>
+                                        <option value="capitalize">{{ __('Capitalize', 'all-signs-options-pro') }}</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Padding Y', 'all-signs-options-pro') }}</label>
+                                    <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" placeholder="10px" v-model="configPages.buttonStyles[activeButtonKey].fields.paddingY" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Padding X', 'all-signs-options-pro') }}</label>
+                                    <input type="text" class="asowp-w-full asowp-h-[38px] asowp-px-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded" placeholder="12px" v-model="configPages.buttonStyles[activeButtonKey].fields.paddingX" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Hover background', 'all-signs-options-pro') }}</label>
+                                    <input type="color" class="asowp-w-full asowp-h-[38px] asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttonStyles[activeButtonKey].hover.background" />
+                                </div>
+                                <div>
+                                    <label class="asowp-text-[12px] asowp-text-gray-600">{{ __('Hover text', 'all-signs-options-pro') }}</label>
+                                    <input type="color" class="asowp-w-full asowp-h-[38px] asowp-border asowp-border-[#DDDDDD] asowp-rounded" v-model="configPages.buttonStyles[activeButtonKey].hover.color" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
+                        <div class="asowp-flex asowp-items-center asowp-justify-between">
+                            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Custom CSS (optional)', 'all-signs-options-pro') }}</div>
+                            <label class="asowp-flex asowp-items-center asowp-gap-2 asowp-text-[12px] asowp-text-gray-600">
+                                <input type="checkbox" v-model="configPages.buttonStyles[activeButtonKey].useCustomCss" />
+                                {{ __('Use custom CSS', 'all-signs-options-pro') }}
+                            </label>
+                        </div>
+                        <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
+                            {{ __('If enabled, the CSS below overrides the quick style fields.', 'all-signs-options-pro') }}
+                        </div>
+                        <textarea
+                          class="asowp-mt-3 asowp-w-full asowp-min-h-[110px] asowp-p-3 asowp-border asowp-border-[#DDDDDD] asowp-rounded"
+                          v-model="configPages.buttonStyles[activeButtonKey].customCss"
+                          placeholder="background:#1d6fe3; color:#fff; border-radius:8px; padding:10px 12px;"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="asowp-flex asowp-justify-end asowp-px-5 asowp-py-3 asowp-border-t">
+                    <button class="asowp-px-4 asowp-py-1.5 asowp-text-white asowp-bg-[#016464] asowp-rounded-md" :disabled="isLoading" @click="handleButtonStyleDone">{{ __('Done', 'all-signs-options-pro') }}</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script setup>
-import { ref,onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
@@ -148,6 +262,7 @@ var configPages = ref({
         allTemplatesText:"All",
         recapsButtonOnCart:'Sign Recaps'        
     },
+    buttonStyles:{},
     others:{
         titleBalise:'h1'
     }
@@ -168,12 +283,14 @@ const fetchData = async () => {
     if(!confPages.message){
         configPages.value = {...configPages.value,...confPages};
     }
+    ensureButtonStyleDefaults();
     pages.value = pgs;
     isFetching.value = false;
 }
 
 const saveConfigPage = async () => {
     isLoading.value = true;
+    ensureButtonStyleDefaults();
     const op = await api.saveGlobalSettingsConfigPage(configPages.value);
     if(op.success){
         const confPages = await api.getGlobalSettingsConfigPages();
@@ -187,12 +304,305 @@ const saveConfigPage = async () => {
             toastMessage(op.message,"warning");
         }
         page.value.title='';
+        return op.success == true;
     }else{
         isLoading.value = false;
         page.value.title='';
         toastMessage(op.message,'error');
+        return false;
     }
 }
+
+const buttonStyleModalOpen = ref(false);
+const activeButtonKey = ref('productDesign');
+const hoverPreview = ref(false);
+
+const buttonItems = [
+    {
+        key: 'productDesign',
+        textKey: 'productDesignButton',
+        label: __('Customize button on product', 'all-signs-options-pro'),
+        note: __('Shown on product and product list pages.', 'all-signs-options-pro')
+    },
+    {
+        key: 'productTemplate',
+        textKey: 'productTemplateButton',
+        label: __('Design from example button on product', 'all-signs-options-pro'),
+        note: __('Shown when templates are available for the product.', 'all-signs-options-pro')
+    },
+    {
+        key: 'templateAddToCart',
+        textKey: 'templateAddToCartButton',
+        label: __('Add to cart button on templates page', 'all-signs-options-pro')
+    },
+    {
+        key: 'templateDesign',
+        textKey: 'templateDesignButton',
+        label: __('Design button on templates page', 'all-signs-options-pro')
+    },
+    {
+        key: 'templatesFilter',
+        textKey: 'allTemplatesText',
+        label: __('Templates filter tabs (All + categories)', 'all-signs-options-pro'),
+        note: __('Style applies to all category tabs on the templates page.', 'all-signs-options-pro')
+    },
+    {
+        key: 'recapsButton',
+        textKey: 'recapsButtonOnCart',
+        label: __('Recaps button in cart', 'all-signs-options-pro')
+    }
+];
+
+const buttonMeta = {
+    productDesign: {
+        label: __('Customize button settings', 'all-signs-options-pro'),
+        textKey: 'productDesignButton'
+    },
+    productTemplate: {
+        label: __('Design from example button settings', 'all-signs-options-pro'),
+        textKey: 'productTemplateButton'
+    },
+    templateAddToCart: {
+        label: __('Add to cart button settings', 'all-signs-options-pro'),
+        textKey: 'templateAddToCartButton'
+    },
+    templateDesign: {
+        label: __('Template design button settings', 'all-signs-options-pro'),
+        textKey: 'templateDesignButton'
+    },
+    templatesFilter: {
+        label: __('Templates filter tabs settings', 'all-signs-options-pro'),
+        textKey: 'allTemplatesText'
+    },
+    recapsButton: {
+        label: __('Recaps button settings', 'all-signs-options-pro'),
+        textKey: 'recapsButtonOnCart'
+    }
+};
+
+const ensureButtonStyleDefaults = () => {
+    const defaults = {
+        productDesign: {
+            fields:{
+                background:'#1d6fe3',
+                color:'#ffffff',
+                borderColor:'#1d6fe3',
+                borderWidth:'0px',
+                borderStyle:'solid',
+                borderRadius:'8px',
+                paddingY:'10px',
+                paddingX:'12px',
+                fontSize:'14px',
+                fontWeight:'600',
+                textTransform:'none'
+            },
+            hover:{
+                background:'#0b5fcc',
+                color:'#ffffff',
+                borderColor:'#0b5fcc'
+            },
+            customCss:'',
+            useCustomCss:false
+        },
+        productTemplate: {
+            fields:{
+                background:'#f4c542',
+                color:'#ffffff',
+                borderColor:'#f4c542',
+                borderWidth:'0px',
+                borderStyle:'solid',
+                borderRadius:'8px',
+                paddingY:'10px',
+                paddingX:'12px',
+                fontSize:'14px',
+                fontWeight:'600',
+                textTransform:'none'
+            },
+            hover:{
+                background:'#fcac29',
+                color:'#ffffff',
+                borderColor:'#fcac29'
+            },
+            customCss:'',
+            useCustomCss:false
+        },
+        templateAddToCart: {
+            fields:{
+                background:'#0374e3',
+                color:'#ffffff',
+                borderColor:'#0374e3',
+                borderWidth:'0px',
+                borderStyle:'solid',
+                borderRadius:'5px',
+                paddingY:'10px',
+                paddingX:'12px',
+                fontSize:'14px',
+                fontWeight:'600',
+                textTransform:'none'
+            },
+            hover:{
+                background:'#0b5fcc',
+                color:'#ffffff',
+                borderColor:'#0b5fcc'
+            },
+            customCss:'',
+            useCustomCss:false
+        },
+        templateDesign: {
+            fields:{
+                background:'#febd52',
+                color:'#ffffff',
+                borderColor:'#febd52',
+                borderWidth:'0px',
+                borderStyle:'solid',
+                borderRadius:'6px',
+                paddingY:'10px',
+                paddingX:'12px',
+                fontSize:'14px',
+                fontWeight:'600',
+                textTransform:'none'
+            },
+            hover:{
+                background:'#fcac29',
+                color:'#ffffff',
+                borderColor:'#fcac29'
+            },
+            customCss:'',
+            useCustomCss:false
+        },
+        templatesFilter: {
+            fields:{
+                background:'transparent',
+                color:'#6b7280',
+                borderColor:'transparent',
+                borderWidth:'0px',
+                borderStyle:'solid',
+                borderRadius:'999px',
+                paddingY:'8px',
+                paddingX:'12px',
+                fontSize:'12px',
+                fontWeight:'600',
+                textTransform:'none'
+            },
+            hover:{
+                background:'#f3f4f6',
+                color:'#111827',
+                borderColor:'transparent'
+            },
+            customCss:'',
+            useCustomCss:false
+        },
+        recapsButton: {
+            fields:{
+                background:'#6b7280',
+                color:'#ffffff',
+                borderColor:'#6b7280',
+                borderWidth:'0px',
+                borderStyle:'solid',
+                borderRadius:'2px',
+                paddingY:'5px',
+                paddingX:'10px',
+                fontSize:'14px',
+                fontWeight:'600',
+                textTransform:'none'
+            },
+            hover:{
+                background:'#4b5563',
+                color:'#ffffff',
+                borderColor:'#4b5563'
+            },
+            customCss:'',
+            useCustomCss:false
+        }
+    };
+    if (!configPages.value.buttonStyles) {
+        configPages.value.buttonStyles = {};
+    }
+    Object.keys(defaults).forEach((key) => {
+        const current = configPages.value.buttonStyles[key] || {};
+        configPages.value.buttonStyles[key] = {
+            ...defaults[key],
+            ...current,
+            fields: {
+                ...defaults[key].fields,
+                ...(current.fields || {})
+            },
+            hover: {
+                ...defaults[key].hover,
+                ...(current.hover || {})
+            }
+        };
+    });
+};
+
+const activeButtonLabel = computed(() => buttonMeta[activeButtonKey.value]?.label || '');
+const activeTextKey = computed(() => buttonMeta[activeButtonKey.value]?.textKey || 'productDesignButton');
+
+const openButtonStyleModal = (key) => {
+    activeButtonKey.value = key;
+    ensureButtonStyleDefaults();
+    buttonStyleModalOpen.value = true;
+    hoverPreview.value = false;
+};
+
+const closeButtonStyleModal = () => {
+    buttonStyleModalOpen.value = false;
+    hoverPreview.value = false;
+};
+
+const handleButtonStyleDone = async () => {
+    if (isLoading.value) {
+        return;
+    }
+    const saved = await saveConfigPage();
+    if (saved) {
+        closeButtonStyleModal();
+    }
+};
+
+const getPreviewStyle = (key, hover = false) => {
+    const styles = configPages.value.buttonStyles?.[key];
+    if (!styles || !styles.fields) {
+        return {};
+    }
+    if (styles.useCustomCss && styles.customCss) {
+        return styles.customCss;
+    }
+    const fields = styles.fields;
+    const hoverFields = styles.hover || {};
+    const useHover = hover && (hoverFields.background || hoverFields.color || hoverFields.borderColor);
+    const background = useHover && hoverFields.background ? hoverFields.background : fields.background;
+    const color = useHover && hoverFields.color ? hoverFields.color : fields.color;
+    const borderColor = useHover && hoverFields.borderColor ? hoverFields.borderColor : fields.borderColor;
+    const borderWidth = fields.borderWidth || '0px';
+    const borderStyle = fields.borderStyle || 'solid';
+    const border = `${borderWidth} ${borderStyle} ${borderColor || 'transparent'}`;
+    const radius = fields.borderRadius || '8px';
+    const paddingY = fields.paddingY || '10px';
+    const paddingX = fields.paddingX || '12px';
+    const fontSize = fields.fontSize || '14px';
+    const fontWeight = fields.fontWeight || '600';
+    const textTransform = fields.textTransform || 'none';
+    return {
+        background,
+        color,
+        border,
+        borderRadius: radius,
+        padding: `${paddingY} ${paddingX}`,
+        fontSize,
+        fontWeight,
+        textTransform,
+        textDecoration: 'none',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '6px',
+        cursor: 'pointer',
+        transition: 'all 0.2s ease'
+    };
+};
+
+const previewStyle = computed(() => getPreviewStyle(activeButtonKey.value, hoverPreview.value));
 
 const addNewPage = async () => {
     if(page.value.title != ''){  
