@@ -4,14 +4,14 @@
             <div v-if="categories.length>0" :class="`asowp-grid asowp-grid-cols-4 lg:asowp-grid-cols-8 asowp-gap-4 asowp-templates-categories`">
                 <div
                     @click="showTemplateForCategory('')"
-                    :class="`${category == '' ? 'asowp-border-solid asowp-border-x-0 asowp-border-y-0 asowp-border-b-2 asowp-border-[#111827] asowp-text-[#111827] asowp-font-semibold' : 'asowp-text-gray-600 hover:asowp-text-gray-900'} asowp-cursor-pointer asowp-text-center asowp-px-3 asowp-py-2 asowp-rounded-full hover:asowp-bg-gray-100 asowp-transition-colors`"
+                    :class="`${category == '' ? 'asowp-border-solid asowp-border-x-0 asowp-border-y-0 asowp-border-b-2 asowp-border-[#111827] asowp-text-[#111827] asowp-font-semibold asowp-templates-category-btn--active' : 'asowp-text-gray-600 hover:asowp-text-gray-900'} asowp-templates-category-btn asowp-cursor-pointer asowp-text-center asowp-px-3 asowp-py-2 asowp-rounded-full hover:asowp-bg-gray-100 asowp-transition-colors`"
                 >
                     {{ buttons.allTemplatesText ?? 'All' }}
                 </div>
                 <div
                     v-for="cat in categories"
                     @click="showTemplateForCategory(cat.value)"
-                    :class="`${category == cat.value ? 'asowp-border-solid asowp-border-x-0 asowp-border-y-0 asowp-border-b-2 asowp-border-[#111827] asowp-text-[#111827] asowp-font-semibold' : 'asowp-text-gray-600 hover:asowp-text-gray-900'} asowp-cursor-pointer asowp-text-center asowp-px-3 asowp-py-2 asowp-rounded-full hover:asowp-bg-gray-100 asowp-transition-colors`"
+                    :class="`${category == cat.value ? 'asowp-border-solid asowp-border-x-0 asowp-border-y-0 asowp-border-b-2 asowp-border-[#111827] asowp-text-[#111827] asowp-font-semibold asowp-templates-category-btn--active' : 'asowp-text-gray-600 hover:asowp-text-gray-900'} asowp-templates-category-btn asowp-cursor-pointer asowp-text-center asowp-px-3 asowp-py-2 asowp-rounded-full hover:asowp-bg-gray-100 asowp-transition-colors`"
                 >
                     {{ cat.name }}
                 </div>

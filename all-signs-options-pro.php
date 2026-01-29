@@ -7,7 +7,7 @@ Plugin Name: All Signs Options Pro
 Plugin URI: https://signsdesigner.us/
 Description: The leading app for selling all types of custom signs with WordPress/Woocommerce.  ASO is designed to streamline and improve the process of designing, quoting and ordering custom signs for sign makers and their customers via a beautiful, user-friendly configurator with flexible options for setting up your online store.
 Requires Plugins: woocommerce
-Version: 1.4.0
+Version: 1.5.1
 Author: Vertim Coders
 Author URI: https://vertimcoders.com
 License: GPL2
@@ -61,7 +61,7 @@ final class ASOWP_All_Signs_Options_Pro
      *
      * @var string
      */
-    public $version = '1.4.0';
+    public $version = '1.5.1';
 
     /**
      * Holds various class instances
@@ -110,7 +110,7 @@ final class ASOWP_All_Signs_Options_Pro
                 if (isset($actions['activate'])) {
                     unset($actions['activate']);
                 }
-                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/asowp-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-options-free'));
+                $actions['go_docs'] = sprintf('<a href="%s" style="%s">%s</a>', 'https://docs.signsdesigner.us/docs/asowp-wp-documentation/', 'color:#35b747;font-weight:bold', __('Go Docs!', 'all-signs-options-pro'));
                 // Ajouter un message ou une action personnalisée si besoin
             }
         }
@@ -131,7 +131,7 @@ final class ASOWP_All_Signs_Options_Pro
         if (plugin_basename(__FILE__) == $plugin_file) {
             if (!is_plugin_active('woocommerce/woocommerce.php')) {
                 // Ajoutez un message personnalisé à côté de la description
-                $plugin_meta[] = '<span style="color: red;"><strong>' . esc_html__("This plugin requires WooCommerce to run. Please install or activate WooCommerce.", "all-signs-options-free") . '</strong></span>';
+                $plugin_meta[] = '<span style="color: red;"><strong>' . esc_html__("This plugin requires WooCommerce to run. Please install or activate WooCommerce.", "all-signs-options-pro") . '</strong></span>';
             }
         }
         return $plugin_meta;
@@ -284,7 +284,7 @@ final class ASOWP_All_Signs_Options_Pro
             update_option("asowp_all_borders", $borders);
         } else {
             for ($i = 0; $i < count($have_borders); $i++) {
-                $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
+                $search_strings = ['all-signs-options-starter/', 'all-signs-options-pro/'];
 
                 $found = false;
                 foreach ($search_strings as $string) {
@@ -382,7 +382,7 @@ final class ASOWP_All_Signs_Options_Pro
             update_option("asowp_all_shapes", $shapes);
         } else {
             for ($i = 0; $i < count($have_shapes); $i++) {
-                $search_strings = ['all-signs-options-starter/', 'all-signs-options-free/'];
+                $search_strings = ['all-signs-options-starter/', 'all-signs-options-pro/'];
 
                 $found = false;
                 foreach ($search_strings as $string) {
@@ -587,7 +587,7 @@ final class ASOWP_All_Signs_Options_Pro
             update_option("asowp_all_fixingMethods", $fixingMethods);
         } else {
             for ($i = 0; $i < count($have_fixingMethods); $i++) {
-                $search_strings = ['all-signs-options-starter/assets/images/', 'all-signs-options-free/assets/images/'];
+                $search_strings = ['all-signs-options-starter/assets/images/', 'all-signs-options-pro/assets/images/'];
 
                 $have_fixingMethods[$i]["icon"] = str_replace($search_strings, "all-signs-options-pro/assets/images/", $have_fixingMethods[$i]["icon"]);
 

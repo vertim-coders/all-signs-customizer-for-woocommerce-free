@@ -11,6 +11,23 @@ use WP_REST_Controller;
  */
 class ASOWP_Api_Templates extends WP_REST_Controller
 {
+    private function normalize_show_on_frontend($template, $default = true)
+    {
+        if (!is_array($template)) {
+            return $template;
+        }
+        if (!array_key_exists('showOnFrontend', $template)) {
+            $template['showOnFrontend'] = $default;
+            return $template;
+        }
+        $normalized = filter_var($template['showOnFrontend'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        if ($normalized === null) {
+            $normalized = (bool) $template['showOnFrontend'];
+        }
+        $template['showOnFrontend'] = $normalized;
+        return $template;
+    }
+
     /**
      * [__construct description]
      */
@@ -152,6 +169,10 @@ class ASOWP_Api_Templates extends WP_REST_Controller
                 if (is_array($meta) && count($meta) > 0) {
                     $tab = [];
                     foreach ($meta as $key => $value) {
+                        $value = $this->normalize_show_on_frontend($value);
+                        if (!is_array($value)) {
+                            continue;
+                        }
                         if (!empty($search)) {
                             if (str_contains($search, $value['name'])) {
                                 array_push($tab, $value);
@@ -192,7 +213,7 @@ class ASOWP_Api_Templates extends WP_REST_Controller
 
             if (!empty($templates)) {
                 if (isset($templates[$template_id])) {
-                    $template =  $templates[$template_id];
+                    $template =  $this->normalize_show_on_frontend($templates[$template_id]);
                     $template["data"] = isset( $template["data_file"]) ? asowp_get_large_data($template["data_file"])  : $template["data"] ;
                     return rest_ensure_response($template);
                 } else {
@@ -221,6 +242,7 @@ class ASOWP_Api_Templates extends WP_REST_Controller
         if ($config_id != 0) {
             $post = get_post($config_id);
             if ($post) {
+                $template_data = $this->normalize_show_on_frontend($template_data);
                 $meta_value = get_post_meta($config_id, 'asowp-templates', true);
                 if (!is_array($meta_value)) {
                     $meta_value = [];
@@ -262,6 +284,14 @@ class ASOWP_Api_Templates extends WP_REST_Controller
                 if (!empty($meta_value)) {
 
                     if (isset($meta_value[$template_id])) {
+                        if (!array_key_exists('showOnFrontend', $template)) {
+                            if (isset($meta_value[$template_id]['showOnFrontend'])) {
+                                $template['showOnFrontend'] = $meta_value[$template_id]['showOnFrontend'];
+                            } else {
+                                $template['showOnFrontend'] = true;
+                            }
+                        }
+                        $template = $this->normalize_show_on_frontend($template);
                         if ($meta_value[$template_id] == $template) {
                             return rest_ensure_response(["success" => "same", "message" => __("No change observed in template", "all-signs-options-pro")]);
                         } else {

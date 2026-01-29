@@ -13,6 +13,169 @@ class ASOWP_Frontend
     {
         add_shortcode('asowp-configurator', [$this, 'render_asowp_configurator']);
         add_shortcode('asowp-templates', [$this, 'render_asowp_templates']);
+        add_shortcode('asowp-products', [$this, 'render_asowp_products']);
+    }
+
+    public function render_asowp_products($atts, $content = '')
+    {
+        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
+        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
+
+        $atts = shortcode_atts([
+            'cols' => '3',
+            'ids' => '',
+            'limit' => '-1',
+            'orderby' => 'date',
+            'order' => 'DESC',
+        ], $atts, 'asowp-products');
+
+        $cols = absint($atts['cols']);
+        if ($cols < 1) {
+            $cols = 1;
+        }
+        if ($cols > 6) {
+            $cols = 6;
+        }
+
+        $limit = intval($atts['limit']);
+        if ($limit === 0) {
+            $limit = -1;
+        }
+
+        $ids = array_filter(array_map('absint', preg_split('/[,\s]+/', (string) $atts['ids'])));
+
+        $query_args = [
+            'post_type' => 'product',
+            'post_status' => 'publish',
+            'posts_per_page' => $limit,
+            'orderby' => sanitize_key($atts['orderby']),
+            'order' => strtoupper($atts['order']) === 'ASC' ? 'ASC' : 'DESC',
+        ];
+
+        if (!empty($ids)) {
+            $query_args['post__in'] = $ids;
+            $query_args['orderby'] = 'post__in';
+        } else {
+            $query_args['meta_query'] = [
+                [
+                    'key' => 'product-asowp-metas',
+                    'value' => 'config-id";s:1:"0"',
+                    'compare' => 'NOT LIKE',
+                ],
+            ];
+        }
+
+        $products = new \WP_Query($query_args);
+        $visible_cards = 0;
+        $page_settings = get_option("asowp_config_page");
+        $button_labels = isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [];
+        $customize_label = isset($button_labels['productDesignButton']) && $button_labels['productDesignButton'] !== '' ? $button_labels['productDesignButton'] : __('Customize', 'all-signs-options-pro');
+        $template_label = isset($button_labels['productTemplateButton']) && $button_labels['productTemplateButton'] !== '' ? $button_labels['productTemplateButton'] : __('Templates', 'all-signs-options-pro');
+
+        ob_start();
+
+        if ($products->have_posts()) {
+            ?>
+            <div class="asowp-products-grid" style="--asowp-products-cols: <?php echo esc_attr($cols); ?>;">
+                <?php
+                while ($products->have_posts()) {
+                    $products->the_post();
+                    $product_id = get_the_ID();
+                    $product = wc_get_product($product_id);
+                    if (!$product) {
+                        continue;
+                    }
+
+                    $config_id = $this->get_product_config_id($product_id);
+                    $config_product_id = $product_id;
+
+                    if (!$config_id && $product->is_type('variable')) {
+                        foreach ($product->get_children() as $variation_id) {
+                            $config_id = $this->get_product_config_id($variation_id);
+                            if ($config_id) {
+                                $config_product_id = $variation_id;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!$config_id || !get_post($config_id)) {
+                        continue;
+                    }
+
+                    $asowp_product = new ASOWP_Product_Config($config_product_id);
+                    if (!$asowp_product->is_asowp_customizable()) {
+                        continue;
+                    }
+
+                    $templates = get_post_meta($config_id, 'asowp-templates', true);
+                    if (!is_array($templates)) {
+                        $templates = [];
+                    }
+                    $templates = array_values(array_filter($templates, [$this, 'is_template_visible']));
+                    $has_templates = count($templates) > 0;
+
+                    $design_url = $asowp_product->get_design_page_url();
+                    if ($design_url === '') {
+                        $design_url = get_permalink($product_id);
+                    }
+                    $templates_url = $has_templates ? $asowp_product->get_templates_page_url() : '';
+
+                    $description = $product->get_short_description();
+                    if ($description === '') {
+                        $description = $product->get_description();
+                    }
+                    $description = wp_trim_words(wp_strip_all_tags($description), 24, '...');
+                    ?>
+                    <article class="asowp-product-card">
+                        <a class="asowp-product-card__image" href="<?php echo esc_url(get_permalink($product_id)); ?>">
+                            <?php echo wp_kses_post($product->get_image('large', ['class' => 'asowp-product-card__img', 'loading' => 'lazy'])); ?>
+                        </a>
+                        <div class="asowp-product-card__body">
+                            <h3 class="asowp-product-card__title">
+                                <a href="<?php echo esc_url(get_permalink($product_id)); ?>">
+                                    <?php echo esc_html($product->get_name()); ?>
+                                </a>
+                            </h3>
+                            <?php if ($description !== '') { ?>
+                                <p class="asowp-product-card__desc"><?php echo esc_html($description); ?></p>
+                            <?php } ?>
+                            <div class="asowp-product-card__actions">
+                                <a class="asowp-product-card__btn asowp-product-card__btn--customize" href="<?php echo esc_url($design_url); ?>">
+                                    <?php echo esc_html($customize_label); ?>
+                                </a>
+                                <?php if ($has_templates && $templates_url !== '') { ?>
+                                    <a class="asowp-product-card__btn asowp-product-card__btn--template" href="<?php echo esc_url($templates_url); ?>">
+                                        <?php echo esc_html($template_label); ?>
+                                    </a>
+                                <?php } else { ?>
+                                    <span class="asowp-product-card__btn asowp-product-card__btn--template asowp-product-card__btn--disabled" aria-disabled="true">
+                                        <?php echo esc_html($template_label); ?>
+                                    </span>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </article>
+                    <?php
+                    $visible_cards++;
+                }
+                ?>
+            </div>
+            <?php
+        }
+
+        if ($visible_cards === 0) {
+            ?>
+            <div class="asowp-products-empty">
+                <?php echo esc_html__('No configurable products found.', 'all-signs-options-pro'); ?>
+            </div>
+            <?php
+        }
+
+        wp_reset_postdata();
+
+        $content .= ob_get_clean();
+        return $content;
     }
 
     public function render_asowp_configurator($atts, $content = '')
@@ -230,6 +393,10 @@ class ASOWP_Frontend
                 $configId = $meta[$productid]['config-id'];
                 if ($configId != 0) {
                     $templates = get_post_meta($configId, 'asowp-templates', true);
+                    if (!is_array($templates)) {
+                        $templates = [];
+                    }
+                    $templates = array_values(array_filter($templates, [$this, 'is_template_visible']));
                     $all_categories = get_option('asowp-templates-categories', []);
                     $categories = [];
                     foreach ($templates as $template) {
@@ -242,41 +409,63 @@ class ASOWP_Frontend
                     }
 
                     $asowp_product = new ASOWP_Product_Config($productid);
-                    if (count($templates) > 0) {
-                        ?>
-                        <div id='asowp-frontend-app' class="asowp-templates"></div>
-                        <?php
-                        wp_localize_script('asowp-frontend', 'asowp_templates', [
-                            "data" => $templates,
-                            "categories" => $categories,
-                            "productId" => $productid,
-                            "grid_cols" => $cols,
-                            'regularPrice' => trim($product_price) !== '' ? $product_price : 0,
-                            'thousandSep' => wc_get_price_thousand_separator(),
-                            'decimalSep' => wc_get_price_decimal_separator(),
-                            'decimals' => wc_get_price_decimals(),
-                            'nbDecimals' => wc_get_price_decimals(),
-                            'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
-                            'currency_pos' => get_option('woocommerce_currency_pos'),
-                            "pageConfigs" => get_option("asowp_config_page"),
-                            "frontend_nonce" => wp_create_nonce('asowp_add_to_cart_after_custom'),
-                            "design_page_url" => $asowp_product->get_design_page_url(),
-                        ]);
-                        wp_localize_script('asowp-frontend', 'asowp_data', [
-                            "rest_url" => get_rest_url() . "asowp/v1",
-                            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
-                            "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
-                            "page" => "templates",
-                            "site_url" => urlencode(get_site_url()),
-                            "author" => ASOWP_ID
-                        ]);
-                    }
+                    ?>
+                    <div id='asowp-frontend-app' class="asowp-templates"></div>
+                    <?php
+                    wp_localize_script('asowp-frontend', 'asowp_templates', [
+                        "data" => $templates,
+                        "categories" => $categories,
+                        "productId" => $productid,
+                        "grid_cols" => $cols,
+                        'regularPrice' => trim($product_price) !== '' ? $product_price : 0,
+                        'thousandSep' => wc_get_price_thousand_separator(),
+                        'decimalSep' => wc_get_price_decimal_separator(),
+                        'decimals' => wc_get_price_decimals(),
+                        'nbDecimals' => wc_get_price_decimals(),
+                        'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
+                        'currency_pos' => get_option('woocommerce_currency_pos'),
+                        "pageConfigs" => get_option("asowp_config_page"),
+                        "frontend_nonce" => wp_create_nonce('asowp_add_to_cart_after_custom'),
+                        "design_page_url" => $asowp_product->get_design_page_url(),
+                    ]);
+                    wp_localize_script('asowp-frontend', 'asowp_data', [
+                        "rest_url" => get_rest_url() . "asowp/v1",
+                        'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+                        "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,
+                        "page" => "templates",
+                        "site_url" => urlencode(get_site_url()),
+                        "author" => ASOWP_ID
+                    ]);
                 }
             }
         }
 
         $content .= ob_get_clean();
         return $content;
+    }
+
+    private function is_template_visible($template)
+    {
+        if (!is_array($template)) {
+            return false;
+        }
+        if (!array_key_exists('showOnFrontend', $template)) {
+            return true;
+        }
+        $visible = filter_var($template['showOnFrontend'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        if ($visible === null) {
+            $visible = (bool) $template['showOnFrontend'];
+        }
+        return $visible;
+    }
+
+    private function get_product_config_id($product_id)
+    {
+        $meta = get_post_meta($product_id, 'product-asowp-metas', true);
+        if (!is_array($meta) || !isset($meta[$product_id]['config-id'])) {
+            return 0;
+        }
+        return absint($meta[$product_id]['config-id']);
     }
 
     private function includes_config_fonts($all_fonts)
