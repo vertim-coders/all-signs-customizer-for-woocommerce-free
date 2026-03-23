@@ -283,6 +283,58 @@
               </button>
             </div>
           </div>
+
+          <div
+            v-if="!isFetching && totalConfigsFound > 0"
+            class="asowp-flex asowp-items-center asowp-justify-between asowp-gap-4 asowp-flex-wrap asowp-px-4 asowp-py-4"
+          >
+            <div class="asowp-text-[.8125rem] asowp-text-[#616161]">
+              {{
+                sprintf(
+                  __("Showing %1$d-%2$d of %3$d configurations", "all-signs-options-pro"),
+                  pageStart,
+                  pageEnd,
+                  totalConfigsFound
+                )
+              }}
+            </div>
+
+            <div
+              v-if="totalPages > 1"
+              class="asowp-flex asowp-items-center asowp-gap-2 asowp-flex-wrap"
+            >
+              <button
+                type="button"
+                class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-3 asowp-py-2 asowp-cursor-pointer disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
+                :disabled="page <= 1"
+                @click="setPage(page - 1)"
+              >
+                {{ __("Previous", "all-signs-options-pro") }}
+              </button>
+
+              <button
+                v-for="pageNumber in visiblePageNumbers"
+                :key="pageNumber"
+                type="button"
+                class="asowp-min-w-[40px] asowp-rounded-md asowp-border asowp-text-[13px] asowp-px-3 asowp-py-2 asowp-cursor-pointer"
+                :class="pageNumber === page
+                  ? 'asowp-border-[#016464] asowp-bg-[#016464] asowp-text-white'
+                  : 'asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[#303030]'"
+                @click="setPage(pageNumber)"
+              >
+                {{ pageNumber }}
+              </button>
+
+              <button
+                type="button"
+                class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-3 asowp-py-2 asowp-cursor-pointer disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
+                :disabled="page >= totalPages"
+                @click="setPage(page + 1)"
+              >
+                {{ __("Next", "all-signs-options-pro") }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -421,7 +473,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import api from "@/admin/Api/api";
 import toastMessage from "@/admin/utils/functions";
@@ -445,7 +497,6 @@ const deleteConfig = ref({
 
 const configs = ref([]);
 const totalPages = ref(0);
-const pages = ref(0);
 const page = ref(1);
 const totalConfigsFound = ref(0);
 const isFetching = ref(false);
@@ -453,28 +504,116 @@ const canAddNew = ref(false);
 const isLoading = ref(false);
 const openModal = ref(false);
 const isEdit = ref(false);
+const CONFIGS_PER_PAGE = 10;
 
 const allSelected = computed(() => {
   return configs.value.length > 0 && selectedConfigIds.value.length === configs.value.length;
 });
 
-onMounted(async () => {
-    isFetching.value = true;
-    await fetchConfigs();
-    canAddNew.value = true;
-    isFetching.value = false;
+const pageStart = computed(() => {
+  if (totalConfigsFound.value === 0) {
+    return 0;
+  }
+
+  return (page.value - 1) * CONFIGS_PER_PAGE + 1;
 });
 
-const fetchConfigs = async () => {
-  const allConfigs = await api.getConfigs();
-  configs.value = allConfigs.data;
-  totalPages.value = allConfigs.totalPages;
-  pages.value = allConfigs.totalPages;
-  totalConfigsFound.value = allConfigs.totalConfigsFound;
-  showParams.value = new Array(allConfigs.data.length).fill(false);
-  selectedConfigIds.value = selectedConfigIds.value.filter((id) =>
-    allConfigs.data.some((c) => c.id === id)
-  );
+const pageEnd = computed(() => {
+  if (totalConfigsFound.value === 0) {
+    return 0;
+  }
+
+  return pageStart.value + configs.value.length - 1;
+});
+
+const visiblePageNumbers = computed(() => {
+  if (totalPages.value <= 1) {
+    return [];
+  }
+
+  const maxVisiblePages = 5;
+  let start = Math.max(1, page.value - 2);
+  let end = Math.min(totalPages.value, start + maxVisiblePages - 1);
+
+  start = Math.max(1, end - maxVisiblePages + 1);
+
+  return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+});
+
+onMounted(async () => {
+  page.value = normalizePage(route.query.page);
+  await fetchConfigs(page.value);
+  canAddNew.value = true;
+});
+
+watch(
+  () => route.query.page,
+  async (newPage) => {
+    const nextPage = normalizePage(newPage);
+    if (nextPage === page.value) {
+      return;
+    }
+
+    page.value = nextPage;
+    await fetchConfigs(nextPage);
+  }
+);
+
+const normalizePage = (value) => {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+};
+
+const updatePageQuery = async (nextPage) => {
+  const query = { ...route.query };
+
+  if (nextPage > 1) {
+    query.page = String(nextPage);
+  } else {
+    delete query.page;
+  }
+
+  await router.replace({ query });
+};
+
+const setPage = async (nextPage) => {
+  const maxPage = totalPages.value > 0 ? totalPages.value : 1;
+  const normalizedPage = Math.min(Math.max(1, nextPage), maxPage);
+
+  if (normalizedPage === page.value) {
+    return;
+  }
+
+  await updatePageQuery(normalizedPage);
+};
+
+const fetchConfigs = async (requestedPage = page.value) => {
+  isFetching.value = true;
+
+  try {
+    const safePage = normalizePage(requestedPage);
+    const allConfigs = await api.getConfigs(
+      `?per_page=${CONFIGS_PER_PAGE}&order=DESC&page=${safePage}`
+    );
+    const fetchedConfigs = Array.isArray(allConfigs?.data) ? allConfigs.data : [];
+    const fetchedTotalPages = Number(allConfigs?.totalPages || 0);
+
+    if (fetchedTotalPages > 0 && safePage > fetchedTotalPages) {
+      await updatePageQuery(fetchedTotalPages);
+      return;
+    }
+
+    page.value = safePage;
+    configs.value = fetchedConfigs;
+    totalPages.value = fetchedTotalPages;
+    totalConfigsFound.value = Number(allConfigs?.totalConfigsFound || 0);
+    showParams.value = new Array(fetchedConfigs.length).fill(false);
+    selectedConfigIds.value = selectedConfigIds.value.filter((id) =>
+      fetchedConfigs.some((c) => c.id === id)
+    );
+  } finally {
+    isFetching.value = false;
+  }
 };
 
 const handleOpenConfigParams = (key) => {

@@ -10,6 +10,23 @@
                     <input type="text" v-model="licenses.product" class="asowp-w-full"/>
                 </div>
             </div>
+            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-4">
+                <label class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
+                    <div class="asowp-flex asowp-flex-col asowp-space-y-1">
+                        <span class="asowp-text-[14px] asowp-font-semibold asowp-text-[#1f2937]">
+                            {{ __('Enable plugin auto-updates', 'all-signs-options-pro') }}
+                        </span>
+                        <span class="asowp-text-[12px] asowp-text-[#6b7280]">
+                            {{ __('When enabled, WordPress will automatically install new versions of this plugin when an update is available.', 'all-signs-options-pro') }}
+                        </span>
+                    </div>
+                    <input
+                        type="checkbox"
+                        v-model="licenses.auto_update"
+                        class="asowp-mt-1 asowp-h-4 asowp-w-4 asowp-cursor-pointer"
+                    />
+                </label>
+            </div>
             <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end">
                 <div class="asowp-bg-[#016464] asowp-rounded">
                     <button :disabled="isLoading" @click="updateGlobalLicenses" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
@@ -20,7 +37,7 @@
                             </svg>
                         </div>
 
-                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __('Save & Activate', 'all-signs-options-pro') }}</span>
+                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __('Save settings', 'all-signs-options-pro') }}</span>
                     </button>
                 </div>
             </div>
@@ -37,8 +54,10 @@ import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 
 const isFetching = ref(false);
 const isLoading = ref(false);
+const initialProduct = ref("");
 const licenses = ref({
     product:"",
+    auto_update:false,
 });
 const productId = asowp_data.author;
 onMounted(async() => {
@@ -48,20 +67,28 @@ onMounted(async() => {
 });
 const fetchLicenses = async () => {
     const result = await api.getGlobalSettingsProduct();
-    if(!result.message){
-        licenses.value.product = result.product;
-    }
-    
+    licenses.value.product = result?.product || "";
+    licenses.value.auto_update = Boolean(result?.auto_update);
+    initialProduct.value = licenses.value.product;
 };
 const updateGlobalLicenses = async () => {
     isLoading.value = true;
-    const result = await api.saveGlobalSettingsProduct(licenses.value);
-    if(result.success){
-        await activateLicenseKey();
-        isLoading.value = false;       
-    }else{
+    try {
+        const result = await api.saveGlobalSettingsProduct(licenses.value);
+        if(result.success){
+            const shouldActivateLicense = licenses.value.product?.trim() && licenses.value.product !== initialProduct.value;
+
+            if (shouldActivateLicense) {
+                await activateLicenseKey();
+            } else {
+                initialProduct.value = licenses.value.product;
+                toastMessage(result.success);
+            }
+        }else{
+            toastMessage(result.message,"error");
+        }
+    } finally {
         isLoading.value = false;
-        toastMessage(result.message,"error");
     }
 }
 const activateLicenseKey = async () => {
@@ -71,6 +98,7 @@ const activateLicenseKey = async () => {
         if (response.data.key) {
             licenses.value.valid = response.data.key;
             await api.saveGlobalSettingsProduct(licenses.value);
+            initialProduct.value = licenses.value.product;
             toastMessage(__("Activation successful! Your product is ready to use", "all-signs-options-pro"));
             document.location.href = 'admin.php?page=asowp#/'
             document.location.reload(true);

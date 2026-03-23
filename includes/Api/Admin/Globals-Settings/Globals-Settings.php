@@ -15,7 +15,6 @@ use WP_REST_Controller;
 
 class ASOWP_Api_Globals_Settings extends WP_REST_Controller
 {
-
   /**
    * [__construct description]
    */
@@ -218,30 +217,52 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
   public function save_asowp_product($request)
   {
     $data = json_decode($request->get_body(), true);
-    if (isset($data["product"]) && !empty($data["product"])) {
+    if (!is_array($data)) {
+      return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-options-pro")]);
+    }
+
+    $has_product = isset($data["product"]);
+    $has_auto_update = array_key_exists('auto_update', $data);
+
+    if (!$has_product && !$has_auto_update) {
+      return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-options-pro")]);
+    }
+
+    if ($has_auto_update) {
+      $this->set_auto_update_enabled($this->normalize_bool($data['auto_update']));
+    }
+
+    if ($has_product) {
       $product = get_option("asowp_product_pro", false);
-      if ($product != $data["product"]) {
-        $option = update_option("asowp_product_pro", $data["product"]);
-        if ($option) {
-          $this->clear_license_data();
-          return rest_ensure_response(["success" => __("ASO Product Pro saved successfully", "all-signs-options-pro")]);
+      $next_product = sanitize_text_field((string) $data["product"]);
+
+      if (!empty($next_product) && $product != $next_product) {
+        update_option("asowp_product_pro", $next_product);
+        $this->clear_license_data();
+      } elseif (empty($next_product)) {
+        delete_option("asowp_product_pro");
+        $this->clear_license_data();
+      }
+
+      if (isset($data["valid"])) {
+        $timestamp = (int) $data["valid"];
+        if ($timestamp > 0) {
+          $license_data = $this->process_license_validity($timestamp);
+          $this->save_license_data_robust($license_data);
         } else {
-          return rest_ensure_response(["message" => __("Saving ASO Product Pro failed", "all-signs-options-pro")]);
+          $this->clear_license_data();
         }
-      } else {
-        if (isset($data["valid"])) {
-          $timestamp = (int) $data["valid"];
-          if ($timestamp > 0) {
-            $license_data = $this->process_license_validity($timestamp);
-            $this->save_license_data_robust($license_data);
-          } else {
-            $this->clear_license_data();
-          }
-        }
-        return rest_ensure_response(["success" => __("ASO Product Pro saved successfully", "all-signs-options-pro")]);
+      }
+
+      if (empty($next_product) && !$has_auto_update) {
+        return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-options-pro")]);
       }
     }
-    return rest_ensure_response(["message" => __("ASO Product Pro not found", "all-signs-options-pro")]);
+
+    return rest_ensure_response([
+      "success" => __("ASO Product Pro saved successfully", "all-signs-options-pro"),
+      "auto_update" => $this->get_auto_update_enabled(),
+    ]);
   }
 
   private function process_license_validity($timestamp)
@@ -282,12 +303,68 @@ class ASOWP_Api_Globals_Settings extends WP_REST_Controller
   public function get_asowp_product($request)
   {
     $option = get_option("asowp_product_pro");
+    $response = [
+      'product' => $option ? $option : '',
+      'auto_update' => $this->get_auto_update_enabled(),
+    ];
 
     if ($option == false || empty($option)) {
-      return rest_ensure_response(["message" => __("No ASO Product Pro available", "all-signs-options-pro")]);
+      $response["message"] = __("No ASO Product Pro available", "all-signs-options-pro");
+      return rest_ensure_response($response);
     } else {
-      return rest_ensure_response(['product' => $option]);
+      return rest_ensure_response($response);
     }
+  }
+
+  private function get_auto_update_enabled()
+  {
+    $plugins = get_site_option('auto_update_plugins', []);
+
+    if (!is_array($plugins)) {
+      return false;
+    }
+
+    return in_array(plugin_basename(ASOWP_FILE), $plugins, true);
+  }
+
+  private function set_auto_update_enabled($enabled)
+  {
+    $plugin = plugin_basename(ASOWP_FILE);
+    $plugins = get_site_option('auto_update_plugins', []);
+
+    if (!is_array($plugins)) {
+      $plugins = [];
+    }
+
+    if ($enabled) {
+      if (!in_array($plugin, $plugins, true)) {
+        $plugins[] = $plugin;
+      }
+    } else {
+      $plugins = array_values(array_filter($plugins, function ($item) use ($plugin) {
+        return $item !== $plugin;
+      }));
+    }
+
+    update_site_option('auto_update_plugins', $plugins);
+  }
+
+  private function normalize_bool($value)
+  {
+    if (is_bool($value)) {
+      return $value;
+    }
+
+    if (is_numeric($value)) {
+      return ((int) $value) === 1;
+    }
+
+    if (is_string($value)) {
+      $normalized = strtolower(trim($value));
+      return in_array($normalized, ['1', 'true', 'yes', 'on'], true);
+    }
+
+    return !empty($value);
   }
   /**
    * Add config page

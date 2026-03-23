@@ -10,6 +10,7 @@ Requires Plugins: woocommerce
 Version: 1.5.1
 Author: Vertim Coders
 Author URI: https://vertimcoders.com
+Update URI: https://signsdesigner.us/
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: all-signs-options-pro
@@ -197,7 +198,7 @@ final class ASOWP_All_Signs_Options_Pro
         define('ASOWP_URL', plugins_url('', ASOWP_FILE));
         define('ASOWP_ASSETS', ASOWP_URL . '/assets');
 
-        define("ASOWP_CHECK_TRANSIENT_EXPIRATION", 12 * HOUR_IN_SECONDS); // 12 hours
+        define("ASOWP_CHECK_TRANSIENT_EXPIRATION", 24 * HOUR_IN_SECONDS); // 24 hours
         define("ASOWP_CHECK_TRANSIENT_NAME", "wp_update_check_asowp_pro");
 
         $upload_dir = wp_upload_dir();
@@ -732,6 +733,10 @@ final class ASOWP_All_Signs_Options_Pro
 
     public function check_license_status()
     {
+        if (!is_admin() && !wp_doing_cron()) {
+            return;
+        }
+
         $last_check = (int) get_option('asowp_last_license_check_timestamp', 0);
         $current_time = time();
 
@@ -777,8 +782,15 @@ final class ASOWP_All_Signs_Options_Pro
         }
 
         $site_url = get_site_url();
+        if (!apply_filters('asowp_remote_license_checks_enabled', true)) {
+            return;
+        }
+
         $url = 'https://signsdesigner.us/wp-json/vlc/license/?lcde=' . rawurlencode((string) $product) . '&siteurl=' . rawurlencode((string) $site_url) . "&vertim=" . ASOWP_ID;
-        $args = array('timeout' => 120);
+        $args = array(
+            'timeout' => 10,
+            'user-agent' => 'ASOWP/' . ASOWP_VERSION . '; ' . home_url('/'),
+        );
         $response = wp_remote_get($url, $args);
 
         if (is_wp_error($response)) {
