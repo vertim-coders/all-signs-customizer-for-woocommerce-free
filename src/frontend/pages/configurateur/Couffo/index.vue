@@ -382,8 +382,8 @@
     
                 <div v-show="!isLoaded" id="asowp-options-buttons" class="asowp-w-full asowp-h-full asowp-flex lg:asowp-flex-col asowp-items-center lg:asowp-space-y-0 asowp-py-4 asowp-px-4 lg:asowp-px-0 asowp-overflow-auto no-scrollbar">
                     
-                    <div v-for="(option, id) in activeConfigOption" class="asowp-w-[80%]">
-                        <div v-if="option.type == 'materials' && allMaterials.length > 1" @click="showOptions('material')" :class="`asowp-my-1`">
+                    <div v-for="(option, id) in activeConfigOptionAfterCondition" class="asowp-w-[80%]">
+                        <div v-if="option.type == 'materials' && option.active" @click="showOptions('material')" :class="`asowp-my-1`">
                             <div :class="`${step === 'material' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg  v-if="configSectionIcons.changeIconMaterial === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="mdi:material">
@@ -397,7 +397,7 @@
                             </div>
                         </div>
                         
-                        <div v-if="option.type == 'materials' && materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="asowp-my-1" >
+                        <div v-if="materialType == 'advance'" v-for="(component, id) in currentMaterial.data" class="asowp-my-1" >
                             <div v-if="component.options.length > 0" @click="showOptions('component', component, id)" :class="`${step === 'component' && advancedComponentId === id ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="component.icon === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <g id="fluent-mdl2:product-release">
@@ -411,7 +411,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'sizes' && materialType == 'simple' && (sizees.length > 0 || customSizeActive)" @click="showOptions('size')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'sizes'" @click="showOptions('size')" :class="`asowp-my-1`">
                             <div :class="`${step === 'size' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconSize === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 47 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="fluent:keyboard-layout-resize-24-filled">
@@ -425,7 +425,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'shapes' && shapees.length > 0 && materialType == 'simple'" @click="showOptions('shape')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'shapes'" @click="showOptions('shape')" :class="`asowp-my-1`">
                             <div :class="`${step === 'shape' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconShape === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="mdi:shape">
@@ -439,7 +439,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'fixing-methodes' && fixinggs.length > 0" @click="showOptions('fixing-methode')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'fixing-methodes'" @click="showOptions('fixing-methode')" :class="`asowp-my-1`">
                             <div :class="`${step === 'fixing-methode' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconFixingMethod.trim() == '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="uil:screw">
@@ -453,7 +453,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'borders' && materialType == 'simple' && borderrs.allBorders.length > 0" @click="showOptions('border')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'borders'" @click="showOptions('border')" :class="`asowp-my-1`">
                             <div :class="`${step === 'border' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconBorder === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v8.25A2.25 2.25 0 0 0 6 16.5h2.25m8.25-8.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-7.5A2.25 2.25 0 0 1 8.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 0 0-2.25 2.25v6" />
@@ -465,7 +465,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'colors' && ((materialType == 'simple' && (sizees.length > 0 || customSizeActive)) || (materialType == 'advance' && advancedComponent.options.length > 0))" @click="showOptions('color')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'colors'" @click="showOptions('color')" :class="`asowp-my-1`">
                             <div :class="`${step === 'color' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconColor === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="tdesign:fill-color-1">
@@ -479,7 +479,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'texts' && ((materialType == 'simple' && currentMaterialTextImages.enableText && (sizees.length > 0 || customSizeActive)) || (materialType == 'advance' && advancedComponent.options.length > 0))" @click="showOptions('text')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'texts'" @click="showOptions('text')" :class="`asowp-my-1`">
                             <div :class="`${step === 'text' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconText === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 46 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="clarity:text-line" clip-path="url(#clip0_457_214)">
@@ -499,7 +499,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'images' && ((materialType == 'simple' && currentMaterialTextImages.enableImage && (sizees.length > 0 || customSizeActive)) || (materialType == 'advance' && advancedComponent.options.length > 0))" @click="showOptions('image')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'images'" @click="showOptions('image')" :class="`asowp-my-1`">
                             <div :class="`${step === 'image' && addComponentId === id ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="configSectionIcons.changeIconImage === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
@@ -511,7 +511,7 @@
                             </div>
                         </div>
     
-                        <div v-if="option.type == 'qrcodes' && ((materialType == 'simple' && currentMaterialTextImages.enableQrCode && (sizees.length > 0 || customSizeActive)) || (materialType == 'advance' && advancedComponent.options.length > 0))" @click="showOptions('qr-code')" :class="`asowp-my-1`">
+                        <div v-if="option.type == 'qrcodes'" @click="showOptions('qr-code')" :class="`asowp-my-1`">
                             <div :class="`${step === 'image' && addComponentId === id ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="!configSectionIcons?.changeIconQrCode" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
@@ -524,7 +524,7 @@
                             </div>
                         </div>
         
-                        <div v-if="option.type == 'additional-components'  && (materialType == 'simple' && additionalComponents.length > 0 )" v-for="(option, id) in additionalComponents" class="asowp-my-1" >
+                        <div v-if="option.type == 'additional-components'" v-for="(option, id) in additionalComponents" class="asowp-my-1" >
                             <div v-if="option.options.length > 0" @click="showOptions('add-components', option, id)" :class="`${step === 'add-components' && addComponentId === id ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg v-if="option.icon === '' " class="asowp-w-6 asowp-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <g id="fluent-mdl2:product-release">
@@ -538,7 +538,7 @@
                             </div>
                         </div>
     
-                        <div v-if="option.type == 'additional-options' && configAdditionnalOptions.length > 0" class="asowp-my-1" >
+                        <div v-if="option.type == 'additional-options'" class="asowp-my-1" >
                             <div @click="showOptions('add-options')" :class="`${step === 'add-options' ? `asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}]` : ``} asowp-h-fit asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.optionsSideBar.options.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.buttons.hoverTextColor}] asowp-px-4 asowp-py-1 asowp-rounded-lg asowp-base-animation asowp-cursor-pointer`">
                                 <svg class="asowp-w-6 asowp-h-6" viewBox="0 0 50 50" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <g id="fluent-mdl2:product-release">
