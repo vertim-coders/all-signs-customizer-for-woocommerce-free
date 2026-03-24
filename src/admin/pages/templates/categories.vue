@@ -324,7 +324,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import api from "@/admin/Api/api";
-import { toastMessage } from "@/admin/utils/functions";
+import toastMessage from "@/admin/utils/functions";
 import { __ } from "@wordpress/i18n";
 // Import du helper t
 

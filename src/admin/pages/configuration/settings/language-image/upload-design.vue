@@ -50,7 +50,7 @@
     </div>
 </template>
 <script setup>
-import {ref,defineProps, onMounted} from 'vue';
+import {ref,defineProps, onMounted, onBeforeUnmount} from 'vue';
 import api from '@/admin/Api/api';
 import { useRoute } from 'vue-router';
 import toastMessage from '@/admin/utils/functions';
@@ -69,13 +69,36 @@ const uploadDesign = ref({
     helpContent:'',
 })
 
-
-onMounted(() => {
-    if(props.data){
-        uploadDesign.value = {...uploadDesign.value,...props.data}
+const tinymceEditorId = 'asowp-admin-tinymce';
+const getTinyMCE = () => window.tinymce ?? null;
+const getTinyMCEEditor = () => getTinyMCE()?.get(tinymceEditorId) ?? null;
+const setTinyMCEContent = (content = '') => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.setContent(content || '');
     }
-    tinymce.init({
-        selector: '#asowp-admin-tinymce',
+};
+const getTinyMCEContent = () => getTinyMCEEditor()?.getContent() ?? '';
+const destroyTinyMCE = () => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.remove();
+    }
+};
+const initTinyMCE = (content = '') => {
+    const editorApi = getTinyMCE();
+    if (!editorApi) {
+        return;
+    }
+
+    const existingEditor = getTinyMCEEditor();
+    if (existingEditor) {
+        existingEditor.setContent(content || '');
+        return;
+    }
+
+    editorApi.init({
+        selector: `#${tinymceEditorId}`,
         plugins: 'wordpress paste link image media',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
         relative_urls: false,
@@ -86,15 +109,26 @@ onMounted(() => {
         branding: false,
         setup: function(editor) {
             editor.on('init', function() {
-                editor.setContent(uploadDesign.value.helpContent);
+                editor.setContent(content || '');
             });
         }
     });
+};
+
+onMounted(() => {
+    if(props.data){
+        uploadDesign.value = {...uploadDesign.value,...props.data}
+    }
+    initTinyMCE(uploadDesign.value.helpContent);
+});
+
+onBeforeUnmount(() => {
+    destroyTinyMCE();
 });
 
 const updateUploadDesignSettings = async () => {
     isLoading.value = true;
-    uploadDesign.value.helpContent = tinymce.activeEditor.getContent();
+    uploadDesign.value.helpContent = getTinyMCEContent();
     const result = await api.updateLanguageImagesUploadDesign(configId.value,uploadDesign.value);
     if(result.success){
         await props.fetchSettings();
@@ -109,4 +143,4 @@ const updateUploadDesignSettings = async () => {
         toastMessage(result.message,"error");
     }
 };   
-</script> 
+</script>

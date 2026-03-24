@@ -70,7 +70,6 @@ const activateLicenseKey = async () => {
         toastMessage(__('An unknown error occurred.', 'all-signs-options-pro'), "error");
     }
 }
-
 tailwind.config ={
     prefix: 'asowp-',
     corePlugins: {

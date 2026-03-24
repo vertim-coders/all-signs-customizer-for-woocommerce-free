@@ -110,54 +110,54 @@
               </p>
             </div>
           </div>
-          <div
-            
-            v-for="(config, key) in configs"
-            :key="key"
-            @click="goToMaterial(config)"
-            class="asowp-cursor-pointer hover:asowp-bg-[#f7f7f7] asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-6 asowp-px-4 asowp-py-2 asowp-text-[.8125rem] asowp-text-[#303030] asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-10"
-          >
-            <div class="asowp-flex asowp-items-center" @click.stop>
-              <input
-                type="checkbox"
-                :checked="selectedConfigIds.includes(config.id)"
-                @change="toggleSelect(config.id, $event.target.checked)"
-              />
-            </div>
+          <template v-if="!isFetching">
             <div
-              class="asowp-text-[#303030] asowp-flex dark:asowp-text-[#303030] asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4"
+              v-for="(config, key) in configs"
+              :key="key"
+              @click="goToMaterial(config)"
+              class="asowp-cursor-pointer hover:asowp-bg-[#f7f7f7] asowp-grid asowp-items-center asowp-bg-white asowp-grid-cols-6 asowp-px-4 asowp-py-2 asowp-text-[.8125rem] asowp-text-[#303030] asowp-border-b-[1px] asowp-border-t-0 asowp-border-l-0 asowp-border-r-0 asowp-border-solid asowp-border-gray-200 asowp-gap-x-10"
             >
-              <span
-                class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-items-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black"
+              <div class="asowp-flex asowp-items-center" @click.stop>
+                <input
+                  type="checkbox"
+                  :checked="selectedConfigIds.includes(config.id)"
+                  @change="toggleSelect(config.id, $event.target.checked)"
+                />
+              </div>
+              <div
+                class="asowp-text-[#303030] asowp-flex dark:asowp-text-[#303030] asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis asowp-space-x-4"
               >
-                <span class="asowp-text-[.8125rem]">{{
-                  getInitials(config.name)
-                }}</span>
-              </span>
-              <span
-                class="asowp-flex asowp-justify-center asowp-items-center asowp-text-[.8125rem]"
-                >{{ config.name }}</span
-              >
-            </div>
-            <div
-              class="asowp-text-[#303030] asowp-justify-center asowp-items-center asowp-flex dark:asowp-text-[#303030] asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis"
-            >
-              <span>{{ config.description }}</span>
-            </div>
-            <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
-                <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
-            </div>
-            <div class="asowp-flex asowp-justify-center asowp-items-center">
                 <span
-                    style="padding: .125rem .5rem;"
-                    :class="(config.materialType || config.data?.materials?.[0]?.type) === 'advance'
-                        ? 'asowp-text-[#0c5132] asowp-bg-[#b4fed2] asowp-rounded-[.5rem] asowp-text-[.75rem] asowp-leading-[1rem]'
-                        : 'asowp-text-[#003a5a] asowp-bg-[#d5ebff] asowp-rounded-[.5rem] asowp-text-[.75rem] asowp-leading-[1rem]'"
-                >{{ config.materialType || config.data?.materials?.[0]?.type }}</span>
-            </div>
-            <div
-              class="asowp-flex asowp-space-x-2 asowp-justify-center asowp-items-center asowp-text-gray-500 dark:asowp-text-gray-400"
-            >
+                  class="asowp-w-5 asowp-h-5 asowp-p-1 asowp-px-1 asowp-flex asowp-justify-center asowp-items-center asowp-rounded-full asowp-bg-[#f0f0f1] asowp-border asowp-border-solid asowp-border-black"
+                >
+                  <span class="asowp-text-[.8125rem]">{{
+                    getInitials(config.name)
+                  }}</span>
+                </span>
+                <span
+                  class="asowp-flex asowp-justify-center asowp-items-center asowp-text-[.8125rem]"
+                  >{{ config.name }}</span
+                >
+              </div>
+              <div
+                class="asowp-text-[#303030] asowp-justify-center asowp-items-center asowp-flex dark:asowp-text-[#303030] asowp-overflow-hidden asowp-whitespace-nowrap asowp-text-ellipsis"
+              >
+                <span>{{ config.description }}</span>
+              </div>
+              <div class="asowp-text-gray-500 dark:asowp-text-gray-400 asowp-flex asowp-justify-center asowp-items-center">
+                  <img class="asowp-w-10 asowp-h-10 asowp-rounded" :src="config.icon" alt="" v-if="config.icon!=''">
+              </div>
+              <div class="asowp-flex asowp-justify-center asowp-items-center">
+                  <span
+                      style="padding: .125rem .5rem;"
+                      :class="(config.materialType || config.data?.materials?.[0]?.type) === 'advance'
+                          ? 'asowp-text-[#0c5132] asowp-bg-[#b4fed2] asowp-rounded-[.5rem] asowp-text-[.75rem] asowp-leading-[1rem]'
+                          : 'asowp-text-[#003a5a] asowp-bg-[#d5ebff] asowp-rounded-[.5rem] asowp-text-[.75rem] asowp-leading-[1rem]'"
+                  >{{ config.materialType || config.data?.materials?.[0]?.type }}</span>
+              </div>
+              <div
+                class="asowp-flex asowp-space-x-2 asowp-justify-center asowp-items-center asowp-text-gray-500 dark:asowp-text-gray-400"
+              >
 
               <button
                 class="asowp-w-7 asowp-h-7 asowp-bg-white asowp-cursor-pointer asowp-border asowp-border-gray-300 asowp-rounded-lg asowp-flex asowp-items-center asowp-justify-center asowp-shadow-sm hover:asowp-bg-gray-100 asowp-transition"
@@ -281,8 +281,9 @@
                   </button>
                 </div>
               </button>
+              </div>
             </div>
-          </div>
+          </template>
 
           <div
             v-if="!isFetching && totalConfigsFound > 0"
@@ -306,7 +307,7 @@
               <button
                 type="button"
                 class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-3 asowp-py-2 asowp-cursor-pointer disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
-                :disabled="page <= 1"
+                :disabled="isFetching || page <= 1"
                 @click="setPage(page - 1)"
               >
                 {{ __("Previous", "all-signs-options-pro") }}
@@ -320,6 +321,7 @@
                 :class="pageNumber === page
                   ? 'asowp-border-[#016464] asowp-bg-[#016464] asowp-text-white'
                   : 'asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[#303030]'"
+                :disabled="isFetching"
                 @click="setPage(pageNumber)"
               >
                 {{ pageNumber }}
@@ -328,7 +330,7 @@
               <button
                 type="button"
                 class="asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-bg-white hover:asowp-bg-[#f8fafc] asowp-text-[13px] asowp-px-3 asowp-py-2 asowp-cursor-pointer disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
-                :disabled="page >= totalPages"
+                :disabled="isFetching || page >= totalPages"
                 @click="setPage(page + 1)"
               >
                 {{ __("Next", "all-signs-options-pro") }}

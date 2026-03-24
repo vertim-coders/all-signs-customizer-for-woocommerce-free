@@ -23,4 +23,5 @@ const toastMessage = (text, action = "success") => {
     toastr.error(text);
   }
 };
+export { toastMessage };
 export default toastMessage;

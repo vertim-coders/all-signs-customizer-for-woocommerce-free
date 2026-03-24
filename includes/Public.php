@@ -9,7 +9,7 @@ class ASOWP_Public
 
     public function __construct()
     {
-        $this->render_public();
+        add_action('wp_enqueue_scripts', [$this, 'render_public'], 20);
     }
 
     /**
@@ -22,12 +22,37 @@ class ASOWP_Public
      */
     public function render_public()
     {
+        if (!$this->should_enqueue_public_assets()) {
+            return;
+        }
+
         wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
         $this->add_button_styles_inline();
         wp_enqueue_style('asowp-omodal', ASOWP_ASSETS . '/utilities/modal.min.css', false, ASOWP_VERSION);
         wp_enqueue_script('asowp-omodal', ASOWP_ASSETS . '/utilities/modal.min.js', [], ASOWP_VERSION, true);
         wp_enqueue_script('asowp-tinymce-script', includes_url('/js/tinymce/') . 'tinymce.min.js', [], ASOWP_VERSION, true);
         wp_enqueue_script('asowp-product-min', ASOWP_ASSETS . '/utilities/asowp-product-min.js', ["jquery"], ASOWP_VERSION, true);
+    }
+
+    private function should_enqueue_public_assets(): bool
+    {
+        if (is_admin()) {
+            return false;
+        }
+
+        if (function_exists('is_woocommerce') && is_woocommerce()) {
+            return true;
+        }
+
+        if (function_exists('is_cart') && is_cart()) {
+            return true;
+        }
+
+        if (function_exists('is_checkout') && is_checkout()) {
+            return true;
+        }
+
+        return false;
     }
 
     private function add_button_styles_inline()

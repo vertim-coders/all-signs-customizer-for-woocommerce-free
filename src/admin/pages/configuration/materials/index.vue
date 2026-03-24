@@ -311,6 +311,51 @@ const deleteMaterial = ref({
 const emptyLabel = ref(false);
 const notFoundMessage = ref('');
 const showParams = ref([]);
+const tinymceEditorId = 'asowp-admin-tinymce';
+const getTinyMCE = () => window.tinymce ?? null;
+const getTinyMCEEditor = () => getTinyMCE()?.get(tinymceEditorId) ?? null;
+const setTinyMCEContent = (content = '') => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.setContent(content || '');
+    }
+};
+const getTinyMCEContent = () => getTinyMCEEditor()?.getContent() ?? '';
+const destroyTinyMCE = () => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.remove();
+    }
+};
+const initTinyMCE = (content = '') => {
+    const editorApi = getTinyMCE();
+    if (!editorApi) {
+        return;
+    }
+
+    const existingEditor = getTinyMCEEditor();
+    if (existingEditor) {
+        existingEditor.setContent(content || '');
+        return;
+    }
+
+    editorApi.init({
+        selector: `#${tinymceEditorId}`,
+        plugins: 'wordpress paste link image media',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        height: 200,
+        width: '100%',
+        branding: false,
+        setup: function(editor) {
+            editor.on('init', function() {
+                editor.setContent(content || '');
+            });
+        }
+    });
+};
 const closeAllMaterialParams = () => {
     showParams.value = showParams.value.map(() => false);
 };
@@ -348,22 +393,7 @@ const getInitials = (str) => {
 
 onMounted(async() => {
     document.addEventListener('click', closeAllMaterialParams);
-    tinymce.init({
-        selector: '#asowp-admin-tinymce',
-        plugins: 'wordpress paste link image media',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
-        relative_urls: false,
-        remove_script_host: false,
-        convert_urls: true,
-        height: 200,
-        width: '100%',
-        branding: false,
-        setup: function(editor) {
-            editor.on('init', function() {
-                //console.log('TinyMCE initialized.');
-            });
-        }
-    });
+    initTinyMCE();
     try {
         const cfg = await api.getConfig(configID.value)
         if (!cfg?.message && cfg?.materialType === 'advance') {
@@ -381,6 +411,7 @@ onMounted(async() => {
 
 onBeforeUnmount(() => {
     document.removeEventListener('click', closeAllMaterialParams);
+    destroyTinyMCE();
 });
 
 /**Function for adding */
@@ -485,7 +516,7 @@ const selectMaterialEdit = (material, id) => {
     newMaterial.value = JSON.parse(JSON.stringify(material));
     newMaterial.value.type = enforcedMaterialType.value
     isEdit.value = true;
-    tinymce.activeEditor.setContent(material.popImg)
+    setTinyMCEContent(material.popImg)
     isNewComponent.value = true;
 }
 const selectCloneMaterial = (material)=> {
@@ -495,9 +526,12 @@ const selectCloneMaterial = (material)=> {
 
 const closeTnymceModal = ()=>{
     openTnyMce.value = !openTnyMce.value;
+    if (openTnyMce.value) {
+        setTinyMCEContent(newMaterial.value.popImg);
+    }
 }
 const savePopImg = ()=>{
-    newMaterial.value.popImg = tinymce.activeEditor.getContent();
+    newMaterial.value.popImg = getTinyMCEContent();
     openTnyMce.value = false;
 }
 
