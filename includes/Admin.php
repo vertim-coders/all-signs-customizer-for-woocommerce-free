@@ -10,6 +10,7 @@ class ASOWP_Admin
     public function __construct()
     {
         add_action('admin_menu', [$this, 'admin_menu']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_product_assets']);
         add_filter('upload_mimes', [$this, 'asowp_add_custom_mime_types']);
         add_filter('wp_check_filetype_and_ext', [$this, 'asowp_check_filetype_and_ext'], 99, 5);
         add_action('wp_ajax_asowp_check_product_health', [$this, 'check_product_health']);
@@ -63,13 +64,17 @@ class ASOWP_Admin
      */
     public function enqueue_scripts()
     {
+        if (function_exists('wp_enqueue_editor')) {
+            wp_enqueue_editor();
+        }
+
         wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
         wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
 
         wp_enqueue_style('asowp-admin', ASOWP_ASSETS . '/css/admin.css', false, ASOWP_VERSION);
         wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
 
-        wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
+        wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n', 'editor'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
         wp_set_script_translations( 'asowp-admin', "all-signs-options-pro" );
         wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
 
@@ -77,6 +82,31 @@ class ASOWP_Admin
         wp_enqueue_script('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.js', [], ASOWP_VERSION, true);
         wp_enqueue_script('asowp-sortable', ASOWP_ASSETS . '/utilities/sortable.js', [], ASOWP_VERSION, true);
         wp_enqueue_media();
+    }
+
+    /**
+     * Load lightweight admin styles on WooCommerce product screens.
+     *
+     * This keeps product-list/product-edit UI styling available without
+     * reintroducing the old global frontend-style leak across wp-admin.
+     *
+     * @return void
+     */
+    public function enqueue_product_assets()
+    {
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        if (!$screen) {
+            return;
+        }
+
+        $is_product_screen = $screen->post_type === 'product'
+            || in_array($screen->id, ['edit-product', 'product'], true);
+
+        if (!$is_product_screen) {
+            return;
+        }
+
+        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
     }
 
     /**

@@ -3,11 +3,17 @@
 }
 .asowp-configurator-container {
   height: 100vh;
+  min-height: 100vh;
+}
+.asowp-configurator-container:empty {
+  height: 0;
+  min-height: 0;
 }
 .asowp-templates-customize_button {
   color: white;
   text-decoration: none;
 }
+.asowp-frontend-app,
 #asowp-frontend-app {
   p {
     margin: 0 !important;

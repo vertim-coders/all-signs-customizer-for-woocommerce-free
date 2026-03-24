@@ -133,7 +133,7 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import api from "@/admin/Api/api";
 import toastMessage from '@/admin/utils/functions';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
@@ -152,9 +152,36 @@ const fixingMethod = ref({
     type : ''
 });
 const openTnyMce = ref(false);
-onMounted(async ()=>{
-    tinymce.init({
-        selector: '#asowp-admin-tinymce',
+const tinymceEditorId = 'asowp-admin-tinymce';
+const getTinyMCE = () => window.tinymce ?? null;
+const getTinyMCEEditor = () => getTinyMCE()?.get(tinymceEditorId) ?? null;
+const setTinyMCEContent = (content = '') => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.setContent(content || '');
+    }
+};
+const getTinyMCEContent = () => getTinyMCEEditor()?.getContent() ?? '';
+const destroyTinyMCE = () => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.remove();
+    }
+};
+const initTinyMCE = (content = '') => {
+    const editorApi = getTinyMCE();
+    if (!editorApi) {
+        return;
+    }
+
+    const existingEditor = getTinyMCEEditor();
+    if (existingEditor) {
+        existingEditor.setContent(content || '');
+        return;
+    }
+
+    editorApi.init({
+        selector: `#${tinymceEditorId}`,
         plugins: 'wordpress paste link image media',
         toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
         relative_urls: false,
@@ -165,13 +192,20 @@ onMounted(async ()=>{
         branding: false,
         setup: function(editor) {
             editor.on('init', function() {
-                //console.log('TinyMCE initialized.');
+                editor.setContent(content || '');
             });
         }
     });
+};
+onMounted(async ()=>{
+    initTinyMCE();
     isFetching.value = true;
     await fetchFixingMethods();
     isFetching.value = false;
+});
+
+onBeforeUnmount(() => {
+    destroyTinyMCE();
 });
 
 
@@ -188,7 +222,7 @@ const isNewFixingMethod = ref(false);
 const selectFixingMethod = (id,fx) =>{
     fixingMethodId.value = id;
     fixingMethod.value = fx;
-    tinymce.activeEditor.setContent(fx.popImg);
+    setTinyMCEContent(fx.popImg);
     addNewFixingMethod();
 }
 const addNewFixingMethod = () => {
@@ -250,10 +284,13 @@ const selectFixingMethodIcon = async(e) => {
 
 const closeTnymceModal = ()=>{
     openTnyMce.value = !openTnyMce.value;
+    if (openTnyMce.value) {
+        setTinyMCEContent(fixingMethod.value.popImg);
+    }
 }
 
 const savePopImg = ()=>{
-    fixingMethod.value.popImg = tinymce.activeEditor.getContent();
+    fixingMethod.value.popImg = getTinyMCEContent();
     openTnyMce.value = false;
 }
 const back = () => {

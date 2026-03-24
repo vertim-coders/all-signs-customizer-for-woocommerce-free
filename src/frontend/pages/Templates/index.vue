@@ -79,7 +79,7 @@
 <script setup>
 import { add_to_cart } from '@/frontend/utils/functions';
 import { onMounted, ref } from 'vue';
-import api from '../../../admin/Api/api';
+import api from '@/frontend/api';
 
 const templates = ref(asowp_templates.data);
 const allTemplates = asowp_templates.data;
@@ -89,7 +89,7 @@ const regularPrice = asowp_templates.regularPrice;
 const templates_grid_cols = asowp_templates.grid_cols;
 const design_page_url = asowp_templates.design_page_url;
 const productId = asowp_templates.productId;
-const buttons = asowp_templates.pageConfigs.buttons;
+const buttons = asowp_templates.buttons || {};
 const isAddingToCart = ref(false);
 onMounted(()=>{
     if(document.querySelector("#asowp-templates-loader")){

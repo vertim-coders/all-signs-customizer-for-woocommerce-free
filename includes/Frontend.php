@@ -50,6 +50,10 @@ class ASOWP_Frontend
             'posts_per_page' => $limit,
             'orderby' => sanitize_key($atts['orderby']),
             'order' => strtoupper($atts['order']) === 'ASC' ? 'ASC' : 'DESC',
+            'no_found_rows' => true,
+            'ignore_sticky_posts' => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
         ];
 
         if (!empty($ids)) {
@@ -180,39 +184,9 @@ class ASOWP_Frontend
 
     public function render_asowp_configurator($atts, $content = '')
     {
-        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
-        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
-        wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
-        wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
-        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
         extract(shortcode_atts(['productid' => '0', 'tplid' => false], $atts, 'asowp-products'));
 
         ob_start();
-        ?>
-        <div id="asowp-configurator-loader" class="asowp-configurator-skeleton">
-            <div class="asowp-configurator-skeleton__top">
-                <div class="asowp-skeleton asowp-skeleton-pill"></div>
-                <div class="asowp-skeleton asowp-skeleton-pill"></div>
-                <div class="asowp-skeleton asowp-skeleton-pill"></div>
-                <div class="asowp-skeleton asowp-skeleton-pill"></div>
-            </div>
-            <div class="asowp-configurator-skeleton__main">
-                <div class="asowp-skeleton asowp-skeleton-canvas"></div>
-                <div class="asowp-configurator-skeleton__sidebar">
-                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
-                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
-                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
-                </div>
-            </div>
-            <div class="asowp-configurator-skeleton__bottom">
-                <div class="asowp-skeleton asowp-skeleton-chip"></div>
-                <div class="asowp-skeleton asowp-skeleton-chip"></div>
-                <div class="asowp-skeleton asowp-skeleton-chip"></div>
-                <div class="asowp-skeleton asowp-skeleton-chip"></div>
-                <div class="asowp-skeleton asowp-skeleton-chip"></div>
-            </div>
-        </div>
-        <?php
         $product = wc_get_product($productid);
         if ($product) {
             $meta = get_post_meta($productid, 'product-asowp-metas', true);
@@ -221,7 +195,8 @@ class ASOWP_Frontend
                 $configId = $meta[$productid]['config-id'];
                 if ($configId != 0) {
                     $config = get_post_meta($configId, "asowp-configs-meta", true);
-                    $pageSettings = get_option("asowp_config_page", [])['others'];
+                    $page_settings = get_option("asowp_config_page", []);
+                    $pageSettings = isset($page_settings['others']) && is_array($page_settings['others']) ? $page_settings['others'] : [];
                     $all_cliparts_groups = get_option("asowp-manages-cliparts", []);
                     $all_fonts = get_option("asowp-manages-fonts", []);
                     $all_shapes = get_option("asowp_all_shapes", []);
@@ -230,6 +205,32 @@ class ASOWP_Frontend
                     $outputOptions = get_option("asowp_output_options", []);
 
                     if (is_array($config) && !empty($config)) {
+                        $this->enqueue_frontend_app_assets();
+                        ?>
+                        <div id="asowp-configurator-loader" class="asowp-configurator-skeleton">
+                            <div class="asowp-configurator-skeleton__top">
+                                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                                <div class="asowp-skeleton asowp-skeleton-pill"></div>
+                            </div>
+                            <div class="asowp-configurator-skeleton__main">
+                                <div class="asowp-skeleton asowp-skeleton-canvas"></div>
+                                <div class="asowp-configurator-skeleton__sidebar">
+                                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-panel"></div>
+                                </div>
+                            </div>
+                            <div class="asowp-configurator-skeleton__bottom">
+                                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                                <div class="asowp-skeleton asowp-skeleton-chip"></div>
+                            </div>
+                        </div>
+                        <?php
                         $configData = [
                             'name' => get_post_field('post_title', $configId),
                             'description' => get_post_field('post_content', $configId),
@@ -269,7 +270,6 @@ class ASOWP_Frontend
                         ];
 
                         $product_price = $product->get_price();
-                        $available_variations = $product->get_type() === 'variable' ? $product->get_available_variations() : [];
 
                         $templates = [];
                         if ($tplid !== false) {
@@ -286,7 +286,6 @@ class ASOWP_Frontend
                         $ASO = [
                             'skin' => $config['data']['settings']['themeColors']['skin'],
                             'productID' => $productid,
-                            'product' => $product,
                             'currentConfig' => $configData,
                             'managesData' => $all_manages,
                             'regularPrice' => trim($product_price) !== '' ? $product_price : 0,
@@ -296,7 +295,6 @@ class ASOWP_Frontend
                             'nbDecimals' => wc_get_price_decimals(),
                             'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
                             'currency_pos' => get_option('woocommerce_currency_pos'),
-                            'variations' => $available_variations,
                             'fixing_methods_url' => ASOWP_ASSETS . '/images/fixing-methodes',
                             'borders_url' => ASOWP_ASSETS . '/images/borders',
                             'templates' => [
@@ -316,7 +314,7 @@ class ASOWP_Frontend
                             'author' => ASOWP_ID
                         ]);
                         ?>
-                        <div id='asowp-frontend-app' class="asowp-configurator-container"></div>
+                        <div class="asowp-frontend-app asowp-configurator-container" data-asowp-page="configurator"></div>
                         <?php
                     }
                 }
@@ -329,61 +327,9 @@ class ASOWP_Frontend
 
     public function render_asowp_templates($atts, $content = '')
     {
-        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
-        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
-        wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
-        wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
-        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
-
         extract(shortcode_atts(['productid' => '0', 'cols' => '3'], $atts, 'asowp-products'));
 
         ob_start();
-        ?>
-        <div id="asowp-templates-loader">
-            <div class="asowp-templates-skeleton-grid">
-                <div class="asowp-skeleton-card">
-                    <div class="asowp-skeleton asowp-skeleton-image"></div>
-                    <div class="asowp-skeleton-body">
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                    </div>
-                </div>
-                <div class="asowp-skeleton-card">
-                    <div class="asowp-skeleton asowp-skeleton-image"></div>
-                    <div class="asowp-skeleton-body">
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                    </div>
-                </div>
-                <div class="asowp-skeleton-card">
-                    <div class="asowp-skeleton asowp-skeleton-image"></div>
-                    <div class="asowp-skeleton-body">
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                    </div>
-                </div>
-                <div class="asowp-skeleton-card">
-                    <div class="asowp-skeleton asowp-skeleton-image"></div>
-                    <div class="asowp-skeleton-body">
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
-                        <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                        <div class="asowp-skeleton asowp-skeleton-button"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php
 
         $product = wc_get_product($productid);
         if ($product) {
@@ -409,8 +355,55 @@ class ASOWP_Frontend
                     }
 
                     $asowp_product = new ASOWP_Product_Config($productid);
+                    $page_settings = get_option("asowp_config_page", []);
+                    $this->enqueue_frontend_app_assets();
                     ?>
-                    <div id='asowp-frontend-app' class="asowp-templates"></div>
+                    <div id="asowp-templates-loader">
+                        <div class="asowp-templates-skeleton-grid">
+                            <div class="asowp-skeleton-card">
+                                <div class="asowp-skeleton asowp-skeleton-image"></div>
+                                <div class="asowp-skeleton-body">
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                </div>
+                            </div>
+                            <div class="asowp-skeleton-card">
+                                <div class="asowp-skeleton asowp-skeleton-image"></div>
+                                <div class="asowp-skeleton-body">
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                </div>
+                            </div>
+                            <div class="asowp-skeleton-card">
+                                <div class="asowp-skeleton asowp-skeleton-image"></div>
+                                <div class="asowp-skeleton-body">
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                </div>
+                            </div>
+                            <div class="asowp-skeleton-card">
+                                <div class="asowp-skeleton asowp-skeleton-image"></div>
+                                <div class="asowp-skeleton-body">
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--lg"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--md"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-line asowp-skeleton-line--sm"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                    <div class="asowp-skeleton asowp-skeleton-button"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ?>
+                    <div class="asowp-frontend-app asowp-templates" data-asowp-page="templates"></div>
                     <?php
                     wp_localize_script('asowp-frontend', 'asowp_templates', [
                         "data" => $templates,
@@ -424,7 +417,7 @@ class ASOWP_Frontend
                         'nbDecimals' => wc_get_price_decimals(),
                         'currencySymbol' => html_entity_decode(get_woocommerce_currency_symbol()),
                         'currency_pos' => get_option('woocommerce_currency_pos'),
-                        "pageConfigs" => get_option("asowp_config_page"),
+                        "buttons" => isset($page_settings['buttons']) && is_array($page_settings['buttons']) ? $page_settings['buttons'] : [],
                         "frontend_nonce" => wp_create_nonce('asowp_add_to_cart_after_custom'),
                         "design_page_url" => $asowp_product->get_design_page_url(),
                     ]);
@@ -466,6 +459,15 @@ class ASOWP_Frontend
             return 0;
         }
         return absint($meta[$product_id]['config-id']);
+    }
+
+    private function enqueue_frontend_app_assets()
+    {
+        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
+        wp_enqueue_style('asowp-style', ASOWP_ASSETS . '/css/style.css', false, ASOWP_VERSION);
+        wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
+        wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
+        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
     }
 
     private function includes_config_fonts($all_fonts)

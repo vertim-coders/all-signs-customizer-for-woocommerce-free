@@ -176,7 +176,21 @@
                                 </svg>
                                 <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}</p>
                             </div>
-    
+
+                            <div @click="moveObject('up')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75 12 11.25l4.5 4.5M12 12v8.25M4.5 3.75h15" />
+                                </svg>
+                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasUp && configVisualiserTexts.textCanvasUp.trim() !== '' ? configVisualiserTexts.textCanvasUp : 'Up' }}</p>
+                            </div>
+
+                            <div @click="moveObject('down')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25 12 12.75l-4.5-4.5M12 12v-8.25M4.5 20.25h15" />
+                                </svg>
+                                <p class="asowp-text-[10px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasDown && configVisualiserTexts.textCanvasDown.trim() !== '' ? configVisualiserTexts.textCanvasDown : 'Down' }}</p>
+                            </div>
+
                             <div @click="deleteObject()" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-bg-[${configColors.objectsOptions.delete.buttonColor}] asowp-text-[${configColors.objectsOptions.delete.textColor}] hover:asowp-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.delete.hoverTextColor}] asowp-cursor-pointer asowp-px-1 asowp-rounded-md`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -2132,7 +2146,7 @@
                         {{ configVisualiserTexts.textPreview && configVisualiserTexts.textPreview.trim() !== '' ? configVisualiserTexts.textPreview : 'Preview' }}
                     </p>
 
-                    <p class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
                             <div v-if="configTextType != 'neon'" id="asowp-previewFinish1" class="asowp-w-auto asowp-h-[70px]"></div>
@@ -2145,7 +2159,7 @@
                             <div v-if="configTextType != 'neon'" id="asowp-previewFinish2" class="asowp-w-auto asowp-h-[70px]"></div>
                             <img v-if="configTextType == 'neon'" :src="prevImgBack" alt="" class="asowp-w-auto asowp-h-[70px]" style="pointer-events: none; user-select: none; -webkit-user-select: none">
                         </div>
-                    </p>
+                    </div>
                 </div>
 
                 <div :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
@@ -2192,7 +2206,7 @@
                         <p v-if="configVisualiserTexts.textColor" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textColor}}</p>
                         <p v-if="!configVisualiserTexts.textColor" class="asowp-text-[16px] text-black asowp-font-semibold">Color</p>
                     </div>
-                    <p class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{activeSignColor}}</span>
@@ -2220,7 +2234,7 @@
                                 <span :class="`asowp-h-[35px] asowp-w-[35px] asowp-bg-[${colorTextCodeHex2}] asowp-flex`"></span>
                             </span>
                         </div>
-                    </p>
+                    </div>
                 </div>
 
                 <div v-if="activeFixingMethode != '' " :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`">
@@ -2236,7 +2250,7 @@
                         <p v-if="configVisualiserTexts.textBorder" class="asowp-text-[16px] text-black asowp-font-semibold">{{configVisualiserTexts.textBorder}}</p>
                         <p v-if="!configVisualiserTexts.textBorder" class="asowp-text-[16px] text-black asowp-font-semibold">Border</p>
                     </div>
-                    <p class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
+                    <div class="asowp-text-[14px] asowp-space-y-1 asowp-flex asowp-flex-col asowp-items-center w-2/3 justify-end">
                         <div class="asowp-flex asowp-space-x-2 asowp-full-center">
                             <span v-if="configDoublePart.active"  class="asowp-font-medium">{{configDoublePart.part1}}: </span>
                             <span class="lowercase first-letter:uppercase">{{selectedShape != 'cut-to-shape' ? activeFace1Border : "none"}}</span>
@@ -2276,7 +2290,7 @@
                                 </span>
                             </div>
                         </div>
-                    </p>
+                    </div>
                 </div>
 
                 <div v-if="materialType === 'simple' && addComponentSelected.length > 0" :class="`asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-py-3 asowp-border-b-2 asowp-border-[${configColors.recaps.optionBorderColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBackgroundColor}] hover:asowp-text-[${configColors.recaps.optionHoverTextColor}] hover:asowp-bg-[${configColors.recaps.optionHoverBorderColor}] asowp-base-animation`" v-for="(option, index) in addComponentSelected">
@@ -2671,7 +2685,7 @@
     import { add_to_cart, formatPrice, addformatToPrice, setScrollColor } from '@/frontend/utils/functions.js'
     import toastMessage from '@/admin/utils/functions';
     import { useRoute } from "vue-router";
-    import api from "@/admin/Api/api";
+    import api from "@/frontend/api";
     import { jsPDF } from 'jspdf';
     
     import opentype from 'opentype.js'

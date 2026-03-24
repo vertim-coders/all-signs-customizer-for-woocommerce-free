@@ -481,6 +481,51 @@ const activeDescription = computed(() => activeMaterial.value?.description ?? ''
 const activeMaterialsCount = computed(() =>
   materials.value.filter((material) => (material?.active ?? true)).length
 )
+const tinymceEditorId = 'asowp-admin-tinymce';
+const getTinyMCE = () => window.tinymce ?? null;
+const getTinyMCEEditor = () => getTinyMCE()?.get(tinymceEditorId) ?? null;
+const setTinyMCEContent = (content = '') => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.setContent(content || '');
+    }
+};
+const getTinyMCEContent = () => getTinyMCEEditor()?.getContent() ?? '';
+const destroyTinyMCE = () => {
+    const editor = getTinyMCEEditor();
+    if (editor) {
+        editor.remove();
+    }
+};
+const initTinyMCE = (content = '') => {
+    const editorApi = getTinyMCE();
+    if (!editorApi) {
+        return;
+    }
+
+    const existingEditor = getTinyMCEEditor();
+    if (existingEditor) {
+        existingEditor.setContent(content || '');
+        return;
+    }
+
+    editorApi.init({
+        selector: `#${tinymceEditorId}`,
+        plugins: 'wordpress paste link image media',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
+        relative_urls: false,
+        remove_script_host: false,
+        convert_urls: true,
+        height: 200,
+        width: '100%',
+        branding: false,
+        setup: function(editor) {
+            editor.on('init', function() {
+                editor.setContent(content || '');
+            });
+        }
+    });
+};
 
 import toastMessage from '@/admin/utils/functions';
 const deleteMaterial = ref({
@@ -556,22 +601,7 @@ const closeAllMaterialParams = () => {
 
 onMounted(async() => {
     document.addEventListener('click', closeAllMaterialParams)
-    tinymce.init({
-        selector: '#asowp-admin-tinymce',
-        plugins: 'wordpress paste link image media',
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code| wp_adv',
-        relative_urls: false,
-        remove_script_host: false,
-        convert_urls: true,
-        height: 200,
-        width: '100%',
-        branding: false,
-        setup: function(editor) {
-            editor.on('init', function() {
-                //console.log('TinyMCE initialized.');
-            });
-        }
-    });
+    initTinyMCE();
     try {
         const cfg = await api.getConfig(configID.value)
         if (!cfg?.message && cfg?.materialType === 'advance') {
@@ -595,6 +625,7 @@ onMounted(async() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', closeAllMaterialParams)
+  destroyTinyMCE()
 })
 
 watch(
@@ -656,15 +687,18 @@ const selectMaterialEdit = (material, id) => {
     newMaterial.value.type = enforcedMaterialType.value
     isEdit.value = true;
     contentComponent.value = false;
-    tinymce.activeEditor.setContent(material.popImg);
+    setTinyMCEContent(material.popImg);
     isNewComponent.value = true;
 }
 
 const closeTnymceModal = ()=>{
     openTnyMce.value = !openTnyMce.value;
+    if (openTnyMce.value) {
+        setTinyMCEContent(newMaterial.value.popImg);
+    }
 }
 const savePopImg = ()=>{
-    newMaterial.value.popImg = tinymce.activeEditor.getContent();
+    newMaterial.value.popImg = getTinyMCEContent();
     openTnyMce.value = false;
 }
 

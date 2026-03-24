@@ -9774,21 +9774,72 @@ function handleSetShadow(canva) {
 }
 
 function handleMoveobject(to) {
+  if (!activeCanvas) {
+    return;
+  }
+
   var object = activeCanvas.getActiveObject();
-  const index = activeCanvas.getObjects().indexOf(object);
+  if (!object) {
+    return;
+  }
 
   const objects = activeCanvas.getObjects();
-  const lastIndex = objects.length - 1;
-  if (to === "up") {
-    object.moveTo(index + 1);
+  const relatedObjects = objects
+    .filter((obj) => {
+      if (obj === object) {
+        return true;
+      }
+
+      if (object.id == null || obj.id !== object.id) {
+        return false;
+      }
+
+      return obj.name === "asowp-SignTextLayer" || obj.name === "asowp-SignTextLight";
+    })
+    .sort((a, b) => activeCanvas.getObjects().indexOf(a) - activeCanvas.getObjects().indexOf(b));
+
+  if (relatedObjects.length === 0) {
+    return;
   }
+
+  if (to === "up") {
+    const topIndex = activeCanvas.getObjects().indexOf(relatedObjects[relatedObjects.length - 1]);
+    if (topIndex >= activeCanvas.getObjects().length - 1) {
+      return;
+    }
+
+    [...relatedObjects].reverse().forEach((item) => {
+      const currentIndex = activeCanvas.getObjects().indexOf(item);
+      if (currentIndex < activeCanvas.getObjects().length - 1) {
+        item.moveTo(currentIndex + 1);
+      }
+    });
+  }
+
   if (to === "down") {
-    object.moveTo(index - 1);
+    const bottomIndex = activeCanvas.getObjects().indexOf(relatedObjects[0]);
+    if (bottomIndex <= 0) {
+      return;
+    }
+
+    relatedObjects.forEach((item) => {
+      const currentIndex = activeCanvas.getObjects().indexOf(item);
+      if (currentIndex > 0) {
+        item.moveTo(currentIndex - 1);
+      }
+    });
+  }
+
+  activeCanvas.getObjects().forEach((obj, index) => {
+    obj.zIndex = index;
+  });
+
+  if (readyToSave) {
+    updateModifications(true, "move object");
   }
 
   activeCanvas.renderAll();
   simulateCanvasClick()
-  // console.log('Index de l\'image:', index, "last index", lastIndex);
 }
 function findMaxId(tableau) {
   if (!Array.isArray(tableau) || tableau.length === 0) {

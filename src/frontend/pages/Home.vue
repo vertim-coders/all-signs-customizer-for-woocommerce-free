@@ -7,12 +7,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import Default from "./configurateur/Default/index.vue"
-import Couffo from "./configurateur/Couffo/index.vue"
-import Templates from './Templates/index.vue'
+import { defineAsyncComponent, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import api from "@/admin/Api/api";
+import api from "@/frontend/api";
+
+const Default = defineAsyncComponent(() => import("./configurateur/Default/index.vue"));
+const Couffo = defineAsyncComponent(() => import("./configurateur/Couffo/index.vue"));
+const Templates = defineAsyncComponent(() => import("./Templates/index.vue"));
+
 const route = useRoute();
 const skin = ref('');
 var configData = ref();
