@@ -144,20 +144,6 @@
                                 <p class="asowp-text-[11px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}</p>
                             </div>
 
-                            <div @click="moveObject('up')" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed` } asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-base-animation asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75 12 11.25l4.5 4.5M12 12v8.25M4.5 3.75h15" />
-                                </svg>
-                                <p class="asowp-text-[11px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasUp && configVisualiserTexts.textCanvasUp.trim() !== '' ? configVisualiserTexts.textCanvasUp : 'Up' }}</p>
-                            </div>
-
-                            <div @click="moveObject('down')" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed` } asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-base-animation asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25 12 12.75l-4.5-4.5M12 12v-8.25M4.5 20.25h15" />
-                                </svg>
-                                <p class="asowp-text-[11px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasDown && configVisualiserTexts.textCanvasDown.trim() !== '' ? configVisualiserTexts.textCanvasDown : 'Down' }}</p>
-                            </div>
-
                             <div @click="deleteObject()" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed` } asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-[${configColors.objectsOptions.delete.buttonColor}] asowp-text-[${configColors.objectsOptions.delete.textColor}] hover:asowp-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.delete.hoverTextColor}] asowp-base-animation asowp-px-1 asowp-rounded-md`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -319,20 +305,6 @@
                                         </defs>
                                 </svg>
                                 <p class="asowp-text-[11px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasClone && configVisualiserTexts.textCanvasClone.trim() !== '' ? configVisualiserTexts.textCanvasClone : 'Clone' }}</p>
-                            </div>
-
-                            <div @click="moveObject('up')" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed` } asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-base-animation asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.75 12 11.25l4.5 4.5M12 12v8.25M4.5 3.75h15" />
-                                </svg>
-                                <p class="asowp-text-[11px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasUp && configVisualiserTexts.textCanvasUp.trim() !== '' ? configVisualiserTexts.textCanvasUp : 'Up' }}</p>
-                            </div>
-
-                            <div @click="moveObject('down')" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed` } asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-[${configColors.objectsOptions.center.buttonColor}] asowp-text-[${configColors.objectsOptions.center.textColor}] hover:asowp-bg-[${configColors.objectsOptions.center.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.center.hoverTextColor}] asowp-base-animation asowp-px-1 asowp-rounded-md`">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.25 12 12.75l-4.5-4.5M12 12v-8.25M4.5 20.25h15" />
-                                </svg>
-                                <p class="asowp-text-[11px] asowp-font-semibold">{{ configVisualiserTexts.textCanvasDown && configVisualiserTexts.textCanvasDown.trim() !== '' ? configVisualiserTexts.textCanvasDown : 'Down' }}</p>
                             </div>
 
                                 <div @click="deleteObject()" :class="`${(activeCanvas !== null && (activeCanvas.getActiveObject() !== undefined && activeCanvas.getActiveObject() !== null)) ? `asowp-cursor-pointer` : `asowp-cursor-not-allowed` } asowp-flex asowp-full-center asowp-space-x-1 asowp-bg-[${configColors.objectsOptions.delete.buttonColor}] asowp-text-[${configColors.objectsOptions.delete.textColor}] hover:asowp-bg-[${configColors.objectsOptions.delete.hoverButtonColor}] hover:asowp-text-[${configColors.objectsOptions.delete.hoverTextColor}] asowp-base-animation asowp-px-1 asowp-rounded-md`">
@@ -1456,25 +1428,6 @@
                                                 <p class="asowp-text-xs asowp-font-semibold">Overline</p>
                                             </span>
 
-                                            <span v-if="configTextType != '3D'" @click="moveObject('up')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
-                                                    <path d="m12.707 3.2929c-0.3905-0.39052-1.0237-0.39052-1.4142 0l-4 4c-0.39052 0.39053-0.39052 1.0237 0 1.4142 0.39053 0.39052 1.0237 0.39052 1.4142 0l2.2929-2.2929v7.5858c0 0.5523 0.4477 1 1 1s1-0.4477 1-1v-7.5858l2.2929 2.2929c0.3905 0.39052 1.0237 0.39052 1.4142 0 0.3905-0.39053 0.3905-1.0237 0-1.4142l-4-4z" fill="currentColor"></path>
-                                                    <path d="m3.1056 13.211 5.8944-2.9472v2.2361l-5 2.5 8 4 8-4-5-2.5v-2.2361l5.8944 2.9472c0.6776 0.3388 1.1056 1.0313 1.1056 1.7889 0 0.7575-0.428 1.4501-1.1056 1.7888l-8 4c-0.563 0.2816-1.2258 0.2816-1.7888 0l-8-4c-0.67757-0.3387-1.1056-1.0313-1.1056-1.7888 0-0.7576 0.428-1.4501 1.1056-1.7889z" fill="currentColor"></path>
-                                                </svg>
-                                                <p class="asowp-text-xs asowp-font-semibold">
-                                                    {{ configVisualiserTexts.textMoveUp && configVisualiserTexts.textMoveUp.trim() !== '' ? configVisualiserTexts.textMoveUp : 'Move up' }}
-                                                </p>
-                                            </span>
-
-                                            <span v-if="configTextType != '3D'" @click="moveObject('down')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
-                                                    <path d="m12.707 20.707c-0.3905 0.3905-1.0237 0.3905-1.4142 0l-4-4c-0.39052-0.3905-0.39052-1.0237 0-1.4142 0.39053-0.3905 1.0237-0.3905 1.4142 0l2.2929 2.2929v-7.5858c0-0.55228 0.4477-1 1-1s1 0.44772 1 1v7.5858l2.2929-2.2929c0.3905-0.3905 1.0237-0.3905 1.4142 0s0.3905 1.0237 0 1.4142l-4 4z" fill="currentColor"></path>
-                                                    <path d="m3.1056 10.789 5.8944 2.9472v-2.2361l-5-2.5 8-4 8 4-5 2.5v2.2361l5.8944-2.9472c0.6776-0.3388 1.1056-1.0314 1.1056-1.7889s-0.428-1.4501-1.1056-1.7888l-8-4c-0.563-0.28152-1.2258-0.28152-1.7888 0l-8 4c-0.67757 0.33878-1.1056 1.0313-1.1056 1.7888s0.428 1.4501 1.1056 1.7889z" fill="currentColor"></path>
-                                                </svg>
-                                                <p class="asowp-text-xs asowp-font-semibold">
-                                                    {{ configVisualiserTexts.textMoveDown && configVisualiserTexts.textMoveDown.trim() !== '' ? configVisualiserTexts.textMoveDown : 'Move down' }}
-                                                </p>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -1752,25 +1705,6 @@
                                                 <p class="asowp-text-xs asowp-font-semibold">Flip</p>
                                             </span>
 
-                                            <span  @click="moveObject('up')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
-                                                    <path d="m12.707 3.2929c-0.3905-0.39052-1.0237-0.39052-1.4142 0l-4 4c-0.39052 0.39053-0.39052 1.0237 0 1.4142 0.39053 0.39052 1.0237 0.39052 1.4142 0l2.2929-2.2929v7.5858c0 0.5523 0.4477 1 1 1s1-0.4477 1-1v-7.5858l2.2929 2.2929c0.3905 0.39052 1.0237 0.39052 1.4142 0 0.3905-0.39053 0.3905-1.0237 0-1.4142l-4-4z" fill="currentColor"></path>
-                                                    <path d="m3.1056 13.211 5.8944-2.9472v2.2361l-5 2.5 8 4 8-4-5-2.5v-2.2361l5.8944 2.9472c0.6776 0.3388 1.1056 1.0313 1.1056 1.7889 0 0.7575-0.428 1.4501-1.1056 1.7888l-8 4c-0.563 0.2816-1.2258 0.2816-1.7888 0l-8-4c-0.67757-0.3387-1.1056-1.0313-1.1056-1.7888 0-0.7576 0.428-1.4501 1.1056-1.7889z" fill="currentColor"></path>
-                                                </svg>
-                                                <p class="asowp-text-xs asowp-font-semibold">
-                                                    {{ configVisualiserTexts.textMoveUp && configVisualiserTexts.textMoveUp.trim() !== '' ? configVisualiserTexts.textMoveUp : 'Move up' }}
-                                                </p>
-                                            </span>
-
-                                            <span  @click="moveObject('down')" :class="`asowp-flex asowp-flex-col asowp-full-center asowp-space-y-1 asowp-text-[${configColors.optionsSideBar.options.modals.option.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.option.activeTextColor}] asowp-cursor-pointer asowp-base-animation`">
-                                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="asowp-w-7 asowp-h-7">
-                                                    <path d="m12.707 20.707c-0.3905 0.3905-1.0237 0.3905-1.4142 0l-4-4c-0.39052-0.3905-0.39052-1.0237 0-1.4142 0.39053-0.3905 1.0237-0.3905 1.4142 0l2.2929 2.2929v-7.5858c0-0.55228 0.4477-1 1-1s1 0.44772 1 1v7.5858l2.2929-2.2929c0.3905-0.3905 1.0237-0.3905 1.4142 0s0.3905 1.0237 0 1.4142l-4 4z" fill="currentColor"></path>
-                                                    <path d="m3.1056 10.789 5.8944 2.9472v-2.2361l-5-2.5 8-4 8 4-5 2.5v2.2361l5.8944-2.9472c0.6776-0.3388 1.1056-1.0314 1.1056-1.7889s-0.428-1.4501-1.1056-1.7888l-8-4c-0.563-0.28152-1.2258-0.28152-1.7888 0l-8 4c-0.67757 0.33878-1.1056 1.0313-1.1056 1.7888s0.428 1.4501 1.1056 1.7889z" fill="currentColor"></path>
-                                                </svg>
-                                                <p class="asowp-text-xs asowp-font-semibold">
-                                                    {{ configVisualiserTexts.textMoveDown && configVisualiserTexts.textMoveDown.trim() !== '' ? configVisualiserTexts.textMoveDown : 'Move down' }}
-                                                </p>
-                                            </span>
                                         </div>
                                     </div>
                                 </div>
