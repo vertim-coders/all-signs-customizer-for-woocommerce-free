@@ -135,19 +135,19 @@ class ASOWP_Design
 					</div>
 				</div>
 			</div>
-			<div class="asowp-product-links">
-				<span class="asowp-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
-					data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo esc_html($have_pages_settings["buttons"]["recapsButtonOnCart"]) ?></span>
-				<span class="asowp-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
-					data-target="#<?php echo esc_attr($preview_modal_id); ?>">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-						style="width: 20px;height: 20px;">
-						<path stroke-linecap="round" stroke-linejoin="round"
-							d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-						<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-					</svg>
-				</span>
-			</div>
+				<div class="asowp-product-links">
+					<span class="asowp-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
+						data-target="#<?php echo esc_attr($modal_id); ?>"><?php echo esc_html($have_pages_settings["buttons"]["recapsButtonOnCart"]) ?></span>
+					<span class="asowp-cart-product-preview o-modal-trigger button" data-toggle="o-modal"
+						data-target="#<?php echo esc_attr($preview_modal_id); ?>">
+						<img
+							src="<?php echo esc_url(ASOWP_ASSETS . '/icons/ic_preview_eye.svg'); ?>"
+							alt="<?php echo esc_attr__('Preview', 'all-signs-options-pro'); ?>"
+							title="<?php echo esc_attr__('Preview', 'all-signs-options-pro'); ?>"
+							style="width:20px;height:20px;display:block;"
+						/>
+					</span>
+				</div>
 			<?php
 			$product_name .= ob_get_clean();
 		}

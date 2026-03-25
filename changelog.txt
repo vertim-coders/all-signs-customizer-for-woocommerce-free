@@ -1,3 +1,11 @@
+= 1.5.4 =
+* 25/03/2026
+- Fixed admin configurator preview loading in the backend editor
+- Added a translatable preview notice and disabled Add to Cart actions in admin preview mode
+- Fixed mobile configurator panel issues on Default and Couffo, including section resets while typing and broken option panel sizing
+- Fixed missing mobile redo icon and improved Add to Cart loading state recovery
+- Fixed cart preview button icon rendering
+
 = 1.5.3 =
 * 24/03/2026
 - Optimized frontend asset loading to reduce unnecessary performance impact on public pages

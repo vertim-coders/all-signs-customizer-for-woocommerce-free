@@ -40,10 +40,10 @@
                             </span>
 
                             <span @click="redo" :class="`asowp-w-fit asowp-h-fit asowp-flex asowp-full-center asowp-shadow-[1px_1px_7px_1px_rgba(0,0,0,0.1)] asowp-p-2 asowp-rounded-full asowp-bg-[${configColors.bars.undoRedo.backgroundColor}] asowp-text-[${configColors.bars.undoRedo.textColor}] hover:asowp-bg-[${configColors.bars.undoRedo.hoverBackgroundColor}] hover:asowp-text-[${configColors.bars.undoRedo.hoverTextColor}] asowp-border-2 asowp-border-[${configColors.bars.undoRedo.borderColor}] hover:asowp-border-[${configColors.bars.undoRedo.hoverBorderColor}] asowp-base-animation asowp-cursor-pointer`">
-                                <svg v-if="configSectionIcons.icon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
+                                <svg v-if="configSectionIcons.redoIcon === '' " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
                                 </svg>
-                                <img v-if="configSectionIcons.icon !== '' " :src="configSectionIcons.icon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />                            
+                                <img v-if="configSectionIcons.redoIcon !== '' " :src="configSectionIcons.redoIcon" class="asowp-w-4 asowp-h-4 lg:asowp-w-5 lg:asowp-h-5" />
                             </span>
                         </div>
                     </div>
@@ -405,7 +405,7 @@
                         </div>
                     </div>
     
-                    <div v-show="showOption" id="asowp-options-container" :class="`asowp-relative lg:asowp-absolute lg:asowp-left-4 lg:asowp-top-[20%] lg:asowp-translate-y-[-20%] asowp-w-full lg:asowp-w-[36%] asowp-h-[32%] lg:asowp-h-[70%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-rounded-md lg:asowp-shadow-xl asowp-z-20`">
+                    <div v-show="showOption" id="asowp-options-container" :class="`asowp-relative lg:asowp-absolute lg:asowp-left-4 lg:asowp-top-[20%] lg:asowp-translate-y-[-20%] asowp-w-full asowp-h-full asowp-min-h-0 lg:asowp-w-[36%] lg:asowp-h-[70%] asowp-bg-[${configColors.optionsSideBar.options.modals.backgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.textColor}] asowp-rounded-md lg:asowp-shadow-xl asowp-z-20`">
                         <div class="asowp-hidden lg:asowp-flex asowp-absolute asowp-top-0 asowp-right-0 asowp-w-fit asowp-h-fit">
                             <span @click="closeOption" :class="`asowp-flex asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.backgroundColor}] hover:asowp-bg-[${configColors.optionsSideBar.options.modals.buttons.hoverBackgroundColor}] asowp-text-[${configColors.optionsSideBar.options.modals.buttons.textColor}] hover:asowp-text-[${configColors.optionsSideBar.options.modals.buttons.hoverTextColor}] asowp-p-1 asowp-rounded-md asowp-base-animation asowp-cursor-pointer asowp-z-10`">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
@@ -2497,7 +2497,7 @@
                     <button :disabled="isAddingToCart" @click="() => finish = false" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonEditBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonEditHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonEditTextColor}] hover:asowp-text-[${configColors.recaps.buttonEditHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation asowp-cursor-pointer`" >
                         {{ configVisualiserTexts.textCanvasEdit && configVisualiserTexts.textCanvasEdit.trim() !== '' ? configVisualiserTexts.textCanvasEdit : 'Finish' }}
                     </button>
-                    <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart" @click="addToCart" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:asowp-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation asowp-cursor-pointer`" >
+                    <button v-if="route.name != 'template-maker'" :disabled="isAddingToCart || isAdminPreview" @click="addToCart" :class="`asowp-w-1/2 asowp-h-full asowp-bg-[${configColors.recaps.buttonAddToCartBackgroundColor}] hover:asowp-bg-[${configColors.recaps.buttonAddToCartHoverBackgroundColor}] asowp-text-[${configColors.recaps.buttonAddToCartTextColor}] hover:asowp-text-[${configColors.recaps.buttonAddToCartHoverTextColor}] asowp-flex asowp-full-center asowp-buttons-rad-none asowp-base-animation ${isAdminPreview ? 'asowp-opacity-60 asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`" >
                         <img src="../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isAddingToCart"/>
                         {{ configVisualiserTexts.textAddToCart && configVisualiserTexts.textAddToCart.trim() !== '' ? configVisualiserTexts.textAddToCart : 'Finish' }}
                     </button>
@@ -2693,6 +2693,7 @@
     import { forAliasRE } from '@vue/compiler-core';
 
     const route = useRoute();
+    const isAdminPreview = route.name === 'preview-back';
     const template_config_id = route.params.configId;
     const template_id = route.params.templateId;
     const template = ref({});
@@ -2936,19 +2937,41 @@
         if(window.innerWidth < 1024){
             // isBelowLimits.value = window.innerWidth < 1024;
             isBelowLimit.value = true;
-            if(window.innerWidth < 688){
-                // showOptions('material')
-                let firstTab = configOptions.value[0].type.slice(0, -1)
-                if(firstTab == "material" && allMaterials.value.length > 1){
-                    showOptions(configOptions.value[0].type.slice(0, -1))
-                }else{
-                    showOptions(configOptions.value[1].type.slice(0, -1))
+            if(window.innerWidth < 688 && !showOption.value && !step.value){
+                const firstOption = configOptions.value?.[0];
+                const secondOption = configOptions.value?.[1];
+                const firstTab = firstOption?.type?.slice(0, -1);
+                const secondTab = secondOption?.type?.slice(0, -1);
+                const targetTab = firstTab === "material" && allMaterials.value.length <= 1
+                    ? (secondTab || firstTab)
+                    : firstTab;
+
+                if(targetTab){
+                    showOptions(targetTab);
                 }
             }
         }else{
             isBelowLimit.value = false
             // firstResize((currentResizeSetting.value), 'desktop'); 
         }
+    }
+
+    function isEditingFieldOnMobile() {
+        if (window.innerWidth >= 688) {
+            return false;
+        }
+
+        const activeElement = document.activeElement;
+        if (!activeElement) {
+            return false;
+        }
+
+        const tagName = activeElement.tagName;
+        return (
+            tagName === 'TEXTAREA' ||
+            tagName === 'INPUT' ||
+            activeElement.isContentEditable === true
+        );
     }
 
 
@@ -9514,24 +9537,34 @@
 
     const isAddingToCart = ref(false)
     const addToCart = async ()=>{
-        isAddingToCart.value = true;
-        const cart_data = {
-            recaps:{
-                ...configData.value,
-                custom_price: parseFloat(
-                    finalPrice.value
-                ).toFixed(asowp_configurator_data.decimals)
-                // custom_price: parseFloat(
-                //     finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
-                // ).toFixed(asowp_configurator_data.decimals)
-            },
-            variation_id:asowp_configurator_data.productID,
-            quantity:1
+        if(isAdminPreview){
+            return;
         }
-        var add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
-        if(!add.success){
-            toastMessage(add.message,"error");
-            isAddingToCart.value = false
+        isAddingToCart.value = true;
+        let redirecting = false;
+        try{
+            const cart_data = {
+                recaps:{
+                    ...configData.value,
+                    custom_price: parseFloat(
+                        finalPrice.value
+                    ).toFixed(asowp_configurator_data.decimals)
+                    // custom_price: parseFloat(
+                    //     finalPrices.value + parseFloat(asowp_configurator_data.regularPrice)
+                    // ).toFixed(asowp_configurator_data.decimals)
+                },
+                variation_id:asowp_configurator_data.productID,
+                quantity:1
+            }
+            const add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_configurator_data.frontend_nonce, props.config.data.settings.generals.product.redirectToCheckOutPage);
+            redirecting = !!add?.redirecting;
+            if(!add?.success){
+                toastMessage(add?.message || "A problem occured while adding the product to the cart. Please try again.","error");
+            }
+        }finally{
+            if(!redirecting){
+                isAddingToCart.value = false;
+            }
         }
     }
 
@@ -10321,6 +10354,9 @@
                 window.addEventListener('load', () => {
                 });
                 window.addEventListener('resize', () => {
+                    if (isEditingFieldOnMobile()) {
+                        return;
+                    }
                     checkScreenView()
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(() => {
