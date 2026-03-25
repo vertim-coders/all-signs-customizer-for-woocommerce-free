@@ -145,15 +145,19 @@ class ASOWP_Frontend
                                 <p class="asowp-product-card__desc"><?php echo esc_html($description); ?></p>
                             <?php } ?>
                             <div class="asowp-product-card__actions">
-                                <a class="asowp-product-card__btn asowp-product-card__btn--customize" href="<?php echo esc_url($design_url); ?>">
+                                <a class="asowp-product-card__btn asowp-product-card__btn--customize"
+                                    href="<?php echo esc_url($design_url); ?>">
                                     <?php echo esc_html($customize_label); ?>
                                 </a>
                                 <?php if ($has_templates && $templates_url !== '') { ?>
-                                    <a class="asowp-product-card__btn asowp-product-card__btn--template" href="<?php echo esc_url($templates_url); ?>">
+                                    <a class="asowp-product-card__btn asowp-product-card__btn--template"
+                                        href="<?php echo esc_url($templates_url); ?>">
                                         <?php echo esc_html($template_label); ?>
                                     </a>
                                 <?php } else { ?>
-                                    <span class="asowp-product-card__btn asowp-product-card__btn--template asowp-product-card__btn--disabled" aria-disabled="true">
+                                    <span
+                                        class="asowp-product-card__btn asowp-product-card__btn--template asowp-product-card__btn--disabled"
+                                        aria-disabled="true">
                                         <?php echo esc_html($template_label); ?>
                                     </span>
                                 <?php } ?>
@@ -402,7 +406,6 @@ class ASOWP_Frontend
                             </div>
                         </div>
                     </div>
-                    ?>
                     <div class="asowp-frontend-app asowp-templates" data-asowp-page="templates"></div>
                     <?php
                     wp_localize_script('asowp-frontend', 'asowp_templates', [

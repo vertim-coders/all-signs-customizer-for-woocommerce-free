@@ -21,15 +21,228 @@ var canvasBackground = "";
 var backCanvas = null;
 var activeCanvas = canvas;
 var doubleFace = false;
-var defaultShadow = new fabric.Shadow({
-  color: "black",
-  offsetX: 3,
-  offsetY: 3,
-  blur: 30,
-  isActive: true,
-});
+function getFabric() {
+  const fabricLib = window.fabric || globalThis.fabric;
+
+  if (!fabricLib) {
+    throw new ReferenceError("fabric is not defined");
+  }
+
+  return fabricLib;
+}
+
+function createDefaultShadow() {
+  const fabricLib = getFabric();
+
+  return new fabricLib.Shadow({
+    color: "black",
+    offsetX: 3,
+    offsetY: 3,
+    blur: 30,
+    isActive: true,
+  });
+}
+
+var defaultShadow = null;
+function ensureDefaultShadow() {
+  if (!defaultShadow) {
+    defaultShadow = createDefaultShadow();
+  }
+
+  return defaultShadow;
+}
+
+function registerNeonTextClass(fabricLib) {
+  if (fabricLib.NeonText) {
+    return;
+  }
+
+  fabricLib.NeonText = fabricLib.util.createClass(fabricLib.Text, {
+    type: 'neon-Text',
+
+    initialize: function(text, options) {
+      options = options || {};
+      this.neonColor = options.neonColor || 'white';
+      this.glowRadius = options.glowRadius || 20;
+      this.id = options.id;
+      this.name = options.name;
+      this.lockMoving = options.lockMoving;
+      this.fontFamilyUrl = options.fontFamilyUrl;
+      this.canvasName = options.canvasName;
+
+      this.text = typeof text === 'string' ? text : '';
+
+      this.callSuper('initialize', this.text, options);
+    },
+
+    _render: function(ctx) {
+      this.callSuper('_render', ctx);
+      ctx.save();
+
+      const lines = this.text.split('\n');
+      const lineHeight = this.fontSize * this.lineHeight;
+
+      const originX = -this.width / 2;
+      let originY = -this.height / 2 + this.fontSize / 2 + (this.fontSize * 0.38);
+
+      lines.forEach((line, lineIndex) => {
+        const lineWidth = this.__lineWidths[lineIndex];
+        const lineHeight = this.__lineHeights[lineIndex];
+
+        const lineY = originY + lineIndex * lineHeight;
+
+        let lineX = originX;
+        const newLineOrigin = (this.width / 2 - lineWidth / 2);
+        if (this.textAlign === 'center') {
+          lineX += newLineOrigin;
+        } else if (this.textAlign === 'right') {
+          lineX += newLineOrigin * 2;
+        }
+
+        for (let i = this.glowRadius; i > 0; i -= 5) {
+          ctx.shadowColor = this.neonColor;
+          ctx.shadowBlur = i;
+          ctx.fillStyle = this.neonColor;
+          ctx.fillText(line, lineX, lineY);
+        }
+
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = 'transparent';
+      });
+
+      this.callSuper('_render', ctx);
+      ctx.restore();
+    },
+
+    toObject: function() {
+      return fabricLib.util.object.extend(this.callSuper('toObject'), {
+        neonColor: this.neonColor,
+        glowRadius: this.glowRadius,
+        id: this.id,
+        name: this.name,
+        lockMoving: this.lockMoving,
+        fontFamilyUrl: this.fontFamilyUrl,
+        canvasName: this.canvasName,
+      });
+    }
+  });
+
+  fabricLib.NeonText.fromObject = function (object, callback) {
+    object.text = typeof object.text === 'string' ? object.text : '';
+    return callback(new fabricLib.NeonText(object.text, object));
+  };
+}
+
+function registerCustomFilters(fabricLib) {
+  if (!fabricLib.Image?.filters) {
+    return;
+  }
+
+  if (!fabricLib.Image.filters.Greenify) {
+    fabricLib.Image.filters.Greenify = fabricLib.util.createClass(fabricLib.Image.filters.BaseFilter, {
+      type: 'Greenify',
+      fragmentSource: `
+          precision highp float;
+          uniform sampler2D uTexture;
+          varying vec2 vTexCoord;
+          void main() {
+              vec4 color = texture2D(uTexture, vTexCoord);
+              color.r = 0.0;
+              color.b = 0.0;
+              gl_FragColor = color;
+          }
+      `,
+      isNeutralState: function() { return false; },
+      toObject: function() { return { type: this.type }; }
+    });
+    fabricLib.Image.filters.Greenify.fromObject = function(object) {
+      return new fabricLib.Image.filters.Greenify(object);
+    };
+  }
+
+  if (!fabricLib.Image.filters.Blueify) {
+    fabricLib.Image.filters.Blueify = fabricLib.util.createClass(fabricLib.Image.filters.BaseFilter, {
+      type: 'Blueify',
+      fragmentSource: `
+          precision highp float;
+          uniform sampler2D uTexture;
+          varying vec2 vTexCoord;
+          void main() {
+              vec4 color = texture2D(uTexture, vTexCoord);
+              color.r = 0.0;
+              color.g *= 0.5;
+              color.b *= 0.8;
+              gl_FragColor = color;
+          }
+      `,
+      isNeutralState: function() { return false; },
+      toObject: function() { return { type: this.type }; }
+    });
+    fabricLib.Image.filters.Blueify.fromObject = function(object) {
+      return new fabricLib.Image.filters.Blueify(object);
+    };
+  }
+
+  if (!fabricLib.Image.filters.Pinkify) {
+    fabricLib.Image.filters.Pinkify = fabricLib.util.createClass(fabricLib.Image.filters.BaseFilter, {
+      type: 'Pinkify',
+      fragmentSource: `
+          precision highp float;
+          uniform sampler2D uTexture;
+          varying vec2 vTexCoord;
+          void main() {
+              vec4 color = texture2D(uTexture, vTexCoord);
+              color.g *= 0.3;
+              color.b *= 0.8;
+              gl_FragColor = color;
+          }
+      `,
+      toObject: function() { return { type: this.type }; }
+    });
+    fabricLib.Image.filters.Pinkify.fromObject = function(object) {
+      return new fabricLib.Image.filters.Pinkify(object);
+    };
+  }
+
+  if (!fabricLib.Image.filters.Orangeify) {
+    fabricLib.Image.filters.Orangeify = fabricLib.util.createClass(fabricLib.Image.filters.BaseFilter, {
+      type: 'Orangeify',
+      fragmentSource: `
+          precision highp float;
+          uniform sampler2D uTexture;
+          varying vec2 vTexCoord;
+          void main() {
+              vec4 color = texture2D(uTexture, vTexCoord);
+              color.r = min(1.0, color.r * 1.2);
+              color.g = min(1.0, color.g * 0.9);
+              color.b *= 0.2;
+              gl_FragColor = color;
+          }
+      `,
+      toObject: function() { return { type: this.type }; }
+    });
+    fabricLib.Image.filters.Orangeify.fromObject = function(object) {
+      return new fabricLib.Image.filters.Orangeify(object);
+    };
+  }
+}
+
+let fabricExtensionsRegistered = false;
+function ensureFabricExtensions() {
+  if (fabricExtensionsRegistered) {
+    return;
+  }
+
+  const fabricLib = getFabric();
+  registerNeonTextClass(fabricLib);
+  registerCustomFilters(fabricLib);
+  fabricExtensionsRegistered = true;
+}
+
 function handleGetCanvas(canvas1, canvas2, statut) {
   // console.log('canvas getted', statut)
+  ensureDefaultShadow();
+  ensureFabricExtensions();
   canvas = canvas1;
   backCanvas = canvas2;
   if (statut === "double") {
@@ -314,14 +527,6 @@ var textType = "normal"
 function handleGetTextType(type){
   textType = type;
 }
-
-var defaultShadow = new fabric.Shadow({
-  color: "black",
-  offsetX: 3,
-  offsetY: 3,
-  blur: 30,
-  isActive: true,
-});
 
 function handleCheckObjects() {
   var objects = canvas.getObjects();
@@ -7198,84 +7403,6 @@ function handleGetAddedTextValues(transform) {
   
   return values;
 }
-fabric.NeonText = fabric.util.createClass(fabric.Text, {
-  type: 'neon-Text',
-
-  initialize: function(text, options) {
-    options = options || {};
-    this.neonColor = options.neonColor || 'white';
-    this.glowRadius = options.glowRadius || 20;
-    this.id = options.id;
-    this.name = options.name;
-    this.lockMoving = options.lockMoving;
-    this.fontFamilyUrl = options.fontFamilyUrl;
-    this.canvasName = options.canvasName;
-
-    // Assurez-vous que `text` est une chaîne de caractères
-    this.text = typeof text === 'string' ? text : '';
-
-    this.callSuper('initialize', this.text, options);
-  },
-
-  _render: function(ctx) {
-    this.callSuper('_render', ctx);
-    ctx.save();
-
-    const lines = this.text.split('\n');
-    const lineHeight = this.fontSize * this.lineHeight;
-
-    const originX = -this.width / 2;
-    let originY = -this.height / 2 + this.fontSize / 2 + (this.fontSize * 0.38);
-
-    lines.forEach((line, lineIndex) => {
-      const lineWidth = this.__lineWidths[lineIndex];
-      const lineHeight = this.__lineHeights[lineIndex];
-
-      const lineY = originY + lineIndex * lineHeight;
-
-      let lineX = originX;
-      const newLineOrigin = (this.width / 2 - lineWidth / 2);
-      if (this.textAlign === 'center') {
-        lineX += newLineOrigin;
-      } else if (this.textAlign === 'right') {
-        lineX += newLineOrigin * 2;
-      }
-
-      for (let i = this.glowRadius; i > 0; i -= 5) {
-        ctx.shadowColor = this.neonColor;
-        ctx.shadowBlur = i;
-        ctx.fillStyle = this.neonColor;
-        ctx.fillText(line, lineX, lineY);
-      }
-
-      ctx.shadowBlur = 0;
-      ctx.shadowColor = 'transparent';
-    });
-
-    this.callSuper('_render', ctx);
-    ctx.restore();
-  },
-
-  toObject: function() {
-    return fabric.util.object.extend(this.callSuper('toObject'), {
-      neonColor: this.neonColor,
-      glowRadius: this.glowRadius,
-      id: this.id,
-      name: this.name,
-      lockMoving: this.lockMoving,
-      fontFamilyUrl: this.fontFamilyUrl,
-      canvasName: this.canvasName,
-    });
-  }
-});
-
-fabric.NeonText.fromObject = function (object, callback) {
-  // Assurez-vous que `object.text` est une chaîne de caractères
-  object.text = typeof object.text === 'string' ? object.text : '';
-  return callback(new fabric.NeonText(object.text, object));
-};
-
-
 function loadFont(fontName, fontUrl) {
   return new Promise((resolve, reject) => {
     const font = new FontFace(fontName, `url(${fontUrl})`);
@@ -8994,93 +9121,6 @@ async function removeBackgroundFromURL(imageSrc) {
 
   return transparentImageUrl;
 }
-
-
-// custom filters
-//greenify
-fabric.Image.filters.Greenify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
-  type: 'Greenify',
-  
-  fragmentSource: `
-      precision highp float;
-      uniform sampler2D uTexture;
-      varying vec2 vTexCoord;
-      void main() {
-          vec4 color = texture2D(uTexture, vTexCoord);
-          color.r = 0.0;
-          color.b = 0.0;
-          gl_FragColor = color;
-      }
-  `,
-  
-  isNeutralState: function() { return false; },
-  toObject: function() { return { type: this.type }; }
-});
-fabric.Image.filters.Greenify.fromObject = function(object) {
-  return new fabric.Image.filters.Greenify(object);
-};
-//blueify
-fabric.Image.filters.Blueify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
-  type: 'Blueify',
-  
-  fragmentSource: `
-      precision highp float;
-      uniform sampler2D uTexture;
-      varying vec2 vTexCoord;
-      void main() {
-          vec4 color = texture2D(uTexture, vTexCoord);
-          color.r = 0.0;
-          color.g *= 0.5;
-          color.b *= 0.8;
-          gl_FragColor = color;
-      }
-  `,
-  
-  isNeutralState: function() { return false; },
-  toObject: function() { return { type: this.type }; }
-});
-fabric.Image.filters.Blueify.fromObject = function(object) {
-  return new fabric.Image.filters.Blueify(object);
-};
-//pinkify
-fabric.Image.filters.Pinkify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
-  type: 'Pinkify',
-  fragmentSource: `
-      precision highp float;
-      uniform sampler2D uTexture;
-      varying vec2 vTexCoord;
-      void main() {
-          vec4 color = texture2D(uTexture, vTexCoord);
-          color.g *= 0.3;  // Réduit le vert (ajustez entre 0.0 et 0.5)
-          color.b *= 0.8;  // Garde un peu de bleu (ajustez entre 0.7 et 1.0)
-          gl_FragColor = color;
-      }
-  `,
-  toObject: function() { return { type: this.type }; }
-});
-fabric.Image.filters.Pinkify.fromObject = function(object) {
-  return new fabric.Image.filters.Pinkify(object);
-};
-//Orangeify 
-fabric.Image.filters.Orangeify = fabric.util.createClass(fabric.Image.filters.BaseFilter, {
-  type: 'Orangeify',
-  fragmentSource: `
-      precision highp float;
-      uniform sampler2D uTexture;
-      varying vec2 vTexCoord;
-      void main() {
-          vec4 color = texture2D(uTexture, vTexCoord);
-          color.r = min(1.0, color.r * 1.2);  // Boost le rouge (1.0 à 1.5)
-          color.g = min(1.0, color.g * 0.9);  // Légère réduction du vert (0.7 à 1.0)
-          color.b *= 0.2;                     // Réduit fortement le bleu (0.0 à 0.3)
-          gl_FragColor = color;
-      }
-  `,
-  toObject: function() { return { type: this.type }; }
-});
-fabric.Image.filters.Orangeify.fromObject = function(object) {
-  return new fabric.Image.filters.Orangeify(object);
-};
 
 
 function handleSelectFilter(filter) {

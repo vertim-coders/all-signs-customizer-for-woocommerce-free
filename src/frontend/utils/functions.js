@@ -16,12 +16,26 @@ async function add_to_cart(ajax_url, cart_data, nonce, redirectToCheckOut) {
         },
       }
     );
-    if (response.data.cart_item_key) {
-      window.location.href = response.data.url;
+    const data = response?.data || {};
+    const redirecting = Boolean(data.cart_item_key && data.url);
+
+    if (redirecting) {
+      window.location.href = data.url;
     }
-    return response.data;
+
+    return {
+      ...data,
+      redirecting,
+    };
   } catch (error) {
     console.error("Erreur :", error);
+    return {
+      success: false,
+      message:
+        error?.response?.data?.message ||
+        "A problem occured while adding the product to the cart. Please try again.",
+      redirecting: false,
+    };
   }
 }
 function formatPrice(price) {

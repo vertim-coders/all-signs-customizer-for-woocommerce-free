@@ -98,20 +98,27 @@ onMounted(()=>{
 })
 const addToCart = async (template, index = 0)=>{
     isAddingToCart.value = true
-    template = await api.getTemplate(template.configId, index);
-    // template.data.cartData.recaps.custom_price = ;
-    const cart_data = {
-        recaps:{...template.data.cartData,
-            custom_price: parseFloat( (template.recaps?.customPrice||0) + template.basePrice
-                ).toFixed(2)
-        },
-        variation_id:productId,
-        quantity:1
-    }
-    var add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_templates.frontend_nonce, false);
-    if(!add.success){
-        toastMessage(add.message,"error");
-        isAddingToCart.value = false
+    let redirecting = false
+    try{
+        template = await api.getTemplate(template.configId, index);
+        // template.data.cartData.recaps.custom_price = ;
+        const cart_data = {
+            recaps:{...template.data.cartData,
+                custom_price: parseFloat( (template.recaps?.customPrice||0) + template.basePrice
+                    ).toFixed(2)
+            },
+            variation_id:productId,
+            quantity:1
+        }
+        const add = await add_to_cart(asowp_data.ajax_url, cart_data,asowp_templates.frontend_nonce, false);
+        redirecting = !!add?.redirecting;
+        if(!add?.success){
+            toastMessage(add?.message || "A problem occured while adding the product to the cart. Please try again.","error");
+        }
+    }finally{
+        if(!redirecting){
+            isAddingToCart.value = false;
+        }
     }
 }
 

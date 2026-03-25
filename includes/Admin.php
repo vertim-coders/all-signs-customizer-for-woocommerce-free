@@ -76,7 +76,8 @@ class ASOWP_Admin
 
         wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n', 'editor'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
         wp_set_script_translations( 'asowp-admin', "all-signs-options-pro" );
-        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
+        wp_enqueue_script('asowp-fabric', ASOWP_ASSETS . '/utilities/fabric.min.js', [], filemtime(ASOWP_PATH . '/assets/utilities/fabric.min.js'), true);
+        wp_enqueue_script('asowp-frontend', ASOWP_ASSETS . '/js/frontend.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'asowp-fabric'], filemtime(ASOWP_PATH . '/assets/js/frontend.js'), true);
 
         wp_enqueue_style('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.css', false, ASOWP_VERSION);
         wp_enqueue_script('asowp-toast', ASOWP_ASSETS . '/utilities/toast.min.js', [], ASOWP_VERSION, true);
@@ -120,7 +121,7 @@ class ASOWP_Admin
         <div class="wrap">
             <div id="asowp-admin-app"></div>
         </div>
-        <?php wp_localize_script("asowp-admin", "asowp_data", [
+        <?php $script_data = [
             "rest_url" => $api_url . "asowp/v1",
             "ajax_url" => esc_url(admin_url('admin-ajax.php')),
             "site_url" => urlencode(get_site_url()),
@@ -131,11 +132,15 @@ class ASOWP_Admin
             "version" => ASOWP_VERSION,
             'currencySymbol' => class_exists('WooCommerce') ? html_entity_decode(get_woocommerce_currency_symbol()) : '',
             'currency_pos' => class_exists('WooCommerce') ? get_option('woocommerce_currency_pos') : ''
-        ]);
-        wp_localize_script("asowp-admin", "asowp_configurator_data", array(
+        ];
+        $configurator_data = array(
             "fixing_methods_url" => ASOWP_ASSETS . '/images/fixing-methodes',
             "borders_url" => ASOWP_ASSETS . '/images/borders',
-        ));
+        );
+        wp_localize_script("asowp-admin", "asowp_data", $script_data);
+        wp_localize_script("asowp-frontend", "asowp_data", $script_data);
+        wp_localize_script("asowp-admin", "asowp_configurator_data", $configurator_data);
+        wp_localize_script("asowp-frontend", "asowp_configurator_data", $configurator_data);
     }
 
     public function asowp_add_custom_mime_types($mimes)

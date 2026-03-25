@@ -1,16 +1,28 @@
 <template>
-    <router-view v-if="activateProduct && frontendReady"/>
+    <router-view v-if="canRenderFrontend"/>
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
+import { useRoute } from 'vue-router';
+
 const activateProduct = ref(!isNaN(asowp_data.caches) && parseInt(asowp_data.caches) > 1704067200? true : false);
 const frontendReady = ref(false);
 const currentPage = window.asowp_data?.page || '';
+const route = useRoute();
+const canRenderFrontend = computed(() => {
+    const isAdminPreview = currentPage === 'admin' && (route.name === 'preview-back' || route.name === 'template-maker');
+    return frontendReady.value && (activateProduct.value || isAdminPreview);
+});
 
 onMounted(async() => {
-    await loadFrontendDependencies();
-    frontendReady.value = true;
+    try {
+        await loadFrontendDependencies();
+    } catch (error) {
+        console.error('ASOWP frontend bootstrap failed to load optional dependencies.', error);
+    } finally {
+        frontendReady.value = true;
+    }
 });
 
 const loadFrontendDependencies = async () => {
@@ -53,6 +65,11 @@ const loadFrontendDependencies = async () => {
             import('../../assets/utilities/fabric.min.js'),
             import('../../assets/utilities/hammerjs.js'),
         ]);
+        return;
+    }
+
+    if (currentPage === 'admin' && !window.fabric && !globalThis.fabric) {
+        await import('../../assets/utilities/fabric.min.js');
     }
 };
 </script>
