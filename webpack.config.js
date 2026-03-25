@@ -73,6 +73,8 @@ module.exports = {
   output: {
     path: exportPath,
     filename: appName,
+    chunkFilename: "[name].js",
+    clean: true,
   },
   externals: {
     jquery: 'jQuery',
@@ -101,6 +103,7 @@ module.exports = {
 
   optimization: {
     runtimeChunk: "single",
+    chunkIds: "named",
     splitChunks: {
       cacheGroups: {
         vendor: {
