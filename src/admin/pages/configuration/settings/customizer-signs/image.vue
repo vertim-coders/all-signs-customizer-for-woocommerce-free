@@ -22,7 +22,16 @@
                     </div>
                 </div>
                 <div>
-                    <div class="asowp-flex asowp-justify-between asowp-space-x-6 asowp-space-y-2">
+                    <div class="asowp-flex asowp-space-x-3 asowp-pb-3">
+                        <div class="asowp-text-[16px]">{{ __("Enable upload size restriction", "all-signs-options-pro") }}</div>
+                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
+                            <label for="toggleUploadSizeRestriction" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
+                                <input id="toggleUploadSizeRestriction" type="checkbox" name="toggleUploadSizeRestriction" class="asowp-sr-only asowp-peer" v-model="image.fileUploadScript.enableSizeRestriction">
+                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div v-if="image.fileUploadScript.enableSizeRestriction" class="asowp-flex asowp-justify-between asowp-space-x-6 asowp-space-y-2">
                         <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
                             <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Upload min width (px)", "all-signs-options-pro") }}</label>
                             <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="asowp-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMinWidth)){image.fileUploadScript.uploadMinWidth=100}}"/>
@@ -471,6 +480,7 @@ const image = ref({
     enableCustomColor:true,
     colorsPrevImg:'',
     fileUploadScript:{
+      enableSizeRestriction:false,
       uploadMinWidth:100,
       uploadMaxWidth:100,
       allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
@@ -520,7 +530,14 @@ onMounted(async ()=>{
     isFetching.value = true;
     await fetchManageCliparts();
     if(props.data){
-        image.value = {...image.value,...props.data}
+        image.value = {
+            ...image.value,
+            ...props.data,
+            fileUploadScript: {
+                ...image.value.fileUploadScript,
+                ...(props.data.fileUploadScript || {})
+            }
+        }
     }
     isFetching.value = false;
 });

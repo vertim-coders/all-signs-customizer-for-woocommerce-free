@@ -8844,7 +8844,11 @@ function handleAddImageToSign(image, imageId, price) {
 
         // if (imageSettings.fileUploadScript.customWithGraphical) {
           // } 
-        if( imageSettings.fileUploadScript.uploadMinWidth !== "" && imageSettings.fileUploadScript.uploadMaxWidth !== "") {
+        if(
+          imageSettings.fileUploadScript?.enableSizeRestriction === true &&
+          imageSettings.fileUploadScript.uploadMinWidth !== "" &&
+          imageSettings.fileUploadScript.uploadMaxWidth !== ""
+        ) {
 
           checkImageSize( imgFile, imageSettings.fileUploadScript.uploadMaxWidth, imageSettings.fileUploadScript.uploadMinWidth )
             .then((validFile) => {

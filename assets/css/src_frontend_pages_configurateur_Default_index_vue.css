@@ -1,1 +1,32 @@
-.asowp-hide[data-v-4863ea56]{display:none}.flipper[data-v-4863ea56]{position:relative;text-align:center;transform-style:preserve-3d;transition:transform .8s}.flipper-switch[data-v-4863ea56]{transform:rotateY(180deg)}#asowp-sign-recto[data-v-4863ea56],#asowp-sign-verso[data-v-4863ea56]{-webkit-backface-visibility:hidden;backface-visibility:hidden}#asowp-sign-recto[data-v-4863ea56]{color:#000}#asowp-sign-verso[data-v-4863ea56]{color:#fff;transform:rotateY(180deg)}
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./src/frontend/pages/configurateur/Default/index.vue?vue&type=style&index=0&id=5ab70054&scoped=true&lang=css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+
+.asowp-hide[data-v-5ab70054]{
+        display: none;
+}
+.flipper[data-v-5ab70054] {
+        position: relative;
+        /* width: 100%;
+        height: 100%; */
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+}
+.flipper-switch[data-v-5ab70054] {
+        transform: rotateY(180deg);
+}
+#asowp-sign-recto[data-v-5ab70054], #asowp-sign-verso[data-v-5ab70054] {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+}
+#asowp-sign-recto[data-v-5ab70054] {
+        /* background-color: #bbb; */
+        color: black;
+}
+#asowp-sign-verso[data-v-5ab70054] {
+        /* background-color: dodgerblue; */
+        color: white;
+        transform: rotateY(180deg);
+}
+

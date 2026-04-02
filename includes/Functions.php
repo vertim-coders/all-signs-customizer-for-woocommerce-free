@@ -182,8 +182,13 @@ function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int 
 {
     $newly_added_cart_item_key = false;
     $product = wc_get_product($product_id);
+    if (!$product) {
+        return false;
+    }
+
     $parent_id = $product->get_parent_id();
     $recaps["designImages"] = $images;
+
     if ($parent_id == 0) {
         $newly_added_cart_item_key = WC()->cart->add_to_cart(
             $product_id,
@@ -197,11 +202,12 @@ function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int 
             )
         );
     } else {
+        $variation_id = $product_id;
         $variation = $product->get_variation_attributes();
         $newly_added_cart_item_key = WC()->cart->add_to_cart(
-            $product_id,
+            $parent_id,
             $quantity,
-            0,
+            $variation_id,
             $variation,
             array(
                 'asowp_meta_data' => [
@@ -225,9 +231,18 @@ function asowp_add_designs_to_cart(int $product_id, array $recaps, $images, int 
                  $variation = $_SESSION['combinaison'][ $variation_name ];
              } */
 
-    if (method_exists(WC()->cart, 'maybe_set_cart_cookies')) {
-        WC()->cart->maybe_set_cart_cookies();
+    if ($newly_added_cart_item_key) {
+        WC()->cart->calculate_totals();
+
+        if (method_exists(WC()->cart, 'set_session')) {
+            WC()->cart->set_session();
+        }
+
+        if (method_exists(WC()->cart, 'maybe_set_cart_cookies')) {
+            WC()->cart->maybe_set_cart_cookies();
+        }
     }
+
     return $newly_added_cart_item_key;
 }
 

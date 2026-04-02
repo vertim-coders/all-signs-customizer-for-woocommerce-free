@@ -583,6 +583,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -1409,6 +1410,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -2597,6 +2599,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -3443,6 +3446,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -4600,6 +4604,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 3000,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -5450,6 +5455,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 3000,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -6873,6 +6879,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -7977,6 +7984,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -9844,6 +9852,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -10510,6 +10519,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -11631,6 +11641,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -14018,6 +14029,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -15496,6 +15508,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -16767,6 +16780,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -18399,6 +18413,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -19527,6 +19542,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -20619,6 +20635,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
@@ -22749,6 +22766,7 @@ const configurationDemoData = [
             enableCustomColor: true,
             colorsPrevImg: "",
             fileUploadScript: {
+              enableSizeRestriction: false,
               uploadMinWidth: 100,
               uploadMaxWidth: 100,
               allowedUploadsExtentions: ["png", "jpeg", "webp", "svg", "gif"],
