@@ -35,6 +35,7 @@ class ASOWP_Admin
             if (current_user_can($capability)) {
                 $submenu[$slug][] = array(__('Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/');
                 $submenu[$slug][] = array(__('Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configurations');
+                $submenu[$slug][] = array(__('Request quotes', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
                 $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/global-settings/output');
                 $submenu[$slug][] = array(__('Templates', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');
                 $submenu[$slug][] = array(__('Manage Fonts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-fonts');
@@ -71,8 +72,8 @@ class ASOWP_Admin
         wp_enqueue_script('asowp-runtime', ASOWP_ASSETS . '/js/runtime.js', [], filemtime(ASOWP_PATH . '/assets/js/runtime.js'), true);
         wp_enqueue_script('asowp-vendor', ASOWP_ASSETS . '/js/vendors.js', [], filemtime(ASOWP_PATH . '/assets/js/vendors.js'), true);
 
-        wp_enqueue_style('asowp-admin', ASOWP_ASSETS . '/css/admin.css', false, ASOWP_VERSION);
-        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, ASOWP_VERSION);
+        wp_enqueue_style('asowp-admin', ASOWP_ASSETS . '/css/admin.css', false, filemtime(ASOWP_PATH . '/assets/css/admin.css'));
+        wp_enqueue_style('asowp-frontend', ASOWP_ASSETS . '/css/frontend.css', false, filemtime(ASOWP_PATH . '/assets/css/frontend.css'));
 
         wp_enqueue_script('asowp-admin', ASOWP_ASSETS . '/js/admin.js', ['jquery', 'asowp-vendor', 'asowp-runtime', 'wp-i18n', 'editor'], filemtime(ASOWP_PATH . '/assets/js/admin.js'), true);
         wp_set_script_translations( 'asowp-admin', "all-signs-options-pro" );

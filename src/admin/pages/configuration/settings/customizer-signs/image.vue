@@ -1,640 +1,967 @@
 <template>
-    <div>
-        <div>
-            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
-                
-                <div class="asowp-flex asowp-space-x-3">
-                    <div class="asowp-text-[16px]">{{ __("Enable download Image", "all-signs-options-pro") }}</div>
-                    <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                        <label for="toggleEnableUpload" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                            <input id="toggleEnableUpload" type="checkbox" class="asowp-sr-only asowp-peer" v-model="image.enableDownloadImage">
-                            <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                        </label>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-space-x-3">
-                    <div class="asowp-text-[16px]">{{ __("Enable upload Image", "all-signs-options-pro") }}</div>
-                    <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                        <label for="toggleEnableUpload" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                            <input id="toggleEnableUpload" type="checkbox" name="toggleEnableUpload" class="asowp-sr-only asowp-peer" v-model="image.enableUploadImage">
-                            <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <div class="asowp-flex asowp-space-x-3 asowp-pb-3">
-                        <div class="asowp-text-[16px]">{{ __("Enable upload size restriction", "all-signs-options-pro") }}</div>
-                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                            <label for="toggleUploadSizeRestriction" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleUploadSizeRestriction" type="checkbox" name="toggleUploadSizeRestriction" class="asowp-sr-only asowp-peer" v-model="image.fileUploadScript.enableSizeRestriction">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div v-if="image.fileUploadScript.enableSizeRestriction" class="asowp-flex asowp-justify-between asowp-space-x-6 asowp-space-y-2">
-                        <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Upload min width (px)", "all-signs-options-pro") }}</label>
-                            <input type="number" v-model="image.fileUploadScript.uploadMinWidth" class="asowp-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMinWidth)){image.fileUploadScript.uploadMinWidth=100}}"/>
-                        </div>
-                        <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                            <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Upload Max width (px)", "all-signs-options-pro") }}</label>
-                            <input type="number" v-model="image.fileUploadScript.uploadMaxWidth" class="asowp-w-full" @blur="()=>{ if(isNaN(image.fileUploadScript.uploadMaxWidth)){image.fileUploadScript.uploadMaxWidth =1024}}"/>
-                        </div>
-                    </div>
-                    <div class="asowp-pt-2">
-                        <Multiselect
-                            v-model="image.fileUploadScript.allowedUploadsExtentions"
-                            placeholder=""
-                            :options="allowedUploadsExtentions"
-                            label="name"
-                            trackBy="name"
-                            mode="tags"
-                        /> 
-                    </div>
+  <section class="asowp-image-settings">
+    <header class="asowp-image-header">
+      <div>
+        <h1>Image Setup</h1>
+        <p>Bring image configuration closer to the core flow, while keeping the same classic save location.</p>
+      </div>
+    </header>
 
-                </div> 
-                <div class="asowp-space-y-3">
-                    <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">{{ __("Enable clipart", "all-signs-options-pro") }}</div>
-                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                            <label for="toggleEnableClipart" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableClipart" type="checkbox" name="toggleEnableClipart" class="asowp-sr-only asowp-peer" v-model="image.enableClipart.active">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-space-y-2" v-if="image.enableClipart.active">
-                        <label class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Select clipart group", "all-signs-options-pro") }}</label>
-                        <Multiselect
-                            v-model="image.enableClipart.selectedClipartGroups"
-                            placeholder=""
-                            :options="manageCliparts"
-                            label="name"
-                            trackBy="name"
-                            mode="tags"
-                            :loading="isFetching"
-                        />
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-justify-start asowp-space-x-8 asowp-items-center">
-                    <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">{{ __("Enable Custom color", "all-signs-options-pro") }}</div>
-                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                            <label for="toggleCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleCustom" type="checkbox" name="toggleCustom" class="asowp-sr-only asowp-peer" v-model="image.enableCustomColor">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-w-3/5 asowp-space-x-2 asowp-flex asowp-items-center" v-if="image.enableCustomColor">
-                        <label for="" class="asowp-text-[16px] asowp-text[#444444] asowp-font-normal asowp-w-full">{{ __("Custom Color Preview Image :", "all-signs-options-pro") }} </label>
-                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2">
-                            <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload image", "all-signs-options-pro") }}</button>
-                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                    <img v-if="image.colorsPrevImg != ''" :src="image.colorsPrevImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                    <button v-if="image.colorsPrevImg != ''" @click="()=>{image.colorsPrevImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>             
-                    </div>
-                </div>
-                <div class="asowp-space-y-2">
-                    <label class="asowp-text-[16px] asowp-font-bold">{{ __("Colors for uploaded svg (only for uploaded images that are svg)", "all-signs-options-pro") }}</label>
-                    <div class="asowp-grid asowp-grid-cols-3 asowp-gap-4" v-if="image.colors.length>0">
-                        <div class="asowp-flex asowp-justify-start asowp-space-x-2" :key="key" v-for="(color,key) in image.colors">
-                            <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{ __("Name", "all-signs-options-pro") }}</label>
-                                <input type="text" class="asowp-rounded asowp-w-full asowp-h-[30px]" v-model="image.colors[key].name" autocomplete="off"> 
-                            </div>
-                            <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
-                                <div class="asowp-relative asowp-flex">
-                                    <input
-                                        id="colorPicker"
-                                        type="color"
-                                        v-model="image.colors[key].codeHex"
-                                        @input="(e)=>changeColorCodeHex(e,key)"
-                                        class="asowp-w-9 asowp-h-[30px]"
-                                    />
-                                    <input
-                                        type="text"
-                                        v-model="image.colors[key].codeHex"
-                                        @input="(e)=>changeColorCodeHex(e,key)"
-                                        class="asowp-p-1 asowp-text-black asowp-w-full -asowp-translate-y-px"
-                                    />
-                                </div>
-                                
-                            </div>
-                            <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
-                                <div class="asowp-relative asowp-flex">
-                                    <button @click="removeColor(key)" class="asowp-w-[50px] asowp-h-full asowp-border-solid asowp-border-red-600 asowp-rounded asowp-bg-red-600 asowp-cursor-pointer asowp-text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-[70%] asowp-h-[70%]">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="asowp-pt-4">
-                        <button @click="addNewColor" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Add More Color", "all-signs-options-pro") }}</span>
-                        </button>
-                    </div>
-                </div>
-                <div>
-                    <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">{{ __("Preview scenes", "all-signs-options-pro") }}</div>
-                    </div>
-                    <div>
-                        <div class="asowp-flex asowp-justify-center asowp-items-center asowp-pt-8 asowp-pb-3 asowp-px-8">
-                            <div class="asowp-flex asowp-space-x-2">
-                                <button  @click="addImage" class="asowp-flex asowp-w-fit asowp-rounded asowp-bg-[#016464] asowp-px-4 asowp-space-x-2 asowp-p-1.5 asowp-border-none asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-cursor-pointer asowp-h-[40px] asowp-flex asowp-items-center asowp-justify-center">
-                                    <svg class="asowp-w-5 asowp-h-5" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g id="plus-lg">
-                                        <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M11 2.75C11.1823 2.75 11.3572 2.82243 11.4861 2.95136C11.6151 3.0803 11.6875 3.25516 11.6875 3.4375V10.3125H18.5625C18.7448 10.3125 18.9197 10.3849 19.0486 10.5139C19.1776 10.6428 19.25 10.8177 19.25 11C19.25 11.1823 19.1776 11.3572 19.0486 11.4861C18.9197 11.6151 18.7448 11.6875 18.5625 11.6875H11.6875V18.5625C11.6875 18.7448 11.6151 18.9197 11.4861 19.0486C11.3572 19.1776 11.1823 19.25 11 19.25C10.8177 19.25 10.6428 19.1776 10.5139 19.0486C10.3849 18.9197 10.3125 18.7448 10.3125 18.5625V11.6875H3.4375C3.25516 11.6875 3.0803 11.6151 2.95136 11.4861C2.82243 11.3572 2.75 11.1823 2.75 11C2.75 10.8177 2.82243 10.6428 2.95136 10.5139C3.0803 10.3849 3.25516 10.3125 3.4375 10.3125H10.3125V3.4375C10.3125 3.25516 10.3849 3.0803 10.5139 2.95136C10.6428 2.82243 10.8177 2.75 11 2.75Z" fill="white"/>
-                                        </g>
-                                    </svg>
-                                    <div class="asowp-text-[14px]">
-                                        {{ __("Add Preview Scenes", "all-signs-options-pro") }}
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="asowp-grid asowp-gap-x-6 asowp-gap-y-1 asowp-grid-cols-5 asowp-px-8 asowp-py-4">
-                            <div v-for="(img,index) in image.scenes" :key="index" :class="`asowp-relative asowp-flex asowp-w-[120px] asowp-border asowp-b-white asowp-rounded-md asowp-overflow-hidden`">
-                                <div class="asowp-relative asowp-w-[120px] asowp-h-[120px] asowp-object-cover">
-                                    <img :src="img" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                </div>
-                                <button @click="()=>deleteImage(index)"  :class="`asowp-cursor-pointer asowp-border-solid asowp-border-0 asowp-bg-red-500 asowp-absolute asowp-top-0 asowp-right-0 asowp-flex asowp-items-center asowp-justify-center asowp-text-white asowp-w-[25px] asowp-h-[25px] asowp-rounded-md asowp-shadow-zinc-400 asowp-shadow-lg asowp-text-white asowp-font-medium asowp-transition-all asowp-ease-in-out asowp-duration-1000`">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="asowp-w-4 asowp-h-4">
-                                        <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm3 10.5a.75.75 0 000-1.5H9a.75.75 0 000 1.5h6z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-full asowp-space-y-2">
-                    <!-- Titre principal -->
-                    <h3 class="asowp-text-sm asowp-font-semibold asowp-text-gray-800">{{ __("Cutlines Settings", "all-signs-options-pro") }}</h3>
-                    
-                    <!-- Sélection du type de cutline -->
-                    <div class="asowp-flex asowp-flex-col asowp-space-y-2">
-                        <label for="cutlineType" class="asowp-text-xs asowp-font-medium asowp-text-[#444444]">{{ __("Cutline Type", "all-signs-options-pro") }}</label>
-                        <select id="cutlineType" v-model="image.selectedCutline" class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-h-[30px] asowp-w-full">
-                            <option v-for="cutline in cutlines" :key="cutline" :value="cutline">{{ cutline }}</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Section First Cutline -->
-                    <div class="">
-                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">{{ __("First Cutline", "all-signs-options-pro") }}</h4>
-                        <div class="asowp-flex asowp-space-x-4">
-                            <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="firstBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Size (px)", "all-signs-options-pro") }}</label>
-                                <input 
-                                    id="firstBorderSize"
-                                    type="number" 
-                                    min="0" 
-                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
-                                    v-model="image.cutlines.first.borderSize" 
-                                    autocomplete="off"
-                                    placeholder="0"
-                                > 
-                            </div>
-                            <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="firstBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Color", "all-signs-options-pro") }}</label>
-                                <input
-                                    id="firstBorderColor"
-                                    type="color"
-                                    v-model="image.cutlines.first.color"
-                                    @input="(e)=>changeColorCodeHex(e,key)"
-                                    class="asowp-rounded asowp-border asowp-w-full asowp-h-[30px] asowp-cursor-pointer"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Section Second Cutline -->
-                    <div class="">
-                        <h4 class="asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-mb-2">{{ __("Second Cutline", "all-signs-options-pro") }}</h4>
-                        
-                        <!-- Row 1: Size et Color entre les cutlines -->
-                        <div class="asowp-flex asowp-space-x-4 asowp-mb-2">
-                            <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Space Between Cutlines (px)", "all-signs-options-pro") }}</label>
-                                <input 
-                                    id="secondSize"
-                                    type="number" 
-                                    min="0" 
-                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
-                                    v-model="image.cutlines.second.size" 
-                                    autocomplete="off"
-                                    placeholder="0"
-                                > 
-                            </div>
-                            <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondSpaceColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Space Color", "all-signs-options-pro") }}</label>
-                                <input
-                                    id="secondSpaceColor"
-                                    type="color"
-                                    v-model="image.cutlines.second.color"
-                                    @input="(e)=>changeColorCodeHex(e,key)"
-                                    class="asowp-rounded asowp-border asowp-w-full asowp-h-[30px] asowp-cursor-pointer"
-                                />
-                            </div>
-                        </div>
-                        
-                        <!-- Row 2: Border Size et Border Color -->
-                        <div class="asowp-flex asowp-space-x-4">
-                            <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondBorderSize" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Size (px)", "all-signs-options-pro") }}</label>
-                                <input 
-                                    id="secondBorderSize"
-                                    type="number" 
-                                    min="0" 
-                                    class="asowp-rounded asowp-border asowp-px-2 asowp-py-1 asowp-w-full asowp-h-[30px] focus:asowp-ring-2 focus:asowp-ring-blue-500 focus:asowp-border-transparent" 
-                                    v-model="image.cutlines.second.borderSize" 
-                                    autocomplete="off"
-                                    placeholder="0"
-                                > 
-                            </div>
-                            <div class="asowp-w-1/2 asowp-space-y-2">
-                                <label for="secondBorderColor" class="asowp-text-xs asowp-font-medium asowp-text-[#444444] asowp-block">{{ __("Border Color", "all-signs-options-pro") }}</label>
-                                <input
-                                    id="secondBorderColor"
-                                    type="color"
-                                    v-model="image.cutlines.second.borderColor"
-                                    @input="(e)=>changeColorCodeHex(e,key)"
-                                    class="asowp-rounded asowp-border asowp-w-full asowp-h-[30px] asowp-cursor-pointer"
-                                /> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">{{ __("Filter", "all-signs-options-pro") }}</div>
-                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                            <label for="toggleEnableFilter" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableFilter" type="checkbox" name="toggleEnableFilter" class="asowp-sr-only asowp-peer" v-model="image.filter.active">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-space-x-6" v-if="image.filter.active">
-                    <div class="asowp-text-center asowp-space-x-2 asowp-space-y-1 asowp-flex">
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10 11V9H11.61C11.85 9.71 12 10.39 12 11H10ZM9.58 5C9.12 4.29 8.65 3.61 8.2 3H8V5H9.58ZM10 9V7H8V9H10ZM10 5.68V7H10.74C10.5 6.56 10.26 6.11 10 5.68ZM6 13V11H8V9H6V7H8V5H6V3H8V2.73C6.9 1.26 6 0.25 6 0.25C6 0.25 0 7 0 11C0 14.31 2.69 17 6 17V15H8V13H6ZM8 16.65C8.75 16.39 9.42 16 10 15.46V15H8V16.65ZM8 13H10V11H8V13ZM10 15H10.46C11 14.42 11.39 13.75 11.65 13H10V15Z" fill="black"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Greyscale", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableGreyscale" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableGreyscale" type="checkbox" name="toggleEnableGreyscale" class="asowp-sr-only asowp-peer" v-model="image.filter.enableGreyscale">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
+    <SettingSection
+      title="Image Access"
+      description="Control whether customers can upload or download images in the editor."
+    >
+      <div class="asowp-image-grid asowp-image-grid-2">
+        <ToggleField label="Enable Image" v-model="image.active" class="asowp-image-span-2" />
+        <ToggleField label="Enable Download Image" v-model="image.enableDownloadImage" />
+        <ToggleField label="Enable upload Image" v-model="image.enableUploadImage" />
+      </div>
+    </SettingSection>
 
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex asowp-flex-wrap">
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10 11V9H11.61C11.85 9.71 12 10.39 12 11H10ZM9.58 5C9.12 4.29 8.65 3.61 8.2 3H8V5H9.58ZM10 9V7H8V9H10ZM10 5.68V7H10.74C10.5 6.56 10.26 6.11 10 5.68ZM6 13V11H8V9H6V7H8V5H6V3H8V2.73C6.9 1.26 6 0.25 6 0.25C6 0.25 0 7 0 11C0 14.31 2.69 17 6 17V15H8V13H6ZM8 16.65C8.75 16.39 9.42 16 10 15.46V15H8V16.65ZM8 13H10V11H8V13ZM10 15H10.46C11 14.42 11.39 13.75 11.65 13H10V15Z" fill="black"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Opacity", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableOpacity" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableOpacity" type="checkbox" name="toggleEnableOpacity" class="asowp-sr-only asowp-peer" v-model="image.filter.enableOpacity">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.9995 5.00001C10.7051 5.00009 9.43008 5.31425 8.28382 5.91552C7.13756 6.51679 6.15432 7.38722 5.41847 8.4521C4.68263 9.51698 4.21616 10.7445 4.05911 12.0293C3.90205 13.3142 4.0591 14.6179 4.51677 15.8287C4.97445 17.0394 5.71907 18.1211 6.68675 18.9808C7.65442 19.8404 8.81625 20.4525 10.0725 20.7643C11.3288 21.0762 12.6419 21.0786 13.8993 20.7713C15.1567 20.464 16.3207 19.8562 17.2915 19H11.9995V18H18.2445C18.4975 17.685 18.7265 17.351 18.9295 17H11.9995V16H19.4185C19.5501 15.6743 19.6601 15.3402 19.7475 15H11.9995V14H19.9375C19.9789 13.6683 19.9996 13.3343 19.9995 13H11.9995V12H19.9375C19.8956 11.663 19.8321 11.329 19.7475 11H11.9995V10H19.4185C19.2787 9.65566 19.1149 9.32151 18.9285 9.00001H11.9995V8.00001H18.2445C17.9561 7.63996 17.6373 7.30539 17.2915 7.00001H11.9995V6.00001H15.8755C14.6897 5.34212 13.3556 4.99791 11.9995 5.00001Z" fill="black"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Blur", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableBlur" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableBlur" type="checkbox" name="toggleEnableBlur" class="asowp-sr-only asowp-peer" v-model="image.filter.enableBlur">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Sepia", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableSepia" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableSepia" type="checkbox" name="toggleEnableSepia" class="asowp-sr-only asowp-peer" v-model="image.filter.enableSepia">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("sharpen", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableSharpen" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableSharpen" type="checkbox" name="toggleEnableSharpen" class="asowp-sr-only asowp-peer" v-model="image.filter.enableSharpen">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Emboss", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableEmbross" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableEmbross" type="checkbox" name="toggleEnableEmbross" class="asowp-sr-only asowp-peer" v-model="image.filter.enableEmbross">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-1 asowp-space-x-3 asowp-flex">
-                        <!-- Greenify -->
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Greenify", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableGreenify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableGreenify" type="checkbox" name="toggleEnableGreenify" class="asowp-sr-only asowp-peer" v-model="image.filter.enableGreenify">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
+    <template v-if="image.active">
+      <SettingSection
+        title="Image Colors"
+        description="Manage predefined image colors and the optional custom color preview."
+      >
+        <div class="asowp-image-stack">
+          <div class="asowp-image-field asowp-image-field-sm">
+            <label>Label</label>
+            <input v-model="image.colorsLabel" type="text" />
+          </div>
 
-                        <!-- Pinkify -->
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Pinkify", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnablePinkify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnablePinkify" type="checkbox" name="toggleEnablePinkify" class="asowp-sr-only asowp-peer" v-model="image.filter.enablePinkify">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-
-                        <!-- Orangeify -->
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Orangeify", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableOrangeify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableOrangeify" type="checkbox" name="toggleEnableOrangeify" class="asowp-sr-only asowp-peer" v-model="image.filter.enableOrangeify">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-
-                        <!-- Blueify -->
-                        <div>
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-1 asowp-py-0.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_triangle.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Blueify", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableBlueify" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableBlueify" type="checkbox" name="toggleEnableBlueify" class="asowp-sr-only asowp-peer" v-model="image.filter.enableBlueify">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
+          <div v-if="image.colors.length" class="asowp-image-color-grid">
+            <div v-for="(color, index) in image.colors" :key="`image-color-${index}`" class="asowp-image-color-row">
+              <div class="asowp-image-field">
+                <label>Name</label>
+                <input v-model="color.name" type="text" />
+              </div>
+              <label class="asowp-image-swatch-field">
+                <span>Color</span>
+                <input v-model="color.codeHex" type="color" />
+              </label>
+              <button type="button" class="asowp-image-icon-danger" @click="removeColor(index)" aria-label="Remove color">
+                <Trash2Icon :size="15" />
+              </button>
             </div>
-        </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end asowp-translate-y-12">
-            <div class="asowp-bg-[#016464] asowp-rounded">
-                <button :disabled="isLoading" @click="updateImageSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
-                </button>
+          </div>
+
+          <button type="button" class="asowp-image-secondary asowp-image-fit" @click="addColor">Add more colors</button>
+
+          <div class="asowp-image-custom-color">
+            <ToggleField label="Enable Custom color" v-model="image.enableCustomColor" />
+            <div class="asowp-image-upload-field">
+              <label>Custom color preview image</label>
+              <div class="asowp-image-upload-control">
+                <button type="button" class="asowp-image-primary" @click="selectColorPrevImage">upload image</button>
+                <div class="asowp-image-upload-preview">
+                  <img v-if="image.colorsPrevImg" :src="image.colorsPrevImg" alt="" />
+                  <button v-if="image.colorsPrevImg" type="button" @click="image.colorsPrevImg = ''">×</button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </SettingSection>
+
+      <SettingSection
+        title="Upload Script"
+        description="Define the upload behavior, size limits and allowed extensions."
+      >
+        <div class="asowp-image-stack">
+          <div class="asowp-image-inline-toggle">
+            <strong>Normal</strong>
+            <SwitchControl v-model="image.fileUploadScript.customWithGraphical" />
+            <strong>Custom with graphical enchacements</strong>
+          </div>
+
+          <div>
+            <div class="asowp-image-inline-toggle">
+              <strong>Restrict uploaded image sizes</strong>
+              <span>No</span>
+              <SwitchControl v-model="image.fileUploadScript.enableSizeRestriction" />
+              <span>Yes</span>
+            </div>
+            <p class="asowp-image-muted">Enable this to enforce minimum and maximum width on uploaded images.</p>
+          </div>
+
+          <div v-if="image.fileUploadScript.enableSizeRestriction" class="asowp-image-grid asowp-image-grid-2">
+            <div class="asowp-image-field">
+              <label>Upload min width (px)</label>
+              <input v-model.number="image.fileUploadScript.uploadMinWidth" type="number" />
+            </div>
+            <div class="asowp-image-field">
+              <label>Upload Max width (px)</label>
+              <input v-model.number="image.fileUploadScript.uploadMaxWidth" type="number" />
+            </div>
+          </div>
+
+          <div class="asowp-image-field">
+            <label>Select allow extension</label>
+            <div class="asowp-image-token-box">
+              <span
+                v-for="extension in image.fileUploadScript.allowedUploadsExtentions"
+                :key="extension"
+                class="asowp-image-token"
+              >
+                {{ extension.toUpperCase() }}
+                <button type="button" @click="removeExtension(extension)">×</button>
+              </span>
+              <select v-model="selectedExtension" @change="addExtension">
+                <option value="">select extension</option>
+                <option
+                  v-for="extension in extensionOptions"
+                  :key="extension.value"
+                  :value="extension.value"
+                  :disabled="image.fileUploadScript.allowedUploadsExtentions.includes(extension.value)"
+                >
+                  {{ extension.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </SettingSection>
+
+      <SettingSection
+        title="Cutlines"
+        description="Configure the first and second cutline only when they are enabled."
+      >
+        <div class="asowp-image-stack">
+          <div class="asowp-image-field">
+            <label>Cutline Type</label>
+            <select v-model="image.selectedCutline">
+              <option value="none">none</option>
+              <option value="1x">1x</option>
+              <option value="2x">2x</option>
+            </select>
+          </div>
+
+          <div v-if="image.selectedCutline === '1x' || image.selectedCutline === '2x'" class="asowp-image-soft-card">
+            <strong>First Cutline</strong>
+            <div class="asowp-image-grid asowp-image-grid-2">
+              <div class="asowp-image-field">
+                <label>Border Size (for print ready file)</label>
+                <input v-model.number="image.cutlines.first.borderSize" type="number" />
+              </div>
+              <label class="asowp-image-swatch-field asowp-image-top-label">
+                <span>Color</span>
+                <input v-model="image.cutlines.first.color" type="color" />
+              </label>
+            </div>
+          </div>
+
+          <div v-if="image.selectedCutline === '2x'" class="asowp-image-soft-card">
+            <strong>Second Cutline</strong>
+            <div class="asowp-image-grid asowp-image-grid-2">
+              <div class="asowp-image-field">
+                <label>Size between Two Cutlines border</label>
+                <input v-model.number="image.cutlines.second.size" type="number" />
+              </div>
+              <label class="asowp-image-swatch-field asowp-image-top-label">
+                <span>Color</span>
+                <input v-model="image.cutlines.second.color" type="color" />
+              </label>
+              <div class="asowp-image-field">
+                <label>Border Size (for print ready file)</label>
+                <input v-model.number="image.cutlines.second.borderSize" type="number" />
+              </div>
+              <label class="asowp-image-swatch-field asowp-image-top-label">
+                <span>Border Color</span>
+                <input v-model="image.cutlines.second.borderColor" type="color" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </SettingSection>
+
+      <SettingSection
+        title="Filters"
+        description="Control which image effects are available in the editor."
+      >
+        <div class="asowp-image-stack">
+          <div class="asowp-image-inline-toggle">
+            <strong>Filter</strong>
+            <SwitchControl v-model="image.filter.active" />
+          </div>
+
+          <div v-if="image.filter.active" class="asowp-image-filter-row">
+            <FilterItem label="Greyscale" v-model="image.filter.enableGreyscale" />
+            <FilterItem label="Greenify" v-model="image.filter.enableGreenify" />
+            <FilterItem label="Pinkify" v-model="image.filter.enablePinkify" />
+            <FilterItem label="Orangeify" v-model="image.filter.enableOrangeify" />
+            <FilterItem label="Blueify" v-model="image.filter.enableBlueify" />
+            <FilterItem label="Opacity" v-model="image.filter.enableOpacity" />
+            <FilterItem label="Blur" v-model="image.filter.enableBlur" />
+            <FilterItem label="Sepia" v-model="image.filter.enableSepia" />
+            <FilterItem label="sharpen" v-model="image.filter.enableSharpen" />
+            <FilterItem label="Emboss" v-model="image.filter.enableEmbross" />
+          </div>
+        </div>
+      </SettingSection>
+
+      <SettingSection
+        title="Scenes"
+        description="Choose the background scenes used for image preview."
+      >
+        <div class="asowp-image-stack">
+          <div class="asowp-image-actions-left">
+            <button type="button" class="asowp-image-primary asowp-image-wide" @click="addImage">Choose scenes</button>
+            <button type="button" class="asowp-image-secondary" @click="useDefaultScenes">Use default scenes</button>
+          </div>
+          <div v-if="image.scenes.length" class="asowp-image-scenes">
+            <div v-for="(scene, index) in image.scenes" :key="`${scene}-${index}`" class="asowp-image-scene">
+              <img :src="resolveSceneUrl(scene)" alt="" />
+              <button type="button" @click="deleteImage(index)">×</button>
+            </div>
+          </div>
+        </div>
+      </SettingSection>
+    </template>
+
+    <div class="asowp-image-save-row">
+      <button type="button" class="asowp-image-primary" :disabled="isLoading" @click="updateImageSettings">
+        {{ isLoading ? 'Saving...' : 'Save Image' }}
+      </button>
     </div>
+  </section>
 </template>
+
 <script setup>
 import api from '@/admin/Api/api';
-import {ref,defineProps, onMounted} from 'vue';
-import { useRoute } from 'vue-router';
-import Multiselect from "@vueform/multiselect";
 import toastMessage from '@/admin/utils/functions';
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+import { shopifyImageUrl } from '@/admin/utils/shopify-assets';
+import { defineComponent, h, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { Trash2Icon } from 'lucide-vue-next';
+
 const props = defineProps({
-    data:Object,
-    fetchSettings:Function
-   
+  data: Object,
+  fetchSettings: Function,
 });
 
 const route = useRoute();
 const configId = ref(route.params.configId);
-const isLoading =ref(false);
-const isFetching = ref(false);
-const image = ref({
-    enableDownloadImage:true,
-    enableUploadImage:true,
-    enableCustomColor:true,
-    colorsPrevImg:'',
-    fileUploadScript:{
-      enableSizeRestriction:false,
-      uploadMinWidth:100,
-      uploadMaxWidth:100,
-      allowedUploadsExtentions:["png","jpeg","webp","svg","gif"],
+const isLoading = ref(false);
+const selectedExtension = ref('');
+
+const defaultImageSettings = () => ({
+  active: true,
+  enableUploadImage: true,
+  enableDownloadImage: true,
+  colorsLabel: 'Image Colors',
+  colorsPrevImg: '',
+  colors: [],
+  enableCustomColor: true,
+  fileUploadScript: {
+    customWithGraphical: false,
+    enableSizeRestriction: false,
+    uploadMinWidth: 100,
+    uploadMaxWidth: 200,
+    allowedUploadsExtentions: ['png'],
+  },
+  selectedCutline: 'none',
+  cutlines: {
+    first: { borderSize: 4, color: '#FFF10E' },
+    second: {
+      color: '#5EEC92',
+      size: 10,
+      borderColor: '#4A65F9',
+      borderSize: 4,
     },
-    selectedCutline:'none',
-    "cutlines": {
-        first: {
-            borderSize: 4,
-            color: '#FFF10E'
-        },
-        second: {
-            color: '#5EEC92',
-            size: 10,
-            borderColor: '#4A65F9',
-            borderSize: 4
-        }
+  },
+  enableClipart: { active: true, selectedClipartGroups: [] },
+  filter: {
+    active: true,
+    enableGreyscale: false,
+    enableOpacity: true,
+    enableEmbross: true,
+    enableBlur: true,
+    enableSepia: true,
+    enableSharpen: true,
+    enableGreenify: false,
+    enablePinkify: false,
+    enableOrangeify: false,
+    enableBlueify: false,
+  },
+  scenes: [],
+});
+
+const image = ref(defaultImageSettings());
+
+const extensionOptions = [
+  { label: 'PNG', value: 'png' },
+  { label: 'JPEG', value: 'jpeg' },
+  { label: 'SVG', value: 'svg' },
+  { label: 'WEBP', value: 'webp' },
+  { label: 'GIF', value: 'gif' },
+];
+
+const defaultScenes = Array.from(
+  { length: 7 },
+  (_item, index) => shopifyImageUrl(`aso_default_files/scenes/${index + 1}.webp`),
+);
+
+const mergeSettings = (loaded = {}) => {
+  const defaults = defaultImageSettings();
+  image.value = {
+    ...defaults,
+    ...loaded,
+    active: loaded.active ?? loaded.enableImage ?? defaults.active,
+    fileUploadScript: {
+      ...defaults.fileUploadScript,
+      ...(loaded.fileUploadScript || {}),
+      allowedUploadsExtentions: Array.isArray(loaded.fileUploadScript?.allowedUploadsExtentions)
+        ? [...new Set(loaded.fileUploadScript.allowedUploadsExtentions)]
+        : defaults.fileUploadScript.allowedUploadsExtentions,
     },
-    enableClipart:{
-        active:true,
-        selectedClipartGroups:[],
+    cutlines: {
+      first: {
+        ...defaults.cutlines.first,
+        ...(loaded.cutlines?.first || {}),
+      },
+      second: {
+        ...defaults.cutlines.second,
+        ...(loaded.cutlines?.second || {}),
+      },
+    },
+    enableClipart: {
+      ...defaults.enableClipart,
+      ...(loaded.enableClipart || {}),
     },
     filter: {
-        active:true,
-        enableGreyscale:true,
-        enableOpacity:true,
-        enableEmbross:true,
-        enableBlur:true,
-        enableSepia:true,
-        enableSharpen:true,
-        "enableGreenify":false,
-        "enablePinkify":false,
-        "enableOrangeify":false,
-        "enableBlueify":false
+      ...defaults.filter,
+      ...(loaded.filter || {}),
     },
-    colors:[],
-    scenes:[]
-});
-const allowedUploadsExtentions = [
-    {name:"PNG",value:"png"},
-    {name:"JPEG",value:"jpeg"},
-    {name:"SVG",value:"svg"},
-    {name:"WEBP",value:"webp"},
-    {name:"GIF",value:"gif"}
-];
-const manageCliparts = ref([]);
-onMounted(async ()=>{
-    isFetching.value = true;
-    await fetchManageCliparts();
-    if(props.data){
-        image.value = {
-            ...image.value,
-            ...props.data,
-            fileUploadScript: {
-                ...image.value.fileUploadScript,
-                ...(props.data.fileUploadScript || {})
-            }
-        }
-    }
-    isFetching.value = false;
-});
-
-const cutlines = ['none', '1x', '2x'];
-
-
-const selectColorPrevImage = async(e) => { 
-    e.preventDefault();
-    var uploader = wp.media(
-        {
-            title: __("Select Custom Svg Color Preview Image","all-signs-options-pro"),
-            button: {
-                text: __("Select Image","all-signs-options-pro")
-            },
-            multiple: false
-        }
-    )
-        .on(
-            'select',
-            function () {
-                var selection = uploader.state().get('selection');
-                selection.map(
-                    function (attachment) {
-                        attachment = attachment.toJSON();
-                        if (attachment.type == "image") {
-                            image.value.colorsPrevImg = (attachment.url);
-                        }
-                    }
-                );
-            }
-        )
-        .open();
-}
-const fetchManageCliparts = async () => {
-    const result = await api.getManageCliparts();
-    if (result.data.length > 0) {
-        manageCliparts.value = result.data.map((group,id) => {
-            return { name:group.title, value:id };
-        });
-    } else {
-        manageCliparts.value = [];
-    }
-}
-const updateImageSettings = async () => {
-    isLoading.value = true;
-    const result = await api.updateCustomizerSignsImage(configId.value,image.value);
-    if(result.success){
-        await props.fetchSettings();
-        isLoading.value = false;
-        if(result.success == true){
-            toastMessage(result.message);
-        }else{
-            toastMessage(result.message,"warning");
-        }
-    }else{
-        isLoading.value = false;
-        toastMessage(result.message,"error");
-    }
+    colors: Array.isArray(loaded.colors) ? loaded.colors : defaults.colors,
+    scenes: Array.isArray(loaded.scenes) ? loaded.scenes : defaults.scenes,
+  };
 };
-const addNewColor = ()=> {
-    image.value.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
-}
+
+watch(() => props.data, (data) => {
+  if (data) {
+    mergeSettings(data);
+  }
+}, {
+  immediate: true,
+});
+
+const addColor = () => {
+  image.value.colors.push({ name: '', codeHex: '#FFFFFF' });
+};
+
+const removeColor = (index) => {
+  image.value.colors.splice(index, 1);
+};
+
+const addExtension = () => {
+  if (selectedExtension.value && !image.value.fileUploadScript.allowedUploadsExtentions.includes(selectedExtension.value)) {
+    image.value.fileUploadScript.allowedUploadsExtentions.push(selectedExtension.value);
+  }
+  selectedExtension.value = '';
+};
+
+const removeExtension = (extension) => {
+  image.value.fileUploadScript.allowedUploadsExtentions = image.value.fileUploadScript.allowedUploadsExtentions.filter(
+    (item) => item !== extension,
+  );
+};
+
+const selectColorPrevImage = () => {
+  const uploader = wp.media({
+    title: 'Upload Image',
+    button: { text: 'Use this image' },
+    multiple: false,
+  });
+
+  uploader.on('select', () => {
+    const attachment = uploader.state().get('selection').first().toJSON();
+    image.value.colorsPrevImg = attachment.url;
+  });
+
+  uploader.open();
+};
+
 const addImage = () => {
-    var uploader = wp.media(
-            {
-                title: __("Please set the picture", "all-signs-options-pro"),
-                button: {
-                    text: __("Select picture(s)", "all-signs-options-pro")
-                },
-                multiple: true
-            }
-        )
-        .on(
-            'select',
-            function () {
-                var selection = uploader.state().get( 'selection' );
-                selection.map(
-                    function (attachment) {
-                        attachment = attachment.toJSON();
-                        if(attachment.type == 'image'){
-                            if(image.value.scenes){
-                                if(!image.value.scenes.includes(attachment.url)){
-                                    image.value.scenes.push(attachment.url);
-                                }
-                            }else{
-                                image.value.scenes.push(attachment.url);
-                            }
-                        }
-                    }
-                );
-            }
-        )
-        .open();
-}
+  const uploader = wp.media({
+    title: 'Upload background scenes images',
+    button: { text: 'Use selected images' },
+    multiple: true,
+  });
+
+  uploader.on('select', () => {
+    const selection = uploader.state().get('selection').toJSON();
+    const nextScenes = selection.map((attachment) => attachment.url).filter(Boolean);
+    image.value.scenes = [...new Set([...image.value.scenes, ...nextScenes])];
+  });
+
+  uploader.open();
+};
+
 const deleteImage = (index) => {
-    image.value.scenes.splice(index,1);
+  image.value.scenes.splice(index, 1);
+};
+
+const useDefaultScenes = () => {
+  image.value.scenes = [...defaultScenes];
+};
+
+const resolveSceneUrl = (scene) => {
+  if (!scene) return '';
+  if (/^(https?:)?\/\//i.test(scene) || String(scene).startsWith('data:')) return scene;
+  const normalized = String(scene).replace(/^\/+/, '');
+  if (normalized.startsWith('aso_default_files/')) {
+    return shopifyImageUrl(normalized);
+  }
+  return scene;
+};
+
+const updateImageSettings = async () => {
+  if (isLoading.value) return;
+  isLoading.value = true;
+
+  try {
+    const result = await api.updateCustomizerSignsImage(configId.value, image.value);
+    if (result.success) {
+      await props.fetchSettings?.();
+      toastMessage('Settings saved successfully', 'success');
+    } else {
+      toastMessage('An error occurred', 'error');
+    }
+  } catch (_error) {
+    toastMessage('An error occurred', 'error');
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const SwitchControl = defineComponent({
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['update:modelValue'],
+  setup(componentProps, { emit }) {
+    return () =>
+      h(
+        'button',
+        {
+          type: 'button',
+          class: ['asowp-image-switch', { 'is-on': componentProps.modelValue }],
+          onClick: () => emit('update:modelValue', !componentProps.modelValue),
+        },
+        [h('span')],
+      );
+  },
+});
+
+const ToggleField = defineComponent({
+  components: { SwitchControl },
+  props: {
+    label: {
+      type: String,
+      required: true,
+    },
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['update:modelValue'],
+  template: `
+    <div class="asowp-image-toggle-field">
+      <strong>{{ label }}</strong>
+      <div class="asowp-image-toggle-line">
+        <span>No</span>
+        <SwitchControl :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" />
+        <span>Yes</span>
+      </div>
+    </div>
+  `,
+});
+
+const SettingSection = defineComponent({
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+  },
+  setup() {
+    const isOpen = ref(true);
+
+    return {
+      isOpen,
+    };
+  },
+  template: `
+    <section class="asowp-image-card">
+      <div class="asowp-image-card-head">
+        <div>
+          <h2>{{ title }}</h2>
+          <p>{{ description }}</p>
+        </div>
+        <button type="button" class="asowp-image-show-btn" @click="isOpen = !isOpen">
+          {{ isOpen ? 'Show less ^' : 'Show more v' }}
+        </button>
+      </div>
+      <div v-show="isOpen" class="asowp-image-card-body">
+        <slot />
+      </div>
+    </section>
+  `,
+});
+
+const FilterItem = defineComponent({
+  components: { SwitchControl },
+  props: {
+    label: {
+      type: String,
+      required: true,
+    },
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['update:modelValue'],
+  template: `
+    <div class="asowp-image-filter-item">
+      <div class="asowp-image-filter-icon"></div>
+      <span>{{ label }}</span>
+      <SwitchControl :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" />
+    </div>
+  `,
+});
+</script>
+
+<style>
+.asowp-image-settings {
+  display: grid;
+  gap: 12px;
+  color: #202223;
+  font-size: 13px;
 }
 
-</script>
+.asowp-image-header,
+.asowp-image-card {
+  background: #fff;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.asowp-image-header {
+  padding: 18px 22px;
+}
+
+.asowp-image-header h1,
+.asowp-image-card h2 {
+  margin: 0;
+  color: #303030;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.asowp-image-header h1 {
+  font-size: 16px;
+}
+
+.asowp-image-header p,
+.asowp-image-card p,
+.asowp-image-muted {
+  margin: 3px 0 0;
+  color: #5f6368;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.asowp-image-card {
+  padding: 16px 22px;
+}
+
+.asowp-image-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.asowp-image-card-body {
+  margin-top: 16px;
+}
+
+.asowp-image-show-btn,
+.asowp-image-secondary,
+.asowp-image-primary,
+.asowp-image-token button,
+.asowp-image-scene button,
+.asowp-image-icon-danger {
+  appearance: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.asowp-image-show-btn {
+  padding: 4px 8px;
+  color: #303030;
+  background: #fff;
+  border: 1px solid #d8dee4;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.asowp-image-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.asowp-image-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.asowp-image-span-2 {
+  grid-column: 1 / -1;
+}
+
+.asowp-image-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.asowp-image-field,
+.asowp-image-upload-field {
+  display: grid;
+  gap: 5px;
+}
+
+.asowp-image-field-sm {
+  max-width: 360px;
+}
+
+.asowp-image-field label,
+.asowp-image-upload-field label,
+.asowp-image-swatch-field span {
+  color: #303030;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.asowp-image-field input,
+.asowp-image-field select,
+.asowp-image-token-box,
+.asowp-image-upload-control {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid #8c9196;
+  border-radius: 6px;
+  background: #fff;
+  color: #303030;
+  font-size: 13px;
+}
+
+.asowp-image-field input,
+.asowp-image-field select {
+  padding: 6px 10px;
+}
+
+.asowp-image-token-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 5px 8px;
+}
+
+.asowp-image-token-box select {
+  flex: 1 1 160px;
+  min-width: 120px;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+.asowp-image-token {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: #eef1f3;
+  color: #303030;
+  font-size: 12px;
+}
+
+.asowp-image-token button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #5f6368;
+  line-height: 1;
+}
+
+.asowp-image-toggle-field {
+  display: grid;
+  gap: 6px;
+}
+
+.asowp-image-toggle-field strong,
+.asowp-image-inline-toggle strong {
+  color: #303030;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.asowp-image-toggle-line,
+.asowp-image-inline-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5f6368;
+  font-size: 12px;
+}
+
+.asowp-image-switch {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d8dee8;
+  transition: background 0.15s ease;
+}
+
+.asowp-image-switch span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.asowp-image-switch.is-on {
+  background: #007a73;
+}
+
+.asowp-image-switch.is-on span {
+  transform: translateX(14px);
+}
+
+.asowp-image-primary,
+.asowp-image-secondary {
+  min-height: 30px;
+  padding: 6px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.asowp-image-primary,
+.asowp-image-primary:hover,
+.asowp-image-primary:focus {
+  color: #fff;
+  background: #007a73;
+  border: 1px solid #006c67;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.asowp-image-primary:disabled {
+  cursor: not-allowed;
+  background: #d1d1d1;
+  border-color: #d1d1d1;
+}
+
+.asowp-image-secondary,
+.asowp-image-secondary:hover,
+.asowp-image-secondary:focus {
+  color: #111827;
+  background: #fff;
+  border: 1px solid #c9cccf;
+}
+
+.asowp-image-fit {
+  width: fit-content;
+}
+
+.asowp-image-wide {
+  padding-inline: 28px;
+}
+
+.asowp-image-custom-color {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: end;
+}
+
+.asowp-image-upload-control {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 0 0 5px;
+}
+
+.asowp-image-upload-preview {
+  position: relative;
+  margin-left: auto;
+  width: 44px;
+  height: 30px;
+  border-left: 1px solid #e1e3e5;
+  background: #fff;
+}
+
+.asowp-image-upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asowp-image-upload-preview button,
+.asowp-image-scene button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  background: #bf0711;
+  color: #fff;
+  border-radius: 0 0 0 5px;
+}
+
+.asowp-image-color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 14px;
+}
+
+.asowp-image-color-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px 24px;
+  gap: 8px;
+  align-items: end;
+}
+
+.asowp-image-swatch-field {
+  display: grid;
+  gap: 5px;
+}
+
+.asowp-image-swatch-field input[type='color'] {
+  width: 34px;
+  height: 34px;
+  padding: 3px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.asowp-image-top-label {
+  align-self: end;
+}
+
+.asowp-image-icon-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #bf0711;
+}
+
+.asowp-image-soft-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.asowp-image-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: flex-start;
+}
+
+.asowp-image-filter-item {
+  display: grid;
+  grid-template-columns: 28px auto 34px;
+  align-items: center;
+  gap: 5px;
+  color: #5f6368;
+  font-size: 10px;
+}
+
+.asowp-image-filter-icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #b7c4d4;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg, transparent 45%, #111 45%, #111 55%, transparent 55%),
+    #f8fafc;
+}
+
+.asowp-image-actions-left {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.asowp-image-scenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.asowp-image-scene {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+.asowp-image-scene img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asowp-image-save-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2px;
+}
+
+@media (max-width: 900px) {
+  .asowp-image-grid-2,
+  .asowp-image-custom-color,
+  .asowp-image-color-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .asowp-image-span-2 {
+    grid-column: auto;
+  }
+}
+</style>

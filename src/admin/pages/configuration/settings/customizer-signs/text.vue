@@ -1,476 +1,917 @@
 <template>
-    <div>
+  <div class="asowp-text-settings">
+    <section class="asowp-card">
+      <div class="asowp-card-body asowp-header-card">
         <div>
-            <div class="asowp-bg-[#F8F9FB] asowp-px-8 asowp-py-8 asowp-space-y-6 asowp-translate-y-8">
-                 <div class="asowp-text-[16px] asowp-font-bold">{{ __("Enable Text Type", "all-signs-options-pro") }}</div>
-                <div class="asowp-grid asowp-grid-cols-5 asowp-gap-y-6">
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-normal.png" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Normal", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="textTypeNormal" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="textTypeNormal" type="checkbox" name="textTypeNormal" class="asowp-sr-only asowp-peer" v-model="text.textType" true-value="normal" false-value="normal">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-
-                                <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-neon.png" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("NEON", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="textTypeNeon" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="textTypeNeon" type="checkbox" name="textTypeNeon" class="asowp-sr-only asowp-peer" v-model="text.textType" true-value="neon" false-value="normal">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                         <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <img class="asowp-w-12 asowp-h-12" src="../../../../../../assets/images/text-types/text-3d.png" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("3D", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="textType3d" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="textType3d" type="checkbox" name="textType3d" class="asowp-sr-only asowp-peer" v-model="text.textType" true-value="3D" false-value="normal">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                  
-                 
-                </div>
-                <div class="asowp-flex asowp-flex-col asowp-w-full">
-                    <label class="asowp-text-[12px]">{{ __("Select Fonts", "all-signs-options-pro") }}</label>
-                    <Multiselect
-                        v-model="text.selectedFonts"
-                        placeholder=""
-                        :options="manageFonts"
-                        label="name"
-                        trackBy="name"
-                        mode="tags"
-                        :loading="isFetching"
-                    />
-                        
-                </div>                
-                <div class="asowp-flex asowp-flex-col asowp-w-full" >
-                    <label class="asowp-text-[12px]">{{ __("Define text colors", "all-signs-options-pro") }} </label>
-                    <div class="asowp-flex asowp-space-x-2 asowp-items-center">
-                        <label for="" class="asowp-text-[12px] asowp-text-[#444444]">{{ __("Label:", "all-signs-options-pro") }}</label>
-                        <input type="text" v-model="text.colorsLabel">
-                    </div>
-                    <div class="asowp-grid asowp-grid-cols-3 asowp-gap-4">
-                        <div class="asowp-flex asowp-justify-start asowp-space-x-2" :key="key" v-for="(color,key) in text.colors">
-                            <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal">{{ __("Name", "all-signs-options-pro") }}</label>
-                                <input type="text" class="asowp-rounded asowp-w-full asowp-h-[30px]" v-model="text.colors[key].name" autocomplete="off"> 
-                            </div>
-                            <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
-                                <div class="asowp-relative asowp-flex">
-                                    <input
-                                        id="colorPicker"
-                                        type="color"
-                                        v-model="text.colors[key].codeHex"
-                                        @input="(e)=>changeColorCodeHex(e,key)"
-                                        class="asowp-w-9 asowp-h-[30px]"
-                                    />
-                                    <input
-                                        type="text"
-                                        v-model="text.colors[key].codeHex"
-                                        @input="(e)=>changeColorCodeHex(e,key)"
-                                        class="asowp-p-1 asowp-text-black asowp-w-full -asowp-translate-y-px"
-                                    />
-                                </div>
-                                
-                            </div>
-                            <div class="asowp-w-2/5 asowp-space-y-2 asowp-flex asowp-flex-col">
-                                <label for="" class="asowp-text-[12px] asowp-text[#444444] asowp-font-normal asowp-invisible">{{ __("Background color", "all-signs-options-pro") }}</label>
-                                <div class="asowp-relative asowp-flex">
-                                    <button @click="removeColor(key)" class="asowp-w-[50px] asowp-h-full asowp-border-solid asowp-border-red-600 asowp-rounded asowp-bg-red-600 asowp-cursor-pointer asowp-text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-[70%] asowp-h-[70%]">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="asowp-pt-4" v-if="!isFetching">
-                        <button @click="addNewColor" class="asowp-flex asowp-jsutify-center asowp-items-center asowp-bg-[#016464] asowp-rounded asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-6 asowp-h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <span class="asowp-font-semibold asowp-text-[16px]">{{ __("Add More Color", "all-signs-options-pro") }}</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-justify-start asowp-space-x-8 asowp-items-center">
-                    <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">{{ __("Enable Custom color", "all-signs-options-pro") }}</div>
-                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                            <label for="toggleCustom" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleCustom" type="checkbox" name="toggleCustom" class="asowp-sr-only asowp-peer" v-model="text.enableCustomColor">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-w-3/5 asowp-space-x-2 asowp-flex asowp-items-center" v-if="text.enableCustomColor">
-                        <label for="" class="asowp-text-[16px] asowp-text[#444444] asowp-font-normal asowp-w-full">{{ __("Custom Color Preview Image :", "all-signs-options-pro") }} </label>
-                        <div class="asowp-flex asowp-flex-col asowp-space-y-2 asowp-w-full asowp-pt-2">
-                            <div class="asowp-flex asowp-space-x-2">
-                                <button @click="selectColorPrevImage" class="asowp-bg-[#016464] asowp-border-none asowp-w-fit asowp-h-fit asowp-p-4 asowp-rounded asowp-px-4 asowp-text-white asowp-opacity-90 hover:asowp-opacity-100 asowp-text-[10px] asowp-cursor-pointer">{{ __("Upload image", "all-signs-options-pro") }}</button>
-                                <div :class="`asowp-relative asowp-w-[82px] asowp-h-[49px] asowp-rounded-md asowp-overflow-hidden`">
-                                    <img v-if="text.colorsPrevImg != ''" :src="text.colorsPrevImg" alt="" class="asowp-absolute asowp-w-full asowp-h-full">
-                                    <button v-if="text.colorsPrevImg != ''" @click="()=>{text.colorsPrevImg = ''}" :class="`asowp-bg-[#016464] asowp-absolute asowp-bottom-0 asowp-right-0 asowp-text-white asowp-p-1 asowp-rounded-tl-lg asowp-border-none`">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>             
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-space-x-6">
-                    <div class="asowp-flex asowp-space-x-3">
-                        <div class="asowp-text-[16px]">{{ __("Enable font size", "all-signs-options-pro") }}</div>
-                        <div class="asowp-flex asowp-items-center asowp-translate-y-0.5">
-                            <label for="toggleEnableFont" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableFont" type="checkbox" name="toggleEnableFont" class="asowp-sr-only asowp-peer" v-model="text.enableFontSize.active">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-justify-between asowp-space-x-6" v-if="text.enableFontSize.active">
-                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px]">{{ __("Minimun font size", "all-signs-options-pro") }}</label>
-                        <input type="number" v-model="text.enableFontSize.minimumFontSize" @blur="()=>{ if(isNaN(text.enableFontSize.minimumFontSize)) {text.enableFontSize.minimumFontSize=12}}" class="asowp-w-full"/>
-                    </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px]">{{ __("Maximum font size", "all-signs-options-pro") }}</label>
-                        <input type="number" v-model="text.enableFontSize.maximumFontSize" @blur="()=>{ if(isNaN(text.enableFontSize.maximumFontSize)) {text.enableFontSize.maximumFontSize=30}}" class="asowp-w-full"/>
-                    </div>
-                    <div class="asowp-flex asowp-flex-col asowp-w-2/5 asowp-space-y-2">
-                        <label class="asowp-text-[12px]">{{ __("Default size", "all-signs-options-pro") }}</label>
-                        <input type="number" v-model="text.enableFontSize.defaultFontSize" @blur="()=>{ if(isNaN(text.enableFontSize.defaultFontSize)) {text.enableFontSize.defaultFontSize=16}}" class="asowp-w-full"/>
-                    </div>
-                </div>
-                <div class="asowp-text-[16px] asowp-font-bold">{{ __("enable text options", "all-signs-options-pro") }}</div>
-                <div class="asowp-grid asowp-grid-cols-5 asowp-gap-y-6">
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M5.90078 0C8.30078 0 10.1008 0.3 11.3008 1C12.6008 1.7 13.2008 2.9 13.2008 4.6C13.2008 5.6 12.9008 6.5 12.5008 7.2C12.274 7.54193 11.9795 7.83372 11.6355 8.05733C11.2915 8.28093 10.9053 8.43159 10.5008 8.5C11.0724 8.63353 11.6147 8.87079 12.1008 9.2C12.5008 9.5 12.9008 10 13.2008 10.5C13.5137 11.2244 13.6508 12.0125 13.6008 12.8C13.6361 13.5225 13.5006 14.2431 13.2052 14.9033C12.9099 15.5636 12.4629 16.1449 11.9008 16.6C10.4772 17.6167 8.74656 18.1112 7.00078 18H0.300781V0H5.90078ZM6.30078 7.1C7.40078 7.1 8.20078 7 8.60078 6.6C9.10078 6.3 9.30078 5.7 9.30078 5.1C9.30078 4.4 9.00078 3.9 8.50078 3.6C8.00078 3.3 7.20078 3.1 6.10078 3.1H4.10078V7.1H6.30078ZM4.10078 10.1V15H6.60078C7.70078 15 8.60078 14.7 9.00078 14.3C9.50078 13.8 9.70078 13.3 9.70078 12.5C9.7127 12.1977 9.6559 11.8967 9.53465 11.6196C9.4134 11.3424 9.23086 11.0964 9.00078 10.9C8.50078 10.5 7.70078 10.3 6.50078 10.3H4.00078L4.10078 10.1Z" fill="#016464"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("bold", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableBold" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableBold" type="checkbox" name="toggleEnableBold" class="asowp-sr-only asowp-peer" v-model="text.enableBold">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3.5 1V6C3.5 7.32608 4.02678 8.59785 4.96447 9.53553C5.90215 10.4732 7.17392 11 8.5 11C9.82608 11 11.0979 10.4732 12.0355 9.53553C12.9732 8.59785 13.5 7.32608 13.5 6V1M1.5 15H15.5" stroke="#016464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("underline", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableUnderline" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableUnderline" type="checkbox" name="toggleEnableUnderline" class="asowp-sr-only asowp-peer" v-model="text.enableUnderline">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3.5 5V10C3.5 11.3261 4.02678 12.5979 4.96447 13.5355C5.90215 14.4732 7.17392 15 8.5 15C9.82608 15 11.0979 14.4732 12.0355 13.5355C12.9732 12.5979 13.5 11.3261 13.5 10V5M1.5 1H15.5" stroke="#016464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("overline", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableOverline" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableOverline" type="checkbox" name="toggleEnableOverline" class="asowp-sr-only asowp-peer" v-model="text.enableOverline">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-1">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#016464] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7 8V13M7 13C7 14.3261 7.52678 15.5979 8.46447 16.5355C9.40215 17.4732 10.6739 18 12 18C13.3261 18 14.5979 17.4732 15.5355 16.5355C16.4732 15.5979 17 14.3261 17 13M7 13H17M17 13V8" stroke="#016464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <line x1="3.79883" y1="13" x2="20.1988" y2="13" stroke="#016464"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Strike- through", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableStrike" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableStrike" type="checkbox" name="toggleEnableStrike" class="asowp-sr-only asowp-peer" v-model="text.enableStrike">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18.7031 4.21875H8.57812C8.475 4.21875 8.39062 4.31367 8.39062 4.42969V6.11719C8.39062 6.2332 8.475 6.32812 8.57812 6.32812H12.825L9.16875 20.6719H5.36719C5.26406 20.6719 5.17969 20.7668 5.17969 20.8828V22.5703C5.17969 22.6863 5.26406 22.7812 5.36719 22.7812H15.4922C15.5953 22.7812 15.6797 22.6863 15.6797 22.5703V20.8828C15.6797 20.7668 15.5953 20.6719 15.4922 20.6719H11.1187L14.775 6.32812H18.7031C18.8062 6.32812 18.8906 6.2332 18.8906 6.11719V4.42969C18.8906 4.31367 18.8062 4.21875 18.7031 4.21875Z" fill="black"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Italic", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableItalic" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableItalic" type="checkbox" name="toggleEnableItalic" class="asowp-sr-only asowp-peer" v-model="text.enableItalic">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10 11V9H11.61C11.85 9.71 12 10.39 12 11H10ZM9.58 5C9.12 4.29 8.65 3.61 8.2 3H8V5H9.58ZM10 9V7H8V9H10ZM10 5.68V7H10.74C10.5 6.56 10.26 6.11 10 5.68ZM6 13V11H8V9H6V7H8V5H6V3H8V2.73C6.9 1.26 6 0.25 6 0.25C6 0.25 0 7 0 11C0 14.31 2.69 17 6 17V15H8V13H6ZM8 16.65C8.75 16.39 9.42 16 10 15.46V15H8V16.65ZM8 13H10V11H8V13ZM10 15H10.46C11 14.42 11.39 13.75 11.65 13H10V15Z" fill="black"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Opacity", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableOpacity" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableOpacity" type="checkbox" name="toggleEnableOpacity" class="asowp-sr-only asowp-peer" v-model="text.enableOpacity">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div> -->
-                    <!-- <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7 21H9V19H7V21ZM7 13H9V11H7V13ZM11 13H13V11H11V13ZM11 21H13V19H11V21ZM3 17H5V15H3V17ZM3 21H5V19H3V21ZM3 13H5V11H3V13ZM3 9H5V7H3V9ZM11 17H13V15H11V17ZM19 9H21V7H19V9ZM19 13H21V11H19V13ZM3 3V5H21V3H3ZM19 17H21V15H19V17ZM15 21H17V19H15V21ZM11 9H13V7H11V9ZM19 21H21V19H19V21ZM15 13H17V11H15V13Z" fill="black"/>
-                                </svg>
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("Border", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableBorder" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableBorder" type="checkbox" name="toggleEnableBorder" class="asowp-sr-only asowp-peer" v-model="text.enableBorder">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div> -->
-                    <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <div class="asowp-flex asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB]">
-                                <button class="asowp-bg-transparent asowp-cursor-pointer asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5 asowp-border-none">
-                                    <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0.375 1C0.375 0.767936 0.437556 0.545376 0.548905 0.381282C0.660255 0.217187 0.811278 0.125 0.96875 0.125H14.0312C14.1887 0.125 14.3397 0.217187 14.4511 0.381282C14.5624 0.545376 14.625 0.767936 14.625 1C14.625 1.23206 14.5624 1.45462 14.4511 1.61872C14.3397 1.78281 14.1887 1.875 14.0312 1.875H0.96875C0.811278 1.875 0.660255 1.78281 0.548905 1.61872C0.437556 1.45462 0.375 1.23206 0.375 1ZM0.96875 6.25H10.4688C10.6262 6.25 10.7772 6.15781 10.8886 5.99372C10.9999 5.82962 11.0625 5.60706 11.0625 5.375C11.0625 5.14294 10.9999 4.92038 10.8886 4.75628C10.7772 4.59219 10.6262 4.5 10.4688 4.5H0.96875C0.811278 4.5 0.660255 4.59219 0.548905 4.75628C0.437556 4.92038 0.375 5.14294 0.375 5.375C0.375 5.60706 0.437556 5.82962 0.548905 5.99372C0.660255 6.15781 0.811278 6.25 0.96875 6.25ZM14.0312 8.875H0.96875C0.811278 8.875 0.660255 8.96719 0.548905 9.13128C0.437556 9.29537 0.375 9.51794 0.375 9.75C0.375 9.98206 0.437556 10.2046 0.548905 10.3687C0.660255 10.5328 0.811278 10.625 0.96875 10.625H14.0312C14.1887 10.625 14.3397 10.5328 14.4511 10.3687C14.5624 10.2046 14.625 9.98206 14.625 9.75C14.625 9.51794 14.5624 9.29537 14.4511 9.13128C14.3397 8.96719 14.1887 8.875 14.0312 8.875ZM10.4688 13.25H0.96875C0.811278 13.25 0.660255 13.3422 0.548905 13.5063C0.437556 13.6704 0.375 13.8929 0.375 14.125C0.375 14.3571 0.437556 14.5796 0.548905 14.7437C0.660255 14.9078 0.811278 15 0.96875 15H10.4688C10.6262 15 10.7772 14.9078 10.8886 14.7437C10.9999 14.5796 11.0625 14.3571 11.0625 14.125C11.0625 13.8929 10.9999 13.6704 10.8886 13.5063C10.7772 13.3422 10.6262 13.25 10.4688 13.25Z" fill="black"/>
-                                    </svg>
-                                </button>
-                                <button class="asowp-bg-transparent asowp-cursor-pointer asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5 asowp-border-none">
-                                    <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M14.625 1.06689V1.94189C14.625 2.17396 14.5624 2.39652 14.4511 2.56061C14.3397 2.72471 14.1887 2.81689 14.0312 2.81689H0.96875C0.811278 2.81689 0.660255 2.72471 0.548905 2.56061C0.437556 2.39652 0.375 2.17396 0.375 1.94189V1.06689C0.375 0.83483 0.437556 0.612271 0.548905 0.448176C0.660255 0.284082 0.811278 0.191895 0.96875 0.191895H14.0312C14.1887 0.191895 14.3397 0.284082 14.4511 0.448176C14.5624 0.612271 14.625 0.83483 14.625 1.06689ZM12.25 7.19189C12.4075 7.19189 12.5585 7.09971 12.6698 6.93561C12.7812 6.77152 12.8438 6.54896 12.8438 6.31689V5.44189C12.8438 5.20983 12.7812 4.98727 12.6698 4.82318C12.5585 4.65908 12.4075 4.56689 12.25 4.56689H2.75C2.59253 4.56689 2.44151 4.65908 2.33016 4.82318C2.21881 4.98727 2.15625 5.20983 2.15625 5.44189V6.31689C2.15625 6.54896 2.21881 6.77152 2.33016 6.93561C2.44151 7.09971 2.59253 7.19189 2.75 7.19189H12.25ZM14.0312 8.94189H0.96875C0.811278 8.94189 0.660255 9.03408 0.548905 9.19818C0.437556 9.36227 0.375 9.58483 0.375 9.81689V10.6919C0.375 10.924 0.437556 11.1465 0.548905 11.3106C0.660255 11.4747 0.811278 11.5669 0.96875 11.5669H14.0312C14.1887 11.5669 14.3397 11.4747 14.4511 11.3106C14.5624 11.1465 14.625 10.924 14.625 10.6919V9.81689C14.625 9.58483 14.5624 9.36227 14.4511 9.19818C14.3397 9.03408 14.1887 8.94189 14.0312 8.94189ZM12.25 13.3169H2.75C2.59253 13.3169 2.44151 13.4091 2.33016 13.5732C2.21881 13.7373 2.15625 13.9598 2.15625 14.1919V15.0669C2.15625 15.299 2.21881 15.5215 2.33016 15.6856C2.44151 15.8497 2.59253 15.9419 2.75 15.9419H12.25C12.4075 15.9419 12.5585 15.8497 12.6698 15.6856C12.7812 15.5215 12.8438 15.299 12.8438 15.0669V14.1919C12.8438 13.9598 12.7812 13.7373 12.6698 13.5732C12.5585 13.4091 12.4075 13.3169 12.25 13.3169Z" fill="black"/>
-                                    </svg>
-                                </button>
-                                <button class="asowp-bg-transparent asowp-cursor-pointer asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5 asowp-border-none">
-                                    <svg class="asowp-w-4 asowp-h-4" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0.375 1C0.375 0.767936 0.437556 0.545376 0.548905 0.381282C0.660255 0.217187 0.811278 0.125 0.96875 0.125H14.0312C14.1887 0.125 14.3397 0.217187 14.4511 0.381282C14.5624 0.545376 14.625 0.767936 14.625 1C14.625 1.23206 14.5624 1.45462 14.4511 1.61872C14.3397 1.78281 14.1887 1.875 14.0312 1.875H0.96875C0.811278 1.875 0.660255 1.78281 0.548905 1.61872C0.437556 1.45462 0.375 1.23206 0.375 1ZM14.0312 4.5H4.53125C4.37378 4.5 4.22276 4.59219 4.11141 4.75628C4.00006 4.92038 3.9375 5.14294 3.9375 5.375C3.9375 5.60706 4.00006 5.82962 4.11141 5.99372C4.22276 6.15781 4.37378 6.25 4.53125 6.25H14.0312C14.1887 6.25 14.3397 6.15781 14.4511 5.99372C14.5624 5.82962 14.625 5.60706 14.625 5.375C14.625 5.14294 14.5624 4.92038 14.4511 4.75628C14.3397 4.59219 14.1887 4.5 14.0312 4.5ZM14.0312 8.875H0.96875C0.811278 8.875 0.660255 8.96719 0.548905 9.13128C0.437556 9.29537 0.375 9.51794 0.375 9.75C0.375 9.98206 0.437556 10.2046 0.548905 10.3687C0.660255 10.5328 0.811278 10.625 0.96875 10.625H14.0312C14.1887 10.625 14.3397 10.5328 14.4511 10.3687C14.5624 10.2046 14.625 9.98206 14.625 9.75C14.625 9.51794 14.5624 9.29537 14.4511 9.13128C14.3397 8.96719 14.1887 8.875 14.0312 8.875ZM14.0312 13.25H4.53125C4.37378 13.25 4.22276 13.3422 4.11141 13.5063C4.00006 13.6704 3.9375 13.8929 3.9375 14.125C3.9375 14.3571 4.00006 14.5796 4.11141 14.7437C4.22276 14.9078 4.37378 15 4.53125 15H14.0312C14.1887 15 14.3397 14.9078 14.4511 14.7437C14.5624 14.5796 14.625 14.3571 14.625 14.125C14.625 13.8929 14.5624 13.6704 14.4511 13.5063C14.3397 13.3422 14.1887 13.25 14.0312 13.25Z" fill="black"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5">{{ __("Text Alignment", "all-signs-options-pro") }}</div>
-
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-2">
-                            <label for="toggleEnableTextAlignment" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableTextAlignment" type="checkbox" name="toggleEnableTextAlignment" class="asowp-sr-only asowp-peer" v-model="text.enableTextAlignment">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div>
-                    <!-- <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-3">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_curved_up.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("curved up", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableCurvedUp" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableCurvedUp" type="checkbox" name="toggleEnableCurvedUp" class="asowp-sr-only asowp-peer" v-model="text.enableCurvedUp">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div> -->
-                    <!-- <div class="asowp-text-center asowp-space-y-0.5 asowp-flex asowp-space-x-1">
-                        <div class="">
-                            <button class="asowp-bg-transparent asowp-cursor-pointer asowp-border asowp-border-solid asowp-border-[1px] asowp-border-[#BBBBBB] asowp-w-fit asowp-h-fit asowp-px-2 asowp-py-1.5">
-                                <img class="asowp-w-4 asowp-h-4" src="../../../../../../assets/icons/ic_curved_down.svg" alt="">
-                            </button>
-                            <div class="asowp-text-[10px] asowp-text-[#3D3D3D] -asowp-translate-y-0.5 asowp-px-0.5">{{ __("curved down", "all-signs-options-pro") }}</div>
-                        </div>
-                        <div class="asowp-flex asowp-items-center -asowp-translate-y-3">
-                            <label for="toggleEnableCurvedDown" class="asowp-relative asowp-inline-flex asowp-items-center asowp-cursor-pointer asowp-border-[1px] asowp-border-solid asowp-border-black asowp-rounded-full">
-                                <input id="toggleEnableCurvedDown" type="checkbox" name="toggleEnableCurvedDown" class="asowp-sr-only asowp-peer" v-model="text.enableCurvedDown">
-                                <div :class="`peer-checked:after:asowp-border-[#016464] peer-checked:after:asowp-border-solid peer-checked:after:asowp-border-[5px] peer-checked:after:asowp-top-[-2px] peer-checked:after:asowp-translate-y-[-15%] asowp-w-10 asowp-h-3 asowp-border asowp-border-[5px] asowp-border-[#016464] asowp-bg-zinc-300 asowp-rounded-full asowp-peer peer-checked:after:asowp-translate-x-[140%] after:asowp-content-[''] after:asowp-absolute after:asowp-top-[-2px] after:asowp-left-[-5px] after:asowp-bg-zinc-300 after:asowp-border-white after:asowp-border-solid after:asowp-translate-y-[-15%] after:asowp-border-[#FFFFFF] after:asowp-border-[5px] after:asowp-rounded-full after:asowp-h-2.5 after:asowp-w-2.5 after:asowp-transition-all after:asowp-shadow-lg`"></div>
-                            </label>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
+          <h1>{{ __("Text Setting", "all-signs-options-pro") }}</h1>
+          <p>
+            {{
+              __(
+                "Bring text configuration closer to the core setup, while keeping the same classic save location.",
+                "all-signs-options-pro"
+              )
+            }}
+          </p>
         </div>
-        <div class="asowp-bg-[#F8F9FB] asowp-flex asowp-space-x-4 asowp-px-4 asowp-py-3 asowp-justify-end asowp-items-end asowp-translate-y-12">
-            <div class="asowp-bg-[#016464] asowp-rounded">
-                <button :disabled="isLoading" @click="updateTextSettings" class="asowp-rounded asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointerasowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-12 asowp-p-2.5 asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                    <img src="../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" />
-                    <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Save", "all-signs-options-pro") }}</div>
+      </div>
+    </section>
+
+    <section class="asowp-card">
+      <div class="asowp-card-body">
+        <div class="asowp-section-head">
+          <div>
+            <h2>{{ __("Text Access", "all-signs-options-pro") }}</h2>
+            <p>{{ __("Decide whether this configuration should expose text customization.", "all-signs-options-pro") }}</p>
+          </div>
+          <button class="asowp-disclosure-button" type="button" @click="togglePanel('access')">
+            {{ openPanels.access ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
+            <ChevronUpIcon v-if="openPanels.access" class="asowp-icon" />
+            <ChevronDownIcon v-else class="asowp-icon" />
+          </button>
+        </div>
+        <div v-if="openPanels.access" class="asowp-panel-content">
+          <ToggleRow v-model="text.active" />
+        </div>
+      </div>
+    </section>
+
+    <section class="asowp-card">
+      <div class="asowp-card-body">
+        <div class="asowp-section-head">
+          <div>
+            <h2>{{ __("QR Code", "all-signs-options-pro") }}</h2>
+            <p>{{ __("Control whether QR code customization is available in this configuration.", "all-signs-options-pro") }}</p>
+          </div>
+          <button class="asowp-disclosure-button" type="button" @click="togglePanel('qr')">
+            {{ openPanels.qr ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
+            <ChevronUpIcon v-if="openPanels.qr" class="asowp-icon" />
+            <ChevronDownIcon v-else class="asowp-icon" />
+          </button>
+        </div>
+        <div v-if="openPanels.qr" class="asowp-panel-content">
+          <ToggleRow v-model="text.enableQrCode" />
+        </div>
+      </div>
+    </section>
+
+    <template v-if="text.active">
+      <section class="asowp-card">
+        <div class="asowp-card-body">
+          <div class="asowp-section-head">
+            <div>
+              <h2>{{ __("Text Type", "all-signs-options-pro") }}</h2>
+              <p>{{ __("Choose the main text rendering mode used by the configurator.", "all-signs-options-pro") }}</p>
+            </div>
+            <button class="asowp-disclosure-button" type="button" @click="togglePanel('type')">
+              {{ openPanels.type ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
+              <ChevronUpIcon v-if="openPanels.type" class="asowp-icon" />
+              <ChevronDownIcon v-else class="asowp-icon" />
+            </button>
+          </div>
+          <div v-if="openPanels.type" class="asowp-panel-content">
+            <div class="asowp-text-type-grid">
+              <button
+                v-for="type in textTypeOptions"
+                :key="type.value"
+                class="asowp-type-card"
+                type="button"
+                @click="setTextType(type.value)"
+              >
+                <span class="asowp-type-left">
+                  <img :src="type.image" :alt="type.label" />
+                  <strong>{{ type.label }}</strong>
+                </span>
+                <span :class="['asowp-toggle', text.textType === type.value ? 'is-active' : '']">
+                  <span></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="asowp-card">
+        <div class="asowp-card-body">
+          <div class="asowp-section-head">
+            <div>
+              <h2>{{ __("Text Colors", "all-signs-options-pro") }}</h2>
+              <p>{{ __("Manage predefined text colors and the optional custom color flow.", "all-signs-options-pro") }}</p>
+            </div>
+            <button class="asowp-disclosure-button" type="button" @click="togglePanel('colors')">
+              {{ openPanels.colors ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
+              <ChevronUpIcon v-if="openPanels.colors" class="asowp-icon" />
+              <ChevronDownIcon v-else class="asowp-icon" />
+            </button>
+          </div>
+          <div v-if="openPanels.colors" class="asowp-panel-content">
+            <label class="asowp-field asowp-label-field">
+              <span>{{ __("Label", "all-signs-options-pro") }}</span>
+              <input v-model="text.colorsLabel" type="text" autocomplete="off" />
+            </label>
+
+            <div class="asowp-color-grid">
+              <article v-for="(color, index) in text.colors" :key="`text-color-${index}`" class="asowp-color-card">
+                <div class="asowp-color-card-head">
+                  <strong>{{ sprintf(__("Color %s", "all-signs-options-pro"), index + 1) }}</strong>
+                  <button type="button" class="asowp-icon-danger" @click="removeColor(index)">
+                    <Trash2Icon class="asowp-icon" />
+                  </button>
+                </div>
+                <div class="asowp-color-row">
+                  <label class="asowp-field asowp-color-name">
+                    <span class="asowp-sr-only">{{ __("Color name", "all-signs-options-pro") }}</span>
+                    <input v-model="color.name" type="text" :placeholder="__('Name', 'all-signs-options-pro')" autocomplete="off" />
+                  </label>
+                  <label class="asowp-field asowp-color-code">
+                    <span>{{ __("Color", "all-signs-options-pro") }}</span>
+                    <span class="asowp-color-inputs">
+                      <input v-model="color.codeHex" type="color" @input="normalizeColor(index)" />
+                      <input v-model="color.codeHex" type="text" autocomplete="off" @blur="normalizeColor(index)" />
+                    </span>
+                  </label>
+                </div>
+              </article>
+            </div>
+
+            <button type="button" class="asowp-secondary-button asowp-small-button" @click="addNewColor">
+              {{ __("Add text color", "all-signs-options-pro") }}
+            </button>
+
+            <div class="asowp-custom-color-row">
+              <div class="asowp-custom-toggle">
+                <strong>{{ __("Enable Custom color", "all-signs-options-pro") }}</strong>
+                <ToggleRow v-model="text.enableCustomColor" />
+              </div>
+              <label class="asowp-field asowp-upload-field">
+                <span>{{ __("Custom color preview image", "all-signs-options-pro") }}</span>
+                <span class="asowp-file-control">
+                  <button type="button" class="asowp-primary-button asowp-file-button" @click.prevent="selectColorPrevImage">
+                    {{ __("upload image", "all-signs-options-pro") }}
+                  </button>
+                  <span class="asowp-file-preview">
+                    <img v-if="text.colorsPrevImg" :src="text.colorsPrevImg" alt="" />
+                    <button v-if="text.colorsPrevImg" type="button" @click="text.colorsPrevImg = ''">
+                      <Trash2Icon class="asowp-icon" />
+                    </button>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="asowp-card">
+        <div class="asowp-card-body">
+          <div class="asowp-section-head">
+            <div>
+              <h2>{{ __("Font Size", "all-signs-options-pro") }}</h2>
+              <p>{{ __("Configure whether the customer can change size and define the allowed bounds.", "all-signs-options-pro") }}</p>
+            </div>
+            <button class="asowp-disclosure-button" type="button" @click="togglePanel('fontSize')">
+              {{ openPanels.fontSize ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
+              <ChevronUpIcon v-if="openPanels.fontSize" class="asowp-icon" />
+              <ChevronDownIcon v-else class="asowp-icon" />
+            </button>
+          </div>
+          <div v-if="openPanels.fontSize" class="asowp-panel-content">
+            <div class="asowp-block-toggle">
+              <strong>{{ __("Enable font size", "all-signs-options-pro") }}</strong>
+              <ToggleRow v-model="text.enableFontSize.active" />
+            </div>
+            <div v-if="text.enableFontSize.active" class="asowp-form-grid asowp-three-cols">
+              <label class="asowp-field">
+                <span>{{ __("Minimum font size", "all-signs-options-pro") }}</span>
+                <input v-model="text.enableFontSize.minimumFontSize" type="number" />
+              </label>
+              <label class="asowp-field">
+                <span>{{ __("Maximum font size", "all-signs-options-pro") }}</span>
+                <input v-model="text.enableFontSize.maximumFontSize" type="number" />
+              </label>
+              <label class="asowp-field">
+                <span>{{ __("Default size", "all-signs-options-pro") }}</span>
+                <input v-model="text.enableFontSize.defaultFontSize" type="number" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="asowp-card">
+        <div class="asowp-card-body">
+          <div class="asowp-section-head">
+            <div>
+              <h2>{{ __("Text Options", "all-signs-options-pro") }}</h2>
+              <p>{{ __("Enable or disable the formatting tools available to the customer.", "all-signs-options-pro") }}</p>
+            </div>
+            <button class="asowp-disclosure-button" type="button" @click="togglePanel('options')">
+              {{ openPanels.options ? __("Show less", "all-signs-options-pro") : __("Show more", "all-signs-options-pro") }}
+              <ChevronUpIcon v-if="openPanels.options" class="asowp-icon" />
+              <ChevronDownIcon v-else class="asowp-icon" />
+            </button>
+          </div>
+          <div v-if="openPanels.options" class="asowp-panel-content">
+            <div class="asowp-options-row">
+              <div v-for="option in textOptionControls" :key="option.key" class="asowp-option-control">
+                <button type="button" :class="['asowp-option-icon', option.className]" @click="text[option.key] = !text[option.key]">
+                  <span v-if="option.key !== 'enableTextAlignment'">{{ option.icon }}</span>
+                  <span v-else class="asowp-align-icon"><i></i><i></i><i></i></span>
                 </button>
+                <span>{{ option.label }}</span>
+                <button type="button" :class="['asowp-toggle', text[option.key] ? 'is-active' : '']" @click="text[option.key] = !text[option.key]">
+                  <span></span>
+                </button>
+              </div>
             </div>
+          </div>
         </div>
+      </section>
+    </template>
+
+    <div class="asowp-save-row">
+      <button type="button" class="asowp-primary-button" :disabled="isLoading" @click="updateTextSettings">
+        <img v-if="isLoading" src="../../../../../../assets/icons/ic_loading_gray.svg" alt="" />
+        {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save Text", "all-signs-options-pro") }}
+      </button>
     </div>
+  </div>
 </template>
+
 <script setup>
-import api from '@/admin/Api/api';
-import {ref,defineProps, onMounted} from 'vue';
-import { useRoute } from 'vue-router';
-import Multiselect from "@vueform/multiselect";
-import toastMessage from '@/admin/utils/functions';
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
+import api from "@/admin/Api/api";
+import toastMessage from "@/admin/utils/functions";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Trash2Icon,
+} from "lucide-vue-next";
+import { defineComponent, h, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import { __, sprintf } from "@wordpress/i18n";
+import textNormalImg from "../../../../../../assets/images/text-types/text-normal.png";
+import textNeonImg from "../../../../../../assets/images/text-types/text-neon.png";
+import text3dImg from "../../../../../../assets/images/text-types/text-3d.png";
+
+const ToggleRow = defineComponent({
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ["update:modelValue"],
+  setup(props, { emit }) {
+    return () =>
+      h("span", { class: "asowp-toggle-row" }, [
+        h("span", { class: "asowp-toggle-label" }, "No"),
+        h(
+          "button",
+          {
+            type: "button",
+            class: ["asowp-toggle", props.modelValue ? "is-active" : ""],
+            onClick: () => emit("update:modelValue", !props.modelValue),
+          },
+          [h("span")]
+        ),
+        h("span", { class: "asowp-toggle-label" }, "Yes"),
+      ]);
+  },
+});
+
 const props = defineProps({
-    data:Object,
-    fetchSettings:Function
-   
+  data: Object,
+  fetchSettings: Function,
 });
 
 const route = useRoute();
 const configId = ref(route.params.configId);
-const isLoading =ref(false);
-const isFetching = ref(false);
-const text = ref({
-    selectedFonts: [],
-    colorsLabel:"Texts Colors",
-    colors:[],
-    enableCustomColor:true,
-    colorsPrevImg:"",    
-    enableFontSize:{
-        active:true,
-        minimumFontSize:12,
-        maximumFontSize:50,
-        defaultFontSize:16,
+const isLoading = ref(false);
+
+const openPanels = ref({
+  access: true,
+  qr: false,
+  type: true,
+  colors: true,
+  fontSize: true,
+  options: true,
+});
+
+const defaultTextColors = [
+  { name: "Black", codeHex: "#000000" },
+  { name: "White", codeHex: "#FFFFFF" },
+  { name: "Blue", codeHex: "#004FB6" },
+  { name: "Red", codeHex: "#C4271D" },
+  { name: "Pink", codeHex: "#EB5377" },
+  { name: "Green", codeHex: "#009251" },
+  { name: "Yellow", codeHex: "#FFEE00" },
+  { name: "Grey", codeHex: "#AF5758" },
+  { name: "Orange", codeHex: "#E5610E" },
+  { name: "Purple", codeHex: "#554585" },
+  { name: "Brown", codeHex: "#523C2A" },
+];
+
+const defaultText = () => ({
+  active: true,
+  enableQrCode: false,
+  selectedFonts: [],
+  colorsLabel: "Text Colors",
+  colors: defaultTextColors.map((color) => ({ ...color })),
+  enableCustomColor: true,
+  colorsPrevImg: "",
+  enableFontSize: {
+    active: true,
+    minimumFontSize: 4,
+    maximumFontSize: 100,
+    defaultFontSize: 16,
+  },
+  enableBold: true,
+  enableUnderline: true,
+  enableOverline: true,
+  enableStrike: true,
+  enableItalic: true,
+  enableOpacity: true,
+  enableBorder: true,
+  enableTextAlignment: true,
+  enableCurvedUp: true,
+  enableCurvedDown: true,
+  textType: "normal",
+});
+
+const normalizeTextColor = (color) => ({
+  name: String(color?.name || ""),
+  codeHex: formatHex(color?.codeHex || "#FFFFFF"),
+  additionalPrice: color?.additionalPrice ?? 0,
+});
+
+const mergeTextData = (data) => {
+  const defaults = defaultText();
+  const loadedColors = Array.isArray(data?.colors) && data.colors.length > 0
+    ? data.colors.map(normalizeTextColor)
+    : defaults.colors;
+
+  return {
+    ...defaults,
+    ...(data || {}),
+    active: typeof data?.active === "boolean" ? data.active : defaults.active,
+    enableQrCode: typeof data?.enableQrCode === "boolean" ? data.enableQrCode : defaults.enableQrCode,
+    colors: loadedColors,
+    enableFontSize: {
+      ...defaults.enableFontSize,
+      ...(data?.enableFontSize || {}),
     },
-    enableBold:true,
-    enableUnderline:true,
-    enableOverline:true,
-    enableStrike:true,
-    enableItalic:true,
-    enableOpacity:true,
-    enableBorder:true,
-    enableTextAlignment:true,
-    enableCurvedUp:true,
-    enableCurvedDown:true,
-    textType:"normal",
-});
-const manageFonts = ref([]);
-
-onMounted(async ()=>{
-    isFetching.value = true;
-    await fetchManageFonts();
-    if(props.data){
-        text.value = {...text.value,...props.data}
-    }
-    isFetching.value = false;
-});
-
-const selectColorPrevImage = async(e) => { 
-    e.preventDefault();
-    var uploader = wp.media(
-        {
-            title: __("Select Custom Text Color Preview Image", "all-signs-options-pro"),
-            button: {
-                text: __("Select Image", "all-signs-options-pro")
-            },
-            multiple: false
-        }
-    )
-        .on(
-            'select',
-            function () {
-                var selection = uploader.state().get('selection');
-                selection.map(
-                    function (attachment) {
-                        attachment = attachment.toJSON();
-                        if (attachment.type == "image") {
-                            text.value.colorsPrevImg = (attachment.url);
-                        }
-                    }
-                );
-            }
-        )
-        .open();
-}
-
-const fetchManageFonts = async () => {
-    const result = await api.getManagefonts();
-    if(!result.message){
-        console.log(result);
-        manageFonts.value = result.map((font,id)=>{
-            return {name:font.label,value:id};
-        });
-    }else{
-        manageFonts.value = [];
-    }
-}
-const updateTextSettings = async () => {
-    isLoading.value = true;
-    const result = await api.updateCustomizerSignsText(configId.value,text.value);
-    if(result.success){
-        await props.fetchSettings();
-        isLoading.value = false;
-        if(result.success == true){
-            toastMessage(result.message);
-        }else{
-            toastMessage(result.message,"warning");
-        }
-    }else{
-        isLoading.value = false;
-        toastMessage(result.message,"error");
-    }
+  };
 };
-const addNewColor = ()=> {
-    text.value.colors.push({name:"",codeHex:"#000000",additionalPrice:0});
-}
-const removeColor = (key)=> {
-    text.value.colors.splice(key,1);
-}
-const changeColorCodeHex = (event,key) => {
-    if(event.target.value[0]!=='#'){
-        event.target.value = '#'+ event.target.value;
+
+const text = ref(defaultText());
+
+const textTypeOptions = [
+  { value: "normal", label: "NORMAL", image: textNormalImg },
+  { value: "neon", label: "NEON", image: textNeonImg },
+  { value: "3D", label: "3D", image: text3dImg },
+];
+
+const textOptionControls = [
+  { key: "enableBold", label: "Bold", icon: "B", className: "is-bold" },
+  { key: "enableUnderline", label: "Underline", icon: "U", className: "is-underline" },
+  { key: "enableOverline", label: "Overline", icon: "O", className: "is-overline" },
+  { key: "enableStrike", label: "Strike-through", icon: "S", className: "is-strike" },
+  { key: "enableItalic", label: "Italic", icon: "I", className: "is-italic" },
+  { key: "enableOpacity", label: "Opacity", icon: "O", className: "is-opacity" },
+  { key: "enableBorder", label: "Bolder", icon: "B", className: "is-border" },
+  { key: "enableTextAlignment", label: "Text Alignment", icon: "", className: "is-align" },
+];
+
+onMounted(() => {
+  text.value = mergeTextData(props.data || {});
+});
+
+const togglePanel = (key) => {
+  openPanels.value[key] = !openPanels.value[key];
+};
+
+const setTextType = (value) => {
+  text.value.textType = value;
+};
+
+const formatHex = (value) => {
+  let next = String(value || "").trim();
+  if (!next) return "#FFFFFF";
+  if (!next.startsWith("#")) next = `#${next}`;
+  return next.toUpperCase();
+};
+
+const normalizeColor = (index) => {
+  text.value.colors[index].codeHex = formatHex(text.value.colors[index].codeHex);
+};
+
+const addNewColor = () => {
+  text.value.colors.push({ name: "", codeHex: "#FFFFFF", additionalPrice: 0 });
+};
+
+const removeColor = (index) => {
+  text.value.colors.splice(index, 1);
+};
+
+const selectColorPrevImage = (event) => {
+  event?.preventDefault?.();
+  const uploader = wp
+    .media({
+      title: __("Select Custom Text Color Preview Image", "all-signs-options-pro"),
+      button: {
+        text: __("Select Image", "all-signs-options-pro"),
+      },
+      multiple: false,
+    })
+    .on("select", () => {
+      const selection = uploader.state().get("selection");
+      selection.map((attachment) => {
+        const image = attachment.toJSON();
+        if (image.type === "image") {
+          text.value.colorsPrevImg = image.url;
+        }
+      });
+    });
+
+  uploader.open();
+};
+
+const updateTextSettings = async () => {
+  if (isLoading.value) return;
+  isLoading.value = true;
+
+  try {
+    const result = await api.updateCustomizerSignsText(configId.value, text.value);
+    if (result?.success) {
+      await props.fetchSettings?.();
+      toastMessage(result.message || __("Text settings saved", "all-signs-options-pro"));
+    } else {
+      toastMessage(result?.message || __("Unable to save text settings", "all-signs-options-pro"), "error");
     }
-    text.value.colors[key].codeHex = event.target.value;
+  } finally {
+    isLoading.value = false;
+  }
+};
+</script>
+
+<style>
+.asowp-text-settings {
+  display: grid;
+  gap: 12px;
 }
 
+.asowp-card {
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
 
-</script>
+.asowp-card-body {
+  padding: 16px 18px;
+}
+
+.asowp-header-card h1,
+.asowp-section-head h2 {
+  margin: 0;
+  color: #303030;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 900;
+}
+
+.asowp-header-card p,
+.asowp-section-head p {
+  margin: 2px 0 0;
+  color: #616161;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.asowp-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.asowp-disclosure-button,
+.asowp-secondary-button,
+.asowp-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 7px;
+  border: 1px solid #c9cccf;
+  background: #ffffff;
+  color: #303030;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.asowp-primary-button {
+  border-color: #005f59;
+  background: #007a72;
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.asowp-primary-button:hover,
+.asowp-primary-button:focus {
+  background: #00645f;
+  color: #ffffff;
+}
+
+.asowp-primary-button:disabled {
+  border-color: #d1d1d1;
+  background: #d4d4d4;
+  color: #ffffff;
+  cursor: default;
+}
+
+.asowp-secondary-button:hover,
+.asowp-disclosure-button:hover {
+  background: #f6f6f7;
+  color: #303030;
+}
+
+.asowp-small-button {
+  width: fit-content;
+  height: 28px;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+
+.asowp-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.asowp-panel-content {
+  padding-top: 12px;
+}
+
+.asowp-toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.asowp-toggle-label {
+  color: #616161;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.asowp-toggle {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d8dee9;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.asowp-toggle span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  transition: transform 0.15s ease;
+}
+
+.asowp-toggle.is-active {
+  background: #007a72;
+}
+
+.asowp-toggle.is-active span {
+  transform: translateX(18px);
+}
+
+.asowp-text-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.asowp-type-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px;
+  border: 1px solid #dfe3e8;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #303030;
+  cursor: pointer;
+}
+
+.asowp-type-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.asowp-type-card img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  background: #f7f8fa;
+}
+
+.asowp-type-card strong,
+.asowp-block-toggle strong,
+.asowp-custom-toggle strong {
+  color: #303030;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 900;
+}
+
+.asowp-field {
+  display: grid;
+  gap: 4px;
+  color: #303030;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.asowp-field > span:first-child {
+  font-weight: 400;
+}
+
+.asowp-field input {
+  width: 100%;
+  min-height: 36px;
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid #8c9196;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #303030;
+  font-size: 13px;
+  line-height: 18px;
+  box-shadow: none;
+}
+
+.asowp-label-field {
+  max-width: 320px;
+  margin-bottom: 12px;
+}
+
+.asowp-color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.asowp-color-card {
+  padding: 10px;
+  border: 1px solid #dfe3e8;
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.asowp-color-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.asowp-color-card-head strong {
+  color: #303030;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 900;
+}
+
+.asowp-icon-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #b42318;
+  cursor: pointer;
+}
+
+.asowp-color-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  align-items: end;
+  gap: 8px;
+}
+
+.asowp-color-inputs {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 6px;
+}
+
+.asowp-color-inputs input[type="color"] {
+  min-height: 34px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.asowp-custom-color-row {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 16px;
+  align-items: end;
+  margin-top: 12px;
+}
+
+.asowp-custom-toggle,
+.asowp-block-toggle {
+  display: grid;
+  gap: 6px;
+}
+
+.asowp-file-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 36px;
+  border: 1px solid #8c9196;
+  border-radius: 7px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.asowp-file-button {
+  height: 30px;
+  margin: 3px;
+}
+
+.asowp-file-preview {
+  position: relative;
+  min-height: 34px;
+}
+
+.asowp-file-preview img {
+  position: absolute;
+  inset: 3px 38px auto auto;
+  width: 44px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.asowp-file-preview button {
+  position: absolute;
+  right: 3px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #b42318;
+  cursor: pointer;
+}
+
+.asowp-form-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.asowp-three-cols {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.asowp-options-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  align-items: flex-start;
+}
+
+.asowp-option-control {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  color: #303030;
+  font-size: 9px;
+  line-height: 12px;
+  min-width: 64px;
+}
+
+.asowp-option-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid #c9cccf;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #303030;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.asowp-option-icon.is-bold {
+  font-weight: 900;
+}
+
+.asowp-option-icon.is-underline {
+  text-decoration: underline;
+}
+
+.asowp-option-icon.is-overline {
+  text-decoration: overline;
+}
+
+.asowp-option-icon.is-strike {
+  text-decoration: line-through;
+}
+
+.asowp-option-icon.is-italic {
+  font-style: italic;
+}
+
+.asowp-option-icon.is-opacity span {
+  opacity: 0.55;
+}
+
+.asowp-option-icon.is-border {
+  -webkit-text-stroke: 0.5px #303030;
+}
+
+.asowp-align-icon {
+  display: grid;
+  gap: 3px;
+  width: 18px;
+}
+
+.asowp-align-icon i {
+  display: block;
+  height: 2px;
+  border-radius: 999px;
+  background: #303030;
+}
+
+.asowp-align-icon i:nth-child(2) {
+  width: 70%;
+}
+
+.asowp-save-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2px;
+}
+
+.asowp-save-row img {
+  width: 14px;
+  height: 14px;
+}
+
+.asowp-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1180px) {
+  .asowp-color-grid,
+  .asowp-text-type-grid,
+  .asowp-three-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .asowp-custom-color-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

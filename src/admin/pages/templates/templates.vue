@@ -1,619 +1,314 @@
 <template>
-  <div class="asowp-pt-5 asowp-space-y-4">
-    <div v-if="!isNewTemplate" class="asowp-space-y-4">
-      <div
-        class="asowp-rounded-xl asowp-bg-white asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-shadow-sm"
-      >
-        <div
-          class="asowp-flex asowp-flex-col lg:asowp-flex-row lg:asowp-items-center asowp-gap-4 asowp-p-4"
-        >
-          <div class="asowp-flex-1">
-            <div class="asowp-text-lg asowp-font-bold asowp-text-gray-900">
-              {{ __("Templates", "all-signs-options-pro") }}
-            </div>
-            <div class="asowp-text-sm asowp-text-gray-500">
-              {{ filteredTemplates.length }}
-              {{ __("templates", "all-signs-options-pro") }}
-            </div>
+  <div class="asowp-template-module">
+    <template v-if="view === 'list'">
+      <section class="asowp-template-toolbar-card">
+        <div>
+          <div class="asowp-template-heading-row">
+            <h1>{{ __("Templates", "all-signs-options-pro") }}</h1>
+            <span class="asowp-template-count-pill">
+              {{ filteredTemplates.length }} {{ filteredTemplates.length > 1 ? __("templates", "all-signs-options-pro") : __("template", "all-signs-options-pro") }}
+            </span>
           </div>
+          <p>{{ __("Manage your saved template library, import JSON files and open the public template packs.", "all-signs-options-pro") }}</p>
+        </div>
 
-          <div
-            class="asowp-flex asowp-flex-col sm:asowp-flex-row asowp-items-stretch sm:asowp-items-center asowp-gap-2"
-          >
-            <form
-              class="asowp-relative asowp-w-full sm:asowp-w-[260px]"
-              @submit.prevent="handleSearchChange"
-            >
-              <input
-                type="search"
-                v-model="search"
-                @input="searchInputEmpty"
-                id="asowp-search"
-                class="asowp-w-full asowp-h-[36px] asowp-rounded-lg asowp-border asowp-border-gray-300 asowp-pl-9 asowp-pr-3 asowp-text-sm focus:asowp-outline-none focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-transparent"
-                :placeholder="__('Search templates...', 'all-signs-options-pro')"
-              />
-              <svg
-                class="asowp-absolute asowp-left-3 asowp-top-2.5 asowp-h-4 asowp-w-4 asowp-text-gray-400"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-4.35-4.35m1.6-5.4a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </form>
+        <div class="asowp-template-controls">
+          <select v-model="selectedCategory" class="asowp-template-input asowp-template-select">
+            <option value="all">{{ __("All categories", "all-signs-options-pro") }}</option>
+            <option v-for="cat in categories" :key="cat.value" :value="cat.value">
+              {{ cat.name }}
+            </option>
+          </select>
 
-            <select
-              v-model="selectedCategory"
-              class="asowp-h-[36px] asowp-rounded-lg asowp-border asowp-border-gray-300 asowp-px-3 asowp-text-sm focus:asowp-outline-none focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-transparent"
-            >
-              <option value="all">
-                {{ __("All categories", "all-signs-options-pro") }}
-              </option>
-              <option
-                v-for="cat in categories"
-                :key="cat.value"
-                :value="cat.value"
-              >
-                {{ cat.name }}
+          <label class="asowp-template-search">
+            <SearchIcon />
+            <input
+              v-model="search"
+              type="search"
+              :placeholder="__('Search templates', 'all-signs-options-pro')"
+              @keyup.enter="handleSearchChange"
+              @input="searchInputEmpty"
+            />
+          </label>
+
+          <button type="button" class="asowp-template-primary-button" @click="startCreateTemplate">
+            <PlusIcon />
+            {{ __("Create Template", "all-signs-options-pro") }}
+          </button>
+          <button type="button" class="asowp-template-primary-button" @click="openImportView">
+            <DownloadIcon />
+            {{ __("Import", "all-signs-options-pro") }}
+          </button>
+          <button type="button" class="asowp-template-primary-button" @click="openExportView">
+            <UploadIcon />
+            {{ __("Export", "all-signs-options-pro") }}
+          </button>
+          <button type="button" class="asowp-template-primary-button" @click="openLibraryView">
+            <PanelTopIcon />
+            {{ __("Browse our template", "all-signs-options-pro") }}
+          </button>
+          <button type="button" class="asowp-template-primary-button" @click="openThemeBlockModal = true">
+            {{ __("Add template theme", "all-signs-options-pro") }}
+          </button>
+        </div>
+      </section>
+
+      <section class="asowp-template-list-card">
+        <h2>{{ __("Templates List", "all-signs-options-pro") }}</h2>
+
+        <div v-if="isFetching" class="asowp-template-empty">
+          <img :src="asoLogo" alt="" />
+          <h3>{{ __("Loading templates...", "all-signs-options-pro") }}</h3>
+        </div>
+
+        <div v-else-if="filteredTemplates.length === 0" class="asowp-template-empty">
+          <img :src="asoLogo" alt="" />
+          <h3>{{ __("No templates found", "all-signs-options-pro") }}</h3>
+          <p>{{ __("There is currently no template matching this filter. You can create one, import a JSON file, or open template packs.", "all-signs-options-pro") }}</p>
+          <button type="button" class="asowp-template-primary-button is-compact" @click="startCreateTemplate">
+            {{ __("Create template", "all-signs-options-pro") }}
+          </button>
+        </div>
+
+        <div v-else class="asowp-template-grid">
+          <article v-for="tpl in filteredTemplates" :key="`${tpl.configId}-${tpl._index}`" class="asowp-template-item">
+            <div class="asowp-template-preview">
+              <img v-if="tpl.prevImg || tpl.realImg" :src="tpl.prevImg || tpl.realImg" :alt="tpl.name" />
+              <img v-else :src="asoLogo" alt="" />
+            </div>
+            <div class="asowp-template-item-body">
+              <div>
+                <h3>{{ tpl.name || __("Untitled template", "all-signs-options-pro") }}</h3>
+                <p>{{ categoryMap[tpl.categoryId] || __("Uncategorized", "all-signs-options-pro") }}</p>
+              </div>
+              <span>{{ currencySumbol }}{{ tpl.basePrice || 0 }}</span>
+            </div>
+            <div class="asowp-template-item-actions">
+              <button type="button" @click="selectTemplate(tpl._index, tpl)">
+                <PencilIcon />
+              </button>
+              <button type="button" @click="selectTemplate(tpl._index, tpl, true)">
+                <Trash2Icon />
+              </button>
+              <button type="button" @click="goToTemplate(tpl, tpl._index)">
+                <SettingsIcon />
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </template>
+
+    <template v-else-if="view === 'form'">
+      <section class="asowp-template-form-card is-title-only">
+        <h1>{{ isEdit ? __("Edit template", "all-signs-options-pro") : __("Create new template", "all-signs-options-pro") }}</h1>
+      </section>
+
+      <section class="asowp-template-form-card">
+        <div class="asowp-template-form-grid">
+          <label class="asowp-template-field">
+            <span>{{ __("Name", "all-signs-options-pro") }}</span>
+            <input v-model="template.name" type="text" />
+            <small v-if="isEmptyName">{{ __("Name is required", "all-signs-options-pro") }}</small>
+          </label>
+
+          <label class="asowp-template-field">
+            <span>{{ __("Select configuration", "all-signs-options-pro") }}</span>
+            <select v-model="template.configId">
+              <option value="0" disabled>{{ __("Search configuration", "all-signs-options-pro") }}</option>
+              <option v-for="config in configurations" :key="config.value" :value="config.value">
+                {{ config.name }}
               </option>
             </select>
+            <small v-if="isEmptyConfig">{{ __("Configuration is required", "all-signs-options-pro") }}</small>
+          </label>
 
-            <button
-              class="asowp-flex asowp-items-center asowp-justify-center asowp-gap-2 asowp-bg-[#016464] asowp-text-white asowp-text-sm asowp-font-semibold asowp-px-4 asowp-py-2 asowp-rounded-lg asowp-border-none asowp-cursor-pointer hover:asowp-opacity-90"
-              @click="isNewTemplate = true"
-            >
-              <svg
-                class="asowp-h-4 asowp-w-4"
-                viewBox="0 0 20 20"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10 4v12m6-6H4"
-                />
-              </svg>
-              <span>{{ __("Create template", "all-signs-options-pro") }}</span>
-            </button>
-          </div>
-        </div>
-      </div>
+          <label class="asowp-template-field">
+            <span>{{ __("Upload preview image", "all-signs-options-pro") }}</span>
+            <ImageUploadControl :label="__('Upload preview image', 'all-signs-options-pro')" :image="template.prevImg" @choose="selectTemplatePrevImg" />
+          </label>
 
-      <div
-        v-if="isFetching"
-        class="asowp-flex asowp-items-center asowp-justify-center asowp-py-16 asowp-bg-white asowp-rounded-xl asowp-border asowp-border-dashed asowp-border-gray-300"
-      >
-        <div class="asowp-text-sm asowp-text-gray-500">
-          {{ __("Loading templates...", "all-signs-options-pro") }}
-        </div>
-      </div>
+          <label class="asowp-template-field">
+            <span>{{ __("Upload real image", "all-signs-options-pro") }}</span>
+            <ImageUploadControl :label="__('Upload real image', 'all-signs-options-pro')" :image="template.realImg" @choose="selectTemplateRealImg" />
+          </label>
 
-      <div
-        v-else-if="filteredTemplates.length > 0"
-        class="asowp-grid asowp-grid-cols-1 sm:asowp-grid-cols-2 lg:asowp-grid-cols-3 xl:asowp-grid-cols-4 asowp-gap-4"
-      >
-        <div
-          v-for="tpl in filteredTemplates"
-          :key="`${tpl.configId}-${tpl._index}`"
-          class="asowp-group asowp-bg-white asowp-rounded-xl asowp-border asowp-border-gray-200 asowp-overflow-hidden asowp-shadow-sm hover:asowp-shadow-md asowp-transition-shadow"
-        >
-          <div
-            class="asowp-relative asowp-bg-[#f3f4f6] asowp-h-[160px] asowp-flex asowp-items-center asowp-justify-center asowp-overflow-hidden"
-          >
-            <div
-              v-if="tpl.prevImg || tpl.realImg"
-              class="asowp-absolute asowp-inset-0 asowp-w-full asowp-h-full"
-            >
-              <img
-                v-if="tpl.prevImg"
-                :src="tpl.prevImg"
-                :alt="tpl.name"
-                class="asowp-absolute asowp-inset-0 asowp-w-full asowp-h-full asowp-object-cover asowp-transition-transform asowp-duration-300 group-hover:asowp-scale-105"
-              />
-              <img
-                v-if="tpl.realImg"
-                :src="tpl.realImg"
-                :alt="tpl.name"
-                class="asowp-absolute asowp-inset-0 asowp-w-full asowp-h-full asowp-object-cover asowp-opacity-0 asowp-transition-opacity asowp-duration-300 group-hover:asowp-opacity-100"
-              />
-              <div class="asowp-absolute asowp-inset-0 asowp-bg-gradient-to-t asowp-from-black/30 asowp-via-black/10 asowp-to-transparent asowp-opacity-0 asowp-transition-opacity asowp-duration-300 group-hover:asowp-opacity-100"></div>
-            </div>
-            <div
-              v-else
-              class="asowp-flex asowp-flex-col asowp-items-center asowp-justify-center asowp-text-gray-400"
-            >
-              <svg
-                class="asowp-h-8 asowp-w-8"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 5h18v14H3zM8 10l4 4 4-4"
-                />
-              </svg>
-              <span class="asowp-text-xs asowp-mt-1">
-                {{ __("No preview", "all-signs-options-pro") }}
-              </span>
-            </div>
+          <label class="asowp-template-field">
+            <span>{{ __("Base price", "all-signs-options-pro") }}</span>
+            <input v-model.number="template.basePrice" type="number" min="0" step="0.01" />
+          </label>
 
-            <div class="asowp-absolute asowp-top-2 asowp-right-2 asowp-flex asowp-gap-1">
-              <button
-                class="asowp-p-1.5 asowp-rounded-md asowp-text-gray-600 hover:asowp-bg-gray-100 asowp-cursor-pointer"
-                :title="__('Edit', 'all-signs-options-pro')"
-                @click="selectTemplate(tpl._index, tpl)"
-              >
-                <svg
-                  class="asowp-w-4 asowp-h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                  />
-                </svg>
-              </button>
-              <button
-                class="asowp-p-1.5 asowp-rounded-md asowp-text-red-500 hover:asowp-bg-red-50 asowp-cursor-pointer"
-                :title="__('Delete', 'all-signs-options-pro')"
-                @click="selectTemplate(tpl._index, tpl, true)"
-              >
-                <svg
-                  class="asowp-w-4 asowp-h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-              </button>
-              <button
-                class="asowp-p-1.5 asowp-rounded-md asowp-text-gray-600 hover:asowp-bg-gray-100 asowp-cursor-pointer"
-                :title="__('Open template', 'all-signs-options-pro')"
-                @click="goToTemplate(tpl, tpl._index)"
-              >
-                <svg
-                  class="asowp-w-4 asowp-h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9.75 3a.75.75 0 01.75.75V5h3V3.75a.75.75 0 011.5 0V5h1.25A2.75 2.75 0 0119 7.75V9h1.25a.75.75 0 010 1.5H19v3h1.25a.75.75 0 010 1.5H19v1.25A2.75 2.75 0 0116.25 19H15v1.25a.75.75 0 01-1.5 0V19h-3v1.25a.75.75 0 01-1.5 0V19H7.75A2.75 2.75 0 015 16.25V15H3.75a.75.75 0 010-1.5H5v-3H3.75a.75.75 0 010-1.5H5V7.75A2.75 2.75 0 017.75 5H9V3.75A.75.75 0 019.75 3zM7.5 8.75A1.25 1.25 0 018.75 7.5h6.5A1.25 1.25 0 0116.5 8.75v6.5a1.25 1.25 0 01-1.25 1.25h-6.5A1.25 1.25 0 017.5 15.25v-6.5z"
-                  />
-                </svg>
-              </button>
-            </div>
+          <div class="asowp-template-field asowp-template-toggles">
+            <ToggleRow v-model="template.enablePreviewImage" :label="__('Enable auto-update for the preview image', 'all-signs-options-pro')" />
+            <ToggleRow v-model="template.enableAddToCart" :label="__('Enable add to cart', 'all-signs-options-pro')" />
           </div>
 
-          <div class="asowp-p-3">
-            <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-2">
-              <div class="asowp-min-w-0">
-                <h3
-                  class="asowp-text-sm asowp-font-semibold asowp-text-gray-900 asowp-truncate"
-                >
-                  {{ tpl.name || __("Untitled template", "all-signs-options-pro") }}
-                </h3>
-                <p class="asowp-text-xs asowp-text-gray-500">
-                  {{ categoryMap[tpl.categoryId] || __("Uncategorized", "all-signs-options-pro") }}
-                  ·
-                  {{ configurationMap[tpl.configId] || __("No configuration", "all-signs-options-pro") }}
-                </p>
-              </div>
-              <span
-                class="asowp-inline-flex asowp-items-center asowp-rounded-full asowp-bg-[#ffe6e6] asowp-text-[#b42318] asowp-text-[11px] asowp-px-2 asowp-py-0.5"
-              >
-                {{ __("Base price", "all-signs-options-pro") }}:
-                {{ currencySumbol }}{{ tpl.basePrice || 0 }}
-              </span>
-            </div>
-
-            <div class="asowp-mt-3 asowp-flex asowp-items-center asowp-justify-between">
-              <button
-                class="asowp-text-sm asowp-font-medium asowp-text-[#016464] asowp-bg-transparent asowp-border-none asowp-cursor-pointer hover:asowp-underline"
-                @click="goToTemplate(tpl, tpl._index)"
-              >
-                {{ __("Open", "all-signs-options-pro") }}
-              </button>
-              <button
-                class="asowp-text-sm asowp-font-medium asowp-text-gray-600 asowp-bg-transparent asowp-border-none asowp-cursor-pointer hover:asowp-text-gray-900"
-                @click="selectTemplate(tpl._index, tpl)"
-              >
-                {{ __("Edit details", "all-signs-options-pro") }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        v-else
-        class="asowp-flex asowp-flex-col asowp-items-center asowp-justify-center asowp-py-12 asowp-bg-white asowp-rounded-xl asowp-border asowp-border-dashed asowp-border-gray-300"
-      >
-        <div class="asowp-bg-gray-50 asowp-p-4 asowp-rounded-full asowp-mb-4">
-          <svg
-            class="asowp-w-8 asowp-h-8 asowp-text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-            />
-          </svg>
-        </div>
-        <h3 class="asowp-text-sm asowp-font-medium asowp-text-gray-900">
-          {{ __("No templates yet", "all-signs-options-pro") }}
-        </h3>
-        <p class="asowp-text-sm asowp-text-gray-500 asowp-mb-4">
-          {{
-            __(
-              "Create your first template to start building presets.",
-              "all-signs-options-pro"
-            )
-          }}
-        </p>
-        <button
-          @click="isNewTemplate = true"
-          class="asowp-text-[#016464] asowp-font-medium hover:asowp-underline asowp-bg-transparent asowp-border-none asowp-cursor-pointer"
-        >
-          {{ __("Create template", "all-signs-options-pro") }}
-        </button>
-      </div>
-    </div>
-
-    <div v-else class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-gray-200 asowp-shadow-sm">
-      <div class="asowp-px-6 asowp-py-4 asowp-border-b asowp-border-gray-200">
-        <h2 class="asowp-text-sm asowp-font-semibold asowp-text-gray-900">
-          {{
-            isEdit
-              ? __("Edit template", "all-signs-options-pro")
-              : __("Create new template", "all-signs-options-pro")
-          }}
-        </h2>
-      </div>
-
-      <div class="asowp-bg-[#f8f9fb] asowp-p-6">
-        <div class="asowp-grid asowp-grid-cols-1 lg:asowp-grid-cols-2 asowp-gap-6">
-          <div class="asowp-space-y-4">
-            <div>
-              <label class="asowp-block asowp-text-xs asowp-font-semibold asowp-text-gray-700 asowp-mb-2">
-                {{ __("Name", "all-signs-options-pro") }}
-              </label>
-              <input
-                v-model="template.name"
-                type="text"
-                class="asowp-w-full asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-bg-white asowp-px-3 asowp-text-sm focus:asowp-outline-none"
-              />
-              <p v-if="isEmptyName" class="asowp-text-red-500 asowp-text-xs asowp-mt-1">
-                {{ __("Name is required", "all-signs-options-pro") }}
-              </p>
-            </div>
-
-            <div>
-              <label class="asowp-block asowp-text-xs asowp-font-semibold asowp-text-gray-700 asowp-mb-2">
-                {{ __("Upload preview image", "all-signs-options-pro") }}
-              </label>
-              <div class="asowp-flex asowp-items-center asowp-gap-3">
-                <div
-                  class="asowp-flex-1 asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-bg-white asowp-flex asowp-items-center asowp-justify-between asowp-px-2"
-                >
-                  <button
-                    type="button"
-                    class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-bg-[#016464] asowp-text-white asowp-text-xs asowp-font-semibold asowp-px-3 asowp-py-1.5 asowp-rounded-md asowp-border-none asowp-cursor-pointer hover:asowp-opacity-90"
-                    @click="selectTemplatePrevImg"
-                  >
-                    {{ __("Upload preview image", "all-signs-options-pro") }}
-                  </button>
-                  <span class="asowp-text-xs asowp-text-gray-400 asowp-ml-2 asowp-truncate">
-                    {{ template.prevImg ? __("Selected", "all-signs-options-pro") : __("No file", "all-signs-options-pro") }}
-                  </span>
-                </div>
-                <div
-                  class="asowp-w-[38px] asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-200 asowp-bg-white asowp-overflow-hidden asowp-flex asowp-items-center asowp-justify-center"
-                >
-                  <img
-                    v-if="template.prevImg"
-                    :src="template.prevImg"
-                    :alt="template.name"
-                    class="asowp-w-full asowp-h-full asowp-object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label class="asowp-block asowp-text-xs asowp-font-semibold asowp-text-gray-700 asowp-mb-2">
-                {{ __("Base price", "all-signs-options-pro") }}
-              </label>
-              <input
-                v-model.number="template.basePrice"
-                type="number"
-                min="0"
-                step="0.01"
-                class="asowp-w-full asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-bg-white asowp-px-3 asowp-text-sm focus:asowp-outline-none"
-              />
-            </div>
-
-            <div>
-              <label class="asowp-block asowp-text-xs asowp-font-semibold asowp-text-gray-700 asowp-mb-2">
-                {{ __("Select category", "all-signs-options-pro") }}
-              </label>
-              <div class="asowp-flex asowp-items-center asowp-gap-2">
-                <select
-                  v-model="template.categoryId"
-                  class="asowp-flex-1 asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-bg-white asowp-px-3 asowp-text-sm focus:asowp-outline-none"
-                >
-                  <option value="">
-                    {{ __("No category", "all-signs-options-pro") }}
-                  </option>
-                  <option
-                    v-for="cat in categories"
-                    :key="cat.value"
-                    :value="cat.value"
-                  >
-                    {{ cat.name }}
-                  </option>
-                </select>
-                <button
-                  type="button"
-                  class="asowp-h-[30px] asowp-px-3 asowp-text-xs asowp-font-semibold asowp-text-white asowp-bg-[#016464] asowp-rounded-md asowp-border-none asowp-cursor-pointer hover:asowp-opacity-90"
-                  @click="openCategoryModal = true"
-                >
-                  {{ __("Add new", "all-signs-options-pro") }}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="asowp-space-y-4">
-            <div>
-              <label class="asowp-block asowp-text-xs asowp-font-semibold asowp-text-gray-700 asowp-mb-2">
-                {{ __("Select configuration", "all-signs-options-pro") }}
-              </label>
-              <select
-                v-model="template.configId"
-                class="asowp-w-full asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-bg-white asowp-px-3 asowp-text-sm focus:asowp-outline-none"
-              >
-                <option value="0" disabled>
-                  {{ __("Search configuration", "all-signs-options-pro") }}
-                </option>
-                <option
-                  v-for="config in configurations"
-                  :key="config.value"
-                  :value="config.value"
-                >
-                  {{ config.name }}
+          <label class="asowp-template-field">
+            <span>{{ __("Select category", "all-signs-options-pro") }}</span>
+            <div class="asowp-template-inline-field">
+              <select v-model="template.categoryId">
+                <option value="">{{ __("Search category", "all-signs-options-pro") }}</option>
+                <option v-for="cat in categories" :key="cat.value" :value="cat.value">
+                  {{ cat.name }}
                 </option>
               </select>
-              <p v-if="isEmptyConfig" class="asowp-text-red-500 asowp-text-xs asowp-mt-1">
-                {{ __("Configuration is required", "all-signs-options-pro") }}
-              </p>
+              <button type="button" class="asowp-template-primary-button is-compact" @click="openCategoryModal = true">
+                {{ __("Add new", "all-signs-options-pro") }}
+              </button>
             </div>
-
-            <div>
-              <label class="asowp-block asowp-text-xs asowp-font-semibold asowp-text-gray-700 asowp-mb-2">
-                {{ __("Upload real image", "all-signs-options-pro") }}
-              </label>
-              <div class="asowp-flex asowp-items-center asowp-gap-3">
-                <div
-                  class="asowp-flex-1 asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-400 asowp-bg-white asowp-flex asowp-items-center asowp-justify-between asowp-px-2"
-                >
-                  <button
-                    type="button"
-                    class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-bg-[#016464] asowp-text-white asowp-text-xs asowp-font-semibold asowp-px-3 asowp-py-1.5 asowp-rounded-md asowp-border-none asowp-cursor-pointer hover:asowp-opacity-90"
-                    @click="selectTemplateRealImg"
-                  >
-                    {{ __("Upload real image", "all-signs-options-pro") }}
-                  </button>
-                  <span class="asowp-text-xs asowp-text-gray-400 asowp-ml-2 asowp-truncate">
-                    {{ template.realImg ? __("Selected", "all-signs-options-pro") : __("No file", "all-signs-options-pro") }}
-                  </span>
-                </div>
-                <div
-                  class="asowp-w-[38px] asowp-h-[38px] asowp-rounded-md asowp-border asowp-border-gray-200 asowp-bg-white asowp-overflow-hidden asowp-flex asowp-items-center asowp-justify-center"
-                >
-                  <img
-                    v-if="template.realImg"
-                    :src="template.realImg"
-                    :alt="template.name"
-                    class="asowp-w-full asowp-h-full asowp-object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="asowp-space-y-3">
-              <label class="asowp-flex asowp-items-center asowp-justify-between asowp-gap-3">
-                <span class="asowp-text-xs asowp-font-semibold asowp-text-gray-700">
-                  {{ __("Enable auto-update for the preview image", "all-signs-options-pro") }}
-                </span>
-                <span class="asowp-relative asowp-inline-flex asowp-items-center">
-                  <input
-                    type="checkbox"
-                    v-model="template.enablePreviewImage"
-                    class="asowp-sr-only asowp-peer"
-                  />
-                  <span class="asowp-w-10 asowp-h-5 asowp-rounded-full asowp-bg-gray-300 peer-checked:asowp-bg-[#008060]"></span>
-                  <span
-                    class="asowp-absolute asowp-left-0.5 asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-transition-transform peer-checked:asowp-translate-x-5"
-                  ></span>
-                </span>
-              </label>
-              <label class="asowp-flex asowp-items-center asowp-justify-between asowp-gap-3">
-                <span class="asowp-text-xs asowp-font-semibold asowp-text-gray-700">
-                  {{ __("Enable add to cart", "all-signs-options-pro") }}
-                </span>
-                <span class="asowp-relative asowp-inline-flex asowp-items-center">
-                  <input
-                    type="checkbox"
-                    v-model="template.enableAddToCart"
-                    class="asowp-sr-only asowp-peer"
-                  />
-                  <span class="asowp-w-10 asowp-h-5 asowp-rounded-full asowp-bg-gray-300 peer-checked:asowp-bg-[#008060]"></span>
-                  <span
-                    class="asowp-absolute asowp-left-0.5 asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-transition-transform peer-checked:asowp-translate-x-5"
-                  ></span>
-                </span>
-              </label>
-              <label class="asowp-flex asowp-items-center asowp-justify-between asowp-gap-3">
-                <span class="asowp-text-xs asowp-font-semibold asowp-text-gray-700">
-                  {{ __("Show on frontend templates list", "all-signs-options-pro") }}
-                </span>
-                <span class="asowp-relative asowp-inline-flex asowp-items-center">
-                  <input
-                    type="checkbox"
-                    v-model="template.showOnFrontend"
-                    class="asowp-sr-only asowp-peer"
-                  />
-                  <span class="asowp-w-10 asowp-h-5 asowp-rounded-full asowp-bg-gray-300 peer-checked:asowp-bg-[#008060]"></span>
-                  <span
-                    class="asowp-absolute asowp-left-0.5 asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-transition-transform peer-checked:asowp-translate-x-5"
-                  ></span>
-                </span>
-              </label>
-            </div>
-          </div>
+          </label>
         </div>
-      </div>
+      </section>
 
-      <div class="asowp-flex asowp-justify-end asowp-gap-3 asowp-px-6 asowp-py-4 asowp-border-t asowp-border-gray-200 asowp-bg-[#f8f9fb]">
-        <button
-          @click="back"
-          class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-sm asowp-font-semibold asowp-text-gray-800 asowp-bg-white asowp-border asowp-border-gray-400 asowp-px-6 asowp-py-2 asowp-rounded-md hover:asowp-bg-gray-50 asowp-cursor-pointer"
-        >
-          <span class="asowp-text-base">←</span>
+      <section class="asowp-template-form-actions">
+        <button type="button" class="asowp-template-secondary-button" @click="back">
+          <ArrowLeftIcon />
           {{ __("Back", "all-signs-options-pro") }}
         </button>
-        <button
-          @click="saveOrUpdate"
-          class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-sm asowp-font-semibold asowp-text-white asowp-bg-[#016464] asowp-border-none asowp-px-8 asowp-py-2 asowp-rounded-md hover:asowp-opacity-90 asowp-cursor-pointer"
-          :disabled="isLoading"
-        >
+        <button type="button" class="asowp-template-primary-button is-wide" :disabled="isLoading" @click="saveOrUpdate">
+          <SaveIcon />
           {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save", "all-signs-options-pro") }}
         </button>
-      </div>
-    </div>
+      </section>
+    </template>
 
-    <div v-if="openCategoryModal" class="asowp-fixed asowp-inset-0 asowp-z-[1000]">
-      <div
-        class="asowp-fixed asowp-inset-0 asowp-bg-gray-500 asowp-bg-opacity-70"
-        @click="closeCategoryModal"
-      ></div>
-      <div
-        class="asowp-relative asowp-flex asowp-items-center asowp-justify-center asowp-min-h-screen asowp-px-4"
-      >
-        <div class="asowp-bg-white asowp-rounded-xl asowp-shadow-xl asowp-w-full asowp-max-w-md asowp-p-6">
-          <h3 class="asowp-text-lg asowp-font-bold asowp-text-gray-900 asowp-mb-2">
-            {{ __("New category", "all-signs-options-pro") }}
-          </h3>
-          <p class="asowp-text-sm asowp-text-gray-500 asowp-mb-4">
-            {{ __("Add a category for your templates.", "all-signs-options-pro") }}
-          </p>
-          <input
-            v-model="category"
-            type="text"
-            class="asowp-w-full asowp-rounded-lg asowp-border asowp-border-gray-300 asowp-px-4 asowp-py-2 asowp-text-sm focus:asowp-outline-none focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-transparent"
-            :placeholder="__('Category name', 'all-signs-options-pro')"
-          />
-          <div class="asowp-mt-6 asowp-flex asowp-justify-end asowp-gap-3">
-            <button
-              @click="closeCategoryModal"
-              class="asowp-inline-flex asowp-items-center asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-bg-white asowp-border asowp-border-gray-300 asowp-px-4 asowp-py-2 asowp-rounded-lg hover:asowp-bg-gray-50 asowp-cursor-pointer"
-            >
-              {{ __("Cancel", "all-signs-options-pro") }}
-            </button>
-            <button
-              @click="saveCategory"
-              class="asowp-inline-flex asowp-items-center asowp-text-sm asowp-font-semibold asowp-text-white asowp-bg-[#016464] asowp-border-none asowp-px-5 asowp-py-2 asowp-rounded-lg hover:asowp-opacity-90 asowp-cursor-pointer"
-              :disabled="isLoading"
-            >
-              {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save", "all-signs-options-pro") }}
-            </button>
+    <template v-else-if="view === 'import'">
+      <ActionHeader :title="__('Import Templates', 'all-signs-options-pro')" :description="__('Import a templates JSON file into a selected configuration and category.', 'all-signs-options-pro')" @cancel="view = 'list'" />
+      <section class="asowp-template-form-card">
+        <div class="asowp-template-form-grid">
+          <label class="asowp-template-field">
+            <span>{{ __("Upload template JSON file", "all-signs-options-pro") }}</span>
+            <ImageUploadControl :label="__('Choose JSON file', 'all-signs-options-pro')" :image="''" @choose="selectJsonFile" />
+            <p>{{ __("Select a .json file exported from the templates module.", "all-signs-options-pro") }}</p>
+          </label>
+          <label class="asowp-template-field">
+            <span>{{ __("Select category", "all-signs-options-pro") }}</span>
+            <div class="asowp-template-inline-field">
+              <select v-model="importForm.categoryId">
+                <option value="">{{ __("Search category", "all-signs-options-pro") }}</option>
+                <option v-for="cat in categories" :key="cat.value" :value="cat.value">{{ cat.name }}</option>
+              </select>
+              <button type="button" class="asowp-template-primary-button is-compact" @click="openCategoryModal = true">{{ __("Add new", "all-signs-options-pro") }}</button>
+            </div>
+          </label>
+          <label class="asowp-template-field">
+            <span>{{ __("Select configuration", "all-signs-options-pro") }}</span>
+            <select v-model="importForm.configId">
+              <option value="0">{{ __("Search configuration", "all-signs-options-pro") }}</option>
+              <option v-for="config in configurations" :key="config.value" :value="config.value">{{ config.name }}</option>
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="asowp-template-form-card">
+        <div class="asowp-template-heading-row">
+          <div>
+            <h2>{{ __("Available JSON files", "all-signs-options-pro") }}</h2>
+            <p>{{ __("Quick access to JSON files already present in this shop library.", "all-signs-options-pro") }}</p>
           </div>
+          <span class="asowp-template-count-pill">0 {{ __("file", "all-signs-options-pro") }}</span>
+        </div>
+        <p class="asowp-template-muted">{{ __("No JSON file is currently available in the upload library for this shop.", "all-signs-options-pro") }}</p>
+      </section>
+      <section class="asowp-template-form-actions">
+        <button type="button" class="asowp-template-primary-button is-wide" @click="notifyUnavailable">
+          {{ __("Import templates", "all-signs-options-pro") }}
+        </button>
+      </section>
+    </template>
+
+    <template v-else-if="view === 'export'">
+      <section class="asowp-template-form-card is-title-only">
+        <h1>{{ __("Export Templates", "all-signs-options-pro") }}</h1>
+      </section>
+      <section class="asowp-template-form-card">
+        <div class="asowp-template-form-grid">
+          <label class="asowp-template-field">
+            <span>{{ __("Select configuration", "all-signs-options-pro") }}</span>
+            <select v-model="exportForm.configId">
+              <option value="0">{{ __("Search configuration", "all-signs-options-pro") }}</option>
+              <option v-for="config in configurations" :key="config.value" :value="config.value">{{ config.name }}</option>
+            </select>
+          </label>
+          <div class="asowp-template-field">
+            <span>{{ __("Export all templates of selected configuration", "all-signs-options-pro") }}</span>
+            <ToggleRow v-model="exportForm.allTemplates" label="" />
+          </div>
+          <label class="asowp-template-field asowp-template-field-wide">
+            <span>{{ __("Templates", "all-signs-options-pro") }}</span>
+            <select v-model="exportForm.templateId">
+              <option value="">{{ __("select template", "all-signs-options-pro") }}</option>
+              <option v-for="tpl in templates" :key="`${tpl.configId}-${tpl._index}`" :value="tpl._index">{{ tpl.name }}</option>
+            </select>
+          </label>
+        </div>
+      </section>
+      <section class="asowp-template-form-actions">
+        <button type="button" class="asowp-template-secondary-button" @click="view = 'list'">
+          <ArrowLeftIcon />
+          {{ __("Back", "all-signs-options-pro") }}
+        </button>
+        <button type="button" class="asowp-template-primary-button is-wide" @click="notifyUnavailable">
+          <SaveIcon />
+          {{ __("Export templates", "all-signs-options-pro") }}
+        </button>
+      </section>
+    </template>
+
+    <template v-else-if="view === 'library'">
+      <div class="asowp-template-library-layout">
+        <aside class="asowp-template-library-sidebar">
+          <h2>{{ __("Categories", "all-signs-options-pro") }}</h2>
+          <button type="button" class="is-active">{{ __("All", "all-signs-options-pro") }}</button>
+        </aside>
+        <div class="asowp-template-library-main">
+          <section class="asowp-template-library-header">
+            <h1>{{ __("Template Library", "all-signs-options-pro") }}</h1>
+            <div>
+              <button type="button" class="asowp-template-filter is-active">{{ __("All", "all-signs-options-pro") }}</button>
+              <button type="button" class="asowp-template-filter">{{ __("Free", "all-signs-options-pro") }}</button>
+              <button type="button" class="asowp-template-filter">{{ __("Basic", "all-signs-options-pro") }}</button>
+              <button type="button" class="asowp-template-filter">{{ __("Pro", "all-signs-options-pro") }}</button>
+              <button type="button" class="asowp-template-primary-button" @click="view = 'list'">{{ __("Back to Templates", "all-signs-options-pro") }}</button>
+            </div>
+          </section>
+          <section class="asowp-template-library-empty">
+            <h2>{{ __("No template packs available", "all-signs-options-pro") }}</h2>
+            <p>{{ __("There are no template packs available at the moment.", "all-signs-options-pro") }}</p>
+            <button type="button" class="asowp-template-primary-button" @click="view = 'list'">{{ __("Back to Templates", "all-signs-options-pro") }}</button>
+          </section>
         </div>
       </div>
-    </div>
+    </template>
 
-    <div v-if="openModal && isDelete" class="asowp-fixed asowp-inset-0 asowp-z-[1000]">
-      <div
-        class="asowp-fixed asowp-inset-0 asowp-bg-gray-500 asowp-bg-opacity-75"
-        @click="closeModal"
-      ></div>
-      <div
-        class="asowp-relative asowp-flex asowp-items-center asowp-justify-center asowp-min-h-screen asowp-px-4"
-      >
-        <div
-          class="asowp-bg-white asowp-p-6 asowp-rounded-xl asowp-shadow-xl asowp-w-full asowp-max-w-md"
-        >
-          <h3 class="asowp-text-lg asowp-font-bold asowp-mb-4">
-            {{ __("Are you sure?", "all-signs-options-pro") }}
-          </h3>
-          <p class="asowp-mb-6">
-            {{
-              __(
-                "Do you really want to delete this template? This action cannot be undone.",
-                "all-signs-options-pro"
-              )
-            }}
-          </p>
-          <div class="asowp-flex asowp-justify-end asowp-gap-3">
-            <button
-              @click="closeModal"
-              class="asowp-inline-flex asowp-items-center asowp-text-sm asowp-font-medium asowp-text-gray-700 asowp-bg-white asowp-border asowp-border-gray-300 asowp-px-4 asowp-py-2 asowp-rounded-lg hover:asowp-bg-gray-50 asowp-cursor-pointer"
-            >
-              {{ __("No, Cancel", "all-signs-options-pro") }}
-            </button>
-            <button
-              @click="deleteTemplate"
-              class="asowp-inline-flex asowp-items-center asowp-text-sm asowp-font-semibold asowp-text-white asowp-bg-red-600 asowp-border-none asowp-px-5 asowp-py-2 asowp-rounded-lg hover:asowp-bg-red-700 asowp-cursor-pointer"
-            >
-              {{ __("Yes, Delete", "all-signs-options-pro") }}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <TemplateThemeModal v-if="openThemeBlockModal" @close="openThemeBlockModal = false" />
+    <CategoryModal v-if="openCategoryModal" v-model="category" :loading="isLoading" @close="closeCategoryModal" @save="saveCategory" />
+    <DeleteModal v-if="openModal && isDelete" :loading="isLoading" @close="closeModal" @confirm="deleteTemplate" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { computed, defineComponent, h, onMounted, ref } from "vue";
+import {
+  ArrowLeftIcon,
+  DownloadIcon,
+  PanelTopIcon,
+  PencilIcon,
+  PlusIcon,
+  SaveIcon,
+  SearchIcon,
+  SettingsIcon,
+  Trash2Icon,
+  UploadIcon,
+  XIcon,
+} from "lucide-vue-next";
 import api from "@/admin/Api/api";
 import { __ } from "@wordpress/i18n";
 import toastMessage from "@/admin/utils/functions";
 import router from "@/admin/router";
+import asoLogo from "../../../../assets/images/im_asowp-icon.png";
 
-const isNewTemplate = ref(false);
-const openCategoryModal = ref(false);
-const openModal = ref(false);
-const category = ref("");
-const template = ref({
+const emptyTemplate = () => ({
   name: "",
   categoryId: "",
   configId: 0,
@@ -628,6 +323,15 @@ const template = ref({
     cartData: {},
   },
 });
+
+const view = ref("list");
+const openCategoryModal = ref(false);
+const openThemeBlockModal = ref(false);
+const openModal = ref(false);
+const category = ref("");
+const template = ref(emptyTemplate());
+const importForm = ref({ categoryId: "", configId: 0, file: "" });
+const exportForm = ref({ configId: 0, allTemplates: false, templateId: "" });
 const isEmptyName = ref(false);
 const isEmptyConfig = ref(false);
 const currencySumbol = asowp_data.currencySymbol;
@@ -644,36 +348,20 @@ const selectedCategory = ref("all");
 
 const categoryMap = computed(() => {
   const map = {};
-  if (Array.isArray(categories.value)) {
-    categories.value.forEach((cat) => {
-      map[cat.value] = cat.name;
-    });
-  }
-  return map;
-});
-
-const configurationMap = computed(() => {
-  const map = {};
-  if (Array.isArray(configurations.value)) {
-    configurations.value.forEach((config) => {
-      map[config.value] = config.name;
-    });
-  }
+  categories.value.forEach((cat) => {
+    map[cat.value] = cat.name;
+  });
   return map;
 });
 
 const filteredTemplates = computed(() => {
   let list = templates.value;
   if (selectedCategory.value !== "all") {
-    list = list.filter(
-      (tpl) => String(tpl.categoryId) === String(selectedCategory.value)
-    );
+    list = list.filter((tpl) => String(tpl.categoryId) === String(selectedCategory.value));
   }
   const term = search.value.trim().toLowerCase();
   if (term) {
-    list = list.filter((tpl) =>
-      (tpl.name || "").toLowerCase().includes(term)
-    );
+    list = list.filter((tpl) => (tpl.name || "").toLowerCase().includes(term));
   }
   return list;
 });
@@ -682,9 +370,7 @@ const normalizeTemplates = (result) => {
   const list = [];
   const groups = Array.isArray(result?.templates) ? result.templates : [];
   groups.forEach((group) => {
-    if (!Array.isArray(group)) {
-      return;
-    }
+    if (!Array.isArray(group)) return;
     group.forEach((tpl, index) => {
       if (tpl && typeof tpl === "object") {
         list.push({ ...tpl, _index: index });
@@ -696,339 +382,264 @@ const normalizeTemplates = (result) => {
 
 const normalizeCategories = (data) => {
   if (Array.isArray(data)) {
-    if (data.length === 0) {
-      return [];
-    }
-    if (Object.prototype.hasOwnProperty.call(data[0], "value")) {
-      return data;
-    }
+    if (data.length && Object.prototype.hasOwnProperty.call(data[0], "value")) return data;
+    return data.map((item) => ({ value: item.id ?? item.value, name: item.name ?? item.label ?? String(item) }));
   }
   if (data && typeof data === "object") {
-    return Object.keys(data).map((key) => ({
-      value: key,
-      name: data[key],
-    }));
+    return Object.keys(data).map((key) => ({ value: key, name: data[key] }));
   }
   return [];
 };
 
 const fetchTemplates = async (searchTerm = "") => {
   const query = searchTerm ? `?s=${encodeURIComponent(searchTerm)}` : "";
-  const result = await api.getAllTemplates(query);
-  templates.value = normalizeTemplates(result);
-  configurations.value = Array.isArray(result?.configurations)
-    ? result.configurations
-    : [];
-  categories.value = normalizeCategories(result?.categories);
+  try {
+    const result = await api.getAllTemplates(query);
+    templates.value = normalizeTemplates(result);
+    configurations.value = Array.isArray(result?.configurations) ? result.configurations : [];
+    categories.value = normalizeCategories(result?.categories);
+  } catch (error) {
+    toastMessage(__("Unable to load templates.", "all-signs-options-pro"), "error");
+  }
 };
 
 const handleSearchChange = async () => {
   isFetching.value = true;
-  await fetchTemplates(search.value.trim());
-  isFetching.value = false;
+  try {
+    await fetchTemplates(search.value.trim());
+  } finally {
+    isFetching.value = false;
+  }
 };
 
 const searchInputEmpty = async () => {
   if (search.value.trim() === "") {
     isFetching.value = true;
-    await fetchTemplates();
-    isFetching.value = false;
+    try {
+      await fetchTemplates();
+    } finally {
+      isFetching.value = false;
+    }
   }
 };
 
+const startCreateTemplate = () => {
+  isEdit.value = false;
+  template_id.value = null;
+  template.value = emptyTemplate();
+  view.value = "form";
+};
+
+const openImportView = () => {
+  importForm.value = { categoryId: categories.value[0]?.value || "", configId: configurations.value[0]?.value || 0, file: "" };
+  view.value = "import";
+};
+
+const openExportView = () => {
+  exportForm.value = { configId: configurations.value[0]?.value || 0, allTemplates: false, templateId: "" };
+  view.value = "export";
+};
+
+const openLibraryView = () => {
+  view.value = "library";
+};
+
+const notifyUnavailable = () => {
+  toastMessage(__("This action is not connected to a WordPress endpoint yet.", "all-signs-options-pro"), "warning");
+};
+
 const goToTemplate = (templateData, key) => {
-  router
-    .push("/configs/template/" + templateData.configId + "/" + key)
-    .then(() => {
-      window.location.reload();
-    });
+  router.push("/configs/template/" + templateData.configId + "/" + key).then(() => {
+    window.location.reload();
+  });
 };
 
 onMounted(async () => {
   isFetching.value = true;
-  await fetchTemplates();
-  isFetching.value = false;
+  try {
+    await fetchTemplates();
+  } finally {
+    isFetching.value = false;
+  }
 });
 
-const selectTemplatePrevImg = async (e) => {
-  e.preventDefault();
-  var uploader = wp
+const selectTemplatePrevImg = (e) => {
+  e?.preventDefault?.();
+  const uploader = wp
     .media({
       title: __("Select Template Preview Image", "all-signs-options-pro"),
-      button: {
-        text: __("Select Image", "all-signs-options-pro"),
-      },
+      button: { text: __("Select Image", "all-signs-options-pro") },
       multiple: false,
     })
-    .on("select", function () {
-      var selection = uploader.state().get("selection");
-      selection.map(function (attachment) {
-        attachment = attachment.toJSON();
-        if (attachment.type == "image") {
-          template.value.prevImg = attachment.url;
-        }
-      });
+    .on("select", () => {
+      const attachment = uploader.state().get("selection").first().toJSON();
+      if (attachment.type === "image") template.value.prevImg = attachment.url;
     })
     .open();
 };
 
-const selectTemplateRealImg = async (e) => {
-  e.preventDefault();
-  var uploader = wp
+const selectTemplateRealImg = (e) => {
+  e?.preventDefault?.();
+  const uploader = wp
     .media({
       title: __("Select Template Usage Image", "all-signs-options-pro"),
-      button: {
-        text: __("Select Image", "all-signs-options-pro"),
-      },
+      button: { text: __("Select Image", "all-signs-options-pro") },
       multiple: false,
     })
-    .on("select", function () {
-      var selection = uploader.state().get("selection");
-      selection.map(function (attachment) {
-        attachment = attachment.toJSON();
-        if (attachment.type == "image") {
-          template.value.realImg = attachment.url;
-        }
-      });
+    .on("select", () => {
+      const attachment = uploader.state().get("selection").first().toJSON();
+      if (attachment.type === "image") template.value.realImg = attachment.url;
+    })
+    .open();
+};
+
+const selectJsonFile = (e) => {
+  e?.preventDefault?.();
+  const uploader = wp
+    .media({
+      title: __("Select JSON file", "all-signs-options-pro"),
+      button: { text: __("Select JSON file", "all-signs-options-pro") },
+      multiple: false,
+    })
+    .on("select", () => {
+      const attachment = uploader.state().get("selection").first().toJSON();
+      importForm.value.file = attachment.url;
     })
     .open();
 };
 
 const saveCategory = async () => {
-  if (!category.value.trim()) {
-    return;
-  }
+  if (!category.value.trim()) return;
   isLoading.value = true;
-  const save = await api.createCategory(category.value);
-  if (save.success) {
-    categories.value = normalizeCategories(save.categories);
-    template.value.categoryId = save.key;
-    category.value = "";
-    isLoading.value = false;
-    closeCategoryModal();
-    toastMessage(save.message);
-  } else {
-    isLoading.value = false;
+  try {
+    const save = await api.createCategory(category.value);
+    if (save.success) {
+      categories.value = normalizeCategories(save.categories);
+      template.value.categoryId = save.key;
+      importForm.value.categoryId = save.key;
+      category.value = "";
+      closeCategoryModal();
+      toastMessage(save.message);
+      return;
+    }
     toastMessage(save.message, "error");
     closeCategoryModal();
-    category.value = "";
+  } catch (error) {
+    toastMessage(__("Unable to create category.", "all-signs-options-pro"), "error");
+  } finally {
+    isLoading.value = false;
   }
 };
 
 const saveTemplate = async () => {
   isEmptyName.value = false;
   isEmptyConfig.value = false;
-  if (template.value.name.trim() !== "" && template.value.configId != 0) {
-    isLoading.value = true;
+  if (template.value.configId == 0) {
+    isEmptyConfig.value = true;
+    return;
+  }
+  if (template.value.name.trim() === "") {
+    isEmptyName.value = true;
+    return;
+  }
+
+  isLoading.value = true;
+  try {
     const result = await api.createTemplate(template.value);
     if (result.success) {
       await fetchTemplates();
-      isLoading.value = false;
-      isNewTemplate.value = false;
+      view.value = "list";
       toastMessage(result.message);
-      template.value = {
-        name: "",
-        categoryId: "",
-        configId: 0,
-        basePrice: 0,
-        prevImg: "",
-        realImg: "",
-        enableAddToCart: false,
-        enablePreviewImage: false,
-        showOnFrontend: true,
-        data: {
-          templateData: {},
-          cartData: {},
-        },
-      };
-    } else {
-      isLoading.value = false;
-      isNewTemplate.value = false;
-      toastMessage(result.message);
-      template.value = {
-        name: "",
-        categoryId: "",
-        configId: 0,
-        basePrice: 0,
-        prevImg: "",
-        realImg: "",
-        enableAddToCart: false,
-        enablePreviewImage: false,
-        showOnFrontend: true,
-        data: {
-          templateData: {},
-          cartData: {},
-        },
-      };
+      template.value = emptyTemplate();
+      return;
     }
-  } else if (template.value.configId == 0) {
-    isEmptyConfig.value = true;
-  } else if (template.value.name.trim() == "") {
-    isEmptyName.value = true;
+    toastMessage(result.message, "error");
+  } catch (error) {
+    toastMessage(__("Unable to create template.", "all-signs-options-pro"), "error");
+  } finally {
+    isLoading.value = false;
   }
 };
 
-const selectTemplate = async (key, temp, del = false) => {
-  if (del) {
-    isDelete.value = true;
-    openModal.value = true;
-  } else {
-    isEdit.value = true;
-    isNewTemplate.value = true;
-  }
+const selectTemplate = (key, temp, del = false) => {
   template_id.value = key;
-  template.value = { showOnFrontend: true, ...temp };
+  template.value = { ...emptyTemplate(), ...temp };
   delete template.value._index;
   isEmptyName.value = false;
   isEmptyConfig.value = false;
+  if (del) {
+    isDelete.value = true;
+    openModal.value = true;
+    return;
+  }
+  isEdit.value = true;
+  view.value = "form";
 };
 
 const updateTemplate = async () => {
   isEmptyName.value = false;
   isEmptyConfig.value = false;
-  if (template.value.name.trim() !== "" && template.value.configId != 0) {
-    isLoading.value = true;
+  if (template.value.configId == 0) {
+    isEmptyConfig.value = true;
+    return;
+  }
+  if (template.value.name.trim() === "") {
+    isEmptyName.value = true;
+    return;
+  }
+
+  isLoading.value = true;
+  try {
     const result = await api.updateTemplate(template_id.value, template.value);
     if (result.success) {
       await fetchTemplates();
-      isLoading.value = false;
-      isNewTemplate.value = false;
+      view.value = "list";
       isEdit.value = false;
       template_id.value = null;
-      if (result.success == true) {
-        toastMessage(result.message);
-      } else {
-        toastMessage(result.message, "warning");
-      }
-      template.value = {
-        name: "",
-        categoryId: "",
-        configId: 0,
-        basePrice: 0,
-        prevImg: "",
-        realImg: "",
-        enableAddToCart: false,
-        enablePreviewImage: false,
-        showOnFrontend: true,
-        data: {
-          templateData: {},
-          cartData: {},
-        },
-      };
-    } else {
-      isLoading.value = false;
-      isNewTemplate.value = false;
-      isEdit.value = false;
-      template_id.value = null;
-      toastMessage(result.message, "error");
-      template.value = {
-        name: "",
-        categoryId: "",
-        configId: 0,
-        basePrice: 0,
-        prevImg: "",
-        realImg: "",
-        enableAddToCart: false,
-        enablePreviewImage: false,
-        showOnFrontend: true,
-        data: {
-          templateData: {},
-          cartData: {},
-        },
-      };
+      toastMessage(result.message, result.success === true ? undefined : "warning");
+      template.value = emptyTemplate();
+      return;
     }
-  } else if (template.value.configId == 0) {
-    isEmptyConfig.value = true;
-  } else if (template.value.name.trim() == "") {
-    isEmptyName.value = true;
+    toastMessage(result.message, "error");
+  } catch (error) {
+    toastMessage(__("Unable to update template.", "all-signs-options-pro"), "error");
+  } finally {
+    isLoading.value = false;
   }
 };
 
 const saveOrUpdate = () => {
-  if (isEdit.value) {
-    updateTemplate();
-  } else {
-    saveTemplate();
-  }
+  if (isEdit.value) updateTemplate();
+  else saveTemplate();
 };
 
 const deleteTemplate = async () => {
   isLoading.value = true;
-  const result = await api.deleteTemplate(
-    template.value.configId,
-    template_id.value
-  );
-  if (result.success) {
-    await fetchTemplates();
-    isLoading.value = false;
-    isDelete.value = false;
-    template_id.value = null;
-    openModal.value = false;
-    if (result.success == true) {
-      toastMessage(result.message);
-    } else {
-      toastMessage(result.message, "warning");
+  try {
+    const result = await api.deleteTemplate(template.value.configId, template_id.value);
+    if (result.success) {
+      await fetchTemplates();
+      closeModal();
+      toastMessage(result.message, result.success === true ? undefined : "warning");
+      return;
     }
-    template.value = {
-      name: "",
-      categoryId: "",
-      configId: 0,
-      basePrice: 0,
-      prevImg: "",
-      realImg: "",
-      enableAddToCart: false,
-      enablePreviewImage: false,
-      showOnFrontend: true,
-      data: {
-        templateData: {},
-        cartData: {},
-      },
-    };
-  } else {
-    isLoading.value = false;
-    isDelete.value = false;
-    template_id.value = null;
-    openModal.value = false;
+    closeModal();
     toastMessage(result.message, "error");
-    template.value = {
-      name: "",
-      categoryId: "",
-      configId: 0,
-      basePrice: 0,
-      realImg: "",
-      prevImg: "",
-      enableAddToCart: false,
-      enablePreviewImage: false,
-      showOnFrontend: true,
-      data: {
-        templateData: {},
-        cartData: {},
-      },
-    };
+  } catch (error) {
+    closeModal();
+    toastMessage(__("Unable to delete template.", "all-signs-options-pro"), "error");
+  } finally {
+    isLoading.value = false;
   }
 };
 
 const back = () => {
-  isNewTemplate.value = false;
+  view.value = "list";
   isLoading.value = false;
   isDelete.value = false;
   template_id.value = null;
   isEdit.value = false;
-  template.value = {
-    name: "",
-    categoryId: "",
-    configId: 0,
-    basePrice: 0,
-    prevImg: "",
-    realImg: "",
-    enableAddToCart: false,
-    enablePreviewImage: false,
-    showOnFrontend: true,
-    data: {
-      templateData: {},
-      cartData: {},
-    },
-  };
+  template.value = emptyTemplate();
   category.value = "";
   isEmptyName.value = false;
   isEmptyConfig.value = false;
@@ -1041,21 +652,767 @@ const closeCategoryModal = () => {
 
 const closeModal = () => {
   openModal.value = false;
-  template.value = {
-    name: "",
-    categoryId: "",
-    configId: 0,
-    basePrice: 0,
-    prevImg: "",
-    realImg: "",
-    enableAddToCart: false,
-    enablePreviewImage: false,
-    showOnFrontend: true,
-    data: {
-      templateData: {},
-      cartData: {},
-    },
-  };
+  template.value = emptyTemplate();
   isDelete.value = false;
+  template_id.value = null;
 };
+
+const ToggleRow = defineComponent({
+  props: {
+    modelValue: { type: Boolean, default: false },
+    label: { type: String, default: "" },
+  },
+  emits: ["update:modelValue"],
+  setup(props, { emit }) {
+    return () =>
+      h("label", { class: "asowp-template-toggle-row" }, [
+        props.label ? h("span", props.label) : null,
+        h("button", {
+          type: "button",
+          class: ["asowp-template-toggle", { "is-on": props.modelValue }],
+          onClick: () => emit("update:modelValue", !props.modelValue),
+        }, [h("span")]),
+      ]);
+  },
+});
+
+const ImageUploadControl = defineComponent({
+  props: {
+    label: { type: String, required: true },
+    image: { type: String, default: "" },
+  },
+  emits: ["choose"],
+  setup(props, { emit }) {
+    return () =>
+      h("div", { class: "asowp-template-upload-control" }, [
+        h("button", { type: "button", onClick: (event) => emit("choose", event) }, props.label),
+        h("span", { class: "asowp-template-upload-preview" }, props.image ? [h("img", { src: props.image, alt: "" })] : []),
+      ]);
+  },
+});
+
+const ActionHeader = defineComponent({
+  props: {
+    title: { type: String, required: true },
+    description: { type: String, default: "" },
+  },
+  emits: ["cancel"],
+  setup(props, { emit }) {
+    return () =>
+      h("section", { class: "asowp-template-form-card asowp-template-action-header" }, [
+        h("div", [h("h1", props.title), props.description ? h("p", props.description) : null]),
+        h("button", { type: "button", onClick: () => emit("cancel") }, __("Cancel", "all-signs-options-pro")),
+      ]);
+  },
+});
+
+const TemplateThemeModal = defineComponent({
+  emits: ["close"],
+  setup(_, { emit }) {
+    return () =>
+      h("div", { class: "asowp-template-modal-layer" }, [
+        h("div", { class: "asowp-template-modal-backdrop", onClick: () => emit("close") }),
+        h("div", { class: "asowp-template-modal is-medium" }, [
+          h("header", [h("h2", "Templates List Block"), h("button", { type: "button", onClick: () => emit("close") }, [h(XIcon)])]),
+          h("div", { class: "asowp-template-modal-body" }, [
+            h("p", "This will open the theme editor and add the Templates List block to the product template. You can then place it and save."),
+            h("button", { type: "button", class: "asowp-template-primary-button is-full", onClick: () => emit("close") }, "Embed Now"),
+          ]),
+          h("footer", [h("button", { type: "button", class: "asowp-template-secondary-button", onClick: () => emit("close") }, "cancel")]),
+        ]),
+      ]);
+  },
+});
+
+const CategoryModal = defineComponent({
+  props: {
+    modelValue: { type: String, default: "" },
+    loading: { type: Boolean, default: false },
+  },
+  emits: ["update:modelValue", "close", "save"],
+  setup(props, { emit }) {
+    return () =>
+      h("div", { class: "asowp-template-modal-layer" }, [
+        h("div", { class: "asowp-template-modal-backdrop", onClick: () => emit("close") }),
+        h("div", { class: "asowp-template-modal" }, [
+          h("header", [h("h2", "Create new category"), h("button", { type: "button", onClick: () => emit("close") }, [h(XIcon)])]),
+          h("div", { class: "asowp-template-modal-body" }, [
+            h("label", { class: "asowp-template-field" }, [
+              h("span", "Name"),
+              h("input", { value: props.modelValue, onInput: (event) => emit("update:modelValue", event.target.value) }),
+            ]),
+          ]),
+          h("footer", [
+            h("button", { type: "button", class: "asowp-template-secondary-button", onClick: () => emit("close") }, "cancel"),
+            h("button", { type: "button", class: "asowp-template-primary-button", disabled: props.loading, onClick: () => emit("save") }, props.loading ? "Creating..." : "Create"),
+          ]),
+        ]),
+      ]);
+  },
+});
+
+const DeleteModal = defineComponent({
+  props: {
+    loading: { type: Boolean, default: false },
+  },
+  emits: ["close", "confirm"],
+  setup(props, { emit }) {
+    return () =>
+      h("div", { class: "asowp-template-modal-layer" }, [
+        h("div", { class: "asowp-template-modal-backdrop", onClick: () => emit("close") }),
+        h("div", { class: "asowp-template-modal" }, [
+          h("header", [h("h2", "Delete template?"), h("button", { type: "button", onClick: () => emit("close") }, [h(XIcon)])]),
+          h("div", { class: "asowp-template-modal-body" }, [h("p", "This action cannot be undone.")]),
+          h("footer", [
+            h("button", { type: "button", class: "asowp-template-secondary-button", onClick: () => emit("close") }, "Cancel"),
+            h("button", { type: "button", class: "asowp-template-danger-button", disabled: props.loading, onClick: () => emit("confirm") }, props.loading ? "Deleting..." : "Delete"),
+          ]),
+        ]),
+      ]);
+  },
+});
 </script>
+
+<style>
+.asowp-template-module,
+.asowp-template-module * {
+  box-sizing: border-box;
+}
+
+.asowp-template-module {
+  display: grid;
+  gap: 16px;
+}
+
+.asowp-template-toolbar-card,
+.asowp-template-list-card,
+.asowp-template-form-card,
+.asowp-template-form-actions,
+.asowp-template-library-sidebar,
+.asowp-template-library-header,
+.asowp-template-library-empty {
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.asowp-template-toolbar-card,
+.asowp-template-form-card {
+  padding: 24px 28px;
+}
+
+.asowp-template-list-card {
+  min-height: 520px;
+  padding: 24px 28px;
+}
+
+.asowp-template-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.asowp-template-toolbar-card h1,
+.asowp-template-list-card h2,
+.asowp-template-form-card h1,
+.asowp-template-form-card h2,
+.asowp-template-library-header h1 {
+  margin: 0;
+  color: #202223;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.asowp-template-list-card h2,
+.asowp-template-form-card h2 {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.asowp-template-toolbar-card p,
+.asowp-template-form-card p,
+.asowp-template-library-empty p,
+.asowp-template-muted {
+  margin: 4px 0 0;
+  color: #616161;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.asowp-template-count-pill {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 18px;
+  padding: 0 8px;
+  color: #0b4f8a;
+  background: #d9ebff;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.asowp-template-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.asowp-template-input,
+.asowp-template-search,
+.asowp-template-field input,
+.asowp-template-field select {
+  height: 36px;
+  color: #202223;
+  background: #ffffff;
+  border: 1px solid #8c9196;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 18px;
+  outline: none;
+  box-shadow: none;
+}
+
+.asowp-template-select {
+  min-width: 220px;
+  padding: 0 12px;
+}
+
+.asowp-template-search {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  width: 240px;
+  padding: 0 10px;
+}
+
+.asowp-template-search svg {
+  width: 15px;
+  height: 15px;
+  color: #6d7175;
+}
+
+.asowp-template-search input {
+  width: 100%;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  font-size: 13px;
+}
+
+.asowp-template-primary-button,
+.asowp-template-secondary-button,
+.asowp-template-danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 13px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+}
+
+.asowp-template-primary-button svg,
+.asowp-template-secondary-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.asowp-template-primary-button {
+  color: #ffffff;
+  background: #007a6f;
+  border: 1px solid #006e52;
+}
+
+.asowp-template-primary-button:hover,
+.asowp-template-primary-button:focus,
+.asowp-template-primary-button:active {
+  color: #ffffff;
+  background: #006e52;
+  border-color: #005c45;
+  box-shadow: none;
+}
+
+.asowp-template-primary-button.is-compact {
+  min-height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.asowp-template-primary-button.is-wide {
+  min-width: 150px;
+}
+
+.asowp-template-primary-button.is-full {
+  width: 100%;
+}
+
+.asowp-template-secondary-button {
+  color: #202223;
+  background: #ffffff;
+  border: 1px solid #8c9196;
+}
+
+.asowp-template-secondary-button:hover,
+.asowp-template-secondary-button:focus,
+.asowp-template-secondary-button:active {
+  color: #202223;
+  background: #ffffff;
+  border-color: #6d7175;
+  box-shadow: none;
+}
+
+.asowp-template-danger-button {
+  color: #ffffff;
+  background: #8e1f0b;
+  border: 1px solid #7a1a09;
+}
+
+.asowp-template-empty {
+  min-height: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.asowp-template-empty img {
+  width: min(440px, 58vw);
+  max-height: 280px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.asowp-template-empty h3 {
+  margin: 0;
+  color: #202223;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.asowp-template-empty p {
+  max-width: 420px;
+  margin: 4px 0 16px;
+  color: #616161;
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.asowp-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.asowp-template-item {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+}
+
+.asowp-template-preview {
+  aspect-ratio: 4 / 3;
+  background: #f6f6f7;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.asowp-template-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asowp-template-item-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+}
+
+.asowp-template-item-body h3 {
+  margin: 0;
+  color: #202223;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.asowp-template-item-body p {
+  margin: 2px 0 0;
+  color: #616161;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.asowp-template-item-body span {
+  flex-shrink: 0;
+  align-self: start;
+  padding: 2px 8px;
+  color: #8e1f0b;
+  background: #fff1f0;
+  border-radius: 999px;
+  font-size: 11px;
+}
+
+.asowp-template-item-actions {
+  display: flex;
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+
+.asowp-template-item-actions button {
+  width: 30px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #5c5f62;
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.asowp-template-item-actions svg {
+  width: 14px;
+  height: 14px;
+}
+
+.asowp-template-form-card.is-title-only {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.asowp-template-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 30px;
+}
+
+.asowp-template-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #202223;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.asowp-template-field input,
+.asowp-template-field select {
+  width: 100%;
+  padding: 0 12px;
+}
+
+.asowp-template-field small {
+  color: #bf0711;
+}
+
+.asowp-template-field-wide {
+  grid-column: 1 / -1;
+}
+
+.asowp-template-inline-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  align-items: center;
+}
+
+.asowp-template-upload-control {
+  display: grid;
+  grid-template-columns: auto 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 4px;
+  background: #ffffff;
+  border: 1px solid #202223;
+  border-radius: 5px;
+}
+
+.asowp-template-upload-control button {
+  min-height: 34px;
+  width: auto;
+  max-width: 240px;
+  padding: 6px 14px;
+  color: #ffffff;
+  background: #007a6f;
+  border: 1px solid #006e52;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.asowp-template-upload-preview {
+  width: 38px;
+  height: 38px;
+  justify-self: end;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 7px;
+}
+
+.asowp-template-upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asowp-template-toggles {
+  justify-content: center;
+  gap: 16px;
+}
+
+.asowp-template-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #202223;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.asowp-template-toggle {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  padding: 0;
+  background: #d2d8e5;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.asowp-template-toggle span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 160ms ease;
+}
+
+.asowp-template-toggle.is-on {
+  background: #008060;
+}
+
+.asowp-template-toggle.is-on span {
+  transform: translateX(16px);
+}
+
+.asowp-template-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 14px 28px;
+  border-radius: 0;
+}
+
+.asowp-template-action-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.asowp-template-action-header button {
+  min-height: 28px;
+  padding: 4px 12px;
+  color: #202223;
+  background: #ffffff;
+  border: 1px solid #c9cccf;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.asowp-template-library-layout {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 30px;
+}
+
+.asowp-template-library-sidebar {
+  min-height: 400px;
+  padding: 38px;
+}
+
+.asowp-template-library-sidebar h2 {
+  margin: 0 0 18px;
+  font-size: 15px;
+}
+
+.asowp-template-library-sidebar button,
+.asowp-template-filter {
+  min-height: 36px;
+  padding: 8px 16px;
+  color: #202223;
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.asowp-template-library-sidebar button.is-active,
+.asowp-template-filter.is-active {
+  color: #0b3b8c;
+  background: #edf4ff;
+}
+
+.asowp-template-library-main {
+  display: grid;
+  gap: 20px;
+}
+
+.asowp-template-library-header {
+  min-height: 82px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.asowp-template-library-header > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.asowp-template-library-empty {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.asowp-template-library-empty h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.asowp-template-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.asowp-template-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.asowp-template-modal {
+  position: relative;
+  width: min(480px, calc(100vw - 32px));
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
+}
+
+.asowp-template-modal.is-medium {
+  width: min(520px, calc(100vw - 32px));
+}
+
+.asowp-template-modal header,
+.asowp-template-modal footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 22px;
+  border-bottom: 1px solid #dfe3e8;
+}
+
+.asowp-template-modal footer {
+  justify-content: flex-end;
+  border-top: 1px solid #dfe3e8;
+  border-bottom: 0;
+}
+
+.asowp-template-modal h2 {
+  margin: 0;
+  color: #202223;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.asowp-template-modal header button {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #8c9196;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.asowp-template-modal header svg {
+  width: 20px;
+  height: 20px;
+}
+
+.asowp-template-modal-body {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.asowp-template-modal-body p {
+  margin: 0;
+  color: #616161;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+@media (max-width: 1100px) {
+  .asowp-template-form-grid,
+  .asowp-template-library-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .asowp-template-library-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>

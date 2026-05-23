@@ -118,6 +118,8 @@ module.exports = {
 
   plugins,
 
+  devtool: devMode ? "eval-cheap-module-source-map" : false,
+
   module: {
     rules: [
       {

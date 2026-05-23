@@ -26863,4 +26863,26 @@ const fontData = [
     isGoogleFont: false,
   },
 ];
-export { signageOption, configurationDemoData, fontData };
+
+const legacyWizardProductNames = new Set([
+  "door signs",
+  "name badges",
+  "double-sided signs",
+  "house signs",
+  "a-boards",
+]);
+
+const sanitizedSignageOption = {
+  ...signageOption,
+  productCategories: (signageOption.productCategories || []).map((category) => ({
+    ...category,
+    productGroups: (category.productGroups || []).map((group) => ({
+      ...group,
+      products: (group.products || []).filter(
+        (product) => !legacyWizardProductNames.has(String(product?.name || "").toLowerCase())
+      ),
+    })),
+  })),
+};
+
+export { sanitizedSignageOption as signageOption, configurationDemoData, fontData };

@@ -88,11 +88,28 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
     {
         $id = $request->get_param('config_id');
         $theme_colors = json_decode($request->get_body(), true);
+        if (!is_array($theme_colors)) {
+            $theme_colors = array();
+        }
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
-                if ($theme_colors != $meta_value["data"]["settings"]["themeColors"]) {
+                if (!is_array($meta_value)) {
+                    $meta_value = array();
+                }
+                if (!isset($meta_value["data"]) || !is_array($meta_value["data"])) {
+                    $meta_value["data"] = array();
+                }
+                if (!isset($meta_value["data"]["settings"]) || !is_array($meta_value["data"]["settings"])) {
+                    $meta_value["data"]["settings"] = array();
+                }
+
+                $current_theme_colors = isset($meta_value["data"]["settings"]["themeColors"]) && is_array($meta_value["data"]["settings"]["themeColors"])
+                    ? $meta_value["data"]["settings"]["themeColors"]
+                    : array();
+
+                if ($theme_colors != $current_theme_colors) {
                     $meta_value["data"]["settings"]["themeColors"] = $theme_colors;
                     $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
                     if ($response) {

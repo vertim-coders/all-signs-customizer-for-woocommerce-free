@@ -1,58 +1,1279 @@
 <template>
-    <div v-if="!isFetching" class="asowp-space-y-1 asowp-sticky asowp-top-[124px] asowp-z-[999] asowp-w-full asowp-shadow-md asowp-translate-y-2">
-        <div class="asowp-bg-[#F4F4F4] asowp-p-2 asowp-space-x-6 asowp-justify-center asowp-items-center asowp-flex asowp-border-solid asowp-border-[1px] asowp-border-[#DDDDDD]">
-            <div class="">
-                <button @click="()=>{showStep = 'product'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'product' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    {{ __("Product", "all-signs-options-pro") }}
-                </button>
-            </div>
-            <div class="">
-                <button @click="()=>{showStep = 'output'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'output' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    {{ __("Output", "all-signs-options-pro") }}
-                </button>
-            </div>
-            <div class="">
-                <button @click="()=>{showStep = 'mobiles-options'}" :class="`asowp-flex asowp-text-[12px] asowp-px-6 asowp-p-2 asowp-w-fit asowp-h-fit asowp-bg-white asowp-rounded asowp-border-none asowp-text-black asowp-font-semibold ${ showStep== 'mobiles-options' ?'asowp-font-bold asowp-text-[#016464] asowp-bg-[#E1E1E1]':''} hover:asowp-bg-[#E1E1E1] hover:asowp-text-[#016464] asowp-cursor-pointer`">
-                    {{ __("Mobile options", "all-signs-options-pro") }}
-                </button>
-            </div>
-        </div>
+  <div class="asowp-general">
+    <div v-if="isFetching" class="asowp-general-card asowp-general-loading">
+      <img src="../../../../../../assets/icons/ic_loading.svg" alt="" />
     </div>
-    <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
-        <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../assets/icons/ic_loading.svg" alt="">
-    </div>
-    <div v-if="!isFetching">
-        <Product v-if="showStep == 'product'" :data="generals.product" :fetch-settings="fetchGeneralSettings"/>
-        <Output v-if="showStep == 'output'" :data="generals.output" :fetch-settings="fetchGeneralSettings"/>
-        <Mobile v-if="showStep == 'mobiles-options'" :data="generals.mobile" :fetch-settings="fetchGeneralSettings"/>
-    </div>
-</template>
-<script setup>
-import Product from './product.vue'
-import Output from './output.vue'
-import Mobile from './mobiles-options.vue';
-import { useRoute } from 'vue-router';
-import { onMounted, ref } from 'vue';
-import api from '@/admin/Api/api';
 
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-const showStep = ref('product');
-const isFetching = ref(false);
-const generals = ref({});
-const route = useRoute()
+    <div v-else class="asowp-general-layout">
+      <div class="asowp-general-main">
+        <header class="asowp-general-card asowp-general-hero">
+          <h1>{{ __('General', 'all-signs-options-pro') }}</h1>
+          <p>{{ __('Work with the classic configuration settings in one page. Each block writes directly into the existing classic settings data.', 'all-signs-options-pro') }}</p>
+        </header>
+
+        <section id="asowp-general-product" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Product', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Storefront and add-to-cart behavior, aligned with the standard ASO product settings.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('product')">
+              {{ openSections.product ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.product" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+
+          <div v-if="openSections.product">
+            <div class="asowp-product-grid">
+              <article v-for="item in productCards" :key="item.key" class="asowp-product-option">
+                <h3>{{ item.title }}</h3>
+                <label class="asowp-switch">
+                  <input type="checkbox" :checked="Boolean(product[item.key])" @change="item.radio ? setProductRedirect(item.key) : product[item.key] = $event.target.checked">
+                  <span></span>
+                </label>
+                <div class="asowp-option-rule"></div>
+                <p>{{ item.description }}</p>
+              </article>
+            </div>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'product'" @click="saveProduct">
+                <Loader2Icon v-if="savingSection === 'product'" class="asowp-spin" />
+                {{ __('Save Product', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-mode" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Mode', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Single or multi-selection behavior and share/save capabilities.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('mode')">
+              {{ openSections.mode ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.mode" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+
+          <div v-if="openSections.mode" class="asowp-nested-card">
+            <div class="asowp-general-section-head asowp-nested-head">
+              <div>
+                <h3>{{ __('Mode', 'all-signs-options-pro') }}</h3>
+                <p>{{ __('Control customization mode and customer share/save capabilities.', 'all-signs-options-pro') }}</p>
+              </div>
+              <button type="button" class="asowp-general-collapse" @click="toggleNested('mode')">
+                {{ nestedSections.mode ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+                <ChevronUpIcon v-if="nestedSections.mode" />
+                <ChevronDownIcon v-else />
+              </button>
+            </div>
+            <div v-if="nestedSections.mode">
+              <div class="asowp-toggle-row">
+                <div>
+                  <strong>{{ __('Allow Share', 'all-signs-options-pro') }}</strong>
+                  <p>{{ __('Let customers share the configured sign.', 'all-signs-options-pro') }}</p>
+                </div>
+                <label class="asowp-switch"><input type="checkbox" v-model="mode.shareAndSave.allowShare"><span></span></label>
+              </div>
+              <div class="asowp-toggle-row">
+                <div>
+                  <strong>{{ __('Allow Save', 'all-signs-options-pro') }}</strong>
+                  <p>{{ __('Let customers save their configuration for later.', 'all-signs-options-pro') }}</p>
+                </div>
+                <label class="asowp-switch"><input type="checkbox" v-model="mode.shareAndSave.allowSave"><span></span></label>
+              </div>
+              <label class="asowp-field">
+                <span>{{ __('Share Sign Location', 'all-signs-options-pro') }}</span>
+                <select v-model="mode.shareAndSave.shareSignLocation" class="asowp-shopify-input">
+                  <option value="options_review">{{ __('Options + Review', 'all-signs-options-pro') }}</option>
+                  <option value="review_only">{{ __('Review only', 'all-signs-options-pro') }}</option>
+                </select>
+              </label>
+              <div class="asowp-save-row">
+                <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'mode'" @click="saveGenericSection('mode', mode)">
+                  <Loader2Icon v-if="savingSection === 'mode'" class="asowp-spin" />
+                  {{ __('Save Mode', 'all-signs-options-pro') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-output" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Output', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Output formats, watermark and generated file settings.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('output')">
+              {{ openSections.output ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.output" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+
+          <div v-if="openSections.output" class="asowp-form-stack">
+            <label class="asowp-field">
+              <span>{{ __('Output files format', 'all-signs-options-pro') }}</span>
+              <select v-model="output.filesFormat" class="asowp-shopify-input">
+                <option value="png">PNG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="svg">SVG</option>
+                <option value="png+jpeg">PNG + JPEG</option>
+                <option value="png+svg">PNG + SVG</option>
+                <option value="jpeg+svg">JPEG + SVG</option>
+              </select>
+            </label>
+            <label class="asowp-field">
+              <span>{{ __('PDF Quality (DPI)', 'all-signs-options-pro') }}</span>
+              <select v-model="output.pdfQuality" class="asowp-shopify-input">
+                <option value="150">150 DPI</option>
+                <option value="300">300 DPI (Quality Print)</option>
+                <option value="600">600 DPI</option>
+              </select>
+            </label>
+            <div class="asowp-field">
+              <span>{{ __('Watermark', 'all-signs-options-pro') }}</span>
+              <div class="asowp-upload-control">
+                <button type="button" class="asowp-shopify-button-primary" @click="selectWaterMarkImage">{{ __('Upload image', 'all-signs-options-pro') }}</button>
+                <div class="asowp-upload-preview">
+                  <img v-if="output.waterMark" :src="output.waterMark" alt="">
+                  <button v-if="output.waterMark" type="button" @click="output.waterMark = ''">x</button>
+                </div>
+              </div>
+            </div>
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Zip output files', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Package generated output files into a zip archive.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="output.zipOutputFiles.active"><span></span></label>
+            </div>
+            <label class="asowp-field">
+              <span>{{ __('Zip output folder prefix', 'all-signs-options-pro') }}</span>
+              <input v-model="output.zipOutputFiles.zipOutFolderPrefix" class="asowp-shopify-input" type="text">
+            </label>
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Design composition', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Include design composition details in the order output.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="output.designComposition"><span></span></label>
+            </div>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'output'" @click="saveOutput">
+                <Loader2Icon v-if="savingSection === 'output'" class="asowp-spin" />
+                {{ __('Save Output', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-upload" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Upload Design', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Allowed upload formats, size limits and archive rules.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('upload')">
+              {{ openSections.upload ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.upload" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+
+          <div v-if="openSections.upload" class="asowp-form-stack">
+            <div class="asowp-field">
+              <span>{{ __('Allowed upload formats', 'all-signs-options-pro') }}</span>
+              <div class="asowp-chip-box">
+                <span v-for="format in uploadDesign.allowedFormats" :key="format" class="asowp-chip">{{ format }} <button type="button" @click="removeChip(uploadDesign.allowedFormats, format)">x</button></span>
+                <select class="asowp-chip-select" @change="addChip(uploadDesign.allowedFormats, $event)">
+                  <option value="">{{ __('Select allowed upload formats', 'all-signs-options-pro') }}</option>
+                  <option v-for="format in uploadFormatOptions" :key="format" :value="format">{{ format }}</option>
+                </select>
+              </div>
+              <p>{{ __('Choose the upload formats allowed for customer files.', 'all-signs-options-pro') }}</p>
+            </div>
+            <div class="asowp-two-columns">
+              <label class="asowp-field">
+                <span>{{ __('Maximum upload size (MB)', 'all-signs-options-pro') }}</span>
+                <input v-model.number="uploadDesign.maxUploadSize" class="asowp-shopify-input" type="number">
+              </label>
+              <label class="asowp-field">
+                <span>{{ __('Maximum upload number', 'all-signs-options-pro') }}</span>
+                <input v-model.number="uploadDesign.maxUploadNumber" class="asowp-shopify-input" type="number">
+              </label>
+            </div>
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Zip output files', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Package customer uploads in a zip file when needed.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="uploadDesign.zipOutputFiles"><span></span></label>
+            </div>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'uploadDesign'" @click="saveGenericSection('uploadDesign', uploadDesign)">
+                <Loader2Icon v-if="savingSection === 'uploadDesign'" class="asowp-spin" />
+                {{ __('Save Upload', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-quantity" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Quantity Limits', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Minimum and maximum quantities allowed for this configuration.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('quantity')">
+              {{ openSections.quantity ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.quantity" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+          <div v-if="openSections.quantity" class="asowp-form-stack">
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Enable quantity limits', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Restrict customer orders to a minimum and maximum quantity.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="quantityLimits.enabled"><span></span></label>
+            </div>
+            <div v-if="quantityLimits.enabled" class="asowp-two-columns">
+              <label class="asowp-field"><span>{{ __('Minimum quantity', 'all-signs-options-pro') }}</span><input v-model.number="quantityLimits.minimum" class="asowp-shopify-input" type="number"></label>
+              <label class="asowp-field"><span>{{ __('Maximum quantity', 'all-signs-options-pro') }}</span><input v-model.number="quantityLimits.maximum" class="asowp-shopify-input" type="number"></label>
+            </div>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'quantityLimits'" @click="saveGenericSection('quantityLimits', quantityLimits)">
+                <Loader2Icon v-if="savingSection === 'quantityLimits'" class="asowp-spin" />
+                {{ __('Save Quantity Limits', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-discount" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Discount', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Choose between a simple discount or quantity-based discount lots.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('discount')">
+              {{ openSections.discount ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.discount" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+          <div v-if="openSections.discount" class="asowp-form-stack">
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Discount by quantity', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Turn this on if discounts should depend on ordered quantity.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="discount.byQuantity"><span></span></label>
+            </div>
+            <label class="asowp-field">
+              <span>{{ __('Discount type', 'all-signs-options-pro') }}</span>
+              <select v-model="discount.type" class="asowp-shopify-input">
+                <option value="none">{{ __('None', 'all-signs-options-pro') }}</option>
+                <option value="percent">{{ __('Percentage', 'all-signs-options-pro') }}</option>
+                <option value="fixed">{{ __('Fixed', 'all-signs-options-pro') }}</option>
+              </select>
+            </label>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'discount'" @click="saveGenericSection('discount', discount)">
+                <Loader2Icon v-if="savingSection === 'discount'" class="asowp-spin" />
+                {{ __('Save Discount', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-mobile" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Mobile Option', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Mobile navigation and selection display preferences.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('mobile')">
+              {{ openSections.mobile ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.mobile" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+          <div v-if="openSections.mobile" class="asowp-form-stack">
+            <label class="asowp-field">
+              <span>{{ __('Show Navigation Menu on Mobile', 'all-signs-options-pro') }}</span>
+              <select v-model="mobile.showNavigatorMenu" class="asowp-shopify-input">
+                <option value="off">{{ __('Off', 'all-signs-options-pro') }}</option>
+                <option value="on">{{ __('On', 'all-signs-options-pro') }}</option>
+              </select>
+              <p>{{ __('Display a navigation menu of the selections on mobile.', 'all-signs-options-pro') }}</p>
+            </label>
+            <label class="asowp-field">
+              <span>{{ __('Show Navigation Menu First', 'all-signs-options-pro') }}</span>
+              <select v-model="mobile.showNavigationMenuFirst" class="asowp-shopify-input">
+                <option value="yes">{{ __('Yes', 'all-signs-options-pro') }}</option>
+                <option value="no">{{ __('No', 'all-signs-options-pro') }}</option>
+              </select>
+              <p>{{ __('Allow customers to jump to a selection from the mobile menu before seeing the first option block.', 'all-signs-options-pro') }}</p>
+            </label>
+            <label class="asowp-field">
+              <span>{{ __('Mobile Selection Options Display', 'all-signs-options-pro') }}</span>
+              <select v-model="mobile.mobileSelectionOptionsDisplay" class="asowp-shopify-input">
+                <option value="horizontally-stack">{{ __('Horizontally Stack', 'all-signs-options-pro') }}</option>
+                <option value="scroll">{{ __('Scroll', 'all-signs-options-pro') }}</option>
+              </select>
+              <p>{{ __('Choose whether selection options are shown as horizontal stacks or scrollable items.', 'all-signs-options-pro') }}</p>
+            </label>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'mobile'" @click="saveMobile">
+                <Loader2Icon v-if="savingSection === 'mobile'" class="asowp-spin" />
+                {{ __('Save Mobile', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-request" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Request Quote', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Quote request workflow, recipient emails and upload rules.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('request')">
+              {{ openSections.request ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.request" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+          <div v-if="openSections.request" class="asowp-nested-card asowp-form-stack">
+            <div class="asowp-general-section-head asowp-nested-head">
+              <div>
+                <h3>{{ __('Request A Quote', 'all-signs-options-pro') }}</h3>
+                <p>{{ __('Configure the request quote flow, recipient emails and file upload restrictions.', 'all-signs-options-pro') }}</p>
+              </div>
+            </div>
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Enable Request Quote', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Turn this on to let customers submit quote requests instead of going straight to purchase.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="requestQuote.enableRequestQuote"><span></span></label>
+            </div>
+            <div class="asowp-two-columns">
+              <label class="asowp-field"><span>{{ __('Receiver Email(s)', 'all-signs-options-pro') }}</span><input :value="requestQuote.receiversEmail.join(', ')" class="asowp-shopify-input" type="text" @input="requestQuote.receiversEmail = splitList($event.target.value)"><p>{{ __('Separate multiple email addresses with commas.', 'all-signs-options-pro') }}</p></label>
+              <label class="asowp-field"><span>{{ __('Email Subject', 'all-signs-options-pro') }}</span><input v-model="requestQuote.emailSubject" class="asowp-shopify-input" type="text"></label>
+            </div>
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Allow Upload Files', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Allow the customer to attach files to a request quote submission.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="requestQuote.allowUploadFiles"><span></span></label>
+            </div>
+            <div class="asowp-field">
+              <span>{{ __('Accepted Extensions', 'all-signs-options-pro') }}</span>
+              <div class="asowp-chip-box">
+                <span v-for="extension in requestQuote.acceptExtensions" :key="extension" class="asowp-chip">{{ extension.replace('.', '').toUpperCase() }} <button type="button" @click="removeChip(requestQuote.acceptExtensions, extension)">x</button></span>
+                <select class="asowp-chip-select" @change="addChip(requestQuote.acceptExtensions, $event)">
+                  <option value="">{{ __('Select file extensions', 'all-signs-options-pro') }}</option>
+                  <option v-for="extension in quoteExtensionOptions" :key="extension" :value="extension">{{ extension.replace('.', '').toUpperCase() }}</option>
+                </select>
+              </div>
+              <p>{{ __('Choose the file extensions customers are allowed to upload.', 'all-signs-options-pro') }}</p>
+            </div>
+            <div class="asowp-two-columns">
+              <label class="asowp-field"><span>{{ __('Max File Size (MB)', 'all-signs-options-pro') }}</span><input v-model.number="requestQuote.maxFileSize" class="asowp-shopify-input" type="number"><p>{{ __('Maximum file size allowed for one uploaded file.', 'all-signs-options-pro') }}</p></label>
+              <label class="asowp-field"><span>{{ __('Max Files Number', 'all-signs-options-pro') }}</span><input v-model.number="requestQuote.maxFilesNumber" class="asowp-shopify-input" type="number"><p>{{ __('Maximum number of files allowed per quote request.', 'all-signs-options-pro') }}</p></label>
+            </div>
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Send To Customer', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('Send a copy or acknowledgement of the request quote to the customer.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="requestQuote.sendToCustomer"><span></span></label>
+            </div>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'requestQuote'" @click="saveGenericSection('requestQuote', requestQuote)">
+                <Loader2Icon v-if="savingSection === 'requestQuote'" class="asowp-spin" />
+                {{ __('Save Request Quote', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="asowp-general-simple" class="asowp-general-card asowp-general-section">
+          <div class="asowp-general-section-head">
+            <div>
+              <h2>{{ __('Simple Options', 'all-signs-options-pro') }}</h2>
+              <p>{{ __('Replace the full customizer with native product option groups when needed.', 'all-signs-options-pro') }}</p>
+            </div>
+            <button type="button" class="asowp-general-collapse" @click="toggleSection('simple')">
+              {{ openSections.simple ? __('Show less', 'all-signs-options-pro') : __('Show more', 'all-signs-options-pro') }}
+              <ChevronUpIcon v-if="openSections.simple" />
+              <ChevronDownIcon v-else />
+            </button>
+          </div>
+          <div v-if="openSections.simple" class="asowp-form-stack">
+            <div class="asowp-toggle-row">
+              <div>
+                <strong>{{ __('Enable Simple Product Options', 'all-signs-options-pro') }}</strong>
+                <p>{{ __('When enabled, the product page will show simple option selectors instead of the full customizer.', 'all-signs-options-pro') }}</p>
+              </div>
+              <label class="asowp-switch"><input type="checkbox" v-model="simpleOptions.enabled"><span></span></label>
+            </div>
+            <div class="asowp-save-row">
+              <button type="button" class="asowp-shopify-button-primary asowp-general-save" :disabled="savingSection === 'simpleOptions'" @click="saveGenericSection('simpleOptions', simpleOptions)">
+                <Loader2Icon v-if="savingSection === 'simpleOptions'" class="asowp-spin" />
+                {{ __('Save Simple Options', 'all-signs-options-pro') }}
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="asowp-section-menu-wrap">
+        <aside class="asowp-section-menu asowp-general-card">
+          <h2>{{ __('Section Menu', 'all-signs-options-pro') }}</h2>
+          <div class="asowp-section-menu-links">
+            <a v-for="item in sectionMenu" :key="item.id" :href="`#${item.id}`" @click.prevent="scrollToSection(item.id)">
+              {{ item.label }}
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { onMounted, reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { ChevronDownIcon, ChevronUpIcon, Loader2Icon } from 'lucide-vue-next';
+import api from '@/admin/Api/api';
+import toastMessage from '@/admin/utils/functions';
+import { __ } from "@wordpress/i18n";
+
+const route = useRoute();
 const configId = ref(route.params.configId);
+const isFetching = ref(false);
+const savingSection = ref('');
+
+const defaultProduct = () => ({
+  designFromScratch: true,
+  redirectAfterAddingToCart: true,
+  redirectToCheckOutPage: false,
+  hideAddToCartButtonOnShopPage: true,
+  hidePricing: false,
+  showRecapAfterFinish: true,
+  uploadFileOnFinish: false,
+});
+
+const defaultMode = () => ({
+  type: 'simple',
+  allowMultiFonts: false,
+  allowMultiColors: false,
+  shareAndSave: {
+    allowShare: false,
+    allowSave: false,
+    shareSignLocation: 'options_review',
+  },
+});
+
+const defaultOutput = () => ({
+  filesFormat: 'png',
+  pdfQuality: '300',
+  waterMark: '',
+  zipOutputFiles: {
+    active: true,
+    zipOutFolderPrefix: 'aso_',
+  },
+  designComposition: true,
+});
+
+const defaultUploadDesign = () => ({
+  allowedFormats: ['JPG', 'JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP', 'PSD', 'AI', 'SVG', 'EPS', 'PDF'],
+  maxUploadSize: 5000,
+  maxUploadNumber: 5,
+  zipOutputFiles: false,
+});
+
+const defaultQuantityLimits = () => ({
+  enabled: false,
+  minimum: 1,
+  maximum: 999,
+});
+
+const defaultDiscount = () => ({
+  byQuantity: false,
+  type: 'none',
+});
+
+const defaultMobile = () => ({
+  showNavigatorMenu: 'off',
+  showNavigationMenuFirst: 'yes',
+  mobileSelectionOptionsDisplay: 'horizontally-stack',
+});
+
+const defaultRequestQuote = () => ({
+  enableRequestQuote: false,
+  receiversEmail: [],
+  sendToCustomer: false,
+  allowUploadFiles: false,
+  acceptExtensions: ['.jpg', '.png', '.svg', '.pdf'],
+  maxFileSize: 10,
+  maxFilesNumber: 5,
+  emailSubject: 'Request A Quote',
+});
+
+const defaultSimpleOptions = () => ({
+  enabled: false,
+  optionGroups: [],
+});
+
+const product = ref(defaultProduct());
+const mode = ref(defaultMode());
+const output = ref(defaultOutput());
+const uploadDesign = ref(defaultUploadDesign());
+const quantityLimits = ref(defaultQuantityLimits());
+const discount = ref(defaultDiscount());
+const mobile = ref(defaultMobile());
+const requestQuote = ref(defaultRequestQuote());
+const simpleOptions = ref(defaultSimpleOptions());
+
+const openSections = reactive({
+  product: true,
+  mode: true,
+  output: true,
+  upload: true,
+  quantity: true,
+  discount: true,
+  mobile: true,
+  request: true,
+  simple: true,
+});
+
+const nestedSections = reactive({
+  mode: true,
+});
+
+const sectionMenu = [
+  { id: 'asowp-general-product', label: 'Product' },
+  { id: 'asowp-general-mode', label: 'Mode' },
+  { id: 'asowp-general-output', label: 'Output' },
+  { id: 'asowp-general-upload', label: 'Upload Design' },
+  { id: 'asowp-general-quantity', label: 'Quantity Limits' },
+  { id: 'asowp-general-discount', label: 'Discount' },
+  { id: 'asowp-general-mobile', label: 'Mobile Option' },
+  { id: 'asowp-general-request', label: 'Request Quote' },
+  { id: 'asowp-general-simple', label: 'Simple Options' },
+];
+
+const productCards = [
+  {
+    key: 'designFromScratch',
+    title: 'Enable design from scratch',
+    description: 'Would you like to allow your clients to design the product from scratch? Or do you prefer allowing the customization only for templates assigned to the custom product ?',
+  },
+  {
+    key: 'redirectAfterAddingToCart',
+    title: 'Redirect to cart after adding a custom design to the cart',
+    description: 'This options allow you to define what to do after adding a design to the cart',
+    radio: true,
+  },
+  {
+    key: 'redirectToCheckOutPage',
+    title: 'Redirect to checkout page after adding a custom design to the cart',
+    description: 'This options allow you to define what to do after adding a design to the cart',
+    radio: true,
+  },
+  {
+    key: 'hideAddToCartButtonOnShopPage',
+    title: 'Hide add to cart buttons for custom product on shop',
+    description: 'This options allow you to show/hide the cart button on the cart button on the customization page',
+  },
+  {
+    key: 'hidePricing',
+    title: 'Hide sign pricing on design screen',
+    description: 'This options allow you to show/hide the sign pricing on design screen',
+  },
+  {
+    key: 'showRecapAfterFinish',
+    title: 'Show Recap after finish',
+    description: 'This option allows you to show recap before adding the product to the cart',
+  },
+  {
+    key: 'uploadFileOnFinish',
+    title: 'Upload File on Finish',
+    description: 'This option allows you to upload the design file upon completion. It will be associated with the product, and the user can manually add the product to the cart.',
+  },
+];
+
+const uploadFormatOptions = ['JPG', 'JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP', 'PSD', 'AI', 'SVG', 'EPS', 'PDF'];
+const quoteExtensionOptions = ['.jpg', '.png', '.svg', '.pdf', '.jpeg', '.webp', '.ai', '.eps'];
+
+const normalizeMode = (raw = {}) => ({
+  ...defaultMode(),
+  ...raw,
+  shareAndSave: {
+    ...defaultMode().shareAndSave,
+    ...(raw.shareAndSave || {}),
+  },
+});
+
+const normalizeOutput = (raw = {}) => ({
+  ...defaultOutput(),
+  ...raw,
+  filesFormat: raw.filesFormat || raw.fileFormat || 'png',
+  zipOutputFiles: {
+    ...defaultOutput().zipOutputFiles,
+    ...(raw.zipOutputFiles || {}),
+  },
+});
+
+const normalizeList = (value, fallback = []) => {
+  if (Array.isArray(value)) return value.filter(Boolean);
+  if (typeof value === 'string') return splitList(value);
+  return [...fallback];
+};
+
+const normalizeUploadDesign = (raw = {}) => ({
+  ...defaultUploadDesign(),
+  ...raw,
+  allowedFormats: normalizeList(raw.allowedFormats, defaultUploadDesign().allowedFormats),
+});
+
+const normalizeRequestQuote = (raw = {}) => ({
+  ...defaultRequestQuote(),
+  ...raw,
+  receiversEmail: normalizeList(raw.receiversEmail, []),
+  acceptExtensions: normalizeList(raw.acceptExtensions, defaultRequestQuote().acceptExtensions),
+});
+
 const fetchGeneralSettings = async () => {
-    const result = await api.getGeneralSettings(configId.value);
-    if(!result.message){
-        generals.value = result;
-    }
-}
-onMounted(async()=>{
-    isFetching.value = true;
+  const result = await api.getGeneralSettings(configId.value);
+  if (result?.message) return;
+
+  const nextProduct = { ...defaultProduct(), ...(result.product || {}) };
+  nextProduct.showRecapAfterFinish = result.product?.showRecapAfterFinish ?? result.product?.displayRecapsOnCheckout ?? true;
+
+  product.value = nextProduct;
+  mode.value = normalizeMode(result.mode || {});
+  output.value = normalizeOutput(result.output || {});
+  uploadDesign.value = normalizeUploadDesign(result.uploadDesign || {});
+  quantityLimits.value = { ...defaultQuantityLimits(), ...(result.quantityLimits || {}) };
+  discount.value = { ...defaultDiscount(), ...(result.discount || {}) };
+  mobile.value = { ...defaultMobile(), ...(result.mobile || {}) };
+  requestQuote.value = normalizeRequestQuote(result.requestQuote || {});
+  simpleOptions.value = { ...defaultSimpleOptions(), ...(result.simpleOptions || {}) };
+};
+
+const toggleSection = (key) => {
+  openSections[key] = !openSections[key];
+};
+
+const toggleNested = (key) => {
+  nestedSections[key] = !nestedSections[key];
+};
+
+const scrollToSection = (id) => {
+  window.requestAnimationFrame(() => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+};
+
+const setProductRedirect = (key) => {
+  product.value.redirectAfterAddingToCart = key === 'redirectAfterAddingToCart';
+  product.value.redirectToCheckOutPage = key === 'redirectToCheckOutPage';
+};
+
+const splitList = (value) => String(value || '').split(',').map((item) => item.trim()).filter(Boolean);
+
+const addChip = (target, event) => {
+  const value = event.target.value;
+  if (value && !target.includes(value)) {
+    target.push(value);
+  }
+  event.target.value = '';
+};
+
+const removeChip = (target, value) => {
+  const index = target.indexOf(value);
+  if (index !== -1) {
+    target.splice(index, 1);
+  }
+};
+
+const handleSaveResponse = async (result) => {
+  if (result?.success) {
     await fetchGeneralSettings();
+    toastMessage(result.message);
+    return;
+  }
+  toastMessage(result?.message || __('Unable to save settings', 'all-signs-options-pro'), 'error');
+};
+
+const saveProduct = async () => {
+  savingSection.value = 'product';
+  try {
+    const payload = {
+      ...product.value,
+      displayRecapsOnCheckout: product.value.showRecapAfterFinish,
+    };
+    await handleSaveResponse(await api.updateGeneralProduct(configId.value, payload));
+  } finally {
+    savingSection.value = '';
+  }
+};
+
+const saveOutput = async () => {
+  savingSection.value = 'output';
+  try {
+    await handleSaveResponse(await api.updateGeneralOutput(configId.value, output.value));
+  } finally {
+    savingSection.value = '';
+  }
+};
+
+const saveMobile = async () => {
+  savingSection.value = 'mobile';
+  try {
+    await handleSaveResponse(await api.updateGeneralMobile(configId.value, mobile.value));
+  } finally {
+    savingSection.value = '';
+  }
+};
+
+const saveGenericSection = async (section, data) => {
+  savingSection.value = section;
+  try {
+    await handleSaveResponse(await api.updateGeneralSection(configId.value, section, data));
+  } finally {
+    savingSection.value = '';
+  }
+};
+
+const selectWaterMarkImage = async (event) => {
+  event.preventDefault();
+  const uploader = wp.media({
+    title: __('Select WaterMark Image', 'all-signs-options-pro'),
+    button: {
+      text: __('Select Image', 'all-signs-options-pro'),
+    },
+    multiple: false,
+  }).on('select', () => {
+    const selection = uploader.state().get('selection');
+    selection.map((attachment) => {
+      const image = attachment.toJSON();
+      if (image.type === 'image') {
+        output.value.waterMark = image.url;
+      }
+    });
+  });
+
+  uploader.open();
+};
+
+onMounted(async () => {
+  isFetching.value = true;
+  try {
+    await fetchGeneralSettings();
+  } finally {
     isFetching.value = false;
-})
+  }
+});
 </script>
-<style>
-    
+
+<style scoped>
+.asowp-general {
+  color: var(--asowp-shopify-text);
+}
+
+.asowp-general-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 20px;
+  align-items: start;
+}
+
+.asowp-general-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.asowp-general-card {
+  background: var(--asowp-shopify-surface);
+  border: 1px solid var(--asowp-shopify-border);
+  border-radius: var(--asowp-shopify-radius-card);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.asowp-general-hero {
+  padding: 32px 40px;
+}
+
+.asowp-general-hero h1,
+.asowp-general-section h2,
+.asowp-section-menu h2,
+.asowp-nested-card h3 {
+  margin: 0;
+  color: #303030;
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+.asowp-general-hero h1 {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.asowp-general-hero p,
+.asowp-general-section-head p,
+.asowp-field p,
+.asowp-toggle-row p,
+.asowp-product-option p {
+  margin: 6px 0 0;
+  color: #616161;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.asowp-general-section {
+  padding: 32px 34px 28px;
+  scroll-margin-top: 12px;
+}
+
+.asowp-general-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.asowp-general-section h2,
+.asowp-nested-card h3 {
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.asowp-general-collapse {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 31px;
+  padding: 5px 12px;
+  border: 1px solid #c9cccf;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #202223;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.asowp-general-collapse:hover,
+.asowp-general-collapse:focus {
+  background: #ffffff;
+  color: #202223;
+  border-color: #babfc3;
+  box-shadow: none;
+  outline: none;
+}
+
+.asowp-general-collapse svg {
+  width: 15px;
+  height: 15px;
+}
+
+.asowp-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.asowp-product-option {
+  min-height: 205px;
+  padding: 20px;
+  border: 1px solid #dfe3e8;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.04);
+}
+
+.asowp-product-option h3 {
+  min-height: 48px;
+  margin: 0;
+  color: #303030;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.asowp-product-option .asowp-switch {
+  margin: 12px auto 14px;
+}
+
+.asowp-option-rule {
+  height: 1px;
+  margin: 0 0 14px;
+  background: #dfe3e8;
+}
+
+.asowp-product-option p {
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.asowp-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.asowp-nested-card {
+  padding: 32px;
+  border: 1px solid #dfe3e8;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.asowp-nested-head {
+  margin-bottom: 18px;
+}
+
+.asowp-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 64px;
+  padding: 16px 18px;
+  border: 1px solid #dfe3e8;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.asowp-toggle-row strong {
+  display: block;
+  color: #303030;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.asowp-switch {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  flex: 0 0 auto;
+  cursor: pointer;
+}
+
+.asowp-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.asowp-switch span {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #d5dbe6;
+  transition: background 160ms ease;
+}
+
+.asowp-switch span::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.26);
+  transition: transform 160ms ease;
+}
+
+.asowp-switch input:checked + span {
+  background: #007a76;
+}
+
+.asowp-switch input:checked + span::after {
+  transform: translateX(16px);
+}
+
+.asowp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.asowp-field > span {
+  color: #303030;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.asowp-shopify-input {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #8c9196;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #303030;
+  font-size: 14px;
+  line-height: 20px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.asowp-shopify-input:focus {
+  border-color: #8c9196;
+  box-shadow: none !important;
+}
+
+.asowp-two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.asowp-upload-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 46px;
+  padding: 3px;
+  border: 1px solid #8c9196;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.asowp-upload-control .asowp-shopify-button-primary {
+  min-height: 34px;
+  padding: 7px 16px;
+}
+
+.asowp-upload-preview {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.asowp-upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asowp-upload-preview button {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 4px;
+  background: #006e52;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.asowp-chip-box {
+  min-height: 88px;
+  padding: 10px;
+  border: 1px solid #8c9196;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.asowp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 20px;
+  margin: 0 8px 8px 0;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: #e4e5e7;
+  color: #303030;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.asowp-chip button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #777;
+  font: inherit;
+  cursor: pointer;
+}
+
+.asowp-chip-select {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  border: 0;
+  outline: 0;
+  color: #616161;
+  background: transparent;
+  font-size: 14px;
+}
+
+.asowp-save-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.asowp-general-save {
+  min-height: 32px;
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.asowp-general-save svg {
+  width: 14px;
+  height: 14px;
+}
+
+.asowp-section-menu-wrap {
+  position: sticky;
+  top: 46px;
+  align-self: start;
+}
+
+.asowp-section-menu {
+  padding: 10px;
+}
+
+.asowp-section-menu h2 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 650;
+}
+
+.asowp-section-menu-links {
+  display: grid;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.asowp-section-menu a {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #111827;
+  text-align: left;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.asowp-section-menu a:hover,
+.asowp-section-menu a:focus {
+  background: #ffffff;
+  color: #111827;
+  border-color: #d1d5db;
+  box-shadow: none;
+  outline: none;
+}
+
+.asowp-general-loading {
+  display: flex;
+  min-height: 300px;
+  align-items: center;
+  justify-content: center;
+}
+
+.asowp-general-loading img {
+  width: 140px;
+  height: 140px;
+}
+
+.asowp-spin {
+  animation: asowp-general-spin 800ms linear infinite;
+}
+
+@keyframes asowp-general-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1200px) {
+  .asowp-general-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .asowp-section-menu {
+    position: static;
+    order: -1;
+  }
+
+  .asowp-section-menu-wrap {
+    position: static;
+    order: -1;
+  }
+
+  .asowp-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 782px) {
+  .asowp-general-section,
+  .asowp-general-hero,
+  .asowp-nested-card {
+    padding: 20px;
+  }
+
+  .asowp-product-grid,
+  .asowp-two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .asowp-general-section-head,
+  .asowp-toggle-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .asowp-switch {
+    align-self: flex-end;
+  }
+}
 </style>

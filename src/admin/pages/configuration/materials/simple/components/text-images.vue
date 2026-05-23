@@ -1,108 +1,1005 @@
 <template>
-    <div class="asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
-        <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
-            <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
+  <div class="asowp-fonts-panel asowp-space-y-3">
+    <template v-if="!showForm">
+      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
+        <div class="asowp-p-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+          <div>
+            <h2 class="asowp-text-[16px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Fonts', 'all-signs-options-pro') }}</h2>
+            <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#616161] asowp-m-0">{{ __('These are the fonts available to customers in this config.', 'all-signs-options-pro') }}</p>
+          </div>
+          <div class="asowp-flex asowp-items-center asowp-gap-2">
+            <span class="asowp-selected-badge">{{ sprintf(__('%s selected', 'all-signs-options-pro'), selectedFontRows.length) }}</span>
+            <button
+              @click="openAddForm"
+              class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-[#007a72] asowp-text-white asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-border-none asowp-rounded-md asowp-cursor-pointer hover:asowp-bg-[#00645f]"
+            >
+              <PlusIcon class="asowp-w-4 asowp-h-4" />
+              {{ __('Add fonts', 'all-signs-options-pro') }}
+            </button>
+            <button
+              @click="goToManageFonts"
+              class="asowp-inline-flex asowp-items-center asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-text-[#303030] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]"
+            >
+              {{ __('Manage fonts', 'all-signs-options-pro') }}
+            </button>
+          </div>
         </div>
-        <div class="asowp-space-y-1" v-if="!isFetching">
-            <div class="asowp-flex  asowp-px-4 asowp-py-12 asowp-space-x-12">
-                
-                <div class="asowp-flex asowp-font-semibold">
-                    {{ __('Enable text', 'all-signs-options-pro') }}
-                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
-                        <label for="asowp-toggle" @click="changeTextImageEnableText" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
-                            <div :class="textImages.enableText ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
-                        </label>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-font-semibold">
-                    {{ __('Enable image', 'all-signs-options-pro') }}
-                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
-                        <label for="asowp-toggle" @click="changeTextImageEnableImage" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
-                        <div :class="textImages.enableImage ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
-                        </label>
-                    </div>
-                </div>
-                <div class="asowp-flex asowp-font-semibold">
-                    {{ __('Enable QR Code', 'all-signs-options-pro') }}
-                    <div class="asowp-flex asowp-items-center asowp-translate-x-2 asowp-translate-y-0.5">
-                        <label for="asowp-toggle" @click="handleEnableQrCode" class="asowp-cursor-pointer asowp-bg-[#F8F8FF] asowp-border-[1px] asowp-border-solid asowp-border-black asowp-w-6 asowp-h-0.5 asowp-rounded-full asowp-p-1">
-                        <div :class="textImages.enableQrCode ? 'asowp-translate-x-[100%] asowp-border-[#016464]': 'asowp-border-[#FFFFFF]'" class="asowp-toggle-dot asowp-w-2.5 asowp-h-2.5 asowp-duration-100 -asowp-translate-y-[8px] -asowp-translate-x-2 asowp-border-[4px] asowp-border-solid asowp-bg-[#D9D9D9] asowp-rounded-full asowp-shadow-md asowp-transform"></div>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <hr class="Polaris-Divider" style="border: 1px solid #ebebeb;">
-            <div class=" asowp-flex asowp-font-bold asowp-space-x-4 asowp-px-4 asowp-py-4 asowp-justify-end asowp-items-end">
-                <div class="asowp-bg-[#016464] asowp-rounded">
-                    <button :disabled="isLoading" @click="updateMaterialTextImages" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
-                        <div class="asowp-translate-y-1">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
-                            <svg v-if="!isLoading" class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
-                            </svg>
-                        </div>
+      </section>
 
-                        <span class="asowp-font-semibold asowp-text-[16px]">{{ __('Save', 'all-signs-options-pro') }}</span>
+      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
+        <div class="asowp-p-4">
+          <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Fonts List', 'all-signs-options-pro') }}</h3>
+
+          <div v-if="isFetching" class="asowp-py-8 asowp-text-center asowp-text-[13px] asowp-text-[#616161]">
+            {{ __('Loading fonts...', 'all-signs-options-pro') }}
+          </div>
+
+          <div v-else-if="selectedFontRows.length === 0" class="asowp-py-8 asowp-text-center asowp-border asowp-border-dashed asowp-border-[#dfe3e8] asowp-rounded-lg">
+            <p class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('No fonts added to this config yet', 'all-signs-options-pro') }}</p>
+            <p class="asowp-text-[12px] asowp-text-[#616161] asowp-mt-1 asowp-mb-3">{{ __('Add only the fonts this config should expose to customers.', 'all-signs-options-pro') }}</p>
+            <button @click="openAddForm" class="asowp-inline-flex asowp-items-center asowp-gap-1 asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-font-[900] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">
+              <PlusIcon class="asowp-w-4 asowp-h-4" />
+              {{ __('Add fonts', 'all-signs-options-pro') }}
+            </button>
+          </div>
+
+          <div v-else class="asowp-overflow-visible">
+            <table class="asowp-fonts-list-table asowp-w-full asowp-border-collapse">
+              <thead class="asowp-bg-[#f6f6f7]">
+                <tr>
+                  <th class="asowp-w-10 asowp-py-2 asowp-px-3"></th>
+                  <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Preview', 'all-signs-options-pro') }}</th>
+                  <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Label', 'all-signs-options-pro') }}</th>
+                  <th class="asowp-py-2 asowp-px-3 asowp-text-center asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Default', 'all-signs-options-pro') }}</th>
+                  <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Actions', 'all-signs-options-pro') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(font, index) in selectedFontRows"
+                  :key="font.id"
+                  class="asowp-border-b asowp-border-solid asowp-border-[#e5e7eb] hover:asowp-bg-[#f7f8fa]"
+                  draggable="true"
+                  @dragstart="dragStartFont(index)"
+                  @dragover.prevent
+                  @drop="dropFont(index)"
+                >
+                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-[#6b7280]">
+                    <GripVerticalIcon class="asowp-w-4 asowp-h-4 asowp-cursor-grab" />
+                  </td>
+                  <td class="asowp-py-2.5 asowp-px-3">
+                    <div v-if="font.previewImg" class="asowp-font-preview-box">
+                      <img :src="font.previewImg" :alt="font.label" class="asowp-w-full asowp-h-full asowp-object-cover asowp-rounded-md" />
+                    </div>
+                    <div v-else class="asowp-font-preview-box">
+                      <span :style="{ fontFamily: getPreviewFamily(font) }" class="asowp-text-[20px] asowp-leading-5 asowp-text-[#303030]">Ag</span>
+                    </div>
+                  </td>
+                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-[13px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030]">
+                    {{ font.label }}
+                  </td>
+                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-center">
+                    <div class="asowp-inline-flex asowp-items-center asowp-gap-2">
+                      <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('No', 'all-signs-options-pro') }}</span>
+                      <button
+                        @click="setDefaultFont(font.id)"
+                        :class="['asowp-toggle', index === 0 ? 'is-active' : '']"
+                        :aria-label="__('Set default font', 'all-signs-options-pro')"
+                      >
+                        <span></span>
+                      </button>
+                      <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('Yes', 'all-signs-options-pro') }}</span>
+                    </div>
+                  </td>
+                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-left">
+                    <button @click="removeFont(font.id)" class="asowp-remove-button">
+                      <TrashIcon class="asowp-w-4 asowp-h-4" />
+                      {{ __('Remove', 'all-signs-options-pro') }}
                     </button>
-                </div>
-            </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        
-    </div>
+      </section>
+
+      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
+        <div class="asowp-p-4">
+          <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-0">{{ __('Fonts Settings', 'all-signs-options-pro') }}</h3>
+          <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#616161] asowp-mt-0 asowp-mb-3">{{ __('Keep the title and description used for the fonts section.', 'all-signs-options-pro') }}</p>
+          <div class="asowp-space-y-3">
+            <label class="asowp-block">
+              <span class="asowp-form-label">{{ __('Title', 'all-signs-options-pro') }}</span>
+              <input v-model="textSettings.fontsLabel" class="asowp-form-input" autocomplete="off" />
+            </label>
+            <label class="asowp-block">
+              <span class="asowp-form-label">{{ __('Description', 'all-signs-options-pro') }}</span>
+              <input v-model="textSettings.fontsDescription" class="asowp-form-input" autocomplete="off" />
+            </label>
+          </div>
+          <div class="asowp-flex asowp-justify-end asowp-mt-4">
+            <button @click="saveFonts" :disabled="isLoading" class="asowp-primary-button">
+              {{ isLoading ? __('Saving...', 'all-signs-options-pro') : __('Save fonts', 'all-signs-options-pro') }}
+            </button>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <template v-else>
+      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
+        <div class="asowp-p-4 asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+          <div>
+            <h2 class="asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Add Fonts', 'all-signs-options-pro') }}</h2>
+            <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#616161] asowp-m-0">{{ __('Add an existing font from the shared library or create a new one here.', 'all-signs-options-pro') }}</p>
+          </div>
+          <button @click="resetForm" class="asowp-secondary-button">{{ __('Back to fonts', 'all-signs-options-pro') }}</button>
+        </div>
+      </section>
+
+      <section class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-shadow-sm">
+        <div class="asowp-p-4 asowp-space-y-5">
+          <div v-if="formMode !== 'edit'">
+            <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Add existing fonts', 'all-signs-options-pro') }}</h3>
+            <label class="asowp-block">
+              <span class="asowp-form-label">{{ __('Fonts', 'all-signs-options-pro') }}</span>
+              <select v-model="selectedExistingFontId" class="asowp-form-input">
+                <option value="">{{ __('Select fonts', 'all-signs-options-pro') }}</option>
+                <option v-for="font in availableFontRows" :key="font.id" :value="font.id">{{ font.label }}</option>
+              </select>
+              <span class="asowp-help-text">{{ __('Add one or many fonts already available in your shared library.', 'all-signs-options-pro') }}</span>
+            </label>
+            <div class="asowp-flex asowp-justify-end asowp-mt-3">
+              <button @click="addExistingFont" :disabled="selectedExistingFontId === ''" class="asowp-primary-button">{{ __('Add selected fonts', 'all-signs-options-pro') }}</button>
+            </div>
+          </div>
+
+          <div :class="formMode !== 'edit' ? 'asowp-create-font-section' : ''">
+            <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ formMode === 'edit' ? __('Font details', 'all-signs-options-pro') : __('Create and add a new font', 'all-signs-options-pro') }}</h3>
+            <div class="asowp-space-y-3">
+              <div class="asowp-flex asowp-items-center asowp-gap-5">
+                <label class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-[13px] asowp-text-[#303030]">
+                  {{ __('Google font', 'all-signs-options-pro') }}
+                  <button @click="setAddMode('google')" :class="['asowp-toggle', fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
+                </label>
+                <label class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-[13px] asowp-text-[#303030]">
+                  {{ __('Upload font', 'all-signs-options-pro') }}
+                  <button @click="setAddMode('upload')" :class="['asowp-toggle', !fontForm.isGoogleFont ? 'is-active' : '']"><span></span></button>
+                </label>
+              </div>
+              <div v-if="fontForm.isGoogleFont" class="asowp-google-font-picker">
+                <label class="asowp-block asowp-relative">
+                  <div v-if="showGoogleDropdown" class="asowp-google-dropdown">
+                    <button
+                      v-for="font in filteredGoogleFonts"
+                      :key="font.family"
+                      @mousedown.prevent="selectGoogleFont(font)"
+                      type="button"
+                    >
+                      {{ font.family }}
+                    </button>
+                    <div v-if="filteredGoogleFonts.length === 0" class="asowp-google-empty">
+                      {{ __('No fonts found', 'all-signs-options-pro') }}
+                    </div>
+                  </div>
+                  <span class="asowp-form-label">{{ __('Search Google Fonts', 'all-signs-options-pro') }}</span>
+                  <div class="asowp-search-input">
+                    <SearchIcon class="asowp-w-4 asowp-h-4 asowp-text-[#6b7280]" />
+                    <input
+                      v-model="googleFontSearch"
+                      @focus="showGoogleDropdown = true"
+                      :placeholder="__('Search font', 'all-signs-options-pro')"
+                      autocomplete="off"
+                    />
+                  </div>
+                </label>
+
+                <label v-if="selectedGoogleFont?.variants?.length" class="asowp-block">
+                  <span class="asowp-form-label">{{ __('Font Variant', 'all-signs-options-pro') }}</span>
+                  <select v-model="selectedGoogleVariant" @change="applyGoogleVariant" class="asowp-form-input">
+                    <option v-for="variant in selectedGoogleFont.variants" :key="variant" :value="variant">{{ variant }}</option>
+                  </select>
+                </label>
+              </div>
+
+              <label v-else class="asowp-block">
+                <span class="asowp-form-label">{{ __('Upload font file', 'all-signs-options-pro') }}</span>
+                <div class="asowp-file-input">
+                  <button @click.prevent="selectFontFile" class="asowp-file-button">{{ __('Upload font file', 'all-signs-options-pro') }}</button>
+                  <input v-model="fontForm.url" autocomplete="off" />
+                </div>
+                <span class="asowp-help-text">{{ __('.ttf or .otf font file.', 'all-signs-options-pro') }}</span>
+              </label>
+              <label class="asowp-block">
+                <span class="asowp-form-label">{{ __('Label', 'all-signs-options-pro') }}</span>
+                <input v-model="fontForm.label" class="asowp-form-input" autocomplete="off" />
+              </label>
+            </div>
+            <div class="asowp-flex asowp-justify-end asowp-gap-2 asowp-mt-4">
+              <button @click="saveFontForm" :disabled="isSavingFontForm || !fontForm.label.trim() || !fontForm.url.trim()" class="asowp-primary-button">
+                {{
+                  isSavingFontForm
+                    ? __('Creating...', 'all-signs-options-pro')
+                    : formMode === 'edit'
+                      ? __('Update font', 'all-signs-options-pro')
+                      : __('Create and add font', 'all-signs-options-pro')
+                }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
+  </div>
 </template>
+
 <script setup>
-    import { ref,onMounted } from "vue";
-    import api from "@/admin/Api/api";
-    import { useRoute } from 'vue-router';
-    import toastMessage from "@/admin/utils/functions";
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
-    const textImages = ref({
-        enableText:true,
-        enableImage:true,
-        enableQrCode:true
-    });
-    
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import api from "@/admin/Api/api";
+import toastMessage from "@/admin/utils/functions";
+import { __, sprintf } from "@wordpress/i18n";
+import {
+  GripVerticalIcon,
+  PlusIcon,
+  SearchIcon,
+  TrashIcon,
+} from "lucide-vue-next";
 
-    onMounted(async () => {
-        isFetching.value = true;
-        await fetchTextImages();
-        
+const route = useRoute();
+const router = useRouter();
+const configID = ref(route.params.configId);
+
+const isFetching = ref(false);
+const isLoading = ref(false);
+const isSavingFontForm = ref(false);
+const showForm = ref(false);
+const formMode = ref("add");
+const editingFontId = ref(null);
+const selectedExistingFontId = ref("");
+const draggedFontIndex = ref(null);
+const googleFonts = ref([]);
+const googleFontSearch = ref("");
+const showGoogleDropdown = ref(false);
+const selectedGoogleFont = ref(null);
+const selectedGoogleVariant = ref("");
+let previewStyleElement = null;
+
+const managedFonts = ref([]);
+const textSettings = ref({
+  selectedFonts: [],
+  colorsLabel: "Texts Colors",
+  colors: [],
+  enableCustomColor: true,
+  colorsPrevImg: "",
+  enableFontSize: {
+    active: true,
+    minimumFontSize: 12,
+    maximumFontSize: 50,
+    defaultFontSize: 16,
+  },
+  enableBold: true,
+  enableUnderline: true,
+  enableOverline: true,
+  enableStrike: true,
+  enableItalic: true,
+  enableOpacity: true,
+  enableBorder: true,
+  enableTextAlignment: true,
+  enableCurvedUp: true,
+  enableCurvedDown: true,
+  textType: "normal",
+  fontsLabel: "Fonts",
+  fontsDescription: "",
+});
+
+const fontForm = ref({
+  label: "",
+  url: "",
+  previewImg: "",
+  isGoogleFont: false,
+});
+
+const normalizeId = (value) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : value;
+};
+
+const getFontIdentity = (font) => {
+  const url = String(font?.url || "").trim().toLowerCase();
+  const label = String(font?.label || font?.name || "").trim().toLowerCase();
+  return url || label;
+};
+
+const normalizeFontRow = (font, index) => font ? ({
+    ...font,
+    id: index,
+    label: String(font?.label || font?.name || `Font ${index + 1}`),
+    url: String(font?.url || ""),
+    previewImg: String(font?.previewImg || font?.preview || ""),
+    isGoogleFont: Boolean(font?.isGoogleFont),
+  }) : null;
+
+const fontRows = computed(() => {
+  const seen = new Set();
+  return managedFonts.value
+    .map(normalizeFontRow)
+    .filter(Boolean)
+    .filter((font) => {
+      const key = getFontIdentity(font);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
     });
-    const isFetching = ref(false);
-    const isLoading = ref(false);
-    const fetchTextImages = async () => {
-        const result = await api.getMaterialSimpleTextImages(configID.value,materialId.value);
-        if(result.message){
-            textImages.value = result;
-        }
-        isFetching.value = false;
+});
+
+const selectedIds = computed(() =>
+  Array.isArray(textSettings.value.selectedFonts)
+    ? textSettings.value.selectedFonts.map(normalizeId)
+    : []
+);
+
+const selectedFontRows = computed(() => {
+  const seen = new Set();
+  return selectedIds.value
+    .map((id) => normalizeFontRow(managedFonts.value[Number(id)], Number(id)))
+    .filter(Boolean)
+    .filter((font) => {
+      const key = getFontIdentity(font);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+});
+
+const availableFontRows = computed(() => {
+  const selectedKeys = new Set(selectedFontRows.value.map(getFontIdentity).filter(Boolean));
+  return fontRows.value.filter((font) => !selectedKeys.has(getFontIdentity(font)));
+});
+
+const filteredGoogleFonts = computed(() => {
+  const term = googleFontSearch.value.trim().toLowerCase();
+  const source = Array.isArray(googleFonts.value) ? googleFonts.value : [];
+  if (!term) return source.slice(0, 200);
+  return source
+    .filter((font) => String(font?.family || "").toLowerCase().includes(term))
+    .slice(0, 200);
+});
+
+const cssUrl = (url) => String(url || "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+
+const getPreviewFamilyName = (font) => `asowp_config_font_${font.id}`;
+
+const getPreviewFamily = (font) => `'${getPreviewFamilyName(font)}'`;
+
+const getFontFormatFromUrl = (url) => {
+  const cleanUrl = String(url || "").split("?")[0].toLowerCase();
+  if (cleanUrl.endsWith(".woff2")) return "woff2";
+  if (cleanUrl.endsWith(".woff")) return "woff";
+  if (cleanUrl.endsWith(".ttf")) return "truetype";
+  if (cleanUrl.endsWith(".otf")) return "opentype";
+  return "";
+};
+
+const fontPreviewCss = computed(() =>
+  selectedFontRows.value
+    .map((font) => {
+      if (!font.url) return "";
+      const format = getFontFormatFromUrl(font.url);
+      const source = format
+        ? `url('${cssUrl(font.url)}') format('${format}')`
+        : `url('${cssUrl(font.url)}')`;
+      return `@font-face{font-family:'${getPreviewFamilyName(font)}';src:${source};font-display:swap;font-style:normal;font-weight:400;}`;
+    })
+    .filter(Boolean)
+    .join("\n")
+);
+
+const syncPreviewStyle = (css) => {
+  if (!previewStyleElement) {
+    previewStyleElement = document.createElement("style");
+    previewStyleElement.setAttribute("data-asowp-font-preview", "simple-fonts");
+    document.head.appendChild(previewStyleElement);
+  }
+  previewStyleElement.textContent = css || "";
+};
+
+const fetchFonts = async () => {
+  const result = await api.getManagefonts();
+  managedFonts.value = Array.isArray(result) ? result : [];
+};
+
+const fetchGoogleFonts = async () => {
+  const result = await api.getGoogleFonts();
+  const rows = Array.isArray(result) ? result : Array.isArray(result?.items) ? result.items : [];
+  googleFonts.value = rows
+    .map((font) => ({
+      family: String(font?.family || "").trim(),
+      variants: Array.isArray(font?.variants) ? font.variants.map(String) : [],
+      files: font?.files && typeof font.files === "object" ? font.files : {},
+    }))
+    .filter((font) => font.family && font.variants.length > 0 && Object.keys(font.files).length > 0);
+};
+
+const fetchConfigFonts = async () => {
+  const config = await api.getConfig(configID.value);
+  const text = config?.data?.settings?.customizerSign?.text || config?.settings?.customizerSign?.text || {};
+  textSettings.value = { ...textSettings.value, ...text };
+};
+
+const fetchData = async () => {
+  isFetching.value = true;
+  try {
+    await Promise.all([fetchFonts(), fetchConfigFonts(), fetchGoogleFonts()]);
+  } finally {
+    isFetching.value = false;
+  }
+};
+
+const saveFonts = async () => {
+  isLoading.value = true;
+  try {
+    const result = await api.updateCustomizerSignsText(configID.value, textSettings.value);
+    if (result?.success) {
+      toastMessage(result.message || __("Fonts saved", "all-signs-options-pro"));
+    } else {
+      toastMessage(result?.message || __("Unable to save fonts", "all-signs-options-pro"), "warning");
     }
-    const updateMaterialTextImages = async () => {
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleTextImages(configID.value,materialId.value,textImages.value);
-        if(result.success){
-            isLoading.value = false;
-            if(result.success == true){
-                toastMessage(result.message)
-            }else{
-                toastMessage(result.message,"warning");
-            }
-        }else{
-            toastMessage(result.message,"error");
-        }
-    }
-    const changeTextImageEnableText = () => {
-        textImages.value.enableText = !textImages.value.enableText;
-    }
-    const changeTextImageEnableImage = () => {
-        textImages.value.enableImage = !textImages.value.enableImage;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const openAddForm = () => {
+  formMode.value = "add";
+  editingFontId.value = null;
+  selectedExistingFontId.value = "";
+  googleFontSearch.value = "";
+  showGoogleDropdown.value = false;
+  selectedGoogleFont.value = null;
+  selectedGoogleVariant.value = "";
+  fontForm.value = { label: "", url: "", previewImg: "", isGoogleFont: false };
+  showForm.value = true;
+};
+
+const resetForm = () => {
+  showForm.value = false;
+  formMode.value = "add";
+  editingFontId.value = null;
+  selectedExistingFontId.value = "";
+  googleFontSearch.value = "";
+  showGoogleDropdown.value = false;
+  selectedGoogleFont.value = null;
+  selectedGoogleVariant.value = "";
+  fontForm.value = { label: "", url: "", previewImg: "", isGoogleFont: false };
+};
+
+const addExistingFont = async () => {
+  if (selectedExistingFontId.value === "") return;
+  const targetIndex = Number(selectedExistingFontId.value);
+  const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
+  const targetKey = getFontIdentity(targetFont);
+  if (!targetKey) return;
+  textSettings.value.selectedFonts = [
+    ...selectedIds.value
+      .map((id) => Number(id))
+      .filter((id) => {
+        const row = normalizeFontRow(managedFonts.value[id], id);
+        return row && getFontIdentity(row) !== targetKey;
+      }),
+    targetIndex,
+  ];
+  await saveFonts();
+  resetForm();
+};
+
+const saveFontForm = async () => {
+  if (isSavingFontForm.value) return;
+  isSavingFontForm.value = true;
+  const payload = {
+    label: fontForm.value.label.trim(),
+    url: fontForm.value.url.trim(),
+    previewImg: fontForm.value.previewImg.trim(),
+    isGoogleFont: Boolean(fontForm.value.isGoogleFont),
+  };
+
+  try {
+    if (formMode.value === "edit") {
+      const fontId = Number(editingFontId.value);
+      const result = await api.updateManagefont(fontId, payload);
+      if (result?.success) toastMessage(result.message);
+      await fetchFonts();
+      resetForm();
+      return;
     }
 
-    const handleEnableQrCode = () => {
-        textImages.value.enableQrCode = !textImages.value.enableQrCode;
+    await fetchFonts();
+
+    const payloadKey = getFontIdentity(payload);
+    const existingIndex = managedFonts.value.findIndex((font, index) => {
+      const row = normalizeFontRow(font, index);
+      return getFontIdentity(row) === payloadKey;
+    });
+
+    let targetIndex = existingIndex;
+    if (targetIndex < 0) {
+      const result = await api.addManagefont({ many: false, font: payload });
+      if (result?.success) toastMessage(result.message);
+      await fetchFonts();
+      targetIndex = managedFonts.value.findIndex((font, index) => {
+        const row = normalizeFontRow(font, index);
+        return getFontIdentity(row) === payloadKey;
+      });
     }
-    
+
+    if (targetIndex >= 0) {
+      const targetFont = normalizeFontRow(managedFonts.value[targetIndex], targetIndex);
+      const targetKey = getFontIdentity(targetFont);
+      const alreadySelected = selectedFontRows.value.some((font) => getFontIdentity(font) === targetKey);
+      textSettings.value.selectedFonts = [
+        ...selectedIds.value
+          .map((id) => Number(id))
+          .filter((id) => {
+            const row = normalizeFontRow(managedFonts.value[id], id);
+            return row && getFontIdentity(row) !== targetKey;
+          }),
+        targetIndex,
+      ];
+      await saveFonts();
+      if (alreadySelected) {
+        toastMessage(__("This font is already added to this configuration", "all-signs-options-pro"));
+      }
+      resetForm();
+      return;
+    }
+
+    toastMessage(__("Unable to create this font", "all-signs-options-pro"), "error");
+  } finally {
+    isSavingFontForm.value = false;
+  }
+};
+
+const editSelectedFont = (font) => {
+  formMode.value = "edit";
+  editingFontId.value = font.id;
+  fontForm.value = {
+    label: font.label,
+    url: font.url,
+    previewImg: font.previewImg,
+    isGoogleFont: font.isGoogleFont,
+  };
+  showForm.value = true;
+};
+
+const removeFont = async (fontId) => {
+  textSettings.value.selectedFonts = selectedIds.value.filter((id) => Number(id) !== Number(fontId));
+  await saveFonts();
+};
+
+const setDefaultFont = async (fontId) => {
+  const currentIds = selectedIds.value.map((id) => Number(id));
+  if (currentIds[0] === Number(fontId)) return;
+  textSettings.value.selectedFonts = [
+    Number(fontId),
+    ...currentIds.filter((id) => id !== Number(fontId)),
+  ];
+  await saveFonts();
+};
+
+const dragStartFont = (index) => {
+  draggedFontIndex.value = index;
+};
+
+const dropFont = async (targetIndex) => {
+  if (draggedFontIndex.value === null || draggedFontIndex.value === targetIndex) return;
+  const orderedIds = selectedFontRows.value.map((font) => Number(font.id));
+  const [moved] = orderedIds.splice(draggedFontIndex.value, 1);
+  orderedIds.splice(targetIndex, 0, moved);
+  draggedFontIndex.value = null;
+  textSettings.value.selectedFonts = orderedIds;
+  await saveFonts();
+};
+
+const setAddMode = (mode) => {
+  fontForm.value.isGoogleFont = mode === "google";
+  fontForm.value.url = "";
+  googleFontSearch.value = "";
+  showGoogleDropdown.value = mode === "google";
+  selectedGoogleFont.value = null;
+  selectedGoogleVariant.value = "";
+};
+
+const selectGoogleFont = (font) => {
+  selectedGoogleFont.value = font;
+  googleFontSearch.value = font.family;
+  selectedGoogleVariant.value = font.variants?.[0] || "regular";
+  fontForm.value.label = font.family;
+  applyGoogleVariant();
+  showGoogleDropdown.value = false;
+};
+
+const applyGoogleVariant = () => {
+  const font = selectedGoogleFont.value;
+  if (!font) return;
+  const variant = selectedGoogleVariant.value || font.variants?.[0] || "regular";
+  fontForm.value.url = String(font.files?.[variant] || font.files?.regular || Object.values(font.files || {})[0] || "");
+};
+
+const goToManageFonts = () => {
+  router.push({ path: "/manage-fonts", query: { returnTo: route.fullPath } });
+};
+
+const selectFontFile = () => {
+  if (!window.wp?.media) return;
+  const uploader = window.wp.media({
+    title: __("Upload font file", "all-signs-options-pro"),
+    button: { text: __("Use font file", "all-signs-options-pro") },
+    multiple: false,
+  });
+
+  uploader.on("select", () => {
+    const attachment = uploader.state().get("selection").first()?.toJSON();
+    if (!attachment?.url) return;
+    fontForm.value.url = attachment.url;
+    if (!fontForm.value.label.trim()) {
+      fontForm.value.label = String(attachment.title || attachment.filename || "")
+        .replace(/\.(ttf|otf|woff2?|eot)$/i, "")
+        .trim();
+    }
+  });
+
+  uploader.open();
+};
+
+const closeGoogleDropdown = (event) => {
+  if (!event.target?.closest?.(".asowp-google-font-picker")) {
+    showGoogleDropdown.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchData();
+  document.addEventListener("click", closeGoogleDropdown);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeGoogleDropdown);
+  previewStyleElement?.remove();
+  previewStyleElement = null;
+});
+
+watch(fontPreviewCss, syncPreviewStyle, { immediate: true });
 </script>
+
+<style scoped>
+.asowp-fonts-panel {
+  color: #303030;
+}
+
+.asowp-font-preview-box {
+  width: 58px;
+  height: 36px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: #f8f9fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.asowp-fonts-list-table,
+.asowp-fonts-list-table thead,
+.asowp-fonts-list-table tbody,
+.asowp-fonts-list-table tr,
+.asowp-fonts-list-table th,
+.asowp-fonts-list-table td {
+  border-left: 0 !important;
+  border-right: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.asowp-fonts-list-table {
+  border: 0 !important;
+}
+
+.asowp-fonts-list-table th,
+.asowp-fonts-list-table td {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+.asowp-fonts-list-table tbody tr {
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.asowp-fonts-list-table tbody tr:last-child {
+  border-bottom: 0 !important;
+}
+
+.asowp-selected-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #d9ecff;
+  color: #005bd3;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
+.asowp-toggle {
+  width: 38px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #d9dee8;
+  position: relative;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.asowp-toggle span {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: transform 120ms ease;
+}
+
+.asowp-toggle.is-active {
+  background: #007a72;
+}
+
+.asowp-toggle.is-active span {
+  transform: translateX(16px);
+}
+
+.asowp-remove-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 5px 9px;
+  border: 1px solid #c9cccf;
+  border-radius: 6px;
+  background: #fff;
+  color: #8e1f0b;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.asowp-remove-button:hover {
+  background: #f6f6f7;
+  color: #8e1f0b;
+}
+
+.asowp-form-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #303030;
+}
+
+.asowp-create-font-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e3e5;
+}
+
+.asowp-form-input {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 38px;
+  padding: 6px 10px;
+  border: 1px solid #8c9196;
+  border-radius: 7px;
+  background: #fff;
+  color: #303030;
+  font-size: 13px;
+  line-height: 20px;
+  box-shadow: none;
+}
+
+.asowp-form-input:focus {
+  outline: 2px solid #005bd3;
+  outline-offset: 1px;
+  border-color: #8c9196;
+  box-shadow: none;
+}
+
+.asowp-help-text {
+  display: block;
+  margin-top: 3px;
+  color: #616161;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.asowp-file-input {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 44px;
+  border: 1px solid #8c9196;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  overflow: hidden;
+}
+
+.asowp-file-input input {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  border: 0;
+  padding: 6px 10px;
+  box-shadow: none;
+  font-size: 13px;
+  background: transparent;
+}
+
+.asowp-file-input input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.asowp-file-button {
+  margin-left: 5px;
+  min-height: 32px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: #007a72;
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.asowp-file-button:hover {
+  background: #00645f;
+  color: #fff;
+}
+
+.asowp-search-input {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 44px;
+  border: 1px solid #8c9196;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  background: #fff;
+}
+
+.asowp-search-input:focus-within {
+  outline: 2px solid #005bd3;
+  outline-offset: 1px;
+}
+
+.asowp-search-input input {
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 13px;
+  color: #303030;
+}
+
+.asowp-search-input input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.asowp-google-dropdown {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: calc(100% + 5px);
+  z-index: 30;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.asowp-google-font-picker {
+  width: 100%;
+  max-width: 100%;
+}
+
+.asowp-google-dropdown button {
+  width: 100%;
+  display: block;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: #fff;
+  color: #303030;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.asowp-google-dropdown button:hover,
+.asowp-google-dropdown button:first-child {
+  background: #e8e8e8;
+  color: #303030;
+}
+
+.asowp-google-empty {
+  padding: 10px 12px;
+  color: #616161;
+  font-size: 12px;
+}
+
+.asowp-primary-button,
+.asowp-secondary-button {
+  min-height: 32px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.asowp-primary-button {
+  border: 0;
+  background: #007a72;
+  color: #fff;
+}
+
+.asowp-primary-button:hover {
+  background: #00645f;
+  color: #fff;
+}
+
+.asowp-primary-button:disabled {
+  background: #d8d8d8;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.asowp-secondary-button {
+  border: 1px solid #c9cccf;
+  background: #fff;
+  color: #303030;
+}
+
+.asowp-secondary-button:hover {
+  background: #f6f6f7;
+  color: #303030;
+}
+</style>

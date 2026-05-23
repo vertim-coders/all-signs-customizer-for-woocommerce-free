@@ -774,7 +774,7 @@ const api = {
       asowp_api_url + "/configs/" + config + "/settings/generals"
     );
     return generals.data;
-  } /* 
+  } /*
     updateGeneralCustomizer: async (config, data) => {
         const customizer = await axios.post(asowp_api_url + '/configs/' + config + '/settings/generals/customizer', data);
         return customizer.data;
@@ -800,6 +800,13 @@ const api = {
     );
     return output.data;
   },
+  updateGeneralSection: async (config, section, data) => {
+    const generalSection = await axios.post(
+      asowp_api_url + "/configs/" + config + "/settings/generals/" + section,
+      data
+    );
+    return generalSection.data;
+  },
   //fonction related to customizer options
   getCustomizerSignsSettings: async (config) => {
     const customizerSigns = await axios.get(
@@ -816,6 +823,16 @@ const api = {
       data
     );
     return customizer.data;
+  },
+  updateCustomizerSignsConfigOptions: async (config, data) => {
+    const configOptions = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        config +
+        "/settings/customizer-signs/config-options",
+      data
+    );
+    return configOptions.data;
   },
   updateCustomizerSignsSignPart: async (config, data) => {
     const SignPart = await axios.post(

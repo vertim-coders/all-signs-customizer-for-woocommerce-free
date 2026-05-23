@@ -113,6 +113,27 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
             )
         );
     }
+
+    private function ensure_language_images_meta($meta_value)
+    {
+        if (!is_array($meta_value)) {
+            $meta_value = array();
+        }
+
+        if (!isset($meta_value["data"]) || !is_array($meta_value["data"])) {
+            $meta_value["data"] = array();
+        }
+
+        if (!isset($meta_value["data"]["settings"]) || !is_array($meta_value["data"]["settings"])) {
+            $meta_value["data"]["settings"] = array();
+        }
+
+        if (!isset($meta_value["data"]["settings"]["languageImages"]) || !is_array($meta_value["data"]["settings"]["languageImages"])) {
+            $meta_value["data"]["settings"]["languageImages"] = array();
+        }
+
+        return $meta_value;
+    }
     /**
      * Get all language images settings
      * @param \WP_REST_Request $request Full details about the request.
@@ -141,7 +162,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update Main options of language images settings 
+     * Update Main options of language images settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -152,9 +173,9 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
 
-                if ($meta_value["data"]["settings"]["languageImages"]['main'] != $main_options) {
+                if (!isset($meta_value["data"]["settings"]["languageImages"]['main']) || $meta_value["data"]["settings"]["languageImages"]['main'] != $main_options) {
                     $meta_value["data"]["settings"]["languageImages"]['main'] = $main_options;
 
                     $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
@@ -175,7 +196,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update upload design options of language images settings 
+     * Update upload design options of language images settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -186,9 +207,9 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
 
-                if ($meta_value["data"]["settings"]["languageImages"]['uploadDesign'] != $customizer_options) {
+                if (!isset($meta_value["data"]["settings"]["languageImages"]['uploadDesign']) || $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] != $customizer_options) {
                     $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] = $customizer_options;
 
                     $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
@@ -209,7 +230,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update visualizer design options of language images settings 
+     * Update visualizer design options of language images settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -220,9 +241,9 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
 
-                if ($meta_value["data"]["settings"]["languageImages"]['visualizer'] != $visualizer_options) {
+                if (!isset($meta_value["data"]["settings"]["languageImages"]['visualizer']) || $meta_value["data"]["settings"]["languageImages"]['visualizer'] != $visualizer_options) {
                     $meta_value["data"]["settings"]["languageImages"]['visualizer'] = $visualizer_options;
 
                     $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
@@ -243,7 +264,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update images options of language images settings 
+     * Update images options of language images settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -254,9 +275,9 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
         if ($id != 0) {
             $post = get_post($id);
             if ($post) {
-                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->ensure_language_images_meta(get_post_meta($id, 'asowp-configs-meta', true));
 
-                if ($meta_value["data"]["settings"]["languageImages"]['images'] != $image_options) {
+                if (!isset($meta_value["data"]["settings"]["languageImages"]['images']) || $meta_value["data"]["settings"]["languageImages"]['images'] != $image_options) {
                     $meta_value["data"]["settings"]["languageImages"]['images'] = $image_options;
                     $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
 

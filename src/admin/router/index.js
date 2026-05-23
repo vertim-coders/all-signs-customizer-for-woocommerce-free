@@ -5,10 +5,10 @@ import MaterialsShell from "@/admin/pages/configuration/materials/simple/index.v
 import ManageFonts from "@/admin/pages/manage-fonts/index.vue";
 import ManageCliparts from "@/admin/pages/manage-cliparts/index.vue";
 import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
-import Settings from "@/admin/pages/configuration/settings/index.vue";
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 import Templates from "@/admin/pages/templates/index.vue";
 import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
+import RequestQuotes from "@/admin/pages/request-quotes/index.vue";
 import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
 import Preview from "@/admin/pages/preview/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
@@ -79,6 +79,21 @@ const router = createRouter({
       component: MaterialsShell,
     },
     {
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/editor/text-setting",
+      name: "Simple-TextSetting",
+      component: MaterialsShell,
+    },
+    {
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/editor/image-setup",
+      name: "Simple-ImageSetup",
+      component: MaterialsShell,
+    },
+    {
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/editor/sign-part",
+      name: "Simple-SignPartSetup",
+      component: MaterialsShell,
+    },
+    {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components",
       name: "Simple-OthersComponents",
       component: MaterialsShell,
@@ -86,6 +101,16 @@ const router = createRouter({
     {
       path: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components/:additionalOptionID",
       name: "Simple-OthersComponents-Options",
+      component: MaterialsShell,
+    },
+    {
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/additional-inputs",
+      name: "Simple-AdditionalInputs",
+      component: MaterialsShell,
+    },
+    {
+      path: "/configs/:config/:configId/materials/:material/:materialId/simple/cliparts",
+      name: "Simple-Cliparts",
       component: MaterialsShell,
     },
     {
@@ -101,22 +126,22 @@ const router = createRouter({
     {
       path: "/configs/:config/:configId/settings/generals",
       name: "config-settings-generals",
-      component: Settings,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/settings/customizer-options",
       name: "config-settings-customizer-options",
-      component: Settings,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/settings/language-images",
       name: "config-settings-languages-images",
-      component: Settings,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/settings/themes-colors",
       name: "config-settings-themes-colors",
-      component: Settings,
+      component: MaterialsShell,
     },
     {
       path: "/configs/:config/:configId/additional-options",
@@ -182,6 +207,11 @@ const router = createRouter({
       path: "/templates",
       name: "templates",
       component: Templates,
+    },
+    {
+      path: "/request-quotes",
+      name: "request-quotes",
+      component: RequestQuotes,
     },
     {
       path: "/not-found",

@@ -95,6 +95,27 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
                 )
             )
         );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . "/(?P<section>[a-zA-Z0-9_-]+)",
+            array(
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_section_options_generals_settings'),
+                    'permission_callback' => array($this, 'get_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        ),
+                        'section' => array(
+                            'type' => 'string',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
     }
     /**
      * Get all generals settings
@@ -124,7 +145,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update Product options of generals settings 
+     * Update Product options of generals settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -158,7 +179,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
     }
 
     /**
-     * Update Mobile options of generals settings 
+     * Update Mobile options of generals settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -192,7 +213,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update Output options of generals settings 
+     * Update Output options of generals settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -222,6 +243,63 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         } else {
             return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
         }
+    }
+
+    /**
+     * Update a supported general settings section.
+     *
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function update_section_options_generals_settings($request)
+    {
+        $id = $request->get_param('config_id');
+        $section = $request->get_param('section');
+        $allowed_sections = array(
+            'product',
+            'output',
+            'mobile',
+            'mode',
+            'uploadDesign',
+            'quantityLimits',
+            'discount',
+            'requestQuote',
+            'simpleOptions',
+        );
+
+        if (!in_array($section, $allowed_sections, true)) {
+            return rest_ensure_response(["success" => false, "message" => __("General settings section invalid", "all-signs-options-pro")]);
+        }
+
+        $section_options = json_decode($request->get_body(), true);
+
+        if ($id == 0) {
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+        }
+
+        $post = get_post($id);
+        if (!$post) {
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+        }
+
+        $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+
+        if (!isset($meta_value["data"]["settings"]["generals"])) {
+            $meta_value["data"]["settings"]["generals"] = array();
+        }
+
+        if (isset($meta_value["data"]["settings"]["generals"][$section]) && $meta_value["data"]["settings"]["generals"][$section] == $section_options) {
+            return rest_ensure_response(["success" => "same", "message" => __("No change observed in general settings", "all-signs-options-pro")]);
+        }
+
+        $meta_value["data"]["settings"]["generals"][$section] = $section_options;
+        $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+
+        if ($response) {
+            return rest_ensure_response(["success" => true, "message" => __("General settings updated successfully", "all-signs-options-pro")]);
+        }
+
+        return rest_ensure_response(["success" => false, "message" => __("Update general settings failed", "all-signs-options-pro")]);
     }
     /**
      * Checks if a given request has access to read the materials.

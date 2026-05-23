@@ -1,5 +1,5 @@
 <template>
-    <div class="asowp-fixed asowp-z-[9999] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-top-[32px] asowp-h-[2.9rem] asowp-px-2 asowp-bg-white asowp-flex asowp-justify-start asowp-items-center asowp-header asowp-mt-2" style="width: 84.5% !important;">
+    <div v-if="showHeaderbar" class="asowp-fixed asowp-z-[9999] asowp-rounded-[10px] asowp-border-[2px] asowp-border-[rgba(0,0,0,.15)] asowp-border-solid asowp-top-[32px] asowp-h-[2.9rem] asowp-px-2 asowp-bg-white asowp-flex asowp-justify-start asowp-items-center asowp-header asowp-mt-2" style="width: 84.5% !important;">
         <div class="asowp-relative asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
             <div class="pl-[40px] asowp-flex asowp-w-full asowp-cursor-pointer" @click="goToHome">
                 <!--<span>
@@ -40,7 +40,7 @@
                             {{ labels.preview }}
                         </button>
                     </div>
-                    
+
                 </div>
             </div>
             <!--<div class="asowp-pr-[40px]">
@@ -53,7 +53,7 @@
 </template>
 <script setup>
 import router from '@/admin/router';
-import {ref} from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { __ } from "@wordpress/i18n";
 const ASOWP_VERSION = ref(asowp_data.version);
@@ -74,6 +74,10 @@ function goToHome() {
 }
 //const configID = ref(route.params.configId)
 const route = useRoute()
+const showHeaderbar = computed(() => {
+  const isConfigWorkspace = route.path.includes('/configs/') && route.name !== 'preview-back';
+  return !isConfigWorkspace;
+});
 
 const config =route.params.config.replace(/-/,' ');
 const labels = {
@@ -84,5 +88,5 @@ const labels = {
 };
 </script>
 <style lang="">
-    
+
 </style>

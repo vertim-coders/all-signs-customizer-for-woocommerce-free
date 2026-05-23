@@ -1,334 +1,938 @@
 <template>
-    <div class="asowp-translate-y-2 asowp-bg-[#fff] asowp-p-4 asowp-rounded-[10px] asowp-border-[2px] asowp-border-solid asowp-border-[#d9d9d9]">
-        <!-- Loading State -->
-        <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
-            <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="Loading...">
+  <div class="asowp-pricing-page asowp-space-y-3">
+    <template v-if="!showForm">
+      <div class="asowp-pricing-header asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-px-5 asowp-py-4 asowp-flex asowp-items-center asowp-justify-between">
+        <div>
+          <h2 class="asowp-text-[16px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Pricing', 'all-signs-options-pro') }}</h2>
+          <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">
+            {{ __('Create pricing profiles for custom size rules only. Regular sizes keep their own pricing in the size records.', 'all-signs-options-pro') }}
+          </p>
         </div>
+        <button
+          @click="addPricing"
+          class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-[#007a72] asowp-text-white asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-border-none asowp-rounded-md asowp-cursor-pointer hover:asowp-bg-[#00645f]"
+        >
+          <PlusIcon class="asowp-w-3.5 asowp-h-3.5" />
+          {{ __('Add new pricing', 'all-signs-options-pro') }}
+        </button>
+      </div>
 
-        <!-- Main Content -->
-        <div class="asowp-space-y-1" v-if="!isFetching">
-            <div class=" asowp-px-4 asowp-py-6 asowp-rounded-lg asowp-shadow-sm">
-                
-                <!-- Header 
-                <div class="asowp-mb-6">
-                    <h3 class="asowp-text-lg asowp-font-semibold asowp-text-[#333333] asowp-mb-2">{{ __("Discount Configuration", "all-signs-options-pro") }}</h3>
-                    <p class="asowp-text-sm asowp-text-[#666666]">{{ __("Set up quantity-based discounts for your products", "all-signs-options-pro") }}</p>
-                </div>-->
-
-                <!-- Discounts List or Empty State -->
-                <div v-if="!isEdit">
-                    <!-- Empty State -->
-                    <div v-if="!discounts || !Array.isArray(discounts) || discounts.length === 0" 
-                         class="asowp-flex asowp-flex-col asowp-items-center asowp-justify-center asowp-py-12 asowp-text-center">
-                        <div class="asowp-mb-4">
-                            <svg class="asowp-w-16 asowp-h-16 asowp-text-[#D1D1D1] asowp-mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h4 class="asowp-text-lg asowp-font-medium asowp-text-[#444444] asowp-mb-2">{{__("Discount is empty", "all-signs-options-pro")}}</h4>
-                        <p class="asowp-text-sm asowp-text-[#666666] asowp-mb-6">{{__("No discounts have been configured yet. Add your first discount to get started.", "all-signs-options-pro")}}</p>
-                        
-                        <button @click="handleAddMaterialDiscount" 
-                                :disabled="isLoading"
-                                class="asowp-flex asowp-justify-center asowp-items-center asowp-bg-[#016464] asowp-rounded-lg asowp-space-x-2 asowp-text-white asowp-px-6 asowp-py-3 hover:asowp-bg-[#014d4d] asowp-transition-colors asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-5 asowp-h-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <span class="asowp-font-medium">{{__("Add First Discount", "all-signs-options-pro")}}</span>
+      <div class="asowp-pricing-card asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-5">
+        <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Pricing List', 'all-signs-options-pro') }}</h3>
+        <div class="asowp-pricing-table-wrap">
+          <table class="asowp-w-full asowp-border-collapse">
+            <thead>
+              <tr class="asowp-bg-[#f3f3f3]">
+                <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Label', 'all-signs-options-pro') }}</th>
+                <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Shipping', 'all-signs-options-pro') }}</th>
+                <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Actions', 'all-signs-options-pro') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-if="isFetching">
+                <td colspan="3" class="asowp-p-8 asowp-text-center">
+                  <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
+                </td>
+              </tr>
+              <template v-else>
+                <tr
+                  v-for="(item, key) in pricingSettings.priceOptions"
+                  :key="key"
+                  class="asowp-pricing-row asowp-border-b asowp-border-solid asowp-border-[#eceff2] last:asowp-border-b-0"
+                  @click="editPricing(key)"
+                >
+                  <td class="asowp-py-2.5 asowp-px-3">
+                    <span class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030]">
+                      {{ item.label || sprintf(__('Pricing %d', 'all-signs-options-pro'), key + 1) }}
+                    </span>
+                  </td>
+                  <td class="asowp-py-2.5 asowp-px-3 asowp-text-[13px] asowp-text-[#303030]">
+                    {{ item.customPricing.shippingMethod === 'per-weight' ? __('Weight', 'all-signs-options-pro') : __('Size-based', 'all-signs-options-pro') }}
+                  </td>
+                  <td class="asowp-py-2.5 asowp-px-3">
+                    <div class="asowp-pricing-actions-menu" @click.stop>
+                      <button @click="toggleActions(key)" class="asowp-ellipsis-button" :aria-label="__('Pricing actions', 'all-signs-options-pro')">
+                        <MoreHorizontalIcon class="asowp-w-4 asowp-h-4" />
+                      </button>
+                      <div v-if="openActionIndex === key" class="asowp-actions-popover">
+                        <button @click="editPricing(key)">
+                          <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
+                          {{ __('Edit', 'all-signs-options-pro') }}
                         </button>
+                        <button @click="duplicatePricing(key)">
+                          <CopyIcon class="asowp-w-3.5 asowp-h-3.5" />
+                          {{ __('Duplicate', 'all-signs-options-pro') }}
+                        </button>
+                        <button class="is-danger" @click="deletePricing(key)">
+                          <Trash2Icon class="asowp-w-3.5 asowp-h-3.5" />
+                          {{ __('Delete', 'all-signs-options-pro') }}
+                        </button>
+                      </div>
                     </div>
-
-                    <!-- Discounts List -->
-                    <div v-else class="asowp-space-y-4">
-                        <div class="asowp-relative " 
-                             v-for="(discount, key) in discounts" :key="key">
-                            
-                            <!-- Delete Button -->
-                            <button @click="handleDeleteDiscount(key)" 
-                                    class="asowp-absolute asowp-right-0 asowp-top-0 asowp-p-1 asowp-rounded-full asowp-text-[#666666] hover:asowp-text-red-500 hover:asowp-bg-red-50 asowp-transition-all asowp-duration-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-
-                            <div class="asowp-grid asowp-grid-cols-1 md:asowp-grid-cols-2 asowp-gap-6 asowp-pr-8">
-                                <!-- Quantity Input -->
-                                <div class="asowp-space-y-2">
-                                    <label class="asowp-block asowp-text-sm asowp-font-medium asowp-text-[#374151]">
-                                        {{__("Minimum Quantity Required", "all-signs-options-pro")}}
-                                    </label>
-                                    <input 
-                                        type="number" 
-                                        v-model="discounts[key].quantity" 
-                                        :placeholder="__('Enter minimum quantity', 'all-signs-options-pro')"
-                                        class="asowp-w-full asowp-h-[35px] asowp-px-3 asowp-py-2 asowp-border asowp-text-sm focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-[#016464] asowp-transition-all asowp-duration-200"
-                                        :class="{'asowp-border-red-400 focus:asowp-ring-red-400 focus:asowp-border-red-400': errors[key]?.quantity}"
-                                        style="border-radius: 5px !important;"
-                                        @blur="validateQuantity(key)"
-                                        @input="validateQuantity(key)">
-                                    <span v-if="errors[key]?.quantity" class="asowp-text-red-500 asowp-text-xs asowp-block">
-                                        {{ errors[key].quantity }}
-                                    </span>
-                                </div>
-
-                                <!-- Discount Percentage Input -->
-                                <div class="asowp-space-y-2">
-                                    <label class="asowp-block asowp-text-sm asowp-font-medium asowp-text-[#374151]">
-                                        {{__("Discount Percentage", "all-signs-options-pro")}}
-                                    </label>
-                                    <div class="asowp-relative">
-                                        <input 
-                                            type="number" 
-                                            v-model="discounts[key].discountPercentage" 
-                                            :placeholder="__('Enter discount percentage', 'all-signs-options-pro')"
-                                            min="0" 
-                                            max="100"
-                                            class="asowp-w-full asowp-h-[35px] asowp-px-3 asowp-py-2 asowp-pr-8 asowp-border asowp-text-sm focus:asowp-ring-2 focus:asowp-ring-[#016464] focus:asowp-border-[#016464] asowp-transition-all asowp-duration-200"
-                                            :class="{'asowp-border-red-400 focus:asowp-ring-red-400 focus:asowp-border-red-400': errors[key]?.discountPercentage}"
-                                            style="border-radius: 5px !important;"
-                                            @blur="validateDiscountPercentage(key)"
-                                            @input="validateDiscountPercentage(key)">
-                                        <span class="asowp-absolute asowp-right-3 asowp-top-2 asowp-text-[#666666] asowp-text-sm">%</span>
-                                    </div>
-                                    <span v-if="errors[key]?.discountPercentage" class="asowp-text-red-500 asowp-text-xs asowp-block">
-                                        {{ errors[key].discountPercentage }}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Discount Preview -->
-                            <div v-if="discounts[key].quantity > 0 && discounts[key].discountPercentage > 0" 
-                                 class="asowp-mt-1 asowp-p-2 asowp-bg-[#F0F9FF] asowp-border asowp-border-[#BAE6FD] asowp-rounded-lg">
-                                <p class="asowp-text-sm asowp-text-[#0369A1] asowp-m-0">
-                                    <span class="asowp-font-medium">{{__("Preview:", "all-signs-options-pro")}}</span> 
-                                    {{__("Customers buying", "all-signs-options-pro")}} {{ discounts[key].quantity }}+ {{__("items will get", "all-signs-options-pro")}} {{ discounts[key].discountPercentage }}% {{__("off", "all-signs-options-pro")}}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Add More Button -->
-                        <div class="asowp-pt-4 asowp-border-t asowp-border-[#E5E7EB]">
-                            <button @click="handleAddMaterialDiscount" 
-                                    :disabled="isLoading"
-                                    class="asowp-flex asowp-items-center asowp-cursor-pointer asowp-space-x-2 asowp-border asowp-border-[#016464] asowp-px-4 asowp-py-2 asowp-rounded-lg asowp-bg-[#016464] asowp-text-white asowp-transition-all asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="asowp-w-4 asowp-h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                </svg>
-                                <span class="asowp-font-medium asowp-text-sm">{{__("Add Another Discount", "all-signs-options-pro")}}</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Actions Footer -->
-            <div class=" asowp-flex asowp-justify-end asowp-px-4 asowp-py-4 asowp-rounded-lg asowp-shadow-sm">
-                <button @click="updateMaterialDiscounts" 
-                        :disabled="isLoading || !isFormValid"
-                        class="asowp-flex asowp-items-center asowp-space-x-2 asowp-cursor-pointer asowp-bg-[#016464] asowp-text-white asowp-px-6 asowp-py-3 asowp-rounded-lg asowp-font-medium hover:asowp-bg-[#014d4d] asowp-transition-all asowp-duration-200 disabled:asowp-opacity-50 disabled:asowp-cursor-not-allowed"
-                        :class="{'asowp-opacity-50 asowp-cursor-not-allowed': !isFormValid}">
-                    <div v-if="isLoading" class="asowp-w-4 asowp-h-4">
-                        <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-full asowp-h-full" alt="Loading..."/>
-                    </div>
-                    <svg v-else class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z"/>
-                    </svg>
-                    <span>{{__("Save Changes", "all-signs-options-pro")}}</span>
-                </button>
-            </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
         </div>
-    </div>
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="asowp-pricing-card asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-4">
+        <div class="asowp-flex asowp-justify-end">
+          <button @click="closeForm" class="asowp-secondary-button">{{ __('Back to pricings', 'all-signs-options-pro') }}</button>
+        </div>
+      </div>
+
+      <div class="asowp-pricing-editor asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-5">
+        <div>
+          <label>{{ __('Label', 'all-signs-options-pro') }}</label>
+          <input type="text" v-model.trim="editingPricing.label">
+          <p>{{ __('Internal name used to identify this pricing profile.', 'all-signs-options-pro') }}</p>
+        </div>
+
+        <div class="asowp-pricing-divider"></div>
+
+        <section class="asowp-pricing-section">
+          <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
+            <div>
+              <h3>{{ __('Custom size pricing', 'all-signs-options-pro') }}</h3>
+              <p>{{ __('Define the pricing rules for custom size ranges.', 'all-signs-options-pro') }}</p>
+            </div>
+          </div>
+
+          <div class="asowp-pricing-options-card">
+            <div class="asowp-pricing-toggle-row">
+              <div>
+                <h4>{{ __('Per-unit pricing', 'all-signs-options-pro') }}</h4>
+                <p>{{ sprintf(__('Charge per %s instead of a flat price for the whole range.', 'all-signs-options-pro'), surfaceUnitLabel) }}</p>
+              </div>
+              <div class="asowp-toggle-group">
+                <span>{{ __('No', 'all-signs-options-pro') }}</span>
+                <button type="button" @click="togglePerUnit" :class="switchClass(editingPricing.customPricing.rangePricingPerUnit)">
+                  <span></span>
+                </button>
+                <span>{{ __('Yes', 'all-signs-options-pro') }}</span>
+              </div>
+            </div>
+
+            <div class="asowp-pricing-divider"></div>
+
+            <div class="asowp-pricing-toggle-row">
+              <div>
+                <h4>{{ __('Weight-based shipping', 'all-signs-options-pro') }}</h4>
+                <p>{{ __('Use volumetric weight instead of the size range value.', 'all-signs-options-pro') }}</p>
+              </div>
+              <div class="asowp-toggle-group">
+                <span>{{ __('No', 'all-signs-options-pro') }}</span>
+                <button type="button" @click="toggleWeightShipping" :class="switchClass(editingPricing.customPricing.shippingMethod === 'per-weight')">
+                  <span></span>
+                </button>
+                <span>{{ __('Yes', 'all-signs-options-pro') }}</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="asowp-pricing-help">
+            {{ sprintf(__('Each range applies from the previous size up to the current size. Surface is calculated automatically as size x size in %s.', 'all-signs-options-pro'), surfaceUnitLabel) }}
+          </p>
+
+          <div v-if="editingPricing.customPricing.shippingMethod === 'per-weight'" class="asowp-pricing-field">
+            <label>{{ __('Volumetric divisor', 'all-signs-options-pro') }}</label>
+            <input type="number" v-model.number="editingPricing.customPricing.divisorVolumetric">
+            <p>{{ __('Used to convert parcel dimensions into volumetric weight for shipping.', 'all-signs-options-pro') }}</p>
+          </div>
+
+          <div class="asowp-space-y-3">
+            <div
+              v-for="(range, key) in editingPricing.customPricing.range"
+              :key="key"
+              class="asowp-pricing-range-card"
+            >
+              <div class="asowp-flex asowp-items-center asowp-justify-between asowp-gap-4">
+                <h4>{{ sprintf(__('Range %d', 'all-signs-options-pro'), key + 1) }}</h4>
+                <div class="asowp-flex asowp-items-center asowp-gap-2">
+                  <button @click="openRangeModal(key)" class="asowp-action-button">
+                    <Edit2Icon class="asowp-w-3.5 asowp-h-3.5" />
+                    {{ __('Edit', 'all-signs-options-pro') }}
+                  </button>
+                  <button @click="removeRange(key)" class="asowp-delete-button">
+                    <Trash2Icon class="asowp-w-3.5 asowp-h-3.5" />
+                    {{ __('Delete', 'all-signs-options-pro') }}
+                  </button>
+                </div>
+              </div>
+              <p>
+                {{ sprintf(__('Applied from %s to %s %s. Surface equivalent: %s to %s %s.', 'all-signs-options-pro'), rangeStart(key), range.size, measurementUnit, rangeSurfaceStart(key), rangeSurface(range.size), surfaceUnitLabel) }}
+              </p>
+              <p>
+                {{ __('Base price:', 'all-signs-options-pro') }}
+                {{ editingPricing.customPricing.rangePricingPerUnit ? `${range.basePrice} ${currencySymbol}/${surfaceUnitLabel}` : `${range.basePrice} ${currencySymbol}` }}
+                · {{ __('Char price:', 'all-signs-options-pro') }} {{ range.charPrice }} {{ currencySymbol }}/char
+              </p>
+              <p>
+                {{ __('Shipping:', 'all-signs-options-pro') }}
+                {{ shippingLabel(range) }}
+              </p>
+            </div>
+          </div>
+
+          <button @click="openRangeModal()" class="asowp-secondary-button asowp-add-range-button asowp-mt-3">{{ __('Add range', 'all-signs-options-pro') }}</button>
+        </section>
+
+        <div class="asowp-pricing-actions">
+          <button @click="closeForm" class="asowp-secondary-button">{{ __('Cancel', 'all-signs-options-pro') }}</button>
+          <button @click="savePricing" :disabled="!canSavePricing || isLoading" class="asowp-primary-button">
+            {{ isLoading ? __('Saving...', 'all-signs-options-pro') : __('Save pricing', 'all-signs-options-pro') }}
+          </button>
+        </div>
+      </div>
+    </template>
+
+    <Teleport to="body">
+      <div v-if="rangeModalOpen" class="asowp-range-modal-layer">
+        <div class="asowp-range-modal-backdrop" @click="closeRangeModal"></div>
+        <div class="asowp-range-modal">
+          <div class="asowp-range-modal-header">
+            <h3>{{ editingRangeIndex === null ? __('Add range', 'all-signs-options-pro') : sprintf(__('Edit range %d', 'all-signs-options-pro'), editingRangeIndex + 1) }}</h3>
+            <button @click="closeRangeModal" type="button"><XIcon class="asowp-w-5 asowp-h-5" /></button>
+          </div>
+          <div class="asowp-range-modal-body">
+            <div class="asowp-pricing-field">
+              <label>{{ sprintf(__('Size (%s)', 'all-signs-options-pro'), measurementUnit) }}</label>
+              <input type="number" v-model.number="rangeDraft.size">
+              <p>{{ rangeHelpText }}</p>
+            </div>
+            <div class="asowp-pricing-field">
+              <label>{{ editingPricing.customPricing.rangePricingPerUnit ? sprintf(__('Base price per %s', 'all-signs-options-pro'), surfaceUnitLabel) : __('Base price', 'all-signs-options-pro') }}</label>
+              <input type="number" v-model.number="rangeDraft.basePrice">
+            </div>
+            <div class="asowp-pricing-field">
+              <label>{{ __('Char price', 'all-signs-options-pro') }}</label>
+              <input type="number" v-model.number="rangeDraft.charPrice">
+            </div>
+            <template v-if="editingPricing.customPricing.shippingMethod === 'per-weight'">
+              <div class="asowp-pricing-field">
+                <label>{{ sprintf(__('Width modifier (%s)', 'all-signs-options-pro'), measurementUnit) }}</label>
+                <input type="number" v-model.number="rangeDraft.widthModifier">
+              </div>
+              <div class="asowp-pricing-field">
+                <label>{{ sprintf(__('Height modifier (%s)', 'all-signs-options-pro'), measurementUnit) }}</label>
+                <input type="number" v-model.number="rangeDraft.heightModifier">
+              </div>
+              <div class="asowp-pricing-field">
+                <label>{{ sprintf(__('Length (%s)', 'all-signs-options-pro'), measurementUnit) }}</label>
+                <input type="number" v-model.number="rangeDraft.length">
+              </div>
+            </template>
+            <div class="asowp-pricing-field">
+              <label>{{ shippingInputLabel }}</label>
+              <input type="number" v-model.number="rangeDraft.shippingPrice">
+            </div>
+          </div>
+          <div class="asowp-range-modal-actions">
+            <button @click="closeRangeModal" class="asowp-secondary-button">{{ __('Cancel', 'all-signs-options-pro') }}</button>
+            <button @click="saveRange" class="asowp-primary-button">{{ editingRangeIndex === null ? __('Add range', 'all-signs-options-pro') : __('Save changes', 'all-signs-options-pro') }}</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+  </div>
 </template>
+
 <script setup>
-    import { ref, onMounted, computed, watch } from "vue";
-    import api from "@/admin/Api/api";
-    import { useRoute } from 'vue-router';
-    import toastMessage from "@/admin/utils/functions";
-import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-const route = useRoute()
-    const configID = ref(route.params.configId);
-    const materialId = ref(route.params.materialId);
-    const discounts = ref([{
-        quantity: 0,
-        discountPercentage: 0
-    }]);
-    
-    const errors = ref({});
+import api from "@/admin/Api/api";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import toastMessage from "@/admin/utils/functions";
+import { CopyIcon, Edit2Icon, Loader2Icon, MoreHorizontalIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-vue-next";
+import { __, sprintf } from "@wordpress/i18n";
 
-    onMounted(async () => {
-        isFetching.value = true;
-        await fetchDiscounts();
-    });
+const route = useRoute();
+const configID = ref(route.params.configId);
+const materialId = ref(route.params.materialId);
 
-    const isFetching = ref(false);
-    const isLoading = ref(false);
+const isFetching = ref(false);
+const isLoading = ref(false);
+const showForm = ref(false);
+const editingIndex = ref(null);
+const rangeModalOpen = ref(false);
+const editingRangeIndex = ref(null);
+const openActionIndex = ref(null);
 
-        const isFormValid = computed(() => {
-        if (!Array.isArray(discounts.value)) {
-            return true;
-        }
-        return Object.keys(errors.value).length === 0 && 
-            (discounts.value || []).every(discount => 
-                discount.quantity > 0 && 
-                discount.discountPercentage > 0 && 
-                discount.discountPercentage <= 100
-            );
-    });
+const measurementUnit = ref("mm");
+const currencySymbol = ref("$");
+const materialSizes = ref({});
+const pricingSettings = ref({ label: "Pricing", description: "", priceOptions: [] });
 
-    // Watcher pour valider automatiquement quand les discounts changent
-    watch(discounts, () => {
-        validateAllDiscounts();
-    }, { deep: true });
+const emptyPricing = () => ({
+  label: "",
+  customPricing: {
+    rangePricingPerUnit: false,
+    shippingMethod: "per-surface",
+    divisorVolumetric: 5000,
+    unit: { surface: 0, basePrice: 0, charPrice: 0 },
+    range: [],
+  },
+});
 
-    const fetchDiscounts = async () => {
-        const result = await api.getMaterialSimpleDiscounts(configID.value, materialId.value);
-        console.log("rsultat des  recherches", result);
-        if (Array.isArray(result) ) {
-            discounts.value = result;
-        }
-        isFetching.value = false;
-        // Valider après le fetch
-        validateAllDiscounts();
+const editingPricing = ref(emptyPricing());
+const rangeDraft = ref(emptyRange());
+
+const surfaceUnitLabel = computed(() => `${measurementUnit.value}²`);
+const canSavePricing = computed(() => editingPricing.value.label.trim().length > 0);
+
+const rangeStart = (index) => index === 0 ? 0 : Number(editingPricing.value.customPricing.range[index - 1]?.size || 0);
+const rangeSurface = (size) => Number(size || 0) * Number(size || 0);
+const rangeSurfaceStart = (index) => rangeSurface(rangeStart(index));
+
+const rangeHelpText = computed(() => {
+  const start = editingRangeIndex.value === null
+    ? Number(editingPricing.value.customPricing.range.at(-1)?.size || 0)
+    : rangeStart(editingRangeIndex.value);
+  return sprintf(
+    __('This range applies from %s to %s %s. Surface equivalent: %s to %s %s.', 'all-signs-options-pro'),
+    start,
+    Number(rangeDraft.value.size || 0),
+    measurementUnit.value,
+    rangeSurface(start),
+    rangeSurface(rangeDraft.value.size),
+    surfaceUnitLabel.value
+  );
+});
+
+const shippingInputLabel = computed(() => {
+  if (editingPricing.value.customPricing.shippingMethod === "per-weight") {
+    return __("Shipping price per kg", "all-signs-options-pro");
+  }
+  return editingPricing.value.customPricing.rangePricingPerUnit
+    ? sprintf(__("Shipping per %s", "all-signs-options-pro"), surfaceUnitLabel.value)
+    : __("Shipping price", "all-signs-options-pro");
+});
+
+function emptyRange(startSize = 0) {
+  return {
+    size: Number(startSize) + 1,
+    basePrice: 0,
+    charPrice: 0,
+    shippingPrice: 0,
+    widthModifier: 0,
+    heightModifier: 0,
+    length: 0,
+  };
+}
+
+const toNumber = (value, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const normalizeCustomPricing = (value = {}) => ({
+  rangePricingPerUnit: Boolean(value.rangePricingPerUnit),
+  shippingMethod: value.shippingMethod === "per-weight" ? "per-weight" : "per-surface",
+  divisorVolumetric: toNumber(value.divisorVolumetric, 5000),
+  unit: {
+    surface: toNumber(value.unit?.surface, 0),
+    basePrice: toNumber(value.unit?.basePrice, 0),
+    charPrice: toNumber(value.unit?.charPrice, 0),
+  },
+  range: Array.isArray(value.range)
+    ? value.range.map((item) => ({
+        size: toNumber(item?.size ?? item?.surface, 0),
+        basePrice: toNumber(item?.basePrice, 0),
+        charPrice: toNumber(item?.charPrice, 0),
+        shippingPrice: toNumber(item?.shippingPrice ?? item?.pricePerSqCm, 0),
+        widthModifier: toNumber(item?.widthModifier, 0),
+        heightModifier: toNumber(item?.heightModifier, 0),
+        length: toNumber(item?.length, 0),
+      }))
+    : [],
+});
+
+const normalizePricingOption = (item = {}) => ({
+  label: String(item.label || ""),
+  customPricing: normalizeCustomPricing(item.customPricing || item.customSizePricing || item.pricings || {}),
+});
+
+const buildFallbackPricing = () => ({
+  label: "Default pricing",
+  customPricing: normalizeCustomPricing(materialSizes.value?.customSize?.pricings || {}),
+});
+
+const normalizePricingSettings = () => {
+  const stored = materialSizes.value?.pricing || {};
+  const storedOptions = Array.isArray(stored.priceOptions) ? stored.priceOptions : [];
+  pricingSettings.value = {
+    label: String(stored.label || "Pricing"),
+    description: String(stored.description || ""),
+    priceOptions: storedOptions.length
+      ? storedOptions.map(normalizePricingOption)
+      : [buildFallbackPricing()],
+  };
+};
+
+const fetchPricing = async () => {
+  isFetching.value = true;
+  try {
+    const result = await api.getMaterialSimpleSizes(configID.value, materialId.value);
+    if (result?.materialSizes) {
+      materialSizes.value = result.materialSizes;
+      measurementUnit.value = String(result.measurementUnit || "mm");
+      normalizePricingSettings();
     }
+  } finally {
+    isFetching.value = false;
+  }
+};
 
-    const updateMaterialDiscounts = async () => {
-        // Validation finale avant envoi
-        if (!validateAllDiscounts()) {
-            toastMessage("Please correct the errors before saving", "error");
-            return;
-        }
-
-        isLoading.value = true;
-        const result = await api.updateMaterialSimpleDiscount(configID.value, materialId.value, discounts.value);
-        if (result.success) {
-            isLoading.value = false;
-            if (result.success == true) {
-                toastMessage(result.message)
-            } else {
-                toastMessage(result.message, "warning");
-            }
-        } else {
-            isLoading.value = false;
-            toastMessage(result.message, "error");
-        }
+const persistPricing = async () => {
+  isLoading.value = true;
+  try {
+    const primary = pricingSettings.value.priceOptions[0] || buildFallbackPricing();
+    const nextSizes = {
+      ...materialSizes.value,
+      customSize: {
+        ...(materialSizes.value.customSize || {}),
+        pricings: primary.customPricing,
+      },
+      pricing: {
+        label: pricingSettings.value.label,
+        description: pricingSettings.value.description,
+        priceOptions: pricingSettings.value.priceOptions,
+      },
+    };
+    const res = await api.updateMaterialSimpleSizes(configID.value, materialId.value, nextSizes);
+    if (res?.success) {
+      materialSizes.value = nextSizes;
+      toastMessage(res.message);
     }
+  } finally {
+    isLoading.value = false;
+  }
+};
 
-    const handleAddMaterialDiscount = () => {
+const addPricing = () => {
+  editingIndex.value = null;
+  editingPricing.value = emptyPricing();
+  showForm.value = true;
+};
 
-        const lastDiscount = discounts.value[discounts.value.length - 1];
-        const newQuantity = lastDiscount ? lastDiscount.quantity + 1 : 1;
-        
-        discounts.value.push({ 
-            quantity: newQuantity, 
-            discountPercentage: 0 
-        });
-    };
+const editPricing = (index) => {
+  openActionIndex.value = null;
+  editingIndex.value = index;
+  editingPricing.value = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
+  showForm.value = true;
+};
 
-    const handleDeleteDiscount = (index) => {
-        discounts.value.splice(index, 1);
-        delete errors.value[index];
-        
-        // Réorganiser les erreurs après suppression
-        const newErrors = {};
-        Object.keys(errors.value).forEach(key => {
-            const numKey = parseInt(key);
-            if (numKey > index) {
-                newErrors[numKey - 1] = errors.value[key];
-            } else if (numKey < index) {
-                newErrors[numKey] = errors.value[key];
-            }
-        });
-        errors.value = newErrors;
-        
-        // Revalider tous les discounts
-        validateAllDiscounts();
-    };
+const closeForm = () => {
+  showForm.value = false;
+  editingIndex.value = null;
+  editingPricing.value = emptyPricing();
+};
 
-    // Validation de la quantité
-    const validateQuantity = (index) => {
-        const currentQuantity = parseFloat(discounts.value[index].quantity);
-        
-        // Initialiser l'objet d'erreur pour cet index s'il n'existe pas
-        if (!errors.value[index]) {
-            errors.value[index] = {};
-        }
+const savePricing = async () => {
+  if (!canSavePricing.value) return;
+  const next = normalizePricingOption(editingPricing.value);
+  if (editingIndex.value === null) {
+    pricingSettings.value.priceOptions.push(next);
+  } else {
+    pricingSettings.value.priceOptions[editingIndex.value] = next;
+  }
+  await persistPricing();
+  closeForm();
+};
 
-        // Vérifier si c'est un nombre valide
-        if (isNaN(currentQuantity) || currentQuantity <= 0) {
-            errors.value[index].quantity = "Quantity must be a positive number";
-            return false;
-        }
+const duplicatePricing = async (index) => {
+  openActionIndex.value = null;
+  const copy = JSON.parse(JSON.stringify(pricingSettings.value.priceOptions[index]));
+  copy.label = copy.label ? `${copy.label} (copy)` : sprintf(__('Pricing %d', 'all-signs-options-pro'), pricingSettings.value.priceOptions.length + 1);
+  pricingSettings.value.priceOptions.splice(index + 1, 0, copy);
+  await persistPricing();
+};
 
-        // Vérifier si la quantité est supérieure à la précédente
-        if (index > 0) {
-            const previousQuantity = parseFloat(discounts.value[index - 1].quantity);
-            if (currentQuantity <= previousQuantity) {
-                errors.value[index].quantity = `Quantity must be greater than ${previousQuantity}`;
-                return false;
-            }
-        }
+const deletePricing = async (index) => {
+  openActionIndex.value = null;
+  pricingSettings.value.priceOptions.splice(index, 1);
+  if (!pricingSettings.value.priceOptions.length) {
+    pricingSettings.value.priceOptions.push(buildFallbackPricing());
+  }
+  await persistPricing();
+};
 
-        // Vérifier si la quantité suivante est toujours valide
-        if (index < discounts.value.length - 1) {
-            const nextQuantity = parseFloat(discounts.value[index + 1].quantity);
-            if (!isNaN(nextQuantity) && nextQuantity <= currentQuantity) {
-                validateQuantity(index + 1); // Revalider la suivante
-            }
-        }
+const toggleActions = (index) => {
+  openActionIndex.value = openActionIndex.value === index ? null : index;
+};
 
-        // Supprimer l'erreur si tout est OK
-        delete errors.value[index].quantity;
-        if (Object.keys(errors.value[index]).length === 0) {
-            delete errors.value[index];
-        }
-        
-        return true;
-    };
+const closeActions = () => {
+  openActionIndex.value = null;
+};
 
-    // Validation du pourcentage de discount
-    const validateDiscountPercentage = (index) => {
-        const currentPercentage = parseFloat(discounts.value[index].discountPercentage);
-        
-        // Initialiser l'objet d'erreur pour cet index s'il n'existe pas
-        if (!errors.value[index]) {
-            errors.value[index] = {};
-        }
+const togglePerUnit = () => {
+  editingPricing.value.customPricing.rangePricingPerUnit = !editingPricing.value.customPricing.rangePricingPerUnit;
+};
 
-        // Vérifier si c'est un nombre valide
-        if (isNaN(currentPercentage) || currentPercentage <= 0) {
-            errors.value[index].discountPercentage = "Percentage must be a positive number";
-            return false;
-        }
+const toggleWeightShipping = () => {
+  editingPricing.value.customPricing.shippingMethod =
+    editingPricing.value.customPricing.shippingMethod === "per-weight" ? "per-surface" : "per-weight";
+};
 
-        // Vérifier si le pourcentage est <= 100
-        if (currentPercentage > 100) {
-            errors.value[index].discountPercentage = "Percentage cannot exceed 100%";
-            return false;
-        }
+const switchClass = (active) => [
+  "asowp-switch",
+  active ? "is-active" : "",
+];
 
-        // Supprimer l'erreur si tout est OK
-        delete errors.value[index].discountPercentage;
-        if (Object.keys(errors.value[index]).length === 0) {
-            delete errors.value[index];
-        }
-        
-        return true;
-    };
+const openRangeModal = (index = null) => {
+  editingRangeIndex.value = index;
+  if (index === null) {
+    rangeDraft.value = emptyRange(editingPricing.value.customPricing.range.at(-1)?.size || 0);
+  } else {
+    rangeDraft.value = { ...editingPricing.value.customPricing.range[index] };
+  }
+  rangeModalOpen.value = true;
+};
 
-    // Validation de tous les discounts
-    const validateAllDiscounts = () => {
-        let isValid = true;
-        if (Array.isArray(discounts.value)) {
-            discounts.value.forEach((discount, index) => {
-                const quantityValid = validateQuantity(index);
-                const percentageValid = validateDiscountPercentage(index);
-                
-                if (!quantityValid || !percentageValid) {
-                    isValid = false;
-                }
-            });
-        }
-        
-        return isValid;
-    };
+const closeRangeModal = () => {
+  rangeModalOpen.value = false;
+  editingRangeIndex.value = null;
+  rangeDraft.value = emptyRange();
+};
+
+const saveRange = () => {
+  const normalized = { ...emptyRange(), ...rangeDraft.value };
+  if (editingRangeIndex.value === null) {
+    editingPricing.value.customPricing.range.push(normalized);
+  } else {
+    editingPricing.value.customPricing.range[editingRangeIndex.value] = normalized;
+  }
+  closeRangeModal();
+};
+
+const removeRange = (index) => {
+  editingPricing.value.customPricing.range.splice(index, 1);
+};
+
+const shippingLabel = (range) => {
+  if (editingPricing.value.customPricing.shippingMethod === "per-weight") {
+    return `${range.shippingPrice} ${currencySymbol.value}/kg`;
+  }
+  if (editingPricing.value.customPricing.rangePricingPerUnit) {
+    return `${range.shippingPrice} ${currencySymbol.value}/${surfaceUnitLabel.value}`;
+  }
+  return `${range.shippingPrice} ${currencySymbol.value}`;
+};
+
+onMounted(() => {
+  fetchPricing();
+  document.addEventListener("click", closeActions);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeActions);
+});
 </script>
+
+<style scoped>
+.asowp-pricing-page {
+  gap: 10px;
+}
+
+.asowp-pricing-header,
+.asowp-pricing-card,
+.asowp-pricing-editor {
+  border-radius: 10px;
+  border-color: #dfe3e8;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.asowp-pricing-header {
+  min-height: 74px;
+  padding: 14px 20px;
+}
+
+.asowp-pricing-header h2 {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 800;
+}
+
+.asowp-pricing-header p {
+  max-width: 680px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.asowp-pricing-header button {
+  min-height: 28px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.asowp-pricing-card,
+.asowp-pricing-editor {
+  padding: 18px 20px;
+}
+
+.asowp-pricing-card h3,
+.asowp-pricing-section h3 {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 800;
+  color: #303030;
+  margin: 0;
+}
+
+.asowp-pricing-table-wrap {
+  overflow: visible;
+}
+
+.asowp-pricing-card thead th {
+  padding: 8px 12px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+}
+
+.asowp-pricing-card thead th:first-child {
+  width: 56%;
+}
+
+.asowp-pricing-card thead th:nth-child(2) {
+  width: 25%;
+}
+
+.asowp-pricing-card thead th:nth-child(3) {
+  width: 19%;
+}
+
+.asowp-pricing-card tbody td {
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 18px;
+  background: transparent;
+}
+
+.asowp-pricing-row {
+  cursor: pointer;
+  background: transparent;
+  box-shadow: none;
+}
+
+.asowp-pricing-row:hover {
+  background: #f7f8fa;
+}
+
+.asowp-pricing-row:hover .asowp-ellipsis-button {
+  border-color: #aeb4b9;
+}
+
+.asowp-pricing-actions-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.asowp-ellipsis-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: #616161;
+  background: #fff;
+  border: 1px solid #c9cccf;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.asowp-actions-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 136px;
+  padding: 6px;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.asowp-actions-popover button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 30px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #303030;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.asowp-actions-popover button:hover {
+  background: #f6f6f7;
+}
+
+.asowp-actions-popover button.is-danger {
+  color: #8e1f0b;
+}
+
+.asowp-action-button,
+.asowp-delete-button,
+.asowp-secondary-button,
+.asowp-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.asowp-action-button,
+.asowp-secondary-button {
+  color: #303030;
+  background: #fff;
+  border: 1px solid #c9cccf;
+}
+
+.asowp-delete-button {
+  color: #8e1f0b;
+  background: transparent;
+  border: 0;
+}
+
+.asowp-primary-button {
+  color: #fff;
+  background: #007a72;
+  border: 0;
+}
+
+.asowp-primary-button:hover {
+  color: #fff;
+  background: #00645f;
+}
+
+.asowp-primary-button:disabled {
+  background: #d8d8d8;
+  cursor: not-allowed;
+}
+
+.asowp-add-range-button {
+  width: auto;
+  max-width: max-content;
+  align-self: flex-start;
+}
+
+.asowp-pricing-editor {
+  display: grid;
+  gap: 16px;
+}
+
+.asowp-pricing-editor label,
+.asowp-pricing-field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #303030;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.asowp-pricing-editor input,
+.asowp-pricing-field input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  border: 1px solid #8c9196;
+  border-radius: 8px;
+  background: #fff;
+  color: #303030;
+  font-size: 13px;
+  line-height: 18px;
+  padding: 0 12px;
+  outline: none;
+}
+
+.asowp-pricing-editor input:focus,
+.asowp-pricing-field input:focus {
+  border-color: #008060;
+}
+
+.asowp-pricing-editor p,
+.asowp-pricing-section p,
+.asowp-pricing-field p {
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 6px 0 0;
+}
+
+.asowp-pricing-divider {
+  height: 1px;
+  background: #eceff2;
+}
+
+.asowp-pricing-section {
+  display: grid;
+  gap: 12px;
+}
+
+.asowp-pricing-options-card,
+.asowp-pricing-range-card {
+  padding: 14px;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.asowp-pricing-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.asowp-pricing-toggle-row h4,
+.asowp-pricing-range-card h4 {
+  margin: 0;
+  color: #303030;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 800;
+}
+
+.asowp-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.asowp-switch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #d9dee8;
+  cursor: pointer;
+}
+
+.asowp-switch span {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: left 120ms ease;
+}
+
+.asowp-switch.is-active {
+  background: #007a72;
+}
+
+.asowp-switch.is-active span {
+  left: 18px;
+}
+
+.asowp-pricing-help {
+  margin: 0 !important;
+}
+
+.asowp-pricing-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid #dfe3e8;
+}
+
+.asowp-range-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.asowp-range-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.asowp-range-modal {
+  position: relative;
+  width: min(520px, calc(100vw - 40px));
+  max-height: calc(100vh - 56px);
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.asowp-range-modal-header,
+.asowp-range-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #dfe3e8;
+}
+
+.asowp-range-modal-header h3 {
+  margin: 0;
+  color: #202223;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 800;
+}
+
+.asowp-range-modal-header button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: #8c9196;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.asowp-range-modal-body {
+  display: grid;
+  gap: 14px;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  padding: 18px;
+}
+
+.asowp-range-modal-actions {
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #dfe3e8;
+  border-bottom: 0;
+}
+</style>

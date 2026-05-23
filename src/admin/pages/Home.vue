@@ -1,201 +1,176 @@
 <template>
-  <div class="asowp-p-4 asowp-space-y-3">
-
-    <div class="asowp-flex asowp-justify-end">
+  <div class="asowp-dashboard">
+    <!-- Top Action Bar -->
+    <div class="asowp-dashboard-topbar asowp-flex asowp-justify-end asowp-mb-5">
       <RouterLink
-        to="/configurations"
-        class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-rounded-md asowp-bg-[#016464] hover:asowp-text-white asowp-no-underline asowp-text-white asowp-text-sm asowp-font-medium asowp-px-4 asowp-py-2">
+        to="/configurations/new"
+        class="asowp-primary-action asowp-dashboard-primary-action">
         {{ __('Create configuration', 'all-signs-options-pro') }}
       </RouterLink>
     </div>
 
-    <div class="asowp-flex asowp-space-x-3">
-      <div class="asowp-w-[50%]">
-        <button class="asowp-bg-[#fff] asowp-border-none asowp-flex asowp-cursor-pointer asowp-space-x-1 asowp-items-center asowp-w-full asowp-rounded-[0.75rem] asowp-px-2.5 asowp-py-2.5 asowp-text-left">
-          <div class="asowp-bg-[#91d0ff] asowp-p-1 asowp-flex asowp-justify-center asowp-rounded-[6px] asowp-mr-2">
-            <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg asowp-w-4 asowp-h-4" focusable="false" aria-hidden="true">
-              <path d="M10 14a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-.75.75Z"></path><path d="M9 7a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"></path>
-              <path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path>
-            </svg>
-          </div>
-          {{ __('Click', 'all-signs-options-pro') }} 
-          <a href="#" @click.prevent="openInstallConfigModal">&nbsp;{{ __('here to install configuration screen', 'all-signs-options-pro') }}&nbsp;</a>
-          {{ __('in your online store', 'all-signs-options-pro') }}
-        </button>
+    <!-- Info Banners -->
+    <div class="asowp-dashboard-banners asowp-grid md:asowp-grid-cols-2 asowp-gap-4 asowp-mb-4">
+      <div class="asowp-dashboard-card asowp-dashboard-banner asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-p-4 asowp-flex asowp-items-center asowp-shadow-sm">
+        <div class="asowp-dashboard-banner-icon asowp-bg-[#91d0ff] asowp-p-1.5 asowp-rounded-md asowp-mr-3">
+          <InfoIcon class="asowp-w-4 asowp-h-4 asowp-text-white" />
+        </div>
+        <div class="asowp-dashboard-banner-text asowp-text-[13px]">
+          {{ __('Click', 'all-signs-options-pro') }}
+          <a href="#" @click.prevent="openInstallConfigModal">{{ __('here to install configuration screen', 'all-signs-options-pro') }}</a>
+          {{ __(' in your online store', 'all-signs-options-pro') }}
+        </div>
       </div>
-      <div class="asowp-w-[50%]">
-        <button class="asowp-bg-[#fff] asowp-border-none asowp-cursor-pointer asowp-space-x-1 asowp-flex asowp-items-center asowp-w-full asowp-rounded-[0.75rem] asowp-px-2.5 asowp-py-2.5 asowp-text-left">
-          <div class="asowp-bg-[#91d0ff] asowp-p-1 asowp-flex asowp-justify-center asowp-rounded-[6px] asowp-mr-2">
-            <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg asowp-w-4 asowp-h-4" focusable="false" aria-hidden="true">
-              <path d="M10 14a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-.75.75Z"></path><path d="M9 7a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"></path>
-              <path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path>
-            </svg>
-          </div>
-          {{ __('Click', 'all-signs-options-pro') }} 
-          <a href="#" @click.prevent="openInstallTemplatesModal">&nbsp;{{ __('here to add template screen', 'all-signs-options-pro') }}&nbsp;</a>
-          {{ __('to your online store', 'all-signs-options-pro') }}
-        </button>
+      <div class="asowp-dashboard-card asowp-dashboard-banner asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-p-4 asowp-flex asowp-items-center asowp-shadow-sm">
+        <div class="asowp-dashboard-banner-icon asowp-bg-[#91d0ff] asowp-p-1.5 asowp-rounded-md asowp-mr-3">
+          <InfoIcon class="asowp-w-4 asowp-h-4 asowp-text-white" />
+        </div>
+        <div class="asowp-dashboard-banner-text asowp-text-[13px]">
+          {{ __('Click', 'all-signs-options-pro') }}
+          <a href="#" @click.prevent="openInstallTemplatesModal">{{ __('here to add template screen', 'all-signs-options-pro') }}</a>
+          {{ __(' to your online store', 'all-signs-options-pro') }}
+        </div>
       </div>
     </div>
 
-    <section class="asowp-grid lg:asowp-grid-cols-[1fr_360px] asowp-space-x-1">
-        <div class="asowp-space-y-3">
-            <div class="asowp-flex asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-border-solid asowp-bg-white asowp-p-2">
-                <div v-for="c in kpis" :key="c.key" class="asowp-p-5 asowp-space-y-2">
-                    <div class="asowp-text-[28px] asowp-font-bold">{{ c.value }}</div>
-                    <div class="asowp-text-[12px] asowp-text-gray-500">{{ c.label }}</div>
-                </div>
-            </div>
-
-            <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-overflow-hidden">
-                <div class="asowp-bg-[#d1e2e2]">
-                    <div class="asowp-px-5 asowp-py-3 asowp-flex asowp-items-center asowp-gap-2">
-                        <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg asowp-w-4 asowp-h-4" focusable="false" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M13.257 3h-6.514a1.25 1.25 0 0 0-.983.478l-2.386 3.037a1.75 1.75 0 0 0-.374 1.08v.655a2.75 2.75 0 0 0 1.5 2.45v4.55c0 .966.784 1.75 1.75 1.75h7.5a1.75 1.75 0 0 0 1.75-1.75v-4.55a2.75 2.75 0 0 0 1.5-2.45v-.481c0-.504-.17-.994-.48-1.39l-2.28-2.901a1.25 1.25 0 0 0-.983-.478Zm-.257 12.5h.75a.25.25 0 0 0 .25-.25v-4.25a2.742 2.742 0 0 1-2-.863 2.742 2.742 0 0 1-2 .863 2.742 2.742 0 0 1-2-.863 2.742 2.742 0 0 1-2 .863v4.25c0 .138.112.25.25.25h3.75v-2.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v2.5Zm-7-6h-.25c-.69 0-1.25-.56-1.25-1.25v-.654a.25.25 0 0 1 .053-.155l2.312-2.941h6.27l2.205 2.805a.75.75 0 0 1 .16.464v.481c0 .69-.56 1.25-1.25 1.25h-.25c-.69 0-1.25-.56-1.25-1.25v-.5a.75.75 0 0 0-1.5 0v.5a1.25 1.25 0 1 1-2.5 0v-.5a.75.75 0 0 0-1.5 0v.5c0 .69-.56 1.25-1.25 1.25Z"></path>
-                        </svg>
-                        <span class="asowp-text-[14px] asowp-font-semibold">{{ __('Main Menu', 'all-signs-options-pro') }}</span>
-                    </div>
-                    <div class="asowp-px-5 asowp-pb-[15px]">
-                        <div class="asowp-space-y-2 asowp-bg-[#d1e2e2] asowp-pt-1">
-                            <RouterLink v-for="item in mainMenu" :key="item.to" :to="item.to"
-                                class="box-aso asowp-flex asowp-items-center asowp-justify-between asowp-p-2 asowp-no-underline focus:asowp-border-none">
-                                <div class="asowp-flex asowp-items-start asowp-gap-3">
-                                    <span class="asowp-w-9 asowp-h-9 asowp-rounded-lg asowp-bg-[#ffffff] asowp-flex asowp-items-center asowp-justify-center asowp-p-[5px]">
-                                        <component :is="item.icon" />
-                                    </span>
-                                    <div class="asowp-py-1">
-                                        <div class="asowp-text-[.8125em] asowp-font-semibold asowp-text-[#000]">{{ item.title }}</div>
-                                        <div class="asowp-text-[1em] asowp-text-gray-600 asowp-text-[#000]">{{ item.desc }}</div>
-                                    </div>
-                                </div>
-                                <svg class="asowp-w-4 asowp-h-4 asowp-text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                  <path d="M9 5l7 7-7 7" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </RouterLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-bg-white">
-              <div class="asowp-flex asowp-items-center asowp-gap-2 asowp-px-5 asowp-py-5 asowp-border-b asowp-border-[#e5e7eb]">
-                <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg asowp-w-4 asowp-h-4" focusable="false" aria-hidden="true">
-                  <path d="M11.75 3.5a.75.75 0 0 0 0 1.5h2.19l-4.97 4.97a.75.75 0 1 0 1.06 1.06l4.97-4.97v2.19a.75.75 0 0 0 1.5 0v-4a.75.75 0 0 0-.75-.75h-4Z"></path><path d="M15 10.967a.75.75 0 0 0-1.5 0v2.783c0 .69-.56 1.25-1.25 1.25h-6c-.69 0-1.25-.56-1.25-1.25v-6c0-.69.56-1.25 1.25-1.25h2.783a.75.75 0 0 0 0-1.5h-2.783a2.75 2.75 0 0 0-2.75 2.75v6a2.75 2.75 0 0 0 2.75 2.75h6a2.75 2.75 0 0 0 2.75-2.75v-2.783Z"></path>
-                </svg>
-                <div class="asowp-text-[14px] asowp-font-semibold">{{ __('Learning center', 'all-signs-options-pro') }}</div>
-              </div>
-
-              <div class="asowp-pl-5 asowp-pr-5 asowp-pb-5 asowp-flex asowp-flex-col md:asowp-flex-row asowp-gap-4">
-                <div class="asowp-flex-1 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-p-4">
-                  <div class="asowp-text-[12px] asowp-font-semibold asowp-text-gray-700">{{ __('Browse demo', 'all-signs-options-pro') }}</div>
-                  <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-1">
-                    {{ __('Explore live examples of sign lastconfigs in action.', 'all-signs-options-pro') }}
-                  </p>
-                  <div class="asowp-mt-2 asowp-flex asowp-items-center asowp-gap-3">
-                    <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                      <a href="https://demos.signsdesigner.us/aso-live-demo/" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                        {{ __('View demos', 'all-signs-options-pro') }}
-                      </a>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="asowp-flex-1 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#e5e7eb] asowp-p-4">
-                  <div class="asowp-text-[12px] asowp-font-semibold asowp-text-gray-700">{{ __('Documentation', 'all-signs-options-pro') }}</div>
-                  <p class="asowp-text-[13px] asowp-text-gray-600 asowp-mt-1">
-                    {{ __('Explore the app documentation', 'all-signs-options-pro') }}
-                  </p>
-                  <div class="asowp-mt-2">
-                    <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                      <a href="https://docs.signsdesigner.us/docs/aso-wp-documentation/" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                        {{ __('View docs', 'all-signs-options-pro') }}
-                      </a>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-
+    <!-- Main Content Grid -->
+    <div class="asowp-dashboard-layout asowp-grid lg:asowp-grid-cols-[1fr_340px] asowp-gap-5">
       <div class="asowp-space-y-4">
-        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-white">
-          <div class="asowp-px-5 asowp-py-2 asowp-border-b asowp-border-[#e5e7eb] asowp-text-[.8125em] asowp-font-semibold">
-            {{ __('Recent Configurations', 'all-signs-options-pro') }}
+        <!-- KPI Section -->
+        <div class="asowp-dashboard-card asowp-dashboard-kpis asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-p-6 asowp-flex asowp-justify-between asowp-shadow-sm">
+          <div v-for="c in kpis" :key="c.key" class="asowp-dashboard-kpi asowp-flex-1">
+            <div class="asowp-dashboard-kpi-value asowp-text-[32px] asowp-font-semibold asowp-text-[#1a1a1a]">{{ c.value }}</div>
+            <div class="asowp-dashboard-kpi-label asowp-text-[14px] asowp-text-[#616161]">{{ c.label }}</div>
           </div>
-          <div class="asowp-pl-5 asowp-pr-5 asowp-pb-3 asowp-text-[1em] asowp-text-gray-600" v-if="recentConfigs.length === 0">
-            {{ __('No recent configurations yet.', 'all-signs-options-pro') }}
+        </div>
+
+        <!-- Main Menu Section -->
+        <div class="asowp-dashboard-main-menu asowp-bg-[#dce6e6] asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c9dada] asowp-overflow-hidden asowp-shadow-sm">
+          <div class="asowp-px-6 asowp-py-4 asowp-flex asowp-items-center asowp-gap-2">
+            <LayoutGridIcon class="asowp-w-5 asowp-h-5 asowp-text-[#4a4a4a]" />
+            <span class="asowp-text-[15px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Main Menu', 'all-signs-options-pro') }}</span>
           </div>
-          <ul v-else class="asowp-px-5 asowp-py-3 asowp-m-0">
-            <li v-for="rc in recentConfigs" :key="rc.id" class="asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
-              <div @click="goToMaterial(rc)" class="asowp-cursor-pointer asowp-text-black asowp-no-underline hover:asowp-text-black asowp-text-[12px] asowp-w-full">
-                <div>{{ __('ID', 'all-signs-options-pro') }} {{ rc.id }}</div>
-                <div class="asowp-flex asowp-justify-between asowp-items-center">
-                  <div class="asowp-truncate asowp-font-bold">{{ rc.name }}</div>
-                  <div class="asowp-text-gray-500 asowp-bg-[#d5ebff] asowp-text-[11px] asowp-py-1 asowp-px-3 asowp-rounded-full">{{ rc.materialType }}</div>
+          <div class="asowp-px-6 asowp-pb-6 asowp-space-y-3">
+            <RouterLink v-for="item in mainMenu" :key="item.to" :to="item.to"
+              class="asowp-flex asowp-items-center asowp-justify-between asowp-p-3 asowp-bg-transparent hover:asowp-bg-[#c9dada] asowp-rounded-lg asowp-transition-colors asowp-no-underline asowp-group">
+              <div class="asowp-flex asowp-items-center asowp-gap-4">
+                <span class="asowp-dashboard-menu-icon asowp-w-12 asowp-h-12 asowp-rounded-xl asowp-bg-white asowp-flex asowp-items-center asowp-justify-center asowp-shadow-sm">
+                  <component :is="item.icon" class="asowp-w-6 asowp-h-6 asowp-text-[#4a4a4a]" />
+                </span>
+                <div>
+                  <div class="asowp-dashboard-menu-title asowp-text-[15px] asowp-font-bold asowp-text-[#1a1a1a]">{{ item.title }}</div>
+                  <div class="asowp-dashboard-menu-desc asowp-text-[13px] asowp-text-[#616161]">{{ item.desc }}</div>
                 </div>
               </div>
-            </li>
-          </ul>
+              <ChevronRightIcon class="asowp-w-5 asowp-h-5 asowp-text-[#4a4a4a] group-hover:asowp-translate-x-1 asowp-transition-transform" />
+            </RouterLink>
+          </div>
         </div>
 
-        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-white">
-          <div class="asowp-px-5 asowp-py-2 asowp-border-b asowp-border-[#e5e7eb] asowp-text-[.8125em] asowp-font-semibold">
-            {{ __('Share your feedback', 'all-signs-options-pro') }}
+        <!-- Learning Center -->
+        <div class="asowp-dashboard-card asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-shadow-sm">
+          <div class="asowp-px-6 asowp-py-4 asowp-border-b asowp-border-solid asowp-border-[#f1f1f1] asowp-flex asowp-items-center asowp-gap-2">
+            <ExternalLinkIcon class="asowp-w-4 asowp-h-4 asowp-text-[#4a4a4a]" />
+            <div class="asowp-text-[15px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Learning center', 'all-signs-options-pro') }}</div>
           </div>
-          <div class="asowp-pl-5 asowp-pr-5 asowp-pb-3 asowp-space-y-3 asowp-text-[13px]">
-            <div class="asowp-text-[1em]">{{ __('How would you describe your experience using Sign Customiser?', 'all-signs-options-pro') }}</div>
-            <div class="asowp-flex asowp-gap-2">
-              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-3 asowp-py-1.5 hover:asowp-bg-[#f8fafc]">
-                <a href="https://signsdesigner.us/all-signs-customizer-product/#section-review" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                  <div class="asowp-flex asowp-gap-1">
-                      <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg asowp-w-5 asowp-h-5" focusable="false" aria-hidden="true"><path fill-rule="evenodd" d="M12.539 14.57a9.25 9.25 0 0 1-4.074-.838l-.307-.141a3.751 3.751 0 0 0-1.158-.32v-5.222a1.5 1.5 0 0 0 .15-.099 6.489 6.489 0 0 0 2.475-3.95 1.41 1.41 0 0 1 1.378 1.557l-.133 1.26a1.75 1.75 0 0 0 1.74 1.933h1.595c.758 0 1.342.67 1.239 1.42l-.338 2.449a2.25 2.25 0 0 1-2.176 1.942l-.391.01Zm-7.039-6.32h-1v5h1v-5Zm2.34 6.845a10.75 10.75 0 0 0 4.735.975l.391-.01a3.75 3.75 0 0 0 3.626-3.236l.337-2.448a2.75 2.75 0 0 0-2.724-3.126h-1.594a.25.25 0 0 1-.249-.276l.133-1.26a2.91 2.91 0 0 0-2.894-3.214h-.364c-.5 0-.928.357-1.017.849l-.055.303a4.989 4.989 0 0 1-1.915 3.098h-2c-.69 0-1.25.56-1.25 1.25v5.5c0 .69.56 1.25 1.25 1.25h2.345c.324 0 .644.07.938.205l.307.14Z"></path></svg>
-                      {{ __('Yes', 'all-signs-options-pro') }}
-                  </div> 
+          <div class="asowp-p-6 asowp-grid md:asowp-grid-cols-2 asowp-gap-6">
+            <div class="asowp-dashboard-inner-card asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-p-5">
+              <div class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Browse demo', 'all-signs-options-pro') }}</div>
+              <p class="asowp-text-[13px] asowp-text-[#616161] asowp-mt-2">
+                {{ __('Explore live examples of sign lastconfigs in action.', 'all-signs-options-pro') }}
+              </p>
+              <div class="asowp-mt-4 asowp-flex asowp-items-center asowp-gap-3">
+                <a href="https://demos.signsdesigner.us/aso-live-demo/" target="_blank" rel="noopener"
+                  class="asowp-inline-flex asowp-items-center asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-md asowp-text-[13px] asowp-font-bold asowp-text-[#1a1a1a] asowp-no-underline hover:asowp-bg-[#f6f6f7]">
+                  {{ __('View demos', 'all-signs-options-pro') }}
                 </a>
-              </button>
-              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-3 asowp-py-1.5 hover:asowp-bg-[#f8fafc]">
-                <a href="https://signsdesigner.us/contact" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                  <div class="asowp-flex asowp-gap-1">
-                    <svg viewBox="0 0 20 20" class="Polaris-Icon__Svg asowp-w-5 asowp-h-5" focusable="false" aria-hidden="true"><path fill-rule="evenodd" d="M12.16 4.904a10.75 10.75 0 0 0-4.735-.974l-.391.01a3.75 3.75 0 0 0-3.626 3.236l-.337 2.448a2.75 2.75 0 0 0 2.724 3.126h1.594a.25.25 0 0 1 .249.276l-.133 1.26a2.91 2.91 0 0 0 2.894 3.214h.364c.5 0 .928-.358 1.017-.85l.055-.302a4.989 4.989 0 0 1 1.915-3.098h2c.69 0 1.25-.56 1.25-1.25v-5.5c0-.69-.56-1.25-1.25-1.25h-2.345a2.25 2.25 0 0 1-.938-.205l-.307-.14Zm-4.699.525a9.25 9.25 0 0 1 4.074.839l.307.14a3.75 3.75 0 0 0 1.158.32v5.223c-.052.03-.102.062-.15.098a6.49 6.49 0 0 0-2.475 3.95 1.41 1.41 0 0 1-1.378-1.557l.133-1.26a1.75 1.75 0 0 0-1.74-1.932h-1.595a1.25 1.25 0 0 1-1.238-1.421l.337-2.448a2.25 2.25 0 0 1 2.176-1.942l.391-.01Zm7.039 6.32h1v-5h-1v5Z"></path></svg>
-                    {{ __('No', 'all-signs-options-pro') }}
-                  </div>
-                </a>
-              </button>
+                <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('The password to access to demo is: aso', 'all-signs-options-pro') }}</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-white asowp-p-3">
-          <div class="asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb] asowp-text-[.8125em] asowp-font-semibold">
-              {{ __('Useful Links', 'all-signs-options-pro') }}
-          </div>
-          <div class="asowp-flex asowp-flex-wrap asowp-items-center asowp-gap-3 asowp-text-[13px]">
-              <button class="asowp-cursor-pointer asowp-flex asowp-w-[39%] asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                  <a href="https://demos.signsdesigner.us/aso-live-demo/" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                      <span class="asowp-text-[.8125em]">{{ __('Browse Demos', 'all-signs-options-pro') }}</span>
-                  </a>
-              </button>
-              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                  <a href="https://docs.signsdesigner.us/docs/aso-wp-documentation/" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                      <span class="asowp-text-[.8125em]">{{ __('Learning Center', 'all-signs-options-pro') }}</span>
-                  </a>
-              </button>
-              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                  <a href="https://signsdesigner.us/pricing-all-signs-customizer/" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                      <span class="asowp-text-[.8125em]">{{ __('Pricing', 'all-signs-options-pro') }}</span>
-                  </a>
-              </button>
-              <button class="asowp-cursor-pointer asowp-flex asowp-rounded-md asowp-border asowp-border-[#e5e7eb] asowp-px-2 asowp-py-1.5 asowp-bg-[#fff] hover:asowp-bg-[#fafafa]">
-                  <a href="https://signsdesigner.us/contact" target="_blank" rel="noopener" class="asowp-no-underline asowp-flex asowp-text-[#484848] hover:asowp-text-[#484848] asowp-gap-2 focus:asowp-border-none">
-                      <span class="asowp-text-[.8125em]">{{ __('Get in touch', 'all-signs-options-pro') }}</span>
-                  </a>
-              </button>
+            <div class="asowp-dashboard-inner-card asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-p-5">
+              <div class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Documentation', 'all-signs-options-pro') }}</div>
+              <p class="asowp-text-[13px] asowp-text-[#616161] asowp-mt-2">
+                {{ __('Explore the app documentation', 'all-signs-options-pro') }}
+              </p>
+              <div class="asowp-mt-4">
+                <a href="https://docs.signsdesigner.us/docs/aso-wp-documentation/" target="_blank" rel="noopener"
+                  class="asowp-inline-flex asowp-items-center asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-md asowp-text-[13px] asowp-font-bold asowp-text-[#1a1a1a] asowp-no-underline hover:asowp-bg-[#f6f6f7]">
+                  {{ __('View docs', 'all-signs-options-pro') }}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+
+      <!-- Sidebar -->
+      <div class="asowp-space-y-4">
+        <!-- Recent Configurations -->
+        <div class="asowp-dashboard-card asowp-dashboard-side-card">
+          <div class="asowp-dashboard-side-title">
+            {{ __('Recent Configurations', 'all-signs-options-pro') }}
+          </div>
+          <div class="asowp-dashboard-side-content">
+            <div class="asowp-text-[13px] asowp-text-[#616161]" v-if="recentConfigs.length === 0">
+              {{ __('No recent configurations yet.', 'all-signs-options-pro') }}
+            </div>
+            <ul v-else class="asowp-space-y-3 asowp-m-0 asowp-p-0 asowp-list-none">
+              <li v-for="rc in recentConfigs" :key="rc.id" class="asowp-flex asowp-justify-between asowp-items-center asowp-w-full">
+                <div @click="goToMaterial(rc)" class="asowp-cursor-pointer asowp-w-full">
+                  <div class="asowp-text-[11px] asowp-text-[#616161] asowp-mb-1">{{ __('ID', 'all-signs-options-pro') }} {{ rc.id }}</div>
+                  <div class="asowp-flex asowp-justify-between asowp-items-center">
+                    <div class="asowp-text-[13px] asowp-font-bold asowp-text-[#1a1a1a] asowp-truncate asowp-max-w-[150px]">{{ rc.name }}</div>
+                    <div class="asowp-shopify-info-badge">{{ getProductFamilyLabel(rc) }}</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Share Feedback -->
+        <div class="asowp-dashboard-card asowp-dashboard-side-card">
+          <div class="asowp-dashboard-side-title">
+            {{ __('Share your feedback', 'all-signs-options-pro') }}
+          </div>
+          <div class="asowp-dashboard-side-content asowp-space-y-4">
+            <div class="asowp-text-[13px] asowp-text-[#616161]">{{ __('How would you describe your experience using Sign Customiser?', 'all-signs-options-pro') }}</div>
+            <div class="asowp-flex asowp-gap-2">
+              <a href="https://signsdesigner.us/all-signs-customizer-product/#section-review" target="_blank" rel="noopener"
+                class="asowp-flex-1 asowp-inline-flex asowp-items-center asowp-justify-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-md asowp-text-[13px] asowp-font-bold asowp-text-[#1a1a1a] asowp-no-underline hover:asowp-bg-[#f6f6f7]">
+                <ThumbsUpIcon class="asowp-w-4 asowp-h-4" />
+                {{ __('Yes', 'all-signs-options-pro') }}
+              </a>
+              <a href="https://signsdesigner.us/contact" target="_blank" rel="noopener"
+                class="asowp-flex-1 asowp-inline-flex asowp-items-center asowp-justify-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-md asowp-text-[13px] asowp-font-bold asowp-text-[#1a1a1a] asowp-no-underline hover:asowp-bg-[#f6f6f7]">
+                <ThumbsDownIcon class="asowp-w-4 asowp-h-4" />
+                {{ __('No', 'all-signs-options-pro') }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Useful Links -->
+        <div class="asowp-dashboard-card asowp-dashboard-side-card">
+          <div class="asowp-dashboard-side-title">
+            {{ __('Useful Links', 'all-signs-options-pro') }}
+          </div>
+          <div class="asowp-dashboard-side-content">
+            <div class="asowp-flex asowp-flex-wrap asowp-gap-2">
+              <a v-for="link in usefulLinks" :key="link.text" :href="link.url" target="_blank" rel="noopener"
+                class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-full asowp-text-[12px] asowp-font-medium asowp-text-[#1a1a1a] asowp-no-underline hover:asowp-bg-[#f6f6f7]">
+                <component :is="link.icon" class="asowp-w-3.5 asowp-h-3.5" />
+                {{ link.text }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- Modals -->
   <div v-if="showInstallConfigModal" class="asowp-fixed asowp-inset-0 asowp-z-[1000] asowp-flex asowp-items-center asowp-justify-center">
     <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeInstallModals"></div>
     <div class="asowp-relative asowp-w-[min(820px,95vw)] asowp-max-h-[calc(100vh-5.75rem)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
@@ -211,97 +186,20 @@
               <span>{{ __('1) If the product is not attached to a configuration yet, attach it first.', 'all-signs-options-pro') }}</span>
               <span>{{ __('2) On the storefront, customers will see the customization buttons on that product page.', 'all-signs-options-pro') }}</span>
             </div>
-            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start justify-between">
-              <code class="asowp-text-[12px]">{{ '<!-- Buttons will appear on product pages or storefront -->' }}</code>        
-            </div>
-            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-               {{ __('No code is needed for this option. Just attach configurations to products.', 'all-signs-options-pro') }}
-            </div>
-
-            <div>
-              <span class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Note: ', 'all-signs-options-pro') }}</span>
-              <span class="asowp-text-[12px] asowp-text-gray-600">
-                {{ __('If a user attempts to access the page defined as the configuration page, the system will attempt to find a configurable product and display the configurator; otherwise, an error message will be displayed.', 'all-signs-options-pro') }}
-              </span>
-            </div>
           </div>
           <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
             <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 2 — Shortcode', 'all-signs-options-pro') }}</div>
             <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">{{ __('Add the shortcode inside any WordPress page:', 'all-signs-options-pro') }}</div>
-            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start justify-between">
+            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start asowp-justify-between">
               <code class="asowp-text-[12px]">[asowp-configurator productid="123"]</code>
-              <button class="asowp-px-2 asowp-py-1" @click="copySnippet('[asowp-configurator productid=&quot;123&quot;]', 'cfg-basic')">
+              <button class="asowp-px-2 asowp-py-1 asowp-text-[12px] asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded asowp-cursor-pointer" @click="copySnippet('[asowp-configurator productid=&quot;123&quot;]', 'cfg-basic')">
                 {{ copiedKey === 'cfg-basic' ? __('Copied', 'all-signs-options-pro') : __('Copy', 'all-signs-options-pro') }}
               </button>
             </div>
-            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-               {{ sprintf(__('Replace %s with your WooCommerce product ID.', 'all-signs-options-pro'), '123') }}
-            </div>
-          </div>
-          <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
-            <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 3 — Configurable products list', 'all-signs-options-pro') }}</div>
-            <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">
-              {{ __('Use this shortcode to show a grid of all configurable products with image, name, description, and the Customize / Templates buttons.', 'all-signs-options-pro') }}
-            </div>
-            <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start justify-between">
-              <code class="asowp-text-[12px]">[asowp-products cols="3"]</code>
-              <button class="asowp-px-2 asowp-py-1" @click="copySnippet('[asowp-products cols=&quot;3&quot;]', 'products-list')">
-                {{ copiedKey === 'products-list' ? __('Copied', 'all-signs-options-pro') : __('Copy', 'all-signs-options-pro') }}
-              </button>
-            </div>
-            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-              {{ __('Tip: change the number of columns (1–6) or pass specific product IDs when needed.', 'all-signs-options-pro') }}
-            </div>
-            <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600 asowp-space-y-1">
-              <div><code class="asowp-text-[12px]">[asowp-products cols="2" limit="6"]</code></div>
-              <div><code class="asowp-text-[12px]">[asowp-products ids="12,45,78" cols="3"]</code></div>
-            </div>
           </div>
       </div>
       <div class="asowp-flex asowp-justify-end asowp-px-5 asowp-py-3 asowp-border-t">
-        <button class="asowp-px-4 asowp-py-1.5 asowp-text-white asowp-bg-[#016464] asowp-rounded-md" @click="closeInstallModals">{{ __('Got it', 'all-signs-options-pro') }}</button>
-      </div>
-    </div>
-  </div>
-  <div v-if="showInstallTemplatesModal" class="asowp-fixed asowp-inset-0 asowp-z-[1000] asowp-flex asowp-items-center asowp-justify-center">
-    <div class="asowp-absolute asowp-inset-0 asowp-bg-black asowp-bg-opacity-40" @click="closeInstallModals"></div>
-    <div class="asowp-relative asowp-w-[min(820px,95vw)] asowp-max-h-[calc(100vh-5.75rem)] asowp-bg-white asowp-rounded-2xl asowp-shadow-xl asowp-overflow-hidden asowp-flex asowp-flex-col">
-      <div class="asowp-flex asowp-items-center asowp-justify-between asowp-px-5 asowp-py-3 asowp-border-b asowp-border-[#e5e7eb]">
-        <div class="asowp-text-[14px] asowp-font-semibold">{{ __('Install the templates screen', 'all-signs-options-pro') }}</div>
-        <button class="asowp-p-1 asowp-rounded-md hover:asowp-bg-[#f3f4f6] asowp-border-0 asowp-bg-transparent asowp-cursor-pointer" @click="closeInstallModals">✕</button>
-      </div>
-      <div class="asowp-flex-1 asowp-min-h-0 asowp-p-5 asowp-space-y-4 asowp-overflow-y-auto">
-        <div class="asowp-text-[13px] asowp-text-gray-700">{{ __('You can display templates in 2 ways:', 'all-signs-options-pro') }}</div>
-        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
-          <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 1 — Templates button on product pages', 'all-signs-options-pro') }}</div>
-          <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700 asowp-space-y-1">
-            <span>{{ __('1) Attach the product to a configuration.', 'all-signs-options-pro') }}</span>
-            <span>{{ __('2) Add templates to that configuration and enable them for the frontend.', 'all-signs-options-pro') }}</span>
-            <span>{{ __('3) The Templates button will appear on the product page or shop page.', 'all-signs-options-pro') }}</span>
-          </div>
-          <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-            {{ __('No code is needed for this option. Just attach configurations and templates.', 'all-signs-options-pro') }}
-          </div>
-        </div>
-        <div class="asowp-rounded-xl asowp-border asowp-border-[#e5e7eb] asowp-bg-[#fafafa] asowp-p-4">
-          <div class="asowp-text-[13px] asowp-font-semibold asowp-text-[#303030]">{{ __('Option 2 — Shortcode', 'all-signs-options-pro') }}</div>
-          <div class="asowp-mt-2 asowp-text-[13px] asowp-text-gray-700">{{ __('Add the shortcode inside any WordPress page:', 'all-signs-options-pro') }}</div>
-          <div class="asowp-mt-2 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-[#e5e7eb] asowp-p-3 asowp-flex asowp-items-start justify-between">
-            <code class="asowp-text-[12px]">[asowp-templates productid="123"]</code>
-            <button class="asowp-px-2 asowp-py-1" @click="copySnippet('[asowp-templates productid=&quot;123&quot;]', 'tpl-basic')">
-              {{ copiedKey === 'tpl-basic' ? __('Copied', 'all-signs-options-pro') : __('Copy', 'all-signs-options-pro') }}
-            </button>
-          </div>
-          <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-            {{ sprintf(__('Replace %s with your WooCommerce product ID. Only templates attached to the product configuration will be shown.', 'all-signs-options-pro'), '123') }}
-          </div>
-          <div class="asowp-mt-2 asowp-text-[12px] asowp-text-gray-600">
-            <code class="asowp-text-[12px]">[asowp-templates productid="123" cols="4"]</code>
-          </div>
-        </div>
-      </div>
-      <div class="asowp-flex asowp-justify-end asowp-px-5 asowp-py-3 asowp-border-t">
-        <button class="asowp-px-4 asowp-py-1.5 asowp-text-white asowp-bg-[#016464] asowp-rounded-md" @click="closeInstallModals">{{ __('Got it', 'all-signs-options-pro') }}</button>
+        <button class="asowp-px-4 asowp-py-1.5 asowp-text-white asowp-bg-[#006e52] asowp-rounded-md asowp-border-0 asowp-cursor-pointer" @click="closeInstallModals">{{ __('Got it', 'all-signs-options-pro') }}</button>
       </div>
     </div>
   </div>
@@ -309,15 +207,30 @@
 
 <script setup>
 import { RouterLink, useRouter } from 'vue-router';
-import { h, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import api from '@/admin/Api/api'
 import { __, sprintf } from "@wordpress/i18n";
+import {
+  InfoIcon,
+  LayoutGridIcon,
+  ChevronRightIcon,
+  ExternalLinkIcon,
+  ThumbsUpIcon,
+  ThumbsDownIcon,
+  SettingsIcon,
+  LibraryIcon,
+  FileTextIcon,
+  PlusCircleIcon,
+  HelpCircleIcon,
+  CreditCardIcon,
+  MessageCircleIcon
+} from 'lucide-vue-next';
 
 /** KPI values */
 const kpis = ref([
-  { key: 'orders', label: __('Configured Orders', 'all-signs-options-pro'), value: 0 },
-  { key: 'rate', label: __('Rate vs all orders', 'all-signs-options-pro'), value: '0%' },
-  { key: 'revenue', label: __('Configured Revenue', 'all-signs-options-pro'), value: (asowp_data.currencySymbol || '') + '0' },
+  { key: 'items', label: __('Products Created', 'all-signs-options-pro'), value: 0 },
+  { key: 'rate', label: __('Conversion Rate', 'all-signs-options-pro'), value: '0%' },
+  { key: 'orders', label: __('Orders', 'all-signs-options-pro'), value: 0 },
 ])
 
 const kpisLoading = ref(false)
@@ -326,9 +239,62 @@ const showInstallConfigModal = ref(false)
 const showInstallTemplatesModal = ref(false)
 const copiedKey = ref(null)
 const router = useRouter();
+
 const goToMaterial = (config) => {
     router.push({ name: 'materials', params: { configId: config.id, config: config.name.replace(/ /g, '-') } });
 };
+
+const parseMaybeJson = (value) => {
+  if (typeof value !== 'string') return value;
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    return value;
+  }
+};
+
+const normalizeValue = (value) => String(value || '').toLowerCase().trim().replace(/&/g, 'and').replace(/[_\s]+/g, '-');
+
+const resolveFamilySlug = (value) => {
+  const normalized = normalizeValue(value);
+  if (['banner', 'banners'].includes(normalized)) return 'banners';
+  if (['sticker', 'stickers'].includes(normalized)) return 'stickers';
+  if (['signboard', 'signboards', 'signs-panels', 'signs-and-panels'].includes(normalized)) return 'signs-panels';
+  return '';
+};
+
+const getConfigData = (config) => parseMaybeJson(config?.data) || {};
+
+const getProductFamilySlug = (config) => {
+  const data = getConfigData(config);
+  const settings = data?.settings || config?.settings || {};
+  const explicit = resolveFamilySlug(
+    settings.productFamilySlug ||
+    settings.productFamily ||
+    settings.productType ||
+    config?.productFamilySlug ||
+    config?.productFamily ||
+    config?.productType
+  );
+  if (explicit) return explicit;
+
+  const materials = Array.isArray(data?.materials) ? data.materials : [];
+  const names = materials.map(item => normalizeValue(item?.name));
+  if (names.some(name => ['fabric', 'mesh', 'banner-vinyl'].includes(name))) return 'banners';
+  if (names.some(name => ['paper', 'pvc', 'film', 'sticker-vinyl'].includes(name))) return 'stickers';
+  if (names.some(name => ['acrylic', 'aluminium', 'aluminum', 'brass', 'eco-friendly', 'magnet', 'photo-paper', 'plastic', 'stainless-steel', 'vinyl', 'wood'].includes(name))) return 'signs-panels';
+  if (config?.materialType || config?.id) return 'signs-panels';
+  return '';
+};
+
+const getProductFamilyLabel = (config) => {
+  const slug = getProductFamilySlug(config);
+  if (slug === 'banners') return __('Banners', 'all-signs-options-pro');
+  if (slug === 'stickers') return __('Stickers', 'all-signs-options-pro');
+  if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-options-pro');
+  return __('Not set', 'all-signs-options-pro');
+};
+
 const openInstallConfigModal = () => { showInstallConfigModal.value = true }
 const openInstallTemplatesModal = () => { showInstallTemplatesModal.value = true }
 const closeInstallModals = () => {
@@ -341,34 +307,20 @@ const copySnippet = async (text, key) => {
     const plain = String(text).replace(/&quot;/g, '"');
     if (navigator?.clipboard?.writeText) {
       await navigator.clipboard.writeText(plain)
-    } else {
-      const el = document.createElement('textarea')
-      el.value = plain
-      el.setAttribute('readonly', '')
-      el.style.position = 'absolute'
-      el.style.left = '-9999px'
-      document.body.appendChild(el)
-      el.select()
-      document.execCommand('copy')
-      document.body.removeChild(el)
+      copiedKey.value = key
+      setTimeout(() => { copiedKey.value = null }, 2000)
     }
   } catch (_) {}
-}
-
-const formatMoney = (amount, symbol) => {
-  const num = Number(amount || 0)
-  return `${symbol}${num.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
 }
 
 onMounted(async () => {
   try {
     kpisLoading.value = true
     const stats = await api.getHomeStats()
-    const symbol = stats?.currency_symbol || asowp_data.currencySymbol || ''
     kpis.value = [
-      { key: 'items', label: __('Configured Products', 'all-signs-options-pro'), value: stats?.configured_items ?? 0 },
-      { key: 'rate', label: __('Revenue share vs orders', 'all-signs-options-pro'), value: `${stats?.configured_rate ?? 0}%` },
-      { key: 'revenue', label: __('Configured Revenue', 'all-signs-options-pro'), value: formatMoney(stats?.configured_revenue, symbol) },
+      { key: 'items', label: __('Products Created', 'all-signs-options-pro'), value: stats?.configured_items ?? 0 },
+      { key: 'rate', label: __('Conversion Rate', 'all-signs-options-pro'), value: `${stats?.configured_rate ?? 0}%` },
+      { key: 'orders', label: __('Orders', 'all-signs-options-pro'), value: stats?.configured_orders ?? 0 },
     ]
   } finally {
     kpisLoading.value = false
@@ -385,25 +337,271 @@ const mainMenu = [
     to: '/configurations',
     title: __('Configurations', 'all-signs-options-pro'),
     desc: __('Manage your sign configurations', 'all-signs-options-pro'),
-    icon: { render() { return h('svg', { class: 'asowp-w-5 asowp-h-5', viewBox: '0 0 20 20', fill: '#b2b2b2' }, [ h('path', { d: 'M3.5 6.25a2.75 2.75 0 0 1 2.75-2.75h7.5a2.75 2.75 0 0 1 2.75 2.75v7.5a2.75 2.75 0 0 1-2.75 2.75h-7.5a2.75 2.75 0 0 1-2.75-2.75v-7.5Zm2.75-1.25a1.25 1.25 0 0 0-1.25 1.25v7.5c0 .69.56 1.25 1.25 1.25h7.5c.69 0 1.25-.56 1.25-1.25v-7.5c0-.69-.56-1.25-1.25-1.25h-7.5Z' }) ]) } }
+    icon: LayoutGridIcon
   },
   {
     to: '/templates',
     title: __('Templates', 'all-signs-options-pro'),
     desc: __('Manage your sign templates', 'all-signs-options-pro'),
-    icon: { render() { return h('svg', { class: 'asowp-w-5 asowp-h-5', viewBox: '0 0 20 20', fill: '#b2b2b2' }, [ h('path', { d: 'M13.257 3h-6.514a1.25 1.25 0 0 0-.983.478l-2.386 3.037a1.75 1.75 0 0 0-.374 1.08v.655a2.75 2.75 0 0 0 1.5 2.45v4.55c0 .966.784 1.75 1.75 1.75h7.5a1.75 1.75 0 0 0 1.75-1.75v-4.55a2.75 2.75 0 0 0 1.5-2.45v-.481c0-.504-.17-.994-.48-1.39l-2.28-2.901a1.25 1.25 0 0 0-.983-.478Zm-.257 12.5h.75a.25.25 0 0 0 .25-.25v-4.25a2.742 2.742 0 0 1-2-.863 2.742 2.742 0 0 1-2 .863 2.742 2.742 0 0 1-2-.863 2.742 2.742 0 0 1-2 .863v4.25c0 .138.112.25.25.25h3.75v-2.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v2.5Zm-7-6h-.25c-.69 0-1.25-.56-1.25-1.25v-.654a.25.25 0 0 1 .053-.155l2.312-2.941h6.27l2.205 2.805a.75.75 0 0 1 .16.464v.481c0 .69-.56 1.25-1.25 1.25h-.25c-.69 0-1.25-.56-1.25-1.25v-.5a.75.75 0 0 0-1.5 0v.5a1.25 1.25 0 1 1-2.5 0v-.5a.75.75 0 0 0-1.5 0v.5c0 .69-.56 1.25-1.25 1.25Z' }) ]) } }
+    icon: FileTextIcon
   },
   {
     to: '/global-settings/output',
     title: __('Global Settings', 'all-signs-options-pro'),
     desc: __('Manage your sign global setting', 'all-signs-options-pro'),
-    icon: { render() { return h('svg', { class: 'asowp-w-5 asowp-h-5', viewBox: '0 0 20 20', fill: '#b2b2b2' }, [ h('path', { d: 'M11.602 3.125a1.5 1.5 0 0 0-3.204 0l-.136.637a5.558 5.558 0 0 0-.936.388l-.54-.374a1.5 1.5 0 0 0-2.062.333l-1.25 1.812a1.5 1.5 0 0 0 .278 2.072l.504.417c-.035.195-.056.394-.056.59v.001c0 .195.021.394.056.59l-.504.417a1.5 1.5 0 0 0-.278 2.072l1.25 1.812a1.5 1.5 0 0 0 2.062.333l.54-.374c.284.156.595.287.936.388l.136.637a1.5 1.5 0 0 0 3.204 0l.136-.637c.34-.1.652-.232.936-.388l.54.374a1.5 1.5 0 0 0 2.062-.333l1.25-1.812a1.5 1.5 0 0 0-.278-2.072l-.504-.417c.035-.195.056-.395.056-.59s-.021-.395-.056-.59l.504-.417a1.5 1.5 0 0 0 .278-2.072l-1.25-1.812a1.5 1.5 0 0 0-2.062-.333l-.54.374a5.558 5.558 0 0 0-.936-.388l-.136-.637Zm-1.602.875a.5.5 0 1 1 0 1 3.5 3.5 0 1 0 0 7 .5.5 0 1 1 0 1 4.5 4.5 0 1 1 0-9Z' }) ]) } }
+    icon: SettingsIcon
   },
   {
     to: '/manage-fonts',
     title: __('Library', 'all-signs-options-pro'),
     desc: __('Manage your sign library', 'all-signs-options-pro'),
-    icon: { render() { return h('svg', { class: 'asowp-w-5 asowp-h-5', viewBox: '0 0 20 20', fill: '#b2b2b2' }, [ h('path', { d: 'M14 6c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V6Zm-1.5 7.5h-5v-7h5v7ZM4 4.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11Z' }) ]) } }
+    icon: LibraryIcon
   }
 ]
+
+const usefulLinks = [
+  { text: __('Request a feature', 'all-signs-options-pro'), url: 'https://signsdesigner.us/all-signs-customizer-product/#section-review', icon: PlusCircleIcon },
+  { text: __('Learning Center', 'all-signs-options-pro'), url: 'https://docs.signsdesigner.us/docs/aso-wp-documentation/', icon: HelpCircleIcon },
+  { text: __('Pricing', 'all-signs-options-pro'), url: 'https://signsdesigner.us/pricing-all-signs-customizer/', icon: CreditCardIcon },
+  { text: __('Get in touch', 'all-signs-options-pro'), url: 'https://signsdesigner.us/contact', icon: MessageCircleIcon },
+]
 </script>
+
+<style>
+#asowp-backend-app .asowp-dashboard {
+  min-height: 100vh;
+  padding: 30px 30px 18px;
+  background: #f3f3f3;
+  color: #303030;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+#asowp-backend-app .asowp-dashboard-topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 18px;
+}
+
+#asowp-backend-app .asowp-dashboard-primary-action,
+#asowp-backend-app .asowp-dashboard-primary-action:hover,
+#asowp-backend-app .asowp-dashboard-primary-action:focus,
+#asowp-backend-app .asowp-dashboard-primary-action:active,
+#asowp-backend-app .asowp-dashboard-primary-action:visited {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 32px !important;
+  height: 32px !important;
+  padding: 6px 12px !important;
+  border: 1px solid #008060 !important;
+  border-radius: 8px !important;
+  background: #008060 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  line-height: 18px !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+#asowp-backend-app .asowp-dashboard-primary-action:hover {
+  border-color: #006e52 !important;
+  background: #006e52 !important;
+}
+
+#asowp-backend-app .asowp-shopify-info-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 20px !important;
+  padding: 2px 8px !important;
+  border-radius: 999px !important;
+  background: #eaf5ff !important;
+  color: #0b4f8a !important;
+  font-size: 11px !important;
+  line-height: 16px !important;
+  font-weight: 650 !important;
+  white-space: nowrap !important;
+}
+
+#asowp-backend-app .asowp-dashboard-card {
+  background: #fff !important;
+  border: 1px solid #dde5ec !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05) !important;
+}
+
+#asowp-backend-app .asowp-dashboard-banners {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 0 10px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-banner {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  padding: 0 12px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-banner-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  margin-right: 9px !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  background: #91d0ff !important;
+}
+
+#asowp-backend-app .asowp-dashboard-banner-text,
+#asowp-backend-app .asowp-dashboard-banner-text a {
+  color: #303030 !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-banner-text a {
+  margin: 0 3px !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 340px !important;
+  gap: 10px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-layout > .asowp-space-y-4 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-kpis {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: center !important;
+  height: 92px !important;
+  min-height: 92px !important;
+  padding: 16px 32px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-kpi-value {
+  color: #303030 !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  line-height: 28px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-kpi-label {
+  color: #303030 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu {
+  min-height: 0;
+  padding: 7px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: rgba(1, 100, 100, 0.15) !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu > div:first-child {
+  padding: 10px 16px 8px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu > div:last-child {
+  padding: 0 12px 10px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu > div:last-child > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0 !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu a {
+  min-height: 58px !important;
+  padding: 7px !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  text-decoration: none !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu a + a {
+  border-top: 1px solid rgba(255, 255, 255, 0.65) !important;
+}
+
+#asowp-backend-app .asowp-dashboard-main-menu a:hover {
+  background: transparent !important;
+}
+
+#asowp-backend-app .asowp-dashboard-menu-icon {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  border-radius: 8px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-menu-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-menu-title {
+  color: #303030 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 20px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-menu-desc {
+  color: #303030 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-side-card {
+  min-height: 104px !important;
+  padding: 20px 20px 16px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-side-title {
+  color: #303030 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 20px !important;
+  margin: 0 0 12px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-side-content {
+  padding: 0 !important;
+}
+
+#asowp-backend-app .asowp-dashboard-side-card .asowp-text-\[13px\] {
+  font-size: 13px !important;
+  line-height: 19px !important;
+}
+
+#asowp-backend-app .asowp-dashboard-inner-card {
+  border-color: #dde5ec !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+}
+
+@media (max-width: 1100px) {
+  #asowp-backend-app .asowp-dashboard-layout,
+  #asowp-backend-app .asowp-dashboard-banners {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

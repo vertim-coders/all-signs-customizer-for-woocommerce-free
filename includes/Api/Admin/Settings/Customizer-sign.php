@@ -63,6 +63,23 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
         );
         register_rest_route(
             $this->namespace,
+            '/' . $this->rest_base . "/config-options",
+            array(
+                array(
+                    'methods' => \WP_REST_Server::EDITABLE,
+                    'callback' => array($this, 'update_config_options_customizer_sign_settings'),
+                    'permission_callback' => array($this, 'get_permissions_check'),
+                    'args' => array(
+                        'config_id' => array(
+                            'type' => 'integer',
+                            'required' => true,
+                        )
+                    ),
+                )
+            )
+        );
+        register_rest_route(
+            $this->namespace,
             '/' . $this->rest_base . "/sign-part",
             array(
                 array(
@@ -142,7 +159,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update Customizer options of customizer sign settings 
+     * Update Customizer options of customizer sign settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -154,6 +171,15 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+
+                if (!isset($meta_value["data"]["settings"]["customizerSign"])) {
+                    $meta_value["data"]["settings"]["customizerSign"] = array();
+                }
+
+                if (isset($meta_value["data"]["settings"]["customizerSign"]['customizerOptions']) && $meta_value["data"]["settings"]["customizerSign"]['customizerOptions'] == $customizer_options) {
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in customizer options in customizer sign settings", "all-signs-options-pro")]);
+                }
+
                 $meta_value["data"]["settings"]["customizerSign"]['customizerOptions'] = $customizer_options;
 
                 $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
@@ -170,8 +196,46 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
             return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
         }
     }
+
     /**
-     * Update Sign part options of customizer sign settings 
+     * Update Config options order and visibility of customizer sign settings.
+     * @param \WP_REST_Request $request Full details about the request.
+     * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function update_config_options_customizer_sign_settings($request)
+    {
+        $id = $request->get_param('config_id');
+        $config_options = json_decode($request->get_body(), true);
+        if ($id != 0) {
+            $post = get_post($id);
+            if ($post) {
+                $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+
+                if (!isset($meta_value["data"]["settings"]["customizerSign"])) {
+                    $meta_value["data"]["settings"]["customizerSign"] = array();
+                }
+
+                if (isset($meta_value["data"]["settings"]["customizerSign"]['configOptions']) && $meta_value["data"]["settings"]["customizerSign"]['configOptions'] == $config_options) {
+                    return rest_ensure_response(["success" => "same", "message" => __("No change observed in config options in customizer sign settings", "all-signs-options-pro")]);
+                }
+
+                $meta_value["data"]["settings"]["customizerSign"]['configOptions'] = $config_options;
+                $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+
+                if ($response) {
+                    return rest_ensure_response(["success" => true, "message" => __("Config options in customizer sign settings updated successfully", "all-signs-options-pro")]);
+                } else {
+                    return rest_ensure_response(["success" => false, "message" => __("Update config options in customizer sign settings failed", "all-signs-options-pro")]);
+                }
+            } else {
+                return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+            }
+        } else {
+            return rest_ensure_response(["success" => false, "message" => __("Custom ID invalid", "all-signs-options-pro")]);
+        }
+    }
+    /**
+     * Update Sign part options of customizer sign settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -204,7 +268,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update Text options of customizer sign settings 
+     * Update Text options of customizer sign settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
@@ -238,7 +302,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
         }
     }
     /**
-     * Update   Image options of customizer sign settings 
+     * Update   Image options of customizer sign settings
      * @param \WP_REST_Request $request Full details about the request.
      * @return \WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
      */
