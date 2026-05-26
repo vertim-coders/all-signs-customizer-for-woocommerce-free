@@ -420,9 +420,9 @@ const usefulLinks = [
   border-radius: 999px !important;
   background: #eaf5ff !important;
   color: #0b4f8a !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
   line-height: 16px !important;
-  font-weight: 650 !important;
+  font-weight: 400 !important;
   white-space: nowrap !important;
 }
 

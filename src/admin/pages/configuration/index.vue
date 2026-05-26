@@ -32,10 +32,10 @@
       </div>
 
       <!-- Table Content -->
-      <div v-else>
+      <div v-else class="asowp-config-list-table-wrap">
         <table class="asowp-config-list-table asowp-w-full asowp-border-collapse">
           <thead>
-            <tr class="asowp-border-b asowp-border-solid asowp-border-[#f1f1f1]">
+            <tr>
               <th class="asowp-p-5 asowp-text-left asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Name configuration", "all-signs-options-pro") }}</th>
               <th class="asowp-p-5 asowp-text-left asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Description", "all-signs-options-pro") }}</th>
               <th class="asowp-p-5 asowp-text-center asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Icon", "all-signs-options-pro") }}</th>
@@ -44,7 +44,7 @@
               <th class="asowp-p-5 asowp-text-right asowp-text-[13px] asowp-font-bold asowp-text-[#616161]">{{ __("Action", "all-signs-options-pro") }}</th>
             </tr>
           </thead>
-          <tbody class="asowp-divide-y asowp-divide-solid asowp-divide-[#f1f1f1]">
+          <tbody>
             <tr
               v-for="(config, key) in configs"
               :key="config.id"
@@ -57,7 +57,7 @@
               <td class="asowp-p-5">
                 <div class="asowp-flex asowp-items-center asowp-gap-4">
                   <!-- Initials Circle -->
-                  <div class="asowp-config-list-avatar asowp-w-10 asowp-h-10 asowp-rounded-full asowp-bg-[#f1f1f1] asowp-flex asowp-items-center asowp-justify-center asowp-flex-shrink-0 asowp-border asowp-border-solid asowp-border-[#e1e3e5]">
+                  <div class="asowp-config-list-avatar asowp-w-10 asowp-h-10 asowp-rounded-full asowp-bg-[#f1f1f1] asowp-flex asowp-items-center asowp-justify-center asowp-flex-shrink-0 asowp-border asowp-border-solid asowp-border-[#b7d4cc]">
                     <span class="asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">{{ getInitials(config.name) }}</span>
                   </div>
                   <div class="asowp-flex asowp-items-center asowp-gap-2 asowp-min-w-0">
@@ -80,12 +80,12 @@
                 </div>
               </td>
               <td class="asowp-p-5 asowp-text-center">
-                <span class="asowp-shopify-info-badge">
+                <span :class="['asowp-shopify-badge', `asowp-shopify-badge--${getProductBadgeTone(config)}`]">
                   {{ getProductFamilyLabel(config) }}
                 </span>
               </td>
               <td class="asowp-p-5 asowp-text-center">
-                <span class="asowp-shopify-info-badge">
+                <span class="asowp-shopify-badge asowp-shopify-badge--info">
                   {{ (config.materialType || 'simple') === 'advance' ? 'Advanced' : 'Frame fit' }}
                 </span>
               </td>
@@ -210,7 +210,13 @@ const fetchConfigs = async (p = page.value) => {
   } finally { isFetching.value = false; }
 };
 
-const getInitials = (s) => (s || '').split(" ").map(w => w.charAt(0).toUpperCase()).join("").substring(0, 2);
+const getInitials = (s) => {
+  const words = String(s || 'AS').trim().replace(/\s+/g, ' ').split(' ').filter(Boolean);
+  if (words.length < 2) {
+    return String(words[0] || 'AS').slice(0, 2).toLowerCase();
+  }
+  return `${words[0].charAt(0)}${words[1].charAt(0)}`.toUpperCase();
+};
 const slugify = (value) => String(value || 'configuration').trim().replace(/\s+/g, '-');
 const parseMaybeJson = (value) => {
   if (typeof value !== 'string') return value;
@@ -251,11 +257,36 @@ const getProductFamilySlug = (config) => {
   return '';
 };
 const getProductFamilyLabel = (config) => {
+  const ncpcProductType = getNcpcProductType(config);
+  if (ncpcProductType === 'neon') return __('Neon', 'all-signs-options-pro');
+  if (ncpcProductType === 'channel') return __('Channel', 'all-signs-options-pro');
+
   const slug = getProductFamilySlug(config);
   if (slug === 'banners') return __('Banners', 'all-signs-options-pro');
   if (slug === 'stickers') return __('Stickers', 'all-signs-options-pro');
   if (slug === 'signs-panels') return __('Signs & Panels', 'all-signs-options-pro');
   return __('Not set', 'all-signs-options-pro');
+};
+const getNcpcProductType = (config) => {
+  const data = getConfigData(config);
+  const wrappedNcpc = parseMaybeJson(data?.ncpc) || {};
+  const candidates = [
+    config?.productType,
+    data?.productType,
+    wrappedNcpc?.productType
+  ].map(normalizeValue);
+  if (candidates.includes('neon')) return 'neon';
+  if (candidates.includes('channel')) return 'channel';
+  return '';
+};
+const getProductBadgeTone = (config) => {
+  if (getNcpcProductType(config)) return 'attention';
+
+  const data = getConfigData(config);
+  const materialType = normalizeValue(config?.materialType || data?.materialType);
+  if (materialType === 'simple') return 'info';
+  if (materialType === 'advance' || materialType === 'advanced') return 'success';
+  return 'attention';
 };
 const goToMaterial = async (c) => {
   if (!c?.id || managingConfigId.value) return;
@@ -308,26 +339,27 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
 
 <style>
 #asowp-backend-app .asowp-config-list {
-  padding: 30px !important;
-  background: #f3f3f3 !important;
-  color: #303030;
-  font-size: 14px;
+  padding: 8px 24px 24px !important;
+  background: rgba(241, 241, 241, 1) !important;
+  color: rgba(48, 48, 48, 1);
+  font-size: 13px;
   line-height: 20px;
+  font-weight: 450;
 }
 
 #asowp-backend-app .asowp-config-list-header {
-  min-height: 54px !important;
-  margin-bottom: 12px !important;
-  padding: 10px 16px !important;
-  border-color: #dde5ec !important;
+  min-height: 100% !important;
+  margin-bottom: 10px !important;
+  padding: 16px !important;
+  border-color: transparent !important;
   border-radius: 12px !important;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05) !important;
+  box-shadow: 0 1px 0 0 rgba(26, 26, 26, 0.07) !important;
 }
 
 #asowp-backend-app .asowp-config-list-header h1 {
-  color: #303030 !important;
-  font-size: 16px !important;
-  line-height: 22px !important;
+  color: rgba(48, 48, 48, 1) !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
   font-weight: 650 !important;
 }
 
@@ -336,59 +368,142 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
 #asowp-backend-app .asowp-config-list-header .asowp-primary-action:focus,
 #asowp-backend-app .asowp-config-list-header .asowp-primary-action:active,
 #asowp-backend-app .asowp-config-list-header .asowp-primary-action:visited {
-  min-height: 34px !important;
-  height: 34px !important;
-  padding: 7px 14px !important;
+  min-height: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  padding: 6px 12px !important;
   border-radius: 8px !important;
+  background: rgba(41, 132, 90, 1) !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
-  font-size: 13px !important;
-  line-height: 18px !important;
-  font-weight: 700 !important;
-  text-decoration: none !important;
-}
-
-#asowp-backend-app .asowp-config-list-card {
-  border-color: #dde5ec !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05) !important;
-}
-
-#asowp-backend-app .asowp-config-list-table thead tr {
-  background: #f3f3f3 !important;
-  border-bottom: 1px solid #e5e7eb !important;
-}
-
-#asowp-backend-app .asowp-config-list-table th {
-  padding: 10px 14px !important;
-  color: #616161 !important;
   font-size: 12px !important;
   line-height: 16px !important;
   font-weight: 650 !important;
+  text-decoration: none !important;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.48) inset,
+    -1px 0 0 0 rgba(255, 255, 255, 0.20) inset,
+    1px 0 0 0 rgba(255, 255, 255, 0.20) inset,
+    0 -1.5px 0 0 rgba(0, 0, 0, 0.25) inset !important;
+}
+
+#asowp-backend-app .asowp-config-list-header .asowp-primary-action:hover,
+#asowp-backend-app .asowp-config-list-header .asowp-primary-action:focus {
+  background: rgba(19, 111, 69, 1) !important;
+}
+
+#asowp-backend-app .asowp-config-list-card {
+  border-color: transparent !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 0 0 rgba(26, 26, 26, 0.07) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+#asowp-backend-app .asowp-config-list-card > div:not(.asowp-config-list-pagination):not(.asowp-config-list-table-wrap) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#asowp-backend-app .asowp-config-list-table-wrap {
+  padding: 16px 16px 0 !important;
+  margin: 0 !important;
+}
+
+#asowp-backend-app .asowp-config-list-table {
+  width: 100% !important;
+  min-width: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app .asowp-config-list-table thead tr {
+  background: rgba(247, 247, 247, 1) !important;
+  border-bottom: 0 !important;
+}
+
+#asowp-backend-app .asowp-config-list-table th {
+  padding: 6px !important;
+  color: rgba(97, 97, 97, 1) !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  font-weight: 550 !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app .asowp-config-list-table th:first-child {
+  padding-left: 12px !important;
+}
+
+#asowp-backend-app .asowp-config-list-table th:last-child {
+  padding-right: 12px !important;
 }
 
 #asowp-backend-app .asowp-config-list-table td {
-  padding: 10px 14px !important;
+  padding: 6px !important;
   vertical-align: middle !important;
+  white-space: nowrap !important;
+  border-top: 1px solid rgba(235, 235, 235, 1) !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app .asowp-config-list-table td:first-child {
+  padding-left: 12px !important;
+}
+
+#asowp-backend-app .asowp-config-list-table td:last-child {
+  padding-right: 12px !important;
 }
 
 #asowp-backend-app .asowp-config-list-table tbody tr {
-  height: 54px !important;
+  height: auto !important;
+  background-color: rgba(255, 255, 255, 1) !important;
+  border-top: 1px solid rgba(235, 235, 235, 1) !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app .asowp-config-list-table tbody tr:first-child {
+  border-top-color: rgba(227, 227, 227, 1) !important;
+}
+
+#asowp-backend-app .asowp-config-list-table tbody tr td {
+  border-top: 0 !important;
+}
+
+#asowp-backend-app .asowp-config-list-table tr,
+#asowp-backend-app .asowp-config-list-table th,
+#asowp-backend-app .asowp-config-list-table td {
+  border-right-width: 0 !important;
+  border-left-width: 0 !important;
 }
 
 #asowp-backend-app .asowp-config-list-table tbody tr:hover {
-  background: #f9fafb !important;
+  background: rgba(247, 247, 247, 1) !important;
 }
 
 #asowp-backend-app .asowp-config-list-avatar {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
 }
 
 #asowp-backend-app .asowp-config-list-avatar span {
-  font-size: 10px !important;
-  line-height: 14px !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  font-weight: 450 !important;
+  color: rgba(48, 48, 48, 1) !important;
 }
 
 #asowp-backend-app .asowp-config-list-table .asowp-gap-4 {
@@ -397,12 +512,13 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
 
 #asowp-backend-app .asowp-config-list-table .asowp-text-\[14px\] {
   font-size: 13px !important;
-  line-height: 18px !important;
+  line-height: 20px !important;
+  font-weight: 450 !important;
 }
 
 #asowp-backend-app .asowp-config-list-table .asowp-text-\[13px\] {
-  font-size: 12px !important;
-  line-height: 17px !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
 }
 
 #asowp-backend-app .asowp-config-list-table span.asowp-rounded-full {
@@ -412,45 +528,81 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   font-weight: 600 !important;
 }
 
-#asowp-backend-app .asowp-shopify-info-badge {
+#asowp-backend-app .asowp-shopify-badge {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 20px !important;
+  min-height: 0 !important;
   padding: 2px 8px !important;
-  border-radius: 999px !important;
-  background: #eaf5ff !important;
-  color: #0b4f8a !important;
-  font-size: 11px !important;
-  line-height: 16px !important;
-  font-weight: 650 !important;
+  border-radius: 8px !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: rgba(97, 97, 97, 1) !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  font-weight: 550 !important;
   white-space: nowrap !important;
 }
 
+#asowp-backend-app .asowp-shopify-badge--info {
+  background: rgba(224, 240, 255, 1) !important;
+  color: rgba(0, 82, 124, 1) !important;
+}
+
+#asowp-backend-app .asowp-shopify-badge--success {
+  background: rgba(205, 254, 225, 1) !important;
+  color: rgba(12, 81, 50, 1) !important;
+}
+
+#asowp-backend-app .asowp-shopify-badge--attention {
+  background: rgba(255, 239, 157, 1) !important;
+  color: rgba(79, 71, 0, 1) !important;
+}
+
 #asowp-backend-app .asowp-config-list-table td button {
-  width: 32px !important;
+  min-width: 28px !important;
+  width: 28px !important;
+  min-height: 28px !important;
   height: 28px !important;
+  padding: 6px !important;
   border-radius: 8px !important;
+  background: rgba(255, 255, 255, 1) !important;
+  box-shadow:
+    0 -1px 0 #b5b5b5 inset,
+    -1px 0 0 #e3e3e3 inset,
+    1px 0 0 #e3e3e3 inset,
+    0 1px 0 #e3e3e3 inset !important;
 }
 
 #asowp-backend-app .asowp-config-list-table td button svg {
-  width: 16px !important;
-  height: 16px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 #asowp-backend-app .asowp-config-list-pagination {
-  padding: 12px !important;
+  padding: 16px !important;
+  border-top: 1px solid rgba(235, 235, 235, 1) !important;
 }
 
 #asowp-backend-app .asowp-config-list-pagination > div {
-  padding: 3px !important;
-  border-radius: 10px !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  border-radius: 8px !important;
+  background: rgba(227, 227, 227, 1) !important;
+  overflow: hidden !important;
 }
 
 #asowp-backend-app .asowp-config-list-pagination button {
-  width: 30px !important;
-  height: 30px !important;
-  border-radius: 8px !important;
+  min-width: 24px !important;
+  width: 24px !important;
+  min-height: 24px !important;
+  height: 24px !important;
+  border-radius: 0 !important;
+  background: rgba(247, 247, 247, 1) !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app .asowp-config-list-pagination button + button {
+  border-left: 1px solid rgba(235, 235, 235, 1) !important;
 }
 
 #asowp-backend-app .asowp-config-list-pagination svg {
