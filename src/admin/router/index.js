@@ -1,15 +1,50 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+
+// import configuration pages
 import Configuration from "@/admin/pages/configuration/index.vue";
 import CreateConfiguration from "@/admin/pages/configuration/CreateConfiguration.vue";
-import MaterialsShell from "@/admin/pages/configuration/materials/simple/index.vue";
+
+// import required options pages
+import SizesPage from "@/admin/pages/configuration/required-options/SizesPage.vue";
+import BordersPage from "@/admin/pages/configuration/required-options/BordersPage.vue";
+import ColorsPage from "@/admin/pages/configuration/required-options/ColorsPage.vue";
+import FixingMethodsPage from "@/admin/pages/configuration/required-options/FixingMethodsPage.vue";
+import ShapesPage from "@/admin/pages/configuration/required-options/ShapesPage.vue";
+import PricingsPage from "@/admin/pages/configuration/required-options/PricingsPage.vue";
+import FontsPage from "@/admin/pages/configuration/required-options/FontsPage.vue";
+import MaterialsPage from "@/admin/pages/configuration/required-options/MaterialsPage.vue";
+import RequiredComponentsPage from "@/admin/pages/configuration/required-options/ComponentsPage.vue";
+
+// import design setup pages
+import TextSettingPage from "@/admin/pages/configuration/design-setup/TextSettingPage.vue";
+import ImageSettingPage from "@/admin/pages/configuration/design-setup/ImageSettingPage.vue";
+import SignPartSettingPage from "@/admin/pages/configuration/design-setup/SignPartSettingPage.vue";
+
+// import additional options pages
+import AdditionalComponents from "@/admin/pages/configuration/additional-options/additional-components/index.vue";
+import AdditionalInputs from "@/admin/pages/configuration/additional-options/inputs/index.vue";
+
+// import settings pages
+import settingsCustomizerOptions from "@/admin/pages/configuration/settings/customizer-signs/index.vue";
+import settingsGenerals from "@/admin/pages/configuration/settings/generals/index.vue";
+import settingsLanguagesImages from "@/admin/pages/configuration/settings/language-image/index.vue";
+import settingsThemesColors from "@/admin/pages/configuration/settings/themes-color/index.vue";
+
+// import manage fonts and cliparts pages
 import ManageFonts from "@/admin/pages/manage-fonts/index.vue";
 import ManageCliparts from "@/admin/pages/manage-cliparts/index.vue";
 import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
+
+// import global settings pages
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
-import Templates from "@/admin/pages/templates/index.vue";
-import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
+
+//import Templates from "@/admin/pages/templates/index.vue";
+//import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
+
+// import request a quote page
 import RequestQuotes from "@/admin/pages/request-quotes/index.vue";
-import AdditionalOptions from "@/admin/pages/configuration/additional-options/index.vue";
+
+//import other pages
 import Preview from "@/admin/pages/preview/index.vue";
 import NotFound from "@/admin/pages/NotFound/index.vue";
 import Home from "@/admin/pages/Home.vue";
@@ -22,11 +57,13 @@ const router = createRouter({
       name: "home",
       component: Home,
     },
+    //lists configurations
     {
       path: "/configurations",
       name: "configurations",
       component: Configuration,
     },
+    // create and edit configuration
     {
       path: "/configurations/new",
       name: "create-configuration",
@@ -38,156 +75,145 @@ const router = createRouter({
       component: CreateConfiguration,
       props: true,
     },
+    //required options paths
     {
       path: "/configuration/:configId",
-      redirect: to => ({ name: "materials", params: { configId: to.params.configId } }),
+      redirect: (to) => ({
+        name: "fonts",
+        params: { configId: to.params.configId },
+      }),
     },
     {
       path: "/configuration/:configId/required-options",
-      redirect: to => ({ name: "materials", params: { configId: to.params.configId } }),
-    },
-    {
-      path: "/configuration/:configId/design-setup",
-      redirect: to => ({ name: "Simple-TextSetting", params: { configId: to.params.configId } }),
-    },
-    {
-      path: "/configuration/:configId/settings",
-      redirect: to => ({ name: "config-settings-generals", params: { configId: to.params.configId } }),
-    },
-    {
-      path: "/configuration/:configId/additional-options",
-      redirect: to => ({ name: "Simple-OthersComponents", params: { configId: to.params.configId } }),
-    },
-    {
-      path: "/configuration/:configId/required-options/materials",
-      alias: "/configs/:config/:configId/materials",
-      name: "materials",
-      component: MaterialsShell,
+      redirect: (to) => ({
+        name: "fonts",
+        params: { configId: to.params.configId },
+      }),
     },
     {
       path: "/configuration/:configId/required-options/sizes",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/sizes",
-      name: "Simple-Sizes",
-      component: MaterialsShell,
+      name: "sizes",
+      component: SizesPage,
     },
     {
       path: "/configuration/:configId/required-options/borders",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/borders",
-      name: "Simple-Borders",
-      component: MaterialsShell,
+      name: "borders",
+      component: BordersPage,
     },
     {
       path: "/configuration/:configId/required-options/colors",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/colors",
-      name: "Simple-Colors",
-      component: MaterialsShell,
+      name: "colors",
+      component: ColorsPage,
     },
     {
       path: "/configuration/:configId/required-options/fixing-methods",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/fixing-methods",
-      name: "Simple-FixingMethods",
-      component: MaterialsShell,
+      name: "fixing-methods",
+      component: FixingMethodsPage,
     },
     {
       path: "/configuration/:configId/required-options/shapes",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/shapes",
-      name: "Simple-Shapes",
-      component: MaterialsShell,
+      name: "shapes",
+      component: ShapesPage,
     },
     {
-      path: "/configuration/:configId/required-options/pricing",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/discounts",
-      name: "Simple-Discounts",
-      component: MaterialsShell,
+      path: "/configuration/:configId/required-options/pricings",
+      name: "pricings",
+      component: PricingsPage,
     },
     {
       path: "/configuration/:configId/required-options/fonts",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/text-images",
-      name: "Simple-TextImages",
-      component: MaterialsShell,
+      name: "fonts",
+      component: FontsPage,
+    },
+    {
+      path: "/configuration/:configId/required-options/materials",
+      name: "required-components",
+      component: RequiredComponentsPage,
+    },
+    {
+      path: "/configuration/:configId/required-options/materials",
+      name: "materials",
+      component: MaterialsPage,
+    },
+    //design setup paths
+    {
+      path: "/configuration/:configId/design-setup",
+      redirect: (to) => ({
+        name: "text-setting",
+        params: { configId: to.params.configId },
+      }),
     },
     {
       path: "/configuration/:configId/design-setup/text",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/editor/text-setting",
-      name: "Simple-TextSetting",
-      component: MaterialsShell,
+      name: "text-setting",
+      component: TextSettingPage,
     },
     {
       path: "/configuration/:configId/design-setup/images",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/editor/image-setup",
-      name: "Simple-ImageSetup",
-      component: MaterialsShell,
+      alias:
+        "/configs/:configId/materials/:material/:materialId/simple/editor/image-setup",
+      name: "image-setting",
+      component: ImageSettingPage,
     },
     {
       path: "/configuration/:configId/design-setup/sign-part",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/editor/sign-part",
-      name: "Simple-SignPartSetup",
-      component: MaterialsShell,
+      name: "sign-part-setting",
+      component: SignPartSettingPage,
+    },
+    //additional options paths
+    {
+      path: "/configuration/:configId/additional-options",
+      redirect: (to) => ({
+        name: "inputs",
+        params: { configId: to.params.configId },
+      }),
     },
     {
       path: "/configuration/:configId/additional-options/additional-components",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components",
-      name: "Simple-OthersComponents",
-      component: MaterialsShell,
+      name: "Additional-Components",
+      component: AdditionalComponents,
     },
-    {
-      path: "/configuration/:configId/additional-options/additional-components/:additionalOptionID",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/others-components/:additionalOptionID",
+    /* {
+      path: "/configuration/:configId/additional-options/additional-components/:componentID",
       name: "Simple-OthersComponents-Options",
       component: MaterialsShell,
-    },
+    }, */
     {
       path: "/configuration/:configId/additional-options/inputs",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/additional-inputs",
-      name: "Simple-AdditionalInputs",
-      component: MaterialsShell,
+      name: "additional-inputs",
+      component: AdditionalInputs,
     },
+    // settings paths
     {
-      path: "/configuration/:configId/additional-options/cliparts",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/simple/cliparts",
-      name: "Simple-Cliparts",
-      component: MaterialsShell,
-    },
-    {
-      path: "/configuration/:configId/builder",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/advance",
-      name: "Material-Advance",
-      component: MaterialsShell,
-    },
-    {
-      path: "/configuration/:configId/builder/:component/:componentId/options",
-      alias: "/configs/:config/:configId/materials/:material/:materialId/advance/:component/:componentId/options",
-      name: "Material-Advance-options",
-      component: MaterialsShell,
+      path: "/configuration/:configId/settings",
+      redirect: (to) => ({
+        name: "config-settings-generals",
+        params: { configId: to.params.configId },
+      }),
     },
     {
       path: "/configuration/:configId/settings/general",
-      alias: "/configs/:config/:configId/settings/generals",
+      alias: "/configs/:configId/settings/generals",
       name: "config-settings-generals",
-      component: MaterialsShell,
+      component: settingsGenerals,
     },
     {
       path: "/configuration/:configId/settings/customizer-sign",
-      alias: "/configs/:config/:configId/settings/customizer-options",
+      alias: "/configs/:configId/settings/customizer-options",
       name: "config-settings-customizer-options",
-      component: MaterialsShell,
+      component: settingsCustomizerOptions,
     },
     {
       path: "/configuration/:configId/settings/language-text",
-      alias: "/configs/:config/:configId/settings/language-images",
+      alias: "/configs/:configId/settings/language-images",
       name: "config-settings-languages-images",
-      component: MaterialsShell,
+      component: settingsLanguagesImages,
     },
     {
       path: "/configuration/:configId/settings/theme-color",
-      alias: "/configs/:config/:configId/settings/themes-colors",
+      alias: "/configs/:configId/settings/themes-colors",
       name: "config-settings-themes-colors",
-      component: MaterialsShell,
-    },
-    {
-      path: "/configs/:config/:configId/additional-options",
-      name: "config-additional-options",
-      component: AdditionalOptions,
+      component: settingsThemesColors,
     },
     {
       path: "/manage-fonts",
@@ -236,7 +262,7 @@ const router = createRouter({
     },
     {
       path: "/configuration/:configId/preview",
-      alias: "/configs/:config/preview/:configId",
+      alias: "/configs/preview/:configId",
       name: "preview-back",
       component: Preview,
     },
