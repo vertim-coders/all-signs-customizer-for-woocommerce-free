@@ -271,12 +271,14 @@
 
       <!-- STEP 4: Finalize -->
       <div v-if="wizard.step === 4" class="asowp-step4 asowp-p-5 md:asowp-p-6">
+        <div class="asowp-step4-intro">
+          <h2 class="asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#111827]">{{ __('Finalize your configuration', 'all-signs-options-pro') }}</h2>
+          <p class="asowp-text-[12px] asowp-leading-5 asowp-text-[#111827]">{{ __('Add the basic information for this configuration and link the Shopify products that should use it.', 'all-signs-options-pro') }}</p>
+        </div>
+
         <div class="asowp-step4-layout asowp-grid lg:asowp-grid-cols-[7fr_3fr] asowp-gap-4">
           <div class="asowp-step4-main">
             <div class="asowp-flex asowp-flex-col asowp-gap-3">
-              <h2 class="asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#111827] asowp-mb-1">{{ __('Finalize your configuration', 'all-signs-options-pro') }}</h2>
-              <p class="asowp-text-[12px] asowp-leading-5 asowp-text-[#111827] asowp-mb-4">{{ __('Add the basic information for this configuration and link the Shopify products that should use it.', 'all-signs-options-pro') }}</p>
-
               <!-- Name Input -->
               <div class="asowp-step4-card asowp-bg-white asowp-rounded-2xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-4">
                 <label class="asowp-block asowp-text-[12px] asowp-font-medium asowp-text-[#111827] asowp-mb-2">{{ __('Name configuration', 'all-signs-options-pro') }}</label>
@@ -748,6 +750,39 @@ const slugify = (value) => String(value || 'configuration').trim().toLowerCase()
 
 const buildConfigData = () => {
   const demo = configurationDemoData?.[0]?.data || {};
+  const baseMaterial = demo.materials?.[0] || {};
+  const selectedMaterials = wizard.value.selectedMaterials.length
+    ? wizard.value.selectedMaterials
+    : filteredMaterials.value.slice(0, 1).map((material) => material.id);
+
+  const buildMaterials = (withStarterData = false) => selectedMaterials.map((materialId, index) => {
+    const material = availableMaterials.value.find(item => item.id === materialId);
+    const sourceMaterial = withStarterData
+      ? stripIdsDeep(baseMaterial)
+      : clearArraysDeep(stripIdsDeep(baseMaterial));
+
+    return {
+      ...sourceMaterial,
+      id: materialId,
+      materialKey: materialId,
+      sourceMaterialId: materialId,
+      name: material?.title || selectedFamilyTitle.value || __('Material', 'all-signs-options-pro'),
+      label: material?.title || selectedFamilyTitle.value || __('Material', 'all-signs-options-pro'),
+      description: '',
+      icon: material?.image ? mediaSrc(material.image) : '',
+      image: material?.image ? mediaSrc(material.image) : '',
+      previewImg: material?.image ? mediaSrc(material.image) : '',
+      popImg: '',
+      popupImg: '',
+      type: wizard.value.materialType,
+      active: true,
+      isDefault: index === 0,
+      pricingId: sourceMaterial?.pricingId || '',
+      additionalPrice: Number(sourceMaterial?.additionalPrice || 0),
+      excludeComponentIds: Array.isArray(sourceMaterial?.excludeComponentIds) ? sourceMaterial.excludeComponentIds : [],
+    };
+  });
+
   if (wizard.value.includeDemo) {
     const demoPayload = stripIdsDeep(demo);
     return {
@@ -757,29 +792,11 @@ const buildConfigData = () => {
         productFamily: selectedFamilyTitle.value,
         productFamilySlug: selectedFamilySlug.value,
         productType: wizard.value.productType,
+        selectedMaterialIds: selectedMaterials,
       },
+      materials: buildMaterials(true),
     };
   }
-
-  const baseMaterial = demo.materials?.[0] || {};
-  const selectedMaterials = wizard.value.selectedMaterials.length
-    ? wizard.value.selectedMaterials
-    : ['standard'];
-
-  const materials = selectedMaterials.map((materialId) => {
-    const material = availableMaterials.value.find(item => item.id === materialId);
-    const blankMaterial = clearArraysDeep(stripIdsDeep(baseMaterial));
-
-    return {
-      ...blankMaterial,
-      name: material?.title || selectedFamilyTitle.value || __('Standard', 'all-signs-options-pro'),
-      description: '',
-      icon: material?.image ? mediaSrc(material.image) : '',
-      popImg: '',
-      type: wizard.value.materialType,
-      active: true,
-    };
-  });
 
   return {
     settings: {
@@ -787,9 +804,10 @@ const buildConfigData = () => {
       productFamily: selectedFamilyTitle.value,
       productFamilySlug: selectedFamilySlug.value,
       productType: wizard.value.productType,
+      selectedMaterialIds: selectedMaterials,
     },
     additionalOptions: [],
-    materials,
+    materials: buildMaterials(false),
   };
 };
 
@@ -956,7 +974,7 @@ onMounted(async () => {
 
 .asowp-create-stepper-wrap {
   position: sticky;
-  top: 46px;
+  top: calc(var(--wp-admin--admin-bar--height, 32px) + 12px);
   z-index: 20;
   padding: 4px 0 10px;
   backdrop-filter: blur(10px);
@@ -1213,6 +1231,20 @@ onMounted(async () => {
 
 .asowp-step4 {
   padding: 20px 24px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.asowp-step4-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.asowp-step4-intro h2,
+.asowp-step4-intro p {
+  margin: 0 !important;
 }
 
 .asowp-step4-layout {
@@ -1232,7 +1264,13 @@ onMounted(async () => {
 }
 
 .asowp-step4-summary {
-  margin-top: 48px !important;
+  margin-top: 0 !important;
+}
+
+@media (max-width: 1023px) {
+  .asowp-step4-summary {
+    margin-top: 0 !important;
+  }
 }
 
 .asowp-review-modal {

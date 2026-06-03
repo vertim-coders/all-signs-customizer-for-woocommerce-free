@@ -32,25 +32,40 @@
         </div>
         <p class="asowp-config-label asowp-text-[16px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-mb-2">{{ __('Configurator Menu', 'all-signs-options-pro') }}</p>
         <div class="asowp-relative">
-          <input type="text" class="asowp-box-border asowp-w-full asowp-h-12 asowp-px-4 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-text-[16px] asowp-outline-none focus:asowp-border-[#008060]" :placeholder="__('Search configurator items...', 'all-signs-options-pro')" />
+          <input v-model="searchMenu" type="text" class="asowp-box-border asowp-w-full asowp-h-12 asowp-px-4 asowp-rounded-lg asowp-border asowp-border-solid asowp-border-[#8c9196] asowp-text-[16px] asowp-outline-none focus:asowp-border-[#008060]" :placeholder="__('Search configurator items...', 'all-signs-options-pro')" />
         </div>
       </div>
 
       <!-- Navigation Menu -->
-      <div class="asowp-config-nav-card asowp-flex-1 asowp-overflow-y-auto asowp-bg-white asowp-rounded-2xl asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-p-5">
-        <div v-for="section in accordionSections" :key="section.key" class="asowp-mb-2">
-          <button
-            type="button"
-            @click="toggleSection(section.key)"
-            class="asowp-config-accordion asowp-w-full asowp-h-12 asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-rounded-xl asowp-bg-[#f5f6f7] asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-text-[16px] asowp-font-[900] asowp-text-[#5c5f62] asowp-cursor-pointer"
-          >
-            <span>{{ section.label }}</span>
-            <ChevronDownIcon v-if="isSectionOpen(section.key)" class="asowp-w-5 asowp-h-5 asowp-text-[#8c9196]" />
-            <ChevronRightIcon v-else class="asowp-w-5 asowp-h-5 asowp-text-[#8c9196]" />
-          </button>
-          <nav v-if="isSectionOpen(section.key)" class="asowp-config-section-items asowp-ml-4 asowp-pl-4 asowp-py-3 asowp-space-y-2 asowp-border-l asowp-border-solid asowp-border-[#e1e3e5]">
+      <div class="asowp-config-nav-scroll">
+        <div class="asowp-config-nav-card asowp-bg-white asowp-rounded-2xl asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-p-5">
+          <div v-for="section in filteredAccordionSections" :key="section.key" class="asowp-config-group">
             <button
-              v-for="item in section.items"
+              type="button"
+              @click="toggleSection(section.key)"
+              :class="['asowp-config-accordion asowp-w-full asowp-h-12 asowp-flex asowp-items-center asowp-justify-between asowp-px-4 asowp-rounded-xl asowp-border asowp-border-solid asowp-text-[16px] asowp-font-[900] asowp-text-[#5c5f62] asowp-cursor-pointer', isSectionOpen(section.key) || sectionByRoute === section.key ? 'is-active-group' : '']"
+            >
+              <span>{{ section.label }}</span>
+              <ChevronDownIcon v-if="isSectionOpen(section.key)" class="asowp-w-5 asowp-h-5 asowp-text-[#8c9196]" />
+              <ChevronRightIcon v-else class="asowp-w-5 asowp-h-5 asowp-text-[#8c9196]" />
+            </button>
+            <nav v-if="isSectionOpen(section.key)" class="asowp-config-section-items asowp-ml-4 asowp-pl-4 asowp-py-3 asowp-space-y-2 asowp-border-l asowp-border-solid asowp-border-[#e1e3e5]">
+              <button
+                v-for="item in section.items"
+                :key="item.label"
+                type="button"
+                @click="navigateSidebarItem(item)"
+                :class="sidebarItemClass(item)"
+              >
+                <component :is="item.icon" class="asowp-w-5 asowp-h-5 asowp-text-[#8c9196] asowp-flex-shrink-0" />
+                <span class="asowp-truncate">{{ item.label }}</span>
+              </button>
+            </nav>
+          </div>
+
+          <nav v-if="standaloneMenu.length" class="asowp-space-y-2 asowp-my-6">
+            <button
+              v-for="item in standaloneMenu"
               :key="item.label"
               type="button"
               @click="navigateSidebarItem(item)"
@@ -61,19 +76,6 @@
             </button>
           </nav>
         </div>
-
-        <nav v-if="standaloneMenu.length" class="asowp-space-y-2 asowp-my-6">
-          <button
-            v-for="item in standaloneMenu"
-            :key="item.label"
-            type="button"
-            @click="navigateSidebarItem(item)"
-            :class="sidebarItemClass(item)"
-          >
-            <component :is="item.icon" class="asowp-w-5 asowp-h-5 asowp-text-[#8c9196] asowp-flex-shrink-0" />
-            <span class="asowp-truncate">{{ item.label }}</span>
-          </button>
-        </nav>
       </div>
 
       <!-- Settings & Preview Footer -->
@@ -135,6 +137,88 @@
 
           <AdvanceMaterial v-if="isAdvanceRoute" :key="'adv-'+activeId" />
           <template v-else>
+            <section v-if="route.name==='materials'" class="asowp-materials-page">
+              <div class="asowp-materials-hero">
+                <div>
+                  <h1>{{ __('Materials', 'all-signs-options-pro') }}</h1>
+                  <p>{{ __('Manage the materials available in this config, assign the pricing used by each one and exclude components when needed.', 'all-signs-options-pro') }}</p>
+                </div>
+                <button type="button" class="asowp-shopify-button-primary asowp-materials-add-button" @click="addComponent">
+                  <PlusIcon class="asowp-w-4 asowp-h-4" />
+                  {{ __('Add material', 'all-signs-options-pro') }}
+                </button>
+              </div>
+
+              <div class="asowp-materials-card">
+                <h2>{{ __('Materials List', 'all-signs-options-pro') }}</h2>
+                <div class="asowp-materials-table-wrap">
+                  <table class="asowp-materials-table">
+                    <thead>
+                      <tr>
+                        <th>{{ __('Move', 'all-signs-options-pro') }}</th>
+                        <th>{{ __('Preview', 'all-signs-options-pro') }}</th>
+                        <th>{{ __('Label', 'all-signs-options-pro') }}</th>
+                        <th>{{ __('Price', 'all-signs-options-pro') }}</th>
+                        <th>{{ __('Pricing', 'all-signs-options-pro') }}</th>
+                        <th>{{ __('Default', 'all-signs-options-pro') }}</th>
+                        <th>{{ __('Actions', 'all-signs-options-pro') }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-if="isFetching">
+                        <td colspan="7" class="asowp-materials-empty">
+                          <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+                        </td>
+                      </tr>
+                      <tr v-else-if="materials.length === 0">
+                        <td colspan="7" class="asowp-materials-empty">{{ __('No materials found', 'all-signs-options-pro') }}</td>
+                      </tr>
+                      <tr v-for="(material, index) in materials" v-else :key="`${material.name}-${index}`">
+                        <td>
+                          <button type="button" class="asowp-materials-move" :aria-label="__('Move material', 'all-signs-options-pro')">
+                            <GripVerticalIcon class="asowp-w-4 asowp-h-4" />
+                          </button>
+                        </td>
+                        <td>
+                          <div class="asowp-materials-preview">
+                            <img v-if="getMaterialPreview(material)" :src="getMaterialPreview(material)" :alt="getMaterialLabel(material)" />
+                          </div>
+                        </td>
+                        <td class="asowp-materials-label">{{ getMaterialLabel(material) }}</td>
+                        <td>{{ Number(material?.additionalPrice || 0) }}</td>
+                        <td>{{ getPricingLabel(material?.pricingId) }}</td>
+                        <td>
+                          <div class="asowp-materials-default">
+                            <span>{{ material?.isDefault ? __('Yes', 'all-signs-options-pro') : __('No', 'all-signs-options-pro') }}</span>
+                            <button
+                              type="button"
+                              :class="['asowp-materials-toggle', material?.isDefault ? 'is-active' : '']"
+                              :aria-pressed="material?.isDefault ? 'true' : 'false'"
+                              @click="setDefaultMaterial(index)"
+                            >
+                              <span></span>
+                            </button>
+                            <span>{{ __('Yes', 'all-signs-options-pro') }}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="asowp-materials-actions">
+                            <button type="button" class="asowp-materials-edit" @click="editMaterial(index)">
+                              <Edit2Icon class="asowp-w-4 asowp-h-4" />
+                              {{ __('Edit', 'all-signs-options-pro') }}
+                            </button>
+                            <button type="button" class="asowp-materials-delete" @click="selectDeleteMaterial(index, material)">
+                              <Trash2Icon class="asowp-w-4 asowp-h-4" />
+                              {{ __('Delete', 'all-signs-options-pro') }}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
             <Sizes v-if="route.name==='Simple-Sizes' " :material-id="activeId" :key="'sizes-'+activeId"/>
             <Colors v-if="route.name==='Simple-Colors' " :material-id="activeId" :key="'colors-'+activeId"/>
             <Shapes v-if="route.name==='Simple-Shapes' " :material-id="activeId" :key="'shapes-'+activeId"/>
@@ -156,47 +240,75 @@
         </div>
 
         <!-- Create/Edit Material Form -->
-        <div v-if="isNewComponent" class="asowp-max-w-[800px] asowp-mx-auto">
-          <div class="asowp-bg-white asowp-rounded-2xl asowp-shadow-sm asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-overflow-hidden">
-            <div class="asowp-px-6 asowp-py-4 asowp-border-b asowp-border-solid asowp-border-[#f1f1f1]">
-              <h3 class="asowp-text-[18px] asowp-font-bold asowp-text-[#1a1a1a]">{{ isEdit ? __('Edit material', 'all-signs-options-pro') : __('Create new material', 'all-signs-options-pro') }}</h3>
-            </div>
-            <div class="asowp-p-6 asowp-space-y-6">
-              <div class="asowp-grid md:asowp-grid-cols-2 asowp-gap-6">
-                <div class="asowp-space-y-2">
-                  <label class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Name', 'all-signs-options-pro') }} <span class="asowp-text-red-500">*</span></label>
-                  <input type="text" v-model="newMaterial.name" :class="['asowp-w-full asowp-px-4 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] focus:asowp-border-[#006e52] asowp-outline-none', emptyLabel ? 'asowp-border-red-500' : '']">
-                </div>
-                <div class="asowp-space-y-2">
-                  <label class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Description', 'all-signs-options-pro') }}</label>
-                  <input type="text" v-model="newMaterial.description" class="asowp-w-full asowp-px-4 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] focus:asowp-border-[#006e52] asowp-outline-none">
+        <div v-if="isNewComponent" class="asowp-materials-form-card">
+          <h2>{{ isEdit ? __('Edit material', 'all-signs-options-pro') : __('Add material', 'all-signs-options-pro') }}</h2>
+
+          <div class="asowp-materials-form-grid asowp-materials-form-grid--two">
+            <label class="asowp-materials-field">
+              <span>{{ __('Label', 'all-signs-options-pro') }}</span>
+              <input v-model="newMaterial.name" type="text" :class="{ 'has-error': emptyLabel }" />
+              <em>{{ __('Customer-facing material name.', 'all-signs-options-pro') }}</em>
+            </label>
+
+            <label class="asowp-materials-field">
+              <span>{{ __('Additional price', 'all-signs-options-pro') }}</span>
+              <div class="asowp-materials-price-field">
+                <input v-model.number="newMaterial.additionalPrice" type="number" min="0" step="0.01" />
+                <strong>$</strong>
+              </div>
+            </label>
+          </div>
+
+          <label class="asowp-materials-field">
+            <span>{{ __('Description', 'all-signs-options-pro') }}</span>
+            <textarea v-model="newMaterial.description"></textarea>
+          </label>
+
+          <div class="asowp-materials-form-grid asowp-materials-form-grid--two">
+            <label class="asowp-materials-field">
+              <span>{{ __('Preview image', 'all-signs-options-pro') }}</span>
+              <div class="asowp-materials-upload">
+                <button type="button" @click.prevent="selectMaterialImage('icon')">{{ __('Preview image', 'all-signs-options-pro') }}</button>
+                <button v-if="newMaterial.icon" type="button" class="asowp-materials-upload-clear" @click.prevent="clearMaterialImage('icon')">
+                  <Trash2Icon class="asowp-w-4 asowp-h-4" />
+                </button>
+                <div class="asowp-materials-upload-preview">
+                  <img v-if="newMaterial.icon" :src="newMaterial.icon" alt="" />
                 </div>
               </div>
-              <div class="asowp-grid md:asowp-grid-cols-2 asowp-gap-6">
-                <div class="asowp-space-y-2">
-                  <label class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Icon', 'all-signs-options-pro') }}</label>
-                  <div class="asowp-flex asowp-items-center asowp-gap-4 asowp-p-3 asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-rounded-xl">
-                    <button @click="selectMaterialIcon" class="asowp-px-4 asowp-py-2 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-lg asowp-text-[12px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-gray-50">{{ __('Choose file', 'all-signs-options-pro') }}</button>
-                    <div v-if="newMaterial.icon" class="asowp-relative asowp-w-10 asowp-h-10 asowp-rounded-lg asowp-overflow-hidden asowp-border asowp-border-solid asowp-border-[#e1e3e5]">
-                      <img :src="newMaterial.icon" class="asowp-w-full asowp-h-full asowp-object-cover">
-                      <button @click="newMaterial.icon = ''" class="asowp-absolute asowp-inset-0 asowp-bg-black/40 asowp-text-white asowp-flex asowp-items-center asowp-justify-center asowp-opacity-0 hover:asowp-opacity-100 asowp-transition-opacity asowp-border-none asowp-cursor-pointer">
-                        <XIcon class="asowp-w-4 asowp-h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="asowp-space-y-2">
-                  <label class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Behavior type', 'all-signs-options-pro') }}</label>
-                  <div class="asowp-w-full asowp-px-4 asowp-py-2 asowp-bg-gray-100 asowp-rounded-xl asowp-text-[14px] asowp-text-[#616161] asowp-font-medium">{{ enforcedMaterialType }}</div>
+              <em>{{ __('Used in the list and option previews.', 'all-signs-options-pro') }}</em>
+              <img v-if="newMaterial.icon" :src="newMaterial.icon" class="asowp-materials-large-preview" alt="" />
+            </label>
+
+            <label class="asowp-materials-field">
+              <span>{{ __('Popup image', 'all-signs-options-pro') }}</span>
+              <div class="asowp-materials-upload">
+                <button type="button" @click.prevent="selectMaterialImage('popImg')">{{ __('Popup image', 'all-signs-options-pro') }}</button>
+                <button v-if="newMaterial.popImg" type="button" class="asowp-materials-upload-clear" @click.prevent="clearMaterialImage('popImg')">
+                  <Trash2Icon class="asowp-w-4 asowp-h-4" />
+                </button>
+                <div class="asowp-materials-upload-preview">
+                  <img v-if="newMaterial.popImg" :src="newMaterial.popImg" alt="" />
                 </div>
               </div>
-            </div>
-            <div class="asowp-px-6 asowp-py-4 asowp-bg-[#fbfcfc] asowp-border-t asowp-border-solid asowp-border-[#e1e3e5] asowp-flex asowp-justify-end asowp-gap-3">
-              <button @click="back" class="asowp-px-6 asowp-py-2 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-xl asowp-text-[14px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-gray-50">{{ __('Cancel', 'all-signs-options-pro') }}</button>
-              <button @click="isEdit ? updateMaterial() : addNewMaterial()" class="asowp-px-8 asowp-py-2 asowp-bg-[#006e52] asowp-text-white asowp-border-none asowp-rounded-xl asowp-text-[14px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-[#005c45] shadow-sm">
-                {{ isLoading ? __('Saving...', 'all-signs-options-pro') : __('Save', 'all-signs-options-pro') }}
-              </button>
-            </div>
+              <em>{{ __('Optional larger image for product details.', 'all-signs-options-pro') }}</em>
+            </label>
+          </div>
+
+          <label class="asowp-materials-field">
+            <span>{{ __('Pricing used by this material', 'all-signs-options-pro') }}</span>
+            <select v-model="newMaterial.pricingId">
+              <option value="">{{ __('Select pricing', 'all-signs-options-pro') }}</option>
+              <option v-for="pricing in pricingOptions" :key="pricing.id" :value="pricing.id">{{ pricing.label }}</option>
+            </select>
+            <em>{{ __('This pricing profile is applied when this material is selected.', 'all-signs-options-pro') }}</em>
+          </label>
+
+          <div class="asowp-materials-form-actions">
+            <button type="button" class="asowp-materials-back" @click="back">{{ __('Back to materials', 'all-signs-options-pro') }}</button>
+            <button type="button" class="asowp-shopify-button-primary" :disabled="isLoading || !newMaterial.name.trim()" @click="isEdit ? updateMaterial() : addNewMaterial()">
+              {{ isLoading ? __('Saving...', 'all-signs-options-pro') : (isEdit ? __('Update material', 'all-signs-options-pro') : __('Save material', 'all-signs-options-pro')) }}
+            </button>
           </div>
         </div>
       </div>
@@ -262,11 +374,11 @@ import {
   PlusIcon,
   CheckIcon,
   Edit2Icon,
-  XIcon,
   Trash2Icon,
   Loader2Icon,
   SearchIcon,
   DollarSignIcon,
+  GripVerticalIcon,
   ChevronDownIcon,
   ChevronRightIcon
 } from 'lucide-vue-next';
@@ -289,10 +401,11 @@ const isNewComponent = ref(false);
 const contentComponent = ref(true);
 const openModal = ref(false);
 const deleteMaterial = ref({ id: null, name: "" });
-const newMaterial = ref({ name: "", description: "", icon: "", popImg: "", type: "simple", active: true });
+const newMaterial = ref({ name: "", description: "", icon: "", popImg: "", previewImg: "", pricingId: "", additionalPrice: 0, type: "simple", active: true, isDefault: false });
 const emptyLabel = ref(false);
 const customizerSigns = ref({});
 const configurationMeta = ref({});
+const editingMaterialIndex = ref(null);
 
 const activeMaterial = computed(() => materials.value[activeMaterialIndex.value] || null);
 const activeId = computed(() => activeMaterial.value?.id ?? activeMaterialIndex.value);
@@ -300,6 +413,19 @@ const activeName = computed(() => activeMaterial.value?.name ?? '');
 const activeDescription = computed(() => activeMaterial.value?.description ?? '');
 const isMaterialActive = (material) => material?.active ?? true;
 const activeMaterialsCount = computed(() => materials.value.filter(isMaterialActive).length);
+const pricingOptions = computed(() => {
+  const options = configurationMeta.value?.requiredOptions?.pricing?.priceOptions;
+  return Array.isArray(options) ? options : [];
+});
+const canonicalMaterials = computed(() => {
+  const requiredItems = configurationMeta.value?.requiredOptions?.materials?.items;
+  if (Array.isArray(requiredItems) && requiredItems.length > 0) {
+    return requiredItems;
+  }
+
+  const additionalItems = configurationMeta.value?.additionalOptions?.materials?.items;
+  return Array.isArray(additionalItems) ? additionalItems : [];
+});
 const normalizeValue = (value) => String(value || '').toLowerCase().trim().replace(/[_\s]+/g, '-');
 const parseMaybeJson = (value) => {
   if (typeof value !== 'string') return value;
@@ -347,6 +473,7 @@ const isSettingsStickyRoute = computed(() => [
   'config-settings-themes-colors',
 ].includes(route.name));
 const openSections = ref(['core']);
+const searchMenu = ref('');
 
 const coreSetupMenu = [
   { label: __('Sizes', 'all-signs-options-pro'), icon: MaximizeIcon, route: 'Simple-Sizes' },
@@ -355,6 +482,7 @@ const coreSetupMenu = [
   { label: __('Colors', 'all-signs-options-pro'), icon: PaletteIcon, route: 'Simple-Colors' },
   { label: __('Fixing Methods', 'all-signs-options-pro'), icon: WrenchIcon, route: 'Simple-FixingMethods' },
   { label: __('Shapes', 'all-signs-options-pro'), icon: ShapesIcon, route: 'Simple-Shapes' },
+  { label: __('Materials', 'all-signs-options-pro'), icon: TagIcon, route: 'materials', configLevel: true },
   { label: __('Borders', 'all-signs-options-pro'), icon: SquareIcon, route: 'Simple-Borders' },
 ];
 
@@ -389,15 +517,36 @@ const accordionSections = computed(() => [
 ]);
 
 const standaloneMenu = computed(() => []);
+const normalizeSearchValue = (value = '') => String(value).toLowerCase().trim().replace(/\s+/g, ' ');
+const itemMatchesSearch = (item, term) => {
+  const normalizedTerm = normalizeSearchValue(term);
+  if (!normalizedTerm) return true;
+
+  const terms = normalizedTerm.split(' ').filter(Boolean);
+  const haystack = normalizeSearchValue([item.label, ...(item.keywords || [])].join(' '));
+  return terms.every(part => haystack.includes(part));
+};
+
+const filteredAccordionSections = computed(() => {
+  const term = searchMenu.value.trim();
+  if (!term) return accordionSections.value;
+
+  return accordionSections.value
+    .map(section => ({
+      ...section,
+      items: section.items.filter(item => itemMatchesSearch(item, term)),
+    }))
+    .filter(section => section.items.length > 0);
+});
 
 const navigateTo = (routeName) => {
+  const targetIndex = materials.value[activeMaterialIndex.value] ? activeMaterialIndex.value : 0;
   router.push({
     name: routeName,
     params: {
-      ...route.params,
-      materialId: activeMaterialIndex.value,
-      material: String(activeName.value).toLowerCase().replace(/\s+/g, '-')
-    }
+      configId: configID.value,
+    },
+    query: targetIndex > 0 ? { materialIndex: targetIndex } : {},
   });
 };
 
@@ -405,7 +554,6 @@ const navigateConfigRoute = (routeName) => {
   router.push({
     name: routeName,
     params: {
-      config: String(config.value).replace(/\s+/g, '-'),
       configId: configID.value,
     }
   });
@@ -422,14 +570,27 @@ const navigateSidebarItem = (item) => {
     return;
   }
 
+  if (item.configLevel) {
+    router.push({
+      name: item.route,
+      params: {
+        configId: configID.value,
+      }
+    });
+    return;
+  }
+
   navigateTo(item.route);
 };
 
-const isSectionOpen = (key) => openSections.value.includes(key);
+const isSectionOpen = (key) => searchMenu.value.trim().length > 0 || openSections.value.includes(key);
 const toggleSection = (key) => {
-  openSections.value = isSectionOpen(key)
-    ? openSections.value.filter(item => item !== key)
-    : [...openSections.value, key];
+  if (searchMenu.value.trim().length > 0) {
+    openSections.value = [key];
+    return;
+  }
+
+  openSections.value = openSections.value.includes(key) ? [] : [key];
 };
 
 const sectionByRoute = computed(() => {
@@ -445,15 +606,22 @@ const sidebarItemClass = (item) => [
 const fetchMaterials = async () => {
   isFetching.value = true;
   try {
+    if (canonicalMaterials.value.length > 0) {
+      materials.value = canonicalMaterials.value.map((material, index) => normalizeMaterial(material, index));
+      return;
+    }
+
     const result = await api.getMaterials(configID.value);
     if (!result.message) {
-      materials.value = result.map(m => ({ ...m, active: m?.active ?? true }));
+      materials.value = result.map((m, index) => normalizeMaterial(m, index));
+      return;
     }
+    materials.value = [];
   } finally { isFetching.value = false; }
 };
 
 const syncActiveIndexFromRoute = () => {
-  const idx = Number.parseInt(String(route.params.materialId ?? ''), 10);
+  const idx = Number.parseInt(String(route.query.materialIndex ?? route.params.materialId ?? ''), 10);
   if (Number.isFinite(idx) && idx >= 0 && idx < materials.value.length) {
     activeMaterialIndex.value = idx;
   }
@@ -464,7 +632,7 @@ const redirectToMaterial = (idx, name, type) => {
   navigateTo(enforcedMaterialType.value === 'advance' ? 'Material-Advance' : 'Simple-Sizes');
 };
 
-const goToPreview = (c) => router.push({ name: 'preview-back', params: { configId: configID.value, config: String(config.value).replace(/\s+/g, '-') } });
+const goToPreview = (c) => router.push({ name: 'preview-back', params: { configId: configID.value } });
 
 const resetMaterialForm = () => {
   newMaterial.value = {
@@ -472,9 +640,15 @@ const resetMaterialForm = () => {
     description: "",
     icon: "",
     popImg: "",
+    previewImg: "",
+    pricingId: pricingOptions.value[0]?.id || "",
+    additionalPrice: 0,
     type: enforcedMaterialType.value,
     active: true,
+    isDefault: materials.value.length === 0,
+    excludeComponentIds: [],
   };
+  editingMaterialIndex.value = null;
   emptyLabel.value = false;
 };
 
@@ -499,34 +673,106 @@ const back = () => {
   resetMaterialForm();
 };
 
-const selectMaterialIcon = (e) => {
-  e.preventDefault();
-  const uploader = wp.media({ title: __("Select Icon", "all-signs-options-pro"), button: { text: __("Select Icon", "all-signs-options-pro") }, multiple: false })
+const normalizeMaterial = (material, index = 0) => ({
+  ...material,
+  id: material?.id || material?.materialKey || material?.sourceMaterialId || `material-${index + 1}`,
+  materialKey: material?.materialKey || material?.sourceMaterialId || material?.id || '',
+  sourceMaterialId: material?.sourceMaterialId || material?.materialKey || material?.id || '',
+  sourceIndex: Number.isInteger(Number(material?.sourceIndex)) ? Number(material.sourceIndex) : index,
+  name: material?.name || material?.label || '',
+  description: material?.description || '',
+  icon: material?.icon || material?.image || material?.previewImg || '',
+  popImg: material?.popImg || material?.popupImg || material?.popupImage || '',
+  previewImg: material?.previewImg || material?.icon || material?.image || '',
+  pricingId: material?.pricingId || '',
+  additionalPrice: Number(material?.additionalPrice || 0),
+  type: material?.type || enforcedMaterialType.value,
+  active: material?.active ?? true,
+  isDefault: material?.isDefault ?? index === 0,
+  excludeComponentIds: Array.isArray(material?.excludeComponentIds) ? material.excludeComponentIds : [],
+});
+
+const getMaterialLabel = (material) => material?.name || material?.label || __('Material', 'all-signs-options-pro');
+const getMaterialPreview = (material) => material?.previewImg || material?.icon || material?.image || '';
+const getPricingLabel = (pricingId) => {
+  if (!pricingId) return __('No pricing selected', 'all-signs-options-pro');
+  return pricingOptions.value.find((pricing) => pricing.id === pricingId)?.label || pricingId;
+};
+
+const selectMaterialImage = (field) => {
+  const uploader = wp.media({ title: __("Select image", "all-signs-options-pro"), button: { text: __("Select image", "all-signs-options-pro") }, multiple: false })
     .on('select', () => {
       const attachment = uploader.state().get('selection').first().toJSON();
-      if (attachment.type === "image") newMaterial.value.icon = attachment.url;
+      if (attachment.type === "image") {
+        newMaterial.value[field] = attachment.url;
+        if (field === 'icon') {
+          newMaterial.value.previewImg = attachment.url;
+        }
+      }
     }).open();
 };
 
-onMounted(async () => {
+const clearMaterialImage = (field) => {
+  newMaterial.value[field] = "";
+  if (field === 'icon') {
+    newMaterial.value.previewImg = "";
+  }
+};
+
+const editMaterial = (index) => {
+  const material = normalizeMaterial(materials.value[index], index);
+  newMaterial.value = { ...material };
+  editingMaterialIndex.value = material.sourceIndex;
+  materialId.value = material.sourceIndex;
+  isNewComponent.value = true;
+  contentComponent.value = false;
+  isEdit.value = true;
+};
+
+const selectDeleteMaterial = (index, material) => {
+  const normalized = normalizeMaterial(material, index);
+  deleteMaterial.value = { id: normalized.sourceIndex, name: getMaterialLabel(normalized) };
+  openModal.value = true;
+};
+
+const setDefaultMaterial = async (index) => {
+  if (materials.value[index]?.isDefault || isLoading.value) return;
+  isLoading.value = true;
+  try {
+    const payload = normalizeMaterial(materials.value[index], index);
+    payload.isDefault = true;
+    const result = await api.updateMaterial(configID.value, payload.sourceIndex, payload);
+    if (result.success) {
+      await loadConfigurationMeta();
+      await fetchMaterials();
+      toastMessage(__('Default material updated', 'all-signs-options-pro'));
+      return;
+    }
+    toastMessage(result.message, 'error');
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const loadConfigurationMeta = async () => {
   try {
     const cfg = await api.getConfig(configID.value);
     configurationMeta.value = cfg || {};
     enforcedMaterialType.value = cfg?.materialType === 'advance' ? 'advance' : 'simple';
   } catch (e) {}
+};
+
+onMounted(async () => {
+  await loadConfigurationMeta();
   await fetchMaterials();
   await fetchCustomizerSignsSettings();
   syncActiveIndexFromRoute();
-
-  if (route.name === 'materials' && materials.value.length > 0) {
-    redirectToMaterial(0, materials.value[0].name, materials.value[0].type);
-  }
 });
 
-watch(() => route.params.materialId, syncActiveIndexFromRoute);
+watch(() => [route.query.materialIndex, route.params.materialId], syncActiveIndexFromRoute);
 watch(sectionByRoute, (section) => {
-  if (section && !openSections.value.includes(section)) {
-    openSections.value = [...openSections.value, section];
+  if (section && searchMenu.value.trim().length === 0) {
+    openSections.value = [section];
   }
 }, { immediate: true });
 
@@ -539,10 +785,12 @@ const addNewMaterial = async () => {
 
   isLoading.value = true;
   newMaterial.value.type = enforcedMaterialType.value;
+  newMaterial.value.previewImg = newMaterial.value.previewImg || newMaterial.value.icon;
   const result = await api.addMaterial(configID.value, newMaterial.value);
   isLoading.value = false;
 
   if (result.success) {
+    await loadConfigurationMeta();
     await fetchMaterials();
     isNewComponent.value = false;
     contentComponent.value = true;
@@ -564,10 +812,12 @@ const updateMaterial = async () => {
   isLoading.value = true;
   emptyLabel.value = false;
   newMaterial.value.type = enforcedMaterialType.value;
-  const result = await api.updateMaterial(configID.value, materialId.value, newMaterial.value);
+  newMaterial.value.previewImg = newMaterial.value.previewImg || newMaterial.value.icon;
+  const result = await api.updateMaterial(configID.value, editingMaterialIndex.value ?? materialId.value, newMaterial.value);
   isLoading.value = false;
 
   if (result.success) {
+    await loadConfigurationMeta();
     await fetchMaterials();
     isNewComponent.value = false;
     contentComponent.value = true;
@@ -592,6 +842,7 @@ const delMaterial = async () => {
   isLoading.value = false;
 
   if (result.success) {
+    await loadConfigurationMeta();
     await fetchMaterials();
     const nextActiveIndex = materials.value.findIndex(isMaterialActive);
     if (nextActiveIndex !== -1) {
@@ -619,9 +870,12 @@ const delMaterial = async () => {
   position: sticky;
   top: 46px;
   width: 242px;
-  height: calc(100vh - 58px);
+  max-height: calc(100vh - 58px);
   align-self: flex-start;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+  overflow: hidden;
 }
 
 .asowp-config-card,
@@ -633,10 +887,31 @@ const delMaterial = async () => {
 
 .asowp-config-card {
   padding: 14px;
+  flex: 0 0 auto;
+}
+
+.asowp-config-nav-scroll {
+  flex: 1;
+  min-height: 0;
+  padding-top: 0;
+  padding-right: 4px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.asowp-config-nav-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .asowp-config-nav-card {
   padding: 14px 16px;
+  overflow: hidden;
+}
+
+.asowp-config-group + .asowp-config-group {
+  margin-top: 8px;
 }
 
 .asowp-config-title {
@@ -675,7 +950,13 @@ const delMaterial = async () => {
   border-radius: 10px;
   font-size: 13px;
   font-weight: 700;
+  background: #ffffff;
+  border-color: transparent;
+}
+
+.asowp-config-accordion.is-active-group {
   background: #f6f6f7;
+  border-color: #d1d5db;
 }
 
 .asowp-config-section-items {
@@ -747,5 +1028,472 @@ header div::-webkit-scrollbar {
 header div {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.asowp-materials-page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #303030;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.asowp-materials-hero,
+.asowp-materials-card,
+.asowp-materials-form-card {
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.asowp-materials-hero {
+  min-height: 74px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.asowp-materials-hero h1,
+.asowp-materials-form-card h2 {
+  margin: 0;
+  color: #303030;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 800;
+}
+
+.asowp-materials-hero p {
+  margin: 0;
+  color: #616161;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 450;
+}
+
+.asowp-shopify-button-primary {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid #016464;
+  border-radius: 7px;
+  background: #016464;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.48) inset,
+    -1px 0 0 0 rgba(255, 255, 255, 0.20) inset,
+    1px 0 0 0 rgba(255, 255, 255, 0.20) inset,
+    0 -1.5px 0 0 rgba(0, 0, 0, 0.25) inset;
+}
+
+.asowp-materials-add-button {
+  min-height: 28px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.asowp-materials-add-button svg {
+  width: 13px;
+  height: 13px;
+}
+
+.asowp-shopify-button-primary:hover,
+.asowp-shopify-button-primary:focus {
+  border-color: #004e4e;
+  background: #004e4e;
+  color: #ffffff;
+  outline: none;
+}
+
+.asowp-shopify-button-primary:disabled {
+  border-color: #c9c9c9;
+  background: #d4d4d4;
+  color: #ffffff;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.asowp-materials-card {
+  padding: 32px 34px 42px;
+}
+
+.asowp-materials-card h2 {
+  margin: 0 0 14px;
+  color: #303030;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 800;
+}
+
+.asowp-materials-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0;
+  background: #ffffff;
+}
+
+.asowp-materials-table thead tr {
+  background: #f7f7f7;
+}
+
+.asowp-materials-table th {
+  padding: 7px 12px;
+  border: 0;
+  color: #616161;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 650;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.asowp-materials-table td {
+  padding: 10px 12px;
+  border-top: 1px solid #e3e3e3;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  color: #303030;
+  font-size: 13px;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.asowp-materials-empty {
+  height: 120px;
+  text-align: center;
+  color: #616161;
+}
+
+.asowp-materials-empty .asowp-table-loader-icon {
+  margin: 0 auto;
+  color: #016464;
+  animation: asowp-spin 1s linear infinite;
+}
+
+.asowp-materials-move {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c9d2dc;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #6b7280;
+  cursor: grab;
+}
+
+.asowp-materials-preview {
+  width: 52px;
+  height: 52px;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  padding: 4px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.asowp-materials-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.asowp-materials-label {
+  font-weight: 800;
+}
+
+.asowp-materials-default {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #616161;
+}
+
+.asowp-materials-toggle {
+  width: 42px;
+  height: 24px;
+  position: relative;
+  border: 0;
+  border-radius: 999px;
+  background: #cfd6e5;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.asowp-materials-toggle span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+  transition: transform 0.15s ease;
+}
+
+.asowp-materials-toggle.is-active {
+  background: #007a78;
+}
+
+.asowp-materials-toggle.is-active span {
+  transform: translateX(18px);
+}
+
+.asowp-materials-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.asowp-materials-edit,
+.asowp-materials-delete {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.asowp-materials-edit {
+  padding: 5px 10px;
+  border: 1px solid #c9cccf;
+  border-radius: 6px;
+  color: #303030;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.asowp-materials-edit svg,
+.asowp-materials-delete svg {
+  width: 14px;
+  height: 14px;
+}
+
+.asowp-materials-delete {
+  color: #8e1f0b;
+}
+
+.asowp-materials-form-card {
+  padding: 34px 34px 28px;
+  color: #303030;
+}
+
+.asowp-materials-form-card h2 {
+  margin-bottom: 24px;
+}
+
+.asowp-materials-form-grid {
+  display: grid;
+  gap: 22px;
+}
+
+.asowp-materials-form-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.asowp-materials-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+  color: #303030;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 450;
+}
+
+.asowp-materials-field span {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 450;
+}
+
+.asowp-materials-field input,
+.asowp-materials-field textarea,
+.asowp-materials-field select,
+.asowp-materials-price-field {
+  width: 100%;
+  min-height: 38px;
+  box-sizing: border-box;
+  border: 1px solid #8a8a8a;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #303030;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 450;
+  outline: none;
+}
+
+.asowp-materials-field input,
+.asowp-materials-field textarea,
+.asowp-materials-field select {
+  padding: 8px 12px;
+}
+
+.asowp-materials-field textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.asowp-materials-field input:focus,
+.asowp-materials-field textarea:focus,
+.asowp-materials-field select:focus {
+  border-color: #016464;
+  box-shadow: 0 0 0 1px #016464;
+}
+
+.asowp-materials-field input.has-error {
+  border-color: #c5280c;
+}
+
+.asowp-materials-field em {
+  color: #616161;
+  font-style: normal;
+}
+
+.asowp-materials-price-field {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.asowp-materials-price-field input {
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.asowp-materials-price-field strong {
+  padding: 0 14px;
+  color: #616161;
+  font-size: 13px;
+  font-weight: 450;
+}
+
+.asowp-materials-upload {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.asowp-materials-upload > button:first-child {
+  min-width: 160px;
+  height: 32px;
+  margin-left: 4px;
+  padding: 0 18px;
+  border: 1px solid #016464;
+  border-radius: 6px;
+  background: #016464;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.asowp-materials-upload-clear {
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #ff0000;
+  cursor: pointer;
+}
+
+.asowp-materials-upload-preview {
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  margin-right: 4px;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.asowp-materials-upload-clear + .asowp-materials-upload-preview {
+  margin-left: 4px;
+}
+
+.asowp-materials-upload-preview img,
+.asowp-materials-large-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.asowp-materials-large-preview {
+  width: 70px;
+  height: 70px;
+  margin-top: 14px;
+  border: 1px solid #d8dee4;
+  border-radius: 8px;
+}
+
+.asowp-materials-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.asowp-materials-back {
+  min-height: 30px;
+  padding: 5px 14px;
+  border: 1px solid #c9c9c9;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #303030;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 650;
+  cursor: pointer;
+  box-shadow: 0 -1px 0 #b5b5b5 inset, -1px 0 0 #e3e3e3 inset, 1px 0 0 #e3e3e3 inset, 0 1px 0 #e3e3e3 inset;
+}
+
+@keyframes asowp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 960px) {
+  .asowp-materials-form-grid--two {
+    grid-template-columns: 1fr;
+  }
+
+  .asowp-materials-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 </style>

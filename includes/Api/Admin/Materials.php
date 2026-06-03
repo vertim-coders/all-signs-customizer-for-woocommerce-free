@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -129,6 +130,13 @@ class ASOWP_Api_Materials extends WP_REST_Controller
         $config_id = $request->get_param('config_id');
         if ($config_id != 0) {
             $meta = get_post_meta($config_id, 'asowp-configs-meta', true);
+            $normalized = ConfigSchemaNormalizer::normalize_meta($meta);
+            $normalized_materials = isset($normalized['additionalOptions']['materials']['items']) && is_array($normalized['additionalOptions']['materials']['items'])
+                ? $normalized['additionalOptions']['materials']['items']
+                : array();
+            if (!empty($normalized_materials)) {
+                return rest_ensure_response($normalized_materials);
+            }
             if (is_array($meta) && !empty($meta["data"]['materials'])) {
                 $forced_type = $this->get_config_forced_material_type($config_id);
                 $materials = $meta["data"]['materials'];
@@ -173,12 +181,19 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                     } else {
                         // New material added by user - create empty structure with no default data
                         $material = [
-                            "name" => $new_material['name'],
-                            "description" => $new_material['description'],
-                            "icon" => $new_material['icon'],
-                            "popImg" => $new_material['popImg'],
+                            "name" => isset($new_material['name']) ? $new_material['name'] : (isset($new_material['label']) ? $new_material['label'] : ''),
+                            "materialKey" => isset($new_material['materialKey']) ? $new_material['materialKey'] : (isset($new_material['sourceMaterialId']) ? $new_material['sourceMaterialId'] : ''),
+                            "sourceMaterialId" => isset($new_material['sourceMaterialId']) ? $new_material['sourceMaterialId'] : (isset($new_material['materialKey']) ? $new_material['materialKey'] : ''),
+                            "description" => isset($new_material['description']) ? $new_material['description'] : '',
+                            "icon" => isset($new_material['icon']) ? $new_material['icon'] : (isset($new_material['image']) ? $new_material['image'] : ''),
+                            "popImg" => isset($new_material['popImg']) ? $new_material['popImg'] : (isset($new_material['popupImg']) ? $new_material['popupImg'] : ''),
                             "type" => 'simple',
                             "active" => true,
+                            "isDefault" => isset($new_material['isDefault']) ? (bool) $new_material['isDefault'] : empty($meta["data"]['materials']),
+                            "pricingId" => isset($new_material['pricingId']) ? $new_material['pricingId'] : '',
+                            "previewImg" => isset($new_material['previewImg']) ? $new_material['previewImg'] : (isset($new_material['icon']) ? $new_material['icon'] : ''),
+                            "additionalPrice" => isset($new_material['additionalPrice']) ? (float) $new_material['additionalPrice'] : 0,
+                            "excludeComponentIds" => isset($new_material['excludeComponentIds']) && is_array($new_material['excludeComponentIds']) ? $new_material['excludeComponentIds'] : array(),
                             "data" => [
                                     'sizes' => [
                                         "customSize" => [
@@ -225,6 +240,13 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                                 ]
                             ];
                     }
+                    if (!empty($material['isDefault'])) {
+                        foreach ($meta["data"]['materials'] as $idx => $mat) {
+                            if (is_array($mat)) {
+                                $meta["data"]['materials'][$idx]["isDefault"] = false;
+                            }
+                        }
+                    }
                     array_push($meta["data"]['materials'], $material);
                 } elseif ($forced_type === 'advance') {
                     if (isset($new_material['data']) && is_array($new_material['data'])) {
@@ -233,18 +255,32 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                         $material['active'] = isset($new_material['active']) ? (bool)$new_material['active'] : true;
                     } else {
                         $material = [
-                            "name" => $new_material['name'],
-                            "description" => $new_material['description'],
-                            "icon" => $new_material['icon'],
-                            "popImg" => $new_material['popImg'],
+                            "name" => isset($new_material['name']) ? $new_material['name'] : (isset($new_material['label']) ? $new_material['label'] : ''),
+                            "materialKey" => isset($new_material['materialKey']) ? $new_material['materialKey'] : (isset($new_material['sourceMaterialId']) ? $new_material['sourceMaterialId'] : ''),
+                            "sourceMaterialId" => isset($new_material['sourceMaterialId']) ? $new_material['sourceMaterialId'] : (isset($new_material['materialKey']) ? $new_material['materialKey'] : ''),
+                            "description" => isset($new_material['description']) ? $new_material['description'] : '',
+                            "icon" => isset($new_material['icon']) ? $new_material['icon'] : (isset($new_material['image']) ? $new_material['image'] : ''),
+                            "popImg" => isset($new_material['popImg']) ? $new_material['popImg'] : (isset($new_material['popupImg']) ? $new_material['popupImg'] : ''),
                             "type" => 'advance',
                             "active" => true,
+                            "isDefault" => isset($new_material['isDefault']) ? (bool) $new_material['isDefault'] : empty($meta["data"]['materials']),
+                            "pricingId" => isset($new_material['pricingId']) ? $new_material['pricingId'] : '',
+                            "previewImg" => isset($new_material['previewImg']) ? $new_material['previewImg'] : (isset($new_material['icon']) ? $new_material['icon'] : ''),
+                            "additionalPrice" => isset($new_material['additionalPrice']) ? (float) $new_material['additionalPrice'] : 0,
+                            "excludeComponentIds" => isset($new_material['excludeComponentIds']) && is_array($new_material['excludeComponentIds']) ? $new_material['excludeComponentIds'] : array(),
                             "data" => []
                         ];
                     }
+                    if (!empty($material['isDefault'])) {
+                        foreach ($meta["data"]['materials'] as $idx => $mat) {
+                            if (is_array($mat)) {
+                                $meta["data"]['materials'][$idx]["isDefault"] = false;
+                            }
+                        }
+                    }
                     array_push($meta["data"]['materials'], $material);
                 }
-                    $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                    $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                     if ($update === true) {
                         return rest_ensure_response(["success" => true, "message" => __("Materiel component successfully added", "all-signs-options-pro")]);
                     } else {
@@ -290,14 +326,28 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                     }
 
                     if ($old_material !== $material) {
-                        $old_material["name"] = $material['name'];
-                        $old_material["description"] = $material['description'];
-                        $old_material["icon"] = $material['icon'];
-                        $old_material["popImg"] = $material['popImg'];
+                        $old_material["name"] = isset($material['name']) ? $material['name'] : (isset($material['label']) ? $material['label'] : '');
+                        $old_material["materialKey"] = isset($material['materialKey']) ? $material['materialKey'] : (isset($old_material['materialKey']) ? $old_material['materialKey'] : (isset($material['sourceMaterialId']) ? $material['sourceMaterialId'] : ''));
+                        $old_material["sourceMaterialId"] = isset($material['sourceMaterialId']) ? $material['sourceMaterialId'] : (isset($old_material['sourceMaterialId']) ? $old_material['sourceMaterialId'] : (isset($material['materialKey']) ? $material['materialKey'] : ''));
+                        $old_material["description"] = isset($material['description']) ? $material['description'] : '';
+                        $old_material["icon"] = isset($material['icon']) ? $material['icon'] : (isset($material['image']) ? $material['image'] : '');
+                        $old_material["popImg"] = isset($material['popImg']) ? $material['popImg'] : (isset($material['popupImg']) ? $material['popupImg'] : '');
                         $old_material["type"] = $forced_type;
                         $old_material["active"] = $next_active;
+                        $old_material["isDefault"] = isset($material['isDefault']) ? (bool) $material['isDefault'] : (isset($old_material['isDefault']) ? (bool) $old_material['isDefault'] : false);
+                        $old_material["pricingId"] = isset($material['pricingId']) ? $material['pricingId'] : (isset($old_material['pricingId']) ? $old_material['pricingId'] : '');
+                        $old_material["previewImg"] = isset($material['previewImg']) ? $material['previewImg'] : (isset($old_material['previewImg']) ? $old_material['previewImg'] : $old_material["icon"]);
+                        $old_material["additionalPrice"] = isset($material['additionalPrice']) ? (float) $material['additionalPrice'] : (isset($old_material['additionalPrice']) ? (float) $old_material['additionalPrice'] : 0);
+                        $old_material["excludeComponentIds"] = isset($material['excludeComponentIds']) && is_array($material['excludeComponentIds']) ? $material['excludeComponentIds'] : (isset($old_material['excludeComponentIds']) && is_array($old_material['excludeComponentIds']) ? $old_material['excludeComponentIds'] : array());
+                        if ($old_material["isDefault"]) {
+                            foreach ($meta["data"]['materials'] as $idx => $mat) {
+                                if ($idx !== (int) $material_id && is_array($mat)) {
+                                    $meta["data"]['materials'][$idx]["isDefault"] = false;
+                                }
+                            }
+                        }
                         $meta["data"]['materials'][$material_id] = $old_material;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component successfully edited", "all-signs-options-pro")]);
                         } else {
@@ -388,7 +438,7 @@ class ASOWP_Api_Materials extends WP_REST_Controller
                         return rest_ensure_response(['success' => false, "message" => __("At least one active material must remain", "all-signs-options-pro")]);
                     }
                     array_splice($meta["data"]['materials'], $material_id, 1);
-                    update_post_meta($config_id, "asowp-configs-meta", $meta);
+                    ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                     return rest_ensure_response(['success' => true, "message" => __("Component successfully deleted", "all-signs-options-pro")]);
                 } else {
                     return rest_ensure_response(['success' => false, "message" => __("No materials component found", "all-signs-options-pro")]);

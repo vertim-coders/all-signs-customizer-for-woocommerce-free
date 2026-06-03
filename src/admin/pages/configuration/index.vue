@@ -7,7 +7,7 @@
       </h1>
       <RouterLink
         to="/configurations/new"
-        class="asowp-primary-action asowp-inline-flex asowp-items-center asowp-gap-2 asowp-rounded-lg asowp-bg-[#006e52] hover:asowp-bg-[#005c45] asowp-text-white asowp-no-underline asowp-text-[13px] asowp-font-bold asowp-px-4 asowp-py-2 asowp-shadow-sm"
+        class="asowp-primary-action asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-white asowp-no-underline"
       >
         <PlusIcon class="asowp-w-4 asowp-h-4" />
         {{ __("Add new configuration", "all-signs-options-pro") }}
@@ -293,7 +293,7 @@ const goToMaterial = async (c) => {
   showActionMenu.value = false;
   managingConfigId.value = c.id;
   try {
-    await router.push({ name: 'materials', params: { configId: c.id, config: slugify(c.name) } });
+    await router.push({ name: 'materials', params: { configId: c.id } });
   } finally {
     managingConfigId.value = null;
   }
@@ -301,7 +301,7 @@ const goToMaterial = async (c) => {
 const goToPreview = (c) => {
   if (!c?.id) return;
   showActionMenu.value = false;
-  router.push({ name: 'preview-back', params: { configId: c.id, config: slugify(c.name) } });
+  router.push({ name: 'preview-back', params: { configId: c.id } });
 };
 const setPage = (p) => {
   if (p < 1 || p > totalPages.value) return;
@@ -371,9 +371,11 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
   min-height: 28px !important;
   min-width: 28px !important;
   height: 28px !important;
-  padding: 6px 12px !important;
-  border-radius: 8px !important;
-  background: rgba(41, 132, 90, 1) !important;
+  box-sizing: border-box !important;
+  padding: 3px 10px !important;
+  border: 1px solid #016464 !important;
+  border-radius: 7px !important;
+  background: #016464 !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   font-size: 12px !important;
@@ -389,7 +391,13 @@ onMounted(() => fetchConfigs(Number(route.query.page) || 1));
 
 #asowp-backend-app .asowp-config-list-header .asowp-primary-action:hover,
 #asowp-backend-app .asowp-config-list-header .asowp-primary-action:focus {
-  background: rgba(19, 111, 69, 1) !important;
+  border-color: #004e4e !important;
+  background: #004e4e !important;
+}
+
+#asowp-backend-app .asowp-config-list-header .asowp-primary-action:active {
+  border-color: #003b3b !important;
+  background: #003b3b !important;
 }
 
 #asowp-backend-app .asowp-config-list-card {

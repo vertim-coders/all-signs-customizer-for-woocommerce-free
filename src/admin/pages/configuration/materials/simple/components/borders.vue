@@ -241,8 +241,14 @@ import { __ } from "@wordpress/i18n";
 
 const route = useRoute();
 const router = useRouter();
+const props = defineProps({
+  materialId: {
+    type: [String, Number],
+    default: 0,
+  },
+});
 const configID = ref(route.params.configId);
-const materialId = ref(route.params.materialId);
+const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const defaultSettings = () => ({
   borderColorsLabel: "Borders Colors",
@@ -260,7 +266,7 @@ const createBorder = (manageBorderId = -1) => ({
   isDefault: false,
 });
 
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isNewBorder = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);

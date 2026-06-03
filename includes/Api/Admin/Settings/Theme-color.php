@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin\Settings;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -111,7 +112,7 @@ class ASOWP_Api_Theme_color_Settings extends WP_REST_Controller
 
                 if ($theme_colors != $current_theme_colors) {
                     $meta_value["data"]["settings"]["themeColors"] = $theme_colors;
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Theme Colors update successfully settings added successfully", "all-signs-options-pro")]);
                     } else {

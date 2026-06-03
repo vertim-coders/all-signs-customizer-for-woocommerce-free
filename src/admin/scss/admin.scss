@@ -829,3 +829,65 @@ input[type="radio"] {
 .multiselect-spacer {
   @apply h-9 py-px box-content;
 }
+
+#asowp-backend-app table[class*="asowp-"][class*="table"],
+#asowp-backend-app .asowp-sizes-card table {
+  border: 0 !important;
+  border-collapse: collapse !important;
+}
+
+#asowp-backend-app table[class*="asowp-"][class*="table"] thead,
+#asowp-backend-app table[class*="asowp-"][class*="table"] tbody,
+#asowp-backend-app table[class*="asowp-"][class*="table"] tr,
+#asowp-backend-app table[class*="asowp-"][class*="table"] th,
+#asowp-backend-app table[class*="asowp-"][class*="table"] td,
+#asowp-backend-app .asowp-sizes-card table thead,
+#asowp-backend-app .asowp-sizes-card table tbody,
+#asowp-backend-app .asowp-sizes-card table tr,
+#asowp-backend-app .asowp-sizes-card table th,
+#asowp-backend-app .asowp-sizes-card table td {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+#asowp-backend-app table[class*="asowp-"][class*="table"] tbody tr,
+#asowp-backend-app .asowp-sizes-card table tbody tr {
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+#asowp-backend-app table[class*="asowp-"][class*="table"] tbody tr:last-child,
+#asowp-backend-app .asowp-sizes-card table tbody tr:last-child {
+  border-bottom: 0 !important;
+}
+
+#asowp-backend-app .asowp-table-loader-cell,
+#asowp-backend-app td[class*="asowp-text-center"],
+#asowp-backend-app td[class*="asowp-table-loader-cell"] {
+  text-align: center !important;
+}
+
+#asowp-backend-app .asowp-table-loader-icon,
+#asowp-backend-app td[class*="asowp-text-center"] svg.asowp-animate-spin,
+#asowp-backend-app td[class*="asowp-table-loader-cell"] svg {
+  display: block !important;
+  color: #007a72;
+  animation: asowp-spin 1s linear infinite;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+#asowp-backend-app div.asowp-table-loader-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes asowp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

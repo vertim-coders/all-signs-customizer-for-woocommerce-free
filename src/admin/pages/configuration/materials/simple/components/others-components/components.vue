@@ -24,7 +24,9 @@
           </thead>
           <tbody>
             <tr v-if="isFetching">
-              <td colspan="4" class="asowp-additional-empty">Loading...</td>
+              <td colspan="4" class="asowp-additional-empty asowp-table-loader-cell">
+                <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+              </td>
             </tr>
             <tr v-else-if="additionalOptions.length === 0">
               <td colspan="4" class="asowp-additional-empty">{{ noAdditionalOptionsFound || 'No additional components found' }}</td>
@@ -41,7 +43,7 @@
                 <p>{{ additionalOption.description }}</p>
               </td>
               <td>
-                <button type="button" class="asowp-additional-pill" @click="router.push('/configs/'+config+'/'+configID+'/materials/'+material+'/'+materialId+'/simple/others-components/'+key)">
+                <button type="button" class="asowp-additional-pill" @click="openComponentEditor(key)">
                   {{ optionCount(additionalOption) }} options
                 </button>
               </td>
@@ -132,19 +134,23 @@
 
 <script setup>
 import api from '@/admin/Api/api';
-import { defineComponent, h, onMounted, ref } from 'vue';
+import { computed, defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '@/admin/router';
 import toastMessage from '@/admin/utils/functions';
-import { PencilIcon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
+import { Loader2Icon, PencilIcon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 
 const route = useRoute();
+const props = defineProps({
+  materialId: {
+    type: [String, Number],
+    default: 0,
+  },
+});
 const configID = ref(route.params.configId);
-const config = route.params.config;
-const material = route.params.material;
-const materialId = ref(route.params.materialId);
+const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isNewAdditionalOptions = ref(false);
 const isLoading = ref(false);
 const additionalOptions = ref([]);
@@ -168,7 +174,14 @@ onMounted(async () => {
 
 const optionCount = (item) => Array.isArray(item?.options) ? item.options.length : 0;
 const openComponentEditor = (id) => {
-  router.push(`/configs/${config}/${configID.value}/materials/${material}/${materialId.value}/simple/others-components/${id}`);
+  router.push({
+    name: 'Simple-OthersComponents-Options',
+    params: {
+      configId: configID.value,
+      additionalOptionID: id,
+    },
+    query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
+  });
 };
 
 const resetAdditionalOption = () => {

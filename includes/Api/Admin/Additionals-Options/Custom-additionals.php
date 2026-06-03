@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin\Additionals_Options;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -125,6 +126,38 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
 
     }
 
+    private function get_custom_additionals_from_meta($meta_value): array
+    {
+        if (!is_array($meta_value)) {
+            return array();
+        }
+
+        if (isset($meta_value["data"]["additionalOptions"]) && is_array($meta_value["data"]["additionalOptions"]) && count($meta_value["data"]["additionalOptions"]) > 0) {
+            return array_values($meta_value["data"]["additionalOptions"]);
+        }
+
+        $normalized = ConfigSchemaNormalizer::normalize_meta($meta_value);
+        if (isset($normalized["additionalOptions"]["inputs"]["items"]) && is_array($normalized["additionalOptions"]["inputs"]["items"])) {
+            return array_values($normalized["additionalOptions"]["inputs"]["items"]);
+        }
+
+        return array();
+    }
+
+    private function ensure_legacy_custom_additionals_list($meta_value): array
+    {
+        $meta_value = is_array($meta_value) ? $meta_value : array();
+        if (!isset($meta_value["data"]) || !is_array($meta_value["data"])) {
+            $meta_value["data"] = array();
+        }
+
+        if (!isset($meta_value["data"]["additionalOptions"]) || !is_array($meta_value["data"]["additionalOptions"]) || count($meta_value["data"]["additionalOptions"]) === 0) {
+            $meta_value["data"]["additionalOptions"] = $this->get_custom_additionals_from_meta($meta_value);
+        }
+
+        return $meta_value;
+    }
+
     /**
      * Get all custom additionals of aso configuration ID
      * @param \WP_REST_Request $request Full details about the request.
@@ -138,11 +171,8 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
             $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
 
             if (!empty($meta_value)) {
-                //$meta_value["data"]["additionalOptions"] = [];
-                //update_post_meta($id,'asowp-configs-meta',$meta_value);
-
-                if (isset($meta_value["data"]["additionalOptions"]) && count($meta_value["data"]["additionalOptions"]) > 0) {
-                    $custom_additionals_options = $meta_value["data"]["additionalOptions"];
+                $custom_additionals_options = $this->get_custom_additionals_from_meta($meta_value);
+                if (count($custom_additionals_options) > 0) {
                     return rest_ensure_response($custom_additionals_options);
                 }
                 return rest_ensure_response(["message" => __("No Additonal Options found", "all-signs-options-pro")]);
@@ -169,18 +199,12 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
             $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
 
             if (!empty($meta_value)) {
+                $custom_additionals = $this->get_custom_additionals_from_meta($meta_value);
 
-                if (isset($meta_value["data"]["additionalOptions"])) {
-                    $custom_additionals = $meta_value["data"]["additionalOptions"];
-
-                    if (isset($custom_additionals[$custom_additional_id])) {
-                        return rest_ensure_response($custom_additionals[$custom_additional_id]);
-                    }
-                    return rest_ensure_response(array("message" => __("No custom found", "all-signs-options-pro")));
-                } else {
-                    return rest_ensure_response(array("message" => __("No custom found", "all-signs-options-pro")));
+                if (isset($custom_additionals[$custom_additional_id])) {
+                    return rest_ensure_response($custom_additionals[$custom_additional_id]);
                 }
-
+                return rest_ensure_response(array("message" => __("No custom found", "all-signs-options-pro")));
 
             } else {
                 return rest_ensure_response(["message" => __("No data found", "all-signs-options-pro")]);
@@ -206,21 +230,10 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
-                if (empty($meta_value)) {
-                    $meta_value["data"]["additionalOptions"][0] = $custom_additional;
-                } else {
-                    if (isset($meta_value["data"]["additionalOptions"])) {
-                        $custom_additionals = $meta_value["data"]["additionalOptions"];
+                $meta_value = $this->ensure_legacy_custom_additionals_list($meta_value);
+                $meta_value["data"]["additionalOptions"][] = $custom_additional;
 
-                        array_push($custom_additionals, $custom_additional);
-
-                        $meta_value["data"]["additionalOptions"] = $custom_additionals;
-                    } else {
-                        $meta_value["data"]["additionalOptions"][0] = $custom_additional;
-                    }
-                }
-
-                $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                 if ($response) {
                     return rest_ensure_response(["success" => true, "message" => __("Option added successfuly", "all-signs-options-pro")]);
@@ -244,12 +257,13 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->ensure_legacy_custom_additionals_list($meta_value);
                 if ($meta_value["data"]["additionalOptions"] == $custom_additionals) {
                     return rest_ensure_response(["success" => "same", "message" => __("No change observe on additionnals options", "all-signs-options-pro")]);
                 } else {
                     $meta_value["data"]["additionalOptions"] = $custom_additionals;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Additonnals Option successfully sorted", "all-signs-options-pro")]);
@@ -281,6 +295,7 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
                 if (!empty($meta_value)) {
+                    $meta_value = $this->ensure_legacy_custom_additionals_list($meta_value);
                     $custom_additionals = $meta_value["data"]["additionalOptions"];
 
                     if (isset($custom_additionals[$custom_additional_id])) {
@@ -289,7 +304,7 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
                         } else {
                             $custom_additionals[$custom_additional_id] = $custom_additional;
                             $meta_value["data"]["additionalOptions"] = $custom_additionals;
-                            $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                            $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                             if ($response) {
                                 return rest_ensure_response(["success" => true, "message" => __("Option updated successfully", "all-signs-options-pro")]);
@@ -327,6 +342,7 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
             $post = get_post($id);
             if ($post) {
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
+                $meta_value = $this->ensure_legacy_custom_additionals_list($meta_value);
                 if (!empty($meta_value["data"]["additionalOptions"])) {
                     $custom_additionals = $meta_value["data"]["additionalOptions"];
 
@@ -334,7 +350,7 @@ class ASOWP_Api_Customs_Additionals extends WP_REST_Controller
 
                     $meta_value["data"]["additionalOptions"] = $custom_additionals;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Option deleted successfully", "all-signs-options-pro")]);

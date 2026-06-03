@@ -36,7 +36,9 @@
         <p>Add the values available for this additional component.</p>
       </div>
 
-      <div v-if="isFetching" class="asowp-component-empty">Loading...</div>
+      <div v-if="isFetching" class="asowp-component-empty asowp-table-loader-cell">
+        <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+      </div>
       <article v-for="(item, index) in additionalOption.options" v-else :key="index" class="asowp-component-option">
         <header class="asowp-component-option-head">
           <div>
@@ -130,22 +132,26 @@
 </template>
 
 <script setup>
-import { defineComponent, h, onMounted, ref } from 'vue';
+import { computed, defineComponent, h, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
-import { ChevronDownIcon, ChevronUpIcon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
+import { ChevronDownIcon, ChevronUpIcon, Loader2Icon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 
 const route = useRoute();
 const router = useRouter();
+const props = defineProps({
+  materialId: {
+    type: [String, Number],
+    default: 0,
+  },
+});
 
 const configID = ref(route.params.configId);
-const config = route.params.config;
-const materialId = ref(route.params.materialId);
-const material = route.params.material;
+const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 const additionalOptionId = ref(route.params.additionalOptionID);
 
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isLoading = ref(false);
 const expandedOption = ref(0);
 const materialColors = ref([]);
@@ -269,7 +275,13 @@ const saveComponent = async () => {
 };
 
 const goBack = () => {
-  router.push(`/configs/${config}/${configID.value}/materials/${material}/${materialId.value}/simple/others-components`);
+  router.push({
+    name: 'Simple-OthersComponents',
+    params: {
+      configId: configID.value,
+    },
+    query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
+  });
 };
 
 const UploadControl = defineComponent({

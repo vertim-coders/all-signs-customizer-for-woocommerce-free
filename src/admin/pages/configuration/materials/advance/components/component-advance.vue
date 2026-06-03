@@ -254,9 +254,9 @@ import api from "@/admin/Api/api";
 
     const configId = ref(route.params.configId);
     import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-const config = ref(route.params.config.replace(/-/g,' '));
-    const material = ref(route.params.material.replace(/-/g,' '));
-    const materialId = ref(route.params.materialId);
+const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
+    const material = ref(String(route.params.material ?? 'material').replace(/-/g,' '));
+    const materialId = ref(route.query.materialIndex ?? route.params.materialId ?? 0);
     const isFetching = ref(false);
     const isNewComponentAdvance = ref(false);
     const isLoading = ref(false);
@@ -283,10 +283,10 @@ const config = ref(route.params.config.replace(/-/g,' '));
     });
 
     watch(
-      () => route.params.materialId,
+      () => [route.query.materialIndex, route.params.materialId],
       async (v) => {
-        materialId.value = v;
-        material.value = route.params.material.replace(/-/g,' ');
+        materialId.value = v?.[0] ?? v?.[1] ?? 0;
+        material.value = String(route.params.material ?? 'material').replace(/-/g,' ');
         componentAdvanceId.value = null;
         isNewComponentAdvance.value = false;
         isEdit.value = false;
@@ -301,7 +301,9 @@ const config = ref(route.params.config.replace(/-/g,' '));
     });
 
     const goToMaterials = ()=>{
-        router.push('/configs/'+slugify(config.value)+'/'+configId.value+'/materials').then(() => {
+        router.push({ name: 'materials', params: { configId: configId.value } });
+        return;
+        router.push({ name: 'materials', params: { configId: configId.value } }).then(() => {
         // Recharger la page après la navigation
         window.location.reload()
         })
@@ -512,7 +514,15 @@ const closeAllParams = () => {
 
     const goToOptions = (component, idx) => {
         closeAllParams();
-        router.push('/configs/'+slugify(config.value)+'/'+configId.value+'/materials/'+slugify(material.value)+'/'+materialId.value+'/advance/'+component.name+'/'+idx+'/options');
+        router.push({
+            name: 'Material-Advance-options',
+            params: {
+                configId: configId.value,
+                component: slugify(component.name),
+                componentId: idx,
+            },
+            query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
+        });
     };
 
 const selectDefault = async(key) =>{

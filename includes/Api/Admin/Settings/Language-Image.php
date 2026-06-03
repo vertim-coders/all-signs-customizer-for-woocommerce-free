@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin\Settings;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -178,7 +179,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
                 if (!isset($meta_value["data"]["settings"]["languageImages"]['main']) || $meta_value["data"]["settings"]["languageImages"]['main'] != $main_options) {
                     $meta_value["data"]["settings"]["languageImages"]['main'] = $main_options;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Main options in language Images settings updated successfully", "all-signs-options-pro")]);
@@ -212,7 +213,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
                 if (!isset($meta_value["data"]["settings"]["languageImages"]['uploadDesign']) || $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] != $customizer_options) {
                     $meta_value["data"]["settings"]["languageImages"]['uploadDesign'] = $customizer_options;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Customizer Design options in language Images settings updated successfully", "all-signs-options-pro")]);
@@ -246,7 +247,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
                 if (!isset($meta_value["data"]["settings"]["languageImages"]['visualizer']) || $meta_value["data"]["settings"]["languageImages"]['visualizer'] != $visualizer_options) {
                     $meta_value["data"]["settings"]["languageImages"]['visualizer'] = $visualizer_options;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Visualizer options in language Images settings updated successfully", "all-signs-options-pro")]);
@@ -279,7 +280,7 @@ class ASOWP_Api_Language_Images_Settings extends WP_REST_Controller
 
                 if (!isset($meta_value["data"]["settings"]["languageImages"]['images']) || $meta_value["data"]["settings"]["languageImages"]['images'] != $image_options) {
                     $meta_value["data"]["settings"]["languageImages"]['images'] = $image_options;
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Images options in language Images settings updated successfully", "all-signs-options-pro")]);

@@ -158,11 +158,19 @@
           </div>
           <div class="asowp-dashboard-side-content">
             <div class="asowp-flex asowp-flex-wrap asowp-gap-2">
-              <a v-for="link in usefulLinks" :key="link.text" :href="link.url" target="_blank" rel="noopener"
-                class="asowp-inline-flex asowp-items-center asowp-gap-2 asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-full asowp-text-[12px] asowp-font-medium asowp-text-[#1a1a1a] asowp-no-underline hover:asowp-bg-[#f6f6f7]">
+              <component
+                :is="link.action === 'chat' ? 'button' : 'a'"
+                v-for="link in usefulLinks"
+                :key="link.text"
+                :href="link.action === 'chat' ? undefined : link.url"
+                :target="link.action === 'chat' ? undefined : '_blank'"
+                :rel="link.action === 'chat' ? undefined : 'noopener'"
+                :type="link.action === 'chat' ? 'button' : undefined"
+                class="asowp-dashboard-useful-link"
+                @click="handleUsefulLinkClick(link, $event)">
                 <component :is="link.icon" class="asowp-w-3.5 asowp-h-3.5" />
                 {{ link.text }}
-              </a>
+              </component>
             </div>
           </div>
         </div>
@@ -210,6 +218,7 @@ import { RouterLink, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue'
 import api from '@/admin/Api/api'
 import { __, sprintf } from "@wordpress/i18n";
+import { Crisp } from "crisp-sdk-web";
 import {
   InfoIcon,
   LayoutGridIcon,
@@ -241,7 +250,7 @@ const copiedKey = ref(null)
 const router = useRouter();
 
 const goToMaterial = (config) => {
-    router.push({ name: 'materials', params: { configId: config.id, config: config.name.replace(/ /g, '-') } });
+    router.push({ name: 'materials', params: { configId: config.id } });
 };
 
 const parseMaybeJson = (value) => {
@@ -313,6 +322,32 @@ const copySnippet = async (text, key) => {
   } catch (_) {}
 }
 
+const openSupportChat = (maxAttempts = 10, attempt = 0) => {
+  const crispReady = Boolean(window.$crisp?.is);
+
+  if (crispReady) {
+    try {
+      Crisp.setHideOnAway(false);
+      window.asowpUpdateCrispPosition?.();
+      Crisp.chat.show();
+      Crisp.chat.open();
+      window.$crisp?.push?.(["do", "chat:show"]);
+      window.$crisp?.push?.(["do", "chat:open"]);
+    } catch (_) {}
+    return;
+  }
+
+  if (attempt < maxAttempts - 1) {
+    window.setTimeout(() => openSupportChat(maxAttempts, attempt + 1), 200);
+  }
+};
+
+const handleUsefulLinkClick = (link, event) => {
+  if (link.action !== 'chat') return;
+  event.preventDefault();
+  openSupportChat();
+};
+
 onMounted(async () => {
   try {
     kpisLoading.value = true
@@ -363,7 +398,7 @@ const usefulLinks = [
   { text: __('Request a feature', 'all-signs-options-pro'), url: 'https://signsdesigner.us/all-signs-customizer-product/#section-review', icon: PlusCircleIcon },
   { text: __('Learning Center', 'all-signs-options-pro'), url: 'https://docs.signsdesigner.us/docs/aso-wp-documentation/', icon: HelpCircleIcon },
   { text: __('Pricing', 'all-signs-options-pro'), url: 'https://signsdesigner.us/pricing-all-signs-customizer/', icon: CreditCardIcon },
-  { text: __('Get in touch', 'all-signs-options-pro'), url: 'https://signsdesigner.us/contact', icon: MessageCircleIcon },
+  { text: __('Get in touch', 'all-signs-options-pro'), url: '', icon: MessageCircleIcon, action: 'chat' },
 ]
 </script>
 
@@ -391,24 +426,64 @@ const usefulLinks = [
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 32px !important;
-  height: 32px !important;
-  padding: 6px 12px !important;
-  border: 1px solid #008060 !important;
-  border-radius: 8px !important;
-  background: #008060 !important;
+  min-height: 28px !important;
+  height: 28px !important;
+  box-sizing: border-box !important;
+  padding: 3px 10px !important;
+  border: 1px solid #016464 !important;
+  border-radius: 7px !important;
+  background: #016464 !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 650 !important;
-  line-height: 18px !important;
+  line-height: 16px !important;
   text-decoration: none !important;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), inset 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 #asowp-backend-app .asowp-dashboard-primary-action:hover {
-  border-color: #006e52 !important;
-  background: #006e52 !important;
+  border-color: #004e4e !important;
+  background: #004e4e !important;
+}
+
+#asowp-backend-app .asowp-dashboard-primary-action:active {
+  border-color: #003b3b !important;
+  background: #003b3b !important;
+}
+
+#asowp-backend-app .asowp-dashboard-primary-action:focus {
+  outline: none !important;
+  box-shadow:
+    0 0 0 1px #ffffff,
+    0 0 0 3px rgba(1, 100, 100, 0.35),
+    0 1px 0 rgba(0, 0, 0, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+#asowp-backend-app .asowp-dashboard-useful-link,
+#asowp-backend-app .asowp-dashboard-useful-link:hover,
+#asowp-backend-app .asowp-dashboard-useful-link:focus,
+#asowp-backend-app .asowp-dashboard-useful-link:active,
+#asowp-backend-app .asowp-dashboard-useful-link:visited {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 12px !important;
+  background: #ffffff !important;
+  border: 1px solid #c1c4c7 !important;
+  border-radius: 999px !important;
+  color: #1a1a1a !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+
+#asowp-backend-app .asowp-dashboard-useful-link:hover {
+  background: #f6f6f7 !important;
 }
 
 #asowp-backend-app .asowp-shopify-info-badge {

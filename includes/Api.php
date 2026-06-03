@@ -20,6 +20,7 @@ use ASOWP\Api\Admin\Settings\ASOWP_Api_General_Settings;
 use ASOWP\Api\Admin\Settings\ASOWP_Api_Language_Images_Settings;
 use ASOWP\Api\Admin\Settings\ASOWP_Api_Theme_color_Settings;
 use ASOWP\Api\Admin\Templates\ASOWP_Api_Templates;
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_REST_Controller;
 
 /**
@@ -42,6 +43,9 @@ class Api extends WP_REST_Controller {
      * @return void
      */
     private function includes() {
+        if ( !class_exists( ConfigSchemaNormalizer::class ) ) {
+            require_once __DIR__ . '/Support/ConfigSchemaNormalizer.php';
+        }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Configs'  ) ) {
             require_once __DIR__ . '/Api/Admin/Configs.php';
         }

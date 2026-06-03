@@ -349,11 +349,11 @@ const slugify = (value) =>
 
 const configId = ref(route.params.configId);
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
-const config = ref(route.params.config.replace(/-/g," "));
-const materialId = ref(route.params.materialId);
-const material = ref(route.params.material.replace(/-/g," "));
+const config = ref(String(route.params.config ?? '').replace(/-/g," "));
+const materialId = ref(route.query.materialIndex ?? route.params.materialId ?? 0);
+const material = ref(String(route.params.material ?? 'material').replace(/-/g," "));
 const componentId = ref(route.params.componentId);
-const componentName = ref(route.params.component.replace(/-/g," "));
+const componentName = ref(String(route.params.component ?? '').replace(/-/g," "));
 const componentAdvance = ref({
     name:"",
     description:"",
@@ -398,13 +398,13 @@ onMounted(async() => {
 });
 
 watch(
-  () => [route.params.materialId, route.params.componentId],
-  async ([matId, compId]) => {
-    materialId.value = matId;
+  () => [route.query.materialIndex, route.params.materialId, route.params.componentId],
+  async ([queryMaterialIndex, routeMaterialId, compId]) => {
+    materialId.value = queryMaterialIndex ?? routeMaterialId ?? 0;
     componentId.value = compId;
-    material.value = route.params.material.replace(/-/g," ");
-    config.value = route.params.config.replace(/-/g," ");
-    componentName.value = route.params.component.replace(/-/g," ");
+    material.value = String(route.params.material ?? 'material').replace(/-/g," ");
+    config.value = String(route.params.config ?? '').replace(/-/g," ");
+    componentName.value = String(route.params.component ?? '').replace(/-/g," ");
     isNewOption.value = false;
     isEdit.value = false;
     isFetching.value = true;
@@ -414,13 +414,19 @@ watch(
 );
 
 const goToMaterials = ()=>{
-    router.push('/configs/'+slugify(config)+'/'+configId.value+'/materials').then(() => {
+    router.push({ name: 'materials', params: { configId: configId.value } });
+    return;
+    router.push({ name: 'materials', params: { configId: configId.value } }).then(() => {
     // Recharger la page après la navigation
     window.location.reload()
     })
 }
 const goBackToComponents = () => {
-    router.push('/configs/'+slugify(config.value)+'/'+configId.value+'/materials/'+slugify(material.value)+'/'+materialId.value+'/advance')
+    router.push({
+        name: 'Material-Advance',
+        params: { configId: configId.value },
+        query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
+    });
 }
 const fetchMaterialAdvanceOptions = async () => {
     const result = await api.getMaterialAdvanceComponentOptions(configId.value,materialId.value,componentId.value);

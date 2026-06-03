@@ -23,7 +23,9 @@
           </thead>
           <tbody ref="additionalsListTable">
             <tr v-if="isFetching">
-              <td colspan="3" class="asowp-inputs-empty">Loading...</td>
+              <td colspan="3" class="asowp-inputs-empty asowp-table-loader-cell">
+                <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+              </td>
             </tr>
             <tr v-else-if="additionals.length === 0">
               <td colspan="3" class="asowp-inputs-empty">{{ noAdditionalsOptionsFound || 'No inputs found' }}</td>
@@ -110,14 +112,14 @@ import Note from './components/note.vue';
 import IncludedType from './components/included-type.vue';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
-import { CheckSquareIcon, ImageIcon, ListIcon, NotebookIcon, PackageCheckIcon, PencilIcon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
+import { CheckSquareIcon, ImageIcon, ListIcon, Loader2Icon, NotebookIcon, PackageCheckIcon, PencilIcon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 
 const route = useRoute();
 const configId = route.params.configId;
 const news = ref(false);
 const edit = ref(false);
 const type = ref('yes/no');
-const isFetching = ref(false);
+const isFetching = ref(true);
 const noAdditionalsOptionsFound = ref('');
 const additionals = ref([]);
 const additionalOptionId = ref(null);
@@ -140,8 +142,11 @@ const sortChanged = computed(() => JSON.stringify(newIndexs.value) !== JSON.stri
 
 onMounted(async () => {
   isFetching.value = true;
-  await fetchAdditionalOptions();
-  isFetching.value = false;
+  try {
+    await fetchAdditionalOptions();
+  } finally {
+    isFetching.value = false;
+  }
 
   if (window.Sortable && additionalsListTable.value) {
     sortable.value = window.Sortable.create(additionalsListTable.value, {
@@ -167,18 +172,20 @@ const inputDescription = (item) => item.description || item.descriptionText || i
 
 const fetchAdditionalOptions = async () => {
   const data = await api.getCustomAdditionals(configId);
-  if (data.message) {
-    noAdditionalsOptionsFound.value = data.message;
-    additionals.value = [];
-    newIndexs.value = [];
-    originalIndexs.value = [];
-    return;
-  }
-
-  additionals.value = Array.isArray(data) ? data : [];
+  const items = extractAdditionalItems(data);
+  noAdditionalsOptionsFound.value = items.length === 0 && data?.message ? data.message : '';
+  additionals.value = items;
   const indexes = additionals.value.map((_, index) => index);
   newIndexs.value = indexes;
   originalIndexs.value = [...indexes];
+};
+
+const extractAdditionalItems = (data) => {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.items)) return data.items;
+  if (Array.isArray(data?.inputs?.items)) return data.inputs.items;
+  if (Array.isArray(data?.additionalOptions?.inputs?.items)) return data.additionalOptions.inputs.items;
+  return [];
 };
 
 const newAdditionalOptions = () => {

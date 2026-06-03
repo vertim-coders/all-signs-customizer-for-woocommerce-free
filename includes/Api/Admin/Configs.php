@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -293,13 +294,13 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         if (isset($params["data"]) && !empty($params["data"])) {
             $post_id = wp_insert_post($data);
             if ($post_id != 0 && !is_wp_error($post_id)) {
-                $data = [
-                    "icon" => $params["icon"],
-                    "popImg" => $params["popImg"],
+                $data = ConfigSchemaNormalizer::normalize_meta([
+                    "icon" => isset($params["icon"]) ? $params["icon"] : '',
+                    "popImg" => isset($params["popImg"]) ? $params["popImg"] : '',
                     "materialType" => $material_type,
                     "data" => $params["data"]
-                ];
-                update_post_meta($post_id, 'asowp-configs-meta', $data);
+                ]);
+                ConfigSchemaNormalizer::save_meta((int) $post_id, $data);
                 update_post_meta($post_id, "asowp-templates", []);
                 if (!empty($product_ids)) {
                     $conflicts = $this->sync_config_products((int) $post_id, $product_ids);
@@ -330,18 +331,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         if ($id != 0) {
             $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
             if (is_array($meta_value) && !empty($meta_value)) {
-                $material_type = isset($meta_value['materialType']) ? $this->sanitize_material_type($meta_value['materialType']) : 'simple';
-
-                $post_data = array(
-                    'id' => $id,
-                    'name' => get_the_title($id),
-                    "description" => get_post_field('post_content', $id),
-                    "icon" => $meta_value['icon'],
-                    "popImg" => $meta_value['popImg'],
-                    "materialType" => $material_type,
-                    'data' => $meta_value["data"]
-                );
-                return rest_ensure_response($post_data);
+                return rest_ensure_response(ConfigSchemaNormalizer::to_shopify_schema($meta_value));
             } else {
                 return rest_ensure_response(["message" => __("Not ASO Config Post", "all-signs-options-pro")]);
             }
@@ -357,6 +347,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
     {
         $configId = $request->get_param('config_id');
         $config = get_post_meta($configId, "asowp-configs-meta", true);
+        $config = ConfigSchemaNormalizer::normalize_meta($config);
         $material_type = isset($config['materialType']) ? $this->sanitize_material_type($config['materialType']) : 'simple';
         $pageSettings = get_option("asowp_config_page", [])["others"];
         $all_cliparts_groups = get_option("asowp-manages-cliparts", []);
@@ -373,8 +364,15 @@ class ASOWP_Api_Configs extends WP_REST_Controller
             "materialType" => $material_type,
             "data" => $config["data"]
         ];
-        $config_fonts = $config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"];
-        $config_cliparts = $config["data"]["settings"]["customizerSign"]["images"]["enableClipart"] == true ? $config["data"]["settings"]["customizerSign"]["images"]["enableClipart"]["selectedClipartGroups"] : [];
+        $config_fonts = isset($config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"]) && is_array($config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"])
+            ? $config["data"]["settings"]["customizerSign"]["text"]["selectedFonts"]
+            : [];
+        $enable_clipart = isset($config["data"]["settings"]["customizerSign"]["images"]["enableClipart"])
+            ? $config["data"]["settings"]["customizerSign"]["images"]["enableClipart"]
+            : false;
+        $config_cliparts = is_array($enable_clipart) && isset($enable_clipart["selectedClipartGroups"]) && is_array($enable_clipart["selectedClipartGroups"])
+            ? $enable_clipart["selectedClipartGroups"]
+            : [];
 
         $visibleFonts = [];
         foreach ($config_fonts as $font) {
@@ -400,7 +398,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         ];
 
         $preview_data = array(
-            'skin' => $config["data"]["settings"]['themeColors']['skin'],
+            'skin' => isset($config["data"]["settings"]['themeColors']['skin']) ? $config["data"]["settings"]['themeColors']['skin'] : $config['settings']['themeColors']['skin'],
             'currentConfig' => $configData,
             "managesData" => $all_manages,
             'regularPrice' => 0,
@@ -440,16 +438,28 @@ class ASOWP_Api_Configs extends WP_REST_Controller
         $updatePosts = wp_update_post($args);
         $meta = get_post_meta($post_id, 'asowp-configs-meta', true);
         if (!is_wp_error($updatePosts)) {
+            $data_payload = isset($params["data"]) ? $params["data"] : (isset($meta['data']) ? $meta['data'] : array());
+            if (isset($params["settings"]) && is_array($params["settings"])) {
+                if (!is_array($data_payload)) {
+                    $data_payload = array();
+                }
+                $data_payload["settings"] = $params["settings"];
+            }
             $material_type = isset($params['materialType'])
                 ? $this->sanitize_material_type($params['materialType'])
                 : (isset($meta['materialType']) ? $this->sanitize_material_type($meta['materialType']) : 'simple');
-            $data = [
+            $data = ConfigSchemaNormalizer::normalize_meta([
                 "icon" => isset($params["icon"]) ? $params["icon"] : (is_array($existing_meta) && isset($existing_meta["icon"]) ? $existing_meta["icon"] : ''),
                 "popImg" => isset($params["popImg"]) ? $params["popImg"] : (is_array($existing_meta) && isset($existing_meta["popImg"]) ? $existing_meta["popImg"] : ''),
                 "materialType" => $material_type,
-                "data" => isset($params["data"]) ? $params["data"] : $meta['data']
-            ];
-            update_post_meta($post_id, 'asowp-configs-meta', $data);
+                "data" => $data_payload,
+                "settings" => isset($params["settings"]) ? $params["settings"] : (isset($meta["settings"]) ? $meta["settings"] : array()),
+                "productType" => isset($params["productType"]) ? $params["productType"] : (isset($meta["productType"]) ? $meta["productType"] : null),
+                "pricingMode" => isset($params["pricingMode"]) ? $params["pricingMode"] : (isset($meta["pricingMode"]) ? $meta["pricingMode"] : null),
+                "requiredOptions" => isset($params["requiredOptions"]) ? $params["requiredOptions"] : (isset($meta["requiredOptions"]) ? $meta["requiredOptions"] : array()),
+                "additionalOptions" => isset($params["additionalOptions"]) ? $params["additionalOptions"] : (isset($meta["additionalOptions"]) ? $meta["additionalOptions"] : array()),
+            ]);
+            ConfigSchemaNormalizer::save_meta((int) $post_id, $data);
             if (isset($params['product_ids']) && is_array($params['product_ids'])) {
                 $conflicts = $this->sync_config_products((int) $post_id, $params['product_ids']);
                 if (!empty($conflicts)) {
@@ -558,16 +568,7 @@ class ASOWP_Api_Configs extends WP_REST_Controller
                 $query->the_post();
                 $id = get_the_ID();
                 $meta = get_post_meta($id, 'asowp-configs-meta', true);
-                $material_type = isset($meta['materialType']) ? $this->sanitize_material_type($meta['materialType']) : 'simple';
-                $post_data = array(
-                    'id' => $id,
-                    'name' => get_the_title(),
-                    "description" => get_post_field('post_content', $id),
-                    "icon" => $meta["icon"],
-                    "popImg" => $meta["popImg"],
-                    "materialType" => $material_type,
-                    "data" => $meta["data"]
-                );
+                $post_data = ConfigSchemaNormalizer::to_admin_payload((int) $id, $meta);
                 array_push($posts_data["data"], $post_data);
                 //$posts_data["data"][] = $post_data;
 

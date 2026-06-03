@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin\Settings;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -160,7 +161,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
 
                 if ($meta_value["data"]["settings"]["generals"]['product'] != $product_options) {
                     $meta_value["data"]["settings"]["generals"]['product'] = $product_options;
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Product options in generals settings updated successfully", "all-signs-options-pro")]);
@@ -194,7 +195,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
 
                 if ($meta_value["data"]["settings"]["generals"]['mobile'] != $mobile_options) {
                     $meta_value["data"]["settings"]["generals"]['mobile'] = $mobile_options;
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Mobile options in generals settings updated successfully", "all-signs-options-pro")]);
@@ -228,7 +229,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
 
                 if ($meta_value["data"]["settings"]["generals"]['output'] != $output_options) {
                     $meta_value["data"]["settings"]["generals"]['output'] = $output_options;
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Output options in generals settings updated successfully", "all-signs-options-pro")]);
                     } else {
@@ -293,7 +294,7 @@ class ASOWP_Api_General_Settings extends WP_REST_Controller
         }
 
         $meta_value["data"]["settings"]["generals"][$section] = $section_options;
-        $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+        $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
         if ($response) {
             return rest_ensure_response(["success" => true, "message" => __("General settings updated successfully", "all-signs-options-pro")]);

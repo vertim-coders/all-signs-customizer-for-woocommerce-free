@@ -30,8 +30,8 @@
         <div class="asowp-p-4">
           <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Fonts List', 'all-signs-options-pro') }}</h3>
 
-          <div v-if="isFetching" class="asowp-py-8 asowp-text-center asowp-text-[13px] asowp-text-[#616161]">
-            {{ __('Loading fonts...', 'all-signs-options-pro') }}
+          <div v-if="isFetching" class="asowp-table-loader-cell asowp-py-8 asowp-text-center">
+            <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
           </div>
 
           <div v-else-if="selectedFontRows.length === 0" class="asowp-py-8 asowp-text-center asowp-border asowp-border-dashed asowp-border-[#dfe3e8] asowp-rounded-lg">
@@ -242,6 +242,7 @@ import toastMessage from "@/admin/utils/functions";
 import { __, sprintf } from "@wordpress/i18n";
 import {
   GripVerticalIcon,
+  Loader2Icon,
   PlusIcon,
   SearchIcon,
   TrashIcon,
@@ -251,7 +252,7 @@ const route = useRoute();
 const router = useRouter();
 const configID = ref(route.params.configId);
 
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isLoading = ref(false);
 const isSavingFontForm = ref(false);
 const showForm = ref(false);

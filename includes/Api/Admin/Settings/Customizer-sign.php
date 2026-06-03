@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin\Settings;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -182,7 +183,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
 
                 $meta_value["data"]["settings"]["customizerSign"]['customizerOptions'] = $customizer_options;
 
-                $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                 if ($response) {
                     return rest_ensure_response(["success" => true, "message" => __("customizer in customizer sign settings upadted successfully", "all-signs-options-pro")]);
@@ -220,7 +221,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
                 }
 
                 $meta_value["data"]["settings"]["customizerSign"]['configOptions'] = $config_options;
-                $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                 if ($response) {
                     return rest_ensure_response(["success" => true, "message" => __("Config options in customizer sign settings updated successfully", "all-signs-options-pro")]);
@@ -251,7 +252,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
                 if ($meta_value["data"]["settings"]["customizerSign"]['signPart'] != $sign_options) {
                     $meta_value["data"]["settings"]["customizerSign"]['signPart'] = $sign_options;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Sign part in customizer sign settings upadted successfully", "all-signs-options-pro")]);
                     } else {
@@ -284,7 +285,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
                 if ($meta_value["data"]["settings"]["customizerSign"]['text'] != $text_options) {
                     $meta_value["data"]["settings"]["customizerSign"]['text'] = $text_options;
 
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("Text in customizer sign settings upadted successfully", "all-signs-options-pro")]);
                     } else {
@@ -316,7 +317,7 @@ class ASOWP_Api_Customizer_Sign_Settings extends WP_REST_Controller
                 $meta_value = get_post_meta($id, 'asowp-configs-meta', true);
                 if ($meta_value["data"]["settings"]["customizerSign"]['images'] != $image_options) {
                     $meta_value["data"]["settings"]["customizerSign"]['images'] = $image_options;
-                    $response = update_post_meta($id, 'asowp-configs-meta', $meta_value);
+                    $response = ConfigSchemaNormalizer::save_meta((int) $id, $meta_value);
 
                     if ($response) {
                         return rest_ensure_response(["success" => true, "message" => __("image in Customizer sign settings upadted successfully", "all-signs-options-pro")]);

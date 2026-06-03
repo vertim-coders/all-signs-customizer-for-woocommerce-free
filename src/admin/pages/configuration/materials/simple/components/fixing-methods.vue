@@ -137,23 +137,65 @@
           <input type="number" v-model="fixingMethod.additionalPrice" class="asowp-form-input" />
         </label>
 
-        <label class="asowp-field-block">
+        <div class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Exclude sizes", "all-signs-options-pro") }}</span>
-          <select v-model="fixingMethod.excludeSizes" multiple class="asowp-form-input asowp-multi-input">
-            <option v-for="size in MaterialSimpleSizes" :key="size.value" :value="size.value">{{ size.name }}</option>
-          </select>
+          <div class="asowp-combobox" @click.stop>
+            <button type="button" class="asowp-combobox-control" @click="toggleExclusionPicker('sizes')">
+              <span v-if="!normalizeArray(fixingMethod.excludeSizes).length" class="asowp-combobox-placeholder">{{ __("Select excluded sizes", "all-signs-options-pro") }}</span>
+              <span v-else class="asowp-combobox-tags">
+                <span v-for="item in selectedExclusionLabels('excludeSizes', 'sizes')" :key="`size-tag-${item.value}`" class="asowp-combobox-tag">
+                  {{ item.label }}
+                  <span class="asowp-combobox-remove" @click.stop="removeExclusion('excludeSizes', item.value)">x</span>
+                </span>
+              </span>
+              <ChevronDownIcon class="asowp-combobox-icon" />
+            </button>
+            <div v-if="openExclusionPicker === 'sizes'" class="asowp-combobox-popover">
+              <input v-model="exclusionSearch.sizes" type="search" class="asowp-combobox-search" :placeholder="__('Search sizes', 'all-signs-options-pro')" />
+              <button
+                v-for="size in filteredExclusionOptions('sizes')"
+                :key="`size-option-${size.value}`"
+                type="button"
+                :class="['asowp-combobox-option', isExcluded(fixingMethod.excludeSizes, size.value) ? 'is-selected' : '']"
+                @click="toggleExclusion('excludeSizes', size.value)"
+              >
+                {{ size.label }}
+              </button>
+            </div>
+          </div>
           <span class="asowp-help-text">{{ __("Hide this fixing method for selected sizes.", "all-signs-options-pro") }}</span>
-          <span class="asowp-help-text">{{ exclusionSummary(fixingMethod.excludeSizes, __("No sizes excluded.", "all-signs-options-pro")) }}</span>
-        </label>
+          <span class="asowp-help-text">{{ exclusionSummaryLabels('excludeSizes', 'sizes', __("No sizes excluded.", "all-signs-options-pro"), __("Excluded sizes:", "all-signs-options-pro")) }}</span>
+        </div>
 
-        <label class="asowp-field-block">
+        <div class="asowp-field-block">
           <span class="asowp-form-label">{{ __("Exclude shapes", "all-signs-options-pro") }}</span>
-          <select v-model="fixingMethod.excludeShapes" multiple class="asowp-form-input asowp-multi-input">
-            <option v-for="shape in MaterialSimpleShapes" :key="shape.value" :value="shape.value">{{ shape.name }}</option>
-          </select>
+          <div class="asowp-combobox" @click.stop>
+            <button type="button" class="asowp-combobox-control" @click="toggleExclusionPicker('shapes')">
+              <span v-if="!normalizeArray(fixingMethod.excludeShapes).length" class="asowp-combobox-placeholder">{{ __("Select excluded shapes", "all-signs-options-pro") }}</span>
+              <span v-else class="asowp-combobox-tags">
+                <span v-for="item in selectedExclusionLabels('excludeShapes', 'shapes')" :key="`shape-tag-${item.value}`" class="asowp-combobox-tag">
+                  {{ item.label }}
+                  <span class="asowp-combobox-remove" @click.stop="removeExclusion('excludeShapes', item.value)">x</span>
+                </span>
+              </span>
+              <ChevronDownIcon class="asowp-combobox-icon" />
+            </button>
+            <div v-if="openExclusionPicker === 'shapes'" class="asowp-combobox-popover">
+              <input v-model="exclusionSearch.shapes" type="search" class="asowp-combobox-search" :placeholder="__('Search shapes', 'all-signs-options-pro')" />
+              <button
+                v-for="shape in filteredExclusionOptions('shapes')"
+                :key="`shape-option-${shape.value}`"
+                type="button"
+                :class="['asowp-combobox-option', isExcluded(fixingMethod.excludeShapes, shape.value) ? 'is-selected' : '']"
+                @click="toggleExclusion('excludeShapes', shape.value)"
+              >
+                {{ shape.label }}
+              </button>
+            </div>
+          </div>
           <span class="asowp-help-text">{{ __("Hide this fixing method for selected shapes.", "all-signs-options-pro") }}</span>
-          <span class="asowp-help-text">{{ exclusionSummary(fixingMethod.excludeShapes, __("No shapes excluded.", "all-signs-options-pro")) }}</span>
-        </label>
+          <span class="asowp-help-text">{{ exclusionSummaryLabels('excludeShapes', 'shapes', __("No shapes excluded.", "all-signs-options-pro"), __("Excluded shapes:", "all-signs-options-pro")) }}</span>
+        </div>
       </div>
       <div class="asowp-form-footer">
         <button type="button" @click="back" class="asowp-secondary-button">{{ __("Back to fixing methods", "all-signs-options-pro") }}</button>
@@ -179,26 +221,34 @@
 
 <script setup>
 import api from "@/admin/Api/api";
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
-import { BanIcon, Edit2Icon, GripVerticalIcon, Loader2Icon, PlusIcon, Trash2Icon, WrenchIcon } from "lucide-vue-next";
+import { BanIcon, ChevronDownIcon, Edit2Icon, GripVerticalIcon, Loader2Icon, PlusIcon, Trash2Icon, WrenchIcon } from "lucide-vue-next";
 import { __ } from "@wordpress/i18n";
 
 const route = useRoute();
 const router = useRouter();
+const props = defineProps({
+  materialId: {
+    type: [String, Number],
+    default: 0,
+  },
+});
 const configID = ref(route.params.configId);
-const materialId = ref(route.params.materialId);
+const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const MaterialSimpleSizes = ref([]);
 const MaterialSimpleShapes = ref([]);
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isNewFixing = ref(false);
 const isLoading = ref(false);
 const isEdit = ref(false);
 const openModal = ref(false);
 const fixingMethodId = ref(null);
 const draggedIndex = ref(null);
+const openExclusionPicker = ref(null);
+const exclusionSearch = ref({ sizes: "", shapes: "" });
 
 const fixingMethods = ref([]);
 const manageFixingMethods = ref([]);
@@ -216,6 +266,49 @@ const availableManagedMethods = computed(() => manageFixingMethods.value
     if (method.value === Number(fixingMethod.value.fixingMethodId)) return true;
     return !fixingMethods.value.some((fx) => Number(fx.fixingMethodId) === method.value);
   }));
+
+const getExclusionOptions = (type) => (type === "sizes" ? MaterialSimpleSizes.value : MaterialSimpleShapes.value)
+  .map((option) => ({
+    label: option.name,
+    value: option.value,
+  }));
+
+const filteredExclusionOptions = (type) => {
+  const term = String(exclusionSearch.value[type] || "").toLowerCase().trim();
+  const options = getExclusionOptions(type);
+  if (!term) return options;
+  return options.filter((option) => String(option.label || "").toLowerCase().includes(term));
+};
+
+const isExcluded = (items, value) => normalizeArray(items).some((item) => String(item) === String(value));
+
+const toggleExclusionPicker = (type) => {
+  openExclusionPicker.value = openExclusionPicker.value === type ? null : type;
+};
+
+const toggleExclusion = (field, value) => {
+  const items = normalizeArray(fixingMethod.value[field]);
+  fixingMethod.value[field] = isExcluded(items, value)
+    ? items.filter((item) => String(item) !== String(value))
+    : [...items, value];
+};
+
+const removeExclusion = (field, value) => {
+  fixingMethod.value[field] = normalizeArray(fixingMethod.value[field]).filter((item) => String(item) !== String(value));
+};
+
+const selectedExclusionLabels = (field, type) => {
+  const options = getExclusionOptions(type);
+  return normalizeArray(fixingMethod.value[field]).map((value) => ({
+    value,
+    label: options.find((option) => String(option.value) === String(value))?.label || value,
+  }));
+};
+
+const exclusionSummaryLabels = (field, type, fallback, prefix) => {
+  const labels = selectedExclusionLabels(field, type).map((item) => item.label).filter(Boolean);
+  return labels.length ? `${prefix} ${labels.join(", ")}` : fallback;
+};
 
 const fetchMaterialShapes = async () => {
   const res = await api.getMaterialSimpleShapes(configID.value, materialId.value);
@@ -336,18 +429,22 @@ const onDrop = async (index) => {
   await updateFixingMethods();
 };
 
-const exclusionSummary = (items, fallback) => {
-  const count = normalizeArray(items).length;
-  return count ? `${count} ${__("excluded.", "all-signs-options-pro")}` : fallback;
-};
-
 const goToManageFixingMethods = () => {
   router.push({ path: "/global-settings/fixing-methods", query: { returnTo: route.fullPath } });
 };
 
+const closeExclusionPicker = () => {
+  openExclusionPicker.value = null;
+};
+
 onMounted(async () => {
+  document.addEventListener("click", closeExclusionPicker);
   await fetchMaterialShapes();
   await fetchMaterialFixingMethods();
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeExclusionPicker);
 });
 </script>
 
@@ -544,10 +641,6 @@ onMounted(async () => {
   box-shadow: none;
 }
 
-.asowp-multi-input {
-  height: 38px;
-}
-
 .asowp-form-input:focus {
   outline: 2px solid #005bd3;
   outline-offset: 1px;
@@ -646,5 +739,115 @@ onMounted(async () => {
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+}
+
+.asowp-combobox {
+  position: relative;
+}
+
+.asowp-combobox-control {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 38px;
+  padding: 5px 34px 5px 10px;
+  border: 1px solid #8c9196;
+  border-radius: 7px;
+  background: #fff;
+  color: #303030;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+
+.asowp-combobox-control:focus {
+  outline: 2px solid #005bd3;
+  outline-offset: 1px;
+}
+
+.asowp-combobox-placeholder {
+  color: #6d7175;
+}
+
+.asowp-combobox-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.asowp-combobox-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  padding: 2px 6px;
+  border-radius: 7px;
+  background: #e4e5e7;
+  color: #202223;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.asowp-combobox-remove {
+  color: #5c5f62;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.asowp-combobox-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  color: #6d7175;
+  transform: translateY(-50%);
+}
+
+.asowp-combobox-popover {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid #c9cccf;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  padding: 6px;
+}
+
+.asowp-combobox-search {
+  box-sizing: border-box;
+  width: 100%;
+  height: 34px;
+  margin-bottom: 4px;
+  padding: 6px 9px;
+  border: 1px solid #c9cccf;
+  border-radius: 7px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.asowp-combobox-option {
+  display: block;
+  width: 100%;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #303030;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.asowp-combobox-option:hover,
+.asowp-combobox-option.is-selected {
+  background: #f1f2f3;
 }
 </style>

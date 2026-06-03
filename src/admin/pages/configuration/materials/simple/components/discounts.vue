@@ -20,7 +20,7 @@
       <div class="asowp-pricing-card asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-5">
         <h3 class="asowp-text-[14px] asowp-font-[900] asowp-text-[#303030] asowp-mt-0 asowp-mb-3">{{ __('Pricing List', 'all-signs-options-pro') }}</h3>
         <div class="asowp-pricing-table-wrap">
-          <table class="asowp-w-full asowp-border-collapse">
+          <table class="asowp-pricing-table asowp-w-full asowp-border-collapse">
             <thead>
               <tr class="asowp-bg-[#f3f3f3]">
                 <th class="asowp-py-2 asowp-px-3 asowp-text-left asowp-text-[11px] asowp-font-bold asowp-text-[#6b7280]">{{ __('Label', 'all-signs-options-pro') }}</th>
@@ -30,8 +30,8 @@
             </thead>
             <tbody>
               <tr v-if="isFetching">
-                <td colspan="3" class="asowp-p-8 asowp-text-center">
-                  <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
+                <td colspan="3" class="asowp-table-loader-cell asowp-p-8 asowp-text-center">
+                  <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
                 </td>
               </tr>
               <template v-else>
@@ -108,14 +108,19 @@
                 <h4>{{ __('Per-unit pricing', 'all-signs-options-pro') }}</h4>
                 <p>{{ sprintf(__('Charge per %s instead of a flat price for the whole range.', 'all-signs-options-pro'), surfaceUnitLabel) }}</p>
               </div>
-              <div class="asowp-toggle-group">
-                <span>{{ __('No', 'all-signs-options-pro') }}</span>
-                <button type="button" @click="togglePerUnit" :class="switchClass(editingPricing.customPricing.rangePricingPerUnit)">
-                  <span></span>
-                </button>
-                <span>{{ __('Yes', 'all-signs-options-pro') }}</span>
-              </div>
-            </div>
+              <div class="asowp-flex asowp-items-center asowp-gap-3">
+                <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('No', 'all-signs-options-pro') }}</span>
+                <div
+                  @click="togglePerUnit"
+                  :class="[
+                    'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors',
+                    editingPricing.customPricing.rangePricingPerUnit ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
+                  ]"
+                >
+                  <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', editingPricing.customPricing.rangePricingPerUnit ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
+                </div>
+                <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('Yes', 'all-signs-options-pro') }}</span>
+              </div>            </div>
 
             <div class="asowp-pricing-divider"></div>
 
@@ -124,12 +129,18 @@
                 <h4>{{ __('Weight-based shipping', 'all-signs-options-pro') }}</h4>
                 <p>{{ __('Use volumetric weight instead of the size range value.', 'all-signs-options-pro') }}</p>
               </div>
-              <div class="asowp-toggle-group">
-                <span>{{ __('No', 'all-signs-options-pro') }}</span>
-                <button type="button" @click="toggleWeightShipping" :class="switchClass(editingPricing.customPricing.shippingMethod === 'per-weight')">
-                  <span></span>
-                </button>
-                <span>{{ __('Yes', 'all-signs-options-pro') }}</span>
+              <div class="asowp-flex asowp-items-center asowp-gap-3">
+                <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('No', 'all-signs-options-pro') }}</span>
+                <div
+                  @click="toggleWeightShipping"
+                  :class="[
+                    'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors',
+                    editingPricing.customPricing.shippingMethod === 'per-weight' ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
+                  ]"
+                >
+                  <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', editingPricing.customPricing.shippingMethod === 'per-weight' ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
+                </div>
+                <span class="asowp-text-[12px] asowp-text-[#616161]">{{ __('Yes', 'all-signs-options-pro') }}</span>
               </div>
             </div>
           </div>
@@ -250,10 +261,16 @@ import { CopyIcon, Edit2Icon, Loader2Icon, MoreHorizontalIcon, PlusIcon, Trash2I
 import { __, sprintf } from "@wordpress/i18n";
 
 const route = useRoute();
+const props = defineProps({
+  materialId: {
+    type: [String, Number],
+    default: 0,
+  },
+});
 const configID = ref(route.params.configId);
-const materialId = ref(route.params.materialId);
+const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isLoading = ref(false);
 const showForm = ref(false);
 const editingIndex = ref(null);
@@ -884,55 +901,50 @@ onBeforeUnmount(() => {
 
 .asowp-range-modal {
   position: relative;
-  width: min(520px, calc(100vw - 40px));
-  max-height: calc(100vh - 56px);
+  width: min(540px, 95vw);
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 10px 30px rgba(0,0,0,0.1);
   overflow: hidden;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
 }
 
-.asowp-range-modal-header,
-.asowp-range-modal-actions {
+.asowp-range-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid #dfe3e8;
+  padding: 16px 20px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #d8dee4;
 }
 
 .asowp-range-modal-header h3 {
   margin: 0;
   color: #202223;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
-  font-weight: 800;
-}
-
-.asowp-range-modal-header button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  color: #8c9196;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+  font-weight: 700;
 }
 
 .asowp-range-modal-body {
-  display: grid;
-  gap: 14px;
-  max-height: calc(100vh - 180px);
+  padding: 20px;
+  max-height: calc(100vh - 200px);
   overflow-y: auto;
-  padding: 18px;
 }
 
 .asowp-range-modal-actions {
+  display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  border-top: 1px solid #dfe3e8;
-  border-bottom: 0;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-top: 1px solid #d8dee4;
+}
+
+.asowp-range-modal-actions button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
 }
 </style>

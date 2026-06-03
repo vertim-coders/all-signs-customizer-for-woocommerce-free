@@ -21,7 +21,7 @@
 
       <section class="asowp-bg-white asowp-border asowp-border-solid asowp-border-[#d1d5db] asowp-rounded-xl asowp-shadow-sm asowp-px-5 asowp-py-4">
         <h2 class="asowp-m-0 asowp-mb-3 asowp-text-[14px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030]">{{ __('Selected groups', 'all-signs-options-pro') }}</h2>
-        <table class="asowp-w-full asowp-border-collapse asowp-text-left">
+        <table class="asowp-cliparts-table asowp-w-full asowp-border-collapse asowp-text-left">
           <thead class="asowp-bg-[#f6f6f7]">
             <tr>
               <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Preview', 'all-signs-options-pro') }}</th>
@@ -32,7 +32,9 @@
           </thead>
           <tbody>
             <tr v-if="isFetching">
-              <td colspan="4" class="asowp-px-3 asowp-py-4 asowp-text-[13px] asowp-text-[#616161]">{{ __('Loading...', 'all-signs-options-pro') }}</td>
+              <td colspan="4" class="asowp-table-loader-cell asowp-px-3 asowp-py-5 asowp-text-center">
+                <Loader2Icon class="asowp-table-loader-icon asowp-w-7 asowp-h-7" />
+              </td>
             </tr>
             <tr v-else-if="selectedGroups.length === 0" class="asowp-border-b asowp-border-solid asowp-border-[#e5e7eb]">
               <td class="asowp-px-3 asowp-py-3">
@@ -179,7 +181,7 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { __ } from '@wordpress/i18n';
-import { PlusIcon, Trash2Icon } from 'lucide-vue-next';
+import { Loader2Icon, PlusIcon, Trash2Icon } from 'lucide-vue-next';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 
@@ -191,7 +193,7 @@ const props = defineProps({
 const route = useRoute();
 const router = useRouter();
 const groups = ref([]);
-const isFetching = ref(false);
+const isFetching = ref(true);
 const isSaving = ref(false);
 const isAddingGroup = ref(false);
 const createNewGroup = ref(false);

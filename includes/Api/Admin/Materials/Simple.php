@@ -1,6 +1,7 @@
 <?php
 namespace ASOWP\Api\Admin\Materials;
 
+use ASOWP\Support\ConfigSchemaNormalizer;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -499,7 +500,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_shapes = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['shapes'] !== $new_shapes) {
                         $meta_value['data']['materials'][$material_id]['data']['shapes'] = $new_shapes;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component shapes successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -570,7 +571,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_sizes = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['sizes'] !== $new_sizes) {
                         $meta_value['data']['materials'][$material_id]['data']['sizes'] = $new_sizes;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component sizes successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -640,7 +641,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_borders = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['borders'] !== $new_borders) {
                         $meta_value['data']['materials'][$material_id]['data']['borders'] = $new_borders;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component borders successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -710,7 +711,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_textImages = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['textImages'] !== $new_textImages) {
                         $meta_value['data']['materials'][$material_id]['data']['textImages'] = $new_textImages;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component textImages successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -781,7 +782,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_discounts = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['discounts'] !== $new_discounts) {
                         $meta_value['data']['materials'][$material_id]['data']['discounts'] = $new_discounts;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Material component discounts successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -853,7 +854,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_colors = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['colors'] !== $new_colors) {
                         $meta_value['data']['materials'][$material_id]['data']['colors'] = $new_colors;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component colors successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -923,7 +924,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                     $new_fixingMethods = json_decode($request->get_body(), true);
                     if ($meta_value['data']['materials'][$material_id]['data']['fixingMethods'] != $new_fixingMethods) {
                         $meta_value['data']['materials'][$material_id]['data']['fixingMethods'] = $new_fixingMethods;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta_value);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta_value);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component fixingMethods successfully updated", "all-signs-options-pro")]);
                         } else {
@@ -998,7 +999,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                         "options" => $new_additional['options']
                     ];
                     array_push($meta["data"]['materials'][$material_id]['data']['additionalOptions'], $additional);
-                    $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                    $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                     if ($update === true) {
                         return rest_ensure_response(["success" => true, "message" => __("Material component Additional Option successfully added", "all-signs-options-pro")]);
                     } else {
@@ -1096,7 +1097,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                         $old_additional["popImg"] = $additional['popImg'];
                         $old_additional["options"] = $additional['options'];
                         $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id] = $old_additional;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component Additional Option successfully edited", "all-signs-options-pro")]);
                         } else {
@@ -1132,7 +1133,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
             if (is_array($meta) && !empty($meta)) {
                 if ($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]) {
                     array_splice($meta["data"]['materials'][$material_id]['data']['additionalOptions'], $additional_id, 1);
-                    $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                    $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                     if ($update === true) {
                         return rest_ensure_response(['success' => true, "message" => __("Component Additional Option successfully deleted", "all-signs-options-pro")]);
                     } else {
@@ -1183,7 +1184,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                         $new_option["isDefault"] = true;
                         $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][0] = $new_option;
                     }
-                    $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                    $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                     if ($update === true) {
                         return rest_ensure_response(["success" => true, "message" => __("Material component Option successfully added", "all-signs-options-pro")]);
                     } else {
@@ -1257,7 +1258,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
                         $old_option["image"] = $option['image'];
                         $old_option["additionalPrice"] = $option['additionalPrice'];
                         $meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][$option_id] = $old_option;
-                        $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                        $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                         if ($update === true) {
                             return rest_ensure_response(["success" => true, "message" => __("Materiel component  Option successfully edited", "all-signs-options-pro")]);
                         } else {
@@ -1295,7 +1296,7 @@ class ASOWP_Materials_Simple extends WP_REST_Controller
             if (is_array($meta) && !empty($meta)) {
                 if ($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'][$option_id]) {
                     array_splice($meta["data"]['materials'][$material_id]['data']['additionalOptions'][$additional_id]['options'], $option_id, 1);
-                    $update = update_post_meta($config_id, 'asowp-configs-meta', $meta);
+                    $update = ConfigSchemaNormalizer::save_meta((int) $config_id, $meta);
                     if ($update === true)
                         return rest_ensure_response(['success' => true, "message" => __("Component  Option successfully deleted", "all-signs-options-pro")]);
                     else
