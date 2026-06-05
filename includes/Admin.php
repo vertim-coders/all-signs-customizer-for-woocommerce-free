@@ -34,11 +34,11 @@ class ASOWP_Admin
 
             if (current_user_can($capability)) {
                 $submenu[$slug][] = array(__('Home', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/');
-                $submenu[$slug][] = array(__('Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configurations');
+                $submenu[$slug][] = array(__('Configurations', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/configuration');
                 $submenu[$slug][] = array(__('Request quotes', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/request-quotes');
-                $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/global-settings/output');
+                $submenu[$slug][] = array(__('Global Settings', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/settings/output');
                 $submenu[$slug][] = array(__('Templates', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/templates');
-                $submenu[$slug][] = array(__('Manage Fonts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-fonts');
+                $submenu[$slug][] = array(__('Manage Fonts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-font');
                 $submenu[$slug][] = array(__('Manage Cliparts', "all-signs-options-pro"), $capability, 'admin.php?page=' . $slug . '#/manage-cliparts');
 
 

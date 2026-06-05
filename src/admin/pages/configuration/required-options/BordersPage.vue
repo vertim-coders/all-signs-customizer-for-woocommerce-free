@@ -469,7 +469,7 @@ const selectCustomBorderColorPrevImage = () => {
 };
 
 const goToManageBorders = () => {
-  router.push({ path: "/global-settings/border", query: { returnTo: route.fullPath } });
+  router.push({ path: "/settings/border", query: { returnTo: route.fullPath } });
 };
 
 onMounted(async () => {

@@ -1,7 +1,7 @@
 <template>
   <div class="asowp-general">
     <div v-if="isFetching" class="asowp-general-card asowp-general-loading">
-      <img src="../../../../../../assets/icons/ic_loading.svg" alt="" />
+      <img :src="loadingIcon" alt="" />
     </div>
 
     <div v-else class="asowp-general-layout">
@@ -458,6 +458,8 @@ import { ChevronDownIcon, ChevronUpIcon, Loader2Icon } from 'lucide-vue-next';
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { __ } from "@wordpress/i18n";
+
+const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const route = useRoute();
 const configId = ref(route.params.configId);

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div class="asowp-mt-4">
         <div class="asowp-space-y-1"  v-if="!isNewComponentAdvance">
             <!-- <div class="asowp-bg-white asowp-border-solid asowp-border-2 asowp-rounded-[10px] asowp-p-2 asowp-border-[#D1D1D1] asowp-space-x-1 asowp-px-4 asowp-py-4 asowp-flex">
@@ -56,7 +56,7 @@
                             <tr v-if="isFetching">
                                 <td colspan="5">
                                     <div class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[200px] p-4">
-                                        <img class="asowp-w-[100px] asowp-h-[100px]" src="../../../../../../../assets/icons/ic_loading.svg" alt="">
+                                        <img class="asowp-w-[100px] asowp-h-[100px]" src="@/../assets/icons/ic_loading.svg" alt="">
                                     </div>
                                 </td>
                             </tr>
@@ -191,14 +191,14 @@
                 </div>
                 <div class="asowp-bg-[#016464] asowp-rounded" v-if="isEdit">
                     <button @click="updateComponentAdvance" :class="`asowp-rounded asowp-flex ${!isLoading ? 'asowp-bg-amber-400 ' :'asowp-bg-amber-500'} asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-px-8 asowp-text-white asowp-p-2 asowp-border-none asowp-opacity-90 hover:asowp-border-none hover:asowp-text-white hover:asowp-opacity-100 asowp-cursor-pointer`">
-                        <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                        <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                         <div class="asowp-font-semibold asowp-text-[16px]">{{ __("Update", "all-signs-options-pro") }}</div>
                     </button>
                 </div>
                 <div class="asowp-bg-[#016464] asowp-rounded" v-if="!isEdit">
                     <button @click="addComponentAdvance" class="asowp-flex asowp-bg-transparent asowp-w-fit asowp-space-x-2 asowp-h-fit asowp-text-white asowp-px-8 asowp-p-2.5 asowp-rounded asowp-border-none asowp-opacity-90 hover:asowp-opacity-100 hover:asowp-border-none hover:asowp-text-white hover:asowp-bg-[#016464] asowp-cursor-pointer">
                         <div class="asowp-translate-y-1">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             <svg v-if="!isLoading" class="asowp-w-4 asowp-h-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.5 1.25C2.16848 1.25 1.85054 1.3817 1.61612 1.61612C1.3817 1.85054 1.25 2.16848 1.25 2.5V17.5C1.25 17.8315 1.3817 18.1495 1.61612 18.3839C1.85054 18.6183 2.16848 18.75 2.5 18.75H17.5C17.8315 18.75 18.1495 18.6183 18.3839 18.3839C18.6183 18.1495 18.75 17.8315 18.75 17.5V2.5C18.75 2.16848 18.6183 1.85054 18.3839 1.61612C18.1495 1.3817 17.8315 1.25 17.5 1.25H11.875C11.5435 1.25 11.2255 1.3817 10.9911 1.61612C10.7567 1.85054 10.625 2.16848 10.625 2.5V11.6163L13.9325 8.3075C14.0499 8.19014 14.209 8.12421 14.375 8.12421C14.541 8.12421 14.7001 8.19014 14.8175 8.3075C14.9349 8.42486 15.0008 8.58403 15.0008 8.75C15.0008 8.91597 14.9349 9.07514 14.8175 9.1925L10.4425 13.5675C10.3844 13.6257 10.3155 13.6719 10.2395 13.7034C10.1636 13.7349 10.0822 13.7511 10 13.7511C9.91779 13.7511 9.83639 13.7349 9.76046 13.7034C9.68453 13.6719 9.61556 13.6257 9.5575 13.5675L5.1825 9.1925C5.12439 9.13439 5.07829 9.0654 5.04685 8.98948C5.0154 8.91356 4.99921 8.83218 4.99921 8.75C4.99921 8.66782 5.0154 8.58644 5.04685 8.51052C5.07829 8.4346 5.12439 8.36561 5.1825 8.3075C5.24061 8.24939 5.3096 8.20329 5.38552 8.17185C5.46144 8.1404 5.54282 8.12421 5.625 8.12421C5.70718 8.12421 5.78856 8.1404 5.86448 8.17185C5.9404 8.20329 6.00939 8.24939 6.0675 8.3075L9.375 11.6163V2.5C9.375 1.83696 9.63839 1.20107 10.1072 0.732233C10.5761 0.263392 11.212 0 11.875 0L17.5 0C18.163 0 18.7989 0.263392 19.2678 0.732233C19.7366 1.20107 20 1.83696 20 2.5V17.5C20 18.163 19.7366 18.7989 19.2678 19.2678C18.7989 19.7366 18.163 20 17.5 20H2.5C1.83696 20 1.20107 19.7366 0.732233 19.2678C0.263392 18.7989 0 18.163 0 17.5V2.5C0 1.83696 0.263392 1.20107 0.732233 0.732233C1.20107 0.263392 1.83696 0 2.5 0L5.625 0C5.79076 0 5.94973 0.065848 6.06694 0.183058C6.18415 0.300269 6.25 0.45924 6.25 0.625C6.25 0.79076 6.18415 0.949732 6.06694 1.06694C5.94973 1.18415 5.79076 1.25 5.625 1.25H2.5Z" fill="white"/>
                             </svg>
@@ -226,7 +226,7 @@
                         <h3 class="asowp-mb-5 asowp-text-lg asowp-font-normal asowp-text-gray-500 dark:text-gray-400">{{ __("Are you sure you want to delete this component advance?", "all-signs-options-pro") }}</h3>
                         <input v-model="componentAdvance.name" readonly class="asowp-rounded asowp-w-full asowp-h-[35px] asowp-text-center asowp-p-4 asowp-my-2 asowp-border-none" />
                         <button @click="deleteComponentAdvance" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-text-white ${!isLoading ? 'asowp-bg-red-600 asowp-cursor-pointer' :'asowp-bg-red-700 asowp-cursor-not-allowed'} hover:bg-red-800 focus:ring-4 focus:outline-none asowp-my-2 asowp-border-none  focus:ring-red-300 dark:focus:ring-red-800 asowp-font-medium asowp-rounded-lg asowp-text-sm asowp-inline-flex asowp-items-center asowp-px-5 asowp-py-2.5 asowp-text-center`">
-                            <img src="../../../../../../../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
+                            <img src="@/../assets/icons/ic_loading_gray.svg" class="asowp-w-5 asowp-w-5" v-if="isLoading" :disabled="isLoading"/>
                             {{ __("Yes, I'm sure", "all-signs-options-pro") }}
                         </button>
                         <button @click.stop="closeModal" data-modal-hide="popup-modal" type="button" :class="`asowp-border-solid asowp-py-2.5 asowp-px-5 asowp-ms-3 asowp-text-sm asowp-font-medium asowp-text-gray-900 asowp-my-2  asowp-border-gray-500 asowp-border-white focus:outline-none asowp-bg-white asowp-rounded-lg asowp-border asowp-border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${isLoading ? 'asowp-cursor-not-allowed' : 'asowp-cursor-pointer'}`">{{ __("No, cancel", "all-signs-options-pro") }}</button>
@@ -256,7 +256,7 @@ import api from "@/admin/Api/api";
     import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
     const material = ref(String(route.params.material ?? 'material').replace(/-/g,' '));
-    const materialId = ref(route.query.materialIndex ?? route.params.materialId ?? 0);
+        const materialId = ref(route.query.materialIndex ?? route.params.materialId ?? null);
     const isFetching = ref(false);
     const isNewComponentAdvance = ref(false);
     const isLoading = ref(false);
@@ -275,8 +275,62 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         options:[]
     });
 
+    const getCanonicalMaterials = (configData) => {
+        const additionalMaterials = configData?.additionalOptions?.materials?.items;
+        if (Array.isArray(additionalMaterials)) {
+            return additionalMaterials;
+        }
+
+        const legacyData = configData?.data || {};
+        if (Array.isArray(legacyData?.materials)) {
+            return legacyData.materials;
+        }
+
+        if (Array.isArray(configData?.materials)) {
+            return configData.materials;
+        }
+
+        return [];
+    };
+
+    const getMaterialIndex = (material, fallbackIndex = 0) => {
+        const sourceIndex = Number(material?.sourceIndex);
+        if (Number.isInteger(sourceIndex) && sourceIndex >= 0) {
+            return sourceIndex;
+        }
+
+        const rawIndex = Number(material?.index);
+        if (Number.isInteger(rawIndex) && rawIndex >= 0) {
+            return rawIndex;
+        }
+
+        return fallbackIndex;
+    };
+
+    // Résoudre le materialId si non fourni (chercher le premier matériau par défaut)
+    const resolveMaterialId = async () => {
+        if (materialId.value === null || materialId.value === undefined || materialId.value === '') {
+            try {
+                const configData = await api.getConfig(configId.value);
+                const materials = getCanonicalMaterials(configData);
+                const defaultMaterial = materials.find(m => m?.isDefault) || materials[0];
+                if (defaultMaterial) {
+                    const idx = materials.indexOf(defaultMaterial);
+                    materialId.value = getMaterialIndex(defaultMaterial, idx >= 0 ? idx : 0);
+                    material.value = String(defaultMaterial?.label || defaultMaterial?.name || 'material').replace(/-/g,' ');
+                } else {
+                    materialId.value = 0;
+                }
+            } catch (e) {
+                console.error('Failed to find default material:', e);
+                materialId.value = 0;
+            }
+        }
+    };
+
     onMounted(async ()=>{
         isFetching.value = true;
+        await resolveMaterialId();
         await fetchMaterialComponentAdvances();
         isFetching.value = false;
         document.addEventListener('click', closeAllParams);
@@ -285,7 +339,8 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
     watch(
       () => [route.query.materialIndex, route.params.materialId],
       async (v) => {
-        materialId.value = v?.[0] ?? v?.[1] ?? 0;
+        materialId.value = v?.[0] ?? v?.[1] ?? null;
+        await resolveMaterialId();
         material.value = String(route.params.material ?? 'material').replace(/-/g,' ');
         componentAdvanceId.value = null;
         isNewComponentAdvance.value = false;
@@ -304,7 +359,7 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
         router.push({ name: 'materials', params: { configId: configId.value } });
         return;
         router.push({ name: 'materials', params: { configId: configId.value } }).then(() => {
-        // Recharger la page après la navigation
+        // Recharger la page aprÃ¨s la navigation
         window.location.reload()
         })
     }
@@ -515,10 +570,9 @@ const closeAllParams = () => {
     const goToOptions = (component, idx) => {
         closeAllParams();
         router.push({
-            name: 'Material-Advance-options',
+            name: 'required-component-options',
             params: {
                 configId: configId.value,
-                component: slugify(component.name),
                 componentId: idx,
             },
             query: materialId.value > 0 ? { materialIndex: materialId.value } : {},
@@ -532,6 +586,6 @@ const selectDefault = async(key) =>{
             componentAdvances.value[i].isDefault = false;
         }
     }
-    await updateMaterialAdvanceComponents();
+await updateMaterialAdvanceComponents();
 }
 </script>

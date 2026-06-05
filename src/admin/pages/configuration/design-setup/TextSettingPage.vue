@@ -230,7 +230,7 @@
 
     <div class="asowp-save-row">
       <button type="button" class="asowp-primary-button" :disabled="isLoading" @click="updateTextSettings">
-        <img v-if="isLoading" src="../../../../../../assets/icons/ic_loading_gray.svg" alt="" />
+        <img v-if="isLoading" src="@/../assets/icons/ic_loading_gray.svg" alt="" />
         {{ isLoading ? __("Saving...", "all-signs-options-pro") : __("Save Text", "all-signs-options-pro") }}
       </button>
     </div>
@@ -248,9 +248,9 @@ import {
 import { defineComponent, h, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { __, sprintf } from "@wordpress/i18n";
-import textNormalImg from "../../../../../../assets/images/text-types/text-normal.png";
-import textNeonImg from "../../../../../../assets/images/text-types/text-neon.png";
-import text3dImg from "../../../../../../assets/images/text-types/text-3d.png";
+import textNormalImg from "@/../assets/images/text-types/text-normal.png";
+import textNeonImg from "@/../assets/images/text-types/text-neon.png";
+import text3dImg from "@/../assets/images/text-types/text-3d.png";
 
 const ToggleRow = defineComponent({
   props: {

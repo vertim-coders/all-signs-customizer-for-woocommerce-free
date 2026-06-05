@@ -374,6 +374,24 @@ tailwind.config ={
   line-height: 16px;
 }
 
+#asowp-backend-app .asowp-shopify-pill-info {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+#asowp-backend-app .asowp-settings-loader-icon {
+  width: 28px;
+  height: 28px;
+  color: #007a72;
+  animation: asowp-shopify-spin 0.8s linear infinite;
+}
+
+@keyframes asowp-shopify-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 #asowp-backend-app .asowp-shopify-accordion-body {
   display: flex;
   flex-direction: column;

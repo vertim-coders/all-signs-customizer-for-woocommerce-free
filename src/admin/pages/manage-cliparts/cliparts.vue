@@ -19,7 +19,7 @@
           <h1 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('Cliparts', 'all-signs-options-pro') }}</h1>
           <p class="asowp-m-0 asowp-mt-1 asowp-text-[13px] asowp-leading-4 asowp-text-[#616161]">{{ __('Manage the cliparts inside this group.', 'all-signs-options-pro') }}</p>
         </div>
-        <button type="button" @click="addClipart" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white asowp-inline-flex asowp-items-center asowp-gap-2">
+        <button type="button" @click="goToCreateClipart" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white asowp-inline-flex asowp-items-center asowp-gap-2">
           <PlusIcon class="asowp-w-4 asowp-h-4" />
           {{ __('Add new clipart', 'all-signs-options-pro') }}
         </button>
@@ -34,7 +34,7 @@
           <h2 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('No Cliparts found', 'all-signs-options-pro') }}</h2>
           <p class="asowp-m-0 asowp-mt-3 asowp-text-[13px] asowp-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-options-pro') }}</p>
         </div>
-        <table v-else class="asowp-w-full asowp-border-collapse asowp-text-left">
+        <table v-else class="asowp-cliparts-table asowp-w-full asowp-border-collapse asowp-text-left">
           <thead class="asowp-bg-[#f6f6f7]">
             <tr>
               <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Title', 'all-signs-options-pro') }}</th>
@@ -53,7 +53,7 @@
               <td class="asowp-px-3 asowp-py-2.5 asowp-text-[13px] asowp-text-[#303030]">{{ item.additionalPrice || 0 }} {{ currency_symbol }}</td>
               <td class="asowp-px-3 asowp-py-3">
                 <div class="asowp-flex asowp-items-center asowp-gap-2">
-                  <button type="button" @click="selectClipart(key, item)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Edit', 'all-signs-options-pro') }}</button>
+                  <button type="button" @click="goToEditClipart(key)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Edit', 'all-signs-options-pro') }}</button>
                   <button type="button" @click="selectClipart(key, item, true)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#8a0f00] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#8a0f00]">{{ __('Delete', 'all-signs-options-pro') }}</button>
                 </div>
               </td>
@@ -143,7 +143,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { ChevronRightIcon, PlusIcon, SearchIcon } from 'lucide-vue-next';
@@ -199,6 +199,27 @@ onMounted(async () => {
   await fetchApiCliparts();
 });
 
+const isClipartEditRoute = () => route.name === "clipart-edit";
+
+const syncClipartRouteState = () => {
+  if (!isClipartEditRoute()) {
+    isNew.value = false;
+    isEdit.value = false;
+    return;
+  }
+
+  const id = route.query.id;
+  if (id === undefined || id === null || id === "") {
+    addClipart();
+    return;
+  }
+
+  const currentClipart = clipartGroups.value[Number(id)];
+  if (currentClipart) {
+    selectClipart(Number(id), currentClipart);
+  }
+};
+
 const displayAllChoice = () => {
   cliparts.value = Object.keys(clipartsSelected.value).map(key => ({ title: '', url: clipartsSelected.value[key], additionalPrice: 0 }));
   makeChoice.value = true;
@@ -238,6 +259,7 @@ const fetchCliparts = async () => {
     clipartGroups.value = [];
   }
   isFetching.value = false;
+  syncClipartRouteState();
 };
 
 const handleAddClipart = () => {
@@ -266,6 +288,14 @@ const selectClipart = (id, currentClipart, isDeleting = false) => {
   }
   isEdit.value = true;
   addClipart();
+};
+
+const goToCreateClipart = () => {
+  router.push({ name: "clipart-edit", params: { groupId: groupId.value } });
+};
+
+const goToEditClipart = (id) => {
+  router.push({ name: "clipart-edit", params: { groupId: groupId.value }, query: { id } });
 };
 
 const updateClipart = async () => {
@@ -333,6 +363,9 @@ const back = () => {
   useApi.value = false;
   makeChoice.value = false;
   clipartId.value = null;
+  if (isClipartEditRoute()) {
+    router.push({ name: "cliparts", params: { groupId: groupId.value } });
+  }
 };
 
 const handleDeleteClipartSelected = (key) => {
@@ -341,4 +374,38 @@ const handleDeleteClipartSelected = (key) => {
     cliparts.value = [{ title: "", url: "", additionalPrice: 0 }];
   }
 };
+
+watch(
+  () => [route.name, route.query.id],
+  () => syncClipartRouteState()
+);
 </script>
+
+<style scoped>
+.asowp-cliparts-table,
+.asowp-cliparts-table thead,
+.asowp-cliparts-table tbody,
+.asowp-cliparts-table tr,
+.asowp-cliparts-table th,
+.asowp-cliparts-table td {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.asowp-cliparts-table th,
+.asowp-cliparts-table td {
+  border-top: 0 !important;
+}
+
+.asowp-cliparts-table thead tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.asowp-cliparts-table tbody tr {
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.asowp-cliparts-table tbody tr:last-child {
+  border-bottom: 0 !important;
+}
+</style>

@@ -920,15 +920,11 @@ const finalCreate = async () => {
      });
      if (response.success) {
         toastMessage(response.message, 'success');
-        const firstMaterial = data.materials?.[0];
-        if (response.post_id && firstMaterial) {
+        if (response.post_id) {
           router.push({
-            name: wizard.value.materialType === 'advance' ? 'Material-Advance' : 'Simple-Sizes',
+            name: 'sizes',
             params: {
-              config: slugify(newConfig.value.name),
               configId: String(response.post_id),
-              material: slugify(firstMaterial.name),
-              materialId: '0',
             },
           });
         }

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <OthersComponents v-if="$route.name == 'Simple-OthersComponents'" :material-id="materialId"/>
-        <Options v-if="$route.name == 'Simple-OthersComponents-Options'" :material-id="materialId"/>
+        <OthersComponents v-if="$route.name == 'Additional-Components'" :material-id="materialId"/>
+        <Options v-if="$route.name == 'Additional-Components-Options'" :material-id="materialId"/>
     </div>
 </template>
 <script setup>

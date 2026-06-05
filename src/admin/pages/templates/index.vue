@@ -3,32 +3,40 @@
     <nav class="asowp-template-tabs" aria-label="Templates navigation">
       <button
         type="button"
-        :class="{ 'is-active': state === 'templates' }"
-        @click="state = 'templates'"
+        :class="{ 'is-active': route.name === 'templates-main' }"
+        @click="router.push('/templates/main')"
       >
         {{ __("Templates", "all-signs-options-pro") }}
       </button>
       <button
         type="button"
-        :class="{ 'is-active': state === 'category' }"
-        @click="state = 'category'"
+        :class="{ 'is-active': route.name === 'templates-categories' }"
+        @click="router.push('/templates/categories')"
       >
         {{ __("Categories", "all-signs-options-pro") }}
       </button>
     </nav>
 
-    <Templates v-if="state === 'templates'" />
-    <Categories v-if="state === 'category'" />
+    <Templates v-if="route.name === 'templates-main'" />
+    <Categories v-if="route.name === 'templates-categories'" />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import Templates from "./templates.vue";
 import Categories from "./categories.vue";
 import { __ } from "@wordpress/i18n";
 
-const state = ref("templates");
+const route = useRoute();
+const router = useRouter();
+
+onMounted(() => {
+  if (route.path === "/templates") {
+    router.replace("/templates/main");
+  }
+});
 </script>
 
 <style>

@@ -21,16 +21,19 @@ function menuFix(slug) {
     if (route.startsWith("/templates") || route.startsWith("/configs/template")) {
       return "templates";
     }
-    if (route.startsWith("/global-settings")) {
+    if (route.startsWith("/settings") || route.startsWith("/global-settings")) {
       return "global-settings";
     }
-    if (route.startsWith("/manage-fonts")) {
+    if (route.startsWith("/manage-font") || route.startsWith("/manage-fonts")) {
       return "manage-fonts";
     }
     if (route.startsWith("/manage-cliparts")) {
       return "manage-cliparts";
     }
-    if (route.startsWith("/configurations") || route.startsWith("/configs")) {
+    if (route.startsWith("/request-quotes")) {
+      return "request-quotes";
+    }
+    if (route === "/configuration" || route.startsWith("/configuration/") || route.startsWith("/configurations") || route.startsWith("/configs")) {
       return "configurations";
     }
     return "home";
@@ -56,11 +59,12 @@ function menuFix(slug) {
       const routeKey = getRouteKey();
       const routeMatch = {
         home: "#/",
-        configurations: "#/configurations",
-        templates: "#/templates",
-        "global-settings": "#/global-settings",
-        "manage-fonts": "#/manage-fonts",
+        configurations: "#/configuration",
+        templates: "#/templates/main",
+        "global-settings": "#/settings",
+        "manage-fonts": "#/manage-font",
         "manage-cliparts": "#/manage-cliparts",
+        "request-quotes": "#/request-quotes",
       }[routeKey];
 
       if (routeMatch) {

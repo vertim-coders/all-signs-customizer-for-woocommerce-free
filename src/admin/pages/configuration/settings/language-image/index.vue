@@ -1,7 +1,7 @@
 <template>
   <div class="asowp-language-setup">
     <div v-if="isFetching" class="asowp-language-card asowp-language-loading">
-      <img src="../../../../../../assets/icons/ic_loading.svg" alt="" />
+      <img :src="loadingIcon" alt="" />
     </div>
 
     <div v-else class="asowp-language-layout">
@@ -129,6 +129,8 @@ import { ChevronDownIcon, ChevronUpIcon, Loader2Icon, Trash2Icon } from 'lucide-
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { __ } from "@wordpress/i18n";
+
+const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const SectionHead = defineComponent({
   props: {

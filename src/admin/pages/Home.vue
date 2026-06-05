@@ -3,7 +3,7 @@
     <!-- Top Action Bar -->
     <div class="asowp-dashboard-topbar asowp-flex asowp-justify-end asowp-mb-5">
       <RouterLink
-        to="/configurations/new"
+        to="/configuration/create"
         class="asowp-primary-action asowp-dashboard-primary-action">
         {{ __('Create configuration', 'all-signs-options-pro') }}
       </RouterLink>
@@ -250,7 +250,7 @@ const copiedKey = ref(null)
 const router = useRouter();
 
 const goToMaterial = (config) => {
-    router.push({ name: 'materials', params: { configId: config.id } });
+    router.push({ name: 'sizes', params: { configId: config.id } });
 };
 
 const parseMaybeJson = (value) => {
@@ -369,25 +369,25 @@ onMounted(async () => {
 
 const mainMenu = [
   {
-    to: '/configurations',
+    to: '/configuration',
     title: __('Configurations', 'all-signs-options-pro'),
     desc: __('Manage your sign configurations', 'all-signs-options-pro'),
     icon: LayoutGridIcon
   },
   {
-    to: '/templates',
+    to: '/templates/main',
     title: __('Templates', 'all-signs-options-pro'),
     desc: __('Manage your sign templates', 'all-signs-options-pro'),
     icon: FileTextIcon
   },
   {
-    to: '/global-settings/output',
+    to: '/settings/output',
     title: __('Global Settings', 'all-signs-options-pro'),
     desc: __('Manage your sign global setting', 'all-signs-options-pro'),
     icon: SettingsIcon
   },
   {
-    to: '/manage-fonts',
+    to: '/manage-font',
     title: __('Library', 'all-signs-options-pro'),
     desc: __('Manage your sign library', 'all-signs-options-pro'),
     icon: LibraryIcon

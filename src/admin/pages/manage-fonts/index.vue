@@ -22,7 +22,7 @@
             {{ __("Manage the fonts available to configurations.", "all-signs-options-pro") }}
           </p>
         </div>
-        <button type="button" @click="openCreateModal" class="asowp-primary-button">
+        <button type="button" @click="goToCreateFont" class="asowp-primary-button">
           <PlusIcon class="asowp-w-4 asowp-h-4" />
           {{ __("Add new font", "all-signs-options-pro") }}
         </button>
@@ -67,7 +67,7 @@
               </td>
               <td class="asowp-py-3 asowp-px-3">
                 <div class="asowp-flex asowp-items-center asowp-gap-2">
-                  <button type="button" @click="openEditModal(font)" class="asowp-outline-button">
+                  <button type="button" @click="goToEditFont(font)" class="asowp-outline-button">
                     {{ __("Edit", "all-signs-options-pro") }}
                   </button>
                   <button type="button" @click="selectDeleteFont(font)" class="asowp-danger-button">
@@ -143,7 +143,7 @@
 
 <script setup>
 import api from "@/admin/Api/api";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import toastMessage from "@/admin/utils/functions";
 import { ArrowLeftIcon, Loader2Icon, PlusIcon, SearchIcon, XIcon } from "lucide-vue-next";
@@ -181,14 +181,43 @@ const fontRows = computed(() => {
     });
 });
 
+const isFontEditRoute = () => route.name === "manage-font-edit";
+
+const syncFontRouteState = () => {
+  if (!isFontEditRoute()) {
+    if (showFontModal.value) closeFontModal(false);
+    return;
+  }
+
+  const fontId = route.query.id;
+  if (fontId === undefined || fontId === null || fontId === "") {
+    openCreateModal();
+    return;
+  }
+
+  const font = fontRows.value.find((row) => Number(row.id) === Number(fontId));
+  if (font) {
+    openEditModal(font);
+  }
+};
+
 const fetchFonts = async () => {
   isFetching.value = true;
   try {
     const result = await api.getManagefonts();
     fonts.value = Array.isArray(result) ? result : [];
+    syncFontRouteState();
   } finally {
     isFetching.value = false;
   }
+};
+
+const goToCreateFont = () => {
+  router.push({ name: "manage-font-edit" });
+};
+
+const goToEditFont = (font) => {
+  router.push({ name: "manage-font-edit", query: { id: font.id } });
 };
 
 const openCreateModal = () => {
@@ -210,10 +239,13 @@ const openEditModal = (font) => {
   showFontModal.value = true;
 };
 
-const closeFontModal = () => {
+const closeFontModal = (navigateBack = true) => {
   showFontModal.value = false;
   isEdit.value = false;
   editingFontId.value = null;
+  if (navigateBack && isFontEditRoute()) {
+    router.push("/manage-font");
+  }
 };
 
 const saveFont = async () => {
@@ -303,8 +335,13 @@ const backToFonts = () => {
     router.push(returnTo);
     return;
   }
-  router.push("/");
+  router.push("/manage-font");
 };
+
+watch(
+  () => [route.name, route.query.id],
+  () => syncFontRouteState()
+);
 
 onMounted(fetchFonts);
 </script>

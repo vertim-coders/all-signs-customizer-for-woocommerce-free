@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // import configuration pages
 import Configuration from "@/admin/pages/configuration/index.vue";
 import CreateConfiguration from "@/admin/pages/configuration/CreateConfiguration.vue";
+import ConfiguratorLayout from "@/admin/pages/configuration/ConfiguratorLayout.vue";
 
 // import required options pages
 import SizesPage from "@/admin/pages/configuration/required-options/SizesPage.vue";
@@ -14,6 +15,7 @@ import PricingsPage from "@/admin/pages/configuration/required-options/PricingsP
 import FontsPage from "@/admin/pages/configuration/required-options/FontsPage.vue";
 import MaterialsPage from "@/admin/pages/configuration/required-options/MaterialsPage.vue";
 import RequiredComponentsPage from "@/admin/pages/configuration/required-options/ComponentsPage.vue";
+import RequiredComponentOptionsPage from "@/admin/pages/configuration/required-options/components/options.vue";
 
 // import design setup pages
 import TextSettingPage from "@/admin/pages/configuration/design-setup/TextSettingPage.vue";
@@ -38,8 +40,9 @@ import Cliparts from "@/admin/pages/manage-cliparts/cliparts.vue";
 // import global settings pages
 import GlobalSettings from "@/admin/pages/global-settings/index.vue";
 
-//import Templates from "@/admin/pages/templates/index.vue";
-//import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
+// import templates pages
+import Templates from "@/admin/pages/templates/index.vue";
+import ConfigurateTemplate from "@/admin/pages/templates/configurate-template.vue";
 
 // import request a quote page
 import RequestQuotes from "@/admin/pages/request-quotes/index.vue";
@@ -57,167 +60,187 @@ const router = createRouter({
       name: "home",
       component: Home,
     },
-    //lists configurations
     {
       path: "/configurations",
+      redirect: "/configuration",
+    },
+    {
+      path: "/configurations/new",
+      redirect: "/configuration/create",
+    },
+    {
+      path: "/configurations/edit/:configId",
+      redirect: (to) => `/configuration/${to.params.configId}/edit`,
+    },
+    {
+      path: "/configuration",
       name: "configurations",
       component: Configuration,
     },
-    // create and edit configuration
     {
-      path: "/configurations/new",
+      path: "/configuration/create",
       name: "create-configuration",
       component: CreateConfiguration,
     },
     {
-      path: "/configurations/edit/:configId",
+      path: "/configuration/:configId/edit",
       name: "edit-configuration",
       component: CreateConfiguration,
       props: true,
     },
-    //required options paths
+    // Configurator Layout - nested routes with sidebar navigation
     {
       path: "/configuration/:configId",
+      component: ConfiguratorLayout,
       redirect: (to) => ({
-        name: "fonts",
+        name: "sizes",
         params: { configId: to.params.configId },
       }),
+      children: [
+        {
+          path: "required-options",
+          redirect: () => ({ name: "sizes" }),
+        },
+        {
+          path: "required-options/sizes",
+          name: "sizes",
+          component: SizesPage,
+        },
+        {
+          path: "required-options/borders",
+          name: "borders",
+          component: BordersPage,
+        },
+        {
+          path: "required-options/colors",
+          name: "colors",
+          component: ColorsPage,
+        },
+        {
+          path: "required-options/fixing-methods",
+          name: "fixing-methods",
+          component: FixingMethodsPage,
+        },
+        {
+          path: "required-options/shapes",
+          name: "shapes",
+          component: ShapesPage,
+        },
+        {
+          path: "required-options/pricing",
+          name: "pricing",
+          component: PricingsPage,
+        },
+        {
+          path: "required-options/pricings",
+          redirect: (to) => ({
+            name: "pricing",
+            params: { configId: to.params.configId },
+            query: to.query,
+          }),
+        },
+        {
+          path: "required-options/fonts",
+          name: "fonts",
+          component: FontsPage,
+        },
+        {
+          path: "required-options/materials",
+          name: "materials",
+          component: MaterialsPage,
+        },
+        {
+          path: "required-options/components",
+          name: "required-components",
+          component: RequiredComponentsPage,
+        },
+        {
+          path: "required-options/components/:componentId/options",
+          name: "required-component-options",
+          component: RequiredComponentOptionsPage,
+        },
+        {
+          path: "design-setup",
+          redirect: () => ({ name: "text-setting" }),
+        },
+        {
+          path: "design-setup/text",
+          name: "text-setting",
+          component: TextSettingPage,
+        },
+        {
+          path: "design-setup/images",
+          name: "image-setting",
+          component: ImageSettingPage,
+        },
+        {
+          path: "design-setup/sign-part",
+          name: "sign-part-setting",
+          component: SignPartSettingPage,
+        },
+        {
+          path: "additional-options",
+          redirect: () => ({ name: "additional-inputs" }),
+        },
+        {
+          path: "additional-options/additional-components",
+          name: "Additional-Components",
+          component: AdditionalComponents,
+        },
+        {
+          path: "additional-options/additional-components/:additionalOptionID/options",
+          name: "Additional-Components-Options",
+          component: AdditionalComponents,
+        },
+        {
+          path: "additional-options/inputs",
+          name: "additional-inputs",
+          component: AdditionalInputs,
+        },
+        {
+          path: "settings",
+          redirect: () => ({ name: "config-settings-generals" }),
+        },
+        {
+          path: "settings/general",
+          name: "config-settings-generals",
+          component: settingsGenerals,
+        },
+        {
+          path: "settings/customizer-sign",
+          name: "config-settings-customizer-options",
+          component: settingsCustomizerOptions,
+        },
+        {
+          path: "settings/language-text",
+          name: "config-settings-languages-images",
+          component: settingsLanguagesImages,
+        },
+        {
+          path: "settings/theme-color",
+          name: "config-settings-themes-colors",
+          component: settingsThemesColors,
+        },
+      ],
     },
+    // preview route (outside sidebar)
     {
-      path: "/configuration/:configId/required-options",
-      redirect: (to) => ({
-        name: "fonts",
-        params: { configId: to.params.configId },
-      }),
-    },
-    {
-      path: "/configuration/:configId/required-options/sizes",
-      name: "sizes",
-      component: SizesPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/borders",
-      name: "borders",
-      component: BordersPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/colors",
-      name: "colors",
-      component: ColorsPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/fixing-methods",
-      name: "fixing-methods",
-      component: FixingMethodsPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/shapes",
-      name: "shapes",
-      component: ShapesPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/pricings",
-      name: "pricings",
-      component: PricingsPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/fonts",
-      name: "fonts",
-      component: FontsPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/materials",
-      name: "required-components",
-      component: RequiredComponentsPage,
-    },
-    {
-      path: "/configuration/:configId/required-options/materials",
-      name: "materials",
-      component: MaterialsPage,
-    },
-    //design setup paths
-    {
-      path: "/configuration/:configId/design-setup",
-      redirect: (to) => ({
-        name: "text-setting",
-        params: { configId: to.params.configId },
-      }),
-    },
-    {
-      path: "/configuration/:configId/design-setup/text",
-      name: "text-setting",
-      component: TextSettingPage,
-    },
-    {
-      path: "/configuration/:configId/design-setup/images",
-      alias:
-        "/configs/:configId/materials/:material/:materialId/simple/editor/image-setup",
-      name: "image-setting",
-      component: ImageSettingPage,
-    },
-    {
-      path: "/configuration/:configId/design-setup/sign-part",
-      name: "sign-part-setting",
-      component: SignPartSettingPage,
-    },
-    //additional options paths
-    {
-      path: "/configuration/:configId/additional-options",
-      redirect: (to) => ({
-        name: "inputs",
-        params: { configId: to.params.configId },
-      }),
-    },
-    {
-      path: "/configuration/:configId/additional-options/additional-components",
-      name: "Additional-Components",
-      component: AdditionalComponents,
-    },
-    /* {
-      path: "/configuration/:configId/additional-options/additional-components/:componentID",
-      name: "Simple-OthersComponents-Options",
-      component: MaterialsShell,
-    }, */
-    {
-      path: "/configuration/:configId/additional-options/inputs",
-      name: "additional-inputs",
-      component: AdditionalInputs,
-    },
-    // settings paths
-    {
-      path: "/configuration/:configId/settings",
-      redirect: (to) => ({
-        name: "config-settings-generals",
-        params: { configId: to.params.configId },
-      }),
-    },
-    {
-      path: "/configuration/:configId/settings/general",
-      alias: "/configs/:configId/settings/generals",
-      name: "config-settings-generals",
-      component: settingsGenerals,
-    },
-    {
-      path: "/configuration/:configId/settings/customizer-sign",
-      alias: "/configs/:configId/settings/customizer-options",
-      name: "config-settings-customizer-options",
-      component: settingsCustomizerOptions,
-    },
-    {
-      path: "/configuration/:configId/settings/language-text",
-      alias: "/configs/:configId/settings/language-images",
-      name: "config-settings-languages-images",
-      component: settingsLanguagesImages,
-    },
-    {
-      path: "/configuration/:configId/settings/theme-color",
-      alias: "/configs/:configId/settings/themes-colors",
-      name: "config-settings-themes-colors",
-      component: settingsThemesColors,
+      path: "/configuration/:configId/preview",
+      name: "preview-back",
+      component: Preview,
     },
     {
       path: "/manage-fonts",
+      redirect: "/manage-font",
+    },
+    {
+      path: "/manage-font",
       name: "manageFonts",
+      component: ManageFonts,
+    },
+    {
+      path: "/manage-font/edit",
+      name: "manage-font-edit",
       component: ManageFonts,
     },
     {
@@ -227,59 +250,103 @@ const router = createRouter({
     },
     {
       path: "/manage-cliparts/:groupId/cliparts",
+      redirect: (to) => `/manage-cliparts/${to.params.groupId}/clipart`,
+    },
+    {
+      path: "/manage-cliparts/edit",
+      name: "manage-cliparts-edit",
+      component: ManageCliparts,
+    },
+    {
+      path: "/manage-cliparts/:groupId/clipart",
       name: "cliparts",
       component: Cliparts,
     },
     {
-      path: "/global-settings/border",
+      path: "/manage-cliparts/:groupId/clipart/edit",
+      name: "clipart-edit",
+      component: Cliparts,
+    },
+    {
+      path: "/global-settings",
+      redirect: "/settings/output",
+    },
+    {
+      path: "/global-settings/:section",
+      redirect: (to) => {
+        const sectionMap = {
+          shapes: "shape",
+          "fixing-methods": "fixing-method",
+        };
+        const section = sectionMap[to.params.section] || to.params.section;
+        return `/settings/${section}`;
+      },
+    },
+    {
+      path: "/settings",
+      redirect: "/settings/output",
+    },
+    {
+      path: "/settings/shapes",
+      redirect: "/settings/shape",
+    },
+    {
+      path: "/settings/fixing-methods",
+      redirect: "/settings/fixing-method",
+    },
+    {
+      path: "/settings/border",
       name: "global-settings-border",
       component: GlobalSettings,
     },
     {
-      path: "/global-settings/configuration-page",
+      path: "/settings/configuration-page",
       name: "global-settings-configuration-page",
       component: GlobalSettings,
     },
     {
-      path: "/global-settings/fixing-methods",
-      name: "global-settings-fixing-methods",
+      path: "/settings/fixing-method",
+      name: "global-settings-fixing-method",
       component: GlobalSettings,
     },
     {
-      path: "/global-settings/license",
+      path: "/settings/license",
       name: "global-settings-license",
       component: GlobalSettings,
     },
     {
-      path: "/global-settings/output",
+      path: "/settings/output",
       name: "global-settings-output",
       component: GlobalSettings,
     },
     {
-      path: "/global-settings/shapes",
-      name: "global-settings-shapes",
+      path: "/settings/shape",
+      name: "global-settings-shape",
       component: GlobalSettings,
-    },
-    {
-      path: "/configuration/:configId/preview",
-      alias: "/configs/preview/:configId",
-      name: "preview-back",
-      component: Preview,
-    },
-    {
-      path: "/configs/template/:configId/:templateId",
-      name: "template-maker",
-      component: ConfigurateTemplate,
-    },
-    {
-      path: "/templates",
-      name: "templates",
-      component: Templates,
     },
     {
       path: "/request-quotes",
       name: "request-quotes",
       component: RequestQuotes,
+    },
+    {
+      path: "/templates",
+      redirect: "/templates/main",
+    },
+    {
+      path: "/templates/main",
+      name: "templates-main",
+      component: Templates,
+    },
+    {
+      path: "/templates/categories",
+      name: "templates-categories",
+      component: Templates,
+    },
+    {
+      path: "/configs/template/:configId/:templateId",
+      name: "template-maker",
+      component: ConfigurateTemplate,
     },
     {
       path: "/not-found",

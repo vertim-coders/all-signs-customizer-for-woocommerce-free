@@ -7,7 +7,7 @@
           {{ __('Manage the reusable clipart groups used across configurations.', 'all-signs-options-pro') }}
         </p>
       </div>
-      <button type="button" @click="addGroup" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white asowp-inline-flex asowp-items-center asowp-gap-2">
+      <button type="button" @click="goToCreateGroup" class="asowp-h-8 asowp-px-3 asowp-rounded-lg asowp-bg-[#00796b] asowp-border asowp-border-solid asowp-border-[#005f55] asowp-text-white asowp-text-[13px] asowp-font-[800] asowp-cursor-pointer hover:asowp-bg-[#00695f] hover:asowp-text-white asowp-inline-flex asowp-items-center asowp-gap-2">
         <PlusIcon class="asowp-w-4 asowp-h-4" />
         {{ __('Add new clipart group', 'all-signs-options-pro') }}
       </button>
@@ -22,7 +22,7 @@
         <h2 class="asowp-m-0 asowp-text-[20px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030]">{{ __('No Clipart Groups found', 'all-signs-options-pro') }}</h2>
         <p class="asowp-m-0 asowp-mt-3 asowp-text-[13px] asowp-text-[#616161]">{{ __('Try changing the filters or search term', 'all-signs-options-pro') }}</p>
       </div>
-      <table v-else class="asowp-w-full asowp-border-collapse asowp-text-left">
+      <table v-else class="asowp-cliparts-table asowp-w-full asowp-border-collapse asowp-text-left">
         <thead class="asowp-bg-[#f6f6f7]">
           <tr>
             <th class="asowp-px-3 asowp-py-2.5 asowp-text-[12px] asowp-font-[800] asowp-text-[#616161]">{{ __('Title', 'all-signs-options-pro') }}</th>
@@ -37,7 +37,7 @@
             <td class="asowp-px-3 asowp-py-3">
               <div class="asowp-flex asowp-items-center asowp-gap-2">
                 <button type="button" @click="goToGroup(key)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Manage', 'all-signs-options-pro') }}</button>
-                <button type="button" @click="selectGroup(key, group)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Edit', 'all-signs-options-pro') }}</button>
+                <button type="button" @click="goToEditGroup(key)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#202223]">{{ __('Edit', 'all-signs-options-pro') }}</button>
                 <button type="button" @click="selectGroup(key, group, true)" class="asowp-h-7 asowp-px-2.5 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-text-[#8a0f00] asowp-text-[13px] asowp-font-[700] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7] hover:asowp-text-[#8a0f00]">{{ __('Delete', 'all-signs-options-pro') }}</button>
               </div>
             </td>
@@ -110,9 +110,38 @@ const fetchGroups = async () => {
   try {
     const result = await api.getManageCliparts();
     clipartsGroups.value = Array.isArray(result?.data) ? result.data : [];
+    syncGroupRouteState();
   } finally {
     isFetching.value = false;
   }
+};
+
+const isGroupEditRoute = () => route.name === "manage-cliparts-edit";
+
+const syncGroupRouteState = () => {
+  if (!isGroupEditRoute()) {
+    createGroup.value = false;
+    return;
+  }
+
+  const groupId = route.query.id;
+  if (groupId === undefined || groupId === null || groupId === "") {
+    addGroup();
+    return;
+  }
+
+  const group = clipartsGroups.value[Number(groupId)];
+  if (group) {
+    selectGroup(Number(groupId), group);
+  }
+};
+
+const goToCreateGroup = () => {
+  router.push({ name: "manage-cliparts-edit" });
+};
+
+const goToEditGroup = (id) => {
+  router.push({ name: "manage-cliparts-edit", query: { id } });
 };
 
 const addNewGroup = async () => {
@@ -191,7 +220,7 @@ const back = () => {
   isEdit.value = false;
   emptyLabel.value = false;
   newGroup.value = { title: '', description: '' };
-  if (route.query.action) router.replace({ name: 'managecliparts' });
+  if (isGroupEditRoute() || route.query.action) router.replace({ name: 'managecliparts' });
 };
 
 const closeModal = () => {
@@ -206,5 +235,39 @@ watch(() => route.query.action, (action) => {
   if (action === 'new') addGroup();
 }, { immediate: true });
 
+watch(
+  () => [route.name, route.query.id],
+  () => syncGroupRouteState()
+);
+
 onMounted(fetchGroups);
 </script>
+
+<style scoped>
+.asowp-cliparts-table,
+.asowp-cliparts-table thead,
+.asowp-cliparts-table tbody,
+.asowp-cliparts-table tr,
+.asowp-cliparts-table th,
+.asowp-cliparts-table td {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.asowp-cliparts-table th,
+.asowp-cliparts-table td {
+  border-top: 0 !important;
+}
+
+.asowp-cliparts-table thead tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.asowp-cliparts-table tbody tr {
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.asowp-cliparts-table tbody tr:last-child {
+  border-bottom: 0 !important;
+}
+</style>

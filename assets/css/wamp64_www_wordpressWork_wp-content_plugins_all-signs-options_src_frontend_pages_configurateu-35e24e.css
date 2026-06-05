@@ -1,0 +1,46 @@
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ../../../../../../wamp64/www/wordpressWork/wp-content/plugins/all-signs-options/node_modules/css-loader/dist/cjs.js!../../../../../../wamp64/www/wordpressWork/wp-content/plugins/all-signs-options/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../../wamp64/www/wordpressWork/wp-content/plugins/all-signs-options/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!../../../../../../wamp64/www/wordpressWork/wp-content/plugins/all-signs-options/src/frontend/pages/configurateur/Couffo/index.vue?vue&type=style&index=0&id=6398958a&scoped=true&lang=css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+
+.animated-bg[data-v-6398958a] {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 100%; /* Initialement hors de l'écran à droite */
+        animation: slideIn-6398958a 2s forwards; /* Animation de 2 secondes */
+}
+.flipper[data-v-6398958a] {
+        position: relative;
+        /* width: 100%;
+        height: 100%; */
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+}
+.flipper-switch[data-v-6398958a] {
+        transform: rotateY(180deg);
+}
+#asowp-sign-recto[data-v-6398958a], #asowp-sign-verso[data-v-6398958a] {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+}
+#asowp-sign-recto[data-v-6398958a] {
+        /* background-color: #bbb; */
+        color: black;
+}
+#asowp-sign-verso[data-v-6398958a] {
+        /* background-color: dodgerblue; */
+        color: white;
+        transform: rotateY(180deg);
+}
+@keyframes slideIn-6398958a {
+to {
+            left: 0; /* Se déplace vers la gauche pour atteindre la position normale */
+}
+}
+

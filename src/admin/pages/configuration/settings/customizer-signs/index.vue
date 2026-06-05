@@ -1,7 +1,7 @@
 <template>
   <div class="asowp-customizer-setup">
     <div v-if="isFetching" class="asowp-customizer-card asowp-customizer-loading">
-      <img src="../../../../../../assets/icons/ic_loading.svg" alt="" />
+      <img :src="loadingIcon" alt="" />
     </div>
 
     <div v-else class="asowp-customizer-layout">
@@ -200,6 +200,8 @@ import {
 import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import { __ } from "@wordpress/i18n";
+
+const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const route = useRoute();
 const configId = ref(route.params.configId);

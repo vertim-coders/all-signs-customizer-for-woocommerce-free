@@ -6,7 +6,7 @@
         {{ __("Configurations List", "all-signs-options-pro") }}
       </h1>
       <RouterLink
-        to="/configurations/new"
+        to="/configuration/create"
         class="asowp-primary-action asowp-inline-flex asowp-items-center asowp-gap-2 asowp-text-white asowp-no-underline"
       >
         <PlusIcon class="asowp-w-4 asowp-h-4" />
@@ -293,7 +293,7 @@ const goToMaterial = async (c) => {
   showActionMenu.value = false;
   managingConfigId.value = c.id;
   try {
-    await router.push({ name: 'materials', params: { configId: c.id } });
+    await router.push({ name: 'sizes', params: { configId: c.id } });
   } finally {
     managingConfigId.value = null;
   }

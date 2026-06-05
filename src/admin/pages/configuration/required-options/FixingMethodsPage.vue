@@ -430,7 +430,7 @@ const onDrop = async (index) => {
 };
 
 const goToManageFixingMethods = () => {
-  router.push({ path: "/global-settings/fixing-methods", query: { returnTo: route.fullPath } });
+  router.push({ path: "/settings/fixing-method", query: { returnTo: route.fullPath } });
 };
 
 const closeExclusionPicker = () => {

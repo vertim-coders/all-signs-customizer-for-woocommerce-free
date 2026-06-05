@@ -7,7 +7,7 @@
             </div>
         </div>
         <div v-if="isFetching" class="asowp-bg-white asowp-border-solid asowp-border asowp-border-[#D1D1D1] asowp-flex asowp-flex-col asowp-space-y-2 asowp-justify-center asowp-items-center asowp-w-full asowp-h-[306px] p-4">
-            <img class="asowp-w-[200px] asowp-h-[200px]" src="../../../../../assets/icons/ic_loading.svg" alt="">
+            <img class="asowp-w-[200px] asowp-h-[200px]" :src="loadingIcon" alt="">
         </div>
         <div class="asowp-space-y-4 asowp-py-10" v-if="!isFetching">
             <div v-if="state == 'pages'">
@@ -247,6 +247,7 @@ import toastMessage from '@/admin/utils/functions';
 import { __, _x, _n, _nx, sprintf, setLocaleData } from "@wordpress/i18n";
 // Import du helper de traduction
 
+const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 var isLoading = ref(false);
 var isFetching= ref(false);
 var pages = ref([]);

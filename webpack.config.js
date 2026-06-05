@@ -157,9 +157,22 @@ module.exports = {
         ],
       },
       {
-        test: /\.svg$/,
-        use: "file-loader",
-      },
+          test: /\.svg$/,
+          use: {
+            loader: "file-loader",
+            options: {
+              name: "[name].[hash:8].[ext]",
+              outputPath: "../icons",
+              publicPath: (url, resourcePath) => {
+                if (resourcePath.includes("node_modules")) {
+                  return url;
+                }
+                const rel = path.relative(path.dirname(resourcePath), __dirname);
+                return path.posix.join(rel, "assets/icons", url).replace(/\\/g, "/");
+              }
+            }
+          },
+        },
       {
         test: /\.css$/,
         use: [

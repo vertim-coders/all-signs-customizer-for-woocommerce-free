@@ -175,7 +175,7 @@ onMounted(async () => {
 const optionCount = (item) => Array.isArray(item?.options) ? item.options.length : 0;
 const openComponentEditor = (id) => {
   router.push({
-    name: 'Simple-OthersComponents-Options',
+    name: 'Additional-Components-Options',
     params: {
       configId: configID.value,
       additionalOptionID: id,

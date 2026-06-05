@@ -26,8 +26,8 @@
       <Licences v-if="$route.name === 'global-settings-license' && !actualLink.includes(excludeLink)" />
       <ConfigurationPage v-if="$route.name === 'global-settings-configuration-page'" />
       <Output v-if="$route.name === 'global-settings-output'" />
-      <Shapes v-if="$route.name === 'global-settings-shapes'" />
-      <FixingMethods v-if="$route.name === 'global-settings-fixing-methods'" />
+      <Shapes v-if="$route.name === 'global-settings-shape'" />
+      <FixingMethods v-if="$route.name === 'global-settings-fixing-method'" />
       <Border v-if="$route.name === 'global-settings-border'" />
     </div>
   </div>
@@ -42,7 +42,7 @@ import Output from "./output/index.vue";
 import Shapes from "./shapes/index.vue";
 import FixingMethods from "./fixing-methods/index.vue";
 import Border from "./border/index.vue";
-import { PrinterIcon, SettingsIcon, ShapesIcon, ShieldCheckIcon, SquareIcon, WrenchIcon } from "lucide-vue-next";
+import { FileCogIcon, KeyRoundIcon, PrinterIcon, ShapesIcon, SquareIcon, WrenchIcon } from "lucide-vue-next";
 import { __ } from "@wordpress/i18n";
 
 const router = useRouter();
@@ -52,17 +52,17 @@ const excludeLink = ref("https://signsdesigner.us/public-demos");
 const actualLink = ref(window.location.href);
 
 const tabs = [
-  { label: __("License", "all-signs-options-pro"), icon: ShieldCheckIcon, name: "global-settings-license", path: "/global-settings/license" },
-  { label: __("Configuration page", "all-signs-options-pro"), icon: SettingsIcon, name: "global-settings-configuration-page", path: "/global-settings/configuration-page" },
-  { label: __("Output", "all-signs-options-pro"), icon: PrinterIcon, name: "global-settings-output", path: "/global-settings/output" },
-  { label: __("Shapes", "all-signs-options-pro"), icon: ShapesIcon, name: "global-settings-shapes", path: "/global-settings/shapes" },
-  { label: __("Fixing methods", "all-signs-options-pro"), icon: WrenchIcon, name: "global-settings-fixing-methods", path: "/global-settings/fixing-methods" },
-  { label: __("Border", "all-signs-options-pro"), icon: SquareIcon, name: "global-settings-border", path: "/global-settings/border" },
+  { label: __("License", "all-signs-options-pro"), icon: KeyRoundIcon, name: "global-settings-license", path: "/settings/license" },
+  { label: __("Configuration page", "all-signs-options-pro"), icon: FileCogIcon, name: "global-settings-configuration-page", path: "/settings/configuration-page" },
+  { label: __("Output", "all-signs-options-pro"), icon: PrinterIcon, name: "global-settings-output", path: "/settings/output" },
+  { label: __("Shapes", "all-signs-options-pro"), icon: ShapesIcon, name: "global-settings-shape", path: "/settings/shape" },
+  { label: __("Fixing method", "all-signs-options-pro"), icon: WrenchIcon, name: "global-settings-fixing-method", path: "/settings/fixing-method" },
+  { label: __("Border", "all-signs-options-pro"), icon: SquareIcon, name: "global-settings-border", path: "/settings/border" },
 ];
 
 onMounted(() => {
-  if (route.name === "global-settings") {
-    router.replace("/global-settings/output");
+  if (route.path === "/settings" || route.path === "/global-settings") {
+    router.replace("/settings/output");
   }
 });
 </script>
@@ -97,10 +97,11 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0;
   min-height: 56px;
-  padding: 0 18px;
+  gap: 0;
+  padding: 0 14px;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .asowp-tab {
@@ -108,9 +109,9 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 8px;
   min-height: 56px;
-  padding: 0 16px;
+  padding: 0 14px;
   border: 0;
   border-radius: 0;
   background: #fff;
@@ -144,8 +145,9 @@ onMounted(() => {
 }
 
 .asowp-tab :deep(svg) {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
 }
 
 .asowp-content {

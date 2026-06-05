@@ -1,6 +1,6 @@
 <template>
   <div v-if="isFetching" class="asowp-theme-loading-card">
-    <img src="../../../../../../assets/icons/ic_loading.svg" alt="" class="asowp-theme-loading-icon" />
+    <img :src="loadingIcon" alt="" class="asowp-theme-loading-icon" />
   </div>
 
   <div v-else class="asowp-theme-page">
@@ -131,6 +131,8 @@ import api from '@/admin/Api/api';
 import toastMessage from '@/admin/utils/functions';
 import defaultSkinImage from '../../../../../../assets/images/skin-default.png';
 import couffoSkinImage from '../../../../../../assets/images/skin-couffo.png';
+
+const loadingIcon = `${String(window?.asowp_data?.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
 
 const route = useRoute();
 const configId = ref(route.params.configId);

@@ -276,7 +276,7 @@ const saveComponent = async () => {
 
 const goBack = () => {
   router.push({
-    name: 'Simple-OthersComponents',
+    name: 'Additional-Components',
     params: {
       configId: configID.value,
     },

@@ -331,7 +331,7 @@ const onDrop = async (index) => {
 };
 
 const goToManageShapes = () => {
-  router.push({ path: "/global-settings/shapes", query: { returnTo: route.fullPath } });
+  router.push({ path: "/settings/shape", query: { returnTo: route.fullPath } });
 };
 
 onMounted(fetchMaterialShapes);
