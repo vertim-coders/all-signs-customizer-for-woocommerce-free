@@ -2,50 +2,134 @@
   <main class="asowp-request-quotes-page">
     <header class="asowp-request-quotes-heading">
       <h1>{{ __("Request quotes", "all-signs-options-pro") }}</h1>
-      <p>{{ requestQuotes.length }} {{ requestQuotes.length === 1 ? __("request stored", "all-signs-options-pro") : __("request stored", "all-signs-options-pro") }}</p>
+      <p>{{ totalCount }} {{ totalCount === 1 ? __("request stored", "all-signs-options-pro") : __("requests stored", "all-signs-options-pro") }}</p>
     </header>
 
     <section class="asowp-request-quotes-layout">
       <article class="asowp-request-quotes-card asowp-request-quotes-list-card">
         <header>
-          <h2>{{ __("Stored request quotes", "all-signs-options-pro") }}</h2>
-          <p>{{ __("Read the customer request and download the uploaded files.", "all-signs-options-pro") }}</p>
+          <div>
+            <h2>{{ __("Stored request quotes", "all-signs-options-pro") }}</h2>
+            <p>{{ __("Read the customer request and download the uploaded files.", "all-signs-options-pro") }}</p>
+          </div>
+          <button type="button" class="asowp-request-quotes-refresh" :disabled="isLoading" @click="loadQuotes">
+            <RefreshCwIcon :class="{ 'is-spinning': isLoading }" />
+          </button>
         </header>
 
-        <div v-if="requestQuotes.length === 0" class="asowp-request-quotes-empty">
+        <div v-if="isLoading" class="asowp-request-quotes-loader">
+          <img :src="loadingIcon" alt="" />
+        </div>
+
+        <div v-else-if="requestQuotes.length === 0" class="asowp-request-quotes-empty">
           {{ __("No request quote has been saved yet.", "all-signs-options-pro") }}
         </div>
 
-        <button
-          v-for="quote in requestQuotes"
-          v-else
-          :key="quote.id"
-          type="button"
-          class="asowp-request-quotes-row"
-          :class="{ 'is-active': selectedQuote && selectedQuote.id === quote.id }"
-          @click="selectedQuote = quote"
-        >
-          <span>
-            <strong>{{ quote.customer || __("Unknown customer", "all-signs-options-pro") }}</strong>
-            <small>{{ quote.email }}</small>
-          </span>
-          <span>{{ quote.date }}</span>
-        </button>
+        <div v-else class="asowp-request-quotes-table-wrap">
+          <table class="asowp-request-quotes-table">
+            <thead>
+              <tr>
+                <th>{{ __("Created", "all-signs-options-pro") }}</th>
+                <th>{{ __("Customer", "all-signs-options-pro") }}</th>
+                <th>{{ __("Product", "all-signs-options-pro") }}</th>
+                <th>{{ __("Files", "all-signs-options-pro") }}</th>
+                <th>{{ __("Status", "all-signs-options-pro") }}</th>
+                <th>{{ __("Action", "all-signs-options-pro") }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="quote in requestQuotes"
+                :key="quote.id"
+                :class="{ 'is-active': selectedQuote && selectedQuote.id === quote.id }"
+              >
+                <td>{{ formatDate(quote.createdAt) }}</td>
+                <td>
+                  <strong>{{ customerName(quote) }}</strong>
+                  <small>{{ quote.customer?.email || "-" }}</small>
+                </td>
+                <td>
+                  <span>{{ quote.productType || "n/a" }}</span>
+                  <small>{{ quote.configId ? `Config ${quote.configId}` : __("No config id", "all-signs-options-pro") }}</small>
+                </td>
+                <td>{{ quote.files?.length || 0 }}</td>
+                <td>
+                  <span class="asowp-request-quotes-badge" :class="`is-${statusTone(quote.status)}`">{{ quote.status || "pending" }}</span>
+                </td>
+                <td>
+                  <button type="button" class="asowp-request-quotes-view" @click="selectQuote(quote)">
+                    {{ __("View", "all-signs-options-pro") }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </article>
 
       <aside class="asowp-request-quotes-card asowp-request-quotes-detail-card">
         <template v-if="selectedQuote">
-          <h2>{{ selectedQuote.customer || __("Quote details", "all-signs-options-pro") }}</h2>
-          <dl>
+          <header>
             <div>
-              <dt>{{ __("Email", "all-signs-options-pro") }}</dt>
-              <dd>{{ selectedQuote.email || "-" }}</dd>
+              <h2>{{ __("Quote details", "all-signs-options-pro") }}</h2>
+              <p>ID {{ selectedQuote.id }}</p>
             </div>
-            <div>
-              <dt>{{ __("Message", "all-signs-options-pro") }}</dt>
-              <dd>{{ selectedQuote.message || "-" }}</dd>
-            </div>
-          </dl>
+            <span class="asowp-request-quotes-badge" :class="`is-${statusTone(selectedQuote.status)}`">{{ selectedQuote.status || "pending" }}</span>
+          </header>
+
+          <div class="asowp-request-quotes-detail-group">
+            <h3>{{ __("Customer", "all-signs-options-pro") }}</h3>
+            <p>{{ customerName(selectedQuote) }}</p>
+            <p>{{ selectedQuote.customer?.email || __("No email provided", "all-signs-options-pro") }}</p>
+            <p>{{ selectedQuote.customer?.phone || __("No phone provided", "all-signs-options-pro") }}</p>
+          </div>
+
+          <div class="asowp-request-quotes-detail-group">
+            <h3>{{ __("Message", "all-signs-options-pro") }}</h3>
+            <p>{{ selectedQuote.customer?.message || __("No message provided", "all-signs-options-pro") }}</p>
+          </div>
+
+          <div class="asowp-request-quotes-detail-group">
+            <h3>{{ __("Files", "all-signs-options-pro") }}</h3>
+            <p v-if="!selectedQuote.files || selectedQuote.files.length === 0">{{ __("No uploaded file.", "all-signs-options-pro") }}</p>
+            <a
+              v-for="(file, index) in selectedQuote.files"
+              v-else
+              :key="`${selectedQuote.id}-${file.name}-${index}`"
+              class="asowp-request-quotes-file"
+              :href="downloadUrl(selectedQuote, index)"
+              target="_blank"
+              rel="noopener"
+            >
+              <span>{{ file.name }}</span>
+              <DownloadIcon />
+            </a>
+          </div>
+
+          <div class="asowp-request-quotes-detail-group">
+            <h3>{{ __("Technical data", "all-signs-options-pro") }}</h3>
+            <p>{{ __("Created:", "all-signs-options-pro") }} {{ formatDate(selectedQuote.createdAt) }}</p>
+            <p>{{ __("Product type:", "all-signs-options-pro") }} {{ selectedQuote.productType || "-" }}</p>
+            <p>{{ __("Notified:", "all-signs-options-pro") }} {{ selectedQuote.notifiedAt ? formatDate(selectedQuote.notifiedAt) : __("No", "all-signs-options-pro") }}</p>
+            <p>{{ __("Source content type:", "all-signs-options-pro") }} {{ selectedQuote.source?.contentType || "-" }}</p>
+          </div>
+
+          <div v-if="selectedQuote.previewImg" class="asowp-request-quotes-detail-group">
+            <h3>{{ __("Preview", "all-signs-options-pro") }}</h3>
+            <img class="asowp-request-quotes-preview" :src="selectedQuote.previewImg" alt="" />
+          </div>
+
+          <footer>
+            <button
+              type="button"
+              class="asowp-request-quotes-mark"
+              :disabled="isSaving || selectedQuote.status === 'notified'"
+              @click="markAsNotified"
+            >
+              <Loader2Icon v-if="isSaving" class="is-spinning" />
+              <span>{{ selectedQuote.status === "notified" ? __("Already notified", "all-signs-options-pro") : __("Mark as notified", "all-signs-options-pro") }}</span>
+            </button>
+          </footer>
         </template>
         <p v-else>{{ __("Select a quote to see details.", "all-signs-options-pro") }}</p>
       </aside>
@@ -54,11 +138,100 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { __ } from "@wordpress/i18n";
+import { DownloadIcon, Loader2Icon, RefreshCwIcon } from "lucide-vue-next";
+import api from "@/admin/Api/api";
 
 const requestQuotes = ref([]);
 const selectedQuote = ref(null);
+const isLoading = ref(true);
+const isSaving = ref(false);
+const loadingIcon = `${String(asowp_data.assets_url || "").replace(/\/$/, "")}/icons/ic_loading.svg`;
+
+const totalCount = computed(() => requestQuotes.value.length);
+
+const loadQuotes = async () => {
+  isLoading.value = true;
+  try {
+    const result = await api.getRequestQuotes();
+    requestQuotes.value = Array.isArray(result.quotes) ? result.quotes : [];
+    if (!selectedQuote.value && requestQuotes.value.length > 0) {
+      selectedQuote.value = requestQuotes.value[0];
+    }
+    if (selectedQuote.value) {
+      selectedQuote.value =
+        requestQuotes.value.find((quote) => quote.id === selectedQuote.value.id) ||
+        requestQuotes.value[0] ||
+        null;
+    }
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const selectQuote = (quote) => {
+  selectedQuote.value = quote;
+};
+
+const customerName = (quote) => {
+  const firstName = quote?.customer?.firstName || "";
+  const lastName = quote?.customer?.lastName || "";
+  const name = `${firstName} ${lastName}`.trim();
+  return name || quote?.customer?.email || __("Anonymous customer", "all-signs-options-pro");
+};
+
+const formatDate = (value) => {
+  if (!value) {
+    return "-";
+  }
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  return new Intl.DateTimeFormat("fr-FR", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(date);
+};
+
+const statusTone = (status = "") => {
+  const normalized = String(status).trim().toLowerCase();
+  if (["read", "handled", "replied", "notified"].includes(normalized)) {
+    return "success";
+  }
+  if (["archived", "closed"].includes(normalized)) {
+    return "critical";
+  }
+  return "attention";
+};
+
+const downloadUrl = (quote, fileIndex) => {
+  return `${String(asowp_data.rest_url || "").replace(/\/$/, "")}/request-quotes/${quote.id}/download/${fileIndex}`;
+};
+
+const markAsNotified = async () => {
+  if (!selectedQuote.value) {
+    return;
+  }
+
+  isSaving.value = true;
+  try {
+    const result = await api.updateRequestQuote(selectedQuote.value.id, {
+      intent: "mark-notified",
+    });
+    if (result.quote) {
+      selectedQuote.value = result.quote;
+      requestQuotes.value = requestQuotes.value.map((quote) =>
+        quote.id === result.quote.id ? result.quote : quote
+      );
+    }
+  } finally {
+    isSaving.value = false;
+  }
+};
+
+onMounted(loadQuotes);
 </script>
 
 <style>
@@ -75,9 +248,14 @@ const selectedQuote = ref(null);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
 }
 
-.asowp-request-quotes-heading {
+.asowp-request-quotes-heading,
+.asowp-request-quotes-layout {
   width: min(1186px, 100%);
-  margin: 0 auto 30px;
+  margin: 0 auto;
+}
+
+.asowp-request-quotes-heading {
+  margin-bottom: 30px;
 }
 
 .asowp-request-quotes-heading h1 {
@@ -96,8 +274,6 @@ const selectedQuote = ref(null);
 }
 
 .asowp-request-quotes-layout {
-  width: min(1186px, 100%);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
   gap: 20px;
@@ -116,7 +292,15 @@ const selectedQuote = ref(null);
   padding: 38px 39px;
 }
 
-.asowp-request-quotes-list-card header {
+.asowp-request-quotes-list-card > header,
+.asowp-request-quotes-detail-card > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.asowp-request-quotes-list-card > header {
   padding-bottom: 22px;
   border-bottom: 1px solid #e5e7eb;
 }
@@ -130,11 +314,53 @@ const selectedQuote = ref(null);
   font-weight: 700;
 }
 
-.asowp-request-quotes-list-card header p {
+.asowp-request-quotes-list-card header p,
+.asowp-request-quotes-detail-card header p {
   margin: 6px 0 0;
   color: #616161;
   font-size: 15px;
   line-height: 22px;
+}
+
+.asowp-request-quotes-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: #303030;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.asowp-request-quotes-refresh svg {
+  width: 16px;
+  height: 16px;
+}
+
+.asowp-request-quotes-refresh:hover,
+.asowp-request-quotes-refresh:focus,
+.asowp-request-quotes-refresh:active {
+  color: #303030;
+  background: #ffffff;
+  border-color: #b8c0ca;
+  outline: none;
+  box-shadow: none;
+}
+
+.asowp-request-quotes-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 118px;
+}
+
+.asowp-request-quotes-loader img {
+  width: 42px;
+  height: 42px;
 }
 
 .asowp-request-quotes-empty {
@@ -144,44 +370,111 @@ const selectedQuote = ref(null);
   line-height: 22px;
 }
 
-.asowp-request-quotes-row {
+.asowp-request-quotes-table-wrap {
+  padding-top: 14px;
+  overflow-x: auto;
+}
+
+.asowp-request-quotes-table {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 0;
+  border-collapse: collapse;
   color: #303030;
-  background: transparent;
+}
+
+.asowp-request-quotes-table th {
+  padding: 12px 12px;
+  color: #616161;
+  background: #f7f7f7;
+  border: 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 650;
+  text-align: left;
+}
+
+.asowp-request-quotes-table td {
+  padding: 14px 12px;
   border: 0;
   border-bottom: 1px solid #e5e7eb;
-  text-align: left;
-  cursor: pointer;
+  font-size: 13px;
+  line-height: 18px;
+  vertical-align: middle;
 }
 
-.asowp-request-quotes-row:hover,
-.asowp-request-quotes-row:focus,
-.asowp-request-quotes-row:active {
-  color: #303030;
-  background: transparent;
-  outline: none;
-  box-shadow: none;
+.asowp-request-quotes-table tr.is-active td {
+  background: #f8fbff;
 }
 
-.asowp-request-quotes-row strong,
-.asowp-request-quotes-row small {
+.asowp-request-quotes-table strong,
+.asowp-request-quotes-table small {
   display: block;
 }
 
-.asowp-request-quotes-row strong {
-  font-size: 14px;
-  line-height: 20px;
+.asowp-request-quotes-table strong {
+  color: #303030;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
 }
 
-.asowp-request-quotes-row small,
-.asowp-request-quotes-row > span:last-child {
+.asowp-request-quotes-table small {
   color: #616161;
   font-size: 12px;
   line-height: 18px;
+}
+
+.asowp-request-quotes-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 10px;
+  color: #5f4b00;
+  background: #fff1b8;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.asowp-request-quotes-badge.is-success {
+  color: #075e54;
+  background: #dff5ee;
+}
+
+.asowp-request-quotes-badge.is-critical {
+  color: #8a1f11;
+  background: #fde2dd;
+}
+
+.asowp-request-quotes-view,
+.asowp-request-quotes-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.asowp-request-quotes-view {
+  color: #303030;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+}
+
+.asowp-request-quotes-view:hover,
+.asowp-request-quotes-view:focus,
+.asowp-request-quotes-view:active {
+  color: #303030;
+  background: #ffffff;
+  border-color: #b8c0ca;
+  outline: none;
+  box-shadow: none;
 }
 
 .asowp-request-quotes-detail-card {
@@ -189,31 +482,100 @@ const selectedQuote = ref(null);
   padding: 39px 39px;
 }
 
-.asowp-request-quotes-detail-card p {
+.asowp-request-quotes-detail-card > p,
+.asowp-request-quotes-detail-group p {
   margin: 0;
   color: #303030;
   font-size: 15px;
   line-height: 22px;
 }
 
-.asowp-request-quotes-detail-card dl {
+.asowp-request-quotes-detail-group {
   display: grid;
-  gap: 16px;
-  margin: 18px 0 0;
+  gap: 7px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.asowp-request-quotes-detail-card dt {
-  margin: 0 0 4px;
-  color: #616161;
-  font-size: 12px;
-  line-height: 17px;
-}
-
-.asowp-request-quotes-detail-card dd {
+.asowp-request-quotes-detail-group h3 {
   margin: 0;
   color: #303030;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+}
+
+.asowp-request-quotes-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  padding: 0 12px;
+  color: #303030;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.asowp-request-quotes-file svg {
+  width: 15px;
+  height: 15px;
+}
+
+.asowp-request-quotes-preview {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+}
+
+.asowp-request-quotes-detail-card footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 18px;
+}
+
+.asowp-request-quotes-mark {
+  gap: 8px;
+  color: #ffffff;
+  background: #00796b;
+  border: 1px solid #005f54;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.asowp-request-quotes-mark:hover,
+.asowp-request-quotes-mark:focus,
+.asowp-request-quotes-mark:active {
+  color: #ffffff;
+  background: #00796b;
+  border-color: #005f54;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.asowp-request-quotes-mark:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.asowp-request-quotes-mark svg {
+  width: 15px;
+  height: 15px;
+}
+
+.is-spinning {
+  animation: asowp-request-quotes-spin 0.8s linear infinite;
+}
+
+@keyframes asowp-request-quotes-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 980px) {

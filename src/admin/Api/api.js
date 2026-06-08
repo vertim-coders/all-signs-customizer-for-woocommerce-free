@@ -1,5 +1,8 @@
 import axios from "axios";
 const asowp_api_url = asowp_data.rest_url;
+if (asowp_data?.rest_nonce) {
+  axios.defaults.headers.common["X-WP-Nonce"] = asowp_data.rest_nonce;
+}
 const api = {
   //function related to configuration
   getConfigs: async (url = "") => {
@@ -50,6 +53,28 @@ const api = {
     const res = await axios.get(url);
     console.log("response rt: ", res)
     return res.data;
+  },
+
+  getRequestQuotes: async () => {
+    const quotes = await axios.get(asowp_api_url + "/request-quotes");
+    return quotes.data;
+  },
+  getRequestQuote: async (quoteId) => {
+    const quote = await axios.get(asowp_api_url + "/request-quotes/" + quoteId);
+    return quote.data;
+  },
+  updateRequestQuote: async (quoteId, data) => {
+    const quote = await axios.put(
+      asowp_api_url + "/request-quotes/" + quoteId,
+      data
+    );
+    return quote.data;
+  },
+  deleteRequestQuote: async (quoteId) => {
+    const quote = await axios.delete(
+      asowp_api_url + "/request-quotes/" + quoteId
+    );
+    return quote.data;
   },
 
   //function related to maretials

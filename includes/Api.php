@@ -11,6 +11,7 @@ use ASOWP\Api\Admin\ASOWP_Api_Manage_sizes;
 use ASOWP\Api\Admin\ASOWP_Api_Templates_Categories;
 use ASOWP\Api\Admin\ASOWP_Api_WooCommerce_Products;
 use ASOWP\Api\Admin\ASOWP_Api_Home_Stats;
+use ASOWP\Api\Admin\ASOWP_Api_Request_Quotes;
 use ASOWP\Api\Admin\Globals_Settings\ASOWP_Api_Globals_Settings;
 use ASOWP\Api\Admin\Required_Options\ASOWP_Api_Required_Options;
 use ASOWP\Api\Admin\Settings\ASOWP_Api_Customizer_Sign_Settings;

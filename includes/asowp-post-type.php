@@ -5,6 +5,7 @@ class ASOWP_Post_Type
 	public function init_hooks()
 	{
 		add_action('init', array($this, 'register_asowp_post_type'));
+		add_action('init', array($this, 'register_asowp_request_quote_post_type'));
 		add_action('init', array($this, 'register_asowp_config_meta'));
 		add_action('init', array($this, 'register_asowp_config_templates'));
 
@@ -53,6 +54,37 @@ class ASOWP_Post_Type
 		);
 
 		register_post_type('asowp-configs', $args);
+	}
+
+	public function register_asowp_request_quote_post_type()
+	{
+		$labels = array(
+			'name' => _x('ASO Request Quotes', "all-signs-options-pro"),
+			'singular_name' => _x('ASO Request Quote', "all-signs-options-pro"),
+			'add_new_item' => _x('New ASO request quote', "all-signs-options-pro"),
+			'edit_item' => _x('Edit ASO request quote', "all-signs-options-pro"),
+			'not_found' => _x('No ASO request quote found', "all-signs-options-pro"),
+			'menu_name' => _x('ASO Request Quotes', "all-signs-options-pro"),
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'hierarchical' => false,
+			'description' => 'ASO Request Quotes',
+			'supports' => array('title'),
+			'public' => false,
+			'show_in_rest' => false,
+			'show_ui' => false,
+			'show_in_menu' => false,
+			'show_in_nav_menus' => false,
+			'publicly_queryable' => false,
+			'exclude_from_search' => true,
+			'has_archive' => false,
+			'query_var' => false,
+			'can_export' => true,
+		);
+
+		register_post_type('asowp-request-quote', $args);
 	}
 
 	/**
