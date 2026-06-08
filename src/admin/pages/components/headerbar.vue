@@ -71,7 +71,7 @@ const goToAdditionalOptions = ()=>{
     router.push(`/configuration/${currentConfigId.value}/additional-options/inputs`)
 }
 const goToMaterials = ()=>{
-    router.push(`/configuration/${currentConfigId.value}/required-options/materials`)
+    router.push(`/configuration/${currentConfigId.value}/additional-options/materials`)
     .then(() => {
       window.location.reload()
     })

@@ -10,7 +10,6 @@ foreach (array(
     'FixingMethods.php',
     'Pricings.php',
     'Borders.php',
-    'Materials.php',
     'Components.php',
     'Fonts.php',
 ) as $file) {
@@ -30,7 +29,6 @@ class ASOWP_Api_Required_Options extends ASOWP_Api_Required_Options_Base
         (new ASOWP_Api_Required_Options_FixingMethods())->register_routes();
         (new ASOWP_Api_Required_Options_Pricings())->register_routes();
         (new ASOWP_Api_Required_Options_Borders())->register_routes();
-        (new ASOWP_Api_Required_Options_Materials())->register_routes();
         (new ASOWP_Api_Required_Options_Components())->register_routes();
         (new ASOWP_Api_Required_Options_Fonts())->register_routes();
     }

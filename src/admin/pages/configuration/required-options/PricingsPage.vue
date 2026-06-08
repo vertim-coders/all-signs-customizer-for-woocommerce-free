@@ -280,7 +280,7 @@ const openActionIndex = ref(null);
 
 const measurementUnit = ref("mm");
 const currencySymbol = ref("$");
-const materialSizes = ref({});
+const pricingsData = ref({});
 const pricingSettings = ref({ label: "Pricing", description: "", priceOptions: [] });
 
 const emptyPricing = () => ({
@@ -374,11 +374,11 @@ const normalizePricingOption = (item = {}) => ({
 
 const buildFallbackPricing = () => ({
   label: "Default pricing",
-  customPricing: normalizeCustomPricing(materialSizes.value?.customSize?.pricings || {}),
+  customPricing: normalizeCustomPricing(),
 });
 
 const normalizePricingSettings = () => {
-  const stored = materialSizes.value?.pricing || {};
+  const stored = pricingsData.value?.pricing || {};
   const storedOptions = Array.isArray(stored.priceOptions) ? stored.priceOptions : [];
   pricingSettings.value = {
     label: String(stored.label || "Pricing"),
@@ -392,10 +392,9 @@ const normalizePricingSettings = () => {
 const fetchPricing = async () => {
   isFetching.value = true;
   try {
-    const result = await api.getRequiredOptionSizes(configID.value);
-    if (result?.materialSizes) {
-      materialSizes.value = result.materialSizes;
-      measurementUnit.value = String(result.measurementUnit || "mm");
+    const result = await api.getRequiredOptionPricings(configID.value);
+    if (result) {
+      pricingsData.value = result;
       normalizePricingSettings();
     }
   } finally {
@@ -406,22 +405,17 @@ const fetchPricing = async () => {
 const persistPricing = async () => {
   isLoading.value = true;
   try {
-    const primary = pricingSettings.value.priceOptions[0] || buildFallbackPricing();
     const nextSizes = {
-      ...materialSizes.value,
-      customSize: {
-        ...(materialSizes.value.customSize || {}),
-        pricings: primary.customPricing,
-      },
+      ...pricingsData.value,
       pricing: {
         label: pricingSettings.value.label,
         description: pricingSettings.value.description,
         priceOptions: pricingSettings.value.priceOptions,
       },
     };
-    const res = await api.updateRequiredOptionSizes(configID.value, nextSizes);
+    const res = await api.updateRequiredOptionPricings(configID.value, nextSizes);
     if (res?.success) {
-      materialSizes.value = nextSizes;
+      pricingsData.value = nextSizes;
       toastMessage(res.message);
     }
   } finally {

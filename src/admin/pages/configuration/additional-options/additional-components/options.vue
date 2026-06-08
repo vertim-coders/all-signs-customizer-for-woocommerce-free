@@ -184,20 +184,19 @@ const normalizeOption = (option = {}) => ({
 
 const fetchComponentOptions = async () => {
   const result = await api.getAdditionalOptionItems(configID.value, materialId.value, additionalOptionId.value);
-  const data = result?.data ?? result;
   additionalOption.value = {
     title: '',
     description: '',
     icon: '',
     options: [],
-    ...data,
-    options: Array.isArray(data?.options) ? data.options.map(normalizeOption) : [],
+    ...result,
+    options: Array.isArray(result?.options) ? result.options.map(normalizeOption) : [],
   };
 };
 
 const fetchColors = async () => {
   const result = await api.getAdditionalOptionColors(configID.value, materialId.value);
-  if (!result.message && Array.isArray(result.allColors)) {
+  if (!result.message && Array.isArray(result?.allColors)) {
     materialColors.value = result.allColors.map(color => ({
       name: color.name,
       codeHex: color?.pattern?.codeHex || '#ffffff',

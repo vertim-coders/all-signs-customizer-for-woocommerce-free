@@ -81,14 +81,14 @@ const api = {
 
   updateMaterial: async (configId, materialId, material) => {
     const edit = await axios.put(
-      asowp_api_url + "/configs/" + configId + "/required-options/materials/" + materialId,
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials/" + materialId,
       material
     );
     return edit.data;
   },
   getMaterials: async (configId) => {
     const material = await axios.get(
-      asowp_api_url + "/configs/" + configId + "/required-options/materials"
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials"
     );
     return material.data;
   },
@@ -97,20 +97,20 @@ const api = {
       asowp_api_url +
         "/configs/" +
         configId +
-        "/required-options/materials/" +
+        "/additional-options/materials/" +
         materialId
     );
     return material.data;
   },
   deleteMaterial: async (configId, materialId) => {
     const del = await axios.delete(
-      asowp_api_url + "/configs/" + configId + "/required-options/materials/" + materialId
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials/" + materialId
     );
     return del.data;
   },
   addMaterial: async (configId, material) => {
     const post = await axios.post(
-      asowp_api_url + "/configs/" + configId + "/required-options/materials",
+      asowp_api_url + "/configs/" + configId + "/additional-options/materials",
       material
     );
     return post.data;
@@ -149,7 +149,7 @@ const api = {
         "/additional-options/components/" +
         additionalOptionId
     );
-    return additionalOption.data;
+    return additionalOption.data?.data ?? additionalOption.data;
   },
   updateAdditionalOption: async (configId, materialId, additionalOptionId, additionalOption) => {
     const edit = await axios.put(
@@ -187,13 +187,13 @@ const api = {
         materialId +
         "/colors"
     );
-    return colors.data;
+    return colors.data?.data?.colors ?? colors.data;
   },
   getAdditionalOptionMaterials: async (configId) => {
     const materials = await axios.get(
       asowp_api_url + "/configs/" + configId + "/additional-options/materials"
     );
-    return materials.data;
+    return materials.data?.data?.materials ?? materials.data;
   },
   addAdditionalOptionMaterial: async (configId, material) => {
     const post = await axios.post(
@@ -210,7 +210,7 @@ const api = {
         "/additional-options/materials/" +
         materialId
     );
-    return material.data;
+    return material.data?.data?.material ?? material.data;
   },
   updateAdditionalOptionMaterial: async (configId, materialId, material) => {
     const edit = await axios.put(
@@ -443,6 +443,47 @@ const api = {
     );
     return result.data;
   },
+  //Function related to pricings
+  getRequiredOptionPricings: async (configId) => {
+    const result = await axios.get(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings"
+    );
+    return result.data;
+  },
+  updateRequiredOptionsPricing: async (configId, pricingId, pricing) => {
+    const edit = await axios.put(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/" +
+        pricingId,
+      pricing
+    );
+    return edit.data;
+  },
+  deleteRequiredOptionsPricing: async (configId, pricingId) => {
+    const del = await axios.delete(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings/" +
+        pricingId
+    );
+    return del.data;
+  },
+  addRequiredOptionsPricing: async (configId, pricing) => {
+    const add = await axios.post(
+      asowp_api_url +
+        "/configs/" +
+        configId +
+        "/required-options/pricings",
+      pricing
+    );
+    return add.data;
+  },
   //Function related to colors
   updateRequiredOptionColors: async (configId, colors) => {
     const edit = await axios.put(
@@ -463,47 +504,7 @@ const api = {
     );
     return result.data;
   },
-  //Function related to textImages
-  updateRequiredOptionTextImages: async (configId, textImages) => {
-    const edit = await axios.put(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/text-images",
-      textImages
-    );
-    return edit.data;
-  },
-  getRequiredOptionTextImages: async (configId) => {
-    const result = await axios.get(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/text-images"
-    );
-    return result.data;
-  }
-  ,
-  //Function related to discounts
-  updateRequiredOptionDiscounts: async (configId, textImages) => {
-    const edit = await axios.put(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/discounts",
-      textImages
-    );
-    return edit.data;
-  },
-  getRequiredOptionDiscounts: async (configId) => {
-    const result = await axios.get(
-      asowp_api_url +
-        "/configs/" +
-        configId +
-        "/required-options/discounts"
-    );
-    return result.data;
-  },
+
   //Function related to borders
   updateRequiredOptionBorders: async (configId, borders) => {
     const edit = await axios.put(
@@ -562,7 +563,7 @@ const api = {
         configId +
         "/required-options/components"
     );
-    return material.data?.data ?? material.data;
+    return material.data?.data?.components ?? material.data;
   },
   updateRequiredOptionComponent: async (configId, componentId, component) => {
     const material = await axios.put(
@@ -607,7 +608,7 @@ const api = {
         componentId +
         "/options"
     );
-    return material.data;
+    return material.data?.data?.componentOptions ?? material.data;
   },
   updateRequiredOptionComponentOption: async (configId, componentId, optionId, option) => {
     const material = await axios.put(

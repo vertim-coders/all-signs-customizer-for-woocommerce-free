@@ -9,7 +9,7 @@ use WP_Query;
 /**
  * class for api routes reaching additional options inputs
  */
-class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Inputs_Additionals_Base
+class ASOWP_Api_Additional_Options_Inputs extends ASOWP_Api_Customs_Additionals_Base
 {
     /**
      * [__construct description]

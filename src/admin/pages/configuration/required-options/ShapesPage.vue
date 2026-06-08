@@ -231,8 +231,8 @@ const fetchMaterialShapes = async () => {
   try {
     const res = await api.getRequiredOptionShapes(configID.value);
     if (!res.message) {
-      manageShapes.value = res.manageShapes || [];
-      shapes.value = (res.materialShapes || []).map(normalizeShape);
+      manageShapes.value = res.data?.shapes?.manageShapes || [];
+      shapes.value = (res.data?.shapes?.items || []).map(normalizeShape);
     }
   } finally {
     isFetching.value = false;

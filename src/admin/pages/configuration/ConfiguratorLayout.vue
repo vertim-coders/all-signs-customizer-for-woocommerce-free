@@ -269,7 +269,6 @@ const groups = computed(() => {
         { label: __('Fonts', 'all-signs-options-pro'), path: `${basePath}/required-options/fonts`, icon: icons.fonts },
         { label: __('Components', 'all-signs-options-pro'), path: `${basePath}/required-options/components`, icon: icons.components },
         { label: __('Pricing', 'all-signs-options-pro'), path: `${basePath}/required-options/pricing`, icon: icons.pricing },
-        { label: __('Materials', 'all-signs-options-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
       ]
     : [
         { label: __('Sizes', 'all-signs-options-pro'), path: `${basePath}/required-options/sizes`, icon: icons.sizes },
@@ -278,7 +277,6 @@ const groups = computed(() => {
         { label: __('Colors', 'all-signs-options-pro'), path: `${basePath}/required-options/colors`, icon: icons.colors },
         { label: __('Fixing Methods', 'all-signs-options-pro'), path: `${basePath}/required-options/fixing-methods`, icon: icons.fixing },
         { label: __('Shapes', 'all-signs-options-pro'), path: `${basePath}/required-options/shapes`, icon: icons.shapes },
-        { label: __('Materials', 'all-signs-options-pro'), path: `${basePath}/required-options/materials`, icon: icons.materials },
         { label: __('Borders', 'all-signs-options-pro'), path: `${basePath}/required-options/borders`, icon: icons.borders },
       ];
 
@@ -296,6 +294,11 @@ const groups = computed(() => {
       icon: icons.components,
     });
   }
+  additionalItems.push({
+    label: __('Materials', 'all-signs-options-pro'),
+    path: `${basePath}/additional-options/materials`,
+    icon: icons.materials,
+  });
   additionalItems.push({
     label: __('Inputs', 'all-signs-options-pro'),
     path: `${basePath}/additional-options/inputs`,

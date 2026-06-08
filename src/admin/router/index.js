@@ -137,7 +137,7 @@ const router = createRouter({
           component: FontsPage,
         },
         {
-          path: "required-options/materials",
+          path: "additional-options/materials",
           name: "materials",
           component: MaterialsPage,
         },

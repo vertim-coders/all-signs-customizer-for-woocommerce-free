@@ -365,10 +365,12 @@ const config = ref(String(route.params.config ?? '').replace(/-/g,' '));
     }
 
     const fetchComponents = async () => {
-        const response = await api.getRequiredOptionComponents(configId.value);
+    const response = await api.getRequiredOptionComponents(configId.value);
 
-        if (!response?.message) {
-            const comps = Array.isArray(response) ? response : Array.isArray(response?.data) ? response.data : [];
+    if (!response?.message) {
+            const comps = Array.isArray(response?.items)
+                ? response.items
+                : [];
             components.value = comps;
             showParams.value = comps.map(() => false);
             dropdownPositions.value = comps.map(() => ({ top: null, left: null }));

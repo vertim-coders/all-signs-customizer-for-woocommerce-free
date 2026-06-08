@@ -312,9 +312,9 @@ const exclusionSummaryLabels = (field, type, fallback, prefix) => {
 
 const fetchMaterialShapes = async () => {
   const res = await api.getRequiredOptionShapes(configID.value);
-  if (!res.message && res.materialShapes) {
-    fixingMethodShapes.value = res.materialShapes.map((shape) => ({
-      name: res.manageShapes?.[shape.shapeId]?.name || "Shape",
+  if (!res.message && res.data?.shapes) {
+    fixingMethodShapes.value = res.data.shapes.items.map((shape) => ({
+      name: res.data.shapes.manageShapes?.[shape.shapeId]?.name || "Shape",
       value: shape.shapeId,
     }));
   }
@@ -324,16 +324,17 @@ const fetchMaterialFixingMethods = async () => {
   isFetching.value = true;
   try {
     const res = await api.getRequiredOptionFixingMethods(configID.value);
-    fixingMethodSizes.value = (res.materialSizes || []).map((size, index) => ({ name: size.label, value: index }));
-    if (!res.message) {
-      fixingMethods.value = (res.materialFixingMethods || []).map((fx) => ({
+    const fixingMethodsData = res;
+    fixingMethodSizes.value = (fixingMethodsData?.sizes || []).map((size, index) => ({ name: size.label, value: index }));
+    if (!res.message && fixingMethodsData) {
+      fixingMethods.value = (fixingMethodsData.items || []).map((fx) => ({
         isDefault: Boolean(fx.isDefault),
         fixingMethodId: Number(fx.fixingMethodId ?? -1),
         excludeSizes: normalizeArray(fx.excludeSizes),
         excludeShapes: normalizeArray(fx.excludeShapes),
         additionalPrice: Number(fx.additionalPrice || 0),
       }));
-      manageFixingMethods.value = res.manageFixingMethods || [];
+      manageFixingMethods.value = fixingMethodsData.manageFixingMethods || [];
     }
   } finally {
     isFetching.value = false;

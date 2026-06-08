@@ -186,10 +186,13 @@ const getMaterialLabel = (material) => material?.name || material?.label || mate
 const fetchMaterials = async () => {
   isFetching.value = true;
   try {
-    const rawMaterials = await api.getMaterials(configID.value);
-    materials.value = Array.isArray(rawMaterials) ? rawMaterials.map((m, index) => ({
+    const rawMaterials = await api.getAdditionalOptionMaterials(configID.value);
+    const items = Array.isArray(rawMaterials?.items)
+      ? rawMaterials.items
+      : [];
+    materials.value = Array.isArray(items) ? items.map((m, index) => ({
       ...m,
-      sourceIndex: Number.isInteger(Number(m?.sourceIndex)) ? Number(m.sourceIndex) : index,
+      id: String(m?.id || m?.materialKey || `material-${index + 1}`),
       name: String(m?.name || m?.label || ""),
       icon: m?.icon || m?.image || m?.previewImg || "",
       isDefault: Boolean(m?.isDefault),
@@ -205,7 +208,7 @@ const addMaterial = async () => {
   if (!newMaterial.value.name.trim()) return;
   isLoading.value = true;
   try {
-    const result = await api.addMaterial(configID.value, { ...newMaterial.value, isDefault: materials.value.length === 0 });
+    const result = await api.addAdditionalOptionMaterial(configID.value, { ...newMaterial.value, isDefault: materials.value.length === 0 });
     if (result?.success) {
       await fetchMaterials();
       toastMessage(result.message || __("Material added", "all-signs-options-pro"));
@@ -223,7 +226,7 @@ const updateMaterial = async () => {
   isLoading.value = true;
   try {
     const current = materials.value[editingIndex.value] || {};
-    const result = await api.updateMaterial(configID.value, current.sourceIndex ?? editingIndex.value, { ...current, ...newMaterial.value });
+    const result = await api.updateAdditionalOptionMaterial(configID.value, current.id || editingIndex.value, { ...current, ...newMaterial.value });
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
       toastMessage(result.message || __("Material updated", "all-signs-options-pro"));
@@ -262,7 +265,7 @@ const deleteMaterial = async () => {
   isLoading.value = true;
   try {
     const current = materials.value[editingIndex.value] || {};
-    const result = await api.deleteMaterial(configID.value, current.sourceIndex ?? editingIndex.value);
+    const result = await api.deleteAdditionalOptionMaterial(configID.value, current.id || editingIndex.value);
     if (result?.success) {
       openModal.value = false;
       await fetchMaterials();
@@ -280,7 +283,7 @@ const selectDefault = async (index) => {
   if (!current || current.isDefault || isLoading.value) return;
   isLoading.value = true;
   try {
-    const result = await api.updateMaterial(configID.value, current.sourceIndex ?? index, { ...current, isDefault: true });
+    const result = await api.updateAdditionalOptionMaterial(configID.value, current.id || index, { ...current, isDefault: true });
     if (result?.success || result?.success === "same") {
       await fetchMaterials();
       toastMessage(result.message || __("Default material updated", "all-signs-options-pro"));

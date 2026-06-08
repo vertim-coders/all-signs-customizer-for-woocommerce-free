@@ -409,21 +409,16 @@ const goBackToComponents = () => {
 }
 const fetchComponentOptions = async () => {
     const result = await api.getRequiredOptionComponentOptions(configId.value,materialId.value,componentId.value);
-    shapes.value = result.manageShapes.map((sh,key)=>{
+    const componentOptions = result;
+    shapes.value = (componentOptions?.manageShapes || []).map((sh,key)=>{
         return {name:sh.name,value:key,icon:sh.icon};
     });
-    fixingMethods.value = result.manageFixingMethods.map((fx,key)=>{
+    fixingMethods.value = (componentOptions?.manageFixingMethods || []).map((fx,key)=>{
         return {name:fx.name,value:key,icon:fx.icon};
     });
-    if(result.component){
-        componentAdvance.value = result.component;
-        noOptionsFound.value = result.message;
-        isFetching.value = false;
-    }else{
-        componentAdvance.value = result.component;
-        noOptionsFound.value = result.message;
-        isFetching.value = false;
-    }
+    componentAdvance.value = componentOptions?.component;
+    noOptionsFound.value = result.message;
+    isFetching.value = false;
 }
 
 const addNewOption = async () => {

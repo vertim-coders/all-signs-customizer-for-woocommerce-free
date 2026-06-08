@@ -313,8 +313,8 @@ const normalizeSettings = (settings = {}) => ({
 
 const fetchMaterialShapes = async () => {
   const res = await api.getRequiredOptionShapes(configID.value);
-  if (!res.message && res.materialShapes) {
-    borderShapes.value = res.materialShapes.map((item) => ({
+  if (!res.message && res.items) {
+    borderShapes.value = res.items.map((item) => ({
       name: res.manageShapes?.[item.shapeId]?.name || "Shape",
       value: item.shapeId,
     }));
@@ -325,13 +325,14 @@ const fetchMaterialBorders = async () => {
   isFetching.value = true;
   try {
     const res = await api.getRequiredOptionBorders(configID.value);
-    if (res?.materialBorders) {
+    if (res) {
+      const bordersData = res;
       borders.value = {
-        settings: normalizeSettings(res.materialBorders.settings),
-        allBorders: normalizeArray(res.materialBorders.allBorders).map(normalizeBorder),
+        settings: normalizeSettings(bordersData.settings),
+        allBorders: normalizeArray(bordersData.items).map(normalizeBorder),
       };
-      manageBorders.value = res.manageBorders || [];
-      borderSizes.value = (res.materialSizes || []).map((item, index) => ({ name: item.label, value: index }));
+      manageBorders.value = bordersData.manageBorders || [];
+      borderSizes.value = (bordersData.sizes || []).map((item, index) => ({ name: item.label, value: index }));
     }
   } finally {
     isFetching.value = false;

@@ -254,16 +254,33 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
     protected function section_response_key(string $section): string
     {
         $map = array(
-            'sizes' => 'materialSizes',
+            'sizes' => 'sizes',
             'colors' => 'colors',
-            'shapes' => 'materialShapes',
-            'fixing-methods' => 'materialFixingMethods',
+            'shapes' => 'shapes',
+            'fixing-methods' => 'fixingMethods',
             'pricing' => 'pricing',
-            'borders' => 'materialBorders',
-            'materials' => 'materialOptions',
+            'borders' => 'borders',
+            'materials' => 'materials',
+            'components' => 'components',
+            'fonts' => 'fonts',
         );
 
         return isset($map[$section]) ? $map[$section] : $section;
+    }
+
+    protected function section_response_payload(string $section, $value, array $extra = array()): array
+    {
+        $payload = is_array($value) ? $value : array();
+        if (!empty($extra)) {
+            $payload = array_merge($payload, $extra);
+        }
+
+        return array(
+            'success' => true,
+            'data' => array(
+                $this->section_response_key($section) => $payload,
+            ),
+        );
     }
 
     protected function simple_section_default(string $section)
@@ -277,10 +294,9 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
                         'showPredefinedSizes' => true,
                         'width' => array('label' => 'Width', 'min' => 0, 'max' => 0),
                         'height' => array('label' => 'Height', 'min' => 0, 'max' => 0),
-                        'pricings' => array('type' => 'unit', 'unit' => array('basePrice' => 0, 'surface' => 0, 'charPrice' => 0), 'range' => array()),
                     ),
                     'thickness' => array('active' => false, 'values' => array(), 'items' => array()),
-                    'allSizes' => array(),
+                    'items' => array(),
                 );
             case 'colors':
                 return array(
@@ -341,7 +357,7 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         return $required_options;
     }
 
-    protected function get_section($request, string $section, string $response_key, ?callable $response_callback = null)
+    protected function get_section($request, string $section, ?string $response_key = null, ?callable $response_callback = null)
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
@@ -350,12 +366,18 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
 
         $required_options = $this->get_required_options($config_id);
         $value = $this->get_section_items($required_options, $section);
+        $response_key = $response_key ? $response_key : $this->section_response_key($section);
 
         if ($response_callback) {
-            return call_user_func($response_callback, $config_id, $value, $required_options);
+            $value = call_user_func($response_callback, $config_id, $value, $required_options);
         }
 
-        return rest_ensure_response(array($response_key => $value));
+        return rest_ensure_response(array(
+            'success' => true,
+            'data' => array(
+                $response_key => $value,
+            ),
+        ));
     }
 
     protected function update_section($request, string $section)
@@ -373,14 +395,26 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $required_options = $this->get_required_options($config_id);
         $current = $this->get_section_items($required_options, $section);
         if ($current === $payload) {
-            return rest_ensure_response(array('success' => 'same', 'message' => __('No change was observed', 'all-signs-options-pro')));
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => __('No change was observed', 'all-signs-options-pro'),
+                'data' => array(
+                    $this->section_response_key($section) => $payload,
+                ),
+            ));
         }
 
         $required_options = $this->set_section_items($required_options, $section, $payload);
         $update = $this->save_required_options($config_id, $required_options);
 
         if ($update === true) {
-            return rest_ensure_response(array('success' => true, 'message' => sprintf(__('Required option %s successfully updated', 'all-signs-options-pro'), $section)));
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => sprintf(__('Required option %s successfully updated', 'all-signs-options-pro'), $section),
+                'data' => array(
+                    $this->section_response_key($section) => $payload,
+                ),
+            ));
         }
 
         return rest_ensure_response(array('success' => false, 'message' => sprintf(__('Required option %s has not been updated', 'all-signs-options-pro'), $section)));
@@ -388,19 +422,25 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
 
     protected function sizes_response(int $config_id, $value): array
     {
-        $normalized = $this->get_normalized_meta($config_id);
-        $measurement_unit = self::deep_value($normalized, array('settings', 'customizerSign', 'customizerOptions', 'measurementUnit'), 'mm');
+        $value = is_array($value) ? $value : array();
+        $items = array();
+        if (isset($value['items']) && is_array($value['items'])) {
+            $items = array_values($value['items']);
+        }
 
-        return array(
-            'materialSizes' => $value,
-            'measurementUnit' => $measurement_unit,
-        );
+        if (isset($value['customSize']) && is_array($value['customSize'])) {
+            unset($value['customSize']['pricings']);
+        }
+        unset($value['measurementUnit']);
+        $value['items'] = $items;
+
+        return $value;
     }
 
     protected function shapes_response(int $config_id, $value): array
     {
         return array(
-            'materialShapes' => is_array($value) ? array_values($value) : array(),
+            'items' => is_array($value) ? array_values($value) : array(),
             'manageShapes' => get_option('asowp_all_shapes', array()),
         );
     }
@@ -413,11 +453,10 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $normalized = $this->get_normalized_meta($config_id);
 
         return array(
-            'materialFixingMethods' => is_array($value) ? array_values($value) : array(),
+            'items' => is_array($value) ? array_values($value) : array(),
             'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
-            'materialSizes' => isset($sizes['allSizes']) && is_array($sizes['allSizes']) ? $sizes['allSizes'] : array(),
-            'materialShapes' => is_array($shapes) ? array_values($shapes) : array(),
-            'measurementUnit' => self::deep_value($normalized, array('settings', 'customizerSign', 'customizerOptions', 'measurementUnit'), 'mm'),
+            'sizes' => isset($sizes['items']) && is_array($sizes['items']) ? $sizes['items'] : array(),
+            'shapes' => is_array($shapes) ? array_values($shapes) : array(),
         );
     }
 
@@ -426,18 +465,24 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $required_options = $this->get_required_options($config_id);
         $sizes = $this->get_section_items($required_options, 'sizes');
         $shapes = $this->get_section_items($required_options, 'shapes');
+        $settings = is_array($value) && isset($value['settings']) && is_array($value['settings'])
+            ? $value['settings']
+            : array();
 
         return array(
-            'materialBorders' => $value,
+            'settings' => $settings,
+            'items' => isset($value['allBorders']) && is_array($value['allBorders']) ? array_values($value['allBorders']) : array(),
             'manageBorders' => get_option('asowp_all_borders', array()),
-            'materialSizes' => isset($sizes['allSizes']) && is_array($sizes['allSizes']) ? $sizes['allSizes'] : array(),
-            'materialShapes' => is_array($shapes) ? array_values($shapes) : array(),
+            'sizes' => isset($sizes['items']) && is_array($sizes['items']) ? $sizes['items'] : array(),
+            'shapes' => is_array($shapes) ? array_values($shapes) : array(),
         );
     }
 
     protected function materials_response(int $config_id, $value): array
     {
-        return is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array();
+        return array(
+            'items' => is_array($value) && isset($value['items']) && is_array($value['items']) ? array_values($value['items']) : array(),
+        );
     }
 
     protected function get_config_forced_material_type(int $config_id): string
@@ -533,11 +578,13 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('message' => __('No Configuration found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No Configuration found', 'all-signs-options-pro')));
         }
 
         $required_options = $this->get_required_options($config_id);
-        return rest_ensure_response($this->get_materials_items($required_options));
+        $materials = $this->section_value($required_options, 'materials', $this->materials_section_default());
+
+        return rest_ensure_response($this->section_response_payload('materials', $materials));
     }
 
     public function get_materials_material($request)
@@ -552,10 +599,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $required_options = $this->get_required_options($config_id);
         $materials = $this->get_materials_items($required_options);
         if (!isset($materials[$material_id])) {
-            return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-options-pro')));
         }
 
-        return rest_ensure_response($this->normalize_material($materials[$material_id], $material_id, $config_id));
+        return rest_ensure_response(array(
+            'success' => true,
+            'data' => array(
+                'material' => $this->normalize_material($materials[$material_id], $material_id, $config_id),
+            ),
+        ));
     }
 
     public function create_materials_material($request)
@@ -582,7 +634,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_materials_items($config_id, $materials);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Materiel component successfully added', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Materiel component successfully added', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Materiel component has not been added', 'all-signs-options-pro')));
     }
 
@@ -636,7 +696,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_materials_items($config_id, $materials);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Materiel component successfully edited', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Materiel component successfully edited', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Materiel component has not been edited', 'all-signs-options-pro')));
     }
 
@@ -677,7 +745,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_materials_items($config_id, $materials);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Component successfully deleted', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Component successfully deleted', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-options-pro')));
     }
 
@@ -692,9 +768,14 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $components = $this->get_section_items($required_options, 'components');
 
         return rest_ensure_response(array(
-            'data' => is_array($components) ? array_values($components) : array(),
-            'manageShapes' => get_option('asowp_all_shapes', array()),
-            'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+            'success' => true,
+            'data' => array(
+                'components' => array(
+                    'items' => is_array($components) ? array_values($components) : array(),
+                    'manageShapes' => get_option('asowp_all_shapes', array()),
+                    'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+                ),
+            ),
         ));
     }
 
@@ -723,7 +804,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Component successfully added', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Component successfully added', 'all-signs-options-pro'),
+                'data' => array(
+                    'components' => array(
+                        'items' => array_values($components),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Component has not been added', 'all-signs-options-pro')));
     }
 
@@ -746,7 +835,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Components successfully updated', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Components successfully updated', 'all-signs-options-pro'),
+                'data' => array(
+                    'components' => array(
+                        'items' => array_values($components),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Components have not been updated', 'all-signs-options-pro')));
     }
 
@@ -759,10 +856,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $component = isset($components[$component_id]) ? $components[$component_id] : null;
 
         if (!$component) {
-            return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('No materials component found', 'all-signs-options-pro')));
         }
 
-        return rest_ensure_response($component);
+        return rest_ensure_response(array(
+            'success' => true,
+            'data' => array(
+                'component' => $component,
+            ),
+        ));
     }
 
     public function get_component_options($request)
@@ -774,10 +876,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $component = isset($components[$component_id]) ? $components[$component_id] : null;
 
         return rest_ensure_response(array(
-            'manageShapes' => get_option('asowp_all_shapes', array()),
-            'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
-            'component' => $component,
-            'message' => $component ? __('No Material Component Options Found', 'all-signs-options-pro') : __('No materials component found', 'all-signs-options-pro'),
+            'success' => true,
+            'data' => array(
+                'componentOptions' => array(
+                    'manageShapes' => get_option('asowp_all_shapes', array()),
+                    'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+                    'component' => $component,
+                ),
+            ),
+            'message' => $component ? '' : __('No materials component found', 'all-signs-options-pro'),
         ));
     }
 
@@ -803,7 +910,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Component successfully edited', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Component successfully edited', 'all-signs-options-pro'),
+                'data' => array(
+                    'components' => array(
+                        'items' => array_values($components),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Component has not been edited', 'all-signs-options-pro')));
     }
 
@@ -823,7 +938,15 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Component successfully deleted', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Component successfully deleted', 'all-signs-options-pro'),
+                'data' => array(
+                    'components' => array(
+                        'items' => array_values($components),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Component has not been deleted', 'all-signs-options-pro')));
     }
 
@@ -857,7 +980,17 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Component option successfully added', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Component option successfully added', 'all-signs-options-pro'),
+                'data' => array(
+                    'componentOptions' => array(
+                        'component' => $components[$component_id],
+                        'manageShapes' => get_option('asowp_all_shapes', array()),
+                        'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Component option has not been added', 'all-signs-options-pro')));
     }
 
@@ -873,7 +1006,12 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
             return rest_ensure_response(array('message' => __('No materials component found', 'all-signs-options-pro')));
         }
 
-        return rest_ensure_response($components[$component_id]['options'][$option_id]);
+        return rest_ensure_response(array(
+            'success' => true,
+            'data' => array(
+                'option' => $components[$component_id]['options'][$option_id],
+            ),
+        ));
     }
 
     public function update_option($request)
@@ -899,7 +1037,17 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Component option successfully edited', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Component option successfully edited', 'all-signs-options-pro'),
+                'data' => array(
+                    'componentOptions' => array(
+                        'component' => $components[$component_id],
+                        'manageShapes' => get_option('asowp_all_shapes', array()),
+                        'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Component option has not been edited', 'all-signs-options-pro')));
     }
 
@@ -920,7 +1068,17 @@ class ASOWP_Api_Required_Options_Base extends WP_REST_Controller
         $update = $this->save_required_options($config_id, $required_options);
 
         return rest_ensure_response($update === true
-            ? array('success' => true, 'message' => __('Material Component option successfully deleted', 'all-signs-options-pro'))
+            ? array(
+                'success' => true,
+                'message' => __('Material Component option successfully deleted', 'all-signs-options-pro'),
+                'data' => array(
+                    'componentOptions' => array(
+                        'component' => $components[$component_id],
+                        'manageShapes' => get_option('asowp_all_shapes', array()),
+                        'manageFixingMethods' => get_option('asowp_all_fixingMethods', array()),
+                    ),
+                ),
+            )
             : array('success' => false, 'message' => __('Material Component option has not been deleted', 'all-signs-options-pro')));
     }
 

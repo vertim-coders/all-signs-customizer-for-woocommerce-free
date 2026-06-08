@@ -132,15 +132,18 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
     {
         $config_id = absint($request->get_param('config_id'));
         if (!$config_id) {
-            return rest_ensure_response(array('message' => __('Custom ID invalid', 'all-signs-options-pro')));
+            return rest_ensure_response(array('success' => false, 'message' => __('Custom ID invalid', 'all-signs-options-pro')));
         }
 
         $materials = $this->get_section_items($config_id, 'materials');
-        if (!empty($materials)) {
-            return rest_ensure_response(array_values($materials));
-        }
-
-        return rest_ensure_response(array('message' => __('No materials found', 'all-signs-options-pro')));
+        return rest_ensure_response(array(
+            'success' => true,
+            'data' => array(
+                'materials' => array(
+                    'items' => array_values($materials),
+                ),
+            ),
+        ));
     }
 
     public function get_material($request)
@@ -151,10 +154,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $index = $this->find_item_index($materials, $material_id);
 
         if ($config_id && $index !== null && isset($materials[$index])) {
-            return rest_ensure_response($materials[$index]);
+            return rest_ensure_response(array(
+                'success' => true,
+                'data' => array(
+                    'material' => $materials[$index],
+                ),
+            ));
         }
 
-        return rest_ensure_response(array('message' => __('No material found', 'all-signs-options-pro')));
+        return rest_ensure_response(array('success' => false, 'message' => __('No material found', 'all-signs-options-pro')));
     }
 
     public function add_material($request)
@@ -171,7 +179,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
 
         $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Material successfully added', 'all-signs-options-pro')));
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => __('Material successfully added', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            ));
         }
 
         return rest_ensure_response(array('success' => false, 'message' => __('Material has not been added', 'all-signs-options-pro')));
@@ -197,7 +213,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
 
         $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Material successfully updated', 'all-signs-options-pro')));
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => __('Material successfully updated', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            ));
         }
 
         return rest_ensure_response(array('success' => false, 'message' => __('Material has not been updated', 'all-signs-options-pro')));
@@ -217,7 +241,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         array_splice($materials, $index, 1);
         $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Material successfully deleted', 'all-signs-options-pro')));
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => __('Material successfully deleted', 'all-signs-options-pro'),
+                'data' => array(
+                    'materials' => array(
+                        'items' => array_values($materials),
+                    ),
+                ),
+            ));
         }
 
         return rest_ensure_response(array('success' => false, 'message' => __('Material has not been deleted', 'all-signs-options-pro')));
@@ -232,7 +264,12 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $material = $index !== null && isset($materials[$index]) ? $materials[$index] : array();
 
         return rest_ensure_response(array(
-            'allColors' => $this->resolve_material_colors($material),
+            'success' => true,
+            'data' => array(
+                'colors' => array(
+                    'allColors' => $this->resolve_material_colors($material),
+                ),
+            ),
         ));
     }
 
@@ -255,7 +292,15 @@ class ASOWP_Api_Customs_Additionals_Materials extends ASOWP_Api_Customs_Addition
         $saved = $this->set_section_items($config_id, 'materials', $materials, 'Materials', '');
 
         if ($saved === true) {
-            return rest_ensure_response(array('success' => true, 'message' => __('Material colors successfully updated', 'all-signs-options-pro')));
+            return rest_ensure_response(array(
+                'success' => true,
+                'message' => __('Material colors successfully updated', 'all-signs-options-pro'),
+                'data' => array(
+                    'colors' => array(
+                        'allColors' => $materials[$index]['colors'],
+                    ),
+                ),
+            ));
         }
 
         return rest_ensure_response(array('success' => false, 'message' => __('Material colors has not been updated', 'all-signs-options-pro')));

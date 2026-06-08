@@ -1,6 +1,10 @@
 <template>
   <div class="asowp-sizes-page asowp-space-y-3">
     <template v-if="!isNewSize">
+      <div v-if="isFetching" class="asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-8 asowp-flex asowp-items-center asowp-justify-center">
+        <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin" />
+      </div>
+      <template v-else>
       <div class="asowp-sizes-header asowp-bg-white asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-px-5 asowp-py-4 asowp-flex asowp-items-center asowp-justify-between">
         <div>
           <h2 class="asowp-text-[16px] asowp-leading-6 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Sizes', 'all-signs-options-pro') }}</h2>
@@ -29,18 +33,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-if="isFetching">
-                <td colspan="5" class="asowp-p-8 asowp-text-center">
-                  <Loader2Icon class="asowp-w-7 asowp-h-7 asowp-text-[#007a72] asowp-animate-spin asowp-mx-auto" />
-                </td>
-              </tr>
-              <tr v-else-if="sizes.allSizes.length === 0">
+              <tr v-if="sizes.items.length === 0">
                 <td colspan="5" class="asowp-p-8 asowp-text-center asowp-text-[13px] asowp-text-[#6b7280]">
                   {{ __('No standard sizes found.', 'all-signs-options-pro') }}
                 </td>
               </tr>
               <tr
-                v-for="(sz, key) in sizes.allSizes"
+                v-for="(sz, key) in sizes.items"
                 :key="key"
                 class="asowp-border-b asowp-border-solid asowp-border-[#eceff2] last:asowp-border-b-0"
                 draggable="true"
@@ -100,230 +99,119 @@
 
         <div class="asowp-size-setting-toggles asowp-mt-5 asowp-border-t asowp-border-solid asowp-border-[#eceff2]">
           <section class="asowp-settings-section">
-          <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
-            <div>
-              <h4 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Thickness', 'all-signs-options-pro') }}</h4>
-              <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">{{ __('Enable thickness choices for this configuration.', 'all-signs-options-pro') }}</p>
+            <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
+              <div>
+                <h4 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Thickness', 'all-signs-options-pro') }}</h4>
+                <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">{{ __('Enable thickness choices for this configuration.', 'all-signs-options-pro') }}</p>
+              </div>
+              <div
+                @click="sizes.thickness.active = !sizes.thickness.active"
+                :class="[
+                  'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors asowp-shrink-0 asowp-mt-1',
+                  sizes.thickness.active ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
+                ]"
+              >
+                <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', sizes.thickness.active ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
+              </div>
             </div>
-            <div
-              @click="sizes.thickness.active = !sizes.thickness.active"
-              :class="[
-                'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors asowp-shrink-0 asowp-mt-1',
-                sizes.thickness.active ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
-              ]"
-            >
-              <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', sizes.thickness.active ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
-            </div>
-          </div>
 
-          <div v-if="sizes.thickness.active" class="asowp-mt-4 asowp-space-y-3">
-            <div
-              v-for="(thick, key) in sizes.thickness.items"
-              :key="key"
-              class="asowp-thickness-card asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-bg-white asowp-p-4"
-            >
-              <div class="asowp-flex asowp-items-center asowp-justify-between asowp-mb-4">
-                <h5 class="asowp-text-[13px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ sprintf(__('Thickness %s', 'all-signs-options-pro'), key + 1) }}</h5>
-                <button
-                  @click="handleDeleteThickness(key)"
-                  class="asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-text-[#8e1f0b] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]"
-                >
-                  {{ __('Remove', 'all-signs-options-pro') }}
-                </button>
-              </div>
-              <div class="asowp-setting-grid asowp-grid lg:asowp-grid-cols-3 asowp-gap-4">
-                <div>
-                  <label>{{ __('Label', 'all-signs-options-pro') }}</label>
-                  <input type="text" v-model="thick.label">
-                </div>
-                <div>
-                  <label>{{ __('Value', 'all-signs-options-pro') }}</label>
-                  <input type="number" v-model.number="thick.value" @input="syncThicknessValue(key)">
-                </div>
-                <div>
-                  <label>{{ __('Pricing type', 'all-signs-options-pro') }}</label>
-                  <select v-model="thick.pricingType" @change="syncThicknessPricing(key)">
-                    <option value="additional">{{ __('Additional price', 'all-signs-options-pro') }}</option>
-                    <option value="multiplier">{{ __('Multiplier', 'all-signs-options-pro') }}</option>
-                  </select>
-                </div>
-                <div>
-                  <label>{{ thick.pricingType === 'multiplier' ? __('Multiplier', 'all-signs-options-pro') : __('Additional price', 'all-signs-options-pro') }}</label>
-                  <input
-                    type="number"
-                    :step="thick.pricingType === 'multiplier' ? '0.01' : '1'"
-                    v-model.number="thick.pricingValue"
-                    @input="syncThicknessPricing(key)"
+            <div v-if="sizes.thickness.active" class="asowp-mt-4 asowp-space-y-3">
+              <div
+                v-for="(thick, key) in sizes.thickness.items"
+                :key="key"
+                class="asowp-thickness-card asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-bg-white asowp-p-4"
+              >
+                <div class="asowp-flex asowp-items-center asowp-justify-between asowp-mb-4">
+                  <h5 class="asowp-text-[13px] asowp-leading-5 asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ sprintf(__('Thickness %s', 'all-signs-options-pro'), key + 1) }}</h5>
+                  <button
+                    @click="handleDeleteThickness(key)"
+                    class="asowp-px-3 asowp-py-1.5 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-text-[#8e1f0b] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]"
                   >
+                    {{ __('Remove', 'all-signs-options-pro') }}
+                  </button>
+                </div>
+                <div class="asowp-setting-grid asowp-grid lg:asowp-grid-cols-3 asowp-gap-4">
+                  <div>
+                    <label>{{ __('Label', 'all-signs-options-pro') }}</label>
+                    <input type="text" v-model="thick.label">
+                  </div>
+                  <div>
+                    <label>{{ __('Value', 'all-signs-options-pro') }}</label>
+                    <input type="number" v-model.number="thick.value" @input="syncThicknessValue(key)">
+                  </div>
                 </div>
               </div>
-            </div>
-            <button @click="handleAddNewThickness" class="asowp-h-8 asowp-px-3 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">
-              {{ __('Add thickness', 'all-signs-options-pro') }}
+              <button @click="handleAddNewThickness" class="asowp-h-8 asowp-px-3 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c9cccf] asowp-rounded-md asowp-text-[12px] asowp-leading-4 asowp-font-[900] asowp-cursor-pointer hover:asowp-bg-[#f6f6f7]">
+                {{ __('Add thickness', 'all-signs-options-pro') }}
               </button>
             </div>
           </section>
 
           <section class="asowp-settings-section asowp-custom-size-section asowp-border-t asowp-border-solid asowp-border-[#eceff2]">
-          <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
-            <div>
-              <h4 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Custom Size', 'all-signs-options-pro') }}</h4>
-              <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">{{ __('Enable custom width and height entry with allowed limits.', 'all-signs-options-pro') }}</p>
-            </div>
-            <div
-              @click="changeCustomSizeActive"
-              :class="[
-                'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors asowp-shrink-0 asowp-mt-1',
-                sizes.customSize.active ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
-              ]"
-            >
-              <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', sizes.customSize.active ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
-            </div>
-          </div>
-
-          <div v-if="sizes.customSize.active" class="asowp-mt-4 asowp-space-y-4">
             <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
               <div>
-                <h4 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Predefined Sizes Visibility', 'all-signs-options-pro') }}</h4>
-                <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">{{ __('Choose whether predefined sizes stay visible in the configurator when custom size is enabled.', 'all-signs-options-pro') }}</p>
+                <h4 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Custom Size', 'all-signs-options-pro') }}</h4>
+                <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">{{ __('Enable custom width and height entry with allowed limits.', 'all-signs-options-pro') }}</p>
               </div>
               <div
-                @click="sizes.customSize.showPredefinedSizes = !sizes.customSize.showPredefinedSizes"
+                @click="changeCustomSizeActive"
                 :class="[
                   'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors asowp-shrink-0 asowp-mt-1',
-                  sizes.customSize.showPredefinedSizes ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
+                  sizes.customSize.active ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
                 ]"
               >
-                <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', sizes.customSize.showPredefinedSizes ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
+                <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', sizes.customSize.active ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
               </div>
             </div>
 
-            <div class="asowp-setting-grid asowp-grid lg:asowp-grid-cols-3 asowp-gap-4">
-              <div>
-                <label>{{ __('Width label', 'all-signs-options-pro') }}</label>
-                <input type="text" v-model="sizes.customSize.width.label">
+            <div v-if="sizes.customSize.active" class="asowp-mt-4 asowp-space-y-4">
+              <div class="asowp-flex asowp-items-start asowp-justify-between asowp-gap-4">
+                <div>
+                  <h4 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#303030] asowp-m-0">{{ __('Predefined Sizes Visibility', 'all-signs-options-pro') }}</h4>
+                  <p class="asowp-text-[12px] asowp-leading-4 asowp-text-[#6b7280] asowp-m-0">{{ __('Choose whether predefined sizes stay visible in the configurator when custom size is enabled.', 'all-signs-options-pro') }}</p>
+                </div>
+                <div
+                  @click="sizes.customSize.showPredefinedSizes = !sizes.customSize.showPredefinedSizes"
+                  :class="[
+                    'asowp-w-9 asowp-h-5 asowp-rounded-full asowp-relative asowp-cursor-pointer asowp-transition-colors asowp-shrink-0 asowp-mt-1',
+                    sizes.customSize.showPredefinedSizes ? 'asowp-bg-[#007a72]' : 'asowp-bg-[#d9dee8]'
+                  ]"
+                >
+                  <div :class="['asowp-absolute asowp-top-0.5 asowp-w-4 asowp-h-4 asowp-rounded-full asowp-bg-white asowp-shadow asowp-transition-all', sizes.customSize.showPredefinedSizes ? 'asowp-right-0.5' : 'asowp-left-0.5']"></div>
+                </div>
               </div>
-              <div>
-                <label>{{ __('Width min', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.width.min">
-              </div>
-              <div>
-                <label>{{ __('Width max', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.width.max">
-              </div>
-              <div>
-                <label>{{ __('Height label', 'all-signs-options-pro') }}</label>
-                <input type="text" v-model="sizes.customSize.height.label">
-              </div>
-              <div>
-                <label>{{ __('Height min', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.height.min">
-              </div>
-              <div>
-                <label>{{ __('Height max', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.height.max">
+
+              <div class="asowp-setting-grid asowp-grid lg:asowp-grid-cols-3 asowp-gap-4">
+                <div>
+                  <label>{{ __('Width label', 'all-signs-options-pro') }}</label>
+                  <input type="text" v-model="sizes.customSize.width.label">
+                </div>
+                <div>
+                  <label>{{ __('Width min', 'all-signs-options-pro') }}</label>
+                  <input type="number" v-model="sizes.customSize.width.min">
+                </div>
+                <div>
+                  <label>{{ __('Width max', 'all-signs-options-pro') }}</label>
+                  <input type="number" v-model="sizes.customSize.width.max">
+                </div>
+                <div>
+                  <label>{{ __('Height label', 'all-signs-options-pro') }}</label>
+                  <input type="text" v-model="sizes.customSize.height.label">
+                </div>
+                <div>
+                  <label>{{ __('Height min', 'all-signs-options-pro') }}</label>
+                  <input type="number" v-model="sizes.customSize.height.min">
+                </div>
+                <div>
+                  <label>{{ __('Height max', 'all-signs-options-pro') }}</label>
+                  <input type="number" v-model="sizes.customSize.height.max">
+                </div>
               </div>
             </div>
-          </div>
           </section>
-
-        <div v-if="false && sizes.customSize.active" class="asowp-mt-5 asowp-space-y-6">
-        <!-- Range Inputs -->
-        <div class="asowp-grid md:asowp-grid-cols-2 asowp-gap-8">
-          <!-- Width Settings -->
-          <div class="asowp-space-y-4">
-            <h4 class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Width settings', 'all-signs-options-pro') }}</h4>
-            <div class="asowp-grid asowp-grid-cols-2 asowp-gap-4">
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">{{ __('Min width (mm)', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.width.min" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] focus:asowp-border-[#006e52] asowp-outline-none">
-              </div>
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">{{ __('Max width (mm)', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.width.max" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] focus:asowp-border-[#006e52] asowp-outline-none">
-              </div>
-            </div>
-          </div>
-          <!-- Height Settings -->
-          <div class="asowp-space-y-4">
-            <h4 class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Height settings', 'all-signs-options-pro') }}</h4>
-            <div class="asowp-grid asowp-grid-cols-2 asowp-gap-4">
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">{{ __('Min height (mm)', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.height.min" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] focus:asowp-border-[#006e52] asowp-outline-none">
-              </div>
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[12px] asowp-font-bold asowp-text-[#616161]">{{ __('Max height (mm)', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.height.max" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] focus:asowp-border-[#006e52] asowp-outline-none">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Pricing Rules -->
-        <div class="asowp-pt-6 asowp-border-t asowp-border-solid asowp-border-[#f1f1f1]">
-          <div class="asowp-flex asowp-items-center asowp-justify-between asowp-mb-4">
-            <h4 class="asowp-text-[14px] asowp-font-bold asowp-text-[#1a1a1a]">{{ __('Pricing rules', 'all-signs-options-pro') }}</h4>
-            <div class="asowp-flex asowp-bg-[#f1f1f1] asowp-p-1 asowp-rounded-lg">
-              <button
-                @click="changePricingType('unit')"
-                :class="['asowp-px-3 asowp-py-1 asowp-text-[12px] asowp-font-bold asowp-rounded-md asowp-transition-all asowp-border-none asowp-cursor-pointer', sizes.customSize.pricings.type === 'unit' ? 'asowp-bg-white asowp-text-[#006e52] asowp-shadow-sm' : 'asowp-bg-transparent asowp-text-[#616161]']"
-              >
-                {{ __('Per surface', 'all-signs-options-pro') }}
-              </button>
-              <button
-                @click="changePricingType('range')"
-                :class="['asowp-px-3 asowp-py-1 asowp-text-[12px] asowp-font-bold asowp-rounded-md asowp-transition-all asowp-border-none asowp-cursor-pointer', sizes.customSize.pricings.type === 'range' ? 'asowp-bg-white asowp-text-[#006e52] asowp-shadow-sm' : 'asowp-bg-transparent asowp-text-[#616161]']"
-              >
-                {{ __('Per range', 'all-signs-options-pro') }}
-              </button>
-            </div>
-          </div>
-
-          <!-- Range Pricing List -->
-          <div v-if="sizes.customSize.pricings.type === 'range'" class="asowp-space-y-4">
-            <div v-for="(p, k) in sizes.customSize.pricings.range" :key="k" class="asowp-grid asowp-grid-cols-[1fr_1fr_1fr_40px] asowp-gap-4 asowp-items-end">
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[11px] asowp-font-bold asowp-text-[#616161]">{{ __('Surface max (mm²)', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="p.surface" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-outline-none">
-              </div>
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[11px] asowp-font-bold asowp-text-[#616161]">{{ __('Base Price', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="p.basePrice" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-outline-none">
-              </div>
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[11px] asowp-font-bold asowp-text-[#616161]">{{ __('Char Price', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="p.charPrice" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-outline-none">
-              </div>
-              <button @click="handleDeletePricing(k)" class="asowp-mb-1 asowp-w-9 asowp-h-9 asowp-rounded-lg asowp-bg-white asowp-border asowp-border-solid asowp-border-[#e1e3e5] asowp-text-[#8e1f0b] asowp-flex asowp-items-center asowp-justify-center asowp-cursor-pointer hover:asowp-bg-[#fff1f0]">
-                <Trash2Icon class="asowp-w-4 asowp-h-4" />
-              </button>
-            </div>
-            <button @click="handleAddNewPricing" class="asowp-px-4 asowp-py-2 asowp-bg-white asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-rounded-xl asowp-text-[13px] asowp-font-bold asowp-cursor-pointer hover:asowp-bg-[#f9fafb]">
-              {{ __('Add range pricing', 'all-signs-options-pro') }}
-            </button>
-          </div>
-
-          <!-- Unit Pricing -->
-          <div v-else class="asowp-grid asowp-grid-cols-3 asowp-gap-4">
-             <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[11px] asowp-font-bold asowp-text-[#616161]">{{ __('Base Surface (mm²)', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.pricings.unit.surface" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-outline-none">
-              </div>
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[11px] asowp-font-bold asowp-text-[#616161]">{{ __('Price', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.pricings.unit.basePrice" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-outline-none">
-              </div>
-              <div class="asowp-space-y-1.5">
-                <label class="asowp-text-[11px] asowp-font-bold asowp-text-[#616161]">{{ __('Char Price', 'all-signs-options-pro') }}</label>
-                <input type="number" v-model="sizes.customSize.pricings.unit.charPrice" class="asowp-w-full asowp-px-3 asowp-py-2 asowp-rounded-xl asowp-border asowp-border-solid asowp-border-[#c1c4c7] asowp-outline-none">
-              </div>
-          </div>
         </div>
       </div>
-    </div>
-        </div>
-
+      </template>
     </template>
 
     <!-- Add/Edit Size Form -->
@@ -423,14 +311,7 @@ import {
 import { __, sprintf } from "@wordpress/i18n";
 
 const route = useRoute();
-const props = defineProps({
-  materialId: {
-    type: [String, Number],
-    default: 0,
-  },
-});
 const configID = ref(route.params.configId);
-const materialId = computed(() => props.materialId ?? route.query.materialIndex ?? route.params.materialId ?? 0);
 
 const isFetching = ref(true);
 const isNewSize = ref(false);
@@ -442,9 +323,9 @@ const draggedSizeIndex = ref(null);
 
 const sizes = ref({
   settings: { title: 'Sizes', description: '' },
-  customSize: { active: false, showPredefinedSizes: true, width: { label: 'Width', min: 0, max: 0 }, height: { label: 'Height', min: 0, max: 0 }, pricings: { type: "unit", unit: { basePrice: 0, surface: 0, charPrice: 0 }, range: [] } },
+  customSize: { active: false, showPredefinedSizes: true, width: { label: 'Width', min: 0, max: 0 }, height: { label: 'Height', min: 0, max: 0 } },
   thickness: { active: false, values: [], items: [] },
-  allSizes: []
+  items: []
 });
 
 const size = ref({ isDefault: false, label: "", width: 0, height: 0, startPriceAtChar: 1, textNumber: 0, maxTextChar: -1, charPrice: 0, basePrice: 0 });
@@ -522,13 +403,13 @@ const syncThicknessPricing = (key) => {
 };
 
 const ensureDefaultSize = () => {
-  if (!Array.isArray(sizes.value.allSizes) || sizes.value.allSizes.length === 0) {
+  if (!Array.isArray(sizes.value.items) || sizes.value.items.length === 0) {
     return;
   }
 
-  const defaultIndex = sizes.value.allSizes.findIndex((item) => item.isDefault);
+  const defaultIndex = sizes.value.items.findIndex((item) => item.isDefault);
   const selectedIndex = defaultIndex >= 0 ? defaultIndex : 0;
-  sizes.value.allSizes.forEach((item, index) => {
+  sizes.value.items.forEach((item, index) => {
     item.isDefault = index === selectedIndex;
   });
 };
@@ -548,6 +429,7 @@ const getSizesPayload = () => {
 
   if (payload.customSize) {
     payload.customSize.active = typeof payload.customSize.active === 'boolean' ? payload.customSize.active : false;
+    delete payload.customSize.pricings;
   }
 
   return payload;
@@ -558,7 +440,7 @@ const normalizeSizes = () => {
     sizes.value.settings = { title: 'Sizes', description: '' };
   }
   if (!sizes.value.customSize) {
-    sizes.value.customSize = { active: false, showPredefinedSizes: true, width: { label: 'Width', min: 0, max: 0 }, height: { label: 'Height', min: 0, max: 0 }, pricings: { type: "unit", unit: { basePrice: 0, surface: 0, charPrice: 0 }, range: [] } };
+    sizes.value.customSize = { active: false, showPredefinedSizes: true, width: { label: 'Width', min: 0, max: 0 }, height: { label: 'Height', min: 0, max: 0 } };
   }
   if (typeof sizes.value.customSize.active !== 'boolean') {
     sizes.value.customSize.active = false;
@@ -584,8 +466,8 @@ const normalizeSizes = () => {
     });
   }
   syncThicknessValues();
-  if (!Array.isArray(sizes.value.allSizes)) {
-    sizes.value.allSizes = [];
+  if (!Array.isArray(sizes.value.items)) {
+    sizes.value.items = [];
   }
   ensureDefaultSize();
 };
@@ -594,12 +476,12 @@ const fetchMaterialSizes = async () => {
   isFetching.value = true;
   try {
     const result = await api.getRequiredOptionSizes(configID.value);
-    if (result?.materialSizes) {
-      sizes.value = result.materialSizes;
+    if (result) {
+      sizes.value = {
+        ...result,
+        items: Array.isArray(result.items) ? result.items : [],
+      };
       normalizeSizes();
-      if (!sizes.value.customSize.pricings) {
-        sizes.value.customSize.pricings = { type: "unit", unit: { basePrice: 0, surface: 0, charPrice: 0 }, range: [] };
-      }
     }
   } finally { isFetching.value = false; }
 };
@@ -619,21 +501,21 @@ const updateMaterialSize = async () => {
 
 const addMaterialSize = async () => {
   if (size.value.label.trim()) {
-    const hasDefault = sizes.value.allSizes.some((item) => item.isDefault);
-    sizes.value.allSizes.push({ ...size.value, isDefault: !hasDefault });
+    const hasDefault = sizes.value.items.some((item) => item.isDefault);
+    sizes.value.items.push({ ...size.value, isDefault: !hasDefault });
     await updateMaterialSize();
   }
 };
 
 const updateSizeInMaterialSize = async () => {
   if (size.value.label.trim()) {
-    sizes.value.allSizes[sizeId.value] = { ...size.value };
+    sizes.value.items[sizeId.value] = { ...size.value };
     await updateMaterialSize();
   }
 };
 
 const deleteMaterialSize = async () => {
-  sizes.value.allSizes.splice(sizeId.value, 1);
+  sizes.value.items.splice(sizeId.value, 1);
   ensureDefaultSize();
   await updateMaterialSize();
 };
@@ -646,7 +528,7 @@ const selectMaterialSize = (id, sz, isDeleting = false) => {
 };
 
 const selectDefault = (key) => {
-  sizes.value.allSizes.forEach((s, i) => s.isDefault = i === key);
+  sizes.value.items.forEach((s, i) => s.isDefault = i === key);
   updateMaterialSize();
 };
 
@@ -656,8 +538,8 @@ const dragStart = (key) => {
 
 const dropSize = (targetIndex) => {
   if (draggedSizeIndex.value === null || draggedSizeIndex.value === targetIndex) return;
-  const [moved] = sizes.value.allSizes.splice(draggedSizeIndex.value, 1);
-  sizes.value.allSizes.splice(targetIndex, 0, moved);
+  const [moved] = sizes.value.items.splice(draggedSizeIndex.value, 1);
+  sizes.value.items.splice(targetIndex, 0, moved);
   draggedSizeIndex.value = null;
   ensureDefaultSize();
   updateMaterialSize();
@@ -671,7 +553,6 @@ const newSize = () => {
 const back = () => { isNewSize.value = false; isEdit.value = false; };
 const closeModal = () => openModal.value = false;
 const changeCustomSizeActive = () => sizes.value.customSize.active = !sizes.value.customSize.active;
-const changePricingType = (t) => sizes.value.customSize.pricings.type = t;
 const handleAddNewThickness = () => {
   if (!Array.isArray(sizes.value.thickness.items)) {
     sizes.value.thickness.items = [];
@@ -683,8 +564,6 @@ const handleDeleteThickness = (k) => {
   sizes.value.thickness.items.splice(k, 1);
   syncThicknessValues();
 };
-const handleAddNewPricing = () => sizes.value.customSize.pricings.range.push({ basePrice: 0, charPrice: 0, surface: 0 });
-const handleDeletePricing = (k) => sizes.value.customSize.pricings.range.splice(k, 1);
 
 onMounted(fetchMaterialSizes);
 </script>
