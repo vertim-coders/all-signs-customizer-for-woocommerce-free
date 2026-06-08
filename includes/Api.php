@@ -12,6 +12,7 @@ use ASOWP\Api\Admin\ASOWP_Api_Materials;
 use ASOWP\Api\Admin\ASOWP_Api_Templates_Categories;
 use ASOWP\Api\Admin\ASOWP_Api_WooCommerce_Products;
 use ASOWP\Api\Admin\ASOWP_Api_Home_Stats;
+use ASOWP\Api\Admin\ASOWP_Api_Request_Quotes;
 use ASOWP\Api\Admin\Globals_Settings\ASOWP_Api_Globals_Settings;
 use ASOWP\Api\Admin\Materials\ASOWP_Materials_Simple;
 use ASOWP\Api\Admin\Materials\ASOWP_Materials_Advance;
@@ -67,6 +68,9 @@ class Api extends WP_REST_Controller {
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Home_Stats'  ) ) {
             require_once __DIR__ . '/Api/Admin/Home-Stats.php';
         }
+        if ( !class_exists( __NAMESPACE__ . '\Api\Admin\ASOWP_Api_Request_Quotes'  ) ) {
+            require_once __DIR__ . '/Api/Admin/Request-Quotes.php';
+        }
         if ( !class_exists( __NAMESPACE__ . '\Api\Admin\Materials\ASOWP_Api_Materials_Simple'  ) ) {
             require_once __DIR__ . '/Api/Admin/Materials/Simple.php';
         }
@@ -111,6 +115,7 @@ class Api extends WP_REST_Controller {
         (new ASOWP_Api_Materials())->register_routes();
         (new ASOWP_Api_WooCommerce_Products())->register_routes();
         (new ASOWP_Api_Home_Stats())->register_routes();
+        (new ASOWP_Api_Request_Quotes())->register_routes();
         (new ASOWP_Materials_Simple())->register_routes();
         (new ASOWP_Materials_Advance())->register_routes();
         (new ASOWP_Api_GoogleFonts())->register_routes();

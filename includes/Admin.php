@@ -124,6 +124,7 @@ class ASOWP_Admin
         </div>
         <?php $script_data = [
             "rest_url" => $api_url . "asowp/v1",
+            "rest_nonce" => wp_create_nonce('wp_rest'),
             "ajax_url" => esc_url(admin_url('admin-ajax.php')),
             "site_url" => urlencode(get_site_url()),
             "caches" => function_exists('asowp_get_license_cache_timestamp') ? \asowp_get_license_cache_timestamp() : 0,

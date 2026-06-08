@@ -20,6 +20,10 @@ const frontendApi = {
     );
     return response.data;
   },
+  submitRequestQuote: async (payload) => {
+    const response = await axios.post(`${asowpApiUrl}/request-quotes`, payload);
+    return response.data;
+  },
 };
 
 export default frontendApi;
