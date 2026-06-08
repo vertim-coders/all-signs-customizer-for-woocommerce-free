@@ -350,7 +350,7 @@
 
           <!-- Summary Card -->
           <div class="asowp-step4-card asowp-step4-summary asowp-bg-white asowp-rounded-2xl asowp-border asowp-border-solid asowp-border-[#dfe3e8] asowp-p-5 asowp-h-fit">
-            <h3 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#111827] asowp-mb-5">{{ __('Summary', 'all-signs-options-pro') }}</h3>
+            <h3 class="asowp-text-[13px] asowp-font-[900] asowp-text-[#111827] asowp-mb-5 asowp-mt-0">{{ __('Summary', 'all-signs-options-pro') }}</h3>
             <div class="asowp-space-y-3">
               <div>
                  <span class="asowp-text-[12px] asowp-text-[#6b7280]">{{ __('Product family:', 'all-signs-options-pro') }}</span>
@@ -500,24 +500,27 @@
           </div>
           <div class="asowp-review-body asowp-p-5 asowp-grid md:asowp-grid-cols-[1.4fr_1fr] asowp-gap-4">
              <div class="asowp-review-panel asowp-bg-[#f7f9fc] asowp-border asowp-border-solid asowp-border-[#dbe3ea] asowp-rounded-2xl">
-                <h4 class="asowp-text-[16px] asowp-font-[900] asowp-text-[#303030] asowp-mb-4">{{ __('Configuration summary', 'all-signs-options-pro') }}</h4>
-                <div class="asowp-space-y-3 asowp-text-[14px] asowp-leading-6">
+                <h4 class="asowp-review-panel-title">{{ __('Configuration summary', 'all-signs-options-pro') }}</h4>
+                <div class="asowp-review-summary-list">
                    <p><span class="asowp-text-[#667085]">{{ __('Product family:', 'all-signs-options-pro') }}</span> <span class="asowp-font-[900] asowp-text-[#101828]">{{ selectedFamilyTitle }}</span></p>
                    <p><span class="asowp-text-[#667085]">{{ __('Material:', 'all-signs-options-pro') }}</span> <span class="asowp-font-[900] asowp-text-[#101828]">{{ selectedMaterialsNames }}</span></p>
-                   <p><span class="asowp-text-[#667085]">{{ __('Setup model:', 'all-signs-options-pro') }}</span> <span class="asowp-font-[900] asowp-text-[#101828]">{{ wizard.materialType === 'simple' ? (selectedFamilyTitle === 'Letter signs' ? 'Direct Options' : 'Flexible') : 'Preset Components' }}</span></p>
+                   <p><span class="asowp-text-[#667085]">{{ __('Setup model:', 'all-signs-options-pro') }}</span> <span class="asowp-font-[900] asowp-text-[#101828]">{{ wizard.materialType === 'simple' ? 'Direct Options' : 'Preset Components' }}</span></p>
                    <p><span class="asowp-text-[#667085]">{{ __('Configuration name:', 'all-signs-options-pro') }}</span> <span class="asowp-font-[900] asowp-text-[#101828]">{{ newConfig.name }}</span></p>
                 </div>
              </div>
              <div class="asowp-review-panel asowp-bg-[#f7f9fc] asowp-border asowp-border-solid asowp-border-[#dbe3ea] asowp-rounded-2xl">
-                <h4 class="asowp-text-[16px] asowp-font-[900] asowp-text-[#303030] asowp-mb-4">{{ __('Starter template', 'all-signs-options-pro') }}</h4>
-                <p class="asowp-text-[15px] asowp-leading-6 asowp-text-[#5c5f62] asowp-mb-4">{{ __('Decide if you want to start from a ready template or create the configuration from a blank setup.', 'all-signs-options-pro') }}</p>
-                <div class="asowp-flex asowp-flex-wrap asowp-gap-3 asowp-mb-4">
+                <h4 class="asowp-review-panel-title">{{ __('Starter template', 'all-signs-options-pro') }}</h4>
+                <p class="asowp-review-description">{{ __('Decide if you want to start from a ready template or create the configuration from a blank setup.', 'all-signs-options-pro') }}</p>
+                <div class="asowp-review-choice-row">
                    <button @click="wizard.includeDemo = false" :class="['asowp-review-choice-button', !wizard.includeDemo ? 'is-selected' : '']">{{ __('Start blank', 'all-signs-options-pro') }}</button>
                    <button @click="wizard.includeDemo = true" :class="['asowp-review-choice-button', wizard.includeDemo ? 'is-selected' : '']">{{ __('Include starter template', 'all-signs-options-pro') }}</button>
                 </div>
-                <p class="asowp-text-[14px] asowp-leading-6 asowp-text-[#64748b]">
-                   {{ wizard.includeDemo ? __('The configuration will be pre-filled with demo materials, shapes, and sizes.', 'all-signs-options-pro') : __('No starter template will be imported. The configuration will be created from your selected setup only.', 'all-signs-options-pro') }}
-                </p>
+                <div v-if="wizard.includeDemo" class="asowp-review-selected-template">
+                  <p class="asowp-review-selected-label">{{ __('Selected template', 'all-signs-options-pro') }}</p>
+                  <p class="asowp-review-selected-name">{{ __('Generated starter data', 'all-signs-options-pro') }}</p>
+                  <p class="asowp-review-selected-help">{{ __('Automatically selected from your product family, material and setup model.', 'all-signs-options-pro') }}</p>
+                </div>
+                <p v-else class="asowp-review-blank-help">{{ __('No starter template will be imported. The configuration will be created from your selected setup only.', 'all-signs-options-pro') }}</p>
              </div>
           </div>
           <div class="asowp-review-footer asowp-h-[76px] asowp-px-5 asowp-bg-white asowp-border-t asowp-border-solid asowp-border-[#e1e3e5] asowp-flex asowp-justify-end asowp-items-center asowp-gap-3">
@@ -970,7 +973,7 @@ onMounted(async () => {
 
 .asowp-create-stepper-wrap {
   position: sticky;
-  top: calc(var(--wp-admin--admin-bar--height, 32px) + 12px);
+  top: var(--wp-admin--admin-bar--height, 32px);
   z-index: 20;
   padding: 4px 0 10px;
   backdrop-filter: blur(10px);
@@ -1274,6 +1277,20 @@ onMounted(async () => {
   box-shadow: 0 24px 54px rgba(15, 23, 42, 0.22) !important;
 }
 
+.asowp-review-header {
+  border-width: 0 0 1px 0 !important;
+}
+
+.asowp-review-header h3 {
+  font-size: 18px !important;
+  line-height: 24px !important;
+  font-weight: 650 !important;
+}
+
+.asowp-review-footer {
+  border-width: 1px 0 0 0 !important;
+}
+
 .asowp-review-body {
   gap: 16px !important;
 }
@@ -1282,18 +1299,59 @@ onMounted(async () => {
   min-height: 230px;
   padding: 18px !important;
   border-radius: 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+
+.asowp-review-panel p,
+.asowp-review-panel h4 {
+  margin: 0 !important;
+}
+
+.asowp-review-panel-title {
+  color: #303030 !important;
+  font-size: 16px !important;
+  line-height: 22px !important;
+  font-weight: 700 !important;
+}
+
+.asowp-review-summary-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  color: #667085 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+.asowp-review-summary-list span:last-child {
+  font-weight: 600 !important;
+}
+
+.asowp-review-description {
+  color: #5c5f62 !important;
+  font-size: 15px !important;
+  line-height: 24px !important;
+  font-weight: 400 !important;
+}
+
+.asowp-review-choice-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
 }
 
 .asowp-review-choice-button {
-  min-height: 44px;
-  padding: 8px 16px;
+  min-height: 38px;
+  padding: 8px 14px;
   border: 1px solid #b7c2cc;
   border-radius: 10px;
   background: #ffffff;
   color: #475467;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 20px;
   cursor: pointer;
   box-shadow: none;
 }
@@ -1304,9 +1362,35 @@ onMounted(async () => {
   color: rgba(1, 100, 100, 0.9);
 }
 
+.asowp-review-selected-template {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding: 12px !important;
+  border: 1px solid #dbe3ea !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+}
+
+.asowp-review-selected-label,
+.asowp-review-selected-help,
+.asowp-review-blank-help {
+  color: #667085 !important;
+  font-size: 13px !important;
+  line-height: 20px !important;
+  font-weight: 400 !important;
+}
+
+.asowp-review-selected-name {
+  color: #101828 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-weight: 700 !important;
+}
+
 .asowp-review-secondary-button,
 .asowp-review-primary-button {
-  min-height: 34px;
+  min-height: 36px;
   padding: 8px 14px;
   border-radius: 8px;
   font-size: 14px;
@@ -1463,6 +1547,10 @@ onMounted(async () => {
   max-height: calc(100vh - 224px) !important;
   border-radius: 20px !important;
   box-shadow: 0 24px 54px rgba(15, 23, 42, 0.22) !important;
+}
+
+.asowp-gallery-header {
+  border-width: 0 0 1px 0 !important;
 }
 
 .asowp-gallery-header h3 {
